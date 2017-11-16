@@ -1,6 +1,3 @@
-import { SagaMiddleware } from "redux-saga";
-import { Store } from "redux";
-
 /* Demo Enum*/
 export enum DemoEnum{
     demo = 0
@@ -15,6 +12,8 @@ export interface DemoInterface {
 export class DemoClass {
     demo: any;
 }
+
+/* 公共 ====================================================================*/
 
 /* 国际化*/
 export interface AppLocaleStatic {
