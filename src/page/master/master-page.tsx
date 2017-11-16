@@ -69,17 +69,13 @@ export class MasterPage extends Component<MasterPageProps, MasterPageStates> {
         const topThis = this;
         const {props: {children}} = topThis;
 
-        return <Layout className="hz-master-page">
-            <Header className="header">
+        return <Layout>
+            <Header>
                 Header
             </Header>
-            <Layout>
-                <Layout style={{padding: 24}}>
-                    <Content style={{background: '#fff', padding: 24, margin: 0, minHeight: 280}}>
-                        {children}
-                    </Content>
-                </Layout>
-            </Layout>
+            <Content>
+                {children}
+            </Content>
         </Layout>
     });
 
