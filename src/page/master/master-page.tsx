@@ -5,7 +5,8 @@ import {Layout, Select} from "antd";
 import {IntlProvider, injectIntl} from 'react-intl';
 import {getLocale} from "../../locales";
 import {AppLocaleStatic}  from "../../api/model/common-model";
-const {Header, Content} = Layout;
+import {NaContext, NaGlobal} from "../../util/common";
+const {Header, Content, Footer} = Layout;
 
 interface MasterPageProps {
     onLoaded?: (appLocale?: AppLocaleStatic, theme?: string) => Promise<any>;
@@ -64,18 +65,21 @@ export class MasterPage extends Component<MasterPageProps, MasterPageStates> {
         </Select>;
     }
 
-    /* 为了children能用 formatMessage({id: LoginPageLocale.Password})的方式*/
+    /* 为了children能用 formatMessage({id: LoginPageLocale.Password})的方式 组件用injectIntl包含*/
     renderMasterPage = injectIntl((props) => {
+        NaGlobal.intl = props.intl;
         const topThis = this;
         const {props: {children}} = topThis;
-
         return <Layout>
             <Header>
-                Header
+                <div>{topThis.renderLanguageSelect()}</div>
             </Header>
             <Content>
                 {children}
             </Content>
+            <Footer>
+
+            </Footer>
         </Layout>
     });
 

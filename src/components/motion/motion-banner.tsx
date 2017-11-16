@@ -7,6 +7,8 @@ import TweenOne from 'rc-tween-one';
 import ScrollAnim from 'rc-scroll-anim';
 import {isNullOrUndefined} from "util";
 const OverPack = ScrollAnim.OverPack;
+import {CommonLocale} from '../../locales/localeid';
+import {NaGlobal} from '../../util/common';
 
 interface MotionBannerControlProps {
     /* 注意应用中是否可以设置为非覆盖性属性 仅仅为外层className 附加名称*/
@@ -24,8 +26,10 @@ export class MotionBannerControl extends Component<MotionBannerControlProps, Mot
     render() {
         const topThis = this;
         const {props, props: {className}} = topThis;
+        const {formatMessage} = NaGlobal.intl;
         return (
-            <OverPack replay playScale={[0.3, 0.1]} {...props} className={isNullOrUndefined(className) ? "motion-banner" : className}>
+            <OverPack replay playScale={[0.3, 0.1]} {...props}
+                      className={isNullOrUndefined(className) ? "motion-banner" : className}>
                 <QueueAnim type={['bottom', 'top']}
                            delay={200}
                            className={`${isNullOrUndefined(className) ? "motion-banner" : className}-wrapper`}
@@ -34,7 +38,7 @@ export class MotionBannerControl extends Component<MotionBannerControlProps, Mot
                         <img width="100%" src="https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png"/>
                     </span>
                     <p key="content"> 一个高效的页面动画解决方案 </p>
-                    <Button type="ghost" key="button"> Learn More </Button>
+                    <Button type="ghost" key="button"> {formatMessage({id: CommonLocale.Demo})}</Button>
                 </QueueAnim>
                 <TweenOne animation={{y: '-=20', yoyo: true, repeat: -1, duration: 1000}}
                           className={`${isNullOrUndefined(className) ? "motion-banner" : className}-icon`}
