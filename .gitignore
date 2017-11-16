@@ -12,7 +12,6 @@ release/
 slnx.sqlite
 .suo
 VSWorkspaceState.json
-/index.html
 .awcache
 vendor-manifest.json
 vendor.dll.js

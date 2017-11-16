@@ -1,3 +1,9 @@
 {
-  "page.demo": "演示"
+  "common.demo":"学习更多",
+  "common.error": "错误",
+  "common.server.status.message":"message",
+  "common.response.error": "服务器错误，请稍后再试或联系管理员",
+  "common.response.unauthorized": "您没有权限访问该功能",
+  "common.response.badrequest": "无效请求",
+  "common.response.notFound": "请求的对象不存在"
 }

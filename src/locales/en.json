@@ -1,3 +1,9 @@
 {
-  "page.demo": "Demo"
+  "common.demo":"Learn More",
+  "common.error": "Error",
+  "common.server.status.message":"message",
+  "common.response.error": "Server error, please try again later or contact administrator",
+  "common.response.unauthorized": "You are not authorized to access this function",
+  "common.response.badrequest": "Wrong request sent to server",
+  "common.response.notFound": "The requested method not found"
 }
