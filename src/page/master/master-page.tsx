@@ -5,7 +5,7 @@ import {Layout, Select} from "antd";
 import {IntlProvider, injectIntl} from 'react-intl';
 import {getLocale} from "../../locales";
 import {AppLocaleStatic}  from "../../api/model/common-model";
-import {NaContext, NaGlobal} from "../../util/common";
+import {NaGlobal} from "../../util/common";
 const {Header, Content, Footer} = Layout;
 
 interface MasterPageProps {
