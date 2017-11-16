@@ -3,6 +3,7 @@ import {Component} from "react";
 import {Layout, Select} from "antd";
 /* 多语言*/
 import {IntlProvider, injectIntl} from 'react-intl';
+import { ReducersMapObject ,createStore,combineReducers,Reducer} from "redux";
 import {getLocale} from "../../locales";
 import {AppLocaleStatic}  from "../../api/model/common-model";
 import {NaGlobal} from "../../util/common";
@@ -10,6 +11,7 @@ const {Header, Content, Footer} = Layout;
 
 interface MasterPageProps {
     onLoaded?: (appLocale?: AppLocaleStatic, theme?: string) => Promise<any>;
+    reducers?:ReducersMapObject;
 }
 interface MasterPageStates {
     appLocale?: AppLocaleStatic;
@@ -23,6 +25,7 @@ export class MasterPage extends Component<MasterPageProps, MasterPageStates> {
             appLocale: null,
             localeKey: "zh"
         };
+        this.initRedux();
     }
 
     /* 语言*/
@@ -63,6 +66,13 @@ export class MasterPage extends Component<MasterPageProps, MasterPageStates> {
             <Select.Option value="zh">中文</Select.Option>
             <Select.Option value="en">English</Select.Option>
         </Select>;
+    }
+
+
+    initRedux() {
+        NaGlobal.store = createStore(combineReducers(this.props.reducers)); //创建store
+        //Window.prototype.naDispatch = (action) => NaGlobal.store.dispatch(action); //给window对象增加dispatch action方法
+
     }
 
     /* 为了children能用 formatMessage({id: LoginPageLocale.Password})的方式 组件用injectIntl包含*/

@@ -1,6 +1,7 @@
 import * as React from "react";
 import {Component} from "react";
 import {Button, Icon} from 'antd';
+import {connect} from "react-redux";
 /* 动画效果*/
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
@@ -9,16 +10,18 @@ import {isNullOrUndefined} from "util";
 const OverPack = ScrollAnim.OverPack;
 import {CommonLocale} from '../../locales/localeid';
 import {NaGlobal} from '../../util/common';
+import {clearScreenDown} from "readline";
 
 interface MotionBannerControlProps {
     /* 注意应用中是否可以设置为非覆盖性属性 仅仅为外层className 附加名称*/
     className?: string;
+    data?:any;
 }
 interface MotionBannerControlStates {
 
 }
 
-export class MotionBannerControl extends Component<MotionBannerControlProps, MotionBannerControlStates> {
+class MotionBannerControl extends Component<MotionBannerControlProps, MotionBannerControlStates> {
     constructor(props, context) {
         super(props, context);
     }
@@ -39,6 +42,7 @@ export class MotionBannerControl extends Component<MotionBannerControlProps, Mot
                     </span>
                     <p key="content"> 一个高效的页面动画解决方案 </p>
                     <Button type="ghost" key="button"> {formatMessage({id: CommonLocale.Demo})}</Button>
+                    {this.props.data}
                 </QueueAnim>
                 <TweenOne animation={{y: '-=20', yoyo: true, repeat: -1, duration: 1000}}
                           className={`${isNullOrUndefined(className) ? "motion-banner" : className}-icon`}
@@ -49,3 +53,9 @@ export class MotionBannerControl extends Component<MotionBannerControlProps, Mot
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {data: state.data};
+};
+
+export default connect(mapStateToProps)(MotionBannerControl);

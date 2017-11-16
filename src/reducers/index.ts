@@ -1,5 +1,5 @@
-import { evan } from "./evan";
+import { task } from "./task";
 
 export let reducers = {
-    evan
+    task
 };
