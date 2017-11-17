@@ -3,9 +3,11 @@ import {Component} from "react";
 import {Layout, Select} from "antd";
 /* 多语言*/
 import {IntlProvider, injectIntl} from 'react-intl';
-import { ReducersMapObject ,createStore,combineReducers,Reducer} from "redux";
+import { ReducersMapObject ,createStore,combineReducers} from "redux";
+import { Provider } from "react-redux";
 import {getLocale} from "../../locales";
 import {AppLocaleStatic}  from "../../api/model/common-model";
+import {NaLocalProvider} from '../../components/controls/na-localprovider';
 import {NaGlobal} from "../../util/common";
 const {Header, Content, Footer} = Layout;
 
@@ -94,12 +96,17 @@ export class MasterPage extends Component<MasterPageProps, MasterPageStates> {
     });
 
     render() {
-        const topThis = this;
-        const {state: {appLocale}} = topThis;
-        return appLocale ? <IntlProvider key={appLocale.locale}
+        const {appLocale} = this.state;
+        const content= appLocale ?
+            <NaLocalProvider locale={appLocale.antd}>
+                <IntlProvider key={appLocale.locale}
                                          locale={appLocale.locale}
                                          messages={appLocale.messages}>
-            <topThis.renderMasterPage></topThis.renderMasterPage>
-        </IntlProvider> : null;
+            <this.renderMasterPage></this.renderMasterPage>
+            </IntlProvider></NaLocalProvider>
+            : <div></div>;
+        return <Provider store={NaGlobal.store}>
+            {content}
+        </Provider>;
     }
 }
