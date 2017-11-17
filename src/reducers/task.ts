@@ -1,4 +1,5 @@
 import {TASK_COUNTLOADED} from "../actions/ActionTypes";
+
 const initialState = {
     todoCount: 0,
     claimCount: 0

@@ -1,5 +1,5 @@
 import {createAction} from "redux-actions";
-import {REQUEST_TASKCOUNT,TASK_COUNTLOADED} from "./ActionTypes";
+import {REQUEST_TASKCOUNT, TASK_COUNTLOADED} from "./ActionTypes";
 
 export class TaskAction {
     static requestTaskCount = createAction(REQUEST_TASKCOUNT);

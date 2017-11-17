@@ -3,18 +3,20 @@ import {Component} from "react";
 import {Layout, Select} from "antd";
 /* 多语言*/
 import {IntlProvider, injectIntl} from 'react-intl';
-import { ReducersMapObject ,createStore,combineReducers} from "redux";
-import { Provider } from "react-redux";
+import {ReducersMapObject, createStore, combineReducers} from "redux";
+import {Provider} from "react-redux";
 import {getLocale} from "../../locales";
-import {AppLocaleStatic}  from "../../api/model/common-model";
+import {AppLocaleStatic} from "../../api/model/common-model";
 import {NaLocalProvider} from '../../components/controls/na-localprovider';
 import {NaGlobal} from "../../util/common";
+
 const {Header, Content, Footer} = Layout;
 
 interface MasterPageProps {
     onLoaded?: (appLocale?: AppLocaleStatic, theme?: string) => Promise<any>;
-    reducers?:ReducersMapObject;
+    reducers?: ReducersMapObject;
 }
+
 interface MasterPageStates {
     appLocale?: AppLocaleStatic;
     localeKey: string;
@@ -97,13 +99,13 @@ export class MasterPage extends Component<MasterPageProps, MasterPageStates> {
 
     render() {
         const {appLocale} = this.state;
-        const content= appLocale ?
+        const content = appLocale ?
             <NaLocalProvider locale={appLocale.antd}>
                 <IntlProvider key={appLocale.locale}
-                                         locale={appLocale.locale}
-                                         messages={appLocale.messages}>
-            <this.renderMasterPage></this.renderMasterPage>
-            </IntlProvider></NaLocalProvider>
+                              locale={appLocale.locale}
+                              messages={appLocale.messages}>
+                    <this.renderMasterPage></this.renderMasterPage>
+                </IntlProvider></NaLocalProvider>
             : <div></div>;
         return <Provider store={NaGlobal.store}>
             {content}

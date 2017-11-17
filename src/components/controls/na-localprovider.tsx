@@ -22,8 +22,11 @@ export interface NaLocalProviderProps {
     };
     children?: React.ReactElement<any>;
 }
-export interface NaLocalProviderStates {}
-export class NaLocalProvider extends Component<NaLocalProviderProps,NaLocalProviderStates> {
+
+export interface NaLocalProviderStates {
+}
+
+export class NaLocalProvider extends Component<NaLocalProviderProps, NaLocalProviderStates> {
     render() {
         return <LocaleProvider {...this.props}></LocaleProvider>
     }

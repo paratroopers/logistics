@@ -1,4 +1,4 @@
-import { task } from "./task";
+import {task} from "./task";
 
 export let reducers = {
     task

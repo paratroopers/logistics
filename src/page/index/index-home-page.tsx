@@ -5,8 +5,11 @@ import {NaGlobal} from '../../util/common';
 import {TaskAction} from "../../actions/index";
 import MotionBannerControl from "../../components/motion/motion-banner";
 
-interface HomePageProps {}
-interface HomePageStates {}
+interface HomePageProps {
+}
+
+interface HomePageStates {
+}
 
 @withRouter
 export class HomePage extends Component<HomePageProps, HomePageStates> {
@@ -15,8 +18,8 @@ export class HomePage extends Component<HomePageProps, HomePageStates> {
 
     }
 
-    componentWillMount(){
-        NaGlobal.store.dispatch(TaskAction.taskCountLoaded(3,4));
+    componentWillMount() {
+        NaGlobal.store.dispatch(TaskAction.taskCountLoaded(3, 4));
     }
 
     render() {
