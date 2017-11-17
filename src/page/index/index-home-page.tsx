@@ -16,7 +16,6 @@ export class HomePage extends Component<HomePageProps, HomePageStates> {
     }
 
     componentWillMount(){
-        NaGlobal.store.dispatch(TaskAction.requestTaskCount());
         NaGlobal.store.dispatch(TaskAction.taskCountLoaded(3,4));
     }
 
