@@ -1,7 +1,10 @@
 import {DemoRequest} from "./model/request/common-request";
+import {Request} from '../util/request';
 
 export class DemoAPI {
     static async GetDemo(data?: DemoRequest) {
-        // return new Request<Request, Response>().get(url, data);
+        let url: string = "";
+        return new Request<NaRequest,
+            NaResponse>().get(url, data);
     }
 }
