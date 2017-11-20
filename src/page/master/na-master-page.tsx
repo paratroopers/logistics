@@ -8,6 +8,7 @@ import {Provider} from "react-redux";
 import {getLocale} from "../../locales";
 import {AppLocaleStatic} from "../../api/model/common-model";
 import {NaLocalProvider} from '../../components/controls/na-localprovider';
+import NaHeader from "../../components/controls/na-header";
 import {NaGlobal} from "../../util/common";
 
 const {Header, Content, Footer} = Layout;
@@ -86,7 +87,9 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
         const {props: {children}} = topThis;
         return <Layout>
             <Header>
-                <div>{topThis.renderLanguageSelect()}</div>
+                {/*<div>{topThis.renderLanguageSelect()}</div>*/}
+                <NaHeader logo="https://gw.alipayobjects.com/zos/rmsportal/gVAKqIsuJCepKNbgbSwE.svg"
+                          logoName="Nanometer"></NaHeader>
             </Header>
             <Content>
                 {children}
