@@ -21,13 +21,13 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
     /* 导航*/
     renderNavigation() {
         const topThis = this;
-        return null;
+        return <Col>renderNavigation</Col>;
     }
 
     /* 工具*/
     renderTool() {
         const topThis = this;
-        return null;
+        return <Col>renderTool</Col>;
     }
 
     onClickLogo() {
@@ -41,13 +41,18 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
         const topThis = this;
         const {props: {className, logo, logoName}} = topThis;
         return <Row className={className ? className + " na-header" : "na-header"}>
-            <Col xs={2} sm={4} md={6} lg={8} xl={10}>
+            <Col xs={24} sm={24} md={8} lg={8} xl={5}>
                 <a className="logo" onClick={topThis.onClickLogo.bind(this)}>
                     {typeof logo === "string" ? <img src={logo}></img> : logo}
                     {typeof logoName === "string" ? <span>{logoName}</span> : logoName}
                 </a>
             </Col>
-            <Col xs={2} sm={4} md={6} lg={8} xl={10}></Col>
+            <Col xs={0} sm={0} md={16} lg={16} xl={19}>
+                <Row type="flex" justify="space-between">
+                    {topThis.renderNavigation()}
+                    {topThis.renderTool()}
+                </Row>
+            </Col>
         </Row>;
     }
 }
