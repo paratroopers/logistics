@@ -110,5 +110,6 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
         return <Provider store={NaGlobal.store}>
             {content}
         </Provider>;
+
     }
 }
