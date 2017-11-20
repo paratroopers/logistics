@@ -21,4 +21,5 @@ export class NaHomePage extends Component<NaHomePageProps, NaHomePageStates> {
             {/*<MotionBannerControl></MotionBannerControl>*/}
         </div>;
     }
+
 }
