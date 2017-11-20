@@ -3,28 +3,29 @@ import {Component} from "react";
 import {withRouter} from "react-router";
 import {NaGlobal} from '../../util/common';
 import {TaskAction} from "../../actions/index";
-import MotionBannerControl from "../../components/motion/motion-banner";
+import DemoControl from "../../components/demo/na-demo";
 
-interface HomePageProps {
+interface NaDemoPageProps {
 }
 
-interface HomePageStates {
+interface NaDemoPageStates {
 }
 
 @withRouter
-export class HomePage extends Component<HomePageProps, HomePageStates> {
+export class NaDemoPage extends Component<NaDemoPageProps, NaDemoPageStates> {
     constructor(props, context) {
         super(props, context);
 
     }
 
-    componentWillMount() {
+    componentDidMount() {
+        /* reducers使用*/
         NaGlobal.store.dispatch(TaskAction.taskCountLoaded(3, 4));
     }
 
     render() {
         return <div>
-            <MotionBannerControl></MotionBannerControl>
+            <DemoControl></DemoControl>
         </div>;
     }
 

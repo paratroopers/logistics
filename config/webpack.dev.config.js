@@ -34,8 +34,9 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
+            title:'Nanometer',//生成的html文档的标题
             favicon: './favicon.ico', //favicon路径
-            filename: './index.html',
+            filename: './index.html',//输出文件的文件名称，默认为index.html，不配置就是该文件名；此外，还可以为输出文件指定目录位置
             template: './index.html',
             inject: true,
             hash: true,

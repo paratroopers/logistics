@@ -12,17 +12,17 @@ import {NaGlobal} from "../../util/common";
 
 const {Header, Content, Footer} = Layout;
 
-interface MasterPageProps {
+interface NaMasterPageProps {
     onLoaded?: (appLocale?: AppLocaleStatic, theme?: string) => Promise<any>;
     reducers?: ReducersMapObject;
 }
 
-interface MasterPageStates {
+interface NaMasterPageStates {
     appLocale?: AppLocaleStatic;
     localeKey: string;
 }
 
-export class MasterPage extends Component<MasterPageProps, MasterPageStates> {
+export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageStates> {
     constructor(props, context) {
         super(props, context);
         this.state = {

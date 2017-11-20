@@ -1,5 +1,7 @@
-import {HomePage}from "./index/index-home-page";
+import {NaHomePage}from "./index/na-home-page";
+import {NaDemoPage}from "./demo/na-demo-page";
 
 export {
-    HomePage
+    NaDemoPage,
+    NaHomePage
 }
