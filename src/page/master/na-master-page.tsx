@@ -3,26 +3,33 @@ import {Component} from "react";
 import {Layout, Select} from "antd";
 /* 多语言*/
 import {IntlProvider, injectIntl} from 'react-intl';
+import {ReducersMapObject, createStore, combineReducers} from "redux";
+import {Provider} from "react-redux";
 import {getLocale} from "../../locales";
-import {AppLocaleStatic}  from "../../api/model/common-model";
+import {AppLocaleStatic} from "../../api/model/common-model";
+import {NaLocalProvider} from '../../components/controls/na-localprovider';
 import {NaGlobal} from "../../util/common";
+
 const {Header, Content, Footer} = Layout;
 
-interface MasterPageProps {
+interface NaMasterPageProps {
     onLoaded?: (appLocale?: AppLocaleStatic, theme?: string) => Promise<any>;
+    reducers?: ReducersMapObject;
 }
-interface MasterPageStates {
+
+interface NaMasterPageStates {
     appLocale?: AppLocaleStatic;
     localeKey: string;
 }
 
-export class MasterPage extends Component<MasterPageProps, MasterPageStates> {
+export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageStates> {
     constructor(props, context) {
         super(props, context);
         this.state = {
             appLocale: null,
             localeKey: "zh"
         };
+        this.initRedux();
     }
 
     /* 语言*/
@@ -65,6 +72,13 @@ export class MasterPage extends Component<MasterPageProps, MasterPageStates> {
         </Select>;
     }
 
+
+    initRedux() {
+        NaGlobal.store = createStore(combineReducers(this.props.reducers)); //创建store
+        //Window.prototype.naDispatch = (action) => NaGlobal.store.dispatch(action); //给window对象增加dispatch action方法
+
+    }
+
     /* 为了children能用 formatMessage({id: LoginPageLocale.Password})的方式 组件用injectIntl包含*/
     renderMasterPage = injectIntl((props) => {
         NaGlobal.intl = props.intl;
@@ -84,12 +98,18 @@ export class MasterPage extends Component<MasterPageProps, MasterPageStates> {
     });
 
     render() {
-        const topThis = this;
-        const {state: {appLocale}} = topThis;
-        return appLocale ? <IntlProvider key={appLocale.locale}
-                                         locale={appLocale.locale}
-                                         messages={appLocale.messages}>
-            <topThis.renderMasterPage></topThis.renderMasterPage>
-        </IntlProvider> : null;
+        const {appLocale} = this.state;
+        const content = appLocale ?
+            <NaLocalProvider locale={appLocale.antd}>
+                <IntlProvider key={appLocale.locale}
+                              locale={appLocale.locale}
+                              messages={appLocale.messages}>
+                    <this.renderMasterPage></this.renderMasterPage>
+                </IntlProvider></NaLocalProvider>
+            : <div></div>;
+        return <Provider store={NaGlobal.store}>
+            {content}
+        </Provider>;
+
     }
 }

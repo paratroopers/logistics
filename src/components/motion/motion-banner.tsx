@@ -6,19 +6,22 @@ import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 import ScrollAnim from 'rc-scroll-anim';
 import {isNullOrUndefined} from "util";
+
 const OverPack = ScrollAnim.OverPack;
 import {CommonLocale} from '../../locales/localeid';
 import {NaGlobal} from '../../util/common';
+import {InjectedIntlProps} from "react-intl";
 
-interface MotionBannerControlProps {
+interface MotionBannerControlProps extends InjectedIntlProps {
     /* 注意应用中是否可以设置为非覆盖性属性 仅仅为外层className 附加名称*/
     className?: string;
 }
+
 interface MotionBannerControlStates {
 
 }
 
-export class MotionBannerControl extends Component<MotionBannerControlProps, MotionBannerControlStates> {
+export default class MotionBannerControl extends Component<MotionBannerControlProps, MotionBannerControlStates> {
     constructor(props, context) {
         super(props, context);
     }
