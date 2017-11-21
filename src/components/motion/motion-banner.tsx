@@ -33,8 +33,7 @@ export default class MotionBannerControl extends Component<MotionBannerControlPr
         return (
             <OverPack replay playScale={[0.3, 0.1]} {...props}
                       className={isNullOrUndefined(className) ? "motion-banner" : className}>
-                <QueueAnim type={['bottom', 'top']}
-                           delay={200}
+                <QueueAnim delay={200}
                            className={`${isNullOrUndefined(className) ? "motion-banner" : className}-wrapper`}
                            key="text">
                     <span className="title" key="title">
