@@ -1,11 +1,12 @@
 import * as React from "react";
 import {Component} from "react";
-import {Layout, Select} from "antd";
+import {Layout} from "antd";
 /* 多语言*/
 import {IntlProvider, injectIntl} from 'react-intl';
 import {ReducersMapObject, createStore, combineReducers} from "redux";
 import {Provider} from "react-redux";
 import {getLocale} from "../../locales";
+import {CommonLocale} from "../../locales/localeid";
 import {AppLocaleStatic} from "../../api/model/common-model";
 import {NaLocalProvider} from '../../components/controls/na-localprovider';
 import NaHeader from "../../components/controls/na-header";
@@ -34,10 +35,10 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
     }
 
     /* 语言*/
-    onChangeLanguage = (key) => {
+    onChangeLanguage = (key: any) => {
         const topThis = this;
         topThis.setState({localeKey: key});
-        topThis.loadLanguage(key);
+        topThis.loadLanguage(key.toString());
     }
 
     componentWillMount() {
@@ -62,40 +63,29 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
         });
     }
 
-    /* 多语言控件*/
-    renderLanguageSelect() {
-        const topThis = this;
-        const {state: {localeKey}} = topThis;
-        return <Select value={localeKey}
-                       onChange={topThis.onChangeLanguage.bind(this)}>
-            <Select.Option value="zh">中文</Select.Option>
-            <Select.Option value="en">English</Select.Option>
-        </Select>;
-    }
-
-
     initRedux() {
         NaGlobal.store = createStore(combineReducers(this.props.reducers)); //创建store
         //Window.prototype.naDispatch = (action) => NaGlobal.store.dispatch(action); //给window对象增加dispatch action方法
-
     }
 
     /* 为了children能用 formatMessage({id: LoginPageLocale.Password})的方式 组件用injectIntl包含*/
     renderMasterPage = injectIntl((props) => {
         NaGlobal.intl = props.intl;
         const topThis = this;
-        const {props: {children}} = topThis;
+        const {props: {children}, state: {localeKey}} = topThis;
+        const {formatMessage} = NaGlobal.intl;
         return <Layout>
-            <Header>
-                {/*<div>{topThis.renderLanguageSelect()}</div>*/}
+            <Header style={{position: 'fixed', width: '100%', height: 80}}>
                 <NaHeader logo="https://gw.alipayobjects.com/zos/rmsportal/gVAKqIsuJCepKNbgbSwE.svg"
-                          logoName="Nanometer"></NaHeader>
+                          defaultLanguageKey={localeKey}
+                          onChangeLanguage={topThis.onChangeLanguage.bind(this)}
+                          logoName={formatMessage({id: CommonLocale.HeaderName})}></NaHeader>
             </Header>
-            <Content>
+            <Content style={{height: 1000}}>
                 {children}
             </Content>
-            <Footer>
-
+            <Footer style={{textAlign: 'center'}}>
+                Ant Design ©2016 Created by Ant UED
             </Footer>
         </Layout>
     });

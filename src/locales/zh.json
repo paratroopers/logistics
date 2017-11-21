@@ -5,5 +5,11 @@
   "common.response.error": "服务器错误，请稍后再试或联系管理员",
   "common.response.unauthorized": "您没有权限访问该功能",
   "common.response.badrequest": "无效请求",
-  "common.response.notFound": "请求的对象不存在"
+  "common.response.notFound": "请求的对象不存在",
+  "common.header.name":"纳米",
+  "common.header.menu.home":"首页",
+  "common.header.menu.guide":"指引",
+  "common.header.menu.components":"组件",
+  "common.header.menu.header":"头部",
+  "common.header.menu.banner":"横幅广告"
 }

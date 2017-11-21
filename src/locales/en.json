@@ -1,9 +1,15 @@
 {
-  "common.demo":"Learn More",
+  "common.demo": "Learn More",
   "common.error": "Error",
-  "common.server.status.message":"message",
+  "common.server.status.message": "message",
   "common.response.error": "Server error, please try again later or contact administrator",
   "common.response.unauthorized": "You are not authorized to access this function",
   "common.response.badrequest": "Wrong request sent to server",
-  "common.response.notFound": "The requested method not found"
+  "common.response.notFound": "The requested method not found",
+  "common.header.name": "Nanometer",
+  "common.header.menu.home":"Home",
+  "common.header.menu.guide":"Guide",
+  "common.header.menu.components":"Components",
+  "common.header.menu.header":"Header",
+  "common.header.menu.banner":"Banner"
 }
