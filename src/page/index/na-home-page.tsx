@@ -18,7 +18,7 @@ export class NaHomePage extends Component<NaHomePageProps, NaHomePageStates> {
 
     render() {
         return <div>
-            {/*<MotionBannerControl></MotionBannerControl>*/}
+            <MotionBannerControl></MotionBannerControl>
         </div>;
     }
 }

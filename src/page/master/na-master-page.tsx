@@ -75,13 +75,13 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
         const {props: {children}, state: {localeKey}} = topThis;
         const {formatMessage} = NaGlobal.intl;
         return <Layout>
-            <Header style={{position: 'fixed', width: '100%', height: 80}}>
+            <Header style={{position: 'fixed', width: '100%', height: 80, zIndex: 1}}>
                 <NaHeader logo="https://gw.alipayobjects.com/zos/rmsportal/gVAKqIsuJCepKNbgbSwE.svg"
                           defaultLanguageKey={localeKey}
                           onChangeLanguage={topThis.onChangeLanguage.bind(this)}
                           logoName={formatMessage({id: CommonLocale.HeaderName})}></NaHeader>
             </Header>
-            <Content style={{height: 1000}}>
+            <Content style={{marginTop: 80}}>
                 {children}
             </Content>
             <Footer style={{textAlign: 'center'}}>
