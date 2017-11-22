@@ -1,8 +1,8 @@
 @import "../common";
 
 /* Banner*/
-@banner0: motion-banner;
-.@{banner0} {
+@motion-banner: motion-banner;
+.@{motion-banner} {
   width: 100%;
   // 如果在第一屏且导航位置为 relative, 一屏为 height: calc(~"100vh - 64px");
   height: 100vh;
@@ -28,7 +28,7 @@
   &-wrapper {
     display: inline-block;
     position: absolute;
-    top: 20%;
+    top: 40%;
     margin: auto;
     left: 0;
     right: 0;
@@ -89,7 +89,7 @@
 }
 
 @media screen and (max-width: 767px) {
-  .@{banner0} {
+  .@{motion-banner} {
     &-wrapper {
       width: 90%;
       .title {

@@ -39,8 +39,8 @@ export default class MotionBannerControl extends Component<MotionBannerControlPr
                     <span className="title" key="title">
                         <img width="100%" src="https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png"/>
                     </span>
-                    <p key="content"> 一个高效的页面动画解决方案 </p>
-                    <Button type="ghost" key="button"> {formatMessage({id: CommonLocale.Demo})}</Button>
+                    {/*<p key="content"> 一个高效的页面动画解决方案 </p>*/}
+                    {/*<Button type="ghost" key="button"> {formatMessage({id: CommonLocale.Demo})}</Button>*/}
                 </QueueAnim>
                 <TweenOne animation={{y: '-=20', yoyo: true, repeat: -1, duration: 1000}}
                           className={`${isNullOrUndefined(className) ? "motion-banner" : className}-icon`}

@@ -40,17 +40,16 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
             <Menu theme={menuTheme ? menuTheme : "dark"}
                   mode="horizontal"
                   defaultSelectedKeys={['1']}
-                  style={{lineHeight: '80px', height: 80, fontSize: 14}}
+                  style={{lineHeight: '80px', height: 80, fontSize: 16}}
                   onClick={({item, key, keyPath}) => {
                       console.log(item, key, keyPath);
                   }}
             >
                 <Menu.Item key="1">{formatMessage({id: CommonLocale.HeaderMenuHome})}</Menu.Item>
                 <Menu.Item key="2">{formatMessage({id: CommonLocale.HeaderMenuGuide})}</Menu.Item>
-                <SubMenu title={formatMessage({id: CommonLocale.HeaderMenuComponents})}>
-                    <Menu.Item key="3">{formatMessage({id: CommonLocale.HeaderMenuHeader})}</Menu.Item>
-                    <Menu.Item key="4">{formatMessage({id: CommonLocale.HeaderMenuBanner})}</Menu.Item>
-                </SubMenu>
+                <Menu.Item key="3">{formatMessage({id: CommonLocale.HeaderMenuComponents})}</Menu.Item>
+                <Menu.Item key="4">{formatMessage({id: CommonLocale.HeaderMenuHeader})}</Menu.Item>
+                <Menu.Item key="5">{formatMessage({id: CommonLocale.HeaderMenuBanner})}</Menu.Item>
             </Menu>
         </Col>;
     }
@@ -93,11 +92,11 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                 <a className="logo" onClick={topThis.onClickLogo.bind(this)}
                    style={{lineHeight: '80px', height: 80, fontSize: 14}}>
                     {typeof logo === "string" ? <img src={logo}></img> : logo}
-                    {typeof logoName === "string" ? <span>{logoName}</span> : logoName}
+                    {typeof logoName === "string" ? <img src={logoName}></img> : logoName}
                 </a>
             </Col>
             <Col xs={0} sm={0} md={16} lg={16} xl={19}>
-                <Row type="flex" justify="space-between">
+                <Row type="flex" justify="end">
                     {topThis.renderNavigation()}
                     {topThis.renderTool()}
                 </Row>

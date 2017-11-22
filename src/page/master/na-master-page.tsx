@@ -75,13 +75,15 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
         const {props: {children}, state: {localeKey}} = topThis;
         const {formatMessage} = NaGlobal.intl;
         return <Layout>
-            <Header style={{position: 'fixed', width: '100%', height: 80, zIndex: 1}}>
-                <NaHeader logo="https://gw.alipayobjects.com/zos/rmsportal/gVAKqIsuJCepKNbgbSwE.svg"
-                          defaultLanguageKey={localeKey}
-                          onChangeLanguage={topThis.onChangeLanguage.bind(this)}
-                          logoName={formatMessage({id: CommonLocale.HeaderName})}></NaHeader>
+            <Header style={{position: 'fixed', width: '100%', height: 80, zIndex: 1, background: "#FFF"}}>
+                <NaHeader
+                    menuTheme={"light"}
+                    logo={"http://a3.qpic.cn/psb?/V13ZnpTW0vonqf/WWKEbbdMdJC6AYcoZQ7bLZI6UcuHRq0ELFm3Vw*WAi4!/b/dG0BAAAAAAAA&bo=QABAAEAAQAADCSw!&rf=viewer_4"}
+                    defaultLanguageKey={localeKey}
+                    onChangeLanguage={topThis.onChangeLanguage.bind(this)}
+                    logoName={"http://a2.qpic.cn/psb?/V13ZnpTW0vonqf/qx4ufATm2nUuH6mb6g5B.4RztJRniAH5CHIyYByK8gM!/b/dOIAAAAAAAAA&bo=5QBAAOUAQAADCSw!&rf=viewer_4"}></NaHeader>
             </Header>
-            <Content style={{marginTop: 80}}>
+            <Content>
                 {children}
             </Content>
             <Footer style={{textAlign: 'center'}}>
