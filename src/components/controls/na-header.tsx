@@ -40,7 +40,7 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
             <Menu theme={menuTheme ? menuTheme : "dark"}
                   mode="horizontal"
                   defaultSelectedKeys={['1']}
-                  style={{lineHeight: '80px', height: 80, fontSize: 16}}
+                  style={{lineHeight: '78px', height: 78, fontSize: 16}}
                   onClick={({item, key, keyPath}) => {
                       console.log(item, key, keyPath);
                   }}

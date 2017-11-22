@@ -73,9 +73,16 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
         NaGlobal.intl = props.intl;
         const topThis = this;
         const {props: {children}, state: {localeKey}} = topThis;
-        const {formatMessage} = NaGlobal.intl;
+        // const {formatMessage} = NaGlobal.intl;
         return <Layout>
-            <Header style={{position: 'fixed', width: '100%', height: 80, zIndex: 1, background: "#FFF"}}>
+            <Header style={{
+                position: 'fixed',
+                width: '100%',
+                height: 80,
+                zIndex: 1,
+                background: "#FFF",
+                borderBottom: "1px solid #c2c2c2"
+            }}>
                 <NaHeader
                     menuTheme={"light"}
                     logo={"http://a3.qpic.cn/psb?/V13ZnpTW0vonqf/WWKEbbdMdJC6AYcoZQ7bLZI6UcuHRq0ELFm3Vw*WAi4!/b/dG0BAAAAAAAA&bo=QABAAEAAQAADCSw!&rf=viewer_4"}
@@ -86,9 +93,9 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
             <Content style={{background: "#FFF"}}>
                 {children}
             </Content>
-            <Footer style={{textAlign: 'center'}}>
-                Ant Design ©2016 Created by Ant UED
-            </Footer>
+            {/*<Footer style={{textAlign: 'center'}}>*/}
+                {/*Ant Design ©2016 Created by Ant UED*/}
+            {/*</Footer>*/}
         </Layout>
     });
 
