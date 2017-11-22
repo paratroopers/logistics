@@ -83,7 +83,7 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
                     onChangeLanguage={topThis.onChangeLanguage.bind(this)}
                     logoName={"http://a2.qpic.cn/psb?/V13ZnpTW0vonqf/qx4ufATm2nUuH6mb6g5B.4RztJRniAH5CHIyYByK8gM!/b/dOIAAAAAAAAA&bo=5QBAAOUAQAADCSw!&rf=viewer_4"}></NaHeader>
             </Header>
-            <Content>
+            <Content style={{background: "#FFF"}}>
                 {children}
             </Content>
             <Footer style={{textAlign: 'center'}}>
