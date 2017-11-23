@@ -113,8 +113,7 @@ export class NaMobileTabBar extends React.Component<NaMobileTabBarProps, NaMobil
                                 selectedTab: 'redTab',
                             });
                         }}
-                        data-seed="logId1"
-                    >
+                        data-seed="logId1">
                         {this.renderContent('Koubei')}
                     </TabBar.Item>
                     <TabBar.Item

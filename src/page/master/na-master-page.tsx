@@ -10,6 +10,8 @@ import {CommonLocale} from "../../locales/localeid";
 import {AppLocaleStatic} from "../../api/model/common-model";
 import {NaLocalProvider} from '../../components/controls/na-localprovider';
 import NaHeader from "../../components/controls/na-header";
+import {NaMasterMobilePage} from './na-master-mobile-page';
+import {NaMasterWebPage} from './na-master-web-page';
 import {NaGlobal} from "../../util/common";
 
 const {Header, Content, Footer} = Layout;
@@ -74,27 +76,15 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
         const topThis = this;
         const {props: {children}, state: {localeKey}} = topThis;
         // const {formatMessage} = NaGlobal.intl;
+        const isMobile = window.innerWidth < 786 ? true : false;
         return <Layout>
-            <Header style={{
-                position: 'fixed',
-                width: '100%',
-                height: 80,
-                zIndex: 1,
-                background: "#FFF",
-                borderBottom: "1px solid #c2c2c2"
-            }}>
-                <NaHeader
-                    menuTheme={"light"}
-                    logo={"http://a3.qpic.cn/psb?/V13ZnpTW0vonqf/WWKEbbdMdJC6AYcoZQ7bLZI6UcuHRq0ELFm3Vw*WAi4!/b/dG0BAAAAAAAA&bo=QABAAEAAQAADCSw!&rf=viewer_4"}
-                    defaultLanguageKey={localeKey}
-                    onChangeLanguage={topThis.onChangeLanguage.bind(this)}
-                    logoName={"http://a2.qpic.cn/psb?/V13ZnpTW0vonqf/qx4ufATm2nUuH6mb6g5B.4RztJRniAH5CHIyYByK8gM!/b/dOIAAAAAAAAA&bo=5QBAAOUAQAADCSw!&rf=viewer_4"}></NaHeader>
-            </Header>
-            <Content style={{background: "#FFF"}}>
-                {children}
-            </Content>
+            {
+                isMobile ? <NaMasterMobilePage></NaMasterMobilePage> :
+                    <NaMasterWebPage localeKey={localeKey}
+                                     onChangeLanguage={this.onChangeLanguage.bind(this)}></NaMasterWebPage>
+            }
             {/*<Footer style={{textAlign: 'center'}}>*/}
-                {/*Ant Design ©2016 Created by Ant UED*/}
+            {/*Ant Design ©2016 Created by Ant UED*/}
             {/*</Footer>*/}
         </Layout>
     });
