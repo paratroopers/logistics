@@ -22,13 +22,20 @@ interface NaMasterPageStates {
 }
 
 export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageStates> {
+
     constructor(props, context) {
         super(props, context);
+
         this.state = {
             appLocale: null,
             localeKey: "zh"
         };
         this.initRedux();
+        console.log(navigator);
+    }
+
+    onWindowResize() {
+        console.log(window.innerWidth);
     }
 
     /* 语言*/
@@ -43,6 +50,15 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
         /* 初始化语言*/
         const {state: {localeKey}} = topThis;
         topThis.loadLanguage(localeKey);
+
+        /* 装载事件-监视屏幕大小*/
+        window.addEventListener('resize', topThis.onWindowResize.bind(this));
+    }
+
+    componentWillUnmount() {
+        const topThis = this;
+        /* 卸载-监视屏幕大小*/
+        window.removeEventListener('resize', topThis.onWindowResize.bind(this))
     }
 
     loadLanguage(language: string) {
