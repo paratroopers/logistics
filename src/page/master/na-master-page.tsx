@@ -5,11 +5,12 @@ import {IntlProvider, injectIntl} from 'react-intl';
 import {ReducersMapObject, createStore, combineReducers} from "redux";
 import {Provider} from "react-redux";
 import {getLocale} from "../../locales";
-import {AppLocaleStatic} from "../../api/model/common-model";
+import {AppLocaleStatic, ScreenModeEnum} from "../../api/model/common-model";
 import {NaLocalProvider} from '../../components/controls/na-localprovider';
 import {NaMasterMobilePage} from './na-master-mobile-page';
 import {NaMasterWebPage} from './na-master-web-page';
-import {NaGlobal} from "../../util/common";
+import {NaGlobal, NaConstants} from "../../util/common";
+import {NaUtil} from "../../util/util";
 
 interface NaMasterPageProps {
     onLoaded?: (appLocale?: AppLocaleStatic, theme?: string) => Promise<any>;
@@ -19,24 +20,54 @@ interface NaMasterPageProps {
 interface NaMasterPageStates {
     appLocale?: AppLocaleStatic;
     localeKey: string;
+    mode: ScreenModeEnum;
 }
 
+let timeout;
+let currentValue;
 export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageStates> {
-
     constructor(props, context) {
         super(props, context);
 
         this.state = {
             appLocale: null,
-            localeKey: "zh"
+            localeKey: "zh",
+            mode: NaUtil.getScrrenMode(window.innerWidth)
         };
         this.initRedux();
-        console.log(navigator);
     }
 
+    /**
+     * 监视屏幕
+     **/
     onWindowResize() {
-        console.log(window.innerWidth);
+        const topThis = this;
+        const {state: {mode}} = topThis;
+        topThis.fetch(window.innerWidth, (data) => {
+            if ((data === ScreenModeEnum.sm && mode !== ScreenModeEnum.sm) || (data !== ScreenModeEnum.sm && mode === ScreenModeEnum.sm)) {
+                topThis.setState({mode: data});
+            }
+        });
     }
+
+    /**
+     * 获取最终mode
+     * */
+    fetch(value, callback) {
+        if (timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+        }
+        currentValue = value;
+        function fake() {
+            if (currentValue === value) {
+                callback(NaUtil.getScrrenMode(value));
+            }
+        }
+
+        timeout = setTimeout(fake, 1000);
+    }
+
 
     /* 语言*/
     onChangeLanguage = (key: any) => {
@@ -85,8 +116,8 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
     renderMasterPage = injectIntl((props) => {
         NaGlobal.intl = props.intl;
         const topThis = this;
-        const {props: {children}, state: {localeKey}} = topThis;
-        const Master = (window.innerWidth < 786 ? true : false) ?
+        const {props: {children}, state: {localeKey, mode}} = topThis;
+        const Master = (mode === ScreenModeEnum.sm) ?
             <NaMasterMobilePage>{children}</NaMasterMobilePage> :
             <NaMasterWebPage localeKey={localeKey}
                              onChangeLanguage={this.onChangeLanguage.bind(this)}>{children}</NaMasterWebPage>;

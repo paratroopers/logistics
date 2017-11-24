@@ -88,9 +88,23 @@ export class NaGlobal {
 
 export class NaConstants {
     /**
-     * 服务器状态
+     *服务器状态
      */
     static CommonServerStatusLocale = "common.server.status.";
+
+    /**
+     * 屏幕尺寸
+     */
+    static xs = 480;
+    static sm = 768;
+    static md = 992;
+    static lg = 1200;
+    static xl = 1600;
+    static minXS = window.innerWidth < NaConstants.xs;
+    static minSM = window.innerWidth < NaConstants.sm;
+    static minMD = window.innerWidth < NaConstants.md;
+    static minLG = window.innerWidth < NaConstants.lg;
+    static minXL = window.innerWidth < NaConstants.xl;
 }
 
 export class NaContext {

@@ -53,7 +53,7 @@ export class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps,
 
     render() {
         const topThis = this;
-        return <div style={{position: 'fixed', height: '100%', width: '100%', top: 0}}>
+        return <div>
             <TabBar unselectedTintColor="#949494"
                     tintColor="#33A3F4"
                     barTintColor="white"
