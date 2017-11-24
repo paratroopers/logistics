@@ -1,20 +1,15 @@
 import * as React from "react";
 import {Component} from "react";
-import {Layout} from "antd";
 /* 多语言*/
 import {IntlProvider, injectIntl} from 'react-intl';
 import {ReducersMapObject, createStore, combineReducers} from "redux";
 import {Provider} from "react-redux";
 import {getLocale} from "../../locales";
-import {CommonLocale} from "../../locales/localeid";
 import {AppLocaleStatic} from "../../api/model/common-model";
 import {NaLocalProvider} from '../../components/controls/na-localprovider';
-import NaHeader from "../../components/controls/na-header";
 import {NaMasterMobilePage} from './na-master-mobile-page';
 import {NaMasterWebPage} from './na-master-web-page';
 import {NaGlobal} from "../../util/common";
-
-const {Header, Content, Footer} = Layout;
 
 interface NaMasterPageProps {
     onLoaded?: (appLocale?: AppLocaleStatic, theme?: string) => Promise<any>;
@@ -75,33 +70,26 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
         NaGlobal.intl = props.intl;
         const topThis = this;
         const {props: {children}, state: {localeKey}} = topThis;
-        // const {formatMessage} = NaGlobal.intl;
-        const isMobile = window.innerWidth < 786 ? true : false;
-        return <Layout>
-            {
-                isMobile ? <NaMasterMobilePage></NaMasterMobilePage> :
-                    <NaMasterWebPage localeKey={localeKey}
-                                     onChangeLanguage={this.onChangeLanguage.bind(this)}></NaMasterWebPage>
-            }
-            {/*<Footer style={{textAlign: 'center'}}>*/}
-            {/*Ant Design ©2016 Created by Ant UED*/}
-            {/*</Footer>*/}
-        </Layout>
+        const Master = (window.innerWidth < 786 ? true : false) ?
+            <NaMasterMobilePage>{children}</NaMasterMobilePage> :
+            <NaMasterWebPage localeKey={localeKey}
+                             onChangeLanguage={this.onChangeLanguage.bind(this)}>{children}</NaMasterWebPage>;
+        return Master;
     });
 
     render() {
-        const {appLocale} = this.state;
+        const topThis = this;
+        const {state: {appLocale}} = topThis;
         const content = appLocale ?
             <NaLocalProvider locale={appLocale.antd}>
                 <IntlProvider key={appLocale.locale}
                               locale={appLocale.locale}
                               messages={appLocale.messages}>
-                    <this.renderMasterPage></this.renderMasterPage>
+                    <topThis.renderMasterPage></topThis.renderMasterPage>
                 </IntlProvider></NaLocalProvider>
             : <div></div>;
         return <Provider store={NaGlobal.store}>
             {content}
         </Provider>;
-
     }
 }

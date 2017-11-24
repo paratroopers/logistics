@@ -1,8 +1,7 @@
 import * as React from 'react';
 import {Layout} from "antd";
 import NaHeader from "../../components/controls/na-header";
-
-const {Header, Content, Footer} = Layout;
+const {Header, Content} = Layout;
 
 interface NaMasterWebPageProps {
     localeKey: string;
@@ -12,14 +11,22 @@ interface NaMasterWebPageProps {
 interface NaMasterWebPageStates {
 }
 
-export class NaMasterWebPage extends React.Component<NaMasterWebPageProps, NaMasterWebPageStates> {
+const logo = "http://a3.qpic.cn/psb?/V13ZnpTW0vonqf/WWKEbbdMdJC6AYcoZQ7bLZI6UcuHRq0ELFm3Vw*WAi4!/b/dG0BAAAAAAAA&bo=QABAAEAAQAADCSw!&rf=viewer_4";
+const logoName = "http://a2.qpic.cn/psb?/V13ZnpTW0vonqf/qx4ufATm2nUuH6mb6g5B.4RztJRniAH5CHIyYByK8gM!/b/dOIAAAAAAAAA&bo=5QBAAOUAQAADCSw!&rf=viewer_4";
 
+export class NaMasterWebPage extends React.Component<NaMasterWebPageProps, NaMasterWebPageStates> {
     onChangeLanguage(key: any) {
-        this.props.onChangeLanguage && this.props.onChangeLanguage(key);
+        const topThis = this;
+        const {props: {onChangeLanguage}} = topThis;
+        if (onChangeLanguage)
+            onChangeLanguage(key);
     }
 
     render() {
-        return <div>
+        const topThis = this;
+        const {props: {localeKey}} = this;
+
+        return <Layout>
             <Header style={{
                 position: 'fixed',
                 width: '100%',
@@ -30,15 +37,14 @@ export class NaMasterWebPage extends React.Component<NaMasterWebPageProps, NaMas
             }}>
                 <NaHeader
                     menuTheme={"light"}
-                    logo={"http://a3.qpic.cn/psb?/V13ZnpTW0vonqf/WWKEbbdMdJC6AYcoZQ7bLZI6UcuHRq0ELFm3Vw*WAi4!/b/dG0BAAAAAAAA&bo=QABAAEAAQAADCSw!&rf=viewer_4"}
-                    defaultLanguageKey={this.props.localeKey}
-                    onChangeLanguage={this.onChangeLanguage.bind(this)}
-                    logoName={"http://a2.qpic.cn/psb?/V13ZnpTW0vonqf/qx4ufATm2nUuH6mb6g5B.4RztJRniAH5CHIyYByK8gM!/b/dOIAAAAAAAAA&bo=5QBAAOUAQAADCSw!&rf=viewer_4"}></NaHeader>
+                    logo={logo}
+                    defaultLanguageKey={localeKey}
+                    onChangeLanguage={topThis.onChangeLanguage.bind(this)}
+                    logoName={logoName}></NaHeader>
             </Header>
             <Content style={{background: "#FFF"}}>
                 {this.props.children}
             </Content>
-        </div>
-
+        </Layout>
     }
 }
