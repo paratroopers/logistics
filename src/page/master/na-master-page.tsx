@@ -44,6 +44,7 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
         const topThis = this;
         const {state: {mode}} = topThis;
         topThis.fetch(window.innerWidth, (data) => {
+            console.log(data);
             if ((data === ScreenModeEnum.sm && mode !== ScreenModeEnum.sm) || (data !== ScreenModeEnum.sm && mode === ScreenModeEnum.sm)) {
                 topThis.setState({mode: data});
             }

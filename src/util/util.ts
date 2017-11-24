@@ -383,7 +383,7 @@ export class NaUtil {
             mode = ScreenModeEnum.sm;
         }
         if (innerWidth < NaConstants.xs) {
-            mode = ScreenModeEnum.xs;
+            mode = ScreenModeEnum.sm;
         }
         return mode;
     }

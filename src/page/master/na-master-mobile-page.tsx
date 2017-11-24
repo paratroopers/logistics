@@ -25,6 +25,7 @@ export class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps,
             selectedTab: TabType.User
         }
     }
+
     onSelectUser() {
         return this.state.selectedTab === TabType.User
     }
