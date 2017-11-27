@@ -67,11 +67,12 @@ export class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps,
         const topThis = this;
         const {props: {children}} = topThis;
         const height = window.innerHeight - this.state.tabHeight + 'px';
-        return <Layout style={{height: height}}>
-            <Content style={{background: "#FFF"}}>
-                {children}
-            </Content>
-        </Layout>
+        return <div style={{height: height}}>
+            <Layout >
+                <Content style={{background: "#FFF"}}>
+                    {children}
+                </Content>
+            </Layout></div>
     }
 
     render() {
