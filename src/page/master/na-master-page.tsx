@@ -113,7 +113,7 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
         //Window.prototype.naDispatch = (action) => NaGlobal.store.dispatch(action); //给window对象增加dispatch action方法
     }
 
-    /* 为了children能用 formatMessage({id: LoginPageLocale.Password})的方式 组件用injectIntl包含*/
+    /*为了children能用 formatMessage({id: LoginPageLocale.Password})的方式 组件用injectIntl包含*/
     renderMasterPage = injectIntl((props) => {
         NaGlobal.intl = props.intl;
         const topThis = this;
