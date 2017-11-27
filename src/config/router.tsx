@@ -12,3 +12,5 @@ const routerConfig = (
     </Router>
 );
 export default routerConfig;
+
+

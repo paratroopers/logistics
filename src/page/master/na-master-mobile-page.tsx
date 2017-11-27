@@ -1,15 +1,18 @@
 import * as React from 'react';
+import {InjectedIntlProps} from "react-intl";
+import {withRouter, hashHistory} from 'react-router';
 import {Layout} from "antd";
 import {TabBar} from 'antd-mobile';
-import NaHeader from "../../components/controls/na-header";
+import {PathConfig} from '../../config/pathconfig';
 const {Header, Content} = Layout;
 
-interface NaMasterMobilePageProps {
+interface NaMasterMobilePageProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
     selectedTab?: TabType;
 }
 
 interface NaMasterMobilePageStates {
     selectedTab?: TabType;
+    tabHeight?: number;
 }
 
 export enum TabType {
@@ -18,12 +21,16 @@ export enum TabType {
     Warehouse = 3,
     Service = 4
 }
+
 export class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMasterMobilePageStates> {
+    defaultConfig: NaMasterMobilePageStates = {
+        selectedTab: TabType.User,
+        tabHeight: 50
+    }
+
     constructor(props, context) {
         super(props, context);
-        this.state = {
-            selectedTab: TabType.User
-        }
+        this.state = this.defaultConfig;
     }
 
     onSelectUser() {
@@ -42,10 +49,25 @@ export class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps,
         return this.state.selectedTab === TabType.Service
     }
 
+    onTabChange(type: TabType) {
+        let pathname: string = "";
+        switch (type) {
+            case TabType.User:
+                pathname = PathConfig.HomePage;
+                break;
+            case TabType.Order:
+                pathname = PathConfig.DemoPage;
+                break;
+        }
+        hashHistory.push({pathname: pathname, query: {selectedTab: type}});
+        //this.props.router.replace({pathname: pathname, query: {selectedTab: type}});
+    }
+
     renderContent() {
         const topThis = this;
         const {props: {children}} = topThis;
-        return <Layout>
+        const height = window.innerHeight - this.state.tabHeight + 'px';
+        return <Layout style={{height: height}}>
             <Content style={{background: "#FFF"}}>
                 {children}
             </Content>
@@ -76,9 +98,7 @@ export class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps,
                     selected={this.onSelectUser()}
                     badge={1}
                     onPress={() => {
-                        this.setState({
-                            selectedTab: TabType.User,
-                        });
+                        this.onTabChange(TabType.User);
                     }}>
                     {topThis.renderContent()}
                 </TabBar.Item>
@@ -104,9 +124,7 @@ export class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps,
                     badge={'new'}
                     selected={this.onSelectOrder()}
                     onPress={() => {
-                        this.setState({
-                            selectedTab: TabType.Order,
-                        });
+                        this.onTabChange(TabType.Order);
                     }}>
                     {topThis.renderContent()}
                 </TabBar.Item>
