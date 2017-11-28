@@ -94,7 +94,7 @@ export class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps,
         const footerHeight = this.state.navHeight + 'px';
         return <div className="mobile-page">
             <Layout>
-                <Header>
+                <Header style={{position: 'fixed', width: '100%'}}>
                     <div className="header">
                         <NavBar
                             mode="light"
@@ -105,7 +105,7 @@ export class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps,
                         </NavBar>
                     </div>
                 </Header>
-                <Content>
+                <Content style={{marginTop: 45                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 }}>
                     {children}
                 </Content>
                 <Footer>
