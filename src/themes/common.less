@@ -1,6 +1,6 @@
-@import "~antd/dist/antd.less";   // 引入官方提供的 less 样式入口文件
+@import "~antd/dist/antd.less";
+// 引入官方提供的 less 样式入口文件
 @import '~antd-mobile/dist/antd-mobile.css';
-
 
 /*默认主题颜色*/
 @app-theme-color: #404040;
@@ -8,10 +8,10 @@
 @screen-pc-min: 768px;
 
 /* Motion-Banner*/
-@link-color             : #019BF0;
-@link-hover-color       : tint(@link-color, 20%);
-@link-active-color      : shade(@link-color, 5%);
-@link-hover-decoration  : none;
+@link-color: #019BF0;
+@link-hover-color: tint(@link-color, 20%);
+@link-active-color: shade(@link-color, 5%);
+@link-hover-decoration: none;
 
 @line-color: #e9e9e9;
 @line-deep-color: #979797;
@@ -23,7 +23,6 @@
 @shadow-color: rgba(0, 0, 0, 0.15);
 
 @title-color: #404040;
-
 
 @template-bg-color: #333;
 @template-bg-color-light: #ECECEC;
@@ -103,9 +102,19 @@
   display: flex;
   flex-direction: column;
 }
+
 #tab-bar .demoName {
   height: 40px;
 }
+
 #tab-bar .demo-preview-item .am-tab-bar {
   background-color: white;
+}
+
+.mobile-page {
+  .header {
+    height: 45px;
+  }
+  .footer{
+  }
 }
