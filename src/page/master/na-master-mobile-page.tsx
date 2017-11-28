@@ -91,90 +91,86 @@ export class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps,
         const topThis = this;
         const {Header, Content, Footer} = Layout;
         const {props: {children}} = topThis;
-        const footerHeight = this.state.navHeight + 'px';
+        const tabHeight = window.innerHeight - this.state.tabHeight + 'px';
         return <div className="mobile-page">
             <Layout>
-                <Header style={{position: 'fixed', width: '100%'}}>
-                    <div className="header">
-                        <NavBar
-                            mode="light"
-                            icon={<Icon type="left"/>}
-                            onLeftClick={() => console.log('onLeftClick')}
-                            rightContent={this.renderHeaderRight()}>
-                            Im Araysa
-                        </NavBar>
-                    </div>
+                <Header className="header fixed">
+                    <NavBar
+                        mode="light"
+                        icon={<Icon type="left"/>}
+                        onLeftClick={() => console.log('onLeftClick')}
+                        rightContent={this.renderHeaderRight()}>
+                        Im Araysa
+                    </NavBar>
                 </Header>
-                <Content style={{marginTop: 45                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 }}>
+                <Content style={{marginTop: 45}}>
                     {children}
                 </Content>
-                <Footer>
-                    <div className="footer" style={{height: footerHeight}}>
-                        <TabBar unselectedTintColor="#949494"
-                                tintColor="#33A3F4"
-                                barTintColor="white"
-                                hidden={false}>
-                            <TabBar.Item
-                                title={'User'}
-                                key={TabType.User}
-                                icon={this.renderWebIcon('user')}
-                                selectedIcon={this.renderWebIcon('user')}
-                                selected={this.onSelectUser()}
-                                onPress={() => {
-                                    this.onTabChange(TabType.User);
-                                }}>
-                            </TabBar.Item>
-                            <TabBar.Item
-                                icon={this.renderWebIcon('tag-o')}
-                                selectedIcon={this.renderWebIcon('tag')}
-                                title="Order"
-                                key={TabType.Order}
-                                selected={this.onSelectOrder()}
-                                onPress={() => {
-                                    this.onTabChange(TabType.Order);
-                                }}>
-                            </TabBar.Item>
-                            <TabBar.Item
-                                icon={
-                                    <div style={{
-                                        width: '22px',
-                                        height: '22px',
-                                        background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat'
-                                    }}
-                                    />
-                                }
-                                selectedIcon={
-                                    <div style={{
-                                        width: '22px',
-                                        height: '22px',
-                                        background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat'
-                                    }}
-                                    />
-                                }
-                                title="Friend"
-                                key="Friend"
-                                dot
-                                selected={this.onSelectWarehouse()}
-                                onPress={() => {
-                                    this.setState({
-                                        selectedTab: TabType.Warehouse,
-                                    });
-                                }}>
-                            </TabBar.Item>
-                            <TabBar.Item
-                                icon={{uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg'}}
-                                selectedIcon={{uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg'}}
-                                title="My"
-                                key="my"
-                                selected={this.onSelectService()}
-                                onPress={() => {
-                                    this.setState({
-                                        selectedTab: TabType.Service,
-                                    });
-                                }}>
-                            </TabBar.Item>
-                        </TabBar>
-                    </div>
+                <Footer className="footer fixed" style={{top: tabHeight}}>
+                    <TabBar unselectedTintColor="#949494"
+                            tintColor="#33A3F4"
+                            barTintColor="white"
+                            hidden={false}>
+                        <TabBar.Item
+                            title={'User'}
+                            key={TabType.User}
+                            icon={this.renderWebIcon('user')}
+                            selectedIcon={this.renderWebIcon('user')}
+                            selected={this.onSelectUser()}
+                            onPress={() => {
+                                this.onTabChange(TabType.User);
+                            }}>
+                        </TabBar.Item>
+                        <TabBar.Item
+                            icon={this.renderWebIcon('tag-o')}
+                            selectedIcon={this.renderWebIcon('tag')}
+                            title="Order"
+                            key={TabType.Order}
+                            selected={this.onSelectOrder()}
+                            onPress={() => {
+                                this.onTabChange(TabType.Order);
+                            }}>
+                        </TabBar.Item>
+                        <TabBar.Item
+                            icon={
+                                <div style={{
+                                    width: '22px',
+                                    height: '22px',
+                                    background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat'
+                                }}
+                                />
+                            }
+                            selectedIcon={
+                                <div style={{
+                                    width: '22px',
+                                    height: '22px',
+                                    background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat'
+                                }}
+                                />
+                            }
+                            title="Friend"
+                            key="Friend"
+                            dot
+                            selected={this.onSelectWarehouse()}
+                            onPress={() => {
+                                this.setState({
+                                    selectedTab: TabType.Warehouse,
+                                });
+                            }}>
+                        </TabBar.Item>
+                        <TabBar.Item
+                            icon={{uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg'}}
+                            selectedIcon={{uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg'}}
+                            title="My"
+                            key="my"
+                            selected={this.onSelectService()}
+                            onPress={() => {
+                                this.setState({
+                                    selectedTab: TabType.Service,
+                                });
+                            }}>
+                        </TabBar.Item>
+                    </TabBar>
                 </Footer>
             </Layout>
         </div>
