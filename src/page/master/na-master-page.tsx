@@ -7,7 +7,7 @@ import {Provider} from "react-redux";
 import {getLocale} from "../../locales";
 import {AppLocaleStatic, ScreenModeEnum} from "../../api/model/common-model";
 import {NaLocalProvider} from '../../components/controls/na-localprovider';
-import {NaMasterMobilePage} from './na-master-mobile-page';
+import NaMasterMobilePage from './na-master-mobile-page';
 import {NaMasterWebPage} from './na-master-web-page';
 import {NaGlobal, NaConstants} from "../../util/common";
 import {NaUtil} from "../../util/util";

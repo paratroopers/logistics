@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {InjectedIntlProps} from "react-intl";
 import {hashHistory} from 'react-router';
+import {connect} from 'react-redux'
 import {TabBar, NavBar, Icon} from 'antd-mobile';
 import {Icon as WebIcon, Layout} from 'antd';
 import {NaGlobal} from '../../util/common';
@@ -19,26 +20,36 @@ interface NaMasterMobilePageStates {
 }
 
 export enum TabType {
-    User = 1,
+    Home = 1,
     Order = 2,
     Warehouse = 3,
     Service = 4
 }
 
-export class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMasterMobilePageStates> {
+class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMasterMobilePageStates> {
     defaultConfig: NaMasterMobilePageStates = {
-        selectedTab: TabType.User,
+        selectedTab: TabType.Home,
         tabHeight: 50,
         navHeight: 45
     }
 
     constructor(props, context) {
         super(props, context);
-        this.state = this.defaultConfig;
+        this.state = {
+            selectedTab: props.selectedTab ? props.selectedTab : this.defaultConfig.selectedTab,
+            tabHeight: this.defaultConfig.tabHeight,
+            navHeight: this.defaultConfig.navHeight
+        };
     }
 
-    onSelectUser() {
-        return this.state.selectedTab === TabType.User
+    componentWillReceiveProps(nextProps) {
+        if ('selectedTab' in nextProps && nextProps.selectedTab !== this.props.selectedTab) {
+            this.setState({selectedTab: nextProps.selectedTab});
+        }
+    }
+
+    onSelectHome() {
+        return this.state.selectedTab === TabType.Home
     }
 
     onSelectOrder() {
@@ -56,7 +67,7 @@ export class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps,
     onTabChange(type: TabType) {
         let pathname: string = "";
         switch (type) {
-            case TabType.User:
+            case TabType.Home:
                 pathname = PathConfig.HomePage;
                 break;
             case TabType.Order:
@@ -65,18 +76,6 @@ export class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps,
         }
         NaGlobal.store.dispatch(MobileSelectTabAction.SelectTabLoaded(Number(type)));
         hashHistory.push({pathname: pathname, query: {selectedTab: type}});
-    }
-
-    renderContent() {
-        /*        const topThis = this;
-         const {props: {children}} = topThis;
-         const height = window.innerHeight - this.state.tabHeight - this.state.tabHeight + 'px';
-         return <div style={{height: height}}>
-         <Layout >
-         <Content style={{background: "#FFF"}}>
-
-         </Content>
-         </Layout></div>*/
     }
 
     renderHeaderRight() {
@@ -103,7 +102,7 @@ export class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps,
                         Im Araysa
                     </NavBar>
                 </Header>
-                <Content style={{marginTop: 45}}>
+                <Content>
                     {children}
                 </Content>
                 <Footer className="footer fixed" style={{top: tabHeight}}>
@@ -112,45 +111,31 @@ export class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps,
                             barTintColor="white"
                             hidden={false}>
                         <TabBar.Item
-                            title={'User'}
-                            key={TabType.User}
-                            icon={this.renderWebIcon('user')}
-                            selectedIcon={this.renderWebIcon('user')}
-                            selected={this.onSelectUser()}
+                            title={'首页'}
+                            key={TabType.Home}
+                            icon={this.renderWebIcon('home')}
+                            selectedIcon={this.renderWebIcon('home')}
+                            selected={this.onSelectHome()}
                             onPress={() => {
-                                this.onTabChange(TabType.User);
+                                this.onTabChange(TabType.Home);
                             }}>
                         </TabBar.Item>
                         <TabBar.Item
-                            icon={this.renderWebIcon('tag-o')}
-                            selectedIcon={this.renderWebIcon('tag')}
-                            title="Order"
+                            icon={this.renderWebIcon('pay-circle-o')}
+                            selectedIcon={this.renderWebIcon('pay-circle')}
+                            title="费用"
                             key={TabType.Order}
+                            dot={true}
                             selected={this.onSelectOrder()}
                             onPress={() => {
                                 this.onTabChange(TabType.Order);
                             }}>
                         </TabBar.Item>
                         <TabBar.Item
-                            icon={
-                                <div style={{
-                                    width: '22px',
-                                    height: '22px',
-                                    background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat'
-                                }}
-                                />
-                            }
-                            selectedIcon={
-                                <div style={{
-                                    width: '22px',
-                                    height: '22px',
-                                    background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat'
-                                }}
-                                />
-                            }
-                            title="Friend"
+                            icon={this.renderWebIcon('customer-service')}
+                            selectedIcon={this.renderWebIcon('customer-service')}
+                            title="客服"
                             key="Friend"
-                            dot
                             selected={this.onSelectWarehouse()}
                             onPress={() => {
                                 this.setState({
@@ -159,9 +144,9 @@ export class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps,
                             }}>
                         </TabBar.Item>
                         <TabBar.Item
-                            icon={{uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg'}}
-                            selectedIcon={{uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg'}}
-                            title="My"
+                            icon={this.renderWebIcon('user')}
+                            selectedIcon={this.renderWebIcon('user')}
+                            title="会员"
                             key="my"
                             selected={this.onSelectService()}
                             onPress={() => {
@@ -176,3 +161,10 @@ export class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps,
         </div>
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        selectedTab: state.tab.tabName
+    }
+}
+export default connect(mapStateToProps)(NaMasterMobilePage);
