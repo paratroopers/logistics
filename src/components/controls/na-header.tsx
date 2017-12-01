@@ -1,9 +1,10 @@
 import * as React from "react";
 import {Component} from "react";
+import {hashHistory} from 'react-router';
 import {Row, Col, Menu, Select} from 'antd';
-const {SubMenu} = Menu;
 import {NaGlobal} from "../../util/common";
 import {CommonLocale} from "../../locales/localeid";
+import {PathConfig} from "../../config/pathconfig";
 
 interface NaHeaderProps {
     /* na-header 同级样式*/
@@ -41,15 +42,14 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                   mode="horizontal"
                   defaultSelectedKeys={['1']}
                   style={{lineHeight: '78px', height: 78, fontSize: 16}}
-                  onClick={({item, key, keyPath}) => {
-                      console.log(item, key, keyPath);
+                  onClick={(obj: { item, key, keyPath }) => {
+                      hashHistory.push({pathname: obj.key});
+                      //console.log(item, key, keyPath);
+                      //hashHistory.push({pathname: key, query: {selectedTab: type}});
                   }}
             >
-                <Menu.Item key="1">{formatMessage({id: CommonLocale.HeaderMenuHome})}</Menu.Item>
-                <Menu.Item key="2">{formatMessage({id: CommonLocale.HeaderMenuGuide})}</Menu.Item>
-                <Menu.Item key="3">{formatMessage({id: CommonLocale.HeaderMenuComponents})}</Menu.Item>
-                <Menu.Item key="4">{formatMessage({id: CommonLocale.HeaderMenuHeader})}</Menu.Item>
-                <Menu.Item key="5">{formatMessage({id: CommonLocale.HeaderMenuBanner})}</Menu.Item>
+                <Menu.Item key={PathConfig.HomePage}>{formatMessage({id: CommonLocale.HeaderMenuHome})}</Menu.Item>
+                <Menu.Item key={PathConfig.VIPCenterPage}>{formatMessage({id: CommonLocale.HeaderMenuVIPCenter})}</Menu.Item>
             </Menu>
         </Col>;
     }

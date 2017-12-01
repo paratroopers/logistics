@@ -8,8 +8,5 @@
   "common.response.notFound": "请求的对象不存在",
   "common.header.name":"纳米",
   "common.header.menu.home":"首页",
-  "common.header.menu.guide":"指引",
-  "common.header.menu.components":"组件",
-  "common.header.menu.header":"头部",
-  "common.header.menu.banner":"横幅广告"
+  "common.header.menu.vip.center":"会员中心"
 }

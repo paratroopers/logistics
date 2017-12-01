@@ -8,8 +8,5 @@
   "common.response.notFound": "The requested method not found",
   "common.header.name": "Nanometer",
   "common.header.menu.home":"Home",
-  "common.header.menu.guide":"Guide",
-  "common.header.menu.components":"Components",
-  "common.header.menu.header":"Header",
-  "common.header.menu.banner":"Banner"
+  "common.header.menu.vip.center":"VIP Center"
 }

@@ -42,7 +42,7 @@ export class NaMasterWebPage extends React.Component<NaMasterWebPageProps, NaMas
                     onChangeLanguage={topThis.onChangeLanguage.bind(this)}
                     logoName={logoName}></NaHeader>
             </Header>
-            <Content style={{background: "#FFF"}}>
+            <Content style={{background: "#FFF", marginTop: 80,height:'calc(100vh - 80px)'}}>
                 {this.props.children}
             </Content>
         </Layout>
