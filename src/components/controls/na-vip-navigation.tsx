@@ -20,8 +20,7 @@ export class NaVIPNavigation extends React.Component<NaVIPNavigationProps, NaVIP
             defaultSelectedKeys={['1']}
             defaultOpenKeys={['sub1']}
             mode={"inline"}
-            theme="dark"
-        >
+            theme="dark">
             <SubMenu key="sub1" title={<span><Icon type="appstore" /><span>我的仓库</span></span>}>
                 <Menu.Item key="0">待打包</Menu.Item>
                 <Menu.Item key="1">待发运</Menu.Item>

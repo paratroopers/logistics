@@ -7,6 +7,7 @@ import {Icon as WebIcon, Layout} from 'antd';
 import {NaGlobal} from '../../util/common';
 import {MobileSelectTabAction} from '../../actions/index';
 import {PathConfig} from '../../config/pathconfig';
+import {NaVIPNavigation} from '../../components/controls/na-vip-navigation';
 import {NaMobileNavbarPopover} from '../../components/controls/na-mobile-navbar-popover';
 
 interface NaMasterMobilePageProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
@@ -17,6 +18,7 @@ interface NaMasterMobilePageStates {
     selectedTab?: TabType;
     tabHeight?: number;
     navHeight?: number;
+    collapsed?: boolean;
 }
 
 export enum TabType {
@@ -30,7 +32,8 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
     defaultConfig: NaMasterMobilePageStates = {
         selectedTab: TabType.Home,
         tabHeight: 50,
-        navHeight: 45
+        navHeight: 45,
+        collapsed: true
     }
 
     constructor(props, context) {
@@ -78,6 +81,10 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
         hashHistory.push({pathname: pathname, query: {selectedTab: type}});
     }
 
+    onCollapse = (collapsed) => {
+        this.setState({collapsed});
+    }
+
     renderHeaderRight() {
         return <NaMobileNavbarPopover></NaMobileNavbarPopover>;
     }
@@ -88,24 +95,26 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
 
     render() {
         const topThis = this;
+        const {tabHeight, navHeight} = this.state;
         const {Header, Content, Footer} = Layout;
         const {props: {children}} = topThis;
-        const tabHeight = window.innerHeight - this.state.tabHeight + 'px';
+        const _tabHeight: string = window.innerHeight - tabHeight + 'px';
+        const _siderHeight: string = window.innerHeight - tabHeight - navHeight + 'px';
+        /*        onLeftClick={() => console.log('onLeftClick')}
+                rightContent={this.renderHeaderRight()}
+                icon={<Icon type="left"/>}>>*/
         return <div className="mobile-page">
             <Layout>
                 <Header className="header fixed">
                     <NavBar
-                        mode="light"
-                        icon={<Icon type="left"/>}
-                        onLeftClick={() => console.log('onLeftClick')}
-                        rightContent={this.renderHeaderRight()}>
+                        mode="light">
                         Im Araysa
                     </NavBar>
                 </Header>
                 <Content>
                     {children}
                 </Content>
-                <Footer className="footer fixed" style={{top: tabHeight}}>
+                <Footer className="footer fixed" style={{top: _tabHeight}}>
                     <TabBar unselectedTintColor="#949494"
                             tintColor="#33A3F4"
                             barTintColor="white"
@@ -157,6 +166,15 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
                         </TabBar.Item>
                     </TabBar>
                 </Footer>
+                <Layout.Sider collapsible={true}
+                              defaultCollapsed={true}
+                              collapsed={this.state.collapsed}
+                              collapsedWidth={0}
+                              className='na-side'
+                              style={{height: _siderHeight, marginTop: navHeight}}
+                              onCollapse={this.onCollapse}>
+                    <NaVIPNavigation></NaVIPNavigation>
+                </Layout.Sider>
             </Layout>
         </div>
     }
