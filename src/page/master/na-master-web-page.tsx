@@ -24,7 +24,7 @@ export class NaMasterWebPage extends React.Component<NaMasterWebPageProps, NaMas
 
     render() {
         const topThis = this;
-        const {props: {localeKey}} = this;
+        const {props: {localeKey,children}} = this;
 
         return <Layout>
             <Header style={{
@@ -43,7 +43,7 @@ export class NaMasterWebPage extends React.Component<NaMasterWebPageProps, NaMas
                     logoName={logoName}></NaHeader>
             </Header>
             <Content style={{background: "#FFF", marginTop: 80,height:'calc(100vh - 80px)'}}>
-                {this.props.children}
+                {children}
             </Content>
         </Layout>
     }
