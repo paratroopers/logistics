@@ -146,10 +146,13 @@
   .na-side {
     position: fixed;
     z-index: 1000;
-    overflow-y: auto;
-    overflow-x: hidden;
     .ant-layout-sider-trigger {
       position: relative !important;
+    }
+    .ant-layout-sider-children {
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: 100%;
     }
   }
 }
