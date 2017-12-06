@@ -76,6 +76,12 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
             case TabType.Order:
                 pathname = PathConfig.DemoPage;
                 break;
+            case TabType.Service:
+                pathname = PathConfig.VIPCenterPage;
+                break;
+            default:
+                pathname = PathConfig.HomePage;
+                break;
         }
         NaGlobal.store.dispatch(MobileSelectTabAction.SelectTabLoaded(Number(type)));
         hashHistory.push({pathname: pathname, query: {selectedTab: type}});
@@ -143,38 +149,34 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
                         <TabBar.Item
                             icon={this.renderWebIcon('customer-service')}
                             selectedIcon={this.renderWebIcon('customer-service')}
-                            title="客服"
-                            key="Friend"
+                            title={"客服"}
+                            key={TabType.Warehouse}
                             selected={this.onSelectWarehouse()}
                             onPress={() => {
-                                this.setState({
-                                    selectedTab: TabType.Warehouse,
-                                });
+                                this.onTabChange(TabType.Warehouse);
                             }}>
                         </TabBar.Item>
                         <TabBar.Item
                             icon={this.renderWebIcon('user')}
                             selectedIcon={this.renderWebIcon('user')}
-                            title="会员"
-                            key="my"
+                            title={"会员"}
+                            key={TabType.Service}
                             selected={this.onSelectService()}
                             onPress={() => {
-                                this.setState({
-                                    selectedTab: TabType.Service,
-                                });
+                                this.onTabChange(TabType.Service);
                             }}>
                         </TabBar.Item>
                     </TabBar>
                 </Footer>
-                <Layout.Sider collapsible={true}
-                              defaultCollapsed={true}
-                              collapsed={this.state.collapsed}
-                              collapsedWidth={0}
-                              className='na-side'
-                              style={{height: _siderHeight, marginTop: navHeight}}
-                              onCollapse={this.onCollapse}>
-                    <NaVIPNavigation></NaVIPNavigation>
-                </Layout.Sider>
+                {/*<Layout.Sider collapsible={true}*/}
+                              {/*defaultCollapsed={true}*/}
+                              {/*collapsed={this.state.collapsed}*/}
+                              {/*collapsedWidth={0}*/}
+                              {/*className='na-side'*/}
+                              {/*style={{height: _siderHeight, marginTop: navHeight}}*/}
+                              {/*onCollapse={this.onCollapse}>*/}
+                    {/*<NaVIPNavigation></NaVIPNavigation>*/}
+                {/*</Layout.Sider>*/}
             </Layout>
         </div>
     }

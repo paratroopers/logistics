@@ -30,7 +30,7 @@ export class NaVIPCenterPage extends Component<NaVIPCenterPageProps, NaVIPCenter
         const topThis = this;
         const {state: {collapsed},props:{children}} = topThis;
         return <Layout style={{height: '100%'}}>
-            <Sider collapsible collapsedWidth={0} collapsed={collapsed} onCollapse={topThis.onCollapse.bind(this)}>
+            <Sider className="na-side" collapsible collapsedWidth={0} collapsed={collapsed} onCollapse={topThis.onCollapse.bind(this)}>
                 <NaVIPNavigation></NaVIPNavigation>
             </Sider>
             <Content>
