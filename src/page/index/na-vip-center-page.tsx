@@ -2,11 +2,13 @@ import * as React from "react";
 import {Component} from "react";
 import {withRouter} from "react-router";
 import {Layout} from "antd";
-const {Header, Content, Sider, Footer} = Layout;
+const {Content, Sider} = Layout;
 import {NaVIPNavigation}from "../../components/controls/na-vip-navigation";
-
+import {NaUtil} from "../../util/util";
+import {ScreenModeEnum} from "../../api/model/common-model";
 
 interface NaVIPCenterPageProps {
+
 }
 
 interface NaVIPCenterPageStates {
@@ -28,12 +30,17 @@ export class NaVIPCenterPage extends Component<NaVIPCenterPageProps, NaVIPCenter
 
     render() {
         const topThis = this;
-        const {state: {collapsed},props:{children}} = topThis;
-        return <Layout style={{height: '100%'}}>
-            <Sider className="na-side" collapsible collapsedWidth={0} collapsed={collapsed} onCollapse={topThis.onCollapse.bind(this)}>
+        const {state: {collapsed}, props: {children}} = topThis;
+        const sider = {collapsedWidth: NaUtil.getScrrenMode(window.innerWidth) !== ScreenModeEnum.sm ? 64 : 0};
+        // collapsedWidth={NaUtil.getScrrenMode(window.innerWidth) !== ScreenModeEnum.sm ? '' : 0}
+        return <Layout style={{minHeight: '100%'}}>
+            <Sider style={{zIndex: 1}} collapsible
+                   {...sider}
+                   collapsed={collapsed}
+                   onCollapse={topThis.onCollapse.bind(this)}>
                 <NaVIPNavigation></NaVIPNavigation>
             </Sider>
-            <Content>
+            <Content style={{margin: 16, padding: 16, backgroundColor: '#FFF'}}>
                 {children}
             </Content>
         </Layout>;

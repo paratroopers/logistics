@@ -117,7 +117,7 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
                         Im Araysa
                     </NavBar>
                 </Header>
-                <Content>
+                <Content style={{minHeight: _siderHeight, marginTop: navHeight}}>
                     {children}
                 </Content>
                 <Footer className="footer fixed" style={{top: _tabHeight}}>

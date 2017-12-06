@@ -1,5 +1,5 @@
 import {notification} from 'antd';
-export declare type notificationPlacement = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
+export declare type NotificationPlacement = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
 
 export interface ArgsProps {
     message: React.ReactNode;
@@ -9,8 +9,8 @@ export interface ArgsProps {
     onClose?: () => void;
     duration?: number;
     icon?: React.ReactNode;
-    placement?: notificationPlacement;
-    style?: string;
+    placement?: NotificationPlacement;
+    style?: React.CSSProperties;
     prefixCls?: string;
     className?: string;
     readonly type?: string;
@@ -19,25 +19,25 @@ export interface ConfigProps {
     top?: number;
     bottom?: number;
     duration?: number;
-    placement?: notificationPlacement;
+    placement?: NotificationPlacement;
     getContainer?: () => HTMLElement;
 }
 
 export class NaNotification {
     static info(args : ArgsProps) : void {
-        return notification.info(args as ArgsProps);
+        return notification.info(args);
     };
     static success(args : ArgsProps) : void {
-        return notification.success(args as ArgsProps);
+        return notification.success(args);
     };
     static error(args : ArgsProps) : void {
-        return notification.error(args as ArgsProps);
+        return notification.error(args);
     };
     static warn(args : ArgsProps) : void {
-        return notification.warn(args as ArgsProps);
+        return notification.warn(args);
     };
     static warning(args : ArgsProps) : void {
-        return notification.warning(args as ArgsProps);
+        return notification.warning(args);
     };
     static open(args : ArgsProps) : void {
         return notification.open(args)
