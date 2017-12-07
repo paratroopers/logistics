@@ -1,4 +1,7 @@
 import * as React from 'react';
+import {connect} from 'react-redux';
+import {NaGlobal} from '../../util/common';
+import {MobileNavTreeAction} from '../../actions/index';
 import {Popover, Icon, Menu} from 'antd-mobile';
 
 const Item = Popover.Item;
@@ -10,7 +13,7 @@ interface NaMobileNavbarPopoverProps {
 }
 
 interface NaMobileNavbarPopoverStates {
-    visible?: boolean;
+    showNav?: boolean;
     selected?: string;
 }
 
@@ -18,25 +21,17 @@ export class NaMobileNavbarPopover extends React.Component<NaMobileNavbarPopover
     constructor(props, context) {
         super(props, context)
         this.state = {
-            visible: false
-        }
-    }
-
-    componentDidMount() {
-        this.setState({visible: this.props.visible});
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if ('visible' in nextProps && nextProps.visible !== this.props.visible) {
-            this.setState({visible: this.props.visible});
+            showNav: false
         }
     }
 
     onSelect(opt) {
-        this.setState({
-            visible: false,
-            selected: opt.props.value,
-        });
+        /*        this.setState({
+                    visible: false,
+                    selected: opt.props.value,
+                });*/
+        this.setState({showNav: !this.state.showNav});
+        NaGlobal.store.dispatch(MobileNavTreeAction.SelectTabLoaded(!this.state.showNav));
     };
 
     renderMenu() {
@@ -64,20 +59,6 @@ export class NaMobileNavbarPopover extends React.Component<NaMobileNavbarPopover
     }
 
     render() {
-        return <Popover overlayStyle={{color: 'currentColor'}}
-                        visible={this.state.visible}
-                        overlay={this.renderOverlay()}
-                        onSelect={this.onSelect}
-                        mask={true}>
-            <div style={{
-                height: '100%',
-                padding: '0 15px',
-                marginRight: '-15px',
-                display: 'flex',
-                alignItems: 'center',
-            }}>
-                <Icon type="ellipsis"/>
-            </div>
-        </Popover>
+        return <a onClick={this.onSelect.bind(this)}>asdasd</a>
     }
 }
