@@ -25,22 +25,22 @@ export interface ConfigProps {
 
 export class NaNotification {
     static info(args : ArgsProps) : void {
-        return notification.info(args);
+        return notification.info(args as any);
     };
     static success(args : ArgsProps) : void {
-        return notification.success(args);
+        return notification.success(args as any);
     };
     static error(args : ArgsProps) : void {
-        return notification.error(args);
+        return notification.error(args as any);
     };
     static warn(args : ArgsProps) : void {
-        return notification.warn(args);
+        return notification.warn(args as any);
     };
     static warning(args : ArgsProps) : void {
-        return notification.warning(args);
+        return notification.warning(args as any);
     };
     static open(args : ArgsProps) : void {
-        return notification.open(args)
+        return notification.open(args as any)
     };
     static close(key : string) : void {
         return notification.close(key);

@@ -2,6 +2,8 @@ import * as React from 'react';
 import {Menu, Icon} from 'antd';
 import {hashHistory} from 'react-router';
 import {PathConfig} from "../../config/pathconfig";
+import NavTree from '../../config/navconfig';
+
 const {SubMenu} = Menu;
 
 interface NaVIPNavigationProps {
@@ -17,6 +19,18 @@ export class NaVIPNavigation extends React.Component<NaVIPNavigationProps, NaVIP
         super(props, context);
     }
 
+    renderMenu(tree: any) {
+        return tree.map(item => {
+            if (item.Children)
+                return <SubMenu key={item.Key} title={<span><Icon type={item.Icon}/><span>{item.Title}</span></span>}>
+                    {this.renderMenu(item.Children)}
+                </SubMenu>;
+            else {
+                return <Menu.Item key={item.Key}>{item.Title}</Menu.Item>
+            }
+        });
+    }
+
     render() {
         return <Menu
             defaultOpenKeys={['sub1']}
@@ -25,27 +39,7 @@ export class NaVIPNavigation extends React.Component<NaVIPNavigationProps, NaVIP
             onClick={(obj: { item, key, keyPath }) => {
                 hashHistory.push({pathname: obj.key});
             }}>
-            <SubMenu key="sub1" title={<span><Icon type="appstore"/><span>我的仓库</span></span>}>
-                <Menu.Item key="0">待打包</Menu.Item>
-                <Menu.Item key="1">待发运</Menu.Item>
-                <SubMenu key="sub1-2" title="已完成">
-                    <Menu.Item key="2">已付款</Menu.Item>
-                    <Menu.Item key="3">已发运</Menu.Item>
-                    <Menu.Item key="4">已清空</Menu.Item>
-                </SubMenu>
-            </SubMenu>
-            <SubMenu key="sub2" title={<span><Icon type="setting"/><span>我的设置</span></span>}>
-                <Menu.Item key="5">仓库地址</Menu.Item>
-                <Menu.Item key="6">用户信息</Menu.Item>
-                <Menu.Item key={PathConfig.VIPConsigneeAddressPage}>收货地址</Menu.Item>
-                <Menu.Item key="8">会员活动</Menu.Item>
-                <Menu.Item key="9">邀请记录</Menu.Item>
-                <Menu.Item key="10">修改密码</Menu.Item>
-            </SubMenu>
-            <Menu.Item key="11">
-                <Icon type="mail"/>
-                <span>用户须知</span>
-            </Menu.Item>
+            {this.renderMenu(NavTree)}
         </Menu>;
     }
 }

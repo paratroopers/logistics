@@ -106,14 +106,13 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
         const {props: {children}} = topThis;
         const _tabHeight: string = window.innerHeight - tabHeight + 'px';
         const _siderHeight: string = window.innerHeight - tabHeight - navHeight + 'px';
-        /*        onLeftClick={() => console.log('onLeftClick')}
-                rightContent={this.renderHeaderRight()}
-                icon={<Icon type="left"/>}>>*/
         return <div className="mobile-page">
             <Layout>
                 <Header className="header fixed">
                     <NavBar
-                        mode="light">
+                        mode="light"
+                        rightContent={this.renderHeaderRight()}
+                        icon={<Icon type="left"/>}>
                         Im Araysa
                     </NavBar>
                 </Header>
@@ -169,13 +168,13 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
                     </TabBar>
                 </Footer>
                 {/*<Layout.Sider collapsible={true}*/}
-                              {/*defaultCollapsed={true}*/}
-                              {/*collapsed={this.state.collapsed}*/}
-                              {/*collapsedWidth={0}*/}
-                              {/*className='na-side'*/}
-                              {/*style={{height: _siderHeight, marginTop: navHeight}}*/}
-                              {/*onCollapse={this.onCollapse}>*/}
-                    {/*<NaVIPNavigation></NaVIPNavigation>*/}
+                {/*defaultCollapsed={true}*/}
+                {/*collapsed={this.state.collapsed}*/}
+                {/*collapsedWidth={0}*/}
+                {/*className='na-side'*/}
+                {/*style={{height: _siderHeight, marginTop: navHeight}}*/}
+                {/*onCollapse={this.onCollapse}>*/}
+                {/*<NaVIPNavigation></NaVIPNavigation>*/}
                 {/*</Layout.Sider>*/}
             </Layout>
         </div>
