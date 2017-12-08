@@ -17,7 +17,7 @@
   "author": "handy.zhang",
   "license": "ISC",
   "dependencies": {
-    "antd": "^2.12.8",
+    "antd": "^3.0.0",
     "antd-mobile": "^2.0.3",
     "classnames": "^2.2.5",
     "dom-scroll-into-view": "^1.2.1",
