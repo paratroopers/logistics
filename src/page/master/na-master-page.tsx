@@ -15,6 +15,7 @@ import {NaUtil} from "../../util/util";
 interface NaMasterPageProps {
     onLoaded?: (appLocale?: AppLocaleStatic, theme?: string) => Promise<any>;
     reducers?: ReducersMapObject;
+    cdn?: string;
 }
 
 interface NaMasterPageStates {
@@ -28,7 +29,8 @@ let currentValue;
 export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageStates> {
     constructor(props, context) {
         super(props, context);
-
+        window["CDN"] = 'http://www.famliytree.cn/'//this.props.cdn;
+        console.log(this.props.cdn);
         this.state = {
             appLocale: null,
             localeKey: "zh",

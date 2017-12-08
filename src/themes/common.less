@@ -11,6 +11,9 @@
 @screen-mobile-max: 767px;
 @screen-pc-min: 768px;
 
+/*橙色系主题*/
+@app-theme-orange-color: #e65922;
+
 /* Motion-Banner*/
 @link-color: #019BF0;
 @link-hover-color: tint(@link-color, 20%);
@@ -122,11 +125,23 @@
   }
   .header {
     height: 45px;
+    .left-icon {
+      padding-top: 25px;
+      img {
+        width: 35px;
+        height: 35px;
+      }
+    }
   }
   .ant-layout-header {
     height: auto !important;
     padding: 0 !important;
     z-index: 1000;
+    .right-button {
+      color: @app-theme-orange-color;
+      font-size: 25px;
+      line-height: 20;
+    }
   }
   .ant-layout-content {
     //z-index: 999;

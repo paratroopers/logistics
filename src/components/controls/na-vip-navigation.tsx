@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {Menu, Icon} from 'antd';
 import {hashHistory} from 'react-router';
-import {PathConfig} from "../../config/pathconfig";
 import NavTree from '../../config/navconfig';
 
 const {SubMenu} = Menu;

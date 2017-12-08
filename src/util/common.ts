@@ -186,4 +186,10 @@ export class NaContext {
     static getToken() {
         return Cookies.get("NaSecret");
     }
+
+    /**
+     * 获取当前ICON地址*/
+    static getIconAddress(name: string) {
+        return window['CDN'] + 'icon/' + name + '.jpg';
+    }
 }
