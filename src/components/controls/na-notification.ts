@@ -1,7 +1,7 @@
 import {notification} from 'antd';
 export declare type NotificationPlacement = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
 
-export interface ArgsProps {
+export interface ArgsProps{
     message: React.ReactNode;
     description: React.ReactNode;
     btn?: React.ReactNode;

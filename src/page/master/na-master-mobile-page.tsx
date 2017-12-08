@@ -7,8 +7,8 @@ import {Icon as WebIcon, Layout} from 'antd';
 import {NaGlobal} from '../../util/common';
 import {MobileSelectTabAction} from '../../actions/index';
 import {PathConfig} from '../../config/pathconfig';
-import {NaVIPNavigation} from '../../components/controls/na-vip-navigation';
 import {NaMobileNavbarPopover} from '../../components/controls/na-mobile-navbar-popover';
+import {NaContext} from '../../util/common';
 
 interface NaMasterMobilePageProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
     selectedTab?: TabType;
@@ -87,12 +87,12 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
         hashHistory.push({pathname: pathname, query: {selectedTab: type}});
     }
 
-    onCollapse = (collapsed) => {
-        this.setState({collapsed});
+    renderHeaderRight() {
+        return <NaMobileNavbarPopover className="right-button"></NaMobileNavbarPopover>;
     }
 
-    renderHeaderRight() {
-        return <NaMobileNavbarPopover></NaMobileNavbarPopover>;
+    renderHeaderLeft() {
+        return <a className="left-icon"><img src={NaContext.getIconAddress('logo')}/></a>;
     }
 
     renderWebIcon(iconName: string) {
@@ -112,7 +112,7 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
                     <NavBar
                         mode="light"
                         rightContent={this.renderHeaderRight()}
-                        icon={<Icon type="left"/>}>
+                        icon={this.renderHeaderLeft()}>
                         Im Araysa
                     </NavBar>
                 </Header>
@@ -167,15 +167,6 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
                         </TabBar.Item>
                     </TabBar>
                 </Footer>
-                {/*<Layout.Sider collapsible={true}*/}
-                {/*defaultCollapsed={true}*/}
-                {/*collapsed={this.state.collapsed}*/}
-                {/*collapsedWidth={0}*/}
-                {/*className='na-side'*/}
-                {/*style={{height: _siderHeight, marginTop: navHeight}}*/}
-                {/*onCollapse={this.onCollapse}>*/}
-                {/*<NaVIPNavigation></NaVIPNavigation>*/}
-                {/*</Layout.Sider>*/}
             </Layout>
         </div>
     }

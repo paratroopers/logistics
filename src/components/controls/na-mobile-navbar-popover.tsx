@@ -1,15 +1,11 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
+import {Icon} from 'antd';
 import {NaGlobal} from '../../util/common';
 import {MobileNavTreeAction} from '../../actions/index';
-import {Popover, Icon, Menu} from 'antd-mobile';
-
-const Item = Popover.Item;
-const myImg = src => <img src={`https://gw.alipayobjects.com/zos/rmsportal/${src}.svg`} className="am-icon am-icon-xs"
-                          alt=""/>;
 
 interface NaMobileNavbarPopoverProps {
     visible?: boolean;
+    className?: string;
 }
 
 interface NaMobileNavbarPopoverStates {
@@ -25,40 +21,12 @@ export class NaMobileNavbarPopover extends React.Component<NaMobileNavbarPopover
         }
     }
 
-    onSelect(opt) {
-        /*        this.setState({
-                    visible: false,
-                    selected: opt.props.value,
-                });*/
+    onSelect() {
         this.setState({showNav: !this.state.showNav});
         NaGlobal.store.dispatch(MobileNavTreeAction.SelectTabLoaded(!this.state.showNav));
     };
 
-    renderMenu() {
-        const data = [{
-            label: 'Chinese Food',
-            value: '2',
-        }];
-        return <Menu
-            className="foo-menu"
-            data={data}
-            height={document.documentElement.clientHeight * 0.6}
-        />;
-    }
-
-    renderOverlay() {
-        return [
-            (<Item key="4" value="scan" icon={myImg('tOtXhkIWzwotgGSeptou')}
-                   data-seed="logId">Scan</Item>),
-            (<Item key="5" value="special" icon={myImg('PKAgAqZWJVNwKsAJSmXd')}
-                   style={{whiteSpace: 'nowrap'}}>My Qrcode</Item>),
-            (<Item key="6" value="button ct" icon={myImg('uQIYTFeRrjPELImDRrPt')}>
-                <span style={{marginRight: 5}}>Language</span>
-            </Item>),
-        ];
-    }
-
     render() {
-        return <a onClick={this.onSelect.bind(this)}>asdasd</a>
+        return <a className={this.props.className} onClick={this.onSelect.bind(this)}><Icon type="bars"/></a>
     }
 }
