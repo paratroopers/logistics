@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {Layout} from "antd";
 import NaHeader from "../../components/controls/na-header";
-const {Header, Content} = Layout;
+const {Header, Content, Footer} = Layout;
+import MotionFooterControl from "../../components/motion/motion-footer";
 
 interface NaMasterWebPageProps {
     localeKey: string;
@@ -24,7 +25,7 @@ export class NaMasterWebPage extends React.Component<NaMasterWebPageProps, NaMas
 
     render() {
         const topThis = this;
-        const {props: {localeKey,children}} = this;
+        const {props: {localeKey, children}} = this;
 
         return <Layout>
             <Header style={{
@@ -42,9 +43,14 @@ export class NaMasterWebPage extends React.Component<NaMasterWebPageProps, NaMas
                     onChangeLanguage={topThis.onChangeLanguage.bind(this)}
                     logoName={logoName}></NaHeader>
             </Header>
-            <Content style={{background: "#FFF", marginTop: 80,height:'calc(100vh - 80px)'}}>
+            <Content style={{background: "#FFF", marginTop: 80}}>
                 {children}
             </Content>
+            <Footer style={{padding: 0}}>
+                <div className="templates-wrapper">
+                    <MotionFooterControl></MotionFooterControl>
+                </div>
+            </Footer>
         </Layout>
     }
 }

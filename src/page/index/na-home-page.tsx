@@ -4,7 +4,6 @@ import {withRouter} from "react-router";
 import MotionBannerControl from "../../components/motion/motion-banner";
 import MotionContentAControl from "../../components/motion/motion-content-a";
 import MotionContentBControl from "../../components/motion/motion-content-b";
-import MotionFooterControl from "../../components/motion/motion-footer";
 
 interface NaHomePageProps {
 }
@@ -24,7 +23,6 @@ export class NaHomePage extends Component<NaHomePageProps, NaHomePageStates> {
             <MotionBannerControl></MotionBannerControl>
             <MotionContentAControl></MotionContentAControl>
             <MotionContentBControl></MotionContentBControl>
-            <MotionFooterControl></MotionFooterControl>
         </div>;
     }
 }
