@@ -121,7 +121,7 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
                 </Content>
                 <Footer className="footer fixed" style={{top: _tabHeight}}>
                     <TabBar unselectedTintColor="#949494"
-                            tintColor="#33A3F4"
+                            tintColor="#e65922"
                             barTintColor="white"
                             hidden={false}>
                         <TabBar.Item

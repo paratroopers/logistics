@@ -6,7 +6,7 @@ import NavTree from '../../config/navconfig';
 const {SubMenu} = Menu;
 
 interface NaVIPNavigationProps {
-
+    style?: any ;
 }
 
 interface NaVIPNavigationStates {
@@ -32,9 +32,9 @@ export class NaVIPNavigation extends React.Component<NaVIPNavigationProps, NaVIP
 
     render() {
         return <Menu
+            style={this.props.style}
             defaultOpenKeys={['sub1']}
             mode={"inline"}
-            theme="dark"
             onClick={(obj: { item, key, keyPath }) => {
                 hashHistory.push({pathname: obj.key});
             }}>
