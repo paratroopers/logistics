@@ -59,5 +59,7 @@
   "common.nav.customer": "Customer",
   "common.nav.system.setup": "System Setup",
   "common.nav.jurisdiction": "Jurisdiction",
-  "common.nav.user": "User"
+  "common.nav.user": "User",
+  "common.nav.navigation": "Navigation",
+  "common.nav.role": "Role"
 }

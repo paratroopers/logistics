@@ -59,5 +59,7 @@
   "common.nav.customer": "客户",
   "common.nav.system.setup": "系统设置",
   "common.nav.jurisdiction": "权限",
-  "common.nav.user": "用户"
+  "common.nav.user": "用户",
+  "common.nav.navigation":"导航",
+  "common.nav.role":"角色"
 }
