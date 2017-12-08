@@ -92,14 +92,14 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
         const topThis = this;
         const {props: {className, logo, logoName}} = topThis;
         return <Row className={className ? className + " na-header" : "na-header"}>
-            <Col xs={24} sm={24} md={8} lg={8} xl={5}>
+            <Col xs={24} sm={24} md={2} lg={5} xl={5}>
                 <a className="logo" onClick={topThis.onClickLogo.bind(this)}
                    style={{lineHeight: '80px', height: 80, fontSize: 14}}>
                     {typeof logo === "string" ? <img src={logo}></img> : logo}
                     {typeof logoName === "string" ? <img src={logoName}></img> : logoName}
                 </a>
             </Col>
-            <Col xs={0} sm={0} md={16} lg={16} xl={19}>
+            <Col xs={0} sm={0} md={22} lg={19} xl={19}>
                 <Row type="flex" justify="end">
                     {topThis.renderNavigation()}
                     {topThis.renderTool()}
