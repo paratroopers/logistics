@@ -4,15 +4,24 @@
 
 
 /*默认主题-颜色*/
-@primary-color: @orange-6;
+@na-orange-1: color(~`colorPalette("@{na-orange-6}", 1)`);
+@na-orange-2: color(~`colorPalette("@{na-orange-6}", 2)`);
+@na-orange-3: color(~`colorPalette("@{na-orange-6}", 3)`);
+@na-orange-4: color(~`colorPalette("@{na-orange-6}", 4)`);
+@na-orange-5: color(~`colorPalette("@{na-orange-6}", 5)`);
+@na-orange-6: #e65922;//配置主色调
+@na-orange-7: color(~`colorPalette("@{na-orange-6}", 7)`);
+@na-orange-8: color(~`colorPalette("@{na-orange-6}", 8)`);
+@na-orange-9: color(~`colorPalette("@{na-orange-6}", 9)`);
+@na-orange-10: color(~`colorPalette("@{na-orange-6}", 10)`);
+@primary-color: @na-orange-6;
 @app-theme-color: @primary-6;
 
+/*橙色系主题*/
+@app-theme-orange-color: @app-theme-color;
 
 @screen-mobile-max: 767px;
 @screen-pc-min: 768px;
-
-/*橙色系主题*/
-@app-theme-orange-color: #e65922;
 
 /* Motion-Banner*/
 @link-color: #019BF0;
