@@ -49,6 +49,10 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                   }}
             >
                 <Menu.Item key={PathConfig.HomePage}>{formatMessage({id: CommonLocale.HeaderMenuHome})}</Menu.Item>
+                <Menu.Item key={PathConfig.ProcessDemoPage}>{formatMessage({id: CommonLocale.HeaderMenuProcessDemo})}</Menu.Item>
+                <Menu.Item key={PathConfig.CostEstimatePage}>{formatMessage({id: CommonLocale.HeaderMenuCostEstimate})}</Menu.Item>
+                <Menu.Item key={PathConfig.ConsultingCenterPage}>{formatMessage({id: CommonLocale.HeaderMenuConsultingCenter})}</Menu.Item>
+                <Menu.Item key={PathConfig.CompanyProfilePage}>{formatMessage({id: CommonLocale.HeaderMenuCompanyProfile})}</Menu.Item>
                 <Menu.Item key={PathConfig.VIPCenterPage}>{formatMessage({id: CommonLocale.HeaderMenuVIPCenter})}</Menu.Item>
             </Menu>
         </Col>;
