@@ -4,7 +4,6 @@ import {PathConfig} from './pathconfig';
 import {
     NaDemoPage,
     NaHomePage,
-    NaMobileTabBar,
     NaVIPCenterPage,
     NaVIPConsigneeAddressPage,
     NaVIPWelcomePage
@@ -15,7 +14,6 @@ const routerConfig = (
         <IndexRoute component={NaHomePage}></IndexRoute>
         <Route path={PathConfig.DemoPage} component={NaDemoPage}/>
         <Route path={PathConfig.HomePage} component={NaHomePage}/>
-        <Route path={PathConfig.MobilePage} component={NaMobileTabBar}/>
         <Route path={PathConfig.VIPCenterPage} component={NaVIPCenterPage}>
             <IndexRoute component={NaVIPWelcomePage}></IndexRoute>
             <Route path={PathConfig.VIPConsigneeAddressPage} component={NaVIPConsigneeAddressPage}/>

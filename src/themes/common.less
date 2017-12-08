@@ -2,23 +2,11 @@
 // 引入官方提供的 less 样式入口文件
 @import '~antd-mobile/dist/antd-mobile.css';
 
-
-/*默认主题-颜色*/
-@na-orange-1: color(~`colorPalette("@{na-orange-6}", 1)`);
-@na-orange-2: color(~`colorPalette("@{na-orange-6}", 2)`);
-@na-orange-3: color(~`colorPalette("@{na-orange-6}", 3)`);
-@na-orange-4: color(~`colorPalette("@{na-orange-6}", 4)`);
-@na-orange-5: color(~`colorPalette("@{na-orange-6}", 5)`);
-@na-orange-6: #e65922;//配置主色调
-@na-orange-7: color(~`colorPalette("@{na-orange-6}", 7)`);
-@na-orange-8: color(~`colorPalette("@{na-orange-6}", 8)`);
-@na-orange-9: color(~`colorPalette("@{na-orange-6}", 9)`);
-@na-orange-10: color(~`colorPalette("@{na-orange-6}", 10)`);
-@primary-color: @na-orange-6;
-@app-theme-color: @primary-6;
-
 /*橙色系主题*/
 @app-theme-orange-color: @app-theme-color;
+
+/*默认主题-颜色*/
+@na-orange-6: @app-theme-orange-color;//配置主色调
 
 @screen-mobile-max: 767px;
 @screen-pc-min: 768px;
