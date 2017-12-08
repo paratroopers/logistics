@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Menu, Icon} from 'antd';
 import {hashHistory} from 'react-router';
+import {NaGlobal} from '../../util/common';
 import NavTree from '../../config/navconfig';
 
 const {SubMenu} = Menu;
@@ -21,11 +22,12 @@ export class NaVIPNavigation extends React.Component<NaVIPNavigationProps, NaVIP
     renderMenu(tree: any) {
         return tree.map(item => {
             if (item.Children)
-                return <SubMenu key={item.Key} title={<span><Icon type={item.Icon}/><span>{item.Title}</span></span>}>
+                return <SubMenu key={item.Key} title={<span><Icon
+                    type={item.Icon}/><span>{NaGlobal.intl.formatMessage({id: item.Title})}</span></span>}>
                     {this.renderMenu(item.Children)}
                 </SubMenu>;
             else {
-                return <Menu.Item key={item.Key}>{item.Title}</Menu.Item>
+                return <Menu.Item key={item.Key}>{NaGlobal.intl.formatMessage({id: item.Title})}</Menu.Item>
             }
         });
     }
