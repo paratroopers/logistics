@@ -12,7 +12,7 @@ interface NaMasterWebPageProps {
 interface NaMasterWebPageStates {
 }
 
-const logo = "http://a3.qpic.cn/psb?/V13ZnpTW0vonqf/WWKEbbdMdJC6AYcoZQ7bLZI6UcuHRq0ELFm3Vw*WAi4!/b/dG0BAAAAAAAA&bo=QABAAEAAQAADCSw!&rf=viewer_4";
+const logo = "http://www.famliytree.cn/icon/logo.jpg";
 const logoName = "http://a2.qpic.cn/psb?/V13ZnpTW0vonqf/qx4ufATm2nUuH6mb6g5B.4RztJRniAH5CHIyYByK8gM!/b/dOIAAAAAAAAA&bo=5QBAAOUAQAADCSw!&rf=viewer_4";
 
 export class NaMasterWebPage extends React.Component<NaMasterWebPageProps, NaMasterWebPageStates> {
