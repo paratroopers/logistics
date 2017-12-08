@@ -9,12 +9,12 @@ interface NaConsultingCenterPageProps {
 
 }
 
-interface NaConsultingCenterPageProps {
+interface NaConsultingCenterPageStates {
 
 }
 
 @withRouter
-export class NaConsultingCenterPage extends Component<NaConsultingCenterPageProps, NaConsultingCenterPageProps> {
+export class NaConsultingCenterPage extends Component<NaConsultingCenterPageProps, NaConsultingCenterPageStates> {
     constructor(props, context) {
         super(props, context)
     }

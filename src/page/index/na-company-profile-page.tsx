@@ -9,12 +9,12 @@ interface NaCompanyProfilePageProps {
 
 }
 
-interface NaCompanyProfilePageProps {
+interface NaCompanyProfilePageStates {
 
 }
 
 @withRouter
-export class NaCompanyProfilePage extends Component<NaCompanyProfilePageProps, NaCompanyProfilePageProps> {
+export class NaCompanyProfilePage extends Component<NaCompanyProfilePageProps, NaCompanyProfilePageStates> {
     constructor(props, context) {
         super(props, context)
     }

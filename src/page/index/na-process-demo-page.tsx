@@ -10,7 +10,7 @@ interface NaProcessDemoPageProps {
 
 }
 
-interface NaProcessDemoPageProps {
+interface NaProcessDemoPageStates {
 
 }
 
@@ -31,7 +31,7 @@ const data = [
 ];
 
 @withRouter
-export class NaProcessDemoPage extends Component<NaProcessDemoPageProps, NaProcessDemoPageProps> {
+export class NaProcessDemoPage extends Component<NaProcessDemoPageProps, NaProcessDemoPageStates> {
     constructor(props, context) {
         super(props, context)
     }
