@@ -28,7 +28,7 @@ export default class MotionBannerControl extends Component<MotionBannerControlPr
 
     renderFrom() {
         const topThis = this;
-        return <Row type="flex" justify="center">
+        return <Row type="flex" justify="center" key="form">
             <Col xs={0} sm={0} md={0} lg={18} xl={18} className="banner-form-parent">
                 <Form layout="vertical" style={{padding: 24}}>
                     <FormItem label="收货国家">
@@ -57,11 +57,12 @@ export default class MotionBannerControl extends Component<MotionBannerControlPr
         return (
             <OverPack replay playScale={[0.3, 0.1]} {...props}
                       className={isNullOrUndefined(className) ? "motion-banner" : className}>
-                <TweenOne className={`${isNullOrUndefined(className) ? "motion-banner" : className}-wrapper-right`}
+                <QueueAnim className={`${isNullOrUndefined(className) ? "motion-banner" : className}-wrapper-right`}
                           key="from">
                     {topThis.renderFrom()}
-                </TweenOne>
+                </QueueAnim>
                 <QueueAnim delay={200}
+                           type="left"
                            className={`${isNullOrUndefined(className) ? "motion-banner" : className}-wrapper-left`}
                            key="text">
                 <span className="title" key="title">
