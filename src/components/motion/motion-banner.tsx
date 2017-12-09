@@ -68,7 +68,7 @@ export default class MotionBannerControl extends Component<MotionBannerControlPr
                 <span className="title" key="title">
                     <img width="100%" src="https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png"/>
                 </span>
-                    <p key="content"> 国际物流网致力为客户提供更省心，更便捷的仓储物流服务。 </p>
+                    {/*<p key="content"> 国际物流网致力为客户提供更省心，更便捷的仓储物流服务。 </p>*/}
                     {/*<Button type="ghost" key="button"> {formatMessage({id: CommonLocale.Demo})}</Button>*/}
                 </QueueAnim>
                 <TweenOne animation={{y: '-=20', yoyo: true, repeat: -1, duration: 1000}}

@@ -36,19 +36,19 @@ export default class MotionContentAControl extends Component<MotionContentAContr
         const {props, props: {className}} = topThis;
         const dataSource = [
             {
-                icon: 'https://zos.alipayobjects.com/rmsportal/WBnVOjtIlGWbzyQivuyq.png',
-                title: '一站式业务接入',
-                content: '支付、结算、核算接入产品效率翻四倍'
+                icon: 'http://www.famliytree.cn/icon/motion-content-a-a.png',
+                title: '诚信',
+                content: '我们的核心所在，只适当收取相关服务费用，绝不私吞广大用户的一针一线。'
             },
             {
-                icon: 'https://zos.alipayobjects.com/rmsportal/YPMsLQuCEXtuEkmXTTdk.png',
-                title: '一站式事中风险监控',
-                content: '在所有需求配置环节事前风险控制和质量控制能力'
+                icon: 'http://www.famliytree.cn/icon/motion-content-a-b.png',
+                title: '高效',
+                content: '北京时间17：00前提交的打包订单当天封装完毕。'
             },
             {
-                icon: 'https://zos.alipayobjects.com/rmsportal/EkXWVvAaFJKCzhMmQYiX.png',
-                title: '一站式数据运营',
-                content: '沉淀产品接入效率和运营小二工作效率数据'
+                icon: 'http://www.famliytree.cn/icon/motion-content-a-c.png',
+                title: '创新',
+                content: '推出更多、更好、更便捷的服务理念，绝不辜负您对我们的信任。'
             },
         ];
         const listChildren = dataSource.map(this.getBlockChildren);
@@ -61,7 +61,7 @@ export default class MotionContentAControl extends Component<MotionContentAContr
                               component="h1"
                               key="h1"
                               reverseDelay={300}>
-                        产品与服务
+                        企业与宗旨
                     </TweenOne>
                     <QueueAnim component="ul" type="bottom" key="block" leaveReverse>
                         {listChildren}

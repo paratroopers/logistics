@@ -85,10 +85,10 @@ export default class MotionContentBControl extends Component<MotionContentBContr
                 <OverPack
                     className={`content-template ${isNullOrUndefined(className) ? "motion-content-b" : className}`}>
                     <TweenOne key="h1" animation={oneAnim} component="h1" reverseDelay={100}>
-                        蚂蚁金融云提供专业的服务
+                        专业的服务
                     </TweenOne>
                     <TweenOne key="p" animation={{...oneAnim, delay: 100}} component="p">
-                        基于阿里云强大的基础资源
+                        基于物联网强大的基础资源
                     </TweenOne>
                     <QueueAnim key="ul" type="bottom" className={`${isNullOrUndefined(className) ? "motion-content-b" : className}-contentWrapper`}>
                         <ul key="ul">
