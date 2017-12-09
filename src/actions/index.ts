@@ -24,7 +24,7 @@ export class MobileSelectTabAction {
 
 export class MobileNavTreeAction {
     static requestSelectTab = createAction(REQUEST_MOBILENAVTREE);
-    static SelectTabLoaded = createAction(NAVTREE_COUNTLOADED, (showModal: boolean) => {
-        return {showModal: showModal};
+    static SelectTabLoaded = createAction(NAVTREE_COUNTLOADED, (data: any) => {
+        return {data: data};
     });
 }

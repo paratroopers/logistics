@@ -22,4 +22,5 @@ export class PathConfig {
 
 export class MobilePathConfig {
     static UserCenter = "/mb/user";
+    static UserCenterDetail = "/mb/user/detail";
 }

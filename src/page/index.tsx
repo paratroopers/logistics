@@ -9,6 +9,7 @@ import {NaVIPConsigneeAddressPage} from "./vip/na-vip-consignee-address-page";
 import {NaVIPWelcomePage} from "./vip/na-vip-welcome-page";
 import {NaMobileTabBar} from "./demo/na-mobile-tabbar";
 import {MbUserCenter} from "./mobile/user-center";
+import MbUserCenterDetail from './mobile/user-center-detail';
 
 export {
     NaDemoPage,
@@ -21,5 +22,6 @@ export {
     NaVIPConsigneeAddressPage,
     NaVIPWelcomePage,
     NaMobileTabBar,
-    MbUserCenter
+    MbUserCenter,
+    MbUserCenterDetail
 }

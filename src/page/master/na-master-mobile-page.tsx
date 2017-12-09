@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {InjectedIntlProps} from "react-intl";
 import {hashHistory} from 'react-router';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
 import {TabBar, NavBar, Icon} from 'antd-mobile';
 import {Icon as WebIcon, Layout} from 'antd';
 import {NaGlobal} from '../../util/common';
@@ -118,7 +118,7 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
                     </NavBar>
                     <div className={'a'}></div>
                 </Header>
-                <Content style={{minHeight: _siderHeight, marginTop: navHeight}}>
+                <Content style={{minHeight: _siderHeight, marginTop: navHeight, marginBottom: tabHeight}}>
                     {children}
                 </Content>
                 <Footer className="footer fixed" style={{top: _tabHeight}}>

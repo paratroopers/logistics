@@ -88,7 +88,26 @@ const MobileNavTree = [
             Title: NavLocale.CustomerSettlement,
             Key: NavLocale.CustomerSettlement,
             Icon: 'icon-jiesuan1',
-            Color: '#1296db'
+            Color: '#1296db',
+            Children: [{
+                Title: NavLocale.CustomerReturnCheck,
+                Key: NavLocale.CustomerReturnCheck,
+                Icon: 'icon-shenhe2',
+                Color: '#1296db',
+                FontSize: '45px'
+            }, {
+                Title: NavLocale.BillReceivable,
+                Key: NavLocale.BillReceivable,
+                Icon: 'icon-danju2x',
+                Color: '#1296db',
+                FontSize: '32px'
+            }, {
+                Title: NavLocale.ReceivablesManagement,
+                Key: NavLocale.ReceivablesManagement,
+                Icon: 'icon-shoukuan',
+                Color: '#1296db',
+                FontSize: '35px'
+            }]
         }, {
             Title: NavLocale.AgencySettlement,
             Key: NavLocale.AgencySettlement,
@@ -181,7 +200,8 @@ const MobileNavTree = [
         Children: [{
             Title: NavLocale.Jurisdiction,
             Key: NavLocale.Jurisdiction,
-            Icon: ''
+            Icon: 'icon-win',
+            Color: '#1296db'
         }]
     }
 ];
