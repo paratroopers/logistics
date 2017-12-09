@@ -12,8 +12,8 @@ interface NaMasterWebPageProps {
 interface NaMasterWebPageStates {
 }
 
-const logo = "http://www.famliytree.cn/icon/logo.jpg";
-const logoName = "http://a2.qpic.cn/psb?/V13ZnpTW0vonqf/qx4ufATm2nUuH6mb6g5B.4RztJRniAH5CHIyYByK8gM!/b/dOIAAAAAAAAA&bo=5QBAAOUAQAADCSw!&rf=viewer_4";
+const logo = "http://www.famliytree.cn/icon/logo.png";
+const logoName = "http://www.famliytree.cn/icon/logoName.png";
 
 export class NaMasterWebPage extends React.Component<NaMasterWebPageProps, NaMasterWebPageStates> {
     onChangeLanguage(key: any) {
