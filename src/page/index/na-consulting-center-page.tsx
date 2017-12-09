@@ -68,7 +68,7 @@ export class NaConsultingCenterPage extends Component<NaConsultingCenterPageProp
         return <Layout style={{minHeight: '100%', backgroundColor: '#FFF'}}>
             <Content>
                 <Row style={{marginBottom: 24}}>
-                    <img style={{maxWidth: '100%'}} src="http://www.famliytree.cn/icon/process-demo-banner.jpg"/>
+                    <img style={{maxWidth: '100%'}} src="http://www.famliytree.cn/icon/consulting-center-banner.jpg"/>
                 </Row>
                 <Row type="flex" justify="space-around" style={{marginBottom: 24}}>
                     <Col xs={22} sm={22} md={18} lg={18} xl={18}>
