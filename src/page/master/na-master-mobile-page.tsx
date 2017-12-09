@@ -74,13 +74,13 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
                 pathname = PathConfig.HomePage;
                 break;
             case TabType.Order:
-                pathname = PathConfig.DemoPage;
+                pathname = PathConfig.CostEstimatePage;
                 break;
             case TabType.Service:
                 pathname = PathConfig.VIPCenterPage;
                 break;
             default:
-                pathname = PathConfig.HomePage;
+                pathname = PathConfig.ConsultingCenterPage;
                 break;
         }
         NaGlobal.store.dispatch(MobileSelectTabAction.SelectTabLoaded(Number(type)));
@@ -106,6 +106,7 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
         const {props: {children}} = topThis;
         const _tabHeight: string = window.innerHeight - tabHeight + 'px';
         const _siderHeight: string = window.innerHeight - tabHeight - navHeight + 'px';
+        //${NaContext.getIconAddress('process-demo-banner')}
         return <div className="mobile-page">
             <Layout>
                 <Header className="header fixed">
@@ -115,6 +116,7 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
                         icon={this.renderHeaderLeft()}>
                         Im Araysa
                     </NavBar>
+                    <div className={'a'}></div>
                 </Header>
                 <Content style={{minHeight: _siderHeight, marginTop: navHeight}}>
                     {children}
