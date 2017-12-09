@@ -190,6 +190,6 @@ export class NaContext {
     /**
      * 获取当前ICON地址*/
     static getIconAddress(name: string) {
-        return window['CDN'] + 'icon/' + name + '.jpg';
+        return (window['CDN'] + 'icon/' + name + '.jpg');
     }
 }
