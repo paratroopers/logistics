@@ -6,7 +6,7 @@ import {TabBar, NavBar, Icon} from 'antd-mobile';
 import {Icon as WebIcon, Layout} from 'antd';
 import {NaGlobal} from '../../util/common';
 import {MobileSelectTabAction} from '../../actions/index';
-import {PathConfig} from '../../config/pathconfig';
+import {PathConfig, MobilePathConfig} from '../../config/pathconfig';
 import {NaMobileNavbarPopover} from '../../components/controls/na-mobile-navbar-popover';
 import {NaContext} from '../../util/common';
 
@@ -77,7 +77,7 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
                 pathname = PathConfig.CostEstimatePage;
                 break;
             case TabType.Service:
-                pathname = PathConfig.VIPCenterPage;
+                pathname = MobilePathConfig.UserCenter;
                 break;
             default:
                 pathname = PathConfig.ConsultingCenterPage;

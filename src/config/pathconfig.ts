@@ -19,3 +19,7 @@ export class PathConfig {
     /*mobile Demo*/
     static MobilePage = "/demo-mobile";
 }
+
+export class MobilePathConfig {
+    static UserCenter = "/mb/user";
+}

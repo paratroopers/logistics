@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Router, Route, hashHistory, IndexRoute} from 'react-router';
-import {PathConfig} from './pathconfig';
+import {PathConfig, MobilePathConfig} from './pathconfig';
 import {
     NaDemoPage,
     NaHomePage,
@@ -11,7 +11,8 @@ import {
     NaMobileTabBar,
     NaVIPCenterPage,
     NaVIPConsigneeAddressPage,
-    NaVIPWelcomePage
+    NaVIPWelcomePage,
+    MbUserCenter
 } from '../page/index';
 
 const routerConfig = (
@@ -24,6 +25,7 @@ const routerConfig = (
         <Route path={PathConfig.ConsultingCenterPage} component={NaConsultingCenterPage}/>
         <Route path={PathConfig.CompanyProfilePage} component={NaCompanyProfilePage}/>
         <Route path={PathConfig.MobilePage} component={NaMobileTabBar}/>
+        <Route path={MobilePathConfig.UserCenter} component={MbUserCenter}/>
         <Route path={PathConfig.VIPCenterPage} component={NaVIPCenterPage}>
             <IndexRoute component={NaVIPWelcomePage}></IndexRoute>
             <Route path={PathConfig.VIPConsigneeAddressPage} component={NaVIPConsigneeAddressPage}/>
