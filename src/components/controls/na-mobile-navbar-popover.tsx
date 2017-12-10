@@ -23,7 +23,6 @@ export class NaMobileNavbarPopover extends React.Component<NaMobileNavbarPopover
 
     onSelect() {
         this.setState({showNav: !this.state.showNav});
-        NaGlobal.store.dispatch(MobileNavTreeAction.SelectTabLoaded(!this.state.showNav));
     };
 
     render() {

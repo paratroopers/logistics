@@ -36,7 +36,6 @@ class NaVIPCenterPage extends Component<NaVIPCenterPageProps, NaVIPCenterPageSta
     }
 
     onCollapse = (collapsed) => {
-        NaGlobal.store.dispatch(MobileNavTreeAction.SelectTabLoaded(false));
         //this.setState({collapsed});
     }
 

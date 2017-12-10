@@ -5,13 +5,14 @@ import {connect} from 'react-redux';
 import {TabBar, NavBar, Icon} from 'antd-mobile';
 import {Icon as WebIcon, Layout} from 'antd';
 import {NaGlobal} from '../../util/common';
-import {MobileSelectTabAction} from '../../actions/index';
+import {MobileSelectTabAction, MobileNavTreeAction} from '../../actions/index';
 import {PathConfig, MobilePathConfig} from '../../config/pathconfig';
 import {NaMobileNavbarPopover} from '../../components/controls/na-mobile-navbar-popover';
 import {NaContext} from '../../util/common';
 
 interface NaMasterMobilePageProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
     selectedTab?: TabType;
+    callBack?: string;
 }
 
 interface NaMasterMobilePageStates {
@@ -92,7 +93,13 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
     }
 
     renderHeaderLeft() {
-        return <a className="left-icon"><img src={NaContext.getIconAddress('logo')}/></a>;
+        if (this.props.callBack)
+            return <a className="mian-theme-color" onClick={x => {
+                hashHistory.push({pathname: this.props.callBack});
+                NaGlobal.store.dispatch(MobileNavTreeAction.SelectTabLoaded(null, null));
+            }}><i className="iconfont icon-disclosureindicator"></i></a>
+        else
+            return <a className="left-icon"><img src={NaContext.getIconAddress('logo')}/></a>;
     }
 
     renderWebIcon(iconName: string) {
@@ -176,7 +183,8 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
 
 const mapStateToProps = (state) => {
     return {
-        selectedTab: state.tab.tabName
+        selectedTab: state.tab.tabName,
+        callBack: state.nav.routerAddress
     }
 }
 export default connect(mapStateToProps)(NaMasterMobilePage);

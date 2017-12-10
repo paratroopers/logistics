@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
-import {List} from 'antd-mobile';
+import {List, Badge} from 'antd-mobile';
 import {hashHistory} from 'react-router';
 import {NaGlobal} from '../../util/common';
 import MobileNavTree from '../../config/mobile-navconfig';
 import {MobileNavTreeAction} from '../../actions/index';
-import {MobilePathConfig} from '../../config/pathconfig';
+import {MobilePathConfig, PathConfig} from '../../config/pathconfig';
 
 interface MbUserCenterProps {
 }
@@ -27,7 +27,7 @@ export class MbUserCenter extends React.Component<MbUserCenterProps, MbUserCente
 
     onItemClick(data: any) {
         if (data) {
-            NaGlobal.store.dispatch(MobileNavTreeAction.SelectTabLoaded(data));
+            NaGlobal.store.dispatch(MobileNavTreeAction.SelectTabLoaded(data, MobilePathConfig.UserCenter));
             hashHistory.push({pathname: MobilePathConfig.UserCenterDetail});
         }
     }
@@ -38,7 +38,7 @@ export class MbUserCenter extends React.Component<MbUserCenterProps, MbUserCente
             return <List key={item.Title} renderHeader={() => FormatMessage({id: item.Title})}>
                 {
                     item.Children ? item.Children.map(child => {
-                        return <List.Item onClick={x => {
+                        return <List.Item extra={<Badge text={77} overflowCount={55}></Badge>} onClick={x => {
                             this.onItemClick(child.Children)
                         }} key={child.Title} thumb={this.renderIcon(child.Icon, child.Color)}
                                           arrow="horizontal">
