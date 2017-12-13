@@ -1,14 +1,15 @@
 import * as React from "react";
 import {Component} from "react";
-import {Button, Icon, Row, Col, Form, Input} from 'antd';
-const FormItem = Form.Item;
+import {Icon,  Form} from 'antd';
 /* 动画效果*/
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 import ScrollAnim from 'rc-scroll-anim';
 import {isNullOrUndefined} from "util";
+
 const OverPack = ScrollAnim.OverPack;
 import {CommonLocale} from '../../locales/localeid';
+import {HomeCostQuery} from '../../components/controls/home-cost-query';
 import {NaGlobal} from '../../util/common';
 import {InjectedIntlProps} from "react-intl";
 
@@ -26,30 +27,6 @@ export default class MotionBannerControl extends Component<MotionBannerControlPr
         super(props, context);
     }
 
-    renderFrom() {
-        const topThis = this;
-        return <Row type="flex" justify="center" key="form">
-            <Col xs={0} sm={0} md={0} lg={18} xl={18} className="banner-form-parent">
-                <Form layout="vertical" style={{padding: 24}}>
-                    <FormItem label="收货国家">
-                        <Input size="large"/>
-                    </FormItem>
-                    <FormItem label="重量（kg）公斤">
-                        <Input size="large"/>
-                    </FormItem>
-                    <FormItem label="体积（m3）">
-                        <Input size="large"/>
-                    </FormItem>
-                    <FormItem>
-                        <Row type="flex" justify="center">
-                            <Button size="large" type="primary">开始计算</Button>
-                        </Row>
-                    </FormItem>
-                </Form>
-            </Col>
-        </Row>
-    }
-
     render() {
         const topThis = this;
         const {props, props: {className}} = topThis;
@@ -58,8 +35,8 @@ export default class MotionBannerControl extends Component<MotionBannerControlPr
             <OverPack replay playScale={[0.3, 0.1]} {...props}
                       className={isNullOrUndefined(className) ? "motion-banner" : className}>
                 <QueueAnim className={`${isNullOrUndefined(className) ? "motion-banner" : className}-wrapper-right`}
-                          key="from">
-                    {topThis.renderFrom()}
+                           key="from">
+                    {<HomeCostQuery></HomeCostQuery>}
                 </QueueAnim>
                 <QueueAnim delay={200}
                            type="left"
