@@ -45,11 +45,11 @@ export default class MotionBannerControl extends Component<MotionBannerControlPr
                     <p>为您顶置私人国际仓储平台</p>
                     <p>专注国际物流十年</p>
                 </QueueAnim>
-                <TweenOne animation={{y: '-=20', yoyo: true, repeat: -1, duration: 1000}}
+{/*                <TweenOne animation={{y: '-=20', yoyo: true, repeat: -1, duration: 1000}}
                           className={`${isNullOrUndefined(className) ? "motion-banner" : className}-icon`}
                           key="icon">
                     <Icon type="down"/>
-                </TweenOne>
+                </TweenOne>*/}
             </OverPack>
         );
     }
