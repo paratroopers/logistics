@@ -13,7 +13,6 @@ interface NaMasterWebPageStates {
 }
 
 const logo = "http://www.famliytree.cn/icon/logo.png";
-const logoName = "http://www.famliytree.cn/icon/logoName.png";
 
 export class NaMasterWebPage extends React.Component<NaMasterWebPageProps, NaMasterWebPageStates> {
     onChangeLanguage(key: any) {
@@ -40,8 +39,7 @@ export class NaMasterWebPage extends React.Component<NaMasterWebPageProps, NaMas
                     menuTheme={"light"}
                     logo={logo}
                     defaultLanguageKey={localeKey}
-                    onChangeLanguage={topThis.onChangeLanguage.bind(this)}
-                    logoName={logoName}></NaHeader>
+                    onChangeLanguage={topThis.onChangeLanguage.bind(this)}></NaHeader>
             </Header>
             <Content style={{background: "#FFF", marginTop: 80}}>
                 {children}

@@ -1,15 +1,16 @@
 import * as React from "react";
 import {Component} from "react";
 import {hashHistory} from 'react-router';
-import {Row, Col, Menu, Select} from 'antd';
+import {Row, Col, Menu, Select, Popover,Avatar,Icon} from 'antd';
 import {NaGlobal} from "../../util/common";
 import {CommonLocale} from "../../locales/localeid";
 import {PathConfig} from "../../config/pathconfig";
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
 
 interface NaHeaderProps {
     /* na-header 同级样式*/
     className?: string;
-    logoName?: string | React.ReactNode;
     logo?: string | React.ReactNode;
     /* logo点击事件*/
     onClickLogo?: () => void;
@@ -22,12 +23,16 @@ interface NaHeaderProps {
 }
 
 interface NaHeaderStates {
-
+    /** 是否已经登录*/
+    isLogin: boolean;
 }
 
 export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
     constructor(props, context) {
         super(props, context);
+        this.state = {
+            isLogin: false
+        }
     }
 
     /* 导航*/
@@ -49,11 +54,12 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                   }}
             >
                 <Menu.Item key={PathConfig.HomePage}>{formatMessage({id: CommonLocale.HeaderMenuHome})}</Menu.Item>
-                <Menu.Item key={PathConfig.ProcessDemoPage}>{formatMessage({id: CommonLocale.HeaderMenuProcessDemo})}</Menu.Item>
-                <Menu.Item key={PathConfig.CostEstimatePage}>{formatMessage({id: CommonLocale.HeaderMenuCostEstimate})}</Menu.Item>
-                <Menu.Item key={PathConfig.ConsultingCenterPage}>{formatMessage({id: CommonLocale.HeaderMenuConsultingCenter})}</Menu.Item>
-                <Menu.Item key={PathConfig.CompanyProfilePage}>{formatMessage({id: CommonLocale.HeaderMenuCompanyProfile})}</Menu.Item>
-                <Menu.Item key={PathConfig.VIPCenterPage}>{formatMessage({id: CommonLocale.HeaderMenuVIPCenter})}</Menu.Item>
+                <Menu.Item
+                    key={PathConfig.CostEstimatePage}>{formatMessage({id: CommonLocale.HeaderMenuCostEstimate})}</Menu.Item>
+                <Menu.Item
+                    key={PathConfig.CompanyProfilePage}>{formatMessage({id: CommonLocale.HeaderMenuCompanyProfile})}</Menu.Item>
+                <Menu.Item
+                    key={PathConfig.VIPCenterPage}>{formatMessage({id: CommonLocale.HeaderMenuVIPCenter})}</Menu.Item>
             </Menu>
         </Col>;
     }
@@ -71,12 +77,57 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
         </Select>;
     }
 
-    /* 工具*/
+    renderUserNameContent() {
+        // const topThis = this;
+        return <Menu>
+                <Menu.Item key="0">
+                <Icon type="user" />
+                <span>个人中心</span>
+            </Menu.Item>
+            <Menu.Item key="1">
+                <Icon type="setting" />
+                <span>设置</span>
+            </Menu.Item>
+            <Menu.Item key="2">
+                <Icon type="poweroff" />
+                <span>注销</span>
+            </Menu.Item>
+            </Menu>;
+    }
+
+    /** 用户*/
+    renderUser() {
+        const topThis = this;
+        const {state: {isLogin}} = topThis;
+        return isLogin ? <Row className="tool-user">
+            <Col></Col>
+            <Col className="tool-user-right">
+                <Popover placement="bottomRight" content={topThis.renderUserNameContent()}>
+                    <a className="tool-user-right-name">
+                        <Avatar style={{marginRight:5}} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                        Handy
+                    </a>
+                </Popover>
+            </Col>
+        </Row> : <Row>
+            <a onClick={() => {
+                topThis.setState({isLogin: true});
+            }}> 登录</a>
+            <a> | </a>
+            <a onClick={() => {
+                topThis.setState({isLogin: false});
+            }}>注册 </a>
+        </Row>;
+    }
+
+    /** 工具*/
     renderTool() {
         const topThis = this;
         return <Col>
-            <Row type="flex" justify="space-between" align="middle" style={{height: 80}}>
-                <Col >{topThis.renderLanguageSelect()}</Col>
+            <Row className="tool" type="flex" justify="space-between" align="middle"
+                 style={{height: 80, marginLeft: 50}}>
+                {/*<Col >{topThis.renderLanguageSelect()}</Col>*/}
+                <Col >{topThis.renderUser()}</Col>
             </Row>
         </Col>;
     }
@@ -90,14 +141,20 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
 
     render() {
         const topThis = this;
-        const {props: {className, logo, logoName}} = topThis;
+        const {props: {className, logo}} = topThis;
         return <Row className={className ? className + " na-header" : "na-header"}>
             <Col xs={24} sm={24} md={2} lg={5} xl={5}>
-                <a className="logo" onClick={topThis.onClickLogo.bind(this)}
-                   style={{lineHeight: '80px', height: 80, fontSize: 14}}>
-                    {typeof logo === "string" ? <img src={logo}></img> : logo}
-                    {typeof logoName === "string" ? <img src={logoName}></img> : logoName}
-                </a>
+                <Row type="flex" justify="start">
+                    <Col>
+                        <a className="logo" onClick={topThis.onClickLogo.bind(this)}>
+                            {typeof logo === "string" ? <img src={logo}></img> : logo}
+                        </a>
+                    </Col>
+                    <Col className="title">
+                        <h1>大陆 Mainland</h1>
+                        <p>From Mainland To Word</p>
+                    </Col>
+                </Row>
             </Col>
             <Col xs={0} sm={0} md={22} lg={19} xl={19}>
                 <Row type="flex" justify="end">

@@ -68,8 +68,7 @@ export class NaCompanyProfilePage extends Component<NaCompanyProfilePageProps, N
                                 <h2>公司简介<span style={{paddingLeft: 16, fontSize: 16}}>COMPANY PROFILE</span></h2>
                             </Col>
                             <Col style={{display: 'flex', alignItems: 'center'}}>
-                                <Link style={{paddingRight: 5}} to={PathConfig.HomePage}>首页</Link>
-                                <Link to={PathConfig.ProcessDemoPage}>公司简介</Link>
+
                             </Col>
                         </Row>
                     </Col>

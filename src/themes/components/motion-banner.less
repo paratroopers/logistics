@@ -5,7 +5,7 @@
 .@{motion-banner} {
   width: 100%;
   // 如果在第一屏且导航位置为 relative, 一屏为 height: calc(~"100vh - 64px");
-  height: 100vh;
+  height: calc(~"100vh - 80px");
   position: relative;
   text-align: center;
   border-color: #666;
@@ -26,62 +26,12 @@
     z-index: -1;
   }
   &-wrapper-right {
-    //display: inline-block;
     position: absolute;
     top: 0;
     right: 0;
     font-size: 14px;
     color: @template-text-color-light;
     width: 50%;
-    .input-icon {
-      position: absolute;
-      top: -3px;
-      font-size: 20px;
-      left: -5px;
-      color: rgba(0, 0, 0, .25);
-    }
-    .queue-anim-leaving {
-      position: relative !important;
-      width: auto;
-    }
-    .title {
-      width: 350px;
-      left: 30px;
-      margin: auto;
-      display: inline-block;
-      font-size: 40px;
-      position: relative;
-    }
-    h1 {
-      margin: 10px auto;
-    }
-    p {
-      margin-bottom: 20px;
-      word-wrap: break-word;
-    }
-    //button {
-    //  border: 1px solid #fff;
-    //  color: #fff;
-    //  background: transparent;
-    //  box-shadow: 0 0 0 transparent;
-    //  transition: background .45s @ease-out, box-shadow .45s @ease-out;
-    //  line-height: 36px;
-    //  font-size: 16px;
-    //  height: 36px;
-    //  span {
-    //    text-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    //    transition: text-shadow .45s @ease-out;
-    //  }
-    //  &:hover {
-    //    color: #fff;
-    //    border-color: #fff;
-    //    background: rgba(255, 255, 255, 0.1);
-    //    box-shadow: 0 0 10px rgba(50, 250, 255, 0.75);
-    //    & span {
-    //      text-shadow: 1px 1px 3px rgba(0, 0, 0, .35);
-    //    }
-    //  }
-    //}
     //form表单的父级元素
     .banner-form-parent {
       margin-top: 100px;
@@ -100,7 +50,6 @@
         background-color: rgba(255, 255, 255, 0.4);
         z-index: -1;
         background-attachment: fixed !important;
-        //background-image: url('http://www.famliytree.cn/icon/index-home-banner.jpg');
         background-position: center top;
         background-size: cover;
         -webkit-filter: blur(20px);
@@ -121,29 +70,18 @@
     }
   }
   &-wrapper-left {
-    //display: inline-block;
     position: absolute;
-    top: 0;
-    margin-top: 100px;
+    top: 30%;
     left: 0;
-    font-size: 14px;
     color: @template-text-color-light;
     width: 50%;
     .queue-anim-leaving {
       position: relative !important;
       width: auto;
     }
-    .title {
-      width: 350px;
-      left: 30px;
-      margin: auto;
-      display: inline-block;
-      font-size: 40px;
-      position: relative;
-    }
     p {
-      margin-bottom: 20px;
-      word-wrap: break-word;
+      font-size: 30px;
+      line-height: 80px;
     }
   }
   &-icon {
@@ -166,8 +104,5 @@
         left: 0;
       }
     }
-    //&:before {
-    //  background-attachment: inherit;
-    //}
   }
 }

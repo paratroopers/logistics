@@ -222,8 +222,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
                                 <h2>费用估算<span style={{paddingLeft: 16, fontSize: 16}}>COST ESTIMATING</span></h2>
                             </Col>
                             <Col style={{display: 'flex', alignItems: 'center'}}>
-                                <Link style={{paddingRight: 5}} to={PathConfig.HomePage}>首页</Link>
-                                <Link to={PathConfig.ProcessDemoPage}>费用估算</Link>
+
                             </Col>
                         </Row>
                     </Col>

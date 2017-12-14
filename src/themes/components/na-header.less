@@ -8,15 +8,15 @@
   }
   .logo {
     overflow: hidden;
-    //padding-left: 40px;
+    font-size: 14px;
     float: left;
-    line-height: 64px;
+    line-height: 80px;
     text-decoration: none;
-    height: 64px;
+    height: 80px;
     img {
       display: inline;
       vertical-align: middle;
-      margin-right: 16px;
+      //margin-right: 16px;
       width: 64px;
     }
     span {
@@ -24,6 +24,47 @@
       outline: none;
       font-size: 14px;
       line-height: 28px
+    }
+  }
+  .title {
+    padding-top: 10px;
+    text-align: center;
+    h1 {
+      line-height: 40px;
+      font-family: "palatino linotype", palatino, serif;
+      color: #5b5b5b;
+      text-transform: uppercase;
+      word-spacing: -2pt;
+    }
+    p {
+      line-height: 20px;
+    }
+  }
+  .tool {
+    a:hover {
+      color: @primary-color;
+    }
+    &-user {
+    }
+    &-user-right {
+      &-name{
+        &:hover{
+          background-color: @na-orange-1;
+        }
+        height: 80px;
+        line-height: 80px;
+        cursor: pointer;
+        padding: 0 12px;
+        transition: all .3s;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        font-size:14px;
+        display: flex;
+        align-items: center;
+        :hover {
+          //background-color: @na-orange-1;
+        }
+      }
     }
   }
 }

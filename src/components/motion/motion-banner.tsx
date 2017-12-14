@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Component} from "react";
-import {Icon,  Form} from 'antd';
+import {Icon,  Row} from 'antd';
 /* 动画效果*/
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
@@ -42,11 +42,8 @@ export default class MotionBannerControl extends Component<MotionBannerControlPr
                            type="left"
                            className={`${isNullOrUndefined(className) ? "motion-banner" : className}-wrapper-left`}
                            key="text">
-                <span className="title" key="title">
-                    <img width="100%" src="https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png"/>
-                </span>
-                    {/*<p key="content"> 国际物流网致力为客户提供更省心，更便捷的仓储物流服务。 </p>*/}
-                    {/*<Button type="ghost" key="button"> {formatMessage({id: CommonLocale.Demo})}</Button>*/}
+                    <p>为您顶置私人国际仓储平台</p>
+                    <p>专注国际物流十年</p>
                 </QueueAnim>
                 <TweenOne animation={{y: '-=20', yoyo: true, repeat: -1, duration: 1000}}
                           className={`${isNullOrUndefined(className) ? "motion-banner" : className}-icon`}

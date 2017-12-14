@@ -81,7 +81,7 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
                 pathname = MobilePathConfig.UserCenter;
                 break;
             default:
-                pathname = PathConfig.ConsultingCenterPage;
+                pathname = PathConfig.HomePage;
                 break;
         }
         NaGlobal.store.dispatch(MobileSelectTabAction.SelectTabLoaded(Number(type)));
