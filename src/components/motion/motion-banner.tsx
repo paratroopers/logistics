@@ -48,11 +48,11 @@ export default class MotionBannerControl extends Component<MotionBannerControlPr
                     {/*<p key="content"> 国际物流网致力为客户提供更省心，更便捷的仓储物流服务。 </p>*/}
                     {/*<Button type="ghost" key="button"> {formatMessage({id: CommonLocale.Demo})}</Button>*/}
                 </QueueAnim>
-                <TweenOne animation={{y: '-=20', yoyo: true, repeat: -1, duration: 1000}}
+{/*                <TweenOne animation={{y: '-=20', yoyo: true, repeat: -1, duration: 1000}}
                           className={`${isNullOrUndefined(className) ? "motion-banner" : className}-icon`}
                           key="icon">
                     <Icon type="down"/>
-                </TweenOne>
+                </TweenOne>*/}
             </OverPack>
         );
     }

@@ -32,13 +32,16 @@
     right: 0;
     font-size: 14px;
     color: @template-text-color-light;
-    width: 50%;
+    width: 40%;
     .input-icon {
       position: absolute;
       top: -3px;
       font-size: 20px;
       left: -5px;
       color: rgba(0, 0, 0, .25);
+    }
+    .ant-select-selection__placeholder {
+      margin-top: 10px !important;
     }
     .queue-anim-leaving {
       position: relative !important;
@@ -82,10 +85,27 @@
     //    }
     //  }
     //}
+
+    .banner-form-header {
+      margin-top: 100px;
+      width: 100%;
+      min-height: 60px;
+      background-color: #e65922;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      h2 {
+        color: #fff;
+        i {
+          font-size: 20px;
+          margin-right: 10px;
+        }
+      }
+    }
     //form表单的父级元素
     .banner-form-parent {
-      margin-top: 100px;
-      border-radius: 10px;
+      /*      margin-top: 100px;*/
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
       background-position: center top;
       background-size: cover;
       z-index: 1;
