@@ -2,6 +2,8 @@ import * as React from 'react';
 import {Button, Select, Row, Col, Form, Input} from 'antd';
 
 interface HomeCostQueryProps {
+    className?: string;
+    style?: any;
 }
 
 interface HomeCostQueryStates {
@@ -10,7 +12,7 @@ interface HomeCostQueryStates {
 export class HomeCostQuery extends React.Component<HomeCostQueryProps, HomeCostQueryStates> {
     render() {
 
-        return <Row type="flex" justify="center" align="top">
+        return <Row type="flex" justify="center" align="top" className={this.props.className} style={this.props.style}>
             <Col xs={0} sm={0} md={0} lg={13} xl={13}>
                 <div className="banner-form-header">
                     <Row type="flex" justify="start" style={{paddingTop: '13px', paddingLeft: '21px'}}>

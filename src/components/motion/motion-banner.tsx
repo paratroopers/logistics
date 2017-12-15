@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Component} from "react";
-import {Icon,  Row} from 'antd';
+import {Icon, Row, Carousel} from 'antd';
 /* 动画效果*/
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
@@ -45,7 +45,7 @@ export default class MotionBannerControl extends Component<MotionBannerControlPr
                     <p>为您定制私人国际仓储平台</p>
                     <p>专注国际物流十年</p>
                 </QueueAnim>
-{/*                <TweenOne animation={{y: '-=20', yoyo: true, repeat: -1, duration: 1000}}
+                {/*                <TweenOne animation={{y: '-=20', yoyo: true, repeat: -1, duration: 1000}}
                           className={`${isNullOrUndefined(className) ? "motion-banner" : className}-icon`}
                           key="icon">
                     <Icon type="down"/>

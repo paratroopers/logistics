@@ -1,6 +1,7 @@
 import * as React from "react";
 import {Component} from "react";
 import {withRouter} from "react-router";
+import {MotionHeaderImage} from '../../components/motion/motion-header-image';
 import MotionBannerControl from "../../components/motion/motion-banner";
 import MotionContentAControl from "../../components/motion/motion-content-a";
 import MotionContentBControl from "../../components/motion/motion-content-b";
@@ -20,7 +21,8 @@ export class NaHomePage extends Component<NaHomePageProps, NaHomePageStates> {
 
     render() {
         return <div className="templates-wrapper">
-            <MotionBannerControl></MotionBannerControl>
+            <MotionHeaderImage></MotionHeaderImage>
+{/*            <MotionBannerControl></MotionBannerControl>*/}
             <MotionContentAControl></MotionContentAControl>
             <MotionContentBControl></MotionContentBControl>
         </div>;
