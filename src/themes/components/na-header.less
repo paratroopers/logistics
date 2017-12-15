@@ -45,26 +45,36 @@
       color: @primary-color;
     }
     &-user {
-    }
-    &-user-right {
-      &-name{
-        &:hover{
-          background-color: @na-orange-1;
-        }
+      &-right {
         height: 80px;
         line-height: 80px;
         cursor: pointer;
-        padding: 0 12px;
-        transition: all .3s;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-        font-size:14px;
-        display: flex;
-        align-items: center;
-        :hover {
-          //background-color: @na-orange-1;
+        &:hover{
+          background-color: #e6f7ff;
+          border-bottom: 1px solid rgb(194, 194, 194);
+        }
+        &-name{
+          padding: 0 12px;
+          transition: all .3s;
+          -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+          font-size:14px;
+          display: flex;
+          align-items: center;
+          :hover {
+            //background-color: @na-orange-1;
+          }
         }
       }
+    }
+  }
+}
+
+.tool-user{
+  &-popover{
+    .ant-popover-inner-content{
+      padding: 0px !important;
+      width: 120px;
     }
   }
 }

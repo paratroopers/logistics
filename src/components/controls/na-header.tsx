@@ -5,8 +5,6 @@ import {Row, Col, Menu, Select, Popover,Avatar,Icon} from 'antd';
 import {NaGlobal} from "../../util/common";
 import {CommonLocale} from "../../locales/localeid";
 import {PathConfig} from "../../config/pathconfig";
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
 
 interface NaHeaderProps {
     /* na-header 同级样式*/
@@ -35,10 +33,22 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
         }
     }
 
+    /** User setting*/
+    onClickUserMenu({ item, key, keyPath }){
+        const topThis=this;
+        switch (key){
+            case "2":
+                topThis.setState({isLogin: false});
+                break;
+            default:
+                break;
+        }
+    }
+
     /* 导航*/
     renderNavigation() {
         const topThis = this;
-        const {props: {menuTheme}} = topThis;
+        const {props: {menuTheme},state:{isLogin}} = topThis;
         const {formatMessage} = NaGlobal.intl;
 
         //Menu style背景透明 background: transparent;
@@ -58,8 +68,8 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                     key={PathConfig.CostEstimatePage}>{formatMessage({id: CommonLocale.HeaderMenuCostEstimate})}</Menu.Item>
                 <Menu.Item
                     key={PathConfig.CompanyProfilePage}>{formatMessage({id: CommonLocale.HeaderMenuCompanyProfile})}</Menu.Item>
-                <Menu.Item
-                    key={PathConfig.VIPCenterPage}>{formatMessage({id: CommonLocale.HeaderMenuVIPCenter})}</Menu.Item>
+                {isLogin?<Menu.Item
+                    key={PathConfig.VIPCenterPage}>{formatMessage({id: CommonLocale.HeaderMenuVIPCenter})}</Menu.Item>:null}
             </Menu>
         </Col>;
     }
@@ -78,21 +88,22 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
     }
 
     renderUserNameContent() {
-        // const topThis = this;
-        return <Menu>
-                <Menu.Item key="0">
+        const topThis = this;
+        return <Menu onClick={topThis.onClickUserMenu.bind(this)}>
+            <Menu.Item key="0">
                 <Icon type="user" />
                 <span>个人中心</span>
             </Menu.Item>
             <Menu.Item key="1">
                 <Icon type="setting" />
-                <span>设置</span>
+                <span>个人设置</span>
             </Menu.Item>
+            <Menu.Divider></Menu.Divider>
             <Menu.Item key="2">
                 <Icon type="poweroff" />
                 <span>注销</span>
             </Menu.Item>
-            </Menu>;
+        </Menu>;
     }
 
     /** 用户*/
@@ -102,9 +113,13 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
         return isLogin ? <Row className="tool-user">
             <Col></Col>
             <Col className="tool-user-right">
-                <Popover placement="bottomRight" content={topThis.renderUserNameContent()}>
+                <Popover placement="bottomRight"
+                         overlayClassName="tool-user-popover"
+                         autoAdjustOverflow={true}
+                         content={topThis.renderUserNameContent()}
+                         trigger="click">
                     <a className="tool-user-right-name">
-                        <Avatar style={{marginRight:5}} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                        <Avatar style={{marginRight:5}} src="http://www.famliytree.cn/icon/timor.png" />
                         Handy
                     </a>
                 </Popover>
@@ -143,7 +158,7 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
         const topThis = this;
         const {props: {className, logo}} = topThis;
         return <Row className={className ? className + " na-header" : "na-header"}>
-            <Col xs={24} sm={24} md={2} lg={5} xl={5}>
+            <Col xs={24} sm={24} md={7} lg={6} xl={5}>
                 <Row type="flex" justify="start">
                     <Col>
                         <a className="logo" onClick={topThis.onClickLogo.bind(this)}>
@@ -156,7 +171,7 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                     </Col>
                 </Row>
             </Col>
-            <Col xs={0} sm={0} md={22} lg={19} xl={19}>
+            <Col xs={0} sm={0} md={17} lg={18} xl={19}>
                 <Row type="flex" justify="end">
                     {topThis.renderNavigation()}
                     {topThis.renderTool()}
