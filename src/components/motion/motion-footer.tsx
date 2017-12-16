@@ -70,18 +70,19 @@ export default class MotionFooterControl extends Component<MotionFooterControlPr
                       className={`content-template ${isNullOrUndefined(className) ? "motion-footer" : className}`}>
                 <QueueAnim type="bottom" component="ul" key="ul" leaveReverse>
                     <li key="logo">
-                        <p className="logo">
+                        <p key={0} className="logo">
                             <img src={logoContent.img} width="100%"/>
                         </p>
-                        <p className="logo-content">{logoContent.content}</p>
-                        <p className="rcode">
+                        <p key={1} className="logo-content">{logoContent.content}</p>
+                        <p key={2} className="rcode">
                             <img src={logoContent.rcode} width="100%"/>
                         </p>
                     </li>
                     {liChildrenToRender}
                 </QueueAnim>
                 <TweenOne animation={{y: '+=30', opacity: 0, type: 'from'}} key="copyright" className="copyright">
-                    <span>Copyright © 2018 The Project by <a href="#">Mainload</a>. All Rights Reserved</span>
+                    <span key="0">Copyright © 2018 The Project by <a href="#">Mainload</a>. 当前呈现版本 1.0.0</span>
+                    <span key="1">浙ICP备 00000000号-0 浙公网安备 00000000000000号 大陆物流有限公司版权所有</span>
                 </TweenOne>
             </OverPack>);
     }

@@ -37,6 +37,8 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
     onClickUserMenu({item, key, keyPath}) {
         const topThis = this;
         switch (key) {
+            case "0":
+                hashHistory.push({pathname: PathConfig.VIPCenterPage});
             case "2":
                 topThis.setState({isLogin: false});
                 break;
@@ -48,7 +50,7 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
     /* 导航*/
     renderNavigation() {
         const topThis = this;
-        const {props: {menuTheme}, state: {isLogin}} = topThis;
+        const {props: {menuTheme}} = topThis;
         const {formatMessage} = NaGlobal.intl;
 
         //Menu style背景透明 background: transparent;
@@ -68,8 +70,6 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                     key={PathConfig.CostEstimatePage}>{formatMessage({id: CommonLocale.HeaderMenuCostEstimate})}</Menu.Item>
                 <Menu.Item
                     key={PathConfig.CompanyProfilePage}>{formatMessage({id: CommonLocale.HeaderMenuCompanyProfile})}</Menu.Item>
-                {isLogin ? <Menu.Item
-                    key={PathConfig.VIPCenterPage}>{formatMessage({id: CommonLocale.HeaderMenuVIPCenter})}</Menu.Item> : null}
             </Menu>
         </Row>;
     }
@@ -172,7 +172,7 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
         const topThis = this;
         const {props: {className, logo}} = topThis;
         return <Row className={className ? className + " na-header" : "na-header"}>
-            <Col xs={12} sm={12} md={8} lg={8} xl={5}>
+            <Col xs={12} sm={12} md={8} lg={4} xl={5}>
                 <Row type="flex" justify="start">
                     <Col>
                         <a className="logo" onClick={topThis.onClickLogo.bind(this)}>
@@ -184,7 +184,7 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
             <Col xs={0} sm={0} md={12} lg={12} xl={8}>
                 {topThis.renderNavigation()}
             </Col>
-            <Col xs={9} sm={9} md={2} lg={2} xl={{offset: 1, span: 10}}>
+            <Col xs={9} sm={9} md={2} lg={8} xl={{offset: 1, span: 10}}>
                 {topThis.renderTool()}
             </Col>
         </Row>;
