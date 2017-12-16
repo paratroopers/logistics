@@ -31,7 +31,7 @@ export class NaMasterWebPage extends React.Component<NaMasterWebPageProps, NaMas
                 position: 'fixed',
                 width: '100%',
                 height: 80,
-                zIndex: 2,
+                zIndex: 1001,
                 background: "#FFF",
                 borderBottom: "1px solid #c2c2c2"
             }}>
