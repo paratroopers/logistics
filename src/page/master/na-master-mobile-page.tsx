@@ -121,7 +121,7 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
                         mode="light"
                         rightContent={this.renderHeaderRight()}
                         icon={this.renderHeaderLeft()}>
-                        Main Land
+                        MainLand
                     </NavBar>
                     <div className={'a'}></div>
                 </Header>
