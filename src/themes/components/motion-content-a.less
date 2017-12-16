@@ -6,6 +6,49 @@
     height: 500px;
     overflow: hidden;
   }
+  .content-tag {
+    position: relative;
+    top: 25%;
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    .item {
+      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      .iconfont {
+        font-size: 24px;
+        margin-right: 5px;
+      }
+    }
+  }
+  .with-line {
+    width: 300px;
+    font-size: 16px;
+    color: #999;
+    margin: 0 auto;
+    position: relative;
+    text-align: center
+  }
+  .with-line:before {
+    content: "";
+    border-top: 1px solid #c2c2c2;
+    display: block;
+    position: absolute;
+    width: 100px;
+    top: 24px;
+    left: -100px;
+  }
+  .with-line:after {
+    content: "";
+    border-top: 1px solid #c2c2c2;
+    display: block;
+    position: absolute;
+    width: 100px;
+    top: 24px;
+    right: -100px;
+  }
+
   > h1 {
     text-align: center;
     position: relative;
@@ -15,6 +58,13 @@
     font-weight: 400;
     color: #404040;
     line-height: 48px;
+  }
+  > h4 {
+    text-align: center;
+    position: relative;
+    top: 15%;
+    margin: 10px auto;
+    color: #404040;
   }
   > ul {
     position: relative;
@@ -31,10 +81,11 @@
         position: relative !important;
       }
       .icon {
+        border-radius: 50%;
         max-width: 100px;
         max-height: 100px;
         margin: auto;
-        .na-iconfont {
+        .iconfont {
           color: @primary-color;
           max-width: 100%;
           font-size: 72px;
@@ -57,9 +108,42 @@
     .@{motion-content-a} {
       width: 90%;
       max-width: 100%;
+      .content-tag {
+        top: auto;
+        padding: 0;
+      }
+      .with-line {
+        width: 300px;
+        font-size: 16px;
+        color: #999;
+        position: relative;
+        text-align: center
+      }
+      .with-line:before {
+        content: "";
+        border-top: 1px solid #c2c2c2;
+        display: block;
+        position: absolute;
+        width: 100px;
+        top: 24px;
+        left: -50px;
+      }
+      .with-line:after {
+        content: "";
+        border-top: 1px solid #c2c2c2;
+        display: block;
+        position: absolute;
+        width: 100px;
+        top: 24px;
+        right: -50px;
+      }
       > h1 {
         top: auto;
-        margin: 40px auto 20px;
+        margin: 40px auto 10px;
+      }
+      > h4 {
+        top: auto;
+        margin: 0px auto 40px;
       }
       > ul {
         top: auto;
@@ -71,7 +155,9 @@
           margin: 20px auto 40px;
           padding: 0;
           .icon {
-            .na-iconfont {
+            max-width: 60px;
+            max-height: 60px;
+            .iconfont {
               font-size: 36px;
             }
           }
