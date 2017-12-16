@@ -179,10 +179,6 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                             {typeof logo === "string" ? <img src={logo}></img> : logo}
                         </a>
                     </Col>
-                    <Col className="title">
-                        <h1>大陆 Mainland</h1>
-                        <p>From Mainland To Word</p>
-                    </Col>
                 </Row>
             </Col>
             <Col xs={0} sm={0} md={12} lg={12} xl={5}>
