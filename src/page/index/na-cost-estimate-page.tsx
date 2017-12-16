@@ -139,6 +139,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
         const {state: {selectedTagsA, selectedTagsB}} = topThis;
         const tagsFromServerA = ['美食/零食', '美妆/洗护', '家具/家饰', '女装/男装', '鞋靴/箱包', '运动/乐器', '玩具/孕产', '家电/数码', '眼睛/手表'];
         const tagsFromServerB = ['国际一二线品牌', '少量液体、膏状、药品', '纯液体、内置电池', '木制品（原木）'];
+        const fontSize = {fontSize: '14px'};
         return <Row type="flex" justify="space-between">
             <Col xs={24} sm={24} md={24} lg={10} xl={10}>
                 <Row>
@@ -178,10 +179,10 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
             </Col>
             <Col xs={0} sm={0} md={24} lg={10} xl={10}>
                 <Row>
-                    <h4>运输方式推荐</h4>
+                    <span style={fontSize}>运输方式推荐</span>
                 </Row>
                 <Row>
-                    <h5>您的包裹里面有什么物品（请选择）</h5>
+                    <span style={fontSize}>您的包裹里面有什么物品（请选择）</span>
                 </Row>
                 <Row style={{margin: 5}}>
                     {tagsFromServerA.map(tag => (
@@ -191,7 +192,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
                     ))}
                 </Row>
                 <Row>
-                    <h5>其他敏感选择</h5>
+                    <span style={fontSize}>其他敏感选择</span>
                 </Row>
                 <Row style={{margin: 5}}>
                     {tagsFromServerB.map(tag => (
@@ -201,7 +202,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
                     ))}
                 </Row>
                 <Row>
-                    <h5>适合的运输渠道有</h5>
+                    <span style={fontSize}>适合的运输渠道有</span>
                 </Row>
                 <Row>
                     <TextArea rows={4}/>
