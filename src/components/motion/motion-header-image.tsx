@@ -24,7 +24,7 @@ export class MotionHeaderImage extends React.Component<any, any> {
                             key="bg"
                             className="bg"
                             style={{
-                                background: 'url("http://www.famliytree.cn/icon/index-home-image-6.jpeg")',
+                                background: 'url("http://www.famliytree.cn/icon/index-home-image-9.jpg")',
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center'
                             }}/>
@@ -41,14 +41,14 @@ export class MotionHeaderImage extends React.Component<any, any> {
                             <Icon type="down"/>
                         </TweenOne>
                     </Element>
-                    <Element
+                    {/* <Element
                         prefixCls="banner-user-elem"
                         key="1">
                         <BgElement
                             key="bg"
                             className="bg"
                             style={{
-                                background: 'url("http://www.famliytree.cn/icon/index-home-image-9.jpg")',
+                                background: 'url("http://www.famliytree.cn/icon/index-home-image-6.jpeg")',
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center'
                             }}/>
@@ -59,7 +59,7 @@ export class MotionHeaderImage extends React.Component<any, any> {
                                   animation={{y: 30, opacity: 0, type: 'from', delay: 100}}>
                             <span style={{letterSpacing: '20px'}}>为您节省更多的快递运输时间</span>
                         </TweenOne>
-                    </Element>
+                    </Element>*/}
                 </BannerAnim>
             </div>
         );

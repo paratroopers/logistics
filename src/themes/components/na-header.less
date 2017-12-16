@@ -3,6 +3,8 @@
 /* Banner*/
 @na-header: na-header;
 .@{na-header} {
+  padding-left: 15%;
+  /*  padding-right: 15%;*/
   .ant-menu-horizontal {
     border-bottom: none;
   }
@@ -65,6 +67,44 @@
             //background-color: @na-orange-1;
           }
         }
+      }
+    }
+    &-tel, &-tel i {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    &-tel {
+      margin-top: -2px;
+      margin-left: 15px;
+      i {
+        margin-right: 5px;
+      }
+    }
+    &-qq {
+      margin-left: 15px;
+      i {
+        color: #4cafe9 !important;
+        margin-right: 3px;
+      }
+      span {
+        color: rgba(0, 0, 0, 0.65);
+      }
+    }
+    i.iconfont {
+      color: #e65922;
+    }
+    .login {
+      a {
+        color: rgba(0, 0, 0, 0.65) !important;
+      }
+      i {
+        color: #e65922;
+      }
+      i.iconfont {
+        margin-right: 5px;
+      }
+      .separate {
+        margin: 0px 5px 0px 5px;
       }
     }
   }

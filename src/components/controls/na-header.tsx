@@ -2,7 +2,7 @@ import * as React from "react";
 import {Component} from "react";
 import {hashHistory} from 'react-router';
 import {Row, Col, Menu, Select, Popover, Avatar, Icon} from 'antd';
-import {NaGlobal} from "../../util/common";
+import {NaGlobal, NaContext} from "../../util/common";
 import {CommonLocale} from "../../locales/localeid";
 import {PathConfig} from "../../config/pathconfig";
 
@@ -124,24 +124,40 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                     </a>
                 </Popover>
             </Col>
-        </Row> : <Row>
+        </Row> : <Row className="login">
             <a onClick={() => {
                 topThis.setState({isLogin: true});
-            }}> 登录</a>
-            <a> | </a>
+            }}>
+                <i className={NaContext.getIconClassName('icon-yonghu')}></i>
+                <span>登录</span>
+            </a>
+            <a className="separate">|</a>
             <a onClick={() => {
                 topThis.setState({isLogin: false});
-            }}>注册 </a>
+            }}>
+                <i className={NaContext.getIconClassName('icon-zhuce')}></i>
+                <span>注册</span>
+            </a>
         </Row>;
     }
 
     /** 工具*/
     renderTool() {
         const topThis = this;
-        return <Row className="tool" type="flex" justify="end" align="middle"
-                    style={{height: 80, marginLeft: 50}}>
+        return <Row className="tool" type="flex" justify="start" align="middle"
+                    style={{height: 80}}>
             {/*<Col >{topThis.renderLanguageSelect()}</Col>*/}
-            <Col >{topThis.renderUser()}</Col>
+            <Col>{topThis.renderUser()}</Col>
+            <Col className="tool-tel">
+                <i className={NaContext.getIconClassName('icon-dianhua')}></i>
+                <span>400-820-8820</span>
+            </Col>
+            <Col className="tool-qq">
+                <a>
+                    <i className={NaContext.getIconClassName('icon-qq')}></i>
+                    <span>在线客服</span>
+                </a>
+            </Col>
         </Row>;
     }
 
@@ -169,10 +185,10 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                     </Col>
                 </Row>
             </Col>
-            <Col xs={0} sm={0} md={12} lg={12} xl={8}>
+            <Col xs={0} sm={0} md={12} lg={12} xl={5}>
                 {topThis.renderNavigation()}
             </Col>
-            <Col xs={12} sm={12} md={4} lg={4} xl={8}>
+            <Col xs={9} sm={9} md={2} lg={2} xl={{offset: 1, span: 10}}>
                 {topThis.renderTool()}
             </Col>
         </Row>;

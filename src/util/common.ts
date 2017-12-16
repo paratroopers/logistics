@@ -192,4 +192,8 @@ export class NaContext {
     static getIconAddress(name: string) {
         return (window['CDN'] + 'icon/' + name + '.jpg');
     }
+
+    static getIconClassName(name: string): string {
+        return "iconfont " + name;
+    }
 }
