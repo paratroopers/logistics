@@ -4,6 +4,7 @@ import {Component} from "react";
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 import ScrollAnim from 'rc-scroll-anim';
+import {Tag} from 'antd';
 import {isNullOrUndefined} from "util";
 const OverPack = ScrollAnim.OverPack;
 
@@ -24,9 +25,9 @@ export default class MotionContentAControl extends Component<MotionContentAContr
     getBlockChildren = (item, i) => {
         return <li key={i}>
             <div className="icon">
-                {/*<img src={item.icon} width="100%"/>*/}
                 <i className={"na-iconfont " + item.icon}></i>
             </div>
+            <Tag color={item.type === 0 ? "blue" : "orange"}>{item.type === 0 ? "客户" : "公司"}</Tag>
             <h3>{item.title}</h3>
             {/*<p>{item.content}</p>*/}
         </li>;
@@ -38,27 +39,33 @@ export default class MotionContentAControl extends Component<MotionContentAContr
         const dataSource = [
             {
                 icon: "na-icon-jisuanqilishuai",
-                title: '费用估算'
+                title: '费用估算',
+                type: 0
             },
             {
                 icon: 'na-icon-jijianfasong',
-                title: '客户发货'
+                title: '客户发货',
+                type: 0
             },
             {
                 icon: 'na-icon-cangkucangchu',
-                title: '入库操作'
+                title: '入库操作',
+                type: 1
             },
             {
                 icon: 'na-icon-qianshoushenpitongguo',
-                title: '客户确认'
+                title: '客户确认',
+                type: 0
             },
             {
                 icon: 'na-icon-baoguofahuo',
-                title: '合并打包'
+                title: '合并打包',
+                type: 1
             },
             {
                 icon: 'na-icon-yunshuzhongwuliu',
-                title: '国际快递'
+                title: '国际快递',
+                type: 1
             }
         ];
         const listChildren = dataSource.map(this.getBlockChildren);
