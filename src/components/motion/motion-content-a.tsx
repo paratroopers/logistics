@@ -24,10 +24,11 @@ export default class MotionContentAControl extends Component<MotionContentAContr
     getBlockChildren = (item, i) => {
         return <li key={i}>
             <div className="icon">
-                <img src={item.icon} width="100%"/>
+                {/*<img src={item.icon} width="100%"/>*/}
+                <i className={"na-iconfont " + item.icon}></i>
             </div>
             <h3>{item.title}</h3>
-            <p>{item.content}</p>
+            {/*<p>{item.content}</p>*/}
         </li>;
     }
 
@@ -36,32 +37,42 @@ export default class MotionContentAControl extends Component<MotionContentAContr
         const {props, props: {className}} = topThis;
         const dataSource = [
             {
-                icon: 'http://www.famliytree.cn/icon/motion-content-a-a.png',
-                title: '诚信',
-                content: '我们的核心所在，只适当收取相关服务费用，绝不私吞广大用户的一针一线。'
+                icon: "na-icon-jisuanqilishuai",
+                title: '费用估算'
             },
             {
-                icon: 'http://www.famliytree.cn/icon/motion-content-a-b.png',
-                title: '高效',
-                content: '北京时间17：00前提交的打包订单当天封装完毕。'
+                icon: 'na-icon-jijianfasong',
+                title: '客户发货'
             },
             {
-                icon: 'http://www.famliytree.cn/icon/motion-content-a-c.png',
-                title: '创新',
-                content: '推出更多、更好、更便捷的服务理念，绝不辜负您对我们的信任。'
+                icon: 'na-icon-cangkucangchu',
+                title: '入库操作'
             },
+            {
+                icon: 'na-icon-qianshoushenpitongguo',
+                title: '客户确认'
+            },
+            {
+                icon: 'na-icon-baoguofahuo',
+                title: '合并打包'
+            },
+            {
+                icon: 'na-icon-yunshuzhongwuliu',
+                title: '国际快递'
+            }
         ];
         const listChildren = dataSource.map(this.getBlockChildren);
 
         return (
             <div {...props}
                  className={`content-template-wrapper ${isNullOrUndefined(className) ? "motion-content-a" : className}-wrapper`}>
-                <OverPack className={`content-template ${isNullOrUndefined(className) ? "motion-content-a" : className}`}>
+                <OverPack
+                    className={`content-template ${isNullOrUndefined(className) ? "motion-content-a" : className}`}>
                     <TweenOne animation={{y: '+=30', opacity: 0, type: 'from'}}
                               component="h1"
                               key="h1"
                               reverseDelay={300}>
-                        企业与宗旨
+                        一键式服务流程
                     </TweenOne>
                     <QueueAnim component="ul" type="bottom" key="block" leaveReverse>
                         {listChildren}
