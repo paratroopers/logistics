@@ -4,12 +4,14 @@ import {Icon} from 'antd';
 import 'rc-banner-anim/assets/index.css';
 import TweenOne from 'rc-tween-one';
 import {HomeCostQuery} from '../../components/controls/home-cost-query';
+import {NaConstants} from '../../util/common';
 
 const BgElement = Element.BgElement;
 
 export class MotionHeaderImage extends React.Component<any, any> {
     render() {
         const height = window.innerHeight - 80 + 'px';
+        const isMobile = window.innerWidth <= NaConstants.sm;
         return (<div>
                 <HomeCostQuery className="motion-banner-wrapper-right" style={{zIndex: 1000}}></HomeCostQuery>
                 <BannerAnim prefixCls="banner-user"
@@ -28,12 +30,13 @@ export class MotionHeaderImage extends React.Component<any, any> {
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center'
                             }}/>
-                        <TweenOne className="banner-user-title" animation={{y: 30, opacity: 0, type: 'from'}}>
-                            <span style={{letterSpacing: '30px'}}>一流的物流团队</span>
+                        <TweenOne className={isMobile ? "mobile-user-title" : "banner-user-title"}
+                                  animation={{y: 30, opacity: 0, type: 'from'}}>
+                            <span style={isMobile ? {fontSize: '32px'} : {letterSpacing: '30px'}}>一流的物流团队</span>
                         </TweenOne>
-                        <TweenOne className="banner-user-text"
+                        <TweenOne className={isMobile ? "" : "banner-user-text"}
                                   animation={{y: 30, opacity: 0, type: 'from', delay: 100}}>
-                            <span style={{letterSpacing: '20px'}}>为您提供专业的境外物流服务</span>
+                            <span style={isMobile ? {fontSize: '15px'} : {letterSpacing: '20px'}}>为您提供专业的境外物流服务</span>
                         </TweenOne>
                         <TweenOne animation={{y: '-=20', yoyo: true, repeat: -1, duration: 1000}}
                                   className={`motion-banner-icon`}
