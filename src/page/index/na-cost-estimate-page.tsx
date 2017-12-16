@@ -178,7 +178,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
                 <Row style={{margin: 5}}>
                     {tagsFromServerA.map(tag => (
                         <Tag key={tag}
-                             style={{fontSize: 18, lineHeight: '40px', height: 40, padding: '0 20px', margin: 5}}
+                             style={{fontSize: 14, lineHeight: '40px', height: 40, padding: '0 20px', margin: 5}}
                              color="orange">{tag}</Tag>
                     ))}
                 </Row>
@@ -188,7 +188,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
                 <Row style={{margin: 5}}>
                     {tagsFromServerB.map(tag => (
                         <Tag key={tag}
-                             style={{fontSize: 18, lineHeight: '40px', height: 40, padding: '0 20px', margin: 5}}
+                             style={{fontSize: 14, lineHeight: '40px', height: 40, padding: '0 20px', margin: 5}}
                              color="orange">{tag}</Tag>
                     ))}
                 </Row>

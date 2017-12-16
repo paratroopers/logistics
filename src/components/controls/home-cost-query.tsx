@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {Button, Select, Row, Col, Form, Input} from 'antd';
+import {FormComponentProps} from 'antd/lib/form/Form';
+
 
 interface HomeCostQueryProps {
     className?: string;
@@ -11,8 +13,15 @@ interface HomeCostQueryStates {
 
 
 export class HomeCostQuery extends React.Component<HomeCostQueryProps, HomeCostQueryStates> {
-    render() {
+    constructor(props, context) {
+        super(props, context);
+    }
 
+    onOk() {
+
+    }
+
+    render() {
         return <Row type="flex" justify="center" align="top" className={this.props.className} style={this.props.style}>
             <Col xs={0} sm={0} md={0} lg={13} xl={13}>
                 <div className="banner-form-header">
@@ -45,7 +54,7 @@ export class HomeCostQuery extends React.Component<HomeCostQueryProps, HomeCostQ
                     </Form.Item>
                     <Form.Item>
                         <Row type="flex" justify="center">
-                            <Button size="large" type="primary">开始计算</Button>
+                            <Button size="large" type="primary" onClick={this.onOk.bind(this)}>开始计算</Button>
                         </Row>
                     </Form.Item>
                 </Form>
