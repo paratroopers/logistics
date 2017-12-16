@@ -24,7 +24,7 @@ export class MotionHeaderImage extends React.Component<any, any> {
                             key="bg"
                             className="bg"
                             style={{
-                                background: 'url("http://www.famliytree.cn/icon/index-home-image-5.png")',
+                                background: 'url("http://www.famliytree.cn/icon/index-home-image-6.jpeg")',
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center'
                             }}/>
@@ -48,7 +48,7 @@ export class MotionHeaderImage extends React.Component<any, any> {
                             key="bg"
                             className="bg"
                             style={{
-                                background: 'url("http://www.famliytree.cn/icon/index-home-image-4.png")',
+                                background: 'url("http://www.famliytree.cn/icon/index-home-image-9.jpg")',
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center'
                             }}/>

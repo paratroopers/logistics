@@ -3,6 +3,7 @@ import {Component} from "react";
 import {withRouter, Link} from "react-router";
 import {PathConfig} from "../../config/pathconfig";
 import {Layout, Row, Col, Form, Input, Button, Tag, Table} from "antd";
+
 const {Content} = Layout;
 const FormItem = Form.Item;
 const {CheckableTag} = Tag;
@@ -211,8 +212,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
         const topThis = this;
         return <Layout style={{minHeight: '100%', backgroundColor: '#FFF'}}>
             <Content>
-                <Row style={{marginBottom: 24}}>
-                    <img style={{maxWidth: '100%'}} src="http://www.famliytree.cn/icon/cost-estimeate-banner.jpg"/>
+                <Row style={{marginBottom: 24}} className="page-title-cost-image">
                 </Row>
                 <Row type="flex" justify="space-around">
                     <Col xs={22} sm={22} md={18} lg={18} xl={18}>

@@ -49,16 +49,16 @@
         height: 80px;
         line-height: 80px;
         cursor: pointer;
-        &:hover{
+        &:hover {
           background-color: #e6f7ff;
           border-bottom: 1px solid rgb(194, 194, 194);
         }
-        &-name{
+        &-name {
           padding: 0 12px;
           transition: all .3s;
           -webkit-box-sizing: border-box;
           box-sizing: border-box;
-          font-size:14px;
+          font-size: 14px;
           display: flex;
           align-items: center;
           :hover {
@@ -70,11 +70,26 @@
   }
 }
 
-.tool-user{
-  &-popover{
-    .ant-popover-inner-content{
+.tool-user {
+  &-popover {
+    .ant-popover-inner-content {
       padding: 0px !important;
       width: 120px;
     }
   }
+}
+
+.page-title-cost-image, .page-title-company-image {
+  background-size: 100%;
+  background-position: 0px;
+  margin-bottom: 24px;
+  height: 320px;
+}
+
+.page-title-cost-image {
+  background-image: url('http://www.famliytree.cn/icon/index-home-image-7.jpeg');
+}
+
+.page-title-company-image {
+  background-image: url('http://www.famliytree.cn/icon/index-home-image-12.jpg');
 }

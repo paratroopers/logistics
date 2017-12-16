@@ -2,6 +2,7 @@ import * as React from "react";
 import {Component} from "react";
 import {withRouter, Link} from "react-router";
 import {Layout, Row, Col} from "antd";
+
 const {Content} = Layout;
 import {PathConfig} from "../../config/pathconfig";
 
@@ -24,7 +25,7 @@ export class NaCompanyProfilePage extends Component<NaCompanyProfilePageProps, N
         return <Row>
             <Col xs={24} sm={24} md={24} lg={11} xl={11}>
                 <Row style={{margin: '24px 0'}}>
-                    <img style={{width: '100%'}} src="http://www.famliytree.cn/icon/company-profile-abouts.jpg"/>
+                    <img style={{width: '100%'}} src="http://www.famliytree.cn/icon/index-home-image-11.jpg"/>
                 </Row>
             </Col>
             <Col lg={1} xl={1}></Col>
@@ -47,7 +48,8 @@ export class NaCompanyProfilePage extends Component<NaCompanyProfilePageProps, N
             <Col span={24}>
                 <Row style={{margin: '24px 0'}}>
                     <h2 style={{fontWeight: 800}}>企业宗旨:诚信、高效、创新</h2>
-                    <p>美幻网的核心所在，只适当收取相关服务费用，绝不私吞广大用户的一针一线。北京时间17：00前提交的打包订单当天封装完毕。服务的同时我们会不断的丰富自己，改正自身的缺点，推出更多、更好、更便捷的服务理念，绝不辜负您对“美幻网”的信任。</p>
+                    <p>
+                        美幻网的核心所在，只适当收取相关服务费用，绝不私吞广大用户的一针一线。北京时间17：00前提交的打包订单当天封装完毕。服务的同时我们会不断的丰富自己，改正自身的缺点，推出更多、更好、更便捷的服务理念，绝不辜负您对“美幻网”的信任。</p>
                 </Row>
             </Col>
         </Row>
@@ -57,8 +59,7 @@ export class NaCompanyProfilePage extends Component<NaCompanyProfilePageProps, N
         const topThis = this;
         return <Layout style={{minHeight: '100%', backgroundColor: '#FFF'}}>
             <Content>
-                <Row style={{marginBottom: 24}}>
-                    <img style={{maxWidth: '100%'}} src="http://www.famliytree.cn/icon/company-profile-banner.jpg"/>
+                <Row style={{marginBottom: 24}} className="page-title-company-image">
                 </Row>
                 <Row type="flex" justify="space-around">
                     <Col xs={22} sm={22} md={18} lg={18} xl={18}>
