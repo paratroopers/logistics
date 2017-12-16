@@ -45,7 +45,7 @@ export class HomeCostQuery extends React.Component<HomeCostQueryProps, HomeCostQ
                         <Row type="flex" justify="center" align="top">
                             <Col span={7}><Input placeholder="长" size="large"/></Col>
                             <Col span={7} offset={1}><Input placeholder="宽" size="large"/></Col>
-                            <Col span={7} offset={1}><Input placeholder="高" size="large"/></Col>
+                            <Col span={8} offset={1}><Input placeholder="高" size="large"/></Col>
                             <Col span={1}></Col>
                         </Row>
                     </Form.Item>

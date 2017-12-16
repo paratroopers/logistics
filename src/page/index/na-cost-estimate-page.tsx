@@ -143,14 +143,22 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
             <Col xs={24} sm={24} md={24} lg={10} xl={10}>
                 <Row>
                     <Form layout="vertical">
-                        <FormItem label="收货国家">
-                            <Input size="large"/>
+                        <FormItem>
+                            <Input placeholder="收货国家" size="large"/>
                         </FormItem>
-                        <FormItem label="重量（kg）公斤">
-                            <Input size="large"/>
+                        <FormItem>
+                            <Input placeholder="重量（kg）公斤" size="large"/>
                         </FormItem>
-                        <FormItem label="体积（m3）">
-                            <Input size="large"/>
+                        <Form.Item>
+                            <Row type="flex" justify="center" align="top">
+                                <Col span={7}><Input placeholder="长" size="large"/></Col>
+                                <Col span={7} offset={1}><Input placeholder="宽" size="large"/></Col>
+                                <Col span={8} offset={1}><Input placeholder="高" size="large"/></Col>
+                                <Col span={1}></Col>
+                            </Row>
+                        </Form.Item>
+                        <FormItem>
+                            <Input placeholder="体积（m3）" size="large"/>
                         </FormItem>
                         <FormItem>
                             <Row type="flex" justify="center">
