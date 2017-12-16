@@ -37,6 +37,8 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
     onClickUserMenu({item, key, keyPath}) {
         const topThis = this;
         switch (key) {
+            case "0":
+                hashHistory.push({pathname: PathConfig.VIPCenterPage});
             case "2":
                 topThis.setState({isLogin: false});
                 break;
@@ -48,7 +50,7 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
     /* 导航*/
     renderNavigation() {
         const topThis = this;
-        const {props: {menuTheme}, state: {isLogin}} = topThis;
+        const {props: {menuTheme}} = topThis;
         const {formatMessage} = NaGlobal.intl;
 
         //Menu style背景透明 background: transparent;
@@ -68,8 +70,6 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                     key={PathConfig.CostEstimatePage}>{formatMessage({id: CommonLocale.HeaderMenuCostEstimate})}</Menu.Item>
                 <Menu.Item
                     key={PathConfig.CompanyProfilePage}>{formatMessage({id: CommonLocale.HeaderMenuCompanyProfile})}</Menu.Item>
-{/*                {isLogin ? <Menu.Item
-                    key={PathConfig.VIPCenterPage}>{formatMessage({id: CommonLocale.HeaderMenuVIPCenter})}</Menu.Item> : null}*/}
             </Menu>
         </Row>;
     }

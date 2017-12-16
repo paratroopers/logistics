@@ -81,7 +81,6 @@ export default class MotionFooterControl extends Component<MotionFooterControlPr
                     {liChildrenToRender}
                 </QueueAnim>
                 <TweenOne animation={{y: '+=30', opacity: 0, type: 'from'}} key="copyright" className="copyright">
-                    <span key="0">Copyright © 2018 The Project by <a href="#">Mainload</a>. 当前呈现版本 1.0.0</span>
                     <span key="1">浙ICP备 00000000号-0 浙公网安备 00000000000000号 大陆物流有限公司版权所有</span>
                 </TweenOne>
             </OverPack>);
