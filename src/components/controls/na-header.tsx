@@ -147,7 +147,6 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
         return <Row className="tool" type="flex" justify="start" align="middle"
                     style={{height: 80}}>
             {/*<Col >{topThis.renderLanguageSelect()}</Col>*/}
-            <Col>{topThis.renderUser()}</Col>
             <Col className="tool-tel">
                 <i className={NaContext.getIconClassName('icon-dianhua')}></i>
                 <span>400-820-8820</span>
@@ -158,6 +157,7 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                     <span>在线客服</span>
                 </a>
             </Col>
+            <Col>{topThis.renderUser()}</Col>
         </Row>;
     }
 
