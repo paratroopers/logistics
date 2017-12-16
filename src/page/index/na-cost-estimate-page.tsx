@@ -165,7 +165,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
                         borderRadius: '10px',
                         padding: '10px 20px',
                         color: '#e65922'
-                    }} span={24}>您可以通过支付宝、微信、PayPal在线付款。以下费用已基本包含本公司所有的收费项目（磁检费、超重超长处理费、偏远地区派送费等除外）</Col>
+                    }} span={24}>您可以通过支付宝、微信。以下费用已基本包含本公司所有的收费项目（磁检费、超重超长处理费、偏远地区派送费等除外）</Col>
                 </Row>
             </Col>
             <Col xs={0} sm={0} md={24} lg={10} xl={10}>
