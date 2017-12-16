@@ -9,6 +9,7 @@ interface HomeCostQueryProps {
 interface HomeCostQueryStates {
 }
 
+
 export class HomeCostQuery extends React.Component<HomeCostQueryProps, HomeCostQueryStates> {
     render() {
 
