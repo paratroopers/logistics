@@ -4,7 +4,8 @@ import {withRouter} from "react-router";
 import {Layout, Row, Col, Tabs} from "antd";
 const {Header, Content, Footer} = Layout;
 const {TabPane} = Tabs;
-import RegisterForm from "../../components/controls/na-register-form";
+import PhoneRegisterForm from "../../components/controls/na-phone-register-form";
+import MailRegisterForm from "../../components/controls/na-mail-register-form";
 
 interface NaRegisterPageProps {
 }
@@ -21,21 +22,25 @@ export class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPag
 
     render() {
         return <Layout className="na-page-register">
-            <Content style={{minHeight: '100vh'}}>
-                <Row style={{minHeight: '30vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <h1>欢迎注册</h1>
-                </Row>
-                <Row style={{maxWidth: 368, margin: '0 auto'}}>
-                    <Tabs defaultActiveKey="1"
-                          tabBarStyle={{textAlign:'center'}}
-                          size='default'>
-                        <TabPane tab="手机登录" key="1">
-                            <RegisterForm></RegisterForm>
-                        </TabPane>
-                        <TabPane tab="邮箱登录" key="2">
-                            <RegisterForm></RegisterForm>
-                        </TabPane>
-                    </Tabs>
+            <Content className="na-page-register-content" style={{minHeight: '100vh'}}>
+                <Row style={{width:'100%'}}>
+                    <Row style={{textAlign:'center'}}>
+                        <h1 style={{fontSize: '70px',color: '#e64900'}}>大陸</h1>
+                        <p style={{fontSize: '14px',
+                            color: 'rgba(0, 0, 0, 0.45)',
+                            marginTop: '12px',
+                            marginBottom: '40px'}}>为你的境外物流，提供专业优质的服务</p>
+                    </Row>
+                    <Row style={{maxWidth: 368, margin: '0 auto'}}>
+                        <Tabs defaultActiveKey="1"tabBarStyle={{textAlign:'center'}}>
+                            <TabPane tab="手机登录" key="1">
+                                <PhoneRegisterForm></PhoneRegisterForm>
+                            </TabPane>
+                            <TabPane tab="邮箱登录" key="2">
+                                <MailRegisterForm></MailRegisterForm>
+                            </TabPane>
+                        </Tabs>
+                    </Row>
                 </Row>
             </Content>
         </Layout>
