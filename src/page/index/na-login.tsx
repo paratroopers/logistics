@@ -18,17 +18,21 @@ export class NaLogin extends React.Component<NaLoginProps, any> {
     render() {
         const {getFieldDecorator} = this.props.form;
         return (
-            <Layout>
-                <Layout.Content>
+            <Layout className="na-login">
+                <Layout.Content className="na-login-content">
                     <Row align="middle" justify="center" type="flex">
-                        <Col>
-                            <Form className="login-form">
+                        <Col lg={8} sm={24} md={12} xs={24} xl={4}>
+                            <div className="na-login-content-title">
+                                <p className="company-name">大陸</p>
+                                <p>为你的境外物流，提供专业优质的服务</p>
+                            </div>
+                            <Form className="na-login-content-form">
                                 <FormItem>
                                     {getFieldDecorator('userName', {
                                         rules: [{required: true, message: 'Please input your username!'}],
                                     })(
                                         <Input prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                                               placeholder="Username"/>
+                                               placeholder="手机或邮箱"/>
                                     )}
                                 </FormItem>
                                 <FormItem>
@@ -37,7 +41,7 @@ export class NaLogin extends React.Component<NaLoginProps, any> {
                                     })(
                                         <Input prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                                type="password"
-                                               placeholder="Password"/>
+                                               placeholder="密码"/>
                                     )}
                                 </FormItem>
                                 <FormItem>
@@ -45,13 +49,17 @@ export class NaLogin extends React.Component<NaLoginProps, any> {
                                         valuePropName: 'checked',
                                         initialValue: true,
                                     })(
-                                        <Checkbox>Remember me</Checkbox>
+                                        <Checkbox>记住我</Checkbox>
                                     )}
-                                    <a className="login-form-forgot" href="">Forgot password</a>
-                                    <Button type="primary" htmlType="submit" className="login-form-button">
-                                        Log in
+                                    <a className="na-login-content-form-forgot" href="">忘记密码?</a>
+                                </FormItem>
+                                <FormItem>
+                                    <Button type="primary" htmlType="submit" className="na-login-content-form-button">
+                                        登录
                                     </Button>
-                                    Or <a href="">register now!</a>
+                                </FormItem>
+                                <FormItem>
+                                    或 <a href="">现在注册!</a>
                                 </FormItem>
                             </Form></Col>
                     </Row>
