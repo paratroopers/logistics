@@ -1,9 +1,8 @@
 import * as React from "react";
 import {Component} from "react";
-import {Form, Input, Icon, Checkbox, Button, Select,Row,Col} from 'antd';
+import {Form, Input, Icon, Button, Row,Col} from 'antd';
 import {FormProps} from 'antd/lib/form/Form';
 const FormItem = Form.Item;
-const SelectOption = Select.Option;
 
 interface MailRegisterFormControlProps extends FormProps {
 
@@ -66,14 +65,6 @@ class MailRegisterFormControl extends Component<MailRegisterFormControlProps, Ma
                                type="password"
                                placeholder="请再次输入你的密码"/>
                     )}
-                </FormItem>
-                <FormItem>
-                    <Button type="primary" htmlType="submit" className="register-button" style={{width: "100%"}}>
-                        同意条款并注册
-                    </Button>
-                </FormItem>
-                <FormItem>
-                    <Checkbox>《法律声明和隐私权政策》</Checkbox>
                 </FormItem>
             </Form>
         );

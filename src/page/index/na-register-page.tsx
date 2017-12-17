@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Component} from "react";
 import {withRouter} from "react-router";
-import {Layout, Row, Col, Tabs} from "antd";
+import {Layout, Row, Col, Tabs,Button,Checkbox} from "antd";
 const {Header, Content, Footer} = Layout;
 const {TabPane} = Tabs;
 import PhoneRegisterForm from "../../components/controls/na-phone-register-form";
@@ -40,6 +40,16 @@ export class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPag
                                 <MailRegisterForm></MailRegisterForm>
                             </TabPane>
                         </Tabs>
+                    </Row>
+                    <Row style={{maxWidth: 368, margin: '0 auto'}}>
+                        <Col span={24}>
+                            <Button type="primary" className="register-button" style={{width: "100%",marginBottom: '16px'}}>
+                                同意条款并注册
+                            </Button>
+                        </Col>
+                        <Col span={24}>
+                            <Checkbox>《法律声明和隐私权政策》</Checkbox>
+                        </Col>
                     </Row>
                 </Row>
             </Content>
