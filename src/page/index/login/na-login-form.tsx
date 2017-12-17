@@ -4,17 +4,14 @@ import {FormComponentProps} from 'antd/lib/form/Form';
 
 const FormItem = Form.Item;
 
-interface NaLoginFormProps extends FormComponentProps {
+interface NaLoginFormControlProps extends FormComponentProps {
 }
 
-interface NaLoginFormStates {
+interface NaLoginFormControlStates {
 
 }
 
-
-@Form.create()
-export class NaLoginForm extends React.Component<NaLoginFormProps, any> {
-
+class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLoginFormControlStates> {
     render() {
         const {getFieldDecorator} = this.props.form;
         return (<Form className="na-login-content-form">
@@ -49,10 +46,10 @@ export class NaLoginForm extends React.Component<NaLoginFormProps, any> {
                         登录
                     </Button>
                 </FormItem>
-                <FormItem>
-                    或 <a href="">现在注册!</a>
-                </FormItem>
             </Form>
         );
     }
 }
+
+const NaLoginForm = Form.create({})(NaLoginFormControl);
+export default NaLoginForm;
