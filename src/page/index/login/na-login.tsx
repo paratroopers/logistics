@@ -16,9 +16,9 @@ export class NaLogin extends React.Component<NaLoginProps, NaLoginStates> {
             <Layout className="na-login">
                 <Layout.Content className="na-login-content">
                     <Row align="middle" justify="center" type="flex">
-                        <Col lg={8} sm={24} md={12} xs={24} xl={4}>
+                        <Col lg={8} sm={24} md={12} xs={24} xl={4} className="na-login-content-col">
                             <div className="na-login-content-title">
-                                <p className="company-name">大陸</p>
+                                <p className="company-name">MainLand</p>
                                 <p>为你的境外物流，提供专业优质的服务</p>
                             </div>
                             <Tabs defaultActiveKey="1" className="na-login-content-tabs">
