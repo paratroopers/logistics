@@ -11,6 +11,7 @@ import NaMasterMobilePage from './na-master-mobile-page';
 import {NaMasterWebPage} from './na-master-web-page';
 import {NaGlobal} from "../../util/common";
 import {NaUtil} from "../../util/util";
+import {PathConfig} from "../../config/pathconfig";
 
 interface NaMasterPageProps {
     onLoaded?: (appLocale?: AppLocaleStatic, theme?: string) => Promise<any>;
@@ -26,6 +27,7 @@ interface NaMasterPageStates {
 
 let timeout;
 let currentValue;
+
 export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageStates> {
     constructor(props, context) {
         super(props, context);
@@ -62,6 +64,7 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
             timeout = null;
         }
         currentValue = value;
+
         function fake() {
             if (currentValue === value) {
                 callback(NaUtil.getScrrenMode(value));
@@ -115,15 +118,19 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
         //Window.prototype.naDispatch = (action) => NaGlobal.store.dispatch(action); //给window对象增加dispatch action方法
     }
 
+    loginWithRegister() {
+        return window.location.href.indexOf(PathConfig.LoginPage) > -1;
+    }
+
     /*为了children能用 formatMessage({id: LoginPageLocale.Password})的方式 组件用injectIntl包含*/
     renderMasterPage = injectIntl((props) => {
         NaGlobal.intl = props.intl;
         const topThis = this;
         const {props: {children}, state: {localeKey, mode}} = topThis;
-        const Master = (mode === ScreenModeEnum.sm) ?
+        const Master = this.loginWithRegister() ? <div>{children}</div> : ((mode === ScreenModeEnum.sm) ?
             <NaMasterMobilePage>{children}</NaMasterMobilePage> :
             <NaMasterWebPage localeKey={localeKey}
-                             onChangeLanguage={this.onChangeLanguage.bind(this)}>{children}</NaMasterWebPage>;
+                             onChangeLanguage={this.onChangeLanguage.bind(this)}>{children}</NaMasterWebPage>);
         return Master;
     });
 

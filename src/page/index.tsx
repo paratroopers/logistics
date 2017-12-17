@@ -7,9 +7,11 @@ import {NaVIPConsigneeAddressPage} from "./vip/na-vip-consignee-address-page";
 import {NaVIPWelcomePage} from "./vip/na-vip-welcome-page";
 import {NaMobileTabBar} from "./demo/na-mobile-tabbar";
 import {MbUserCenter} from "./mobile/user-center";
+import {NaLogin} from "./index/na-login";
 import MbUserCenterDetail from './mobile/user-center-detail';
 
 export {
+    NaLogin,
     NaDemoPage,
     NaHomePage,
     NaCostEstimatePage,

@@ -1,5 +1,7 @@
 /** 路径地址 */
 export class PathConfig {
+    /*Login*/
+    static LoginPage = "/login";
     /* Demo*/
     static DemoPage = "/demo";
     /* 首页*/

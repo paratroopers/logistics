@@ -126,7 +126,7 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
             </Col>
         </Row> : <Row className="login">
             <a onClick={() => {
-                topThis.setState({isLogin: true});
+                hashHistory.push(PathConfig.LoginPage);
             }}>
                 <i className={NaContext.getIconClassName('icon-yonghu')}></i>
                 <span>登录</span>
