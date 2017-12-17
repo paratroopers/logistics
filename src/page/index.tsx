@@ -8,10 +8,12 @@ import {NaVIPWelcomePage} from "./vip/na-vip-welcome-page";
 import {NaMobileTabBar} from "./demo/na-mobile-tabbar";
 import {MbUserCenter} from "./mobile/user-center";
 import {NaLogin} from "./index/na-login";
+import {NaRegisterPage} from "./index/na-register-page";
 import MbUserCenterDetail from './mobile/user-center-detail';
 
 export {
     NaLogin,
+    NaRegisterPage,
     NaDemoPage,
     NaHomePage,
     NaCostEstimatePage,

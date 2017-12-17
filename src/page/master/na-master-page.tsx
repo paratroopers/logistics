@@ -119,7 +119,7 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
     }
 
     loginWithRegister() {
-        return window.location.href.indexOf(PathConfig.LoginPage) > -1;
+        return window.location.href.indexOf(PathConfig.LoginPage) > -1 || window.location.href.indexOf(PathConfig.RegisterPage) > -1;
     }
 
     /*为了children能用 formatMessage({id: LoginPageLocale.Password})的方式 组件用injectIntl包含*/

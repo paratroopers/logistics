@@ -16,6 +16,8 @@ export class PathConfig {
     static VIPConsigneeAddressPage = "/vip/consignee/address";
     /*mobile Demo*/
     static MobilePage = "/demo-mobile";
+    /** 注册*/
+    static RegisterPage = "/register";
 }
 
 export class MobilePathConfig {
