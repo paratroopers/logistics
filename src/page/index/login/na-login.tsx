@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Row, Col, Layout, Tabs} from 'antd';
 import {NaLoginForm} from './na-login-form'
+import {NaRegisterPage} from './na-register-page';
 
 interface NaLoginProps {
 }
@@ -23,7 +24,7 @@ export class NaLogin extends React.Component<NaLoginProps, NaLoginStates> {
                             </div>
                             <Tabs defaultActiveKey="1" className="na-login-content-tabs">
                                 <Tabs.TabPane tab="登录" key="1"><NaLoginForm></NaLoginForm></Tabs.TabPane>
-                                <Tabs.TabPane tab="注册" key="2">注册</Tabs.TabPane>
+                                <Tabs.TabPane tab="注册" key="2"><NaRegisterPage></NaRegisterPage></Tabs.TabPane>
                             </Tabs>
                         </Col>
                     </Row>

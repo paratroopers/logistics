@@ -4,7 +4,7 @@ import {withRouter} from "react-router";
 import {Layout, Row, Col, Tabs} from "antd";
 const {Header, Content, Footer} = Layout;
 const {TabPane} = Tabs;
-import RegisterForm from "../../components/controls/na-register-form";
+import RegisterForm from "../../../components/controls/na-register-form";
 
 interface NaRegisterPageProps {
 }
