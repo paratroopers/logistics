@@ -20,13 +20,15 @@ export class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPag
     }
 
     render() {
-        return <Layout className="page-register">
+        return <Layout className="na-page-register">
             <Content style={{minHeight: '100vh'}}>
                 <Row style={{minHeight: '30vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                     <h1>欢迎注册</h1>
                 </Row>
                 <Row style={{maxWidth: 368, margin: '0 auto'}}>
-                    <Tabs defaultActiveKey="1" size='default'>
+                    <Tabs defaultActiveKey="1"
+                          tabBarStyle={{textAlign:'center'}}
+                          size='default'>
                         <TabPane tab="手机登录" key="1">
                             <RegisterForm></RegisterForm>
                         </TabPane>

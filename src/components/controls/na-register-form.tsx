@@ -22,7 +22,7 @@ class RegisterFormControl extends Component<RegisterFormControlProps, RegisterFo
         const topThis = this;
         const {props: {form: {getFieldDecorator}}} = topThis;
 
-        const prefixSelector = getFieldDecorator('prefix', {
+        const prefixSelector = getFieldDecorator('PhonePrefix', {
             initialValue: '86',
         })(
             <Select style={{width: 70}}>
@@ -30,9 +30,9 @@ class RegisterFormControl extends Component<RegisterFormControlProps, RegisterFo
                 <SelectOption value="87">+87</SelectOption>
             </Select>
         );
-
+        const afterInput =<Button type="primary">获取验证码</Button>;
         return (
-            <Form className="page-register-form">
+            <Form className="na-page-register-form">
                 <FormItem>
                     {getFieldDecorator('PhoneNumber', {
                         rules: [{required: true, message: 'Please input your phone number!'}],
@@ -40,6 +40,15 @@ class RegisterFormControl extends Component<RegisterFormControlProps, RegisterFo
                         <Input addonBefore={prefixSelector}
                                prefix={<Icon type="mobile" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                placeholder="请输入手机号码"/>
+                    )}
+                </FormItem>
+                <FormItem>
+                    {getFieldDecorator('Code', {
+                        rules: [{required: true, message: 'Please input your phone code!'}],
+                    })(
+                        <Input addonAfter={afterInput}
+                               prefix={<Icon type="barcode" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                               placeholder="请输入验证码"/>
                     )}
                 </FormItem>
                 <FormItem>
