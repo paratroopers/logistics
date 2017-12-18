@@ -1,5 +1,6 @@
 import * as React from "react";
 import {Component} from "react";
+import {Row} from "antd";
 /* 动画效果*/
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
@@ -31,8 +32,10 @@ export default class MotionFooterControl extends Component<MotionFooterControlPr
             </li>);
         });
         return (<li className={data.className} key={i}>
-            <h2>{data.title}</h2>
-            <ul>{content}</ul>
+            <Row className="li-content">
+                <h2>{data.title}</h2>
+                <ul>{content}</ul>
+            </Row>
         </li>);
     }
 
@@ -40,9 +43,8 @@ export default class MotionFooterControl extends Component<MotionFooterControlPr
         const topThis = this;
         const {props, props: {className}} = topThis;
         const logoContent = {
-            img: 'http://www.famliytree.cn/icon/logo.png',
-            rcode: 'http://www.famliytree.cn/icon/rcode.jpg',
-            content: 'From Mainland To Word'
+            img: 'http://www.famliytree.cn/icon/logoWrite.png',
+            rcode: 'http://www.famliytree.cn/icon/rcode.jpg'
         };
         const dataSource = [
                 {
@@ -70,13 +72,12 @@ export default class MotionFooterControl extends Component<MotionFooterControlPr
                       className={`content-template ${isNullOrUndefined(className) ? "motion-footer" : className}`}>
                 <QueueAnim type="bottom" component="ul" key="ul" leaveReverse>
                     <li key="logo">
-                        <p key={0} className="logo">
-                            <img src={logoContent.img} width="100%"/>
-                        </p>
-                        <p key={1} className="logo-content">{logoContent.content}</p>
-                        <p key={2} className="rcode">
-                            <img src={logoContent.rcode} width="100%"/>
-                        </p>
+                        <span key={0} className="logo">
+                            <img src={logoContent.img}/>
+                        </span>
+                        <span key={1} className="rcode">
+                            <img src={logoContent.rcode}/>
+                        </span>
                     </li>
                     {liChildrenToRender}
                 </QueueAnim>

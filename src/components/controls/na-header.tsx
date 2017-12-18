@@ -133,7 +133,7 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
             </a>
             <a className="separate">|</a>
             <a onClick={() => {
-                topThis.setState({isLogin: false});
+                hashHistory.push(PathConfig.RegisterPage);
             }}>
                 <i className={NaContext.getIconClassName('icon-zhuce')}></i>
                 <span>注册</span>

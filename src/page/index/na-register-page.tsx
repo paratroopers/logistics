@@ -30,13 +30,14 @@ export class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPag
         return <Layout className="na-page-register">
             <Content className="na-page-register-content" style={{minHeight: '100vh'}}>
                 <Row style={{width: '100%'}}>
-                    {/*<Row style={{textAlign:'center'}}>*/}
-                    {/*<h1 style={{fontSize: '70px',color: '#e64900'}}>大陸</h1>*/}
-                    {/*<p style={{fontSize: '14px',*/}
-                    {/*color: 'rgba(0, 0, 0, 0.45)',*/}
-                    {/*marginTop: '12px',*/}
-                    {/*marginBottom: '40px'}}>为你的境外物流，提供专业优质的服务</p>*/}
-                    {/*</Row>*/}
+                    <Row style={{textAlign: 'center'}}>
+                        <div><img style={{maxWidth: 300}} src="http://www.famliytree.cn/icon/logo.png"/></div>
+                        <p style={{
+                            fontSize: '14px',
+                            color: 'rgba(0, 0, 0, 0.45)',
+                            marginTop: '12px'
+                        }}>为你的境外物流，提供专业优质的服务</p>
+                    </Row>
                     <Row style={{maxWidth: 368, margin: '0 auto'}} className="register-tabs">
                         <Tabs size="large" activeKey={tabKey} tabBarStyle={{textAlign: 'center'}} onChange={(key) => {
                             topThis.setState({tabKey: key});
