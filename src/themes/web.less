@@ -11,13 +11,26 @@
 }
 
 .na-page-register {
-  &-content{
+  &-content {
     display: -webkit-box;
     -webkit-box-pack: center;
     -webkit-box-align: center;
     -webkit-box-orient: vertical;
+    .register-tabs {
+      .ant-tabs-bar {
+        border-bottom: none;
+        .ant-tabs-ink-bar-animated {
+          width: 50% !important;
+        }
+      }
+    }
   }
   &-form {
-
+    .ant-input-lg {
+      top: 0;
+    }
+    .ant-input-group-wrapper-lg .ant-input-group-addon {
+      top: 0;
+    }
   }
 }

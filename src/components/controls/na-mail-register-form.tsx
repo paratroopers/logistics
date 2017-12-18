@@ -27,7 +27,7 @@ class MailRegisterFormControl extends Component<MailRegisterFormControlProps, Ma
                     {getFieldDecorator('Mail', {
                         rules: [{required: true, message: 'Please input your phone number!'}],
                     })(
-                        <Input prefix={<Icon type="mail" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                        <Input size="large" prefix={<Icon type="mail" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                placeholder="请输入你的邮箱"/>
                     )}
                 </FormItem>
@@ -43,7 +43,7 @@ class MailRegisterFormControl extends Component<MailRegisterFormControlProps, Ma
                             )}
                         </Col>
                         <Col span={8} style={{padding:'0 4px'}}>
-                            <Button size="large" type="primary">获取验证码</Button>
+                            <Button size="large" type="primary" style={{width: '100%'}}>获取验证码</Button>
                         </Col>
                     </Row>
                 </FormItem>
@@ -52,6 +52,7 @@ class MailRegisterFormControl extends Component<MailRegisterFormControlProps, Ma
                         rules: [{required: true, message: 'Please input your Password!'}],
                     })(
                         <Input prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                               size="large"
                                type="password"
                                placeholder="设置你的登录密码"/>
                     )}
@@ -62,6 +63,7 @@ class MailRegisterFormControl extends Component<MailRegisterFormControlProps, Ma
                         rules: [{required: true, message: 'Please input your Password again!'}],
                     })(
                         <Input prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                               size="large"
                                type="password"
                                placeholder="请再次输入你的密码"/>
                     )}
