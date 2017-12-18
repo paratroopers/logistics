@@ -48,7 +48,7 @@ export class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPag
         const {state: {tabKey}} = topThis;
         return <Layout className="na-page-register">
             <Content className="na-page-register-content" style={{minHeight: '100vh'}}>
-                <Row style={{width: '100%'}}>
+                <Row style={{width: '100%', padding: '0 16px'}}>
                     <Row style={{textAlign: 'center'}}>
                         <div><img style={{maxWidth: 300}} src="http://www.famliytree.cn/icon/logo.png"/></div>
                         <p style={{
