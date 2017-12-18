@@ -18,6 +18,14 @@ class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, 
         super(props, context);
     }
 
+    onSubmit() {
+        const topThis = this;
+        const {props: {form}} = topThis;
+        form.validateFields({}, function () {
+
+        })
+    }
+
     render() {
         const topThis = this;
         const {props: {form: {getFieldDecorator}}} = topThis;
@@ -83,5 +91,5 @@ class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, 
         );
     }
 }
-const PhoneRegisterForm = Form.create({})(PhoneRegisterFormControl);
+const PhoneRegisterForm = Form.create({withRef: true})(PhoneRegisterFormControl);
 export default PhoneRegisterForm;

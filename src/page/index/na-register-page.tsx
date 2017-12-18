@@ -17,10 +17,29 @@ interface NaRegisterPageStates {
 
 @withRouter
 export class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates> {
+    phoneFrom: any;
+    mailFrom: any;
+
     constructor(props, context) {
         super(props, context);
         this.state = {
             tabKey: "0"
+        }
+    }
+
+    onClick() {
+        const topThis = this;
+        const {state: {tabKey}} = topThis;
+        switch (tabKey) {
+            case "0":
+                topThis.phoneFrom.validateFields({}, function (err, values) {
+                    console.log(values);
+                })
+                break;
+            case "1":
+                break;
+            default:
+                break;
         }
     }
 
@@ -43,7 +62,9 @@ export class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPag
                             topThis.setState({tabKey: key});
                         }}>
                             <TabPane tab="手机登录" key="0">
-                                <PhoneRegisterForm></PhoneRegisterForm>
+                                <PhoneRegisterForm ref={(form) => {
+                                    topThis.phoneFrom = form;
+                                }}></PhoneRegisterForm>
                             </TabPane>
                             <TabPane tab="邮箱登录" key="1">
                                 <MailRegisterForm></MailRegisterForm>
@@ -53,6 +74,7 @@ export class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPag
                     <Row style={{maxWidth: 368, margin: '0 auto'}}>
                         <Col span={24}>
                             <Button size="large" type="primary" className="register-button"
+                                    onClick={topThis.onClick.bind(this)}
                                     style={{width: "100%", marginBottom: '16px'}}>
                                 同意条款并注册
                             </Button>
