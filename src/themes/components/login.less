@@ -8,8 +8,14 @@
     -webkit-box-pack: center;
     -webkit-box-align: center;
     -webkit-box-orient: vertical;
+    &-img {
+      text-align: center;
+      img {
+        max-width: 300px;
+      }
+    }
     &-col {
-      min-height: 700px;
+      padding: 0 10px 0 10px;
     }
     > div {
       width: 100%;
@@ -28,10 +34,9 @@
     }
     &-title {
       text-align: center;
-      .company-name {
-        font-size: 55px;
-        margin-bottom: 10px;
-      }
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.45);
+      padding: 12px 0 14px 0;
     }
     &-form {
       &-forgot {
