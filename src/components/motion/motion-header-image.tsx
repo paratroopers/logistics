@@ -30,13 +30,15 @@ export class MotionHeaderImage extends React.Component<any, any> {
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center'
                             }}/>
-                        <TweenOne className={isMobile ? "mobile-user-title" : "banner-user-title"}
-                                  animation={{y: 30, opacity: 0, type: 'from'}}>
-                            <span style={isMobile ? {fontSize: '32px'} : {letterSpacing: '30px'}}>一流的物流团队</span>
-                        </TweenOne>
-                        <TweenOne className={isMobile ? "" : "banner-user-text"}
+                        <TweenOne className={isMobile ? "" : "banner-user-content"}
                                   animation={{y: 30, opacity: 0, type: 'from', delay: 100}}>
-                            <span style={isMobile ? {fontSize: '15px'} : {letterSpacing: '20px'}}>为您提供专业的境外物流服务</span>
+                            <span key="0" className="a" style={isMobile ? {fontSize: '32px'} : {letterSpacing: '30px'}}>一流的物流团队</span>
+                            <span key="1" className="b" style={isMobile ? {fontSize: '15px'} : {letterSpacing: '20px'}}>为您提供专业的境外物流服务</span>
+                            <span key="2" className="a" style={isMobile ? {fontSize: '32px'} : {letterSpacing: '30px'}}>注册会员获得仓位</span>
+                            <span key="3" className="b" style={isMobile ? {fontSize: '15px'} : {letterSpacing: '20px'}}>用户直接发货进仓</span>
+                            <span key="4" className="a" style={isMobile ? {fontSize: '32px'} : {letterSpacing: '30px'}}>免费理货合并打包</span>
+                            <span key="5" className="b" style={isMobile ? {fontSize: '15px'} : {letterSpacing: '20px'}}>专业物流供您选择</span>
+                            <span key="6" className="a" style={isMobile ? {fontSize: '32px'} : {letterSpacing: '30px'}}>大陆您的私家仓库</span>
                         </TweenOne>
                         <TweenOne animation={{y: '-=20', yoyo: true, repeat: -1, duration: 1000}}
                                   className={`motion-banner-icon`}
