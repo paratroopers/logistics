@@ -6,8 +6,7 @@ const FormItem = Form.Item;
 const SelectOption = Select.Option;
 
 export interface PhoneRegisterFormControlProps extends FormComponentProps {
-    naAge: number;
-    onSubmit?: (err, values) => void;
+
 }
 
 export interface PhoneRegisterFormControlStates {
@@ -17,15 +16,6 @@ export interface PhoneRegisterFormControlStates {
 class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, PhoneRegisterFormControlStates> {
     constructor(props, context) {
         super(props, context);
-    }
-
-    onSubmit() {
-        const topThis = this;
-        const {props: {form, onSubmit}} = topThis;
-        form.validateFields({}, function (err, values) {
-            if (onSubmit)
-                onSubmit(err, values);
-        })
     }
 
     render() {

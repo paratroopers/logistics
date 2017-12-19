@@ -1,7 +1,9 @@
 import * as React from "react";
 import {Component} from "react";
-import {withRouter} from "react-router";
+import {withRouter,Link} from "react-router";
+import {PathConfig}from "../../config/pathconfig";
 import {Layout, Row, Col, Tabs, Button, Checkbox} from "antd";
+import {RegisterEnum}from "../../../src/api/model/common-model";
 const {Header, Content, Footer} = Layout;
 const {TabPane} = Tabs;
 import PhoneRegisterForm from "../../components/controls/na-phone-register-form";
@@ -23,7 +25,7 @@ export class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPag
     constructor(props, context) {
         super(props, context);
         this.state = {
-            tabKey: "0"
+            tabKey: RegisterEnum.phone.toString()
         }
     }
 
@@ -31,10 +33,15 @@ export class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPag
         const topThis = this;
         const {state: {tabKey}} = topThis;
         switch (tabKey) {
-            case "0":
-                topThis.phoneFrom.onSubmit();
+            case RegisterEnum.phone.toString():
+                topThis.phoneFrom.props.form.validateFields({},function (err,values) {
+                    
+                });
                 break;
-            case "1":
+            case RegisterEnum.mail.toString():
+                topThis.mailFrom.props.form.validateFields({},function (err,values) {
+
+                });
                 break;
             default:
                 break;
@@ -48,7 +55,7 @@ export class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPag
             <Content className="na-page-register-content" style={{minHeight: '100vh'}}>
                 <Row style={{width: '100%', padding: '0 16px'}}>
                     <Row style={{textAlign: 'center'}}>
-                        <div><img style={{maxWidth: 300}} src="http://www.famliytree.cn/icon/logo.png"/></div>
+                        <div><img style={{maxWidth: 368}} src="http://www.famliytree.cn/icon/logo.png"/></div>
                         <p style={{
                             fontSize: '14px',
                             color: 'rgba(0, 0, 0, 0.45)',
@@ -59,17 +66,11 @@ export class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPag
                         <Tabs size="large" activeKey={tabKey} tabBarStyle={{textAlign: 'center'}} onChange={(key) => {
                             topThis.setState({tabKey: key});
                         }}>
-                            <TabPane tab="手机登录" key="0">
-                                <PhoneRegisterForm naAge={18}
-                                                   onSubmit={(err, values) => {
-                                                       console.log("onSubmit：");
-                                                       console.log(err);
-                                                       console.log(values);
-                                                   }}
-                                                   wrappedComponentRef={(inst) => topThis.phoneFrom = inst}></PhoneRegisterForm>
+                            <TabPane tab="手机登录" key={RegisterEnum.phone.toString()}>
+                                <PhoneRegisterForm wrappedComponentRef={(inst) => topThis.phoneFrom = inst}></PhoneRegisterForm>
                             </TabPane>
-                            <TabPane tab="邮箱登录" key="1">
-                                <MailRegisterForm></MailRegisterForm>
+                            <TabPane tab="邮箱登录" key={RegisterEnum.mail.toString()}>
+                                <MailRegisterForm wrappedComponentRef={(inst) => topThis.mailFrom = inst}></MailRegisterForm>
                             </TabPane>
                         </Tabs>
                     </Row>
@@ -82,7 +83,15 @@ export class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPag
                             </Button>
                         </Col>
                         <Col span={24}>
-                            <Checkbox defaultChecked={true}>《法律声明和隐私权政策》</Checkbox>
+                            <Row>
+                                <Col span={12}>
+                                    <Checkbox defaultChecked={true}></Checkbox>
+                                    <a>《法律声明和隐私权政策》</a>
+                                </Col>
+                                <Col span={12} style={{textAlign:'right'}}>
+                                    <span>已有账号？ <Link to={PathConfig.LoginPage}>快捷登录 ></Link> </span>
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
                 </Row>

@@ -1,10 +1,10 @@
 import * as React from "react";
 import {Component} from "react";
 import {Form, Input, Icon, Button, Row, Col} from 'antd';
-import {FormProps} from 'antd/lib/form/Form';
+import {FormComponentProps} from 'antd/lib/form/Form';
 const FormItem = Form.Item;
 
-interface MailRegisterFormControlProps extends FormProps {
+interface MailRegisterFormControlProps extends FormComponentProps {
 
 }
 
