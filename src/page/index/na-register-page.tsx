@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Component} from "react";
-import {withRouter,Link} from "react-router";
+import {withRouter,Link,hashHistory} from "react-router";
 import {PathConfig}from "../../config/pathconfig";
 import {Layout, Row, Col, Tabs, Button, Checkbox} from "antd";
 import {RegisterEnum}from "../../../src/api/model/common-model";
@@ -55,7 +55,9 @@ export class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPag
             <Content className="na-page-register-content" style={{minHeight: '100vh'}}>
                 <Row style={{width: '100%', padding: '0 16px'}}>
                     <Row style={{textAlign: 'center'}}>
-                        <div><img style={{maxWidth: 368}} src="http://www.famliytree.cn/icon/logo.png"/></div>
+                        <div><img onClick={()=>{
+                            hashHistory.push(PathConfig.HomePage);
+                        }} style={{maxWidth: 368,cursor:'pointer'}} src="http://www.famliytree.cn/icon/logo.png"/></div>
                         <p style={{
                             fontSize: '14px',
                             color: 'rgba(0, 0, 0, 0.45)',

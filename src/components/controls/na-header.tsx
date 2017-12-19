@@ -176,7 +176,9 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                 <Row type="flex" justify="start">
                     <Col>
                         <a className="logo" onClick={topThis.onClickLogo.bind(this)}>
-                            {typeof logo === "string" ? <img src={logo}></img> : logo}
+                            {typeof logo === "string" ? <img src={logo} style={{cursor:'pointer'}} onClick={()=>{
+                                hashHistory.push(PathConfig.HomePage);
+                            }}></img> : logo}
                         </a>
                     </Col>
                 </Row>
