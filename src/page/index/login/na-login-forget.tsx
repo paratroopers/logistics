@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {hashHistory} from 'react-router';
 import {Form, Input, Button, Modal, Row, Col} from 'antd';
+import {FormComponentProps} from 'antd/lib/form/Form';
 import {Steps, Icon} from 'antd-mobile';
 import {PathConfig} from '../../../config/pathconfig';
-import {FormComponentProps} from 'antd/lib/form/Form';
 
 const FormItem = Form.Item;
 
@@ -18,7 +18,7 @@ interface NaLoginForgetStates {
 }
 
 
-export class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetStates> {
+class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetStates> {
 
     constructor(props, content) {
         super(props, content);
@@ -109,6 +109,4 @@ export class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginFo
         </Modal>
     }
 }
-
-const NaLoginForgetForm = Form.create()(NaLoginForget);
-export default NaLoginForgetForm;
+export default Form.create<any>()(NaLoginForget);

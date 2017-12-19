@@ -1,15 +1,16 @@
 import * as React from "react";
 import {Component} from "react";
 import {Form, Input, Icon, Button, Select, Row, Col} from 'antd';
-import {FormProps} from 'antd/lib/form/Form';
+import {FormComponentProps} from 'antd/lib/form/Form';
 const FormItem = Form.Item;
 const SelectOption = Select.Option;
 
-interface PhoneRegisterFormControlProps extends FormProps {
-
+export interface PhoneRegisterFormControlProps extends FormComponentProps {
+    naAge: number;
+    onSubmit?: (err, values) => void;
 }
 
-interface PhoneRegisterFormControlStates {
+export interface PhoneRegisterFormControlStates {
 
 }
 
@@ -20,9 +21,10 @@ class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, 
 
     onSubmit() {
         const topThis = this;
-        const {props: {form}} = topThis;
-        form.validateFields({}, function () {
-
+        const {props: {form, onSubmit}} = topThis;
+        form.validateFields({}, function (err, values) {
+            if (onSubmit)
+                onSubmit(err, values);
         })
     }
 
@@ -91,5 +93,4 @@ class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, 
         );
     }
 }
-const PhoneRegisterForm = Form.create({withRef: true})(PhoneRegisterFormControl);
-export default PhoneRegisterForm;
+export default Form.create<any>()(PhoneRegisterFormControl);

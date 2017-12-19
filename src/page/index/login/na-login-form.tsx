@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {hashHistory} from 'react-router';
 import {Form, Icon, Input, Button, Checkbox, Modal, Row, Col, Layout} from 'antd';
-import {PathConfig} from '../../../config/pathconfig';
-import {NaLoginForget} from './na-login-forget';
 import {FormComponentProps} from 'antd/lib/form/Form';
+import {PathConfig} from '../../../config/pathconfig';
+import NaLoginForget from './na-login-forget';
 
 const FormItem = Form.Item;
 
@@ -38,7 +38,7 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
                     <Col lg={8} sm={24} md={12} xs={24} xl={4} className="na-login-content-col">
                         {<NaLoginForget onCancel={() => {
                             this.setState({visible: false})
-                        }} visible={this.state.visible}></NaLoginForget>}
+                        }} visible={true}></NaLoginForget>}
                         <div className="na-login-content-img">
                             <img src="http://www.famliytree.cn/icon/logo.png"/>
                         </div>
@@ -94,5 +94,5 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
     }
 }
 
-const NaLoginForm = Form.create()(NaLoginFormControl);
+const NaLoginForm = Form.create<any>()(NaLoginFormControl);
 export default NaLoginForm;

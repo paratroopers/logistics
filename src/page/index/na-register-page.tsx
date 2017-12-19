@@ -32,9 +32,7 @@ export class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPag
         const {state: {tabKey}} = topThis;
         switch (tabKey) {
             case "0":
-                topThis.phoneFrom.validateFields({}, function (err, values) {
-                    console.log(values);
-                })
+                topThis.phoneFrom.onSubmit();
                 break;
             case "1":
                 break;
@@ -62,9 +60,13 @@ export class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPag
                             topThis.setState({tabKey: key});
                         }}>
                             <TabPane tab="手机登录" key="0">
-                                <PhoneRegisterForm ref={(form) => {
-                                    topThis.phoneFrom = form;
-                                }}></PhoneRegisterForm>
+                                <PhoneRegisterForm naAge={18}
+                                                   onSubmit={(err, values) => {
+                                                       console.log("onSubmit：");
+                                                       console.log(err);
+                                                       console.log(values);
+                                                   }}
+                                                   wrappedComponentRef={(inst) => topThis.phoneFrom = inst}></PhoneRegisterForm>
                             </TabPane>
                             <TabPane tab="邮箱登录" key="1">
                                 <MailRegisterForm></MailRegisterForm>

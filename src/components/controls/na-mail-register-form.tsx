@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Component} from "react";
-import {Form, Input, Icon, Button, Row,Col} from 'antd';
+import {Form, Input, Icon, Button, Row, Col} from 'antd';
 import {FormProps} from 'antd/lib/form/Form';
 const FormItem = Form.Item;
 
@@ -32,8 +32,8 @@ class MailRegisterFormControl extends Component<MailRegisterFormControlProps, Ma
                     )}
                 </FormItem>
                 <FormItem>
-                    <Row style={{margin:'0 -4px'}}>
-                        <Col span={16} style={{padding:'0 4px'}}>
+                    <Row style={{margin: '0 -4px'}}>
+                        <Col span={16} style={{padding: '0 4px'}}>
                             {getFieldDecorator('Code', {
                                 rules: [{required: true, message: 'Please input your phone code!'}],
                             })(
@@ -42,7 +42,7 @@ class MailRegisterFormControl extends Component<MailRegisterFormControlProps, Ma
                                        placeholder="请输入验证码"/>
                             )}
                         </Col>
-                        <Col span={8} style={{padding:'0 4px'}}>
+                        <Col span={8} style={{padding: '0 4px'}}>
                             <Button size="large" type="primary" style={{width: '100%'}}>获取验证码</Button>
                         </Col>
                     </Row>
@@ -72,5 +72,5 @@ class MailRegisterFormControl extends Component<MailRegisterFormControlProps, Ma
         );
     }
 }
-const MailRegisterForm = Form.create({})(MailRegisterFormControl);
+const MailRegisterForm = Form.create<any>()(MailRegisterFormControl);
 export default MailRegisterForm;
