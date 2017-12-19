@@ -126,14 +126,17 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
             </Col>
         </Row> : <Row className="login">
             <a onClick={() => {
-                hashHistory.push(PathConfig.LoginPage);
+                //window.location.reload();
+                window.location.replace("./index.html#/login");
+                //hashHistory.push(PathConfig.LoginPage);
             }}>
                 <i className={NaContext.getIconClassName('icon-yonghu')}></i>
                 <span>登录</span>
             </a>
             <a className="separate">|</a>
             <a onClick={() => {
-                hashHistory.push(PathConfig.RegisterPage);
+                window.location.replace("./index.html#/register");
+                //hashHistory.push(PathConfig.RegisterPage);
             }}>
                 <i className={NaContext.getIconClassName('icon-zhuce')}></i>
                 <span>注册</span>
@@ -176,9 +179,7 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                 <Row type="flex" justify="start">
                     <Col>
                         <a className="logo" onClick={topThis.onClickLogo.bind(this)}>
-                            {typeof logo === "string" ? <img src={logo} style={{cursor:'pointer'}} onClick={()=>{
-                                hashHistory.push(PathConfig.HomePage);
-                            }}></img> : logo}
+                            {typeof logo === "string" ? <img src={logo}></img> : logo}
                         </a>
                     </Col>
                 </Row>

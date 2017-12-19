@@ -1,11 +1,12 @@
 import * as React from 'react';
 import {Layout} from "antd";
 import NaHeader from "../../components/controls/na-header";
+
 const {Header, Content, Footer} = Layout;
 import MotionFooterControl from "../../components/motion/motion-footer";
 
 interface NaMasterWebPageProps {
-    localeKey: string;
+    localeKey?: string;
     onChangeLanguage?: (key: any) => void;
 }
 

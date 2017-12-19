@@ -4,8 +4,9 @@ export class PathConfig {
     static LoginPage = "/login";
     /* Demo*/
     static DemoPage = "/demo";
+    static MasterPage = "/";
     /* 首页*/
-    static HomePage = "/";
+    static HomePage = "/home";
     /* 费用估算*/
     static CostEstimatePage = "/cost/estimate";
     /* 公司简介*/

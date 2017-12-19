@@ -10,8 +10,10 @@ import {MbUserCenter} from "./mobile/user-center";
 import {NaRegisterPage} from "./index/na-register-page";
 import NaLoginForm from "./index/login/na-login-form";
 import MbUserCenterDetail from './mobile/user-center-detail';
+import {NaMasterMainPage} from './master/na-mater-main-page';
 
 export {
+    NaMasterMainPage,
     NaLoginForm,
     NaRegisterPage,
     NaDemoPage,

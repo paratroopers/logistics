@@ -127,11 +127,11 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
         NaGlobal.intl = props.intl;
         const topThis = this;
         const {props: {children}, state: {localeKey, mode}} = topThis;
-        const Master = this.loginWithRegister() ? <div>{children}</div> : ((mode === ScreenModeEnum.sm) ?
-            <NaMasterMobilePage>{children}</NaMasterMobilePage> :
-            <NaMasterWebPage localeKey={localeKey}
-                             onChangeLanguage={this.onChangeLanguage.bind(this)}>{children}</NaMasterWebPage>);
-        return Master;
+        /*        const Master = this.loginWithRegister() ? <div>{children}</div> : ((mode === ScreenModeEnum.sm) ?
+                    <NaMasterMobilePage>{children}</NaMasterMobilePage> :
+                    <NaMasterWebPage localeKey={localeKey}
+                                     onChangeLanguage={this.onChangeLanguage.bind(this)}>{children}</NaMasterWebPage>);*/
+        return <div>{children}</div>;
     });
 
     render() {
@@ -142,7 +142,7 @@ export class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageState
                 <IntlProvider key={appLocale.locale}
                               locale={appLocale.locale}
                               messages={appLocale.messages}>
-                    <topThis.renderMasterPage></topThis.renderMasterPage>
+                    <this.renderMasterPage></this.renderMasterPage>
                 </IntlProvider></NaLocalProvider>
             : <div></div>;
         return <Provider store={NaGlobal.store}>
