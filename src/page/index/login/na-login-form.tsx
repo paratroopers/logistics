@@ -38,7 +38,7 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
                     <Col lg={8} sm={24} md={12} xs={24} xl={4} className="na-login-content-col">
                         {<NaLoginForget onCancel={() => {
                             this.setState({visible: false})
-                        }} visible={true}></NaLoginForget>}
+                        }} visible={this.state.visible}></NaLoginForget>}
                         <div className="na-login-content-img">
                             <img src="http://www.famliytree.cn/icon/logo.png"/>
                         </div>
