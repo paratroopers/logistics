@@ -3,7 +3,7 @@ import BannerAnim, {Element} from 'rc-banner-anim';
 import {Icon} from 'antd';
 import 'rc-banner-anim/assets/index.css';
 import TweenOne from 'rc-tween-one';
-import {HomeCostQuery} from '../../components/controls/home-cost-query';
+import HomeCostQuery from '../../components/controls/home-cost-query';
 import {NaConstants} from '../../util/common';
 
 const BgElement = Element.BgElement;

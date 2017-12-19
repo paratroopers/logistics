@@ -1,9 +1,11 @@
 import * as React from 'react';
-import {Button, Select, Row, Col, Form, Input} from 'antd';
+import {hashHistory} from 'react-router';
+import {Button, Select, Row, Col, Form, Input, Spin} from 'antd';
+import {PathConfig} from '../../config/pathconfig';
 import {FormComponentProps} from 'antd/lib/form/Form';
 
 
-interface HomeCostQueryProps {
+interface HomeCostQueryProps extends FormComponentProps {
     className?: string;
     style?: any;
 }
@@ -12,16 +14,22 @@ interface HomeCostQueryStates {
 }
 
 
-export class HomeCostQuery extends React.Component<HomeCostQueryProps, HomeCostQueryStates> {
+class HomeCostQueryForm extends React.Component<HomeCostQueryProps, HomeCostQueryStates> {
     constructor(props, context) {
         super(props, context);
     }
 
     onOk() {
-
+        this.props.form.validateFields((err, values) => {
+            if (err) {
+                return;
+            } else
+                hashHistory.push(PathConfig.CostEstimatePage);
+        });
     }
 
     render() {
+        const {getFieldDecorator} = this.props.form;
         return <Row type="flex" justify="center" align="top" className={this.props.className} style={this.props.style}>
             <Col xs={0} sm={0} md={0} lg={13} xl={13}>
                 <div className="banner-form-header">
@@ -36,21 +44,44 @@ export class HomeCostQuery extends React.Component<HomeCostQueryProps, HomeCostQ
             <Col xs={0} sm={0} md={0} lg={13} xl={13} className="banner-form-parent">
                 <Form layout="vertical" style={{padding: 24}}>
                     <Form.Item>
-                        <Select placeholder="收货国家" size="large"/>
+                        {getFieldDecorator('city', {
+                            rules: [{required: true, message: '请填写收货国家!'}],
+                        })(<Select
+                            mode="multiple"
+                            notFoundContent={<Spin size="small"/>}
+                            filterOption={false}
+                            onSearch={() => {
+                            }} placeholder="收货国家" size="large"/>)}
                     </Form.Item>
                     <Form.Item>
-                        <Input placeholder="重量（kg）公斤" size="large"/>
+                        {getFieldDecorator('kg', {
+                            rules: [{required: true, message: '请填写重量!'}],
+                        })(<Input placeholder="重量（kg）公斤" size="large"/>)}
                     </Form.Item>
                     <Form.Item>
                         <Row type="flex" justify="center" align="top">
-                            <Col span={7}><Input placeholder="长" size="large"/></Col>
-                            <Col span={7} offset={1}><Input placeholder="宽" size="large"/></Col>
-                            <Col span={8} offset={1}><Input placeholder="高" size="large"/></Col>
+                            <Col span={7}>
+                                {getFieldDecorator('long', {
+                                    rules: [{required: true, message: '请填写长度!'}],
+                                })(<Input placeholder="长（cm）" size="large"/>)}
+                            </Col>
+                            <Col span={7} offset={1}>
+                                {getFieldDecorator('width', {
+                                    rules: [{required: true, message: '请填写宽度!'}],
+                                })(<Input placeholder="宽（cm）" size="large"/>)}
+                            </Col>
+                            <Col span={8} offset={1}>
+                                {getFieldDecorator('height', {
+                                    rules: [{required: true, message: '请填写高度!'}],
+                                })(<Input placeholder="高（cm）" size="large"/>)}
+                            </Col>
                             <Col span={1}></Col>
                         </Row>
                     </Form.Item>
                     <Form.Item>
-                        <Input placeholder="体积（m3）" size="large"/>
+                        {getFieldDecorator('volume', {
+                            rules: [{required: true, message: '请填写体积!'}],
+                        })(<Input placeholder="体积（m3）" size="large"/>)}
                     </Form.Item>
                     <Form.Item>
                         <Row type="flex" justify="center">
@@ -62,3 +93,6 @@ export class HomeCostQuery extends React.Component<HomeCostQueryProps, HomeCostQ
         </Row>;
     }
 }
+
+const HomeCostQuery = Form.create<any>()(HomeCostQueryForm);
+export default HomeCostQuery;

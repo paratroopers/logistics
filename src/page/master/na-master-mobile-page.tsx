@@ -99,7 +99,7 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
                 NaGlobal.store.dispatch(MobileNavTreeAction.SelectTabLoaded(null, null));
             }}><i className="iconfont icon-disclosureindicator"></i></a>
         else
-            return <a className="left-icon"><img src={NaContext.getIconAddress('logo')}/></a>;
+            return <a className="left-icon"><img src="http://www.famliytree.cn/icon/logo.png"/></a>;
     }
 
     renderWebIcon(iconName: string) {
@@ -118,10 +118,9 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
             <Layout>
                 <Header className="header fixed">
                     <NavBar
-                        mode="light"
-                        rightContent={this.renderHeaderRight()}
-                        icon={this.renderHeaderLeft()}>
-                        MainLand
+                        mode="light">
+                        <a className="left-icon"><img style={{width: '120px'}}
+                                                      src="http://www.famliytree.cn/icon/logo-mobile.png"/></a>
                     </NavBar>
                     <div className={'a'}></div>
                 </Header>

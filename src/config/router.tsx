@@ -20,7 +20,7 @@ const routerConfig = (
     <Router history={hashHistory}>
         <Route path={PathConfig.MasterPage} component={NaMasterMainPage}>
             <IndexRoute component={NaHomePage}></IndexRoute>
-            <Route path={PathConfig.HomePage} component={NaHomePage}/>
+            <Route path={PathConfig.MasterPage} component={NaHomePage}/>
             <Route path={PathConfig.CostEstimatePage} component={NaCostEstimatePage}/>
             <Route path={PathConfig.CompanyProfilePage} component={NaCompanyProfilePage}/>
             <Route path={PathConfig.MobilePage} component={NaMobileTabBar}/>
