@@ -88,17 +88,42 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
     }
 
     renderDoubtContent() {
-        return <Row>
-            <Col>
-                <i style={{color: '#4cafe9'}} className={NaContext.getIconClassName('icon-qq')}></i>
-                <span>738114990</span>
-            </Col>
-            <Col>
-                <i style={{color: '#fab200'}} className={NaContext.getIconClassName('icon-youxiang')}></i>
-                <span>xuke_break@163.com</span>
-            </Col>
-            <Col></Col>
-        </Row>
+        return [
+            <Row type="flex">
+                <Col span={4}>
+                    <i style={{
+                        color: '#4cafe9', position: 'absolute',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        fontSize: '20px',
+                        textAlign: 'center'
+                    }} className={NaContext.getIconClassName('icon-qq')}></i>
+                </Col>
+                <Col span={20}>
+                    <p style={{
+                        color: '#000', fontSize: '15px', margin: '0',
+                        textAlign: 'center'
+                    }}>服务人员QQ号码</p>
+                    <p style={{
+                        color: '#4cafe9', margin: '0',
+                        textAlign: 'center'
+                    }}>738114990</p>
+                </Col>
+            </Row>,
+            <Row>
+                <Col>
+                    <i style={{color: '#fab200'}} className={NaContext.getIconClassName('icon-youxiang')}></i>
+                    <span>xuke_break@163.com</span>
+                </Col>
+            </Row>,
+            <Row>
+                <Col>
+                    <i style={{color: '#50b44d'}} className={NaContext.getIconClassName('icon-weixin')}></i>
+                    <img style={{width: '80px', height: "80px"}}/>
+                </Col>
+                <Col></Col>
+            </Row>
+        ]
     }
 
     renderUserNameContent() {
@@ -140,7 +165,8 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
             </Col>
         </Row> : <Row className="login">
             <a onClick={() => {
-                {/*window.location.replace("./index.html#/login");*/}
+                {/*window.location.replace("./index.html#/login");*/
+                }
                 hashHistory.push(PathConfig.LoginPage);
             }}>
                 <i className={NaContext.getIconClassName('icon-yonghu')}></i>
@@ -148,7 +174,8 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
             </a>
             <a className="separate">|</a>
             <a onClick={() => {
-                {/*window.location.replace("./index.html#/register");*/}
+                {/*window.location.replace("./index.html#/register");*/
+                }
                 hashHistory.push(PathConfig.RegisterPage);
             }}>
                 <i className={NaContext.getIconClassName('icon-zhuce')}></i>
@@ -190,13 +217,13 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
         return <Row className={className ? className + " na-header" : "na-header"}>
             <Col xs={12} sm={12} md={8} lg={5} xl={5}>
                 {/*<Row type="flex" justify="start">*/}
-                    {/*<Col>*/}
-                        {/*<a className="logo" onClick={topThis.onClickLogo.bind(this)}>*/}
-                            {/*{typeof logo === "string" ? <img onClick={()=>{*/}
-                                {/*hashHistory.push(PathConfig.HomePage);*/}
-                            {/*}} src={logo}></img> : logo}*/}
-                        {/*</a>*/}
-                    {/*</Col>*/}
+                {/*<Col>*/}
+                {/*<a className="logo" onClick={topThis.onClickLogo.bind(this)}>*/}
+                {/*{typeof logo === "string" ? <img onClick={()=>{*/}
+                {/*hashHistory.push(PathConfig.HomePage);*/}
+                {/*}} src={logo}></img> : logo}*/}
+                {/*</a>*/}
+                {/*</Col>*/}
                 {/*</Row>*/}
             </Col>
             <Col xs={0} sm={0} md={12} lg={8} xl={8}>
