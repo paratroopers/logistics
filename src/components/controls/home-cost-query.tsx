@@ -8,6 +8,7 @@ import {FormComponentProps} from 'antd/lib/form/Form';
 interface HomeCostQueryProps extends FormComponentProps {
     className?: string;
     style?: any;
+    isHeard?: boolean;
 }
 
 interface HomeCostQueryStates {
@@ -29,9 +30,10 @@ class HomeCostQueryForm extends React.Component<HomeCostQueryProps, HomeCostQuer
     }
 
     render() {
-        const {getFieldDecorator} = this.props.form;
+        const topThis = this;
+        const {props: {isHeard, form: {getFieldDecorator}}} = topThis;
         return <Row type="flex" justify="center" align="top" className={this.props.className} style={this.props.style}>
-            <Col xs={0} sm={0} md={0} lg={13} xl={13}>
+            {isHeard && <Col xs={0} sm={0} md={0} lg={24} xl={24}>
                 <div className="banner-form-header">
                     <Row type="flex" justify="start" style={{paddingTop: '13px', paddingLeft: '21px'}}>
                         <h2>
@@ -40,12 +42,12 @@ class HomeCostQueryForm extends React.Component<HomeCostQueryProps, HomeCostQuer
                         </h2>
                     </Row>
                 </div>
-            </Col>
-            <Col xs={0} sm={0} md={0} lg={13} xl={13} className="banner-form-parent">
+            </Col>}
+            <Col xs={0} sm={0} md={0} lg={24} xl={24} className="banner-form-parent">
                 <Form layout="vertical" style={{padding: 24}}>
                     <Form.Item>
                         {getFieldDecorator('city', {
-                            rules: [{required: true, message: '请填写收货国家!'}],
+                            rules: [{required: true, message: '请填写收货国家!'}]
                         })(<Select
                             mode="multiple"
                             notFoundContent={<Spin size="small"/>}

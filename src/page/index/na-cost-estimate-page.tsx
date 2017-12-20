@@ -3,7 +3,7 @@ import {Component} from "react";
 import {withRouter, Link} from "react-router";
 import {PathConfig} from "../../config/pathconfig";
 import {Layout, Row, Col, Form, Input, Button, Tag, Table} from "antd";
-
+import HomeCostQuery from "../../components/controls/home-cost-query";
 const {Content} = Layout;
 const FormItem = Form.Item;
 const {CheckableTag} = Tag;
@@ -142,32 +142,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
         const fontSize = {fontSize: '14px'};
         return <Row type="flex" justify="space-between">
             <Col xs={24} sm={24} md={24} lg={10} xl={10}>
-                <Row>
-                    <Form layout="vertical">
-                        <FormItem>
-                            <Input placeholder="收货国家" size="large"/>
-                        </FormItem>
-                        <FormItem>
-                            <Input placeholder="重量（kg）公斤" size="large"/>
-                        </FormItem>
-                        <Form.Item>
-                            <Row type="flex" justify="center" align="top">
-                                <Col span={7}><Input placeholder="长" size="large"/></Col>
-                                <Col span={7} offset={1}><Input placeholder="宽" size="large"/></Col>
-                                <Col span={8} offset={1}><Input placeholder="高" size="large"/></Col>
-                                <Col span={1}></Col>
-                            </Row>
-                        </Form.Item>
-                        <FormItem>
-                            <Input placeholder="体积（m3）" size="large"/>
-                        </FormItem>
-                        <FormItem>
-                            <Row type="flex" justify="center">
-                                <Button size="large" type="primary">开始计算</Button>
-                            </Row>
-                        </FormItem>
-                    </Form>
-                </Row>
+                <HomeCostQuery></HomeCostQuery>
                 <Row>
                     <Col style={{
                         border: '1px solid #e65922',
@@ -219,9 +194,9 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
 
     render() {
         const topThis = this;
-        return <Layout style={{minHeight: '100%', backgroundColor: '#FFF'}}>
+        return <Layout className="cost-estimate-page" style={{minHeight: '100%', backgroundColor: '#FFF'}}>
             <Content>
-                <Row style={{marginBottom: 24}} className="page-title-cost-image">
+                <Row style={{marginBottom: 24,backgroundSize:'cover'}} className="page-title-cost-image">
                 </Row>
                 <Row type="flex" justify="space-around">
                     <Col xs={22} sm={22} md={18} lg={18} xl={18}>

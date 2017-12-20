@@ -44,7 +44,7 @@ export default class MotionFooterControl extends Component<MotionFooterControlPr
         const {props, props: {className}} = topThis;
         const logoContent = {
             img: 'http://www.famliytree.cn/icon/logoWrite.png',
-            rcode: 'http://www.famliytree.cn/icon/rcode.jpg'
+            rcode: 'http://www.famliytree.cn/icon/rcode.png'
         };
         const dataSource = [
                 {
