@@ -87,7 +87,7 @@
         margin-right: 5px;
       }
     }
-    &doubt {
+    &-doubt {
       margin-left: 15px;
       cursor: pointer;
       i {
@@ -139,4 +139,60 @@
 
 .page-title-company-image {
   background-image: url('http://www.famliytree.cn/icon/index-home-image-12.jpg');
+}
+
+.tool-doubt {
+  @img-width: 80px;
+  @font-color: #373d41;
+  @qq-color: #4cafe9;
+  @wx-color: #50b44d;
+  @email-color: #fab200;
+  &-content {
+    width: 200px;
+    padding: 5px 0 5px 0;
+    border-bottom: 1px solid #eaeaea;;
+    &-num-title, &-eml-title, &-wx-title {
+      color: @font-color;
+      margin: 0;
+      textAlign: center;
+    }
+    &-num, &-eml, &-code {
+      margin: 0;
+    }
+    &-code {
+      width: @img-width;
+      height: 80px;
+    }
+    &-wx-title {
+      width: @img-width;
+      font-size: 12px;
+      text-align: center;
+      color: #FF8A00;
+    }
+    .icon-qq, .icon-youxiang, .icon-weixin {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .icon-qq {
+      font-size: 25px;
+    }
+    .icon-youxiang, .icon-weixin {
+      font-size: 27px;
+    }
+    .title {
+      cursor: pointer;
+    }
+  }
+  &-content:hover {
+    .icon-qq {
+      color: @qq-color;
+    }
+    .icon-youxiang {
+      color: @email-color;
+    }
+    .icon-weixin {
+      color: @wx-color;
+    }
+  }
 }
