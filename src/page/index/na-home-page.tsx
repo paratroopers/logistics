@@ -21,10 +21,10 @@ export class NaHomePage extends Component<NaHomePageProps, NaHomePageStates> {
 
     render() {
         return <div className="templates-wrapper">
-            <MotionHeaderImage></MotionHeaderImage>
-{/*            <MotionBannerControl></MotionBannerControl>*/}
-            <MotionContentAControl></MotionContentAControl>
-            <MotionContentBControl></MotionContentBControl>
+            {/*<MotionHeaderImage></MotionHeaderImage>*/}
+            {/*<MotionBannerControl></MotionBannerControl>*/}
+            {/*<MotionContentAControl></MotionContentAControl>*/}
+            {/*<MotionContentBControl></MotionContentBControl>*/}
         </div>;
     }
 }

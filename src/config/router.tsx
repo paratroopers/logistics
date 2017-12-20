@@ -20,17 +20,15 @@ const routerConfig = (
     <Router history={hashHistory}>
         <Route path={PathConfig.MasterPage} component={NaMasterMainPage}>
             <IndexRoute component={NaHomePage}></IndexRoute>
-            <Route path={PathConfig.MasterPage} component={NaHomePage}/>
+            <Route path={PathConfig.HomePage} component={NaHomePage}/>
             <Route path={PathConfig.CostEstimatePage} component={NaCostEstimatePage}/>
             <Route path={PathConfig.CompanyProfilePage} component={NaCompanyProfilePage}/>
             <Route path={PathConfig.MobilePage} component={NaMobileTabBar}/>
             <Route path={MobilePathConfig.UserCenter} component={MbUserCenter}/>
             <Route path={MobilePathConfig.UserCenterDetail} component={MbUserCenterDetail}/>
             <Route path={PathConfig.VIPCenterPage} component={NaVIPCenterPage}>
-                <Route path={PathConfig.VIPCenterPage} component={NaVIPCenterPage}>
-                    <IndexRoute component={NaVIPWelcomePage}></IndexRoute>
-                    <Route path={PathConfig.VIPConsigneeAddressPage} component={NaVIPConsigneeAddressPage}/>
-                </Route>
+                <IndexRoute component={NaVIPWelcomePage}></IndexRoute>
+                <Route path={PathConfig.VIPConsigneeAddressPage} component={NaVIPConsigneeAddressPage}/>
             </Route>
         </Route>
         <Route path={PathConfig.LoginPage} component={NaLoginForm}/>

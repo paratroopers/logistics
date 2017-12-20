@@ -5,7 +5,8 @@ import {
     REQUEST_MOBILESELECTTAB,
     ESELECTTAB_COUNTLOADED,
     REQUEST_MOBILENAVTREE,
-    NAVTREE_COUNTLOADED
+    NAVTREE_COUNTLOADED,
+    onChangeLanguage
 } from "./ActionTypes";
 
 export class TaskAction {
@@ -26,5 +27,11 @@ export class MobileNavTreeAction {
     static requestSelectTab = createAction(REQUEST_MOBILENAVTREE);
     static SelectTabLoaded = createAction(NAVTREE_COUNTLOADED, (data: any, routerAddress: string) => {
         return {data: data, routerAddress: routerAddress};
+    });
+}
+
+export class WebAction {
+    static onChangeLanguage = createAction(onChangeLanguage, (languageKey: string) => {
+        return {languageKey: languageKey};
     });
 }
