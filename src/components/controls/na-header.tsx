@@ -87,6 +87,20 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
         </Select>;
     }
 
+    renderDoubtContent() {
+        return <Row>
+            <Col>
+                <i style={{color: '#4cafe9'}} className={NaContext.getIconClassName('icon-qq')}></i>
+                <span>738114990</span>
+            </Col>
+            <Col>
+                <i style={{color: '#fab200'}} className={NaContext.getIconClassName('icon-youxiang')}></i>
+                <span>xuke_break@163.com</span>
+            </Col>
+            <Col></Col>
+        </Row>
+    }
+
     renderUserNameContent() {
         const topThis = this;
         return <Menu onClick={topThis.onClickUserMenu.bind(this)}>
@@ -153,11 +167,11 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                 <i className={NaContext.getIconClassName('icon-dianhua')}></i>
                 <span>400-820-8820</span>
             </Col>
-            <Col className="tool-qq">
-                <a>
-                    <i className={NaContext.getIconClassName('icon-qq')}></i>
-                    <span>在线客服</span>
-                </a>
+            <Col className="tool-doubt">
+                <Popover placement="bottom" content={this.renderDoubtContent()}>
+                    <i className={NaContext.getIconClassName('icon-zixun')}></i>
+                    <span>咨询客服</span>
+                </Popover>
             </Col>
             <Col>{topThis.renderUser()}</Col>
         </Row>;
