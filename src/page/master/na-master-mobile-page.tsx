@@ -120,6 +120,9 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
                     <NavBar
                         mode="light">
                         <a className="left-icon"><img style={{width: '120px'}}
+                                                      onClick={() => {
+                                                          hashHistory.push(PathConfig.HomePage)
+                                                      }}
                                                       src="http://www.famliytree.cn/icon/logo-mobile.png"/></a>
                     </NavBar>
                     <div className={'a'}></div>

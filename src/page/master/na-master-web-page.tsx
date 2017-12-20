@@ -39,7 +39,7 @@ class NaMasterWebPage extends React.Component<NaMasterWebPageProps, NaMasterWebP
 
     render() {
         const topThis = this;
-        const {props: {children},state:{localeKey}} = this;
+        const {props: {children}, state: {localeKey}} = this;
 
         return <Layout>
             <Header style={{
@@ -59,11 +59,11 @@ class NaMasterWebPage extends React.Component<NaMasterWebPageProps, NaMasterWebP
             <Content style={{background: "#FFF", marginTop: 80}}>
                 {children}
             </Content>
-            {/*<Footer style={{padding: 0}}>*/}
-            {/*<div className="templates-wrapper">*/}
-            {/*<MotionFooterControl></MotionFooterControl>*/}
-            {/*</div>*/}
-            {/*</Footer>*/}
+            <Footer style={{padding: 0}}>
+                <div className="templates-wrapper">
+                    <MotionFooterControl></MotionFooterControl>
+                </div>
+            </Footer>
         </Layout>
     }
 }

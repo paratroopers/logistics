@@ -148,7 +148,7 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
         const topThis = this;
         return <Row className="tool" type="flex" justify="start" align="middle"
                     style={{height: 80}}>
-            <Col >{topThis.renderLanguageSelect()}</Col>
+            {/*<Col >{topThis.renderLanguageSelect()}</Col>*/}
             <Col className="tool-tel">
                 <i className={NaContext.getIconClassName('icon-dianhua')}></i>
                 <span>400-820-8820</span>
@@ -175,15 +175,15 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
         const {props: {className, logo}} = topThis;
         return <Row className={className ? className + " na-header" : "na-header"}>
             <Col xs={12} sm={12} md={8} lg={5} xl={5}>
-                {/*<Row type="flex" justify="start">*/}
-                    {/*<Col>*/}
-                        {/*<a className="logo" onClick={topThis.onClickLogo.bind(this)}>*/}
-                            {/*{typeof logo === "string" ? <img onClick={()=>{*/}
-                                {/*hashHistory.push(PathConfig.HomePage);*/}
-                            {/*}} src={logo}></img> : logo}*/}
-                        {/*</a>*/}
-                    {/*</Col>*/}
-                {/*</Row>*/}
+                <Row type="flex" justify="start">
+                    <Col>
+                        <a className="logo" onClick={topThis.onClickLogo.bind(this)}>
+                            {typeof logo === "string" ? <img onClick={()=>{
+                                hashHistory.push(PathConfig.HomePage);
+                            }} src={logo}></img> : logo}
+                        </a>
+                    </Col>
+                </Row>
             </Col>
             <Col xs={0} sm={0} md={12} lg={8} xl={8}>
                 {topThis.renderNavigation()}
