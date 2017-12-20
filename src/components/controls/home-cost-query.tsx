@@ -9,6 +9,7 @@ interface HomeCostQueryProps extends FormComponentProps {
     className?: string;
     style?: any;
     isHeard?: boolean;
+    isMobile?: boolean;
 }
 
 interface HomeCostQueryStates {
@@ -31,7 +32,7 @@ class HomeCostQueryForm extends React.Component<HomeCostQueryProps, HomeCostQuer
 
     render() {
         const topThis = this;
-        const {props: {isHeard, form: {getFieldDecorator}}} = topThis;
+        const {props: {isHeard, isMobile, form: {getFieldDecorator}}} = topThis;
         return <Row type="flex" justify="center" align="top" className={this.props.className} style={this.props.style}>
             {isHeard && <Col xs={0} sm={0} md={0} lg={24} xl={24}>
                 <div className="banner-form-header">
@@ -43,7 +44,8 @@ class HomeCostQueryForm extends React.Component<HomeCostQueryProps, HomeCostQuer
                     </Row>
                 </div>
             </Col>}
-            <Col xs={0} sm={0} md={0} lg={24} xl={24} className="banner-form-parent">
+            <Col xs={isMobile ? 0 : 24} sm={isMobile ? 0 : 24} md={isMobile ? 0 : 24} lg={24} xl={24}
+                 className="banner-form-parent">
                 <Form layout="vertical" style={{padding: 24}}>
                     <Form.Item>
                         {getFieldDecorator('city', {
