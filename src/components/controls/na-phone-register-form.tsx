@@ -6,7 +6,7 @@ const FormItem = Form.Item;
 const SelectOption = Select.Option;
 
 export interface PhoneRegisterFormControlProps extends FormComponentProps {
-    onClickCode?:()=>void;
+    onClickCode?: React.FormEventHandler<any>;
 }
 
 export interface PhoneRegisterFormControlStates {
@@ -20,7 +20,7 @@ class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, 
 
     render() {
         const topThis = this;
-        const {props: {form: {getFieldDecorator}}} = topThis;
+        const {props: {form: {getFieldDecorator}, onClickCode}} = topThis;
 
         const prefixSelector = getFieldDecorator('PhonePrefix', {
             initialValue: '86',
@@ -54,7 +54,8 @@ class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, 
                             )}
                         </Col>
                         <Col span={8} style={{padding: '0 4px'}}>
-                            <Button size="large" type="primary" style={{width: '100%'}} onClick={topThis.props.onClickCode.bind(this)}>获取验证码</Button>
+                            <Button size="large" type="primary" style={{width: '100%'}}
+                                    onClick={onClickCode}>获取验证码</Button>
                         </Col>
                     </Row>
                 </FormItem>

@@ -140,17 +140,16 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
             </Col>
         </Row> : <Row className="login">
             <a onClick={() => {
-                //window.location.reload();
-                window.location.replace("./index.html#/login");
-                //hashHistory.push(PathConfig.LoginPage);
+                {/*window.location.replace("./index.html#/login");*/}
+                hashHistory.push(PathConfig.LoginPage);
             }}>
                 <i className={NaContext.getIconClassName('icon-yonghu')}></i>
                 <span>登录</span>
             </a>
             <a className="separate">|</a>
             <a onClick={() => {
-                window.location.replace("./index.html#/register");
-                //hashHistory.push(PathConfig.RegisterPage);
+                {/*window.location.replace("./index.html#/register");*/}
+                hashHistory.push(PathConfig.RegisterPage);
             }}>
                 <i className={NaContext.getIconClassName('icon-zhuce')}></i>
                 <span>注册</span>
@@ -163,7 +162,7 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
         const topThis = this;
         return <Row className="tool" type="flex" justify="start" align="middle"
                     style={{height: 80}}>
-            {/*<Col >{topThis.renderLanguageSelect()}</Col>*/}
+            <Col >{topThis.renderLanguageSelect()}</Col>
             <Col className="tool-tel">
                 <i className={NaContext.getIconClassName('icon-dianhua')}></i>
                 <span>400-820-8820</span>
@@ -174,11 +173,6 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                     <span>咨询客服</span>
                 </Popover>
             </Col>
-            {/*            <Col className="tool-wx">
-             <Popover placement="bottom">
-             <i className={NaContext.getIconClassName('icon-weixin')}></i>
-             </Popover>
-             </Col>*/}
             <Col>{topThis.renderUser()}</Col>
         </Row>;
     }
@@ -195,15 +189,15 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
         const {props: {className, logo}} = topThis;
         return <Row className={className ? className + " na-header" : "na-header"}>
             <Col xs={12} sm={12} md={8} lg={5} xl={5}>
-                <Row type="flex" justify="start">
-                    <Col>
-                        <a className="logo" onClick={topThis.onClickLogo.bind(this)}>
-                            {typeof logo === "string" ? <img onClick={() => {
-                                hashHistory.push(PathConfig.HomePage);
-                            }} src={logo}></img> : logo}
-                        </a>
-                    </Col>
-                </Row>
+                {/*<Row type="flex" justify="start">*/}
+                    {/*<Col>*/}
+                        {/*<a className="logo" onClick={topThis.onClickLogo.bind(this)}>*/}
+                            {/*{typeof logo === "string" ? <img onClick={()=>{*/}
+                                {/*hashHistory.push(PathConfig.HomePage);*/}
+                            {/*}} src={logo}></img> : logo}*/}
+                        {/*</a>*/}
+                    {/*</Col>*/}
+                {/*</Row>*/}
             </Col>
             <Col xs={0} sm={0} md={12} lg={8} xl={8}>
                 {topThis.renderNavigation()}

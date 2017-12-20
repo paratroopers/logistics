@@ -5,7 +5,7 @@ import {FormComponentProps} from 'antd/lib/form/Form';
 const FormItem = Form.Item;
 
 interface MailRegisterFormControlProps extends FormComponentProps {
-
+    onClickCode?: React.FormEventHandler<any>;
 }
 
 interface MailRegisterFormControlStates {
@@ -19,7 +19,7 @@ class MailRegisterFormControl extends Component<MailRegisterFormControlProps, Ma
 
     render() {
         const topThis = this;
-        const {props: {form: {getFieldDecorator}}} = topThis;
+        const {props: {form: {getFieldDecorator},onClickCode}} = topThis;
 
         return (
             <Form className="na-page-register-form">
@@ -43,7 +43,7 @@ class MailRegisterFormControl extends Component<MailRegisterFormControlProps, Ma
                             )}
                         </Col>
                         <Col span={8} style={{padding: '0 4px'}}>
-                            <Button size="large" type="primary" style={{width: '100%'}}>获取验证码</Button>
+                            <Button size="large" type="primary" style={{width: '100%'}} onClick={onClickCode}>获取验证码</Button>
                         </Col>
                     </Row>
                 </FormItem>

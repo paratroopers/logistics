@@ -7,7 +7,7 @@ import {NaVIPConsigneeAddressPage} from "./vip/na-vip-consignee-address-page";
 import {NaVIPWelcomePage} from "./vip/na-vip-welcome-page";
 import {NaMobileTabBar} from "./demo/na-mobile-tabbar";
 import {MbUserCenter} from "./mobile/user-center";
-import {NaRegisterPage} from "./index/na-register-page";
+import NaRegisterPage from "./index/na-register-page";
 import NaLoginForm from "./index/login/na-login-form";
 import MbUserCenterDetail from './mobile/user-center-detail';
 import {NaMasterMainPage} from './master/na-mater-main-page';
