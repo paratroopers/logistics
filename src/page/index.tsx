@@ -6,10 +6,11 @@ import {NaCompanyProfilePage} from "./index/na-company-profile-page";
 import {NaVIPConsigneeAddressPage} from "./vip/na-vip-consignee-address-page";
 import {NaVIPWelcomePage} from "./vip/na-vip-welcome-page";
 import {NaMobileTabBar} from "./demo/na-mobile-tabbar";
+import {MbUserHelp} from './mobile/user-help';
 import {MbUserCenter} from "./mobile/user-center";
+import MbUserCenterDetail from './mobile/user-center-detail';
 import NaRegisterPage from "./index/na-register-page";
 import NaLoginForm from "./index/login/na-login-form";
-import MbUserCenterDetail from './mobile/user-center-detail';
 import {NaMasterMainPage} from './master/na-mater-main-page';
 
 export {
@@ -24,6 +25,7 @@ export {
     NaVIPConsigneeAddressPage,
     NaVIPWelcomePage,
     NaMobileTabBar,
+    MbUserHelp,
     MbUserCenter,
     MbUserCenterDetail
 }

@@ -14,7 +14,7 @@ module.exports = {
     },
     output: {
         path: '/',
-        publicPath: 'https://127.0.0.1:' + port + '/',
+        publicPath: 'http://127.0.0.1:' + port + '/',
         filename: '[name].js',
         chunkFilename: '[name].js'
     },
@@ -54,7 +54,7 @@ module.exports = {
             }
         }),
         new OpenBrowserWebpackPlugin({
-            url: 'https://127.0.0.1:' + port + '/index.html'
+            url: 'http://127.0.0.1:' + port + '/index.html'
         })
     ],
     resolve: {

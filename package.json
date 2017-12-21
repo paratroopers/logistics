@@ -6,7 +6,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=locale webpack  --colors  --sort-modules-by size --config webpack.config.js",
     "pub": "cross-env NODE_ENV=production  webpack  -p --colors  --sort-modules-by size --config webpack.config.js",
-    "start": "cross-env NODE_ENV=development webpack-dev-server --https --host 127.0.0.1 --inline --colors --profile --config ./config/webpack.dev.config.js"
+    "start": "cross-env NODE_ENV=development webpack-dev-server --host 127.0.0.1 --inline --colors --profile --config ./config/webpack.dev.config.js"
   },
   "keywords": [
     "ts",

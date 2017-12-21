@@ -12,6 +12,7 @@ import {
     NaVIPConsigneeAddressPage,
     NaVIPWelcomePage,
     MbUserCenter,
+    MbUserHelp,
     MbUserCenterDetail,
     NaRegisterPage
 } from '../page/index';
@@ -26,6 +27,7 @@ const routerConfig = (
             <Route path={PathConfig.MobilePage} component={NaMobileTabBar}/>
             <Route path={MobilePathConfig.UserCenter} component={MbUserCenter}/>
             <Route path={MobilePathConfig.UserCenterDetail} component={MbUserCenterDetail}/>
+            <Route path={MobilePathConfig.UserHelper} component={MbUserHelp}/>
             <Route path={PathConfig.VIPCenterPage} component={NaVIPCenterPage}>
                 <IndexRoute component={NaVIPWelcomePage}></IndexRoute>
                 <Route path={PathConfig.VIPConsigneeAddressPage} component={NaVIPConsigneeAddressPage}/>
