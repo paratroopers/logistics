@@ -184,11 +184,15 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
             }}>
                 <Row type="flex" align="middle" justify="end">
                     <Col>
-                        <Select defaultValue={localeKey ? localeKey : "zh"}
-                                onChange={topThis.onChangeLanguage.bind(this)}>
-                            <Select.Option value="zh">中文</Select.Option>
-                            <Select.Option value="en">English</Select.Option>
-                        </Select>
+                        {/*<Select defaultValue={localeKey ? localeKey : "zh"}*/}
+                                {/*onChange={topThis.onChangeLanguage.bind(this)}>*/}
+                            {/*<Select.Option value="zh">中文</Select.Option>*/}
+                            {/*<Select.Option value="en">English</Select.Option>*/}
+                        {/*</Select>*/}
+                        {/*<Button onClick={() => {*/}
+                            {/*hashHistory.push(PathConfig.HomePage);*/}
+                        {/*}}>首页</Button>*/}
+                        <Link to={PathConfig.HomePage}>返回首页 ></Link>
                     </Col>
                 </Row>
             </Header>
