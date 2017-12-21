@@ -88,17 +88,35 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
     }
 
     renderDoubtContent() {
-        return <Row>
-            <Col>
-                <i style={{color: '#4cafe9'}} className={NaContext.getIconClassName('icon-qq')}></i>
-                <span>738114990</span>
-            </Col>
-            <Col>
-                <i style={{color: '#fab200'}} className={NaContext.getIconClassName('icon-youxiang')}></i>
-                <span>xuke_break@163.com</span>
-            </Col>
-            <Col></Col>
-        </Row>
+        return [
+            <Row key="1" type="flex" className="tool-doubt-content qq">
+                <Col span={6}>
+                    <i className={NaContext.getIconClassName('icon-qq')}></i>
+                </Col>
+                <Col span={18} className="title">
+                    <p className="tool-doubt-content-num-title">服务QQ</p>
+                    <p className="tool-doubt-content-num">738114990</p>
+                </Col>
+            </Row>,
+            <Row key="2" type="flex" className="tool-doubt-content">
+                <Col span={6}>
+                    <i className={NaContext.getIconClassName('icon-youxiang')}></i>
+                </Col>
+                <Col span={18} className="title">
+                    <p className="tool-doubt-content-eml-title">服务邮箱</p>
+                    <p className="tool-doubt-content-eml">xuke_break@163.com</p>
+                </Col>
+            </Row>,
+            <Row key="3" type="flex" className="tool-doubt-content">
+                <Col span={6}>
+                    <i className={NaContext.getIconClassName('icon-weixin')}></i>
+                </Col>
+                <Col span={18} className="title">
+                    <p className="tool-doubt-content-wx-title">关注我</p>
+                    <img className="code" src="http://www.famliytree.cn/icon/wx_ewm.jpg"/>
+                </Col>
+            </Row>
+        ]
     }
 
     renderUserNameContent() {
@@ -140,7 +158,8 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
             </Col>
         </Row> : <Row className="login">
             <a onClick={() => {
-                {/*window.location.replace("./index.html#/login");*/}
+                {/*window.location.replace("./index.html#/login");*/
+                }
                 hashHistory.push(PathConfig.LoginPage);
             }}>
                 <i className={NaContext.getIconClassName('icon-yonghu')}></i>
@@ -148,7 +167,8 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
             </a>
             <a className="separate">|</a>
             <a onClick={() => {
-                {/*window.location.replace("./index.html#/register");*/}
+                {/*window.location.replace("./index.html#/register");*/
+                }
                 hashHistory.push(PathConfig.RegisterPage);
             }}>
                 <i className={NaContext.getIconClassName('icon-zhuce')}></i>
@@ -192,7 +212,7 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                 <Row type="flex" justify="start">
                     <Col>
                         <a className="logo" onClick={topThis.onClickLogo.bind(this)}>
-                            {typeof logo === "string" ? <img onClick={()=>{
+                            {typeof logo === "string" ? <img onClick={() => {
                                 hashHistory.push(PathConfig.HomePage);
                             }} src={logo}></img> : logo}
                         </a>
