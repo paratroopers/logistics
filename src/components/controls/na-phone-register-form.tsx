@@ -10,17 +10,40 @@ export interface PhoneRegisterFormControlProps extends FormComponentProps {
 }
 
 export interface PhoneRegisterFormControlStates {
-
+    /** 验证码禁用倒计时*/
+    countDown: number;
 }
 
 class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, PhoneRegisterFormControlStates> {
     constructor(props, context) {
         super(props, context);
+        this.state = {
+            countDown: 0
+        }
+    }
+
+    /** 验证码倒计时*/
+    onDownCode() {
+        const topThis = this;
+        topThis.setState({countDown: 60});
+        topThis.setTimeoutPhone();
+    }
+
+    /* 成功发送Code,验证码60秒等待*/
+    setTimeoutPhone = () => {
+        const topThis = this;
+        setTimeout(function () {
+            const {state: {countDown}} = topThis;
+            if (countDown !== 0) {
+                topThis.setState({countDown: countDown - 1});
+                topThis.setTimeoutPhone();
+            }
+        }, 1000);
     }
 
     render() {
         const topThis = this;
-        const {props: {form: {getFieldDecorator}, onClickCode}} = topThis;
+        const {props: {form: {getFieldDecorator}, onClickCode}, state: {countDown}} = topThis;
 
         const prefixSelector = getFieldDecorator('PhonePrefix', {
             initialValue: '86',
@@ -55,7 +78,8 @@ class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, 
                         </Col>
                         <Col span={8} style={{padding: '0 4px'}}>
                             <Button size="large" type="primary" style={{width: '100%'}}
-                                    onClick={onClickCode}>获取验证码</Button>
+                                    disabled={countDown === 0 ? false : true}
+                                    onClick={onClickCode}>{countDown === 0 ? "获取验证码" : countDown + "秒"}</Button>
                         </Col>
                     </Row>
                 </FormItem>

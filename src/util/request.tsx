@@ -54,7 +54,7 @@ export class Request<TRequest, TResponse extends NaResponse> {
         }
 
         if (param.RequireToken) {
-            request.withCredentials();
+            request.set("Authorization", NaContext.getToken());
         }
 
         request.set("ClientTimeZone", (moment().utcOffset() / 60).toString());
@@ -291,7 +291,7 @@ export class Request<TRequest, TResponse extends NaResponse> {
             });
         }
         if (hasToken) {
-            xmlhttp.setRequestHeader("NaSecret", NaContext.getToken());
+            xmlhttp.setRequestHeader("Authorization", NaContext.getToken());
         }
         if (type === "GET" || type === "get" || type === "Get") {//大小写
             xmlhttp.send(data);
