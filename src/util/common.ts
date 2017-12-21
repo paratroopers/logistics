@@ -1,5 +1,5 @@
 import {SagaMiddleware} from "redux-saga";
-import {Cookies} from "cookie";
+import {Cookies} from "./cookie";
 import {Store} from "redux";
 
 export interface NaBase {

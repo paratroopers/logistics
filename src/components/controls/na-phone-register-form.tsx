@@ -57,23 +57,23 @@ class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, 
             <Form className="na-page-register-form">
                 <FormItem>
                     {getFieldDecorator('PhoneNumber', {
-                        rules: [{required: true, message: 'Please input your phone number!'}],
+                        rules: [{required: true, message: '请输入你的手机号码!'}],
                     })(
                         <Input addonBefore={prefixSelector}
                                size="large"
                                prefix={<Icon type="mobile" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                               placeholder="请输入手机号码"/>
+                               placeholder="手机号码"/>
                     )}
                 </FormItem>
                 <FormItem>
                     <Row style={{margin: '0 -4px'}}>
                         <Col span={16} style={{padding: '0 4px'}}>
                             {getFieldDecorator('Code', {
-                                rules: [{required: true, message: 'Please input your phone code!'}],
+                                rules: [{required: true, message: '请输入你的手机验证码!'}],
                             })(
                                 <Input prefix={<Icon type="barcode" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                        size="large"
-                                       placeholder="请输入验证码"/>
+                                       placeholder="验证码"/>
                             )}
                         </Col>
                         <Col span={8} style={{padding: '0 4px'}}>
@@ -85,23 +85,23 @@ class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, 
                 </FormItem>
                 <FormItem>
                     {getFieldDecorator('Password', {
-                        rules: [{required: true, message: 'Please input your Password!'}],
+                        rules: [{required: true, message: '请输入你的登录密码!'}],
                     })(
                         <Input prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                type="password"
                                size="large"
-                               placeholder="设置你的登录密码"/>
+                               placeholder="登录密码"/>
                     )}
 
                 </FormItem>
                 <FormItem>
                     {getFieldDecorator('NextPassword', {
-                        rules: [{required: true, message: 'Please input your Password again!'}],
+                        rules: [{required: true, message: '请再次输入你的密码!'}],
                     })(
                         <Input prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                type="password"
                                size="large"
-                               placeholder="请再次输入你的密码"/>
+                               placeholder="再次输入密码"/>
                     )}
                 </FormItem>
             </Form>

@@ -11,8 +11,9 @@ import {WebAction} from "../../actions/index";
 const {TabPane} = Tabs;
 import PhoneRegisterForm from "../../components/controls/na-phone-register-form";
 import MailRegisterForm from "../../components/controls/na-mail-register-form";
+import {NaNotification} from "../../components/controls/na-notification";
 import {RegisterAPI}from "../../api/common-api";
-import {GetCodeRequest} from "../../api/model/request/common-request";
+import {GetCodeRequest,RegisterRequest} from "../../api/model/request/common-request";
 
 interface NaRegisterPageProps {
     localeKey?: string;
@@ -56,32 +57,52 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
         const {state: {tabKey}} = topThis;
         switch (tabKey) {
             case RegisterEnum.phone.toString():
-                topThis.phoneFromComponent.props.form.validateFields(["PhoneNumber"], function (err, values) {
+                topThis.phoneFromComponent.props.form.validateFields(["PhoneNumber"],{force:true}, function (err, values) {
                     if (!err) {
                         const request: GetCodeRequest = {
                             tel: values.PhoneNumber,
                             type: RegisterEnum.phone.toString()
                         }
                         topThis.phoneFromComponent.onDownCode();
-                        // RegisterAPI.GetCode(request).then((data: NaResponse) => {
-                        //     if (data.Data === true) {
-                        //         /** 锁定按钮*/
-                        //         topThis.phoneFromComponent.onDownCode();
-                        //     }
-                        // });
+                        RegisterAPI.GetCode(request).then((data: NaResponse) => {
+                            if (data.Data === true) {
+                                NaNotification.success({
+                                    message: 'Tip',
+                                    description: '验证码发送成功!'
+                                });
+                                /** 锁定按钮*/
+                                topThis.phoneFromComponent.onDownCode();
+                            }else{
+                                NaNotification.error({
+                                    message: 'Tip',
+                                    description: '验证码发送失败!'
+                                });
+                            }
+                        });
                     }
                 });
                 break;
             case RegisterEnum.mail.toString():
-                topThis.phoneFromComponent.props.form.validateFields(["Mail"], function (err, values) {
+                topThis.mailFromComponent.props.form.validateFields(["Mail"],{force:true}, function (err, values) {
                     if (!err) {
                         const request: GetCodeRequest = {
                             mail: values.Mail,
                             type: RegisterEnum.phone.toString()
                         }
+
                         RegisterAPI.GetCode(request).then((data: NaResponse) => {
                             if (data.Data === true) {
+                                NaNotification.success({
+                                    message: 'Tip',
+                                    description: '验证码发送成功!'
+                                });
                                 /** 锁定按钮*/
+                                topThis.mailFromComponent.onDownCode();
+                            }else{
+                                NaNotification.error({
+                                    message: 'Tip',
+                                    description: '验证码发送失败!'
+                                });
                             }
                         });
                     }
@@ -99,12 +120,54 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
         switch (tabKey) {
             case RegisterEnum.phone.toString():
                 topThis.phoneFromComponent.props.form.validateFields({}, function (err, values) {
-
+                    if (!err) {
+                        const request: RegisterRequest = {
+                            tel: values.PhoneNumber,
+                            pwd: values.Password,
+                            rePwd: values.NextPassword,
+                            code: values.Code
+                        }
+                        RegisterAPI.Register(request).then((data: NaResponse) => {
+                            if (data.Data === true) {
+                                NaNotification.success({
+                                    message: 'Tip',
+                                    description: '注册成功!'
+                                });
+                            }else
+                            {
+                                NaNotification.error({
+                                    message: 'Tip',
+                                    description: '注册失败!'
+                                });
+                            }
+                        });
+                    }
                 });
                 break;
             case RegisterEnum.mail.toString():
                 topThis.mailFromComponent.props.form.validateFields({}, function (err, values) {
-
+                    if (!err) {
+                        const request: RegisterRequest = {
+                            mail: values.Mail,
+                            pwd: values.Password,
+                            rePwd: values.NextPassword,
+                            code: values.Code
+                        }
+                        RegisterAPI.Register(request).then((data: NaResponse) => {
+                            if (data.Data === true) {
+                                NaNotification.success({
+                                    message: 'Tip',
+                                    description: '注册成功!'
+                                });
+                            }else
+                            {
+                                NaNotification.error({
+                                    message: 'Tip',
+                                    description: '注册失败!'
+                                });
+                            }
+                        });
+                    }
                 });
                 break;
             default:
