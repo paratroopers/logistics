@@ -14,7 +14,12 @@ export class MbUserHelp extends React.Component<UserHelpProps, UserHelpStates> {
 
     render() {
         return <div className="user-help">
-            <WingBlank className="user-help-row">
+            <span>您的专属客服</span>
+            <br/>
+            <span>400-100-2013</span>
+            <br/>
+            <img src="http://www.famliytree.cn/icon/wx_ewm.jpg" />
+            {/*<WingBlank className="user-help-row">
                 <i className={NaContext.getIconClassName('icon-qq1') + ' qq'}></i>
                 <div className="user-help-row-text">
                     <span>客服人员QQ号</span>
@@ -35,7 +40,7 @@ export class MbUserHelp extends React.Component<UserHelpProps, UserHelpStates> {
             <WingBlank className="user-help-row" style={{height: '180px'}}>
                 <i className={NaContext.getIconClassName('icon-weixin1') + ' wx'}></i>
                 <img style={{height: '160px', marginTop: '10px'}} src="http://www.famliytree.cn/icon/wx_ewm.jpg"/>
-            </WingBlank>
+            </WingBlank>*/}
         </div>
     }
 }

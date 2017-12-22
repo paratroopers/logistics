@@ -123,7 +123,7 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
                                                       onClick={() => {
                                                           hashHistory.push(PathConfig.HomePage)
                                                       }}
-                                                      src="http://www.famliytree.cn/icon/logo-mobile.png"/></a>
+                                                      src="http://www.famliytree.cn/icon/logo_mobile_2017_12_22.jpg"/></a>
                     </NavBar>
                     <div className={'a'}></div>
                 </Header>
