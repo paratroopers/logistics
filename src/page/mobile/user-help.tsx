@@ -32,9 +32,9 @@ export class MbUserHelp extends React.Component<UserHelpProps, UserHelpStates> {
                 </div>
             </WingBlank>
             <WhiteSpace size="xl"/>
-            <WingBlank className="user-help-row">
+            <WingBlank className="user-help-row" style={{height: '180px'}}>
                 <i className={NaContext.getIconClassName('icon-weixin1') + ' wx'}></i>
-                <span>738114990</span>
+                <img style={{height: '160px', marginTop: '10px'}} src="http://www.famliytree.cn/icon/wx_ewm.jpg"/>
             </WingBlank>
         </div>
     }
