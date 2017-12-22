@@ -5,12 +5,15 @@ import {PathConfig}from "../../config/pathconfig";
 import {Layout, Row, Col, Tabs, Button, Checkbox, Select} from "antd";
 import {RegisterEnum}from "../../../src/api/model/common-model";
 const {Header, Content, Footer} = Layout;
-import {NaGlobal} from '../../util/common';
+import {NaGlobal, NaResponse} from '../../util/common';
 import {connect} from "react-redux";
 import {WebAction} from "../../actions/index";
 const {TabPane} = Tabs;
 import PhoneRegisterForm from "../../components/controls/na-phone-register-form";
 import MailRegisterForm from "../../components/controls/na-mail-register-form";
+import {NaNotification} from "../../components/controls/na-notification";
+import {RegisterAPI}from "../../api/common-api";
+import {GetCodeRequest,RegisterRequest} from "../../api/model/request/common-request";
 
 interface NaRegisterPageProps {
     localeKey?: string;
@@ -24,8 +27,8 @@ interface NaRegisterPageStates {
 
 @withRouter
 class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates> {
-    phoneFrom: any;
-    mailFrom: any;
+    phoneFromComponent: any;
+    mailFromComponent: any;
 
     constructor(props, context) {
         super(props, context);
@@ -54,8 +57,56 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
         const {state: {tabKey}} = topThis;
         switch (tabKey) {
             case RegisterEnum.phone.toString():
+                topThis.phoneFromComponent.props.form.validateFields(["PhoneNumber"],{force:true}, function (err, values) {
+                    if (!err) {
+                        const request: GetCodeRequest = {
+                            tel: values.PhoneNumber,
+                            type: RegisterEnum.phone.toString()
+                        }
+                        topThis.phoneFromComponent.onDownCode();
+                        RegisterAPI.GetCode(request).then((data: NaResponse) => {
+                            if (data.Data === true) {
+                                NaNotification.success({
+                                    message: 'Tip',
+                                    description: '验证码发送成功!'
+                                });
+                                /** 锁定按钮*/
+                                topThis.phoneFromComponent.onDownCode();
+                            }else{
+                                NaNotification.error({
+                                    message: 'Tip',
+                                    description: '验证码发送失败!'
+                                });
+                            }
+                        });
+                    }
+                });
                 break;
             case RegisterEnum.mail.toString():
+                topThis.mailFromComponent.props.form.validateFields(["Mail"],{force:true}, function (err, values) {
+                    if (!err) {
+                        const request: GetCodeRequest = {
+                            mail: values.Mail,
+                            type: RegisterEnum.mail.toString()
+                        }
+
+                        RegisterAPI.GetCode(request).then((data: NaResponse) => {
+                            if (data.Data === true) {
+                                NaNotification.success({
+                                    message: 'Tip',
+                                    description: '验证码发送成功!'
+                                });
+                                /** 锁定按钮*/
+                                topThis.mailFromComponent.onDownCode();
+                            }else{
+                                NaNotification.error({
+                                    message: 'Tip',
+                                    description: '验证码发送失败!'
+                                });
+                            }
+                        });
+                    }
+                });
                 break;
             default:
                 break;
@@ -68,13 +119,55 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
         const {state: {tabKey}} = topThis;
         switch (tabKey) {
             case RegisterEnum.phone.toString():
-                topThis.phoneFrom.props.form.validateFields({}, function (err, values) {
-
+                topThis.phoneFromComponent.props.form.validateFields({}, function (err, values) {
+                    if (!err) {
+                        const request: RegisterRequest = {
+                            tel: values.PhoneNumber,
+                            pwd: values.Password,
+                            rePwd: values.NextPassword,
+                            code: values.Code
+                        }
+                        RegisterAPI.Register(request).then((data: NaResponse) => {
+                            if (data.Data === true) {
+                                NaNotification.success({
+                                    message: 'Tip',
+                                    description: '注册成功!'
+                                });
+                            }else
+                            {
+                                NaNotification.error({
+                                    message: 'Tip',
+                                    description: '注册失败!'
+                                });
+                            }
+                        });
+                    }
                 });
                 break;
             case RegisterEnum.mail.toString():
-                topThis.mailFrom.props.form.validateFields({}, function (err, values) {
-
+                topThis.mailFromComponent.props.form.validateFields({}, function (err, values) {
+                    if (!err) {
+                        const request: RegisterRequest = {
+                            mail: values.Mail,
+                            pwd: values.Password,
+                            rePwd: values.NextPassword,
+                            code: values.Code
+                        }
+                        RegisterAPI.Register(request).then((data: NaResponse) => {
+                            if (data.Data === true) {
+                                NaNotification.success({
+                                    message: 'Tip',
+                                    description: '注册成功!'
+                                });
+                            }else
+                            {
+                                NaNotification.error({
+                                    message: 'Tip',
+                                    description: '注册失败!'
+                                });
+                            }
+                        });
+                    }
                 });
                 break;
             default:
@@ -91,15 +184,19 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
             }}>
                 <Row type="flex" align="middle" justify="end">
                     <Col>
-                        <Select defaultValue={localeKey ? localeKey : "zh"}
-                                onChange={topThis.onChangeLanguage.bind(this)}>
-                            <Select.Option value="zh">中文</Select.Option>
-                            <Select.Option value="en">English</Select.Option>
-                        </Select>
+                        {/*<Select defaultValue={localeKey ? localeKey : "zh"}*/}
+                                {/*onChange={topThis.onChangeLanguage.bind(this)}>*/}
+                            {/*<Select.Option value="zh">中文</Select.Option>*/}
+                            {/*<Select.Option value="en">English</Select.Option>*/}
+                        {/*</Select>*/}
+                        {/*<Button onClick={() => {*/}
+                            {/*hashHistory.push(PathConfig.HomePage);*/}
+                        {/*}}>首页</Button>*/}
+                        <Link to={PathConfig.HomePage}>返回首页 ></Link>
                     </Col>
                 </Row>
             </Header>
-            <Content className="na-page-register-content" style={{minHeight: 'calc(100vh - 80px)',background: "#FFF"}}>
+            <Content className="na-page-register-content" style={{minHeight: 'calc(100vh - 80px)', background: "#FFF"}}>
                 <Row style={{width: '100%', padding: '0 16px'}}>
                     <Row style={{textAlign: 'center'}}>
                         <div><img onClick={() => {
@@ -119,12 +216,12 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
                             <TabPane tab="手机登录" key={RegisterEnum.phone.toString()}>
                                 <PhoneRegisterForm
                                     onClickCode={topThis.onClickCode.bind(this)}
-                                    wrappedComponentRef={(inst) => topThis.phoneFrom = inst}></PhoneRegisterForm>
+                                    wrappedComponentRef={(inst) => topThis.phoneFromComponent = inst}></PhoneRegisterForm>
                             </TabPane>
                             <TabPane tab="邮箱登录" key={RegisterEnum.mail.toString()}>
                                 <MailRegisterForm
                                     onClickCode={topThis.onClickCode.bind(this)}
-                                    wrappedComponentRef={(inst) => topThis.mailFrom = inst}></MailRegisterForm>
+                                    wrappedComponentRef={(inst) => topThis.mailFromComponent = inst}></MailRegisterForm>
                             </TabPane>
                         </Tabs>
                     </Row>

@@ -73,6 +73,7 @@ export default class MotionContentAControl extends Component<MotionContentAContr
             <div {...props}
                  className={`content-template-wrapper ${isNullOrUndefined(className) ? "motion-content-a" : className}-wrapper`}>
                 <OverPack
+                    playScale={0.2}
                     className={`content-template ${isNullOrUndefined(className) ? "motion-content-a" : className}`}>
                     <TweenOne className="with-line" animation={{y: '+=30', opacity: 0, type: 'from'}}
                               component="h1"

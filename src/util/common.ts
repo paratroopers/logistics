@@ -1,5 +1,5 @@
 import {SagaMiddleware} from "redux-saga";
-import {Cookies} from "cookie";
+import {Cookies} from "./cookie";
 import {Store} from "redux";
 
 export interface NaBase {
@@ -121,7 +121,7 @@ export class NaContext {
         /**
          * Cookie的存储key
          */
-        LoginSecretKey: "NaSecret",
+        LoginSecretKey: "Authorization",
         /**
          * 用于多语言key
          */
@@ -184,7 +184,7 @@ export class NaContext {
      * 获取当前Token
      */
     static getToken() {
-        return Cookies.get("NaSecret");
+        return Cookies.get("Authorization");
     }
 
     /**

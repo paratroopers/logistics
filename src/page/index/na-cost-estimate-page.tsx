@@ -3,11 +3,66 @@ import {Component} from "react";
 import {withRouter, Link} from "react-router";
 import {PathConfig} from "../../config/pathconfig";
 import {Layout, Row, Col, Form, Input, Button, Tag, Table} from "antd";
-
+import HomeCostQuery from "../../components/controls/home-cost-query";
 const {Content} = Layout;
 const FormItem = Form.Item;
 const {CheckableTag} = Tag;
 const {TextArea} = Input;
+import {NaUtil} from "../../util/util";
+import {ScreenModeEnum} from "../../api/model/common-model";
+import {Card, WingBlank, WhiteSpace, Modal} from 'antd-mobile';
+
+const data = [{
+    key: '1',
+    a: '大包(SAL)',
+    b: '11.000',
+    c: '692.08',
+    d: '15-至-30',
+    e: '34.60',
+    f: '726.68',
+    g: '长宽高任意一边超60cm则计体积费用',
+    h: 'h'
+}, {
+    key: '2',
+    a: '大包(SAL)',
+    b: '11.000',
+    c: '692.08',
+    d: '15-至-30',
+    e: '34.60',
+    f: '726.68',
+    g: '长宽高任意一边超60cm则计体积费用',
+    h: 'h'
+}, {
+    key: '3',
+    a: '大包(SAL)',
+    b: '11.000',
+    c: '692.08',
+    d: '15-至-30',
+    e: '34.60',
+    f: '726.68',
+    g: '长宽高任意一边超60cm则计体积费用',
+    h: 'h'
+}, {
+    key: '4',
+    a: '大包(SAL)',
+    b: '11.000',
+    c: '692.08',
+    d: '15-至-30',
+    e: '34.60',
+    f: '726.68',
+    g: '长宽高任意一边超60cm则计体积费用',
+    h: 'h'
+}, {
+    key: '5',
+    a: '大包(SAL)',
+    b: '11.000',
+    c: '692.08',
+    d: '15-至-30',
+    e: '34.60',
+    f: '726.68',
+    g: '长宽高任意一边超60cm则计体积费用',
+    h: 'h'
+}];
 
 interface NaCostEstimatePageProps {
 
@@ -20,12 +75,15 @@ interface NaCostEstimatePageStates {
 
 @withRouter
 export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCostEstimatePageStates> {
+    isMobile: boolean;
+
     constructor(props, context) {
         super(props, context)
         this.state = {
             selectedTagsA: [],
             selectedTagsB: []
         }
+        this.isMobile = (NaUtil.getScrrenMode(window.innerWidth) === ScreenModeEnum.sm);
     }
 
     TagAChange(tag, checked) {
@@ -75,99 +133,69 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
                 return <a href="#">点击查看</a>
             },
         }];
-
-        const data = [{
-            key: '1',
-            a: '大包(SAL)',
-            b: '11.000',
-            c: '692.08',
-            d: '15-至-30',
-            e: '34.60',
-            f: '726.68',
-            g: '长宽高任意一边超60cm则计体积费用',
-            h: 'h'
-        }, {
-            key: '2',
-            a: '大包(SAL)',
-            b: '11.000',
-            c: '692.08',
-            d: '15-至-30',
-            e: '34.60',
-            f: '726.68',
-            g: '长宽高任意一边超60cm则计体积费用',
-            h: 'h'
-        }, {
-            key: '3',
-            a: '大包(SAL)',
-            b: '11.000',
-            c: '692.08',
-            d: '15-至-30',
-            e: '34.60',
-            f: '726.68',
-            g: '长宽高任意一边超60cm则计体积费用',
-            h: 'h'
-        }, {
-            key: '4',
-            a: '大包(SAL)',
-            b: '11.000',
-            c: '692.08',
-            d: '15-至-30',
-            e: '34.60',
-            f: '726.68',
-            g: '长宽高任意一边超60cm则计体积费用',
-            h: 'h'
-        }, {
-            key: '5',
-            a: '大包(SAL)',
-            b: '11.000',
-            c: '692.08',
-            d: '15-至-30',
-            e: '34.60',
-            f: '726.68',
-            g: '长宽高任意一边超60cm则计体积费用',
-            h: 'h'
-        }];
         return <Table
             columns={columns}
             dataSource={data}
             bordered
-        />
+        />;
+    }
+
+    renderCard() {
+        const topThis = this;
+        return <Row>
+            {data.map(function (item, index) {
+                return <Col key={index}>
+                    <WingBlank size="sm">
+                        <WhiteSpace size="sm"/>
+                        <Card>
+                            <Card.Header
+                                title={item.a}
+                                extra={<span
+                                    style={{fontSize: '12px', color: '#e65922', cursor: 'pointer'}}>注意事项</span>}
+                            />
+                            <Card.Body>
+                                <Row>
+                                    <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>计费重量(kg)</h3>
+                                    <p style={{fontSize: '12px'}}>{item.b}</p>
+                                </Row>
+                                <Row>
+                                    <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>运费(RMB)</h3>
+                                    <p style={{fontSize: '12px'}}>{item.c}</p>
+                                </Row>
+                                <Row>
+                                    <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>送达时间(工作日)</h3>
+                                    <p style={{fontSize: '12px'}}>{item.d}</p>
+                                </Row>
+                                <Row>
+                                    <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>服务费(RMB)</h3>
+                                    <p style={{fontSize: '12px'}}>{item.e}</p>
+                                </Row>
+                                <Row>
+                                    <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>总费用(RMB) </h3>
+                                    <p style={{fontSize: '12px'}}>{item.f}</p>
+                                </Row>
+                                <Row>
+                                    <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>备注</h3>
+                                    <p style={{fontSize: '12px'}}>{item.g}</p>
+                                </Row>
+                            </Card.Body>
+                        </Card>
+                        <WhiteSpace size="sm"/>
+                    </WingBlank>
+                </Col>;
+            })}
+        </Row>
     }
 
     renderContent() {
         const topThis = this;
-        const {state: {selectedTagsA, selectedTagsB}} = topThis;
+        const {isMobile, state: {selectedTagsA, selectedTagsB}} = topThis;
         const tagsFromServerA = ['美食/零食', '美妆/洗护', '家具/家饰', '女装/男装', '鞋靴/箱包', '运动/乐器', '玩具/孕产', '家电/数码', '眼睛/手表'];
         const tagsFromServerB = ['国际一二线品牌', '少量液体、膏状、药品', '纯液体、内置电池', '木制品（原木）'];
         const fontSize = {fontSize: '14px'};
         return <Row type="flex" justify="space-between">
             <Col xs={24} sm={24} md={24} lg={10} xl={10}>
-                <Row>
-                    <Form layout="vertical">
-                        <FormItem>
-                            <Input placeholder="收货国家" size="large"/>
-                        </FormItem>
-                        <FormItem>
-                            <Input placeholder="重量（kg）公斤" size="large"/>
-                        </FormItem>
-                        <Form.Item>
-                            <Row type="flex" justify="center" align="top">
-                                <Col span={7}><Input placeholder="长" size="large"/></Col>
-                                <Col span={7} offset={1}><Input placeholder="宽" size="large"/></Col>
-                                <Col span={8} offset={1}><Input placeholder="高" size="large"/></Col>
-                                <Col span={1}></Col>
-                            </Row>
-                        </Form.Item>
-                        <FormItem>
-                            <Input placeholder="体积（m3）" size="large"/>
-                        </FormItem>
-                        <FormItem>
-                            <Row type="flex" justify="center">
-                                <Button size="large" type="primary">开始计算</Button>
-                            </Row>
-                        </FormItem>
-                    </Form>
-                </Row>
+                <HomeCostQuery></HomeCostQuery>
                 <Row>
                     <Col style={{
                         border: '1px solid #e65922',
@@ -212,16 +240,16 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
                 </Row>
             </Col>
             <Col span={24}>
-                {topThis.renderTable()}
+                {isMobile ? topThis.renderCard() : topThis.renderTable()}
             </Col>
         </Row>
     }
 
     render() {
         const topThis = this;
-        return <Layout style={{minHeight: '100%', backgroundColor: '#FFF'}}>
+        return <Layout className="cost-estimate-page" style={{minHeight: '100%', backgroundColor: '#FFF'}}>
             <Content>
-                <Row style={{marginBottom: 24}} className="page-title-cost-image">
+                <Row style={{marginBottom: 24, backgroundSize: 'cover'}} className="page-title-cost-image">
                 </Row>
                 <Row type="flex" justify="space-around">
                     <Col xs={22} sm={22} md={18} lg={18} xl={18}>

@@ -83,6 +83,7 @@ export default class MotionContentBControl extends Component<MotionContentBContr
             <div {...props}
                  className={`content-template-wrapper ${isNullOrUndefined(className) ? "motion-content-b" : className}-wrapper`}>
                 <OverPack
+                    playScale={0.2}
                     className={`content-template ${isNullOrUndefined(className) ? "motion-content-b" : className}`}>
                     <TweenOne key="h1" animation={oneAnim} component="h1" reverseDelay={100}>
                         专业的服务

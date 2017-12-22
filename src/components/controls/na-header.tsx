@@ -89,39 +89,32 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
 
     renderDoubtContent() {
         return [
-            <Row type="flex">
-                <Col span={4}>
-                    <i style={{
-                        color: '#4cafe9', position: 'absolute',
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        fontSize: '20px',
-                        textAlign: 'center'
-                    }} className={NaContext.getIconClassName('icon-qq')}></i>
+            <Row key="1" type="flex" className="tool-doubt-content qq">
+                <Col span={6}>
+                    <i className={NaContext.getIconClassName('icon-qq')}></i>
                 </Col>
-                <Col span={20}>
-                    <p style={{
-                        color: '#000', fontSize: '15px', margin: '0',
-                        textAlign: 'center'
-                    }}>服务人员QQ号码</p>
-                    <p style={{
-                        color: '#4cafe9', margin: '0',
-                        textAlign: 'center'
-                    }}>738114990</p>
+                <Col span={18} className="title">
+                    <p className="tool-doubt-content-num-title">服务QQ</p>
+                    <p className="tool-doubt-content-num">738114990</p>
                 </Col>
             </Row>,
-            <Row>
-                <Col>
-                    <i style={{color: '#fab200'}} className={NaContext.getIconClassName('icon-youxiang')}></i>
-                    <span>xuke_break@163.com</span>
+            <Row key="2" type="flex" className="tool-doubt-content">
+                <Col span={6}>
+                    <i className={NaContext.getIconClassName('icon-youxiang')}></i>
+                </Col>
+                <Col span={18} className="title">
+                    <p className="tool-doubt-content-eml-title">服务邮箱</p>
+                    <p className="tool-doubt-content-eml">xuke_break@163.com</p>
                 </Col>
             </Row>,
-            <Row>
-                <Col>
-                    <i style={{color: '#50b44d'}} className={NaContext.getIconClassName('icon-weixin')}></i>
-                    <img style={{width: '80px', height: "80px"}}/>
+            <Row key="3" type="flex" className="tool-doubt-content">
+                <Col span={6}>
+                    <i className={NaContext.getIconClassName('icon-weixin')}></i>
                 </Col>
-                <Col></Col>
+                <Col span={18} className="title">
+                    <p className="tool-doubt-content-wx-title">关注我</p>
+                    <img className="code" src="http://www.famliytree.cn/icon/wx_ewm.jpg"/>
+                </Col>
             </Row>
         ]
     }
@@ -219,7 +212,7 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                 <Row type="flex" justify="start">
                     <Col>
                         <a className="logo" onClick={topThis.onClickLogo.bind(this)}>
-                            {typeof logo === "string" ? <img onClick={()=>{
+                            {typeof logo === "string" ? <img onClick={() => {
                                 hashHistory.push(PathConfig.HomePage);
                             }} src={logo}></img> : logo}
                         </a>
