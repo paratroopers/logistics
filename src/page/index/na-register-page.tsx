@@ -87,7 +87,7 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
                     if (!err) {
                         const request: GetCodeRequest = {
                             mail: values.Mail,
-                            type: RegisterEnum.phone.toString()
+                            type: RegisterEnum.mail.toString()
                         }
 
                         RegisterAPI.GetCode(request).then((data: NaResponse) => {

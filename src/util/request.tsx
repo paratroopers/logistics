@@ -18,7 +18,7 @@ export class Request<TRequest, TResponse extends NaResponse> {
         Querys: null,
         RequireToken: true,
         IgnoreError: false,
-        Headers: [],
+        Headers: [{"accept": "application/json;odata=verbose"}],
         Prefix: null
     }
 
@@ -39,6 +39,8 @@ export class Request<TRequest, TResponse extends NaResponse> {
 
         let request = func(param.Prefix && !param.Url.startsWith("http") ? param.Prefix + param.Url : '' + param.Url);
 
+        /**跨域请求带Cookie传递 */
+        // request.withCredentials();
         if (param.Data) {
             request.send(JSON.stringify(param.Data));
         }
