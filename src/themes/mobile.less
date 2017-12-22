@@ -33,44 +33,38 @@
     @email-color: #fab200;
     .user-help {
       width: 100%;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-
+      height: calc(100%);
+      position: fixed;
       text-align: center;
-      span {
-        font-size: 20px;
-      }
-      img {
-        width: 150px;
-      }
-      &-row {
-        background-color: #ebebef;
-        color: #bbb;
-        text-align: center;
-        height: 70px;
-        line-height: 30px;
-        padding: 0 15px 0 15px;
-        &-text {
-          padding: 5px;
-          .number {
-            font-size: 16px;
-          }
+      background-color: #353239;
+      bottom: 50px;
+      &-layout {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-45%);
+        background-color: #fff;
+        margin: 20px;
+        padding: 30px;
+        border-radius: 5px;
+        p {
+          margin: 0;
         }
-        .qq {
-          color: @qq-color;
+        .title {
+          font-size: 20px;
+          line-height: 20px;
+          margin-bottom: 10px;
         }
-        .email {
-          color: @email-color;
+        .number {
+          font-size: 15px;
+          line-height: 15px;
+          margin-bottom: 10px;
         }
-        .wx {
-          color: @wx-color;
-          margin-top: 40px;
+        .tip {
+          margin-top: 30px;
+          color: #a7a7a7;
         }
-        i {
-          font-size: 50px;
-          line-height: 75px;
-          float: left;
+        img {
+          width: 100%;
         }
       }
     }

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
+import {Layout, Row, Col} from 'antd';
 import {WingBlank, WhiteSpace} from 'antd-mobile';
 import {NaContext} from '../../util/common';
 
@@ -14,11 +15,16 @@ export class MbUserHelp extends React.Component<UserHelpProps, UserHelpStates> {
 
     render() {
         return <div className="user-help">
-            <span>您的专属客服</span>
-            <br/>
-            <span>400-100-2013</span>
-            <br/>
-            <img src="http://www.famliytree.cn/icon/wx_ewm.jpg" />
+            <Layout className="user-help-layout" style={{width: 'calc(100% - 40px)'}}>
+                <Layout.Header>
+                    <p className="title">您的专属客服</p>
+                    <p className="number">400-100-2013</p>
+                </Layout.Header>
+                <Layout.Content>
+                    <img src="http://www.famliytree.cn/icon/wx_ewm.jpg"/>
+                    <p className="tip">扫一扫上面的二维码图案，加客服微信</p>
+                </Layout.Content>
+            </Layout>
             {/*<WingBlank className="user-help-row">
                 <i className={NaContext.getIconClassName('icon-qq1') + ' qq'}></i>
                 <div className="user-help-row-text">
