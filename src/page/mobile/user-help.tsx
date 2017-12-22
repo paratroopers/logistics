@@ -15,7 +15,7 @@ export class MbUserHelp extends React.Component<UserHelpProps, UserHelpStates> {
 
     render() {
         return <div className="user-help">
-            <Layout className="user-help-layout" style={{width: 'calc(100% - 40px)'}}>
+            <Layout className="user-help-layout" style={{width: 'calc(100% - 80px)'}}>
                 <Layout.Header>
                     <p className="title">您的专属客服</p>
                     <p className="number">400-100-2013</p>
