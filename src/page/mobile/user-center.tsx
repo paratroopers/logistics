@@ -6,6 +6,7 @@ import {NaGlobal} from '../../util/common';
 import MobileNavTree from '../../config/mobile-navconfig';
 import {MobileNavTreeAction} from '../../actions/index';
 import {MobilePathConfig, PathConfig} from '../../config/pathconfig';
+import {Cookies} from '../../util/cookie';
 
 interface MbUserCenterProps {
 }
@@ -18,6 +19,12 @@ interface MbUserCenterStates {
 export class MbUserCenter extends React.Component<MbUserCenterProps, MbUserCenterStates> {
     constructor(props, context) {
         super(props, context)
+    }
+
+    componentDidMount() {
+        console.log(Cookies.get('Authorization'));
+        if (!Cookies.get('Authorization'))
+            hashHistory.push(PathConfig.LoginPage);
     }
 
     renderIcon(icon: string, colorCode: string) {
