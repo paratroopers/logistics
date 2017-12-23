@@ -48,12 +48,7 @@
       width: auto;
     }
     .title {
-      width: 350px;
-      left: 30px;
-      margin: auto;
-      display: inline-block;
-      font-size: 40px;
-      position: relative;
+      font-size: 30px;
     }
     h1 {
       margin: 10px auto;
@@ -152,4 +147,63 @@
       }
     }
   }
+}
+
+.banner-user-elem {
+  text-align: center;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.banner-user-elem .mobile-user-title {
+  margin-top: 25%;
+}
+
+.banner-user-elem .banner-user-content {
+  top: 10%;
+  margin-left: 10%;
+  text-align: left;
+  .title {
+    font-size: 35px;
+    display: block;
+    &-content {
+      font-size: 15px;
+    }
+    &-mobile-content {
+      display: none;
+    }
+  }
+  .a {
+    font-size: 32px;
+    display: block;
+  }
+  .b {
+    margin-bottom: 16px;
+    display: block;
+  }
+}
+
+.banner-user-mobile-content {
+  .title {
+    font-size: 35px;
+    display: block;
+    margin-top: 15%;
+    &-content {
+      display: none;
+    }
+    &-mobile-content {
+      display: block;
+      font-size: 15px;
+    }
+  }
+}
+
+.banner-anim-elem .bg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
 }

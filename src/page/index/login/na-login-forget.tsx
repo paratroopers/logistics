@@ -5,8 +5,6 @@ import {FormComponentProps} from 'antd/lib/form/Form';
 import {Steps, Icon} from 'antd-mobile';
 import {PathConfig} from '../../../config/pathconfig';
 
-const FormItem = Form.Item;
-
 interface NaLoginForgetProps extends FormComponentProps {
     visible?: boolean;
     onCancel?: () => void;
@@ -15,6 +13,7 @@ interface NaLoginForgetProps extends FormComponentProps {
 interface NaLoginForgetStates {
     visible?: boolean;
     current?: number;
+    countDown?: number;
 }
 
 
@@ -24,65 +23,87 @@ class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetSta
         super(props, content);
         this.state = {
             visible: props.visible ? props.visible : false,
-            current: 1
+            current: 0,
+            countDown: 0
         }
     }
 
 
     componentWillReceiveProps(nextProps) {
         if ('visible' in nextProps && nextProps.visible !== this.props.visible) {
-            this.setState({visible: nextProps.visible});
+            this.setState({visible: nextProps.visible, current: 0});
         }
+    }
+
+    /* 成功发送Code,验证码60秒等待*/
+    setTimeoutPhone = () => {
+        const topThis = this;
+        setTimeout(function () {
+            const {state: {countDown}} = topThis;
+            if (countDown !== 0) {
+                topThis.setState({countDown: countDown - 1});
+                topThis.setTimeoutPhone();
+            }
+        }, 1000);
     }
 
     onCancel() {
         this.props.onCancel && this.props.onCancel();
     }
 
-    renderFirstSteps() {
-        return [
-            <Col span={14} key="1">
-                <FormItem>
-                    <Input placeholder="手机号或者邮箱"/>
-                </FormItem>
-            </Col>,
-            <Col offset={1} key="2" span={9}>
-                <FormItem>
-                    <Button type="primary">获取验证码</Button>
-                </FormItem>
-            </Col>
-        ];
+    onCodeOk() {
+        const {getFieldValue} = this.props.form;
+        const v = getFieldValue('PhoneNumber');
+        var regex = new RegExp(/^1\d{10}$/);
+        if (regex.test(v)) {
+            this.setState({current: 1, countDown: 60})
+            this.setTimeoutPhone();
+        }
     }
 
-    renderSecondSteps() {
-        const size = 'large';
-        return [
-            <Col span={24} key="1">
-                <FormItem>
-                    <Input size={size} placeholder="手机号或者邮箱"/>
-                </FormItem>
-            </Col>,
-            <Col span={24} key="2">
-                <FormItem>
-                    <Input size={size} type="password" placeholder="新密码"/>
-                </FormItem>
-            </Col>,
-            <Col span={14} key="3">
-                <FormItem>
+    renderSteps(steps?: number) {
+        const size = 'default';
+        const {getFieldDecorator} = this.props.form;
+        const {countDown} = this.state;
+        let stepsContent: any[] = [];
+
+        stepsContent.push(<Col span={!steps ? 14 : 24}>
+            <Form.Item>
+                {getFieldDecorator('PhoneNumber', {
+                    rules: [{required: true, message: '请输入你的手机号码!'}]
+                })(<Input size={size} placeholder="新密码"/>)}
+            </Form.Item>
+        </Col>);
+        if (steps) {
+            stepsContent.push(
+                <Col span={24}>
+                    <Form.Item>
+                        {getFieldDecorator('Password', {
+                            rules: [{required: true, message: '请输入你的手机号码!'}]
+                        })(<Input size={size} type="password" placeholder="新密码"/>)}
+                    </Form.Item>
+                </Col>
+            );
+            stepsContent.push(<Col span={14}>
+                <Form.Item>
                     <Input size={size} placeholder="手机收到的6位数验证码"/>
-                </FormItem>
-            </Col>,
-            <Col offset={1} span={9} key="4">
-                <FormItem>
-                    <Button size={size} type="primary" style={{marginTop: '-4px'}}>获取验证码</Button>
-                </FormItem>
-            </Col>,
-            <Col span={24} key="5" style={{textAlign: 'center'}}>
-                <FormItem>
+                </Form.Item>
+            </Col>);
+        }
+        stepsContent.push(<Col offset={1} span={9}>
+            <Form.Item>
+                <Button size={size} type="primary" style={{width: '100%'}} onClick={this.onCodeOk.bind(this)}
+                        disabled={countDown === 0 ? false : true}>{countDown === 0 ? "获取验证码" : countDown + "秒"}</Button>
+            </Form.Item>
+        </Col>);
+        if (steps) {
+            stepsContent.push(<Col span={24} style={{textAlign: 'center'}}>
+                <Form.Item>
                     <Button style={{width: '100%'}} size={size} type="primary">重设密码</Button>
-                </FormItem>
-            </Col>
-        ];
+                </Form.Item>
+            </Col>);
+        }
+        return stepsContent;
     }
 
     render() {
@@ -101,12 +122,13 @@ class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetSta
                     </Steps>
                 </Col>
                 {
-                    <Form>
-                        {this.state.current ? this.renderSecondSteps() : this.renderFirstSteps()}
+                    <Form style={{width: '100%'}}>
+                        {this.renderSteps(this.state.current)}
                     </Form>
                 }
             </Row>
         </Modal>
     }
 }
+
 export default Form.create<any>()(NaLoginForget);
