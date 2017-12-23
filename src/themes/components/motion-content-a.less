@@ -71,10 +71,8 @@
     top: 25%;
     padding: 50px 0;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-around;
     > li {
-      width: 16.66%;
-      padding: 0 4%;
       display: inline-block;
       text-align: center;
       &.queue-anim-leaving {
@@ -82,13 +80,16 @@
       }
       .icon {
         border-radius: 50%;
-        max-width: 100px;
-        max-height: 100px;
+        width: 100px;
+        height: 100px;
         margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         .iconfont {
           color: @primary-color;
           max-width: 100%;
-          font-size: 72px;
+          font-size: 50px;
           vertical-align: middle;
           fill: currentColor;
           overflow: hidden;
@@ -149,14 +150,17 @@
         top: auto;
         padding: 0;
         > li {
-          width: 16.66%;
-          max-width: 250px;
+          //width: 16.66%;
+          //max-width: 250px;
           display: block;
           margin: 20px auto 40px;
           padding: 0;
           .icon {
-            max-width: 60px;
-            max-height: 60px;
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             .iconfont {
               font-size: 36px;
             }
