@@ -6,7 +6,8 @@ import {
     ESELECTTAB_COUNTLOADED,
     REQUEST_MOBILENAVTREE,
     NAVTREE_COUNTLOADED,
-    onChangeLanguage
+    onChangeLanguage,
+    GetLoginState
 } from "./ActionTypes";
 
 export class TaskAction {
@@ -33,5 +34,9 @@ export class MobileNavTreeAction {
 export class WebAction {
     static onChangeLanguage = createAction(onChangeLanguage, (languageKey: string) => {
         return {languageKey: languageKey};
+    });
+
+    static GetLoginState = createAction(GetLoginState, (isLogin: boolean) => {
+        return {isLogin: isLogin};
     });
 }

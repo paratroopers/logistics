@@ -50,11 +50,13 @@ class NaMasterWebPage extends React.Component<NaMasterWebPageProps, NaMasterWebP
                 background: "#FFF",
                 borderBottom: "1px solid #c2c2c2"
             }}>
-                <NaHeader
+                <div className="content-template">
+                    <NaHeader
                     menuTheme={"light"}
                     logo={logo}
                     defaultLanguageKey={localeKey}
                     onChangeLanguage={topThis.onChangeLanguage.bind(this)}></NaHeader>
+                </div>
             </Header>
             <Content style={{background: "#FFF", marginTop: 80}}>
                 {children}

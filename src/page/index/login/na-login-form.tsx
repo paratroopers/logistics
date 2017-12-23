@@ -6,6 +6,8 @@ import {PathConfig} from '../../../config/pathconfig';
 import NaLoginForget from './na-login-forget';
 const {Header, Content, Footer} = Layout;
 const FormItem = Form.Item;
+import {NaGlobal} from '../../../util/common';
+import {WebAction} from "../../../actions/index";
 
 interface NaLoginFormControlProps extends FormComponentProps {
 
@@ -23,12 +25,22 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
         }
     }
 
+    /** 点击登录的动作*/
+    onSubmit(){
+        const topThis=this;
+        const {props:{form}}=topThis;
+        /** 更改登录的状态*/
+        NaGlobal.store.dispatch(WebAction.GetLoginState(true));
+        hashHistory.push(PathConfig.VIPCenterPage);
+    }
+
 
     onRegister() {
         hashHistory.push(PathConfig.RegisterPage);
     }
 
     render() {
+        const topThis=this;
         const inputSize = 'large';
         const iconSize = {fontSize: '18px', marginTop: '-8px'};
         const {getFieldDecorator} = this.props.form;
@@ -95,7 +107,7 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
                                 }}>无法登录?</a>
                             </FormItem>
                             <FormItem>
-                                <Button type="primary" htmlType="submit" className="na-login-content-form-button"
+                                <Button type="primary" onClick={topThis.onSubmit.bind(this)} className="na-login-content-form-button"
                                         size={inputSize}>
                                     登录
                                 </Button>
