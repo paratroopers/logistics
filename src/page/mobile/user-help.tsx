@@ -16,7 +16,7 @@ export class MbUserHelp extends React.Component<UserHelpProps, UserHelpStates> {
             <Layout className="user-help-layout" style={{width: 'calc(100% - 40px)'}}>
                 <Layout.Header>
                     <p className="title">您的专属客服</p>
-                    <a className="number" href="wtai://wp/ap;400-100-2013">400-100-2013</a>
+                    <a className="number" href="tel:400-100-2013">400-100-2013</a>
                 </Layout.Header>
                 <Layout.Content>
                     <img src="http://www.famliytree.cn/icon/wx_ewm.jpg"/>
