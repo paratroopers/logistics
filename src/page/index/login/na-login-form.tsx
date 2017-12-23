@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {hashHistory} from 'react-router';
+import {hashHistory,Link} from 'react-router';
 import {Form, Icon, Input, Button, Checkbox, Modal, Row, Col, Layout} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {PathConfig} from '../../../config/pathconfig';
 import NaLoginForget from './na-login-forget';
-
+const {Header, Content, Footer} = Layout;
 const FormItem = Form.Item;
 
 interface NaLoginFormControlProps extends FormComponentProps {
@@ -33,14 +33,33 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
         const iconSize = {fontSize: '18px', marginTop: '-8px'};
         const {getFieldDecorator} = this.props.form;
         return <Layout className="na-login">
-            <Layout.Content className="na-login-content">
+            <Header style={{
+                background: "#FFF"
+            }}>
+                <Row type="flex" align="middle" justify="end">
+                    <Col>
+                        {/*<Select defaultValue={localeKey ? localeKey : "zh"}*/}
+                        {/*onChange={topThis.onChangeLanguage.bind(this)}>*/}
+                        {/*<Select.Option value="zh">中文</Select.Option>*/}
+                        {/*<Select.Option value="en">English</Select.Option>*/}
+                        {/*</Select>*/}
+                        {/*<Button onClick={() => {*/}
+                        {/*hashHistory.push(PathConfig.HomePage);*/}
+                        {/*}}>首页</Button>*/}
+                        <Link to={PathConfig.HomePage}>返回首页 ></Link>
+                    </Col>
+                </Row>
+            </Header>
+            <Content className="na-login-content">
                 <Row align="middle" justify="center" type="flex">
-                    <Col lg={8} sm={24} md={12} xs={24} xl={4} className="na-login-content-col">
+                    <Col className="na-login-content-col">
                         {<NaLoginForget onCancel={() => {
                             this.setState({visible: false})
                         }} visible={this.state.visible}></NaLoginForget>}
                         <div className="na-login-content-img">
-                            <img src="http://www.famliytree.cn/icon/logo.png"/>
+                            <img style={{cursor:'pointer'}} onClick={() => {
+                                hashHistory.push(PathConfig.HomePage);
+                            }} src="http://www.famliytree.cn/icon/logo.png"/>
                         </div>
                         <div className="na-login-content-title">
                             <p>为你的境外物流，提供专业优质的服务</p>
@@ -89,7 +108,7 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
                         </Form>
                     </Col>
                 </Row>
-            </Layout.Content>
+            </Content>
         </Layout>;
     }
 }

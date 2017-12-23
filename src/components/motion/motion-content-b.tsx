@@ -29,34 +29,34 @@ export default class MotionContentBControl extends Component<MotionContentBContr
         const oneAnim = {y: '+=30', opacity: 0, type: 'from', ease: 'easeOutQuad'};
         const blockArray = [
             {
-                icon: 'http://www.famliytree.cn/icon/motion-content-b-a.png',
-                title: '运输中、物流',
-                content: '云资源集中编排、弹性伸缩、持续发布和部署，高可用及容灾。'
+                icon: 'icon-kucun-xianxing',
+                title: '会员、仓库',
+                content: '免费注册会员分配仓位，专人维护仓库。'
             },
             {
-                icon: 'http://www.famliytree.cn/icon/motion-content-b-b.png',
-                title: '包裹、发货',
-                content: '按金融企业安全要求打造的完整云上安全体系，全方位保障金融应用及数据安全。'
+                icon: 'icon-baoguofahuo-xianxing',
+                title: '包裹、仓储',
+                content: '会员包裹直接发往仓库，仓库收到立即存储，会员收到到货通知，当天即可操作包裹，仓库提供合并打包。'
             },
             {
-                icon: 'http://www.famliytree.cn/icon/motion-content-b-c.png',
-                title: '配载、装车',
-                content: '分布式云环境集中监控，统一资源及应用状态视图，智能分析及故障定位。'
+                icon: 'icon-yunshuzhongwuliu-xianxing',
+                title: '物流、运输',
+                content: '平台与多家大型物流快递公司合作，联邦，UPS,DHL,EMS,TNT，ARAMEX,DPEX，各类专线快递多种物流选择应有尽有。'
             },
             {
-                icon: 'http://www.famliytree.cn/icon/motion-content-b-d.png',
-                title: '拆包裹、取件',
-                content: '一站式移动金融APP开发及全面监控；丰富可用组件，动态发布和故障热修复。'
+                icon: 'icon-qianshoushenpitongguo-xianxing',
+                title: '发货、审核',
+                content: '直接选择自己仓库内货物打包发货专业仓管打包审核，确认无误准备发运。'
             },
             {
-                icon: 'http://www.famliytree.cn/icon/motion-content-b-e.png',
-                title: '签收、审批',
-                content: '金融级联机交易处理中间件，大规模分布式计算机，数万笔/秒级并发能力，严格保证交易数据统一性。'
+                icon: 'icon-jisuanqilishuai-xianxing',
+                title: '渠道、运价',
+                content: '各种物流渠道折扣优惠，运价低至2-5折会员还有定期优惠多个包裹合并打包，更能节省运费。'
             },
             {
-                icon: 'http://www.famliytree.cn/icon/motion-content-b-f.png',
-                title: '安全、保障',
-                content: '一站式、全周期大数据协同工作平台，PB级数据处理、毫秒级数据分析工具。'
+                icon: 'icon-anquanbaozhang-xianxing',
+                title: '付款、安全',
+                content: '付款便捷，支付宝，微信，paypal,银联主流支付方式，保障资金安全。'
             },
         ];
         const children = blockArray.map((item, i) => {
@@ -66,7 +66,7 @@ export default class MotionContentBControl extends Component<MotionContentBContr
             return (<TweenOne component="li" animation={liAnim} key={i}>
                 <TweenOne animation={{x: '-=10', opacity: 0, type: 'from', ease: 'easeOutQuad'}}
                           className="img" key="img">
-                    <img src={item.icon} width="100%"/>
+                    <i className={'iconfont '+item.icon}/>
                 </TweenOne>
                 <div className="text">
                     <TweenOne key="h1" animation={childrenAnim} component="h1">
@@ -88,9 +88,9 @@ export default class MotionContentBControl extends Component<MotionContentBContr
                     <TweenOne key="h1" animation={oneAnim} component="h1" reverseDelay={100}>
                         专业的服务
                     </TweenOne>
-                    <TweenOne key="p" animation={{...oneAnim, delay: 100}} component="p">
-                        基于物联网强大的基础资源
-                    </TweenOne>
+                    {/*<TweenOne key="p" animation={{...oneAnim, delay: 100}} component="p">*/}
+                        {/*基于物联网强大的基础资源*/}
+                    {/*</TweenOne>*/}
                     <QueueAnim key="ul" type="bottom" className={`${isNullOrUndefined(className) ? "motion-content-b" : className}-contentWrapper`}>
                         <ul key="ul">
                             {children}
