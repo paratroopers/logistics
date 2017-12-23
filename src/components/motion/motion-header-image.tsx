@@ -36,7 +36,7 @@ export class MotionHeaderImage extends React.Component<any, any> {
                             <div className="title-group">
                                 <span className="title">大陆您的私家仓库</span>
                                 <span className="title-content">注册会员获得仓位，用户直接发货进仓；免费理货合并打包，专业物流供您选择</span>
-                                <span className="title-mobile-content">注册会员获得仓位，用户直接发货进仓</span>
+                                <span className="title-mobile-content">注册会员获取免费仓位，直接发货无需提交订单</span>
                                 <span className="title-mobile-content">免费理货合并打包，专业物流供您选择</span>
                             </div>
                         </TweenOne>
