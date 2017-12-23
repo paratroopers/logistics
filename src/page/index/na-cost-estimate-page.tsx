@@ -10,7 +10,7 @@ const {CheckableTag} = Tag;
 const {TextArea} = Input;
 import {NaUtil} from "../../util/util";
 import {ScreenModeEnum} from "../../api/model/common-model";
-import {Card, WingBlank, WhiteSpace, Modal} from 'antd-mobile';
+import {Card, WingBlank, WhiteSpace, Modal,List} from 'antd-mobile';
 
 const data = [{
     key: '1',
@@ -21,7 +21,7 @@ const data = [{
     e: '34.60',
     f: '726.68',
     g: '长宽高任意一边超60cm则计体积费用',
-    h: 'h'
+    h: '注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项'
 }, {
     key: '2',
     a: '大包(SAL)',
@@ -31,7 +31,7 @@ const data = [{
     e: '34.60',
     f: '726.68',
     g: '长宽高任意一边超60cm则计体积费用',
-    h: 'h'
+    h: '注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项'
 }, {
     key: '3',
     a: '大包(SAL)',
@@ -41,7 +41,7 @@ const data = [{
     e: '34.60',
     f: '726.68',
     g: '长宽高任意一边超60cm则计体积费用',
-    h: 'h'
+    h: '注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项'
 }, {
     key: '4',
     a: '大包(SAL)',
@@ -51,7 +51,7 @@ const data = [{
     e: '34.60',
     f: '726.68',
     g: '长宽高任意一边超60cm则计体积费用',
-    h: 'h'
+    h: '注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项'
 }, {
     key: '5',
     a: '大包(SAL)',
@@ -61,7 +61,7 @@ const data = [{
     e: '34.60',
     f: '726.68',
     g: '长宽高任意一边超60cm则计体积费用',
-    h: 'h'
+    h: '注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项'
 }];
 
 interface NaCostEstimatePageProps {
@@ -71,6 +71,21 @@ interface NaCostEstimatePageProps {
 interface NaCostEstimatePageStates {
     selectedTagsA: any;
     selectedTagsB: any;
+    /** 手机版Modal*/
+    mobileModalVisible:boolean;
+    /** 注意事项*/
+    mobileModalContent:string;
+}
+
+function closest(el, selector) {
+    const matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
+    while (el) {
+        if (matchesSelector.call(el, selector)) {
+            return el;
+        }
+        el = el.parentElement;
+    }
+    return null;
 }
 
 @withRouter
@@ -81,10 +96,24 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
         super(props, context)
         this.state = {
             selectedTagsA: [],
-            selectedTagsB: []
+            selectedTagsB: [],
+            mobileModalVisible:false,
+            mobileModalContent:""
         }
         this.isMobile = (NaUtil.getScrrenMode(window.innerWidth) === ScreenModeEnum.sm);
     }
+
+    onWrapTouchStart = (e) => {
+        // fix touch to scroll background page on iOS
+        if (!/iPhone|iPod|iPad/i.test(navigator.userAgent)) {
+            return;
+        }
+        const pNode = closest(e.target, '.am-modal-content');
+        if (!pNode) {
+            e.preventDefault();
+        }
+    }
+
 
     TagAChange(tag, checked) {
         const topThis = this;
@@ -150,8 +179,11 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
                         <Card>
                             <Card.Header
                                 title={item.a}
-                                extra={<span
-                                    style={{fontSize: '12px', color: '#e65922', cursor: 'pointer'}}>注意事项</span>}
+                                extra={<a
+                                    onClick={()=>{
+                                        topThis.openMobileModal(item.h);
+                                    }}
+                                    style={{fontSize: '12px', color: '#e65922', cursor: 'pointer'}}>注意事项</a>}
                             />
                             <Card.Body>
                                 <Row>
@@ -245,10 +277,39 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
         </Row>
     }
 
+    openMobileModal(content:string){
+        const topThis=this;
+        topThis.setState({mobileModalVisible:true,mobileModalContent:content});
+    }
+
+    renderMobileModal(){
+        const topThis=this;
+        const {state:{mobileModalVisible,mobileModalContent}}=topThis;
+        return <WingBlank>
+            <WhiteSpace />
+            <Modal
+                visible={mobileModalVisible}
+                transparent
+                maskClosable={false}
+                title="注意事项"
+                footer={[{ text: 'Ok', onPress: ()=>{
+                    topThis.setState({mobileModalVisible:false});
+                }}]}
+                onClose={()=>{
+                    topThis.setState({mobileModalVisible:false});
+                }}
+                wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+            >
+                <p>{mobileModalContent}</p>
+            </Modal>
+        </WingBlank>;
+    }
+
     render() {
         const topThis = this;
         return <Layout className="cost-estimate-page" style={{minHeight: '100%', backgroundColor: '#FFF'}}>
             <Content>
+                {topThis.renderMobileModal()}
                 <Row style={{marginBottom: 24, backgroundSize: 'cover'}} className="page-title-cost-image">
                 </Row>
                 <Row type="flex" justify="space-around">
