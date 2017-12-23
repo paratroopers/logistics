@@ -94,7 +94,7 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                     <i className={NaContext.getIconClassName('icon-qq')}></i>
                 </Col>
                 <Col span={18} className="title">
-                    <p className="tool-doubt-content-num-title">服务QQ</p>
+                    <p className="tool-doubt-content-num-title">客服QQ</p>
                     <p className="tool-doubt-content-num">738114990</p>
                 </Col>
             </Row>,
@@ -103,7 +103,7 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                     <i className={NaContext.getIconClassName('icon-youxiang')}></i>
                 </Col>
                 <Col span={18} className="title">
-                    <p className="tool-doubt-content-eml-title">服务邮箱</p>
+                    <p className="tool-doubt-content-eml-title">客服邮箱</p>
                     <p className="tool-doubt-content-eml">xuke_break@163.com</p>
                 </Col>
             </Row>,
