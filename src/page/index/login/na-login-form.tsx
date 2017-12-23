@@ -1,11 +1,15 @@
 import * as React from 'react';
-import {hashHistory,Link} from 'react-router';
-import {Form, Icon, Input, Button, Checkbox, Modal, Row, Col, Layout} from 'antd';
+import {hashHistory, Link} from 'react-router';
+import {Form, Icon, Input, Button, Checkbox, Row, Col, Layout} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {PathConfig} from '../../../config/pathconfig';
 import NaLoginForget from './na-login-forget';
-const {Header, Content, Footer} = Layout;
-const FormItem = Form.Item;
+import {LoginRequest} from '../../../api/model/request/login-request';
+import {LoginApi} from '../../../api/login';
+import {Cookies} from '../../../util/cookie';
+import {NaNotification} from '../../../components/controls/na-notification';
+
+const {Header, Content} = Layout;
 
 interface NaLoginFormControlProps extends FormComponentProps {
 
@@ -13,19 +17,52 @@ interface NaLoginFormControlProps extends FormComponentProps {
 
 interface NaLoginFormControlStates {
     visible?: boolean;
+    loading?: boolean;
 }
 
 class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLoginFormControlStates> {
     constructor(props, content) {
         super(props, content);
         this.state = {
-            visible: false
+            visible: false,
+            loading: false
         }
+    }
+
+    componentDidMount() {
+        this.props.form.resetFields();
+        this.setState({loading: false});
     }
 
 
     onRegister() {
         hashHistory.push(PathConfig.RegisterPage);
+    }
+
+    onLogin() {
+        this.props.form.validateFields((err, vas) => {
+            if (err) {
+                return;
+            } else {
+                const data: LoginRequest = {
+                    pwd: vas['pwd'],
+                    user: vas['user']
+                };
+                this.setState({loading: true});
+                LoginApi.Login(data).then(result => {
+                    this.setState({loading: false});
+                    if (result.Status === 0) {
+                        Cookies.set("Authorization", result.Data);
+                        hashHistory.push(PathConfig.HomePage);
+                    } else {
+                        NaNotification.error({
+                            message: 'Tip',
+                            description: result.Message
+                        });
+                    }
+                });
+            }
+        })
     }
 
     render() {
@@ -38,14 +75,6 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
             }}>
                 <Row type="flex" align="middle" justify="end">
                     <Col>
-                        {/*<Select defaultValue={localeKey ? localeKey : "zh"}*/}
-                        {/*onChange={topThis.onChangeLanguage.bind(this)}>*/}
-                        {/*<Select.Option value="zh">中文</Select.Option>*/}
-                        {/*<Select.Option value="en">English</Select.Option>*/}
-                        {/*</Select>*/}
-                        {/*<Button onClick={() => {*/}
-                        {/*hashHistory.push(PathConfig.HomePage);*/}
-                        {/*}}>首页</Button>*/}
                         <Link to={PathConfig.HomePage}>返回首页 ></Link>
                     </Col>
                 </Row>
@@ -57,7 +86,7 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
                             this.setState({visible: false})
                         }} visible={this.state.visible}></NaLoginForget>}
                         <div className="na-login-content-img">
-                            <img style={{cursor:'pointer'}} onClick={() => {
+                            <img style={{cursor: 'pointer'}} onClick={() => {
                                 hashHistory.push(PathConfig.HomePage);
                             }} src="http://www.famliytree.cn/icon/logo.png"/>
                         </div>
@@ -65,16 +94,14 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
                             <p>为你的境外物流，提供专业优质的服务</p>
                         </div>
                         <Form className="na-login-content-form">
-                            <FormItem>
-                                {getFieldDecorator('userName', {
+                            <Form.Item>
+                                {getFieldDecorator('user', {
                                     rules: [{required: true, message: 'Please input your username!'}],
-                                })(
-                                    <Input prefix={<Icon type="user" style={iconSize}/>} size={inputSize}
-                                           placeholder="手机或邮箱"/>
-                                )}
-                            </FormItem>
-                            <FormItem>
-                                {getFieldDecorator('password', {
+                                })(<Input prefix={<Icon type="user" style={iconSize}/>} size={inputSize}
+                                          placeholder="手机或邮箱"/>)}
+                            </Form.Item>
+                            <Form.Item>
+                                {getFieldDecorator('pwd', {
                                     rules: [{required: true, message: 'Please input your Password!'}],
                                 })(
                                     <Input prefix={<Icon type="lock" style={iconSize}/>}
@@ -82,8 +109,8 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
                                            type="password"
                                            placeholder="密码"/>
                                 )}
-                            </FormItem>
-                            <FormItem>
+                            </Form.Item>
+                            <Form.Item>
                                 {getFieldDecorator('remember', {
                                     valuePropName: 'checked',
                                     initialValue: true,
@@ -93,18 +120,19 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
                                 <a className="na-login-content-form-forgot" onClick={() => {
                                     this.setState({visible: true})
                                 }}>无法登录?</a>
-                            </FormItem>
-                            <FormItem>
-                                <Button type="primary" htmlType="submit" className="na-login-content-form-button"
-                                        size={inputSize}>
-                                    登录
+                            </Form.Item>
+                            <Form.Item>
+                                <Button loading={this.state.loading} type="primary" htmlType="submit"
+                                        className="na-login-content-form-button"
+                                        onClick={this.onLogin.bind(this)}
+                                        size={inputSize}>{'登录'}
                                 </Button>
-                            </FormItem>
-                            <FormItem>
+                            </Form.Item>
+                            <Form.Item>
                                 或者 <a onClick={() => {
                                 this.onRegister()
                             }}>现在注册!</a>
-                            </FormItem>
+                            </Form.Item>
                         </Form>
                     </Col>
                 </Row>
