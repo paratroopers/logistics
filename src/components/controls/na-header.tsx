@@ -51,6 +51,7 @@ class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
         switch (key) {
             case "0":
                 hashHistory.push({pathname: PathConfig.VIPCenterPage});
+                break;
             case "2":
                 topThis.setState({isLogin: false});
                 break;
