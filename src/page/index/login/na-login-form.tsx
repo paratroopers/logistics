@@ -4,8 +4,6 @@ import {Form, Icon, Input, Button, Checkbox, Row, Col, Layout} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {PathConfig} from '../../../config/pathconfig';
 import NaLoginForget from './na-login-forget';
-const {Header, Content, Footer} = Layout;
-const FormItem = Form.Item;
 import {NaGlobal} from '../../../util/common';
 import {WebAction} from "../../../actions/index";
 import {LoginRequest} from '../../../api/model/request/login-request';
@@ -57,9 +55,6 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
                     this.setState({loading: false});
                     if (result.Status === 0) {
                         Cookies.set("Authorization", result.Data);
-                        //hashHistory.push(PathConfig.HomePage);
-                        const topThis=this;
-                        const {props:{form}}=topThis;
                         /** 更改登录的状态*/
                         NaGlobal.store.dispatch(WebAction.GetLoginState(true));
                         hashHistory.push(PathConfig.VIPCenterPage);
@@ -79,9 +74,7 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
         const iconSize = {fontSize: '18px', marginTop: '-8px'};
         const {getFieldDecorator} = this.props.form;
         return <Layout className="na-login">
-            <Header style={{
-                background: "#FFF"
-            }}>
+            <Header style={{background: "#FFF"}}>
                 <Row type="flex" align="middle" justify="end">
                     <Col>
                         <Link to={PathConfig.HomePage}>返回首页 ></Link>
