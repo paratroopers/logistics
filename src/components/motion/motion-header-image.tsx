@@ -3,7 +3,7 @@ import BannerAnim, {Element} from 'rc-banner-anim';
 import {Icon} from 'antd';
 import 'rc-banner-anim/assets/index.css';
 import TweenOne from 'rc-tween-one';
-import HomeCostQuery from '../../components/controls/home-cost-query';
+import NaCost from '../../components/controls/na-cost';
 import {NaConstants} from '../../util/common';
 
 const BgElement = Element.BgElement;
@@ -13,8 +13,8 @@ export class MotionHeaderImage extends React.Component<any, any> {
         const height = window.innerHeight - 80 + 'px';
         const isMobile = window.innerWidth <= NaConstants.sm;
         return (<div>
-                <HomeCostQuery isHeard={true} isMobile={true} className="motion-banner-wrapper-right"
-                               style={{zIndex: 1000}}></HomeCostQuery>
+                <NaCost isHeard={true} isMobile={true} className="motion-banner-wrapper-right"
+                               style={{zIndex: 1000}}></NaCost>
                 <BannerAnim prefixCls="banner-user"
                             type={'across'}
                             style={{height: height, zIndex: 999}}

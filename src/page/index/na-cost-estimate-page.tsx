@@ -3,7 +3,7 @@ import {Component} from "react";
 import {withRouter, Link} from "react-router";
 import {PathConfig} from "../../config/pathconfig";
 import {Layout, Row, Col, Form, Input, Button, Tag, Table} from "antd";
-import HomeCostQuery from "../../components/controls/home-cost-query";
+import CostQuery from "../../components/controls/na-cost";
 const {Content} = Layout;
 const FormItem = Form.Item;
 const {CheckableTag} = Tag;
@@ -195,7 +195,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
         const fontSize = {fontSize: '14px'};
         return <Row type="flex" justify="space-between">
             <Col xs={24} sm={24} md={24} lg={10} xl={10}>
-                <HomeCostQuery></HomeCostQuery>
+                <CostQuery></CostQuery>
                 <Row>
                     <Col style={{
                         border: '1px solid #e65922',
