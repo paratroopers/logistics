@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Component} from "react";
-import {withRouter} from "react-router";
+import {withRouter, hashHistory} from "react-router";
 import {NaGlobal} from '../../util/common';
 import {connect} from 'react-redux'
 import {Layout} from "antd";
@@ -10,6 +10,8 @@ import {NaVIPNavigation} from "../../components/controls/na-vip-navigation";
 import {NaUtil} from "../../util/util";
 import {NaConstants} from '../../util/common';
 import {ScreenModeEnum} from "../../api/model/common-model";
+import {PathConfig} from '../../config/pathconfig';
+import {Cookies} from '../../util/cookie';
 import {MobileNavTreeAction} from '../../actions/index';
 
 interface NaVIPCenterPageProps {
@@ -27,6 +29,13 @@ class NaVIPCenterPage extends Component<NaVIPCenterPageProps, NaVIPCenterPageSta
         this.state = {
             collapsed: false
         }
+    }
+
+
+    componentDidMount() {
+        console.log(Cookies.get('Authorization'));
+        if (!Cookies.get('Authorization'))
+            hashHistory.push(PathConfig.LoginPage);
     }
 
     componentWillReceiveProps(nextProps) {
