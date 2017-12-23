@@ -4,6 +4,7 @@ import {hashHistory} from 'react-router';
 import {NaGlobal} from '../../util/common';
 import NavTree from '../../config/navconfig';
 
+
 const {SubMenu} = Menu;
 
 interface NaVIPNavigationProps {
@@ -18,6 +19,7 @@ export class NaVIPNavigation extends React.Component<NaVIPNavigationProps, NaVIP
     constructor(props, context) {
         super(props, context);
     }
+
 
     renderMenu(tree: any) {
         return tree.map(item => {
