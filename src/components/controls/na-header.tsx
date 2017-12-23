@@ -199,7 +199,7 @@ class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
     /** 工具*/
     renderTool() {
         const topThis = this;
-        return <Row className="tool" type="flex" justify="end" align="middle"
+        return <Row className="tool" type="flex" justify="start" align="middle"
                     style={{height: 80}}>
             {/*<Col >{topThis.renderLanguageSelect()}</Col>*/}
             {/*<Col className="tool-tel">*/}

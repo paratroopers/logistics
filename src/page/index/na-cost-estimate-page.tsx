@@ -106,32 +106,32 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
 
     renderTable() {
         const columns = [{
-            title: '运输方式',
-            dataIndex: 'a',
+            title: <span>运输方式<br/></span>,
+            dataIndex: 'a'
         }, {
-            title: '计费重量(kg)',
-            dataIndex: 'b',
+            title: <span>计费重量<br/>(kg)</span>,
+            dataIndex: 'b'
         }, {
-            title: '运费(RMB)',
-            dataIndex: 'c',
+            title: <span>运费<br/>(RMB)</span>,
+            dataIndex: 'c'
         }, {
-            title: '送达时间(工作日)',
-            dataIndex: 'd',
+            title: <span>送达时间<br/>(工作日)</span>,
+            dataIndex: 'd'
         }, {
-            title: '服务费(RMB)',
-            dataIndex: 'e',
+            title: <span>服务费<br/>(RMB)</span>,
+            dataIndex: 'e'
         }, {
-            title: '总费用(RMB)',
-            dataIndex: 'f',
+            title: <span>总费用<br/></span>,
+            dataIndex: 'f'
         }, {
-            title: '备注',
-            dataIndex: 'g',
+            title: <span>备注<br/></span>,
+            dataIndex: 'g'
         }, {
-            title: '发运注意事项',
+            title: <span>注意事项<br/></span>,
             dataIndex: 'h',
             render: (text, record, index) => {
                 return <a href="#">点击查看</a>
-            },
+            }
         }];
         return <Table
             columns={columns}
