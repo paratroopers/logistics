@@ -14,14 +14,45 @@ interface MailRegisterFormControlProps extends FormComponentProps {
 interface MailRegisterFormControlStates {
     /** 验证码禁用倒计时*/
     countDown: number;
+    /** 验证密码*/
+    confirmDirty:boolean;
 }
 
 class MailRegisterFormControl extends Component<MailRegisterFormControlProps, MailRegisterFormControlStates> {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            countDown: 0
+            countDown: 0,
+            confirmDirty:false
         }
+    }
+
+    handleConfirmBlur = (e) => {
+        const value = e.target.value;
+        const topThis = this;
+        const {state:{confirmDirty}}=topThis;
+        topThis.setState({ confirmDirty: confirmDirty || !!value });
+    }
+
+    checkPassword = (rule, value, callback) => {
+        const topThis = this;
+        const {props: {form}} = topThis;
+        if (value && value !== form.getFieldValue('Password')) {
+            callback('两次密码输入不一致!');
+        } else {
+            callback();
+        }
+    }
+
+    checkConfirm = (rule, value, callback) => {
+        const topThis = this;
+        const {props: {form},state:{confirmDirty}} = topThis;
+        if (value && confirmDirty) {
+            form.validateFields(['NextPassword'], { force: true },()=>{
+
+            });
+        }
+        callback();
     }
 
     /** 验证码倒计时*/
@@ -49,7 +80,7 @@ class MailRegisterFormControl extends Component<MailRegisterFormControlProps, Ma
 
         return (
             <Form className="na-page-register-form">
-                <FormItem>
+                <FormItem hasFeedback>
                     {getFieldDecorator('Mail', {
                         rules: [{
                             message: '请正确输入你的邮箱!',
@@ -97,7 +128,9 @@ class MailRegisterFormControl extends Component<MailRegisterFormControlProps, Ma
                 </FormItem>
                 <FormItem>
                     {getFieldDecorator('Password', {
-                        rules: [{required: true, message: '请输入你的登录密码!'}],
+                        rules: [{required: true, message: '请输入你的登录密码!'}, {
+                            validator: topThis.checkConfirm,
+                        }],
                     })(
                         <Input prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                size="large"
@@ -108,11 +141,14 @@ class MailRegisterFormControl extends Component<MailRegisterFormControlProps, Ma
                 </FormItem>
                 <FormItem>
                     {getFieldDecorator('NextPassword', {
-                        rules: [{required: true, message: '请再次输入你的密码!'}],
+                        rules: [{required: true, message: '请再次输入你的密码!'}, {
+                            validator: topThis.checkPassword,
+                        }],
                     })(
                         <Input prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                size="large"
                                type="password"
+                               onBlur={topThis.handleConfirmBlur}
                                placeholder="再次输入密码"/>
                     )}
                 </FormItem>
