@@ -29,7 +29,7 @@ export class NaCostCountry extends React.Component<NaCostCountryProps, NaCostCou
             fetching: false
         }
         this.search = "";
-        this.loadingTime = 1000;
+        this.loadingTime = 500;
     }
 
     componentWillReceiveProps(nextProps) {
@@ -60,8 +60,13 @@ export class NaCostCountry extends React.Component<NaCostCountryProps, NaCostCou
         this.search = v;
         setTimeout(() => {
             if (this.search === v)
-                this.getCountry(v ? v : "");
+                this.getCountry(v);
         }, this.loadingTime);
+    }
+
+    onFocus() {
+        if (!this.state.data.length)
+            this.onSearch();
     }
 
     onCountryChange(value?: any) {
@@ -78,7 +83,7 @@ export class NaCostCountry extends React.Component<NaCostCountryProps, NaCostCou
                        value={value}
                        notFoundContent={fetching ? <Spin size="small"/> : null}
                        filterOption={false}
-                       onFocus={this.onSearch.bind(this)}
+                       onFocus={this.onFocus.bind(this)}
                        onChange={(v) => this.onCountryChange(v)}
                        onSearch={(v) => {
                            this.onSearch(v);
