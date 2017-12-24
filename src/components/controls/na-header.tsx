@@ -6,6 +6,7 @@ import {NaGlobal, NaContext} from "../../util/common";
 import {CommonLocale} from "../../locales/localeid";
 import {PathConfig} from "../../config/pathconfig";
 import {connect} from "react-redux";
+import {Cookies} from '../../util/cookie';
 
 interface NaHeaderProps {
     /* na-header 同级样式*/
@@ -54,6 +55,7 @@ class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                 break;
             case "2":
                 topThis.setState({isLogin: false});
+                Cookies.remove("Authorization");
                 break;
             default:
                 break;
