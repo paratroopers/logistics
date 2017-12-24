@@ -2,7 +2,7 @@ import * as React from "react";
 import {Component} from "react";
 import {withRouter, Link, hashHistory} from "react-router";
 import {PathConfig}from "../../config/pathconfig";
-import {Layout, Row, Col, Tabs, Button, Checkbox, Select} from "antd";
+import {Layout, Row, Col, Tabs, Button, Checkbox, Select,Icon} from "antd";
 import {RegisterEnum}from "../../../src/api/model/common-model";
 const {Header, Content, Footer} = Layout;
 import {NaGlobal, NaResponse} from '../../util/common';
@@ -23,6 +23,8 @@ interface NaRegisterPageStates {
     localeKey?: string;
     /** 注册类型*/
     tabKey: string;
+    /** */
+    visibleSuccess:boolean;
 }
 
 @withRouter
@@ -37,7 +39,8 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
         super(props, context);
         this.state = {
             tabKey: RegisterEnum.phone.toString(),
-            localeKey: props.localeKey ? props.localeKey : "zh"
+            localeKey: props.localeKey ? props.localeKey : "zh",
+            visibleSuccess:false
         }
     }
 
@@ -161,6 +164,7 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
                                     message: 'Tip',
                                     description: '注册成功!'
                                 });
+                                topThis.setState({visibleSuccess:true});
                             }else
                             {
                                 NaNotification.error({
@@ -187,6 +191,7 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
                                     message: 'Tip',
                                     description: '注册成功!'
                                 });
+                                topThis.setState({visibleSuccess:true});
                             }else
                             {
                                 NaNotification.error({
@@ -203,9 +208,47 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
         }
     }
 
+    renderSuccess(){
+        const topThis = this;
+        const {state: {tabKey}} = topThis;
+        let account="";
+        switch (tabKey){
+            case RegisterEnum.phone.toString():
+                account=topThis.phoneFromComponent.props.form.getFieldValue("Phone");
+                break;
+            case RegisterEnum.mail.toString():
+                account=topThis.mailFromComponent.props.form.getFieldValue("Mail");
+                break;
+        }
+
+        /** 5秒跳转登录页面*/
+        const time = setTimeout(()=>{
+            hashHistory.push(PathConfig.LoginPage);
+        },5000);
+
+        return <Row style={{textAlign: 'center',maxWidth: 368, margin: '0 auto'}}>
+            <div style={{margin:'40px auto'}}>
+                <Icon style={{fontSize:'72px',color:"#e65922"}} type="check-circle" />
+            </div>
+            <h2>你的账户：{account} 注册成功</h2>
+            <p style={{
+                fontSize: '14px',
+                color: 'rgba(0, 0, 0, 0.45)',
+                marginTop: '12px'
+            }}>5秒后跳转登录页面</p>
+            <Button size="large" type="primary" className="register-button"
+                    onClick={()=>{
+                        clearTimeout(time);
+                    }}
+                    style={{width: "100%", marginTop: '40px',}}>
+                <Link to={PathConfig.LoginPage}>快捷登录 ></Link>
+            </Button>
+        </Row>;
+    }
+
     render() {
         const topThis = this;
-        const {state: {tabKey, localeKey}} = topThis;
+        const {state: {tabKey, localeKey,visibleSuccess}} = topThis;
         return <Layout className="na-page-register">
             <Header style={{
                 background: "#FFF"
@@ -237,7 +280,8 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
                             marginTop: '12px'
                         }}>为你的境外物流，提供专业优质的服务</p>
                     </Row>
-                    <Row style={{maxWidth: 368, margin: '0 auto'}} className="register-tabs">
+                    {visibleSuccess===true?topThis.renderSuccess():null}
+                    {visibleSuccess===true?null:<Row style={{maxWidth: 368, margin: '0 auto'}} className="register-tabs">
                         <Tabs size="large" activeKey={tabKey} tabBarStyle={{textAlign: 'center'}} onChange={(key) => {
                             topThis.setState({tabKey: key});
                         }}>
@@ -254,8 +298,8 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
                                     wrappedComponentRef={(inst) => topThis.mailFromComponent = inst}></MailRegisterForm>
                             </TabPane>
                         </Tabs>
-                    </Row>
-                    <Row style={{maxWidth: 368, margin: '0 auto'}}>
+                    </Row>}
+                    {visibleSuccess===true?null:<Row style={{maxWidth: 368, margin: '0 auto'}}>
                         <Col span={24}>
                             <Button size="large" type="primary" className="register-button"
                                     onClick={topThis.onClick.bind(this)}
@@ -274,7 +318,7 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
                                 </Col>
                             </Row>
                         </Col>
-                    </Row>
+                    </Row>}
                 </Row>
             </Content>
         </Layout>
