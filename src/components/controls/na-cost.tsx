@@ -39,12 +39,25 @@ class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
         setFieldsValue({country: v, searchName: name});
     }
 
+    onVolumeChange(l?: any, w?: any, h?: any) {
+        const {getFieldValue, setFieldsValue} = this.props.form;
+        const height = h ? h : getFieldValue('height');
+        const width = w ? w : getFieldValue('width');
+        const length = l ? l : getFieldValue('length');
+        if (height && length && width) {
+            const volume = Number(height / 100) * Number(width / 100) * Number(length / 100)
+            setFieldsValue({volume: volume});
+        }
+    }
+
     onOk() {
         this.props.form.validateFields((err, values) => {
             if (err) {
                 return;
             } else {
-                if (this.props.location.query) {
+                if (this.props.location.query.country) {
+                    delete values.searchName;
+                    delete values.volume;
                     QuotationApi.GetQuotation({...values}).then(result => {
                         if (result.Status === 0)
                             this.props.onClick && this.props.onClick(result.Data);
@@ -93,17 +106,24 @@ class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
                             <Col span={7}>
                                 {getFieldDecorator('length', {
                                     rules: [{required: true, message: '请填写长度!'}],
-                                })(<Input placeholder="长（cm）" size="large"/>)}
+                                })(<Input onChange={v => {
+                                    this.onVolumeChange(v.target.value)
+                                }} placeholder="长（cm）"
+                                          size="large"/>)}
                             </Col>
                             <Col span={7} offset={1}>
                                 {getFieldDecorator('width', {
                                     rules: [{required: true, message: '请填写宽度!'}],
-                                })(<Input placeholder="宽（cm）" size="large"/>)}
+                                })(<Input onChange={v => {
+                                    this.onVolumeChange(null, v.target.value)
+                                }} placeholder="宽（cm）" size="large"/>)}
                             </Col>
                             <Col span={8} offset={1}>
                                 {getFieldDecorator('height', {
                                     rules: [{required: true, message: '请填写高度!'}],
-                                })(<Input placeholder="高（cm）" size="large"/>)}
+                                })(<Input onChange={v => {
+                                    this.onVolumeChange(null, null, v.target.value)
+                                }} placeholder="高（cm）" size="large"/>)}
                             </Col>
                             <Col span={1}></Col>
                         </Row>
@@ -111,7 +131,7 @@ class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
                     <Form.Item>
                         {getFieldDecorator('volume', {
                             rules: [{required: true, message: '请填写体积!'}],
-                        })(<Input placeholder="体积（m3）" size="large"/>)}
+                        })(<Input readOnly={true} placeholder="体积（m3）" size="large"/>)}
                     </Form.Item>
                     <Form.Item>
                         <Row type="flex" justify="center">

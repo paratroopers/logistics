@@ -32,16 +32,21 @@ export class NaCostCountry extends React.Component<NaCostCountryProps, NaCostCou
         this.loadingTime = 500;
     }
 
+    componentDidMount() {
+        this.getCountry("");
+    }
+
     componentWillReceiveProps(nextProps) {
         if ('value' in nextProps && JSON.stringify(nextProps.value) !== JSON.stringify(this.props.value)) {
             this.setState({value: nextProps.value});
         }
-        if ('searchName' in nextProps && nextProps.searchName !== this.props.searchName) {
+        if ('searchName' in nextProps && nextProps.searchName !== this.props.searchName
+            && nextProps.searchName !== this.search && nextProps.searchName) {
             this.getCountry(nextProps.searchName);
         }
     }
 
-    getCountry(name: string) {
+    getCountry(name?: string) {
         this.setState({data: [], fetching: true, searchName: name});
         const data: CountryRequest = {
             request: {
@@ -56,7 +61,7 @@ export class NaCostCountry extends React.Component<NaCostCountryProps, NaCostCou
     }
 
     onSearch(v?: any) {
-        this.props.onChange && this.props.onChange([], this.state.searchName);
+        this.props.onChange && this.props.onChange([], this.state.searchName ? this.state.searchName : null);
         this.search = v;
         setTimeout(() => {
             if (this.search === v)
