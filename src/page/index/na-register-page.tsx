@@ -13,7 +13,7 @@ import PhoneRegisterForm from "../../components/controls/na-phone-register-form"
 import MailRegisterForm from "../../components/controls/na-mail-register-form";
 import {NaNotification} from "../../components/controls/na-notification";
 import {RegisterAPI}from "../../api/common-api";
-import {GetCodeRequest,RegisterRequest} from "../../api/model/request/common-request";
+import {GetCodeRequest,RegisterRequest,AccountValidateRequest} from "../../api/model/request/common-request";
 
 interface NaRegisterPageProps {
     localeKey?: string;
@@ -29,7 +29,10 @@ interface NaRegisterPageStates {
 class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates> {
     phoneFromComponent: any;
     mailFromComponent: any;
-
+    /* 验证账号的Timeout*/
+    timeout: any;
+    /* 验证账号的value*/
+    currentValue: string;
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -49,6 +52,31 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
     onChangeLanguage(key: any) {
         console.log(key);
         NaGlobal.store.dispatch(WebAction.onChangeLanguage(key));
+    }
+
+    /** 账号是否存在*/
+    validatorAccount=(value:string,callback)=> {
+        const topThis = this;
+        const {timeout} = topThis;
+        if (timeout) {
+            clearTimeout(timeout);
+            topThis.timeout = null;
+        }
+        topThis.currentValue = value;
+
+        topThis.timeout = setTimeout(function () {
+            const request: AccountValidateRequest = {
+                user: value
+            };
+            RegisterAPI.AccountValidate(request).then((result: NaResponse) => {
+                if (result.Data === true) {
+                    callback();
+                } else {
+                    /* 账号被占用*/
+                    callback("账号被占用");
+                }
+            })
+        }, 1000);
     }
 
     /** 获取验证码*/
@@ -215,11 +243,13 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
                         }}>
                             <TabPane tab="手机登录" key={RegisterEnum.phone.toString()}>
                                 <PhoneRegisterForm
+                                    validatorAccount={topThis.validatorAccount.bind(this)}
                                     onClickCode={topThis.onClickCode.bind(this)}
                                     wrappedComponentRef={(inst) => topThis.phoneFromComponent = inst}></PhoneRegisterForm>
                             </TabPane>
                             <TabPane tab="邮箱登录" key={RegisterEnum.mail.toString()}>
                                 <MailRegisterForm
+                                    validatorAccount={topThis.validatorAccount.bind(this)}
                                     onClickCode={topThis.onClickCode.bind(this)}
                                     wrappedComponentRef={(inst) => topThis.mailFromComponent = inst}></MailRegisterForm>
                             </TabPane>
