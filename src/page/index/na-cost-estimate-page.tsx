@@ -1,16 +1,18 @@
 import * as React from "react";
 import {Component} from "react";
 import {withRouter, Link} from "react-router";
+import {InjectedIntlProps} from "react-intl";
 import {PathConfig} from "../../config/pathconfig";
 import {Layout, Row, Col, Form, Input, Button, Tag, Table} from "antd";
 import CostQuery from "../../components/controls/na-cost";
+
 const {Content} = Layout;
 const FormItem = Form.Item;
 const {CheckableTag} = Tag;
 const {TextArea} = Input;
 import {NaUtil} from "../../util/util";
 import {ScreenModeEnum} from "../../api/model/common-model";
-import {Card, WingBlank, WhiteSpace, Modal,List} from 'antd-mobile';
+import {Card, WingBlank, WhiteSpace, Modal, List} from 'antd-mobile';
 
 const data = [{
     key: '1',
@@ -64,7 +66,7 @@ const data = [{
     h: '注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项'
 }];
 
-interface NaCostEstimatePageProps {
+interface NaCostEstimatePageProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
 
 }
 
@@ -72,9 +74,11 @@ interface NaCostEstimatePageStates {
     selectedTagsA: any;
     selectedTagsB: any;
     /** 手机版Modal*/
-    mobileModalVisible:boolean;
+    mobileModalVisible: boolean;
     /** 注意事项*/
-    mobileModalContent:string;
+    mobileModalContent: string;
+    /** 首页带过来的费用估算信息*/
+    costInfo?: any;
 }
 
 function closest(el, selector) {
@@ -94,11 +98,15 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
 
     constructor(props, context) {
         super(props, context)
+        const query = props.location.query;
         this.state = {
             selectedTagsA: [],
             selectedTagsB: [],
-            mobileModalVisible:false,
-            mobileModalContent:""
+            mobileModalVisible: false,
+            mobileModalContent: "",
+            costInfo: {
+                ...query
+            }
         }
         this.isMobile = (NaUtil.getScrrenMode(window.innerWidth) === ScreenModeEnum.sm);
     }
@@ -180,7 +188,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
                             <Card.Header
                                 title={item.a}
                                 extra={<a
-                                    onClick={()=>{
+                                    onClick={() => {
                                         topThis.openMobileModal(item.h);
                                     }}
                                     style={{fontSize: '12px', color: '#e65922', cursor: 'pointer'}}>注意事项</a>}
@@ -227,7 +235,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
         const fontSize = {fontSize: '14px'};
         return <Row type="flex" justify="space-between">
             <Col xs={24} sm={24} md={24} lg={10} xl={10}>
-                <CostQuery></CostQuery>
+                <CostQuery ></CostQuery>
                 <Row>
                     <Col style={{
                         border: '1px solid #e65922',
@@ -277,30 +285,32 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
         </Row>
     }
 
-    openMobileModal(content:string){
-        const topThis=this;
-        topThis.setState({mobileModalVisible:true,mobileModalContent:content});
+    openMobileModal(content: string) {
+        const topThis = this;
+        topThis.setState({mobileModalVisible: true, mobileModalContent: content});
     }
 
-    renderMobileModal(){
-        const topThis=this;
-        const {state:{mobileModalVisible,mobileModalContent}}=topThis;
+    renderMobileModal() {
+        const topThis = this;
+        const {state: {mobileModalVisible, mobileModalContent}} = topThis;
         return <WingBlank>
-            <WhiteSpace />
+            <WhiteSpace/>
             <Modal
                 visible={mobileModalVisible}
                 transparent
                 maskClosable={false}
                 title="注意事项"
-                footer={[{ text: 'Ok', onPress: ()=>{
-                    topThis.setState({mobileModalVisible:false});
-                }}]}
-                onClose={()=>{
-                    topThis.setState({mobileModalVisible:false});
+                footer={[{
+                    text: 'Ok', onPress: () => {
+                        topThis.setState({mobileModalVisible: false});
+                    }
+                }]}
+                onClose={() => {
+                    topThis.setState({mobileModalVisible: false});
                 }}
-                wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+                wrapProps={{onTouchStart: this.onWrapTouchStart}}
             >
-                <div style={{ height: 250, overflow: 'scroll' }}>
+                <div style={{height: 250, overflow: 'scroll'}}>
                     <p>{mobileModalContent}</p>
                 </div>
             </Modal>

@@ -5,14 +5,16 @@ import {CountryModel} from '../../api/model/quotation';
 import {QuotationApi} from '../../api/quotation';
 
 export interface NaCostCountryProps {
-    onChange?: (v) => void;
+    onChange?: (v, name) => void;
     value?: any[];
+    searchName?: string;
 }
 
 export interface NaCostCountryStates {
-    data?: CountryModel[],
-    value?: any[],
-    fetching?: boolean,
+    data?: CountryModel[];
+    value?: any[];
+    fetching?: boolean;
+    searchName?: string;
 }
 
 export class NaCostCountry extends React.Component<NaCostCountryProps, NaCostCountryStates> {
@@ -22,7 +24,7 @@ export class NaCostCountry extends React.Component<NaCostCountryProps, NaCostCou
     constructor(props, context) {
         super(props, context);
         this.state = {
-            data: [],
+            data: props.data ? props.data : [],
             value: [],
             fetching: false
         }
@@ -31,13 +33,16 @@ export class NaCostCountry extends React.Component<NaCostCountryProps, NaCostCou
     }
 
     componentWillReceiveProps(nextProps) {
-        if ('value' in nextProps && nextProps.value !== this.props.value) {
+        if ('value' in nextProps && JSON.stringify(nextProps.value) !== JSON.stringify(this.props.value)) {
             this.setState({value: nextProps.value});
+        }
+        if ('searchName' in nextProps && nextProps.searchName !== this.props.searchName) {
+            this.getCountry(nextProps.searchName);
         }
     }
 
     getCountry(name: string) {
-        this.setState({data: [], fetching: true});
+        this.setState({data: [], fetching: true, searchName: name});
         const data: CountryRequest = {
             request: {
                 name: name
@@ -45,13 +50,13 @@ export class NaCostCountry extends React.Component<NaCostCountryProps, NaCostCou
         }
         QuotationApi.GetCountry(data).then(result => {
             if (result.Status === 0) {
-                this.setState({data: result.Data, fetching: false})
+                this.setState({data: result.Data, fetching: false});
             }
         });
     }
 
     onSearch(v) {
-        this.props.onChange && this.props.onChange([]);
+        this.props.onChange && this.props.onChange([], this.state.searchName);
         this.search = v;
         setTimeout(() => {
             if (this.search === v)
@@ -63,7 +68,7 @@ export class NaCostCountry extends React.Component<NaCostCountryProps, NaCostCou
         this.setState({
             fetching: false,
         }, () => {
-            this.props.onChange && this.props.onChange(value[value.length - 1]);
+            this.props.onChange && this.props.onChange(value[value.length - 1], this.state.searchName);
         });
     }
 
