@@ -6,6 +6,7 @@ import {
     ESELECTTAB_COUNTLOADED,
     REQUEST_MOBILENAVTREE,
     NAVTREE_COUNTLOADED,
+    QOUNTRY_COUNTLOADED,
     onChangeLanguage,
     GetLoginState
 } from "./ActionTypes";
@@ -28,6 +29,12 @@ export class MobileNavTreeAction {
     static requestSelectTab = createAction(REQUEST_MOBILENAVTREE);
     static SelectTabLoaded = createAction(NAVTREE_COUNTLOADED, (data: any, routerAddress: string) => {
         return {data: data, routerAddress: routerAddress};
+    });
+}
+
+export class CountryAction {
+    static CountryLoaded = createAction(QOUNTRY_COUNTLOADED, (data: any) => {
+        return {data: data};
     });
 }
 

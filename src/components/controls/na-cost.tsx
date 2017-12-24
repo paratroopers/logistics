@@ -1,46 +1,61 @@
 import * as React from 'react';
-import {hashHistory} from 'react-router';
+import {hashHistory, withRouter} from 'react-router';
+import {InjectedIntlProps} from "react-intl";
 import {Button, Row, Col, Form, Input} from 'antd';
 import {PathConfig} from '../../config/pathconfig';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {NaCostCountry} from './na-cost-country';
+import {CostModal} from '../../api/model/quotation';
 
 
-interface HomeCostProps extends FormComponentProps {
+interface HomeCostProps extends FormComponentProps, ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
     className?: string;
     style?: any;
     isHeard?: boolean;
     isMobile?: boolean;
+    costInfo?: CostModal;
 }
 
 interface HomeCostStates {
 
 }
 
-
+@withRouter
 class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
     constructor(props, context) {
         super(props, context);
     }
 
-    onCountryChange(v) {
+    componentDidMount() {
+        const query = this.props.location.query;
         const {setFieldsValue} = this.props.form;
-        setFieldsValue({country: v});
+        setFieldsValue({...query});
+    }
+
+    onCountryChange(v, name) {
+        const {setFieldsValue} = this.props.form;
+        setFieldsValue({country: v, searchName: name});
     }
 
     onOk() {
         this.props.form.validateFields((err, values) => {
             if (err) {
                 return;
-            } else
-                hashHistory.push(PathConfig.CostEstimatePage);
-        });
+            } else {
+                hashHistory.push({
+                    pathname: PathConfig.CostEstimatePage,
+                    query: {...values}
+                });
+            }
+        })
     }
 
     render() {
         const topThis = this;
-        const {props: {isHeard, isMobile, form: {getFieldDecorator}}} = topThis;
-        return <Row type="flex" justify="center" align="top" className={this.props.className} style={this.props.style}>
+        const {props: {isHeard, isMobile, form: {getFieldDecorator, getFieldValue}}} = topThis;
+        getFieldDecorator('searchName', {});
+        return <Row type="flex" justify="center" align="top" className={this.props.className}
+                    style={this.props.style}>
             {isHeard && <Col xs={0} sm={0} md={0} lg={24} xl={24}>
                 <div className="banner-form-header">
                     <Row type="flex" justify="start" style={{paddingTop: '13px', paddingLeft: '21px'}}>
@@ -57,17 +72,18 @@ class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
                     <Form.Item>
                         {getFieldDecorator('country', {
                             rules: [{required: true, message: '请填写收货国家!'}]
-                        })(<NaCostCountry onChange={v => this.onCountryChange(v)}></NaCostCountry>)}
+                        })(<NaCostCountry searchName={getFieldValue('searchName')}
+                                          onChange={(v, name) => this.onCountryChange(v, name)}></NaCostCountry>)}
                     </Form.Item>
                     <Form.Item>
-                        {getFieldDecorator('kg', {
+                        {getFieldDecorator('weight', {
                             rules: [{required: true, message: '请填写重量!'}],
                         })(<Input placeholder="重量（kg）公斤" size="large"/>)}
                     </Form.Item>
                     <Form.Item>
                         <Row type="flex" justify="center" align="top">
                             <Col span={7}>
-                                {getFieldDecorator('long', {
+                                {getFieldDecorator('length', {
                                     rules: [{required: true, message: '请填写长度!'}],
                                 })(<Input placeholder="长（cm）" size="large"/>)}
                             </Col>

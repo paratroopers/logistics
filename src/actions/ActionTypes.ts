@@ -10,4 +10,6 @@ export const NAVTREE_COUNTLOADED = "ESELECTTAB_COUNTLOADED";
 /** 多语言状态*/
 export const onChangeLanguage = "onChangeLanguage";
 /** 获取登录状态*/
-export const GetLoginState="GetLoginState";
+export const GetLoginState = "GetLoginState";
+/** 国家下拉内容*/
+export const QOUNTRY_COUNTLOADED = "QOUNTRY_COUNTLOADED";
