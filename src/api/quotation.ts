@@ -9,4 +9,9 @@ export class QuotationApi {
         let url: string = BasicsUrl + "Quotation/Country/Items?request.name=" + data.request.name;
         return new Request<NaRequest, NaResponse>().get(url);
     }
+
+    static async GetQuotation(data: any) {
+        let url: string = BasicsUrl + "Quotation/Item";
+        return new Request<NaRequest, NaResponse>().get(url, data);
+    }
 }

@@ -14,3 +14,14 @@ export interface CostModal {
     volume?: string;
     searchName?: string;
 }
+
+export interface CostTableModal {
+    Amount?: number;
+    Clause?: string;
+    Prescription?: string;
+    Remark?: string;
+    ServiceAmount?: number;
+    channelID?: string;
+    channelName?: string;
+    weight?: number;
+}

@@ -1,70 +1,16 @@
 import * as React from "react";
 import {Component} from "react";
-import {withRouter, Link} from "react-router";
+import {withRouter} from "react-router";
 import {InjectedIntlProps} from "react-intl";
-import {PathConfig} from "../../config/pathconfig";
-import {Layout, Row, Col, Form, Input, Button, Tag, Table} from "antd";
+import {Layout, Row, Col, Input, Button, Tag, Table} from "antd";
 import CostQuery from "../../components/controls/na-cost";
+import {CostTableModal} from '../../api/model/quotation';
 
 const {Content} = Layout;
-const FormItem = Form.Item;
-const {CheckableTag} = Tag;
 const {TextArea} = Input;
 import {NaUtil} from "../../util/util";
 import {ScreenModeEnum} from "../../api/model/common-model";
 import {Card, WingBlank, WhiteSpace, Modal, List} from 'antd-mobile';
-
-const data = [{
-    key: '1',
-    a: '大包(SAL)',
-    b: '11.000',
-    c: '692.08',
-    d: '15-至-30',
-    e: '34.60',
-    f: '726.68',
-    g: '长宽高任意一边超60cm则计体积费用',
-    h: '发达国家和地区2-4个工作日，偏远地区、经济航班、dhl（小货）4-7个工作日体积重量计算公式=(长×宽×高)cm÷5000，实际重量与体积重量取大者为计费重量可一票多件（同一个运单号），总重量无上限（超一吨需预约仓位），单件重量上限300kg为了更顺利的进出口清关请去除包裹内关于商品的价格的标签，海关申报品名与数量必须精准受理延误正式书面查询：7个工作日后，查询期：7个工作日，理赔期：7个工作日包裹遗失最高赔偿标准为国际运费的3倍，时效延误可申请退还服务费禁止运输：化工品、不明物品、电池、液体粉末、食品、仿牌、活体动植物、货币、管制刀具...磁性检测费：2元/kg，最低30元起收（如音响、耳机、榨汁机...）超长附加费330元（单边长超1.2米的包裹），超重附加费330元（单件重量70kg以上），超长与超重同时满足的情况下收取一次330元，不重复收费国外退回的包裹客户需承担返回运费及税金（以账单为准），也可选择不付款（放弃或销毁该包裹）'
-}, {
-    key: '2',
-    a: '大包(SAL)',
-    b: '11.000',
-    c: '692.08',
-    d: '15-至-30',
-    e: '34.60',
-    f: '726.68',
-    g: '长宽高任意一边超60cm则计体积费用',
-    h: '注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项'
-}, {
-    key: '3',
-    a: '大包(SAL)',
-    b: '11.000',
-    c: '692.08',
-    d: '15-至-30',
-    e: '34.60',
-    f: '726.68',
-    g: '长宽高任意一边超60cm则计体积费用',
-    h: '注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项'
-}, {
-    key: '4',
-    a: '大包(SAL)',
-    b: '11.000',
-    c: '692.08',
-    d: '15-至-30',
-    e: '34.60',
-    f: '726.68',
-    g: '长宽高任意一边超60cm则计体积费用',
-    h: '注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项'
-}, {
-    key: '5',
-    a: '大包(SAL)',
-    b: '11.000',
-    c: '692.08',
-    d: '15-至-30',
-    e: '34.60',
-    f: '726.68',
-    g: '长宽高任意一边超60cm则计体积费用',
-    h: '注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项'
-}];
 
 interface NaCostEstimatePageProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
 
@@ -79,6 +25,8 @@ interface NaCostEstimatePageStates {
     mobileModalContent: string;
     /** 首页带过来的费用估算信息*/
     costInfo?: any;
+    /** 列表字段model*/
+    data?: CostTableModal[];
 }
 
 function closest(el, selector) {
@@ -106,7 +54,8 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
             mobileModalContent: "",
             costInfo: {
                 ...query
-            }
+            },
+            data: []
         }
         this.isMobile = (NaUtil.getScrrenMode(window.innerWidth) === ScreenModeEnum.sm);
     }
@@ -143,80 +92,91 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
 
     renderTable() {
         const columns = [{
-            title: <span>运输方式<br/></span>,
-            dataIndex: 'a'
+            title: <span>运输方式</span>,
+            dataIndex: 'channelName',
+            width: '8%'
         }, {
-            title: <span>计费重量<br/>(kg)</span>,
-            dataIndex: 'b'
+            title: <span>计费重量(kg)</span>,
+            dataIndex: 'weight',
+            width: '8%'
         }, {
-            title: <span>运费<br/>(RMB)</span>,
-            dataIndex: 'c'
+            title: <span>运费(RMB)</span>,
+            dataIndex: 'Amount',
+            width: '8%'
         }, {
-            title: <span>送达时间<br/>(工作日)</span>,
-            dataIndex: 'd'
+            title: <span>送达时间(工作日)</span>,
+            dataIndex: 'Prescription',
+            width: '10%'
         }, {
-            title: <span>服务费<br/>(RMB)</span>,
-            dataIndex: 'e'
+            title: <span>服务费(RMB)</span>,
+            dataIndex: 'ServiceAmount',
+            width: '5%'
         }, {
-            title: <span>总费用<br/></span>,
-            dataIndex: 'f'
+            title: <span>总费用</span>,
+            dataIndex: 'AllCount',
+            width: '5%',
+            render: (txt, record) => {
+                return <span>{record.ServiceAmount + record.Amount}</span>;
+            }
         }, {
-            title: <span>备注<br/></span>,
-            dataIndex: 'g'
+            title: <span>备注</span>,
+            dataIndex: 'Remark',
+            width: '10%'
         }, {
-            title: <span>注意事项<br/></span>,
-            dataIndex: 'h',
+            title: <span>注意事项</span>,
+            dataIndex: '',
+            width: '5%',
             render: (text, record, index) => {
                 return <a href="#">点击查看</a>
             }
         }];
-        return <Table
-            columns={columns}
-            dataSource={data}
-            bordered
+        return <Table columns={columns}
+                      style={{minHeight: '400px'}}
+                      bordered={false}
+                      dataSource={this.state.data}
         />;
     }
 
     renderCard() {
         const topThis = this;
         return <Row>
-            {data.map(function (item, index) {
+            {this.state.data.map(function (item, index) {
                 return <Col key={index}>
                     <WingBlank size="sm">
                         <WhiteSpace size="sm"/>
                         <Card>
                             <Card.Header
-                                title={item.a}
+                                title={item.Clause}
                                 extra={<a
                                     onClick={() => {
-                                        topThis.openMobileModal(item.h);
+                                        topThis.openMobileModal(item.Clause);
                                     }}
                                     style={{fontSize: '12px', color: '#e65922', cursor: 'pointer'}}>注意事项</a>}
                             />
                             <Card.Body>
                                 <Row>
                                     <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>计费重量(kg)</h3>
-                                    <p style={{fontSize: '12px'}}>{item.b}</p>
+                                    <p style={{fontSize: '12px'}}>{item.weight}</p>
                                 </Row>
                                 <Row>
                                     <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>运费(RMB)</h3>
-                                    <p style={{fontSize: '12px'}}>{item.c}</p>
+                                    <p style={{fontSize: '12px'}}>{item.Amount}</p>
                                 </Row>
                                 <Row>
                                     <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>送达时间(工作日)</h3>
-                                    <p style={{fontSize: '12px'}}>{item.d}</p>
+                                    <p style={{fontSize: '12px'}}>{item.Prescription}</p>
                                 </Row>
                                 <Row>
                                     <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>服务费(RMB)</h3>
-                                    <p style={{fontSize: '12px'}}>{item.e}</p>
+                                    <p style={{fontSize: '12px'}}>{item.ServiceAmount}</p>
                                 </Row>
                                 <Row>
                                     <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>总费用(RMB) </h3>
-                                    <p style={{fontSize: '12px'}}>{item.f}</p>
+                                    <p style={{fontSize: '12px'}}>{item.Amount + item.ServiceAmount}</p>
                                 </Row>
                                 <Row>
                                     <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>备注</h3>
-                                    <p style={{fontSize: '12px'}}>{item.g}</p>
+                                    <p style={{fontSize: '12px'}}>{item.Remark}</p>
                                 </Row>
                             </Card.Body>
                         </Card>
@@ -229,13 +189,15 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
 
     renderContent() {
         const topThis = this;
-        const {isMobile, state: {selectedTagsA, selectedTagsB}} = topThis;
+        const {isMobile} = topThis;
         const tagsFromServerA = ['美食/零食', '美妆/洗护', '家具/家饰', '女装/男装', '鞋靴/箱包', '运动/乐器', '玩具/孕产', '家电/数码', '眼睛/手表'];
         const tagsFromServerB = ['国际一二线品牌', '少量液体、膏状、药品', '纯液体、内置电池', '木制品（原木）'];
         const fontSize = {fontSize: '14px'};
         return <Row type="flex" justify="space-between">
             <Col xs={24} sm={24} md={24} lg={10} xl={10}>
-                <CostQuery ></CostQuery>
+                <CostQuery onClick={v => {
+                    this.setState({data: v});
+                }}></CostQuery>
                 <Row>
                     <Col style={{
                         border: '1px solid #e65922',

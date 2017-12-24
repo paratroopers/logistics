@@ -6,6 +6,7 @@ import {PathConfig} from '../../config/pathconfig';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {NaCostCountry} from './na-cost-country';
 import {CostModal} from '../../api/model/quotation';
+import {QuotationApi} from '../../api/quotation';
 
 
 interface HomeCostProps extends FormComponentProps, ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
@@ -14,6 +15,7 @@ interface HomeCostProps extends FormComponentProps, ReactRouter.RouteComponentPr
     isHeard?: boolean;
     isMobile?: boolean;
     costInfo?: CostModal;
+    onClick?: (v) => void;
 }
 
 interface HomeCostStates {
@@ -42,10 +44,16 @@ class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
             if (err) {
                 return;
             } else {
-                hashHistory.push({
-                    pathname: PathConfig.CostEstimatePage,
-                    query: {...values}
-                });
+                if (this.props.location.query) {
+                    QuotationApi.GetQuotation({...values}).then(result => {
+                        if (result.Status === 0)
+                            this.props.onClick && this.props.onClick(result.Data);
+                    });
+                } else
+                    hashHistory.push({
+                        pathname: PathConfig.CostEstimatePage,
+                        query: {...values}
+                    });
             }
         })
     }
