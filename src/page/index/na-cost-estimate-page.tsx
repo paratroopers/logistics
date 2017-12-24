@@ -2,7 +2,7 @@ import * as React from "react";
 import {Component} from "react";
 import {withRouter} from "react-router";
 import {InjectedIntlProps} from "react-intl";
-import {Layout, Row, Col, Input, Button, Tag, Table} from "antd";
+import {Layout, Row, Col, Input, Button, Tag, Table, Modal as WebModal} from "antd";
 import CostQuery from "../../components/controls/na-cost";
 import {CostTableModal} from '../../api/model/quotation';
 
@@ -10,7 +10,7 @@ const {Content} = Layout;
 const {TextArea} = Input;
 import {NaUtil} from "../../util/util";
 import {ScreenModeEnum} from "../../api/model/common-model";
-import {Card, WingBlank, WhiteSpace, Modal, List} from 'antd-mobile';
+import {Card, WingBlank, WhiteSpace, Modal} from 'antd-mobile';
 
 interface NaCostEstimatePageProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
 
@@ -90,6 +90,20 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
         this.setState({selectedTagsB: nextSelectedTags});
     }
 
+    onTableRowClick(txt) {
+        WebModal.info({
+            width: 600,
+            title: '注意事项',
+            content: (
+                <div style={{whiteSpace: 'pre-line'}}>
+                    {txt}
+                </div>
+            ),
+            onOk() {
+            },
+        });
+    }
+
     renderTable() {
         const columns = [{
             title: <span>运输方式</span>,
@@ -127,7 +141,9 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
             dataIndex: '',
             width: '5%',
             render: (text, record, index) => {
-                return <a href="#">点击查看</a>
+                return <a onClick={v => {
+                    this.onTableRowClick(record.Clause);
+                }}>点击查看</a>
             }
         }];
         return <Table columns={columns}
@@ -146,7 +162,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
                         <WhiteSpace size="sm"/>
                         <Card>
                             <Card.Header
-                                title={item.Clause}
+                                title={''}
                                 extra={<a
                                     onClick={() => {
                                         topThis.openMobileModal(item.Clause);
@@ -272,7 +288,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
                 }}
                 wrapProps={{onTouchStart: this.onWrapTouchStart}}
             >
-                <div style={{height: 250, overflow: 'scroll'}}>
+                <div style={{height: 250, overflow: 'scroll', whiteSpace: 'pre-line'}}>
                     <p>{mobileModalContent}</p>
                 </div>
             </Modal>

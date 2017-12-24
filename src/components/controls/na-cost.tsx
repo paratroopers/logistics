@@ -32,6 +32,12 @@ class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
         const query = this.props.location.query;
         const {setFieldsValue} = this.props.form;
         setFieldsValue({...query});
+        if (this.homeToThisPage())
+            this.onOk();
+    }
+
+    homeToThisPage() {
+        return this.props.location.query.country;
     }
 
     onCountryChange(v, name) {
@@ -55,7 +61,7 @@ class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
             if (err) {
                 return;
             } else {
-                if (this.props.location.query.country) {
+                if (this.homeToThisPage()) {
                     delete values.searchName;
                     delete values.volume;
                     QuotationApi.GetQuotation({...values}).then(result => {
