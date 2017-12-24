@@ -5,7 +5,7 @@ import {PathConfig}from "../../config/pathconfig";
 import {Layout, Row, Col, Tabs, Button, Checkbox, Select,Icon} from "antd";
 import {RegisterEnum}from "../../../src/api/model/common-model";
 const {Header, Content, Footer} = Layout;
-import {NaGlobal, NaResponse} from '../../util/common';
+import {NaGlobal, NaResponse,NaContext} from '../../util/common';
 import {connect} from "react-redux";
 import {WebAction} from "../../actions/index";
 const {TabPane} = Tabs;
@@ -104,10 +104,7 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
                                 /** 锁定按钮*/
                                 topThis.phoneFromComponent.onDownCode();
                             }else{
-                                NaNotification.error({
-                                    message: 'Tip',
-                                    description: '验证码发送失败!'
-                                });
+                                NaContext.OpenMessage(data.Status);
                             }
                         });
                     }
@@ -130,10 +127,7 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
                                 /** 锁定按钮*/
                                 topThis.mailFromComponent.onDownCode();
                             }else{
-                                NaNotification.error({
-                                    message: 'Tip',
-                                    description: '验证码发送失败!'
-                                });
+                                NaContext.OpenMessage(data.Status);
                             }
                         });
                     }
@@ -167,10 +161,7 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
                                 topThis.setState({visibleSuccess:true});
                             }else
                             {
-                                NaNotification.error({
-                                    message: 'Tip',
-                                    description: '注册失败!'
-                                });
+                                NaContext.OpenMessage(data.Status);
                             }
                         });
                     }
@@ -194,10 +185,7 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
                                 topThis.setState({visibleSuccess:true});
                             }else
                             {
-                                NaNotification.error({
-                                    message: 'Tip',
-                                    description: '注册失败!'
-                                });
+                                NaContext.OpenMessage(data.Status);
                             }
                         });
                     }
