@@ -2,10 +2,13 @@ import * as React from "react";
 import {Component} from "react";
 import {Form, Input, Icon, Button, Row, Col} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
+import {isNullOrUndefined} from "util";
 const FormItem = Form.Item;
 
 interface MailRegisterFormControlProps extends FormComponentProps {
     onClickCode?: React.FormEventHandler<any>;
+    /** 验证账号是否已经存在*/
+    validatorAccount?: (value:string,callback) => void;
 }
 
 interface MailRegisterFormControlStates {
@@ -42,13 +45,33 @@ class MailRegisterFormControl extends Component<MailRegisterFormControlProps, Ma
 
     render() {
         const topThis = this;
-        const {props: {form: {getFieldDecorator},onClickCode}, state: {countDown}} = topThis;
+        const {props: {form: {getFieldDecorator},onClickCode,validatorAccount}, state: {countDown}} = topThis;
 
         return (
             <Form className="na-page-register-form">
                 <FormItem>
                     {getFieldDecorator('Mail', {
-                        rules: [{type:"email",required: true, message: '请正确输入你的邮箱!'}],
+                        rules: [{
+                            message: '请正确输入你的邮箱!',
+                            validator:(rule, value, callback)=>{
+                            if(isNullOrUndefined(value)||value===""){
+                                callback(rule.message);
+                            }else if(!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(value)) {
+                                callback(rule.message);
+                            }else {
+                                /* 验证账号是否已经存在*/
+                                if(validatorAccount)
+                                {
+                                    validatorAccount(value,(message)=>{
+                                        callback(message);
+                                    });
+
+                                }else
+                                {
+                                    callback();
+                                }
+                            }
+                        }}],
                     })(
                         <Input size="large" prefix={<Icon type="mail" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                placeholder="邮箱"/>

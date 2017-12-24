@@ -2,11 +2,14 @@ import * as React from "react";
 import {Component} from "react";
 import {Form, Input, Icon, Button, Select, Row, Col} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
+import {isNullOrUndefined} from "util";
 const FormItem = Form.Item;
 const SelectOption = Select.Option;
 
 export interface PhoneRegisterFormControlProps extends FormComponentProps {
     onClickCode?: React.FormEventHandler<any>;
+    /** 验证账号是否已经存在*/
+    validatorAccount?: (value:string,callback) => void;
 }
 
 export interface PhoneRegisterFormControlStates {
@@ -43,7 +46,7 @@ class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, 
 
     render() {
         const topThis = this;
-        const {props: {form: {getFieldDecorator}, onClickCode}, state: {countDown}} = topThis;
+        const {props: {form: {getFieldDecorator}, onClickCode,validatorAccount}, state: {countDown}} = topThis;
 
         const prefixSelector = getFieldDecorator('PhonePrefix', {
             initialValue: '86',
@@ -55,9 +58,29 @@ class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, 
         );
         return (
             <Form className="na-page-register-form">
-                <FormItem>
+                <FormItem hasFeedback>
                     {getFieldDecorator('PhoneNumber', {
-                        rules: [{required: true, message: '请输入你的手机号码!'}],
+                        rules: [{
+                            validator:(rule, value, callback)=>{
+                                if(isNullOrUndefined(value)||value===""){
+                                    callback('请正确输入你的手机号码!');
+                                }else if(!/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/.test(value)) {
+                                    callback('请正确输入你的手机号码!');
+                                }else {
+                                    /* 验证账号是否已经存在*/
+                                    if(validatorAccount)
+                                    {
+                                        validatorAccount(value,(message)=>{
+                                            callback(message);
+                                        });
+
+                                    }else
+                                    {
+                                        callback();
+                                    }
+                                }
+                            }
+                        }],
                     })(
                         <Input addonBefore={prefixSelector}
                                size="large"
@@ -69,7 +92,7 @@ class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, 
                     <Row style={{margin: '0 -4px'}}>
                         <Col span={16} style={{padding: '0 4px'}}>
                             {getFieldDecorator('Code', {
-                                rules: [{required: true, message: '请输入你的手机验证码!'}],
+                                rules: [{pattern:/^\d{4}$/,required: true, message: '请正确输入你的手机验证码!'}],
                             })(
                                 <Input prefix={<Icon type="barcode" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                        size="large"

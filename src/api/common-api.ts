@@ -16,14 +16,6 @@ export class RegisterAPI {
     static async GetCode(data?: GetCodeRequest) {
         let url: string = BasicsUrl + "User/Send";
         return new Request<NaRequest, NaResponse>().post(url, data);
-        /*let url = "https://app.yungalaxy.com/flowcraft/hr/_api/ver(3.0)//api/holidaytyperules";//: string = BasicsUrl + "User/Send";
-                return new Request<NaRequest, NaResponse>().post(url,
-                    {
-                        Exception: [],
-                        ExpireDate: "2020-10-1",
-                        HolidayType: "832515065746952192",
-                        Mode: 2
-                    });*/
     }
 
     /** 注册账号*/
