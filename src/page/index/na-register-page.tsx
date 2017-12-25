@@ -2,7 +2,7 @@ import * as React from "react";
 import {Component} from "react";
 import {withRouter, Link, hashHistory} from "react-router";
 import {PathConfig}from "../../config/pathconfig";
-import {Layout, Row, Col, Tabs, Button, Checkbox, Select,Icon,Form} from "antd";
+import {Layout, Row, Col, Tabs, Button, Checkbox, Select,Icon,Form,Modal} from "antd";
 import {RegisterEnum}from "../../../src/api/model/common-model";
 const {Header, Content, Footer} = Layout;
 import {NaGlobal, NaResponse,NaContext} from '../../util/common';
@@ -216,6 +216,28 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
         }
     }
 
+    /** 显示法律声明*/
+    onClickCheck() {
+        Modal.info({
+            width: 600,
+            title: '《法律声明和隐私权政策》',
+            content: (
+                <div style={{whiteSpace: 'pre-line'}}>
+                    《法律声明和隐私权政策》
+                    《法律声明和隐私权政策》
+                    《法律声明和隐私权政策》
+                    《法律声明和隐私权政策》
+                    《法律声明和隐私权政策》
+                    《法律声明和隐私权政策》
+                    《法律声明和隐私权政策》
+                    《法律声明和隐私权政策》
+                </div>
+            ),
+            onOk() {
+            },
+        });
+    }
+
     renderSuccess(){
         const topThis = this;
         const {state: {tabKey}} = topThis;
@@ -332,7 +354,7 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
                                     >
                                         <Checkbox checked={isCheckBox} onChange={(e)=>{
                                             topThis.setState({isCheckBox:e.target.checked});
-                                        }}></Checkbox><a>《法律声明和隐私权政策》</a>
+                                        }}></Checkbox><a onClick={topThis.onClickCheck.bind(this)}>《法律声明和隐私权政策》</a>
                                     </FormItem>
                                 </Col>
                                 <Col span={12} style={{textAlign: 'right'}}>
