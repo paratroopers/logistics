@@ -2,7 +2,7 @@ import * as React from "react";
 import {Component} from "react";
 import {withRouter} from "react-router";
 import {InjectedIntlProps} from "react-intl";
-import {Layout, Row, Col, Input, Button, Tag, Table, Modal as WebModal} from "antd";
+import {Layout, Row, Col, Input, Button, Tag, Table, Modal as WebModal, Icon} from "antd";
 import CostQuery from "../../components/controls/na-cost";
 import {CostTableModal} from '../../api/model/quotation';
 
@@ -206,11 +206,8 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
     renderContent() {
         const topThis = this;
         const {isMobile} = topThis;
-        const tagsFromServerA = ['美食/零食', '美妆/洗护', '家具/家饰', '女装/男装', '鞋靴/箱包', '运动/乐器', '玩具/孕产', '家电/数码', '眼睛/手表'];
-        const tagsFromServerB = ['国际一二线品牌', '少量液体、膏状、药品', '纯液体、内置电池', '木制品（原木）'];
-        const fontSize = {fontSize: '14px'};
         return <Row type="flex" justify="space-between">
-            <Col xs={24} sm={24} md={24} lg={10} xl={10}>
+            <Col xs={24} sm={24} md={24} lg={10} xl={10} style={{marginBottom: '30px'}}>
                 <CostQuery onClick={v => {
                     this.setState({data: v});
                 }}></CostQuery>
@@ -224,38 +221,31 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
                 </Row>
             </Col>
             <Col xs={0} sm={0} md={24} lg={10} xl={10}>
-                <Row>
-                    <span style={fontSize}>运输方式推荐</span>
-                </Row>
-                <Row>
-                    <span style={fontSize}>您的包裹里面有什么物品（请选择）</span>
-                </Row>
-                <Row style={{margin: 5}}>
-                    {tagsFromServerA.map(tag => (
-                        <Tag key={tag}
-                             style={{fontSize: 14, lineHeight: '40px', height: 40, padding: '0 20px', margin: 5}}
-                             color="orange">{tag}</Tag>
-                    ))}
-                </Row>
-                <Row>
-                    <span style={fontSize}>其他敏感选择</span>
-                </Row>
-                <Row style={{margin: 5}}>
-                    {tagsFromServerB.map(tag => (
-                        <Tag key={tag}
-                             style={{fontSize: 14, lineHeight: '40px', height: 40, padding: '0 20px', margin: 5}}
-                             color="orange">{tag}</Tag>
-                    ))}
-                </Row>
-                <Row>
-                    <span style={fontSize}>适合的运输渠道有</span>
-                </Row>
-                <Row>
-                    <TextArea rows={4}/>
-                </Row>
-                <Row style={{margin: '20px 0'}} type="flex" justify="center">
-                    <Button size="large" type="primary">点击推荐</Button>
-                </Row>
+                <Layout style={{background: '#fff'}}>
+                    <Layout.Header style={{background: '#fff', paddingLeft: '0px'}}>
+                        <Icon type="info-circle"/>
+                        <span>注意事项</span>
+                    </Layout.Header>
+                    <Layout.Content>
+                        <span>
+                            一、禁寄物品是指国家法律、法规禁止寄递的物品，主要包括：
+                            （一）各类武器、弹药。如枪支、子弹、炮弹、手榴弹、地雷、炸弹等。
+                            （二）各类易爆炸性物品。如雷管、炸药、火药、鞭炮等。
+                            （三）各类易燃烧性物品，包括液体、气体和固体。如汽油、煤油、桐油、酒精、生漆、柴油、气雾剂、气体打火机、瓦斯气瓶、磷、硫磺、火柴等。
+                            （四）各类易腐蚀性物品。如火硫酸、盐酸、硝酸、有机溶剂、农药、双氧水、危险化学品等。
+                            （五）各类放射性元素及容器。如铀、钴、镭、钚等。
+                            （六）各类烈性毒药。如铊、氰化物、砒霜等。
+                            （七）各类麻醉药物。如鸦片（包括罂粟壳、花、苞、叶）、吗啡、可卡因、海洛因、大麻、冰毒、麻黄素及其它制品等。
+                            （八）各类生化制品和传染性物品。如炭疽、危险性病菌、医药用废弃物等。
+                            （九）各种危害国家安全和社会政治稳定以及淫秽的出版物、宣传品、印刷品等。
+                            （十）各种妨害公共卫生的物品。如尸骨、动物器官、肢体、未经硝制的兽皮、未经药制的兽骨等。
+                            （十一）国家法律、法规、行政规章明令禁止流通、寄递或进出境的物品，如国家秘密文件和资料、国家货币及伪造的货币和有价证券、仿真武器、管制刀具、珍贵文物、濒危野生动物及其制品等。
+                            （十二）包装不妥，可能危害人身安全、污染或者损毁其他寄递件、设备的物品等。
+                            （十三）各寄达国（地区）禁止寄递进口的物品等。
+                            （十四）其他禁止寄递的物品。
+                        </span>
+                    </Layout.Content>
+                </Layout>
             </Col>
             <Col span={24}>
                 {isMobile ? topThis.renderCard() : topThis.renderTable()}
