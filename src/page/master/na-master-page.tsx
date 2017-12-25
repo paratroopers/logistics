@@ -7,6 +7,7 @@ import {AppLocaleStatic, ScreenModeEnum} from "../../api/model/common-model";
 import NaLocalProvider from '../../components/controls/na-localprovider';
 import {NaGlobal} from "../../util/common";
 import {NaUtil} from "../../util/util";
+import {message} from 'antd';
 
 interface NaMasterPageProps extends ReactRouter.RouteComponentProps<any, any> {
     onLoaded?: (appLocale?: AppLocaleStatic, theme?: string) => Promise<any>;
@@ -24,6 +25,8 @@ class NaMasterPage extends Component<NaMasterPageProps, NaMasterPageStates> {
         window["CDN"] = 'http://www.famliytree.cn/'//this.props.cdn;
         console.log(this.props.cdn);
         this.initRedux();
+        const messageTop = window.innerHeight * 0.1;
+        message.config({top: messageTop});
     }
 
     initRedux() {
