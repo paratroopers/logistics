@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {hashHistory, Link} from 'react-router';
-import {Form, Icon, Input, Button, Checkbox, Row, Col, Layout} from 'antd';
+import {Form, Icon, Input, Button, Checkbox, Row, Col, Layout, message} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {PathConfig, MobilePathConfig} from '../../../config/pathconfig';
 import NaLoginForget from './na-login-forget';
@@ -63,10 +63,11 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
                         else
                             hashHistory.push(PathConfig.VIPCenterPage);
                     } else {
-                        NaNotification.error({
-                            message: 'Tip',
-                            description: result.Message
-                        });
+                        message.error(result.Message);
+                        /* NaNotification.error({
+                             message: 'Tip',
+                             description: result.Message
+                      });*/
                     }
                 });
             }
@@ -102,13 +103,13 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
                         <Form className="na-login-content-form">
                             <Form.Item>
                                 {getFieldDecorator('user', {
-                                    rules: [{required: true, message: 'Please input your username!'}],
+                                    rules: [{required: true, message: '请输入手机或者邮箱!'}],
                                 })(<Input prefix={<Icon type="user" style={iconSize}/>} size={inputSize}
                                           placeholder="手机或邮箱"/>)}
                             </Form.Item>
                             <Form.Item>
                                 {getFieldDecorator('pwd', {
-                                    rules: [{required: true, message: 'Please input your Password!'}],
+                                    rules: [{required: true, message: '请输入密码!'}],
                                 })(
                                     <Input prefix={<Icon type="lock" style={iconSize}/>}
                                            size={inputSize}

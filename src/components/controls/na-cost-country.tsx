@@ -86,7 +86,7 @@ export class NaCostCountry extends React.Component<NaCostCountryProps, NaCostCou
         const {fetching, data, value} = this.state;
         return <Select mode="multiple"
                        value={value}
-                       notFoundContent={fetching ? <Spin size="small"/> : null}
+                       notFoundContent={fetching ? <Spin size="small"/> : 'No Data'}
                        filterOption={false}
                        onFocus={this.onFocus.bind(this)}
                        onChange={(v) => this.onCountryChange(v)}

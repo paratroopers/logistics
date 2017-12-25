@@ -51,8 +51,8 @@ class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
         const width = w ? w : getFieldValue('width');
         const length = l ? l : getFieldValue('length');
         if (height && length && width) {
-            const volume = Number(height / 100) * Number(width / 100) * Number(length / 100)
-            setFieldsValue({volume: volume});
+            const volume = Number(height) * Number(width) * Number(length)
+            setFieldsValue({volume: volume.toFixed(2)});
         }
     }
 
@@ -137,7 +137,7 @@ class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
                     <Form.Item>
                         {getFieldDecorator('volume', {
                             rules: [{required: true, message: '请填写体积!'}],
-                        })(<Input readOnly={true} placeholder="体积（m3）" size="large"/>)}
+                        })(<Input readOnly={true} placeholder="体积（cm3）" size="large"/>)}
                     </Form.Item>
                     <Form.Item>
                         <Row type="flex" justify="center">
