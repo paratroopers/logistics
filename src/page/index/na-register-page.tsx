@@ -2,7 +2,7 @@ import * as React from "react";
 import {Component} from "react";
 import {withRouter, Link, hashHistory} from "react-router";
 import {PathConfig}from "../../config/pathconfig";
-import {Layout, Row, Col, Tabs, Button, Checkbox, Select,Icon} from "antd";
+import {Layout, Row, Col, Tabs, Button, Checkbox, Select,Icon,Form} from "antd";
 import {RegisterEnum}from "../../../src/api/model/common-model";
 const {Header, Content, Footer} = Layout;
 import {NaGlobal, NaResponse,NaContext} from '../../util/common';
@@ -14,6 +14,7 @@ import MailRegisterForm from "../../components/controls/na-mail-register-form";
 import {NaNotification} from "../../components/controls/na-notification";
 import {RegisterAPI}from "../../api/common-api";
 import {GetCodeRequest,RegisterRequest,AccountValidateRequest} from "../../api/model/request/common-request";
+const FormItem = Form.Item;
 
 interface NaRegisterPageProps {
     localeKey?: string;
@@ -23,8 +24,10 @@ interface NaRegisterPageStates {
     localeKey?: string;
     /** 注册类型*/
     tabKey: string;
-    /** */
+    /** 是否注册成功*/
     visibleSuccess:boolean;
+    /** 是否勾选法律声明*/
+    isCheckBox:boolean;
 }
 
 @withRouter
@@ -40,7 +43,8 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
         this.state = {
             tabKey: RegisterEnum.phone.toString(),
             localeKey: props.localeKey ? props.localeKey : "zh",
-            visibleSuccess:false
+            visibleSuccess:false,
+            isCheckBox:true
         }
     }
 
@@ -75,8 +79,8 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
                 if (result.Data === true) {
                     callback();
                 } else {
-                    /* 账号被占用*/
-                    callback("账号被占用");
+                    /* 该账号已经被注册*/
+                    callback("该账号已经被注册!");
                 }
             })
         }, 1000);
@@ -141,11 +145,20 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
     /** 注册*/
     onClick = () => {
         const topThis = this;
-        const {state: {tabKey}} = topThis;
+        const {state: {tabKey,isCheckBox}} = topThis;
+
         switch (tabKey) {
             case RegisterEnum.phone.toString():
                 topThis.phoneFromComponent.props.form.validateFields({}, function (err, values) {
-                    if (!err) {
+
+                    /** 是否勾选法律声明*/
+                    if(!isCheckBox) {
+                        NaNotification.warning({
+                            message: '提示',
+                            description: '请勾选同意法律声明!'
+                        });
+                        return;
+                    }else if (!err) {
                         const request: RegisterRequest = {
                             tel: values.PhoneNumber,
                             pwd: values.Password,
@@ -169,7 +182,14 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
                 break;
             case RegisterEnum.mail.toString():
                 topThis.mailFromComponent.props.form.validateFields({}, function (err, values) {
-                    if (!err) {
+                    /** 是否勾选法律声明*/
+                    if(!isCheckBox) {
+                        NaNotification.warning({
+                            message: '提示',
+                            description: '请勾选同意法律声明!'
+                        });
+                        return;
+                    }else if (!err) {
                         const request: RegisterRequest = {
                             mail: values.Mail,
                             pwd: values.Password,
@@ -236,7 +256,7 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
 
     render() {
         const topThis = this;
-        const {state: {tabKey, localeKey,visibleSuccess}} = topThis;
+        const {state: {tabKey, localeKey,visibleSuccess,isCheckBox}} = topThis;
         return <Layout className="na-page-register">
             <Header style={{
                 background: "#FFF"
@@ -260,7 +280,7 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
                     <Row style={{textAlign: 'center'}}>
                         <div><img onClick={() => {
                             hashHistory.push(PathConfig.HomePage);
-                        }} style={{maxWidth: 368, cursor: 'pointer'}} src="http://www.famliytree.cn/icon/logo.png"/>
+                        }} style={{maxWidth: 368, cursor: 'pointer',width:'100%'}} src="http://www.famliytree.cn/icon/logo.png"/>
                         </div>
                         <p style={{
                             fontSize: '14px',
@@ -272,14 +292,22 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
                     {visibleSuccess===true?null:<Row style={{maxWidth: 368, margin: '0 auto'}} className="register-tabs">
                         <Tabs size="large" activeKey={tabKey} tabBarStyle={{textAlign: 'center'}} onChange={(key) => {
                             topThis.setState({tabKey: key});
+                            switch (key){
+                                case RegisterEnum.phone.toString():
+                                    topThis.mailFromComponent.props.form.resetFields();
+                                    break;
+                                case RegisterEnum.mail.toString():
+                                    topThis.phoneFromComponent.props.form.resetFields();
+                                    break;
+                            }
                         }}>
-                            <TabPane tab="手机登录" key={RegisterEnum.phone.toString()}>
+                            <TabPane tab="手机注册" key={RegisterEnum.phone.toString()}>
                                 <PhoneRegisterForm
                                     validatorAccount={topThis.validatorAccount.bind(this)}
                                     onClickCode={topThis.onClickCode.bind(this)}
                                     wrappedComponentRef={(inst) => topThis.phoneFromComponent = inst}></PhoneRegisterForm>
                             </TabPane>
-                            <TabPane tab="邮箱登录" key={RegisterEnum.mail.toString()}>
+                            <TabPane tab="邮箱注册" key={RegisterEnum.mail.toString()}>
                                 <MailRegisterForm
                                     validatorAccount={topThis.validatorAccount.bind(this)}
                                     onClickCode={topThis.onClickCode.bind(this)}
@@ -296,15 +324,23 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
                             </Button>
                         </Col>
                         <Col span={24}>
-                            <Row>
+                            <Form>
                                 <Col span={12}>
-                                    <Checkbox defaultChecked={true}></Checkbox>
-                                    <a>《法律声明和隐私权政策》</a>
+                                    <FormItem
+                                        validateStatus={isCheckBox?"success":"error"}
+                                        help={isCheckBox?"":"请勾选同意此声明"}
+                                    >
+                                        <Checkbox checked={isCheckBox} onChange={(e)=>{
+                                            topThis.setState({isCheckBox:e.target.checked});
+                                        }}></Checkbox><a>《法律声明和隐私权政策》</a>
+                                    </FormItem>
                                 </Col>
                                 <Col span={12} style={{textAlign: 'right'}}>
-                                    <span>已有账号？ <Link to={PathConfig.LoginPage}>快捷登录 ></Link> </span>
+                                    <FormItem>
+                                        <span>已有账号？ <Link to={PathConfig.LoginPage}>快捷登录 ></Link> </span>
+                                    </FormItem>
                                 </Col>
-                            </Row>
+                            </Form>
                         </Col>
                     </Row>}
                 </Row>

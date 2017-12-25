@@ -83,12 +83,11 @@ class MailRegisterFormControl extends Component<MailRegisterFormControlProps, Ma
                 <FormItem hasFeedback>
                     {getFieldDecorator('Mail', {
                         rules: [{
-                            message: '请正确输入你的邮箱!',
                             validator:(rule, value, callback)=>{
                             if(isNullOrUndefined(value)||value===""){
-                                callback(rule.message);
+                                callback('请正确输入你的邮箱!');
                             }else if(!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(value)) {
-                                callback(rule.message);
+                                callback('请正确输入你的邮箱!');
                             }else {
                                 /* 验证账号是否已经存在*/
                                 if(validatorAccount)
