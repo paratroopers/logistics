@@ -286,8 +286,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
                 onClose={() => {
                     topThis.setState({mobileModalVisible: false});
                 }}
-                wrapProps={{onTouchStart: this.onWrapTouchStart}}
-            >
+                wrapProps={{onTouchStart: this.onWrapTouchStart}}>
                 <div style={{height: 250, overflow: 'scroll', whiteSpace: 'pre-line'}}>
                     <p>{mobileModalContent}</p>
                 </div>
