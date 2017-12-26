@@ -6,7 +6,7 @@
   "common.server.status.1":"系统错误",
   "common.server.status.2":"不存在",
   "common.server.status.4":"请求参数不合法",
-  "common.server.status.5":"code参数不合法",
+  "common.server.status.5":"验证码已失效",
   "common.server.status.6":"电话或者邮箱不合法",
   "common.server.status.7":"两次密码输入不一致",
   "common.server.status.8":"密码长度小6位",
