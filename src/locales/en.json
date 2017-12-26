@@ -6,7 +6,7 @@
   "common.server.status.1":"System error",
   "common.server.status.2":"Non-existent",
   "common.server.status.4":"Request parameter unlawful",
-  "common.server.status.5":"Code parameter illegality",
+  "common.server.status.5":"Verification code has failed",
   "common.server.status.6":"Unlawful telephone or mailbox",
   "common.server.status.7":"Two inconsistencies in cipher input",
   "common.server.status.8":"6 bit code length",

@@ -79,10 +79,18 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
         const iconSize = {fontSize: '18px', marginTop: '-8px'};
         const {getFieldDecorator} = this.props.form;
         return <Layout className="na-login">
-            <Header style={{background: "#FFF"}}>
-                <Row type="flex" align="middle" justify="end">
-                    <Col>
-                        <Link to={PathConfig.HomePage}>返回首页 ></Link>
+            <Header className="na-login-header" style={{
+                background: "#FFF"
+            }}>
+                <Row className="header-back-home" type="flex" align="middle" justify="end">
+                    <Col xs={12} sm={24} md={0} lg={0} xl={0} style={{textAlign: 'left'}}>
+                        <Link style={{color: '#FFFFFF'}} to={PathConfig.HomePage}>{"< 返回首页"}</Link>
+                    </Col>
+                    <Col xs={0} sm={0} md={24} lg={24} xl={24}>
+                        <Link to={PathConfig.HomePage}>{"返回首页 >"}</Link>
+                    </Col>
+                    <Col xs={12} sm={0} md={0} lg={0} xl={0} style={{textAlign: 'right'}}>
+                        <Link style={{color: '#FFFFFF'}} to={PathConfig.RegisterPage}>现在注册 ></Link>
                     </Col>
                 </Row>
             </Header>
@@ -136,9 +144,11 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
                                 </Button>
                             </Form.Item>
                             <Form.Item>
-                                或者 <a onClick={() => {
-                                this.onRegister()
-                            }}>现在注册!</a>
+                                <Row>
+                                    <Col xs={0} sm={24} md={24} lg={24} xl={24}>或者 <a onClick={() => {
+                                        this.onRegister()
+                                    }}>现在注册!</a></Col>
+                                </Row>
                             </Form.Item>
                         </Form>
                     </Col>
