@@ -6,13 +6,13 @@ import {QuotationApi} from '../../api/quotation';
 
 export interface NaCostCountryProps {
     onChange?: (v, name) => void;
-    value?: any[];
+    value?: any;
     searchName?: string;
 }
 
 export interface NaCostCountryStates {
     data?: CountryModel[];
-    value?: any[];
+    value?: any;
     fetching?: boolean;
     searchName?: string;
 }
@@ -37,13 +37,13 @@ export class NaCostCountry extends React.Component<NaCostCountryProps, NaCostCou
     }
 
     componentWillReceiveProps(nextProps) {
-        if ('value' in nextProps && JSON.stringify(nextProps.value) !== JSON.stringify(this.props.value)) {
+        if ('value' in nextProps && nextProps.value !== this.props.value) {
             this.setState({value: nextProps.value});
         }
-        if ('searchName' in nextProps && nextProps.searchName !== this.props.searchName
-            && nextProps.searchName !== this.search && nextProps.searchName) {
-            this.getCountry(nextProps.searchName);
-        }
+        /*        if ('searchName' in nextProps && nextProps.searchName !== this.props.searchName
+                    && nextProps.searchName !== this.search && nextProps.searchName) {
+                    this.getCountry(nextProps.searchName);
+                }*/
     }
 
     getCountry(name?: string) {
@@ -61,11 +61,12 @@ export class NaCostCountry extends React.Component<NaCostCountryProps, NaCostCou
     }
 
     onSearch(v?: any) {
-        this.props.onChange && this.props.onChange([], this.state.searchName ? this.state.searchName : null);
         this.search = v;
         setTimeout(() => {
-            if (this.search === v)
+            if (this.search === v && v) {
+                this.props.onChange && this.props.onChange([], this.state.searchName ? this.state.searchName : null);
                 this.getCountry(v);
+            }
         }, this.loadingTime);
     }
 
@@ -78,14 +79,13 @@ export class NaCostCountry extends React.Component<NaCostCountryProps, NaCostCou
         this.setState({
             fetching: false,
         }, () => {
-            this.props.onChange && this.props.onChange(value[value.length - 1], this.state.searchName);
+            this.props.onChange && this.props.onChange(value, this.state.searchName);
         });
     }
 
     render() {
         const {fetching, data, value} = this.state;
-        return <Select mode="multiple"
-                       value={value}
+        return <Select showSearch={true} value={value}
                        notFoundContent={fetching ? <Spin size="small"/> : 'No Data'}
                        filterOption={false}
                        onFocus={this.onFocus.bind(this)}

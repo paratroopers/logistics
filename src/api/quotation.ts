@@ -6,9 +6,8 @@ const BasicsUrl = "http://www.famliytree.cn/_api/ver(1.0)/";
 
 export class QuotationApi {
     static async GetCountry(data: CountryRequest) {
-        let url: string = BasicsUrl + "Quotation/Country/Items" +
-            (data.request.name ? ("?request.name=" + data.request.name) : "");
-        return new Request<NaRequest, NaResponse>().get(url);
+        let url: string = BasicsUrl + "Quotation/Country/Items";
+        return new Request<NaRequest, NaResponse>().get(url, (data.request.name ? {"request.name": data.request.name} : {}));
     }
 
     static async GetQuotation(data: any) {

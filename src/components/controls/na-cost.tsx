@@ -1,12 +1,13 @@
 import * as React from 'react';
 import {hashHistory, withRouter} from 'react-router';
 import {InjectedIntlProps} from "react-intl";
-import {Button, Row, Col, Form, Input} from 'antd';
+import {Button, Row, Col, Form, InputNumber, Input} from 'antd';
 import {PathConfig} from '../../config/pathconfig';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {NaCostCountry} from './na-cost-country';
 import {CostModal} from '../../api/model/quotation';
 import {QuotationApi} from '../../api/quotation';
+import {isNumber} from "util";
 
 
 interface HomeCostProps extends FormComponentProps, ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
@@ -50,8 +51,8 @@ class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
         const height = h ? h : getFieldValue('height');
         const width = w ? w : getFieldValue('width');
         const length = l ? l : getFieldValue('length');
-        if (height && length && width) {
-            const volume = Number(height) * Number(width) * Number(length)
+        if (height && length && width && typeof height === 'number' && typeof length === 'number' && typeof width === 'number') {
+            const volume = height * width * length
             setFieldsValue({volume: volume.toFixed(2)});
         }
     }
@@ -105,30 +106,30 @@ class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
                     <Form.Item>
                         {getFieldDecorator('weight', {
                             rules: [{required: true, message: '请填写重量!'}],
-                        })(<Input placeholder="重量（kg）公斤" size="large"/>)}
+                        })(<InputNumber min={0} style={{width: "100%"}} placeholder="重量（kg）公斤" size="large"/>)}
                     </Form.Item>
                     <Form.Item>
                         <Row type="flex" justify="center" align="top">
                             <Col span={7}>
                                 {getFieldDecorator('length', {
                                     rules: [{required: true, message: '请填写长度!'}],
-                                })(<Input onChange={v => {
-                                    this.onVolumeChange(v.target.value)
+                                })(<InputNumber min={0} style={{width: "100%"}} onChange={v => {
+                                    this.onVolumeChange(v)
                                 }} placeholder="长（cm）"
-                                          size="large"/>)}
+                                                size="large"/>)}
                             </Col>
                             <Col span={7} offset={1}>
                                 {getFieldDecorator('width', {
                                     rules: [{required: true, message: '请填写宽度!'}],
-                                })(<Input onChange={v => {
-                                    this.onVolumeChange(null, v.target.value)
+                                })(<InputNumber min={0} style={{width: "100%"}} onChange={v => {
+                                    this.onVolumeChange(null, v)
                                 }} placeholder="宽（cm）" size="large"/>)}
                             </Col>
                             <Col span={8} offset={1}>
                                 {getFieldDecorator('height', {
                                     rules: [{required: true, message: '请填写高度!'}],
-                                })(<Input onChange={v => {
-                                    this.onVolumeChange(null, null, v.target.value)
+                                })(<InputNumber min={0} style={{width: "100%"}} onChange={v => {
+                                    this.onVolumeChange(null, null, v)
                                 }} placeholder="高（cm）" size="large"/>)}
                             </Col>
                             <Col span={1}></Col>
