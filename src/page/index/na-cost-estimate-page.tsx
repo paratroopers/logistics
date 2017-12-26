@@ -94,6 +94,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
         WebModal.info({
             width: 600,
             title: '注意事项',
+            okText:'关闭',
             content: (
                 <div style={{whiteSpace: 'pre-line'}}>
                     {txt}

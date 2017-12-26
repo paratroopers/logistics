@@ -221,6 +221,7 @@ class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates
         Modal.info({
             width: 600,
             title: '《法律声明和隐私权政策》',
+            okText:'关闭',
             content: (
                 <div style={{whiteSpace: 'pre-line'}}>
                     《法律声明和隐私权政策》
