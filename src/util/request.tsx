@@ -154,7 +154,7 @@ export class Request<TRequest, TResponse extends NaResponse> {
         if (typeof (args[0]) === "string") {
             return Object.assign({}, this.defaultParam, {
                 Url: args[0],
-                Data: args[1]
+                Data: {...args[1], tenantID: "890501594632818690"},
             })
         } else {
             return Object.assign({}, this.defaultParam, args[0])
@@ -168,6 +168,7 @@ export class Request<TRequest, TResponse extends NaResponse> {
      * @param addRandom 是否增加随机数避免加载旧数据
      */
     buildQueryParam(url, data, addRandom?) {
+        data = {...data, tenantID: "890501594632818690"};
         if (data) {
             url += "?";
             Object.getOwnPropertyNames(data)
