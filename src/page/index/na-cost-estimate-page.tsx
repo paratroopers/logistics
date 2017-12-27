@@ -55,7 +55,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
             costInfo: {
                 ...query
             },
-            data: null
+            data: []
         }
         this.isMobile = (NaUtil.getScrrenMode(window.innerWidth) === ScreenModeEnum.sm);
     }
@@ -152,11 +152,12 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
                       style={{minHeight: '400px'}}
                       bordered={false}
                       dataSource={this.state.data}
-        />;
+                      locale={{emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>}}/>;
     }
 
     renderCard() {
         const topThis = this;
+        if (!this.state.data) return <div></div>;
         return <Row>
             {this.state.data.map(function (item, index) {
                 return <Col key={index}>

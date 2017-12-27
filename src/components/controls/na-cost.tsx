@@ -38,7 +38,7 @@ class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
     }
 
     homeToThisPage() {
-        return this.props.location.query.country;
+        return window.location.href.indexOf(PathConfig.CostEstimatePage);
     }
 
     onCountryChange(v, name) {
@@ -65,6 +65,7 @@ class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
                 if (this.homeToThisPage()) {
                     delete values.searchName;
                     delete values.volume;
+                    this.props.onClick && this.props.onClick(null);
                     QuotationApi.GetQuotation({...values}).then(result => {
                         if (result.Status === 0)
                             this.props.onClick && this.props.onClick(result.Data);
