@@ -9,7 +9,7 @@ import {WebAction} from "../../../actions/index";
 import {LoginRequest} from '../../../api/model/request/login-request';
 import {LoginApi} from '../../../api/login';
 import {Cookies} from '../../../util/cookie';
-import {NaConstants} from '../../../util/common';
+import {NaConstants,NaContext} from '../../../util/common';
 import {NaNotification} from '../../../components/controls/na-notification';
 
 const {Header, Content} = Layout;
@@ -56,6 +56,8 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
                     this.setState({loading: false});
                     if (result.Status === 0) {
                         Cookies.set("Authorization", result.Data);
+                        /** 设置登录信息*/
+                        NaContext.setMerchantData({isLogin: true});
                         /** 更改登录的状态*/
                         NaGlobal.store.dispatch(WebAction.GetLoginState(true));
                         if (window.innerWidth <= NaConstants.xs)
@@ -65,9 +67,9 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
                     } else {
                         message.error(result.Message);
                         /* NaNotification.error({
-                             message: 'Tip',
-                             description: result.Message
-                      });*/
+                         message: 'Tip',
+                         description: result.Message
+                         });*/
                     }
                 });
             }

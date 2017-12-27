@@ -7,6 +7,7 @@ import {CommonLocale} from "../../locales/localeid";
 import {PathConfig} from "../../config/pathconfig";
 import {connect} from "react-redux";
 import {Cookies} from '../../util/cookie';
+import {isBoolean, isNullOrUndefined} from "util";
 
 interface NaHeaderProps {
     /* na-header 同级样式*/
@@ -21,7 +22,7 @@ interface NaHeaderProps {
     /* 默认语言*/
     defaultLanguageKey?: string;
     /** 是否已经登录*/
-    isLogin?:boolean;
+    isLogin?: boolean;
 }
 
 interface NaHeaderStates {
@@ -33,7 +34,15 @@ class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            isLogin: props.isLogin?props.isLogin:false
+            isLogin: props.isLogin ? props.isLogin : false
+        }
+    }
+
+    componentDidMount() {
+        const topThis = this;
+        const data = NaContext.getMerchantData();
+        if (!isNullOrUndefined(data) && isBoolean(data.isLogin)) {
+            topThis.setState({isLogin: data.isLogin});
         }
     }
 
@@ -48,12 +57,14 @@ class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
     /** User setting*/
     onClickUserMenu({item, key, keyPath}) {
         const topThis = this;
-        const {state:{isLogin}}=topThis;
+        const {state: {isLogin}} = topThis;
         switch (key) {
             case "0":
                 hashHistory.push({pathname: PathConfig.VIPCenterPage});
                 break;
             case "2":
+                NaContext.setMerchantData({isLogin: false});
+                hashHistory.push({pathname: PathConfig.HomePage});
                 topThis.setState({isLogin: false});
                 Cookies.remove("Authorization");
                 break;
@@ -62,14 +73,14 @@ class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
         }
     }
 
-    onClickNavigation({item, key, keyPath}){
+    onClickNavigation({item, key, keyPath}) {
         const topThis = this;
-        const {state:{isLogin}}=topThis;
+        const {state: {isLogin}} = topThis;
         switch (key) {
             case PathConfig.VIPCenterPage:
-                if(isLogin===true){
+                if (isLogin === true) {
                     hashHistory.push({pathname: PathConfig.VIPCenterPage});
-                }else {
+                } else {
                     hashHistory.push({pathname: PathConfig.LoginPage});
                 }
                 break;
@@ -205,8 +216,8 @@ class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                     style={{height: 80}}>
             {/*<Col >{topThis.renderLanguageSelect()}</Col>*/}
             {/*<Col className="tool-tel">*/}
-                {/*<i className={NaContext.getIconClassName('icon-dianhua')}></i>*/}
-                {/*<span>400-820-8820</span>*/}
+            {/*<i className={NaContext.getIconClassName('icon-dianhua')}></i>*/}
+            {/*<span>400-820-8820</span>*/}
             {/*</Col>*/}
             <Col className="tool-doubt">
                 <Popover placement="bottom" content={this.renderDoubtContent()}>
@@ -236,7 +247,7 @@ class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                     }} src={logo}></img> : logo}
                 </a>
             </Col>
-            <Col style={{width:'calc(100% - 220px)'}}>
+            <Col style={{width: 'calc(100% - 220px)'}}>
                 <Row type="flex" align="middle">
                     <Col xs={0} sm={0} md={0} lg={16} xl={16}>
                         {topThis.renderNavigation()}
