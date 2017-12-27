@@ -1,10 +1,12 @@
 import * as React from 'react';
 import {Select, Spin} from 'antd';
+import {InjectedIntlProps} from "react-intl";
+import {withRouter} from 'react-router';
 import {CountryRequest} from '../../api/model/request/quotation-request';
 import {CountryModel} from '../../api/model/quotation';
 import {QuotationApi} from '../../api/quotation';
 
-export interface NaCostCountryProps {
+export interface NaCostCountryProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
     onChange?: (v, name) => void;
     value?: any;
     searchName?: string;
@@ -17,6 +19,7 @@ export interface NaCostCountryStates {
     searchName?: string;
 }
 
+@withRouter
 export class NaCostCountry extends React.Component<NaCostCountryProps, NaCostCountryStates> {
     search?: string;
     loadingTime?: number;
@@ -33,17 +36,14 @@ export class NaCostCountry extends React.Component<NaCostCountryProps, NaCostCou
     }
 
     componentDidMount() {
-        this.getCountry("");
+        const query = this.props.location.query;
+        this.getCountry(query.searchName);
     }
 
     componentWillReceiveProps(nextProps) {
         if ('value' in nextProps && nextProps.value !== this.props.value) {
             this.setState({value: nextProps.value});
         }
-        /*        if ('searchName' in nextProps && nextProps.searchName !== this.props.searchName
-                    && nextProps.searchName !== this.search && nextProps.searchName) {
-                    this.getCountry(nextProps.searchName);
-                }*/
     }
 
     getCountry(name?: string) {

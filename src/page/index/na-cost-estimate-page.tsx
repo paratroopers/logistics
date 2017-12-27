@@ -55,7 +55,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
             costInfo: {
                 ...query
             },
-            data: []
+            data: null
         }
         this.isMobile = (NaUtil.getScrrenMode(window.innerWidth) === ScreenModeEnum.sm);
     }
@@ -148,6 +148,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
             }
         }];
         return <Table columns={columns}
+                      loading={!this.state.data ? true : false}
                       style={{minHeight: '400px'}}
                       bordered={false}
                       dataSource={this.state.data}
