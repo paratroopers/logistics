@@ -226,7 +226,9 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
             <Col xs={0} sm={0} md={24} lg={10} xl={10}>
                 <Layout style={{background: '#fff'}}>
                     <Layout.Header style={{background: '#fff', paddingLeft: '0px'}}>
-                        <Icon type="info-circle"/>
+                        <Icon type="info-circle" onClick={()=>{
+                            topThis.onTableRowClick("ddddddddddddddddddddddddddd");
+                        }}/>
                         <span>注意事项</span>
                     </Layout.Header>
                     <Layout.Content>
@@ -258,7 +260,8 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
 
     openMobileModal(content: string) {
         const topThis = this;
-        topThis.setState({mobileModalVisible: true, mobileModalContent: content});
+        topThis.onTableRowClick(content);
+        // topThis.setState({mobileModalVisible: true, mobileModalContent: content});
     }
 
     renderMobileModal() {
@@ -270,9 +273,9 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
                 visible={mobileModalVisible}
                 transparent
                 maskClosable={false}
-                title="注意事项"
+                title={"注意事项"}
                 footer={[{
-                    text: 'Ok', onPress: () => {
+                    text: '关闭', onPress: () => {
                         topThis.setState({mobileModalVisible: false});
                     }
                 }]}

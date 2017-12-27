@@ -83,10 +83,10 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
                 background: "#FFF"
             }}>
                 <Row className="header-back-home" type="flex" align="middle" justify="end">
-                    <Col xs={12} sm={24} md={0} lg={0} xl={0} style={{textAlign: 'left'}}>
+                    <Col xs={12} sm={24} md={0} lg={0} xl={0}>
                         <Link style={{color: '#FFFFFF'}} to={PathConfig.HomePage}>{"< 返回首页"}</Link>
                     </Col>
-                    <Col xs={0} sm={0} md={24} lg={24} xl={24}>
+                    <Col xs={0} sm={0} md={24} lg={24} xl={24} style={{textAlign: 'right'}}>
                         <Link to={PathConfig.HomePage}>{"返回首页 >"}</Link>
                     </Col>
                     <Col xs={12} sm={0} md={0} lg={0} xl={0} style={{textAlign: 'right'}}>
