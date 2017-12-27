@@ -4,6 +4,7 @@ import * as moment from "moment";
 import {NaRequestParam, NaResponse, NaGlobal, NaConstants, NaContext} from './common';
 import {CommonLocale} from "../locales/localeid";
 import {NaNotification} from "../components/controls/na-notification";
+import {message} from 'antd';
 
 export class Request<TRequest, TResponse extends NaResponse> {
     /**
@@ -107,27 +108,15 @@ export class Request<TRequest, TResponse extends NaResponse> {
                     } else {
                         if (!param.IgnoreError) {
                             if (response.unauthorized) {
-                                NaNotification.error({
-                                    message: NaGlobal.intl.formatMessage({id: CommonLocale.Error}),
-                                    description: NaGlobal.intl.formatMessage({id: CommonLocale.ResponseUnauthorized})
-                                },);
+                                message.error(NaGlobal.intl.formatMessage({id: CommonLocale.ResponseUnauthorized}));
                             } else if (response.notFound) {
-                                NaNotification.error({
-                                    message: NaGlobal.intl.formatMessage({id: CommonLocale.Error}),
-                                    description: NaGlobal.intl.formatMessage({id: CommonLocale.ResponseNotFound})
-                                },);
+                                message.error(NaGlobal.intl.formatMessage({id: CommonLocale.ResponseNotFound}));
 
                             } else if (response.badRequest) {
-                                NaNotification.error({
-                                    message: NaGlobal.intl.formatMessage({id: CommonLocale.Error}),
-                                    description: NaGlobal.intl.formatMessage({id: CommonLocale.ResponseBadRequest})
-                                },);
+                                message.error(NaGlobal.intl.formatMessage({id: CommonLocale.ResponseBadRequest}));
 
                             } else {
-                                NaNotification.error({
-                                    message: NaGlobal.intl.formatMessage({id: CommonLocale.Error}),
-                                    description: NaGlobal.intl.formatMessage({id: CommonLocale.ResponseError})
-                                },);
+                                message.error(NaGlobal.intl.formatMessage({id: CommonLocale.ResponseError}));
                             }
                         }
                         resolve(({
