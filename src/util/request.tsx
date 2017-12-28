@@ -4,6 +4,7 @@ import * as moment from "moment";
 import {NaRequestParam, NaResponse, NaGlobal, NaConstants, NaContext} from './common';
 import {CommonLocale} from "../locales/localeid";
 import {NaNotification} from "../components/controls/na-notification";
+import {message} from 'antd';
 
 export class Request<TRequest, TResponse extends NaResponse> {
     /**
@@ -18,7 +19,7 @@ export class Request<TRequest, TResponse extends NaResponse> {
         Querys: null,
         RequireToken: true,
         IgnoreError: false,
-        Headers: [],
+        Headers: [{"accept": "application/json;odata=verbose"}],
         Prefix: null
     }
 
@@ -39,6 +40,8 @@ export class Request<TRequest, TResponse extends NaResponse> {
 
         let request = func(param.Prefix && !param.Url.startsWith("http") ? param.Prefix + param.Url : '' + param.Url);
 
+        /**跨域请求带Cookie传递 */
+        // request.withCredentials();
         if (param.Data) {
             request.send(JSON.stringify(param.Data));
         }
@@ -56,7 +59,7 @@ export class Request<TRequest, TResponse extends NaResponse> {
         request.send({crossDomain: true});
 
         if (param.RequireToken) {
-            request.withCredentials();
+            request.set("Authorization", NaContext.getToken());
         }
 
         request.set("ClientTimeZone", (moment().utcOffset() / 60).toString());
@@ -107,27 +110,15 @@ export class Request<TRequest, TResponse extends NaResponse> {
                     } else {
                         if (!param.IgnoreError) {
                             if (response.unauthorized) {
-                                NaNotification.error({
-                                    message: NaGlobal.intl.formatMessage({id: CommonLocale.Error}),
-                                    description: NaGlobal.intl.formatMessage({id: CommonLocale.ResponseUnauthorized})
-                                },);
+                                message.error(NaGlobal.intl.formatMessage({id: CommonLocale.ResponseUnauthorized}));
                             } else if (response.notFound) {
-                                NaNotification.error({
-                                    message: NaGlobal.intl.formatMessage({id: CommonLocale.Error}),
-                                    description: NaGlobal.intl.formatMessage({id: CommonLocale.ResponseNotFound})
-                                },);
+                                message.error(NaGlobal.intl.formatMessage({id: CommonLocale.ResponseNotFound}));
 
                             } else if (response.badRequest) {
-                                NaNotification.error({
-                                    message: NaGlobal.intl.formatMessage({id: CommonLocale.Error}),
-                                    description: NaGlobal.intl.formatMessage({id: CommonLocale.ResponseBadRequest})
-                                },);
+                                message.error(NaGlobal.intl.formatMessage({id: CommonLocale.ResponseBadRequest}));
 
                             } else {
-                                NaNotification.error({
-                                    message: NaGlobal.intl.formatMessage({id: CommonLocale.Error}),
-                                    description: NaGlobal.intl.formatMessage({id: CommonLocale.ResponseError})
-                                },);
+                                message.error(NaGlobal.intl.formatMessage({id: CommonLocale.ResponseError}));
                             }
                         }
                         resolve(({
@@ -154,7 +145,7 @@ export class Request<TRequest, TResponse extends NaResponse> {
         if (typeof (args[0]) === "string") {
             return Object.assign({}, this.defaultParam, {
                 Url: args[0],
-                Data: args[1]
+                Data: {...args[1], tenantID: "890501594632818690"},
             })
         } else {
             return Object.assign({}, this.defaultParam, args[0])
@@ -168,6 +159,7 @@ export class Request<TRequest, TResponse extends NaResponse> {
      * @param addRandom 是否增加随机数避免加载旧数据
      */
     buildQueryParam(url, data, addRandom?) {
+        data = {...data, tenantID: "890501594632818690"};
         if (data) {
             url += "?";
             Object.getOwnPropertyNames(data)
@@ -293,7 +285,7 @@ export class Request<TRequest, TResponse extends NaResponse> {
             });
         }
         if (hasToken) {
-            xmlhttp.setRequestHeader("NaSecret", NaContext.getToken());
+            xmlhttp.setRequestHeader("Authorization", NaContext.getToken());
         }
         if (type === "GET" || type === "get" || type === "Get") {//大小写
             xmlhttp.send(data);

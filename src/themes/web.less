@@ -1,3 +1,5 @@
+@import "./common";
+
 .company-page {
   .about-content {
     h2 {
@@ -21,7 +23,13 @@
   }
 }
 
+/** 注册*/
 .na-page-register {
+  &-header {
+    .header-back-home {
+
+    }
+  }
   &-content {
     display: -webkit-box;
     -webkit-box-pack: center;
@@ -42,6 +50,40 @@
     }
     .ant-input-group-wrapper-lg .ant-input-group-addon {
       top: 0;
+    }
+  }
+}
+
+/** 登录*/
+.na-login{
+
+}
+
+@media screen and (max-width: 767px) {
+  .na-page-register {
+    &-header {
+      padding: 0 16px;
+      height: 32px;
+      line-height: 32px;
+      background-color: @na-orange-7 !important;
+    }
+    &-content {
+      padding-top: 16px;
+      .logo-content {
+        display: none;
+      }
+    }
+  }
+
+  .na-login{
+    &-header {
+      padding: 0 16px;
+      height: 32px;
+      line-height: 32px;
+      background-color: @na-orange-7 !important;
+    }
+    &-content{
+      padding-top: 16px;
     }
   }
 }

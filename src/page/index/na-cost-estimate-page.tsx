@@ -1,76 +1,43 @@
 import * as React from "react";
 import {Component} from "react";
-import {withRouter, Link} from "react-router";
-import {PathConfig} from "../../config/pathconfig";
-import {Layout, Row, Col, Form, Input, Button, Tag, Table} from "antd";
-import HomeCostQuery from "../../components/controls/home-cost-query";
+import {withRouter} from "react-router";
+import {InjectedIntlProps} from "react-intl";
+import {Layout, Row, Col, Input, Button, Tag, Table, Modal as WebModal, Icon} from "antd";
+import CostQuery from "../../components/controls/na-cost";
+import {CostTableModal} from '../../api/model/quotation';
+
 const {Content} = Layout;
-const FormItem = Form.Item;
-const {CheckableTag} = Tag;
 const {TextArea} = Input;
 import {NaUtil} from "../../util/util";
 import {ScreenModeEnum} from "../../api/model/common-model";
 import {Card, WingBlank, WhiteSpace, Modal} from 'antd-mobile';
 
-const data = [{
-    key: '1',
-    a: '大包(SAL)',
-    b: '11.000',
-    c: '692.08',
-    d: '15-至-30',
-    e: '34.60',
-    f: '726.68',
-    g: '长宽高任意一边超60cm则计体积费用',
-    h: 'h'
-}, {
-    key: '2',
-    a: '大包(SAL)',
-    b: '11.000',
-    c: '692.08',
-    d: '15-至-30',
-    e: '34.60',
-    f: '726.68',
-    g: '长宽高任意一边超60cm则计体积费用',
-    h: 'h'
-}, {
-    key: '3',
-    a: '大包(SAL)',
-    b: '11.000',
-    c: '692.08',
-    d: '15-至-30',
-    e: '34.60',
-    f: '726.68',
-    g: '长宽高任意一边超60cm则计体积费用',
-    h: 'h'
-}, {
-    key: '4',
-    a: '大包(SAL)',
-    b: '11.000',
-    c: '692.08',
-    d: '15-至-30',
-    e: '34.60',
-    f: '726.68',
-    g: '长宽高任意一边超60cm则计体积费用',
-    h: 'h'
-}, {
-    key: '5',
-    a: '大包(SAL)',
-    b: '11.000',
-    c: '692.08',
-    d: '15-至-30',
-    e: '34.60',
-    f: '726.68',
-    g: '长宽高任意一边超60cm则计体积费用',
-    h: 'h'
-}];
-
-interface NaCostEstimatePageProps {
+interface NaCostEstimatePageProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
 
 }
 
 interface NaCostEstimatePageStates {
     selectedTagsA: any;
     selectedTagsB: any;
+    /** 手机版Modal*/
+    mobileModalVisible: boolean;
+    /** 注意事项*/
+    mobileModalContent: string;
+    /** 首页带过来的费用估算信息*/
+    costInfo?: any;
+    /** 列表字段model*/
+    data?: CostTableModal[];
+}
+
+function closest(el, selector) {
+    const matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
+    while (el) {
+        if (matchesSelector.call(el, selector)) {
+            return el;
+        }
+        el = el.parentElement;
+    }
+    return null;
 }
 
 @withRouter
@@ -79,12 +46,31 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
 
     constructor(props, context) {
         super(props, context)
+        const query = props.location.query;
         this.state = {
             selectedTagsA: [],
-            selectedTagsB: []
+            selectedTagsB: [],
+            mobileModalVisible: false,
+            mobileModalContent: "",
+            costInfo: {
+                ...query
+            },
+            data: []
         }
         this.isMobile = (NaUtil.getScrrenMode(window.innerWidth) === ScreenModeEnum.sm);
     }
+
+    onWrapTouchStart = (e) => {
+        // fix touch to scroll background page on iOS
+        if (!/iPhone|iPod|iPad/i.test(navigator.userAgent)) {
+            return;
+        }
+        const pNode = closest(e.target, '.am-modal-content');
+        if (!pNode) {
+            e.preventDefault();
+        }
+    }
+
 
     TagAChange(tag, checked) {
         const topThis = this;
@@ -104,79 +90,112 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
         this.setState({selectedTagsB: nextSelectedTags});
     }
 
+    onTableRowClick(txt) {
+        WebModal.info({
+            width: 600,
+            title: '注意事项',
+            okText: '关闭',
+            content: (
+                <div style={{whiteSpace: 'pre-line'}}>
+                    {txt}
+                </div>
+            ),
+            onOk() {
+            },
+        });
+    }
+
     renderTable() {
         const columns = [{
-            title: '运输方式',
-            dataIndex: 'a',
+            title: <span>运输方式</span>,
+            dataIndex: 'channelName',
+            width: '8%'
         }, {
-            title: '计费重量(kg)',
-            dataIndex: 'b',
+            title: <span>计费重量(kg)</span>,
+            dataIndex: 'weight',
+            width: '8%'
         }, {
-            title: '运费(RMB)',
-            dataIndex: 'c',
+            title: <span>运费(RMB)</span>,
+            dataIndex: 'Amount',
+            width: '8%'
         }, {
-            title: '送达时间(工作日)',
-            dataIndex: 'd',
+            title: <span>送达时间(工作日)</span>,
+            dataIndex: 'Prescription',
+            width: '10%'
         }, {
-            title: '服务费(RMB)',
-            dataIndex: 'e',
+            title: <span>服务费(RMB)</span>,
+            dataIndex: 'ServiceAmount',
+            width: '5%'
         }, {
-            title: '总费用(RMB)',
-            dataIndex: 'f',
+            title: <span>总费用</span>,
+            dataIndex: 'AllCount',
+            width: '5%',
+            render: (txt, record) => {
+                return <span>{record.ServiceAmount + record.Amount}</span>;
+            }
         }, {
-            title: '备注',
-            dataIndex: 'g',
+            title: <span>备注</span>,
+            dataIndex: 'Remark',
+            width: '10%'
         }, {
-            title: '发运注意事项',
-            dataIndex: 'h',
+            title: <span>注意事项</span>,
+            dataIndex: '',
+            width: '5%',
             render: (text, record, index) => {
-                return <a href="#">点击查看</a>
-            },
+                return <a onClick={v => {
+                    this.onTableRowClick(record.Clause);
+                }}>点击查看</a>
+            }
         }];
-        return <Table
-            columns={columns}
-            dataSource={data}
-            bordered
-        />;
+        return <Table columns={columns}
+                      loading={!this.state.data ? true : false}
+                      style={{minHeight: '400px'}}
+                      bordered={false}
+                      dataSource={this.state.data}
+                      locale={{emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>}}/>;
     }
 
     renderCard() {
         const topThis = this;
+        if (!this.state.data) return <div></div>;
         return <Row>
-            {data.map(function (item, index) {
+            {this.state.data.map(function (item, index) {
                 return <Col key={index}>
                     <WingBlank size="sm">
                         <WhiteSpace size="sm"/>
                         <Card>
                             <Card.Header
-                                title={item.a}
-                                extra={<span
-                                    style={{fontSize: '12px', color: '#e65922', cursor: 'pointer'}}>注意事项</span>}
+                                title={''}
+                                extra={<a
+                                    onClick={() => {
+                                        topThis.openMobileModal(item.Clause);
+                                    }}
+                                    style={{fontSize: '12px', color: '#e65922', cursor: 'pointer'}}>注意事项</a>}
                             />
                             <Card.Body>
                                 <Row>
                                     <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>计费重量(kg)</h3>
-                                    <p style={{fontSize: '12px'}}>{item.b}</p>
+                                    <p style={{fontSize: '12px'}}>{item.weight}</p>
                                 </Row>
                                 <Row>
                                     <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>运费(RMB)</h3>
-                                    <p style={{fontSize: '12px'}}>{item.c}</p>
+                                    <p style={{fontSize: '12px'}}>{item.Amount}</p>
                                 </Row>
                                 <Row>
                                     <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>送达时间(工作日)</h3>
-                                    <p style={{fontSize: '12px'}}>{item.d}</p>
+                                    <p style={{fontSize: '12px'}}>{item.Prescription}</p>
                                 </Row>
                                 <Row>
                                     <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>服务费(RMB)</h3>
-                                    <p style={{fontSize: '12px'}}>{item.e}</p>
+                                    <p style={{fontSize: '12px'}}>{item.ServiceAmount}</p>
                                 </Row>
                                 <Row>
                                     <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>总费用(RMB) </h3>
-                                    <p style={{fontSize: '12px'}}>{item.f}</p>
+                                    <p style={{fontSize: '12px'}}>{item.Amount + item.ServiceAmount}</p>
                                 </Row>
                                 <Row>
                                     <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>备注</h3>
-                                    <p style={{fontSize: '12px'}}>{item.g}</p>
+                                    <p style={{fontSize: '12px'}}>{item.Remark}</p>
                                 </Row>
                             </Card.Body>
                         </Card>
@@ -189,13 +208,12 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
 
     renderContent() {
         const topThis = this;
-        const {isMobile, state: {selectedTagsA, selectedTagsB}} = topThis;
-        const tagsFromServerA = ['美食/零食', '美妆/洗护', '家具/家饰', '女装/男装', '鞋靴/箱包', '运动/乐器', '玩具/孕产', '家电/数码', '眼睛/手表'];
-        const tagsFromServerB = ['国际一二线品牌', '少量液体、膏状、药品', '纯液体、内置电池', '木制品（原木）'];
-        const fontSize = {fontSize: '14px'};
+        const {isMobile} = topThis;
         return <Row type="flex" justify="space-between">
-            <Col xs={24} sm={24} md={24} lg={10} xl={10}>
-                <HomeCostQuery></HomeCostQuery>
+            <Col xs={24} sm={24} md={24} lg={10} xl={10} style={{marginBottom: '30px'}}>
+                <CostQuery onClick={v => {
+                    this.setState({data: v});
+                }}></CostQuery>
                 <Row>
                     <Col style={{
                         border: '1px solid #e65922',
@@ -206,38 +224,33 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
                 </Row>
             </Col>
             <Col xs={0} sm={0} md={24} lg={10} xl={10}>
-                <Row>
-                    <span style={fontSize}>运输方式推荐</span>
-                </Row>
-                <Row>
-                    <span style={fontSize}>您的包裹里面有什么物品（请选择）</span>
-                </Row>
-                <Row style={{margin: 5}}>
-                    {tagsFromServerA.map(tag => (
-                        <Tag key={tag}
-                             style={{fontSize: 14, lineHeight: '40px', height: 40, padding: '0 20px', margin: 5}}
-                             color="orange">{tag}</Tag>
-                    ))}
-                </Row>
-                <Row>
-                    <span style={fontSize}>其他敏感选择</span>
-                </Row>
-                <Row style={{margin: 5}}>
-                    {tagsFromServerB.map(tag => (
-                        <Tag key={tag}
-                             style={{fontSize: 14, lineHeight: '40px', height: 40, padding: '0 20px', margin: 5}}
-                             color="orange">{tag}</Tag>
-                    ))}
-                </Row>
-                <Row>
-                    <span style={fontSize}>适合的运输渠道有</span>
-                </Row>
-                <Row>
-                    <TextArea rows={4}/>
-                </Row>
-                <Row style={{margin: '20px 0'}} type="flex" justify="center">
-                    <Button size="large" type="primary">点击推荐</Button>
-                </Row>
+                <Layout style={{background: '#fff'}}>
+                    <Layout.Header style={{background: '#fff', paddingLeft: '0px'}}>
+                        <Icon type="info-circle" onClick={()=>{
+                            topThis.onTableRowClick("ddddddddddddddddddddddddddd");
+                        }}/>
+                        <span>注意事项</span>
+                    </Layout.Header>
+                    <Layout.Content>
+                        <span>
+                            一、禁寄物品是指国家法律、法规禁止寄递的物品，主要包括：
+                            （一）各类武器、弹药。如枪支、子弹、炮弹、手榴弹、地雷、炸弹等。
+                            （二）各类易爆炸性物品。如雷管、炸药、火药、鞭炮等。
+                            （三）各类易燃烧性物品，包括液体、气体和固体。如汽油、煤油、桐油、酒精、生漆、柴油、气雾剂、气体打火机、瓦斯气瓶、磷、硫磺、火柴等。
+                            （四）各类易腐蚀性物品。如火硫酸、盐酸、硝酸、有机溶剂、农药、双氧水、危险化学品等。
+                            （五）各类放射性元素及容器。如铀、钴、镭、钚等。
+                            （六）各类烈性毒药。如铊、氰化物、砒霜等。
+                            （七）各类麻醉药物。如鸦片（包括罂粟壳、花、苞、叶）、吗啡、可卡因、海洛因、大麻、冰毒、麻黄素及其它制品等。
+                            （八）各类生化制品和传染性物品。如炭疽、危险性病菌、医药用废弃物等。
+                            （九）各种危害国家安全和社会政治稳定以及淫秽的出版物、宣传品、印刷品等。
+                            （十）各种妨害公共卫生的物品。如尸骨、动物器官、肢体、未经硝制的兽皮、未经药制的兽骨等。
+                            （十一）国家法律、法规、行政规章明令禁止流通、寄递或进出境的物品，如国家秘密文件和资料、国家货币及伪造的货币和有价证券、仿真武器、管制刀具、珍贵文物、濒危野生动物及其制品等。
+                            （十二）包装不妥，可能危害人身安全、污染或者损毁其他寄递件、设备的物品等。
+                            （十三）各寄达国（地区）禁止寄递进口的物品等。
+                            （十四）其他禁止寄递的物品。
+                        </span>
+                    </Layout.Content>
+                </Layout>
             </Col>
             <Col span={24}>
                 {isMobile ? topThis.renderCard() : topThis.renderTable()}
@@ -245,10 +258,43 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
         </Row>
     }
 
+    openMobileModal(content: string) {
+        const topThis = this;
+        topThis.onTableRowClick(content);
+        // topThis.setState({mobileModalVisible: true, mobileModalContent: content});
+    }
+
+    renderMobileModal() {
+        const topThis = this;
+        const {state: {mobileModalVisible, mobileModalContent}} = topThis;
+        return <WingBlank>
+            <WhiteSpace/>
+            <Modal
+                visible={mobileModalVisible}
+                transparent
+                maskClosable={false}
+                title={"注意事项"}
+                footer={[{
+                    text: '关闭', onPress: () => {
+                        topThis.setState({mobileModalVisible: false});
+                    }
+                }]}
+                onClose={() => {
+                    topThis.setState({mobileModalVisible: false});
+                }}
+                wrapProps={{onTouchStart: this.onWrapTouchStart}}>
+                <div style={{height: 250, overflow: 'scroll', whiteSpace: 'pre-line'}}>
+                    <p>{mobileModalContent}</p>
+                </div>
+            </Modal>
+        </WingBlank>;
+    }
+
     render() {
         const topThis = this;
         return <Layout className="cost-estimate-page" style={{minHeight: '100%', backgroundColor: '#FFF'}}>
             <Content>
+                {topThis.renderMobileModal()}
                 <Row style={{marginBottom: 24, backgroundSize: 'cover'}} className="page-title-cost-image">
                 </Row>
                 <Row type="flex" justify="space-around">

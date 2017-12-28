@@ -1,6 +1,8 @@
 import {SagaMiddleware} from "redux-saga";
 import {Cookies} from "./cookie";
 import {Store} from "redux";
+import {CommonLocale} from "../locales/localeid";
+import {NaNotification} from "../components/controls/na-notification";
 
 export interface NaBase {
 }
@@ -195,5 +197,14 @@ export class NaContext {
 
     static getIconClassName(name: string): string {
         return "iconfont " + name;
+    }
+
+    /** 返回系统Status*/
+    static OpenMessage(Status:number){
+        const messageId = NaConstants.CommonServerStatusLocale + Status;
+        NaNotification.error({
+            message: NaGlobal.intl.formatMessage({id: CommonLocale.Error}),
+            description: NaGlobal.intl.formatMessage({id: messageId})
+        },);
     }
 }

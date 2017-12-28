@@ -71,7 +71,7 @@ export default class MotionFooterControl extends Component<MotionFooterControlPr
             <OverPack {...props}
                       playScale={0.2}
                       className={isNullOrUndefined(className) ? "motion-footer" : className}>
-                <QueueAnim type="left" component="ul" key="ul" leaveReverse>
+                <QueueAnim type="right" component="ul" key="ul" leaveReverse>
                     <li key="logo">
                         <span key={0} className="logo">
                             <img src={logoContent.img}/>

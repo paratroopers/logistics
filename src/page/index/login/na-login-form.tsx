@@ -1,11 +1,18 @@
 import * as React from 'react';
-import {hashHistory} from 'react-router';
-import {Form, Icon, Input, Button, Checkbox, Modal, Row, Col, Layout} from 'antd';
+import {hashHistory, Link} from 'react-router';
+import {Form, Icon, Input, Button, Checkbox, Row, Col, Layout, message} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
-import {PathConfig} from '../../../config/pathconfig';
+import {PathConfig, MobilePathConfig} from '../../../config/pathconfig';
 import NaLoginForget from './na-login-forget';
+import {NaGlobal} from '../../../util/common';
+import {WebAction} from "../../../actions/index";
+import {LoginRequest} from '../../../api/model/request/login-request';
+import {LoginApi} from '../../../api/login';
+import {Cookies} from '../../../util/cookie';
+import {NaConstants,NaContext} from '../../../util/common';
+import {NaNotification} from '../../../components/controls/na-notification';
 
-const FormItem = Form.Item;
+const {Header, Content} = Layout;
 
 interface NaLoginFormControlProps extends FormComponentProps {
 
@@ -13,14 +20,21 @@ interface NaLoginFormControlProps extends FormComponentProps {
 
 interface NaLoginFormControlStates {
     visible?: boolean;
+    loading?: boolean;
 }
 
 class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLoginFormControlStates> {
     constructor(props, content) {
         super(props, content);
         this.state = {
-            visible: false
+            visible: false,
+            loading: false
         }
+    }
+
+    componentDidMount() {
+        this.props.form.resetFields();
+        this.setState({loading: false});
     }
 
 
@@ -28,43 +42,92 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
         hashHistory.push(PathConfig.RegisterPage);
     }
 
+    onLogin() {
+        this.props.form.validateFields((err, vas) => {
+            if (err) {
+                return;
+            } else {
+                const data: LoginRequest = {
+                    pwd: vas['pwd'],
+                    user: vas['user']
+                };
+                this.setState({loading: true});
+                LoginApi.Login(data).then(result => {
+                    this.setState({loading: false});
+                    if (result.Status === 0) {
+                        Cookies.set("Authorization", result.Data);
+                        /** 设置登录信息*/
+                        NaContext.setMerchantData({isLogin: true});
+                        /** 更改登录的状态*/
+                        NaGlobal.store.dispatch(WebAction.GetLoginState(true));
+                        if (window.innerWidth <= NaConstants.xs)
+                            hashHistory.push(MobilePathConfig.UserCenter);
+                        else
+                            hashHistory.push(PathConfig.VIPCenterPage);
+                    } else {
+                        message.error(result.Message);
+                        /* NaNotification.error({
+                         message: 'Tip',
+                         description: result.Message
+                         });*/
+                    }
+                });
+            }
+        })
+    }
+
     render() {
         const inputSize = 'large';
         const iconSize = {fontSize: '18px', marginTop: '-8px'};
         const {getFieldDecorator} = this.props.form;
         return <Layout className="na-login">
-            <Layout.Content className="na-login-content">
+            <Header className="na-login-header" style={{
+                background: "#FFF"
+            }}>
+                <Row className="header-back-home" type="flex" align="middle" justify="end">
+                    <Col xs={12} sm={24} md={0} lg={0} xl={0}>
+                        <Link style={{color: '#FFFFFF'}} to={PathConfig.HomePage}>{"< 返回首页"}</Link>
+                    </Col>
+                    <Col xs={0} sm={0} md={24} lg={24} xl={24} style={{textAlign: 'right'}}>
+                        <Link to={PathConfig.HomePage}>{"返回首页 >"}</Link>
+                    </Col>
+                    <Col xs={12} sm={0} md={0} lg={0} xl={0} style={{textAlign: 'right'}}>
+                        <Link style={{color: '#FFFFFF'}} to={PathConfig.RegisterPage}>现在注册 ></Link>
+                    </Col>
+                </Row>
+            </Header>
+            <Content className="na-login-content">
                 <Row align="middle" justify="center" type="flex">
-                    <Col lg={8} sm={24} md={12} xs={24} xl={4} className="na-login-content-col">
+                    <Col className="na-login-content-col">
                         {<NaLoginForget onCancel={() => {
                             this.setState({visible: false})
                         }} visible={this.state.visible}></NaLoginForget>}
                         <div className="na-login-content-img">
-                            <img src="http://www.famliytree.cn/icon/logo.png"/>
+                            <img style={{cursor: 'pointer'}} onClick={() => {
+                                hashHistory.push(PathConfig.HomePage);
+                            }} src="http://www.famliytree.cn/icon/logo.png"/>
                         </div>
                         <div className="na-login-content-title">
                             <p>为你的境外物流，提供专业优质的服务</p>
                         </div>
                         <Form className="na-login-content-form">
-                            <FormItem>
-                                {getFieldDecorator('userName', {
-                                    rules: [{required: true, message: 'Please input your username!'}],
-                                })(
-                                    <Input prefix={<Icon type="user" style={iconSize}/>} size={inputSize}
-                                           placeholder="手机或邮箱"/>
-                                )}
-                            </FormItem>
-                            <FormItem>
-                                {getFieldDecorator('password', {
-                                    rules: [{required: true, message: 'Please input your Password!'}],
+                            <Form.Item>
+                                {getFieldDecorator('user', {
+                                    rules: [{required: true, message: '请输入手机或者邮箱!'}],
+                                })(<Input prefix={<Icon type="user" style={iconSize}/>} size={inputSize}
+                                          placeholder="手机或邮箱"/>)}
+                            </Form.Item>
+                            <Form.Item>
+                                {getFieldDecorator('pwd', {
+                                    rules: [{required: true, message: '请输入密码!'}],
                                 })(
                                     <Input prefix={<Icon type="lock" style={iconSize}/>}
                                            size={inputSize}
                                            type="password"
                                            placeholder="密码"/>
                                 )}
-                            </FormItem>
-                            <FormItem>
+                            </Form.Item>
+                            <Form.Item>
                                 {getFieldDecorator('remember', {
                                     valuePropName: 'checked',
                                     initialValue: true,
@@ -74,22 +137,25 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
                                 <a className="na-login-content-form-forgot" onClick={() => {
                                     this.setState({visible: true})
                                 }}>无法登录?</a>
-                            </FormItem>
-                            <FormItem>
-                                <Button type="primary" htmlType="submit" className="na-login-content-form-button"
-                                        size={inputSize}>
-                                    登录
+                            </Form.Item>
+                            <Form.Item>
+                                <Button loading={this.state.loading} type="primary" htmlType="submit"
+                                        className="na-login-content-form-button"
+                                        onClick={this.onLogin.bind(this)}
+                                        size={inputSize}>{'登录'}
                                 </Button>
-                            </FormItem>
-                            <FormItem>
-                                或者 <a onClick={() => {
-                                this.onRegister()
-                            }}>现在注册!</a>
-                            </FormItem>
+                            </Form.Item>
+                            <Form.Item>
+                                <Row>
+                                    <Col xs={0} sm={24} md={24} lg={24} xl={24}>或者 <a onClick={() => {
+                                        this.onRegister()
+                                    }}>现在注册!</a></Col>
+                                </Row>
+                            </Form.Item>
                         </Form>
                     </Col>
                 </Row>
-            </Layout.Content>
+            </Content>
         </Layout>;
     }
 }

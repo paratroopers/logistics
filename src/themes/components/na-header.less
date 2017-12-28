@@ -1,5 +1,6 @@
 @import "../common";
 
+@main-color: #e65922;
 /* Banner*/
 @na-header: na-header;
 @media (width: 1280px) {
@@ -9,7 +10,7 @@
 }
 
 .@{na-header} {
-  padding-left: 15%;
+  //padding-left: 15%;
   /*  padding-right: 15%;*/
   .ant-menu-horizontal {
     border-bottom: none;
@@ -92,12 +93,12 @@
       cursor: pointer;
       i {
         margin-right: 3px;
-        color: #4cafe9 !important;
+        color: @main-color !important;
         font-size: 19px;
       }
     }
     i.iconfont {
-      color: #e65922;
+      color: @main-color;
     }
     .login {
       margin-left: 15px;
@@ -105,7 +106,7 @@
         color: rgba(0, 0, 0, 0.65) !important;
       }
       i {
-        color: #e65922;
+        color: @main-color;
       }
       i.iconfont {
         margin-right: 5px;
@@ -134,19 +135,19 @@
 }
 
 .page-title-cost-image {
-  background-image: url('http://www.famliytree.cn/icon/index-home-image-7.jpeg');
+  background-image: url('http://www.famliytree.cn/Icon/index-home-image-7.jpg');
 }
 
 .page-title-company-image {
-  background-image: url('http://www.famliytree.cn/icon/index-home-image-12.jpg');
+  background-image: url('http://www.famliytree.cn/Icon/index-home-image-12.jpg');
 }
 
 .tool-doubt {
   @img-width: 80px;
   @font-color: #373d41;
-  @qq-color: #4cafe9;
-  @wx-color: #50b44d;
-  @email-color: #fab200;
+  @qq-color: @main-color;
+  @wx-color: @main-color;
+  @email-color: @main-color;
   &-content {
     width: 200px;
     padding: 5px 0 5px 0;
@@ -174,7 +175,7 @@
       top: 50%;
       transform: translateY(-50%);
     }
-    .icon-qq {
+    .icon-dianhua-yuankuang,.icon-qq {
       font-size: 25px;
     }
     .icon-youxiang, .icon-weixin {
@@ -182,6 +183,9 @@
     }
     .title {
       cursor: pointer;
+    }
+    .icon-dianhua-yuankuang,.icon-qq, .icon-youxiang, .icon-weixin {
+      color: @main-color;
     }
   }
   &-content:hover {

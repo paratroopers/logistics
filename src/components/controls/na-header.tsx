@@ -5,6 +5,9 @@ import {Row, Col, Menu, Select, Popover, Avatar, Icon} from 'antd';
 import {NaGlobal, NaContext} from "../../util/common";
 import {CommonLocale} from "../../locales/localeid";
 import {PathConfig} from "../../config/pathconfig";
+import {connect} from "react-redux";
+import {Cookies} from '../../util/cookie';
+import {isBoolean, isNullOrUndefined} from "util";
 
 interface NaHeaderProps {
     /* na-header 同级样式*/
@@ -18,6 +21,8 @@ interface NaHeaderProps {
     onChangeLanguage?: (key: any) => void;
     /* 默认语言*/
     defaultLanguageKey?: string;
+    /** 是否已经登录*/
+    isLogin?: boolean;
 }
 
 interface NaHeaderStates {
@@ -25,24 +30,62 @@ interface NaHeaderStates {
     isLogin: boolean;
 }
 
-export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
+class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            isLogin: false
+            isLogin: props.isLogin ? props.isLogin : false
+        }
+    }
+
+    componentDidMount() {
+        const topThis = this;
+        const data = NaContext.getMerchantData();
+        if (!isNullOrUndefined(data) && isBoolean(data.isLogin)) {
+            topThis.setState({isLogin: data.isLogin});
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const topThis = this;
+        const {props: {isLogin}} = topThis;
+        if ('isLogin' in nextProps && nextProps.isLogin !== isLogin) {
+            topThis.setState({isLogin: nextProps.isLogin});
         }
     }
 
     /** User setting*/
     onClickUserMenu({item, key, keyPath}) {
         const topThis = this;
+        const {state: {isLogin}} = topThis;
         switch (key) {
             case "0":
                 hashHistory.push({pathname: PathConfig.VIPCenterPage});
+                break;
             case "2":
+                NaContext.setMerchantData({isLogin: false});
+                hashHistory.push({pathname: PathConfig.HomePage});
                 topThis.setState({isLogin: false});
+                Cookies.remove("Authorization");
                 break;
             default:
+                break;
+        }
+    }
+
+    onClickNavigation({item, key, keyPath}) {
+        const topThis = this;
+        const {state: {isLogin}} = topThis;
+        switch (key) {
+            case PathConfig.VIPCenterPage:
+                if (isLogin === true) {
+                    hashHistory.push({pathname: PathConfig.VIPCenterPage});
+                } else {
+                    hashHistory.push({pathname: PathConfig.LoginPage});
+                }
+                break;
+            default:
+                hashHistory.push({pathname: key});
                 break;
         }
     }
@@ -59,17 +102,15 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                   mode="horizontal"
                   defaultSelectedKeys={['1']}
                   style={{lineHeight: '78px', height: 78, fontSize: 16}}
-                  onClick={(obj: { item, key, keyPath }) => {
-                      hashHistory.push({pathname: obj.key});
-                      //console.log(item, key, keyPath);
-                      //hashHistory.push({pathname: key, query: {selectedTab: type}});
-                  }}
+                  onClick={topThis.onClickNavigation.bind(this)}
             >
                 <Menu.Item key={PathConfig.HomePage}>{formatMessage({id: CommonLocale.HeaderMenuHome})}</Menu.Item>
                 <Menu.Item
                     key={PathConfig.CostEstimatePage}>{formatMessage({id: CommonLocale.HeaderMenuCostEstimate})}</Menu.Item>
                 <Menu.Item
                     key={PathConfig.CompanyProfilePage}>{formatMessage({id: CommonLocale.HeaderMenuCompanyProfile})}</Menu.Item>
+                <Menu.Item
+                    key={PathConfig.VIPCenterPage}>{formatMessage({id: CommonLocale.HeaderMenuVIPCenter})}</Menu.Item>
             </Menu>
         </Row>;
     }
@@ -89,12 +130,21 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
 
     renderDoubtContent() {
         return [
+            <Row key="0" type="flex" className="tool-doubt-content">
+                <Col span={6}>
+                    <i className={NaContext.getIconClassName('icon-dianhua-yuankuang')}></i>
+                </Col>
+                <Col span={18} className="title">
+                    <p className="tool-doubt-content-num-title">客服电话</p>
+                    <p className="tool-doubt-content-num">400-820-8820</p>
+                </Col>
+            </Row>,
             <Row key="1" type="flex" className="tool-doubt-content qq">
                 <Col span={6}>
                     <i className={NaContext.getIconClassName('icon-qq')}></i>
                 </Col>
                 <Col span={18} className="title">
-                    <p className="tool-doubt-content-num-title">服务QQ</p>
+                    <p className="tool-doubt-content-num-title">客服QQ</p>
                     <p className="tool-doubt-content-num">738114990</p>
                 </Col>
             </Row>,
@@ -103,7 +153,7 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                     <i className={NaContext.getIconClassName('icon-youxiang')}></i>
                 </Col>
                 <Col span={18} className="title">
-                    <p className="tool-doubt-content-eml-title">服务邮箱</p>
+                    <p className="tool-doubt-content-eml-title">客服邮箱</p>
                     <p className="tool-doubt-content-eml">xuke_break@163.com</p>
                 </Col>
             </Row>,
@@ -156,37 +206,19 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
                     </a>
                 </Popover>
             </Col>
-        </Row> : <Row className="login">
-            <a onClick={() => {
-                {/*window.location.replace("./index.html#/login");*/
-                }
-                hashHistory.push(PathConfig.LoginPage);
-            }}>
-                <i className={NaContext.getIconClassName('icon-yonghu')}></i>
-                <span>登录</span>
-            </a>
-            <a className="separate">|</a>
-            <a onClick={() => {
-                {/*window.location.replace("./index.html#/register");*/
-                }
-                hashHistory.push(PathConfig.RegisterPage);
-            }}>
-                <i className={NaContext.getIconClassName('icon-zhuce')}></i>
-                <span>注册</span>
-            </a>
-        </Row>;
+        </Row> : null;
     }
 
     /** 工具*/
     renderTool() {
         const topThis = this;
-        return <Row className="tool" type="flex" justify="start" align="middle"
+        return <Row className="tool" type="flex" justify="space-between" align="middle"
                     style={{height: 80}}>
             {/*<Col >{topThis.renderLanguageSelect()}</Col>*/}
-            <Col className="tool-tel">
-                <i className={NaContext.getIconClassName('icon-dianhua')}></i>
-                <span>400-820-8820</span>
-            </Col>
+            {/*<Col className="tool-tel">*/}
+            {/*<i className={NaContext.getIconClassName('icon-dianhua')}></i>*/}
+            {/*<span>400-820-8820</span>*/}
+            {/*</Col>*/}
             <Col className="tool-doubt">
                 <Popover placement="bottom" content={this.renderDoubtContent()}>
                     <i className={NaContext.getIconClassName('icon-zixun')}></i>
@@ -207,25 +239,31 @@ export default class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
     render() {
         const topThis = this;
         const {props: {className, logo}} = topThis;
-        return <Row className={className ? className + " na-header" : "na-header"}>
-            <Col xs={12} sm={12} md={8} lg={5} xl={5}>
-                <Row type="flex" justify="start">
-                    <Col>
-                        <a className="logo" onClick={topThis.onClickLogo.bind(this)}>
-                            {typeof logo === "string" ? <img onClick={() => {
-                                hashHistory.push(PathConfig.HomePage);
-                            }} src={logo}></img> : logo}
-                        </a>
+        return <Row type="flex" className={className ? className + " na-header" : "na-header"}>
+            <Col>
+                <a className="logo" onClick={topThis.onClickLogo.bind(this)}>
+                    {typeof logo === "string" ? <img onClick={() => {
+                        hashHistory.push(PathConfig.HomePage);
+                    }} src={logo}></img> : logo}
+                </a>
+            </Col>
+            <Col style={{width: 'calc(100% - 220px)'}}>
+                <Row type="flex" align="middle">
+                    <Col xs={0} sm={0} md={0} lg={16} xl={16}>
+                        {topThis.renderNavigation()}
+                    </Col>
+                    <Col xs={0} sm={0} md={24} lg={8} xl={8}>
+                        {topThis.renderTool()}
                     </Col>
                 </Row>
-            </Col>
-            <Col xs={0} sm={0} md={12} lg={8} xl={8}>
-                {topThis.renderNavigation()}
-            </Col>
-            <Col xs={9} sm={9} md={2} lg={{offset: 1, span: 10}} xl={{offset: 1, span: 10}}>
-                {topThis.renderTool()}
             </Col>
         </Row>;
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        isLogin: state.web.isLogin
+    }
+}
+export default connect(mapStateToProps)(NaHeader);

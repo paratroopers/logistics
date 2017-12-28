@@ -2,24 +2,58 @@ import * as React from "react";
 import {Component} from "react";
 import {Form, Input, Icon, Button, Select, Row, Col} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
+import {isNullOrUndefined} from "util";
 const FormItem = Form.Item;
 const SelectOption = Select.Option;
 
 export interface PhoneRegisterFormControlProps extends FormComponentProps {
     onClickCode?: React.FormEventHandler<any>;
+    /** 验证账号是否已经存在*/
+    validatorAccount?: (value:string,callback) => void;
 }
 
 export interface PhoneRegisterFormControlStates {
     /** 验证码禁用倒计时*/
     countDown: number;
+    /** 验证密码*/
+    confirmDirty:boolean;
 }
 
 class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, PhoneRegisterFormControlStates> {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            countDown: 0
+            countDown: 0,
+            confirmDirty:false
         }
+    }
+
+    handleConfirmBlur = (e) => {
+        const value = e.target.value;
+        const topThis = this;
+        const {state:{confirmDirty}}=topThis;
+        topThis.setState({ confirmDirty: confirmDirty || !!value });
+    }
+
+    checkPassword = (rule, value, callback) => {
+        const topThis = this;
+        const {props: {form}} = topThis;
+        if (value && value !== form.getFieldValue('Password')) {
+            callback('两次密码输入不一致!');
+        } else {
+            callback();
+        }
+    }
+
+    checkConfirm = (rule, value, callback) => {
+        const topThis = this;
+        const {props: {form},state:{confirmDirty}} = topThis;
+        if (value && confirmDirty) {
+            form.validateFields(['NextPassword'], { force: true },()=>{
+
+            });
+        }
+        callback();
     }
 
     /** 验证码倒计时*/
@@ -43,7 +77,7 @@ class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, 
 
     render() {
         const topThis = this;
-        const {props: {form: {getFieldDecorator}, onClickCode}, state: {countDown}} = topThis;
+        const {props: {form: {getFieldDecorator}, onClickCode,validatorAccount}, state: {countDown}} = topThis;
 
         const prefixSelector = getFieldDecorator('PhonePrefix', {
             initialValue: '86',
@@ -55,9 +89,29 @@ class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, 
         );
         return (
             <Form className="na-page-register-form">
-                <FormItem>
+                <FormItem hasFeedback>
                     {getFieldDecorator('PhoneNumber', {
-                        rules: [{required: true, message: '请输入你的手机号码!'}],
+                        rules: [{
+                            validator:(rule, value, callback)=>{
+                                if(isNullOrUndefined(value)||value===""){
+                                    callback('请正确输入你的手机号码!');
+                                }else if(!/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/.test(value)) {
+                                    callback('请正确输入你的手机号码!');
+                                }else {
+                                    /* 验证账号是否已经存在*/
+                                    if(validatorAccount)
+                                    {
+                                        validatorAccount(value,(message)=>{
+                                            callback(message);
+                                        });
+
+                                    }else
+                                    {
+                                        callback();
+                                    }
+                                }
+                            }
+                        }],
                     })(
                         <Input addonBefore={prefixSelector}
                                size="large"
@@ -69,7 +123,7 @@ class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, 
                     <Row style={{margin: '0 -4px'}}>
                         <Col span={16} style={{padding: '0 4px'}}>
                             {getFieldDecorator('Code', {
-                                rules: [{required: true, message: '请输入你的手机验证码!'}],
+                                rules: [{pattern:/^\d{4}$/,required: true, message: '请正确输入你的手机验证码!'}],
                             })(
                                 <Input prefix={<Icon type="barcode" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                        size="large"
@@ -85,7 +139,9 @@ class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, 
                 </FormItem>
                 <FormItem>
                     {getFieldDecorator('Password', {
-                        rules: [{required: true, message: '请输入你的登录密码!'}],
+                        rules: [{required: true, message: '请输入你的登录密码!'}, {
+                            validator: topThis.checkConfirm,
+                        }],
                     })(
                         <Input prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                type="password"
@@ -96,11 +152,14 @@ class PhoneRegisterFormControl extends Component<PhoneRegisterFormControlProps, 
                 </FormItem>
                 <FormItem>
                     {getFieldDecorator('NextPassword', {
-                        rules: [{required: true, message: '请再次输入你的密码!'}],
+                        rules: [{required: true, message: '请再次输入你的密码!'}, {
+                            validator: topThis.checkPassword,
+                        }],
                     })(
                         <Input prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                type="password"
                                size="large"
+                               onBlur={topThis.handleConfirmBlur}
                                placeholder="再次输入密码"/>
                     )}
                 </FormItem>

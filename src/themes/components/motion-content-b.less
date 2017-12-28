@@ -19,8 +19,12 @@
         vertical-align: top;
         .img {
           display: inline-block;
-          width: 15%;
+          //width: 15%;
           vertical-align: top;
+          .iconfont {
+            font-size: 40px;
+            color: @app-theme-color;
+          }
         }
         .text {
           width: 85%;
@@ -34,7 +38,7 @@
 
 @media screen and (max-width: 767px) {
   .@{motion-content-b}-wrapper {
-    height: 920px;
+    height: 1000px;
     .@{motion-content-b} {
       overflow: hidden;
       width: 90%;
@@ -52,11 +56,14 @@
         margin: 20px auto;
         height: auto;
         ul {
+          padding: 0;
           > li {
             position: relative;
             width: 90%;
             margin: auto;
-            display: block;
+            padding: 8px 0;
+            display: flex;
+            justify-content: flex-start;
             h1 {
               font-size: 20px;
             }

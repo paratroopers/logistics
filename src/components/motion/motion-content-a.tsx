@@ -42,6 +42,10 @@ export default class MotionContentAControl extends Component<MotionContentAContr
                 type: 0
             },
             {
+                icon: 'icon-zhuce',
+                title: '会员注册',
+                type: 0
+            },{
                 icon: 'icon-jijianfasong',
                 title: '客户发货',
                 type: 0

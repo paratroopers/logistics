@@ -6,7 +6,9 @@ import {
     ESELECTTAB_COUNTLOADED,
     REQUEST_MOBILENAVTREE,
     NAVTREE_COUNTLOADED,
-    onChangeLanguage
+    QOUNTRY_COUNTLOADED,
+    onChangeLanguage,
+    GetLoginState
 } from "./ActionTypes";
 
 export class TaskAction {
@@ -30,8 +32,18 @@ export class MobileNavTreeAction {
     });
 }
 
+export class CountryAction {
+    static CountryLoaded = createAction(QOUNTRY_COUNTLOADED, (data: any) => {
+        return {data: data};
+    });
+}
+
 export class WebAction {
     static onChangeLanguage = createAction(onChangeLanguage, (languageKey: string) => {
         return {languageKey: languageKey};
+    });
+
+    static GetLoginState = createAction(GetLoginState, (isLogin: boolean) => {
+        return {isLogin: isLogin};
     });
 }
