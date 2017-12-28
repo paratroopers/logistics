@@ -116,7 +116,7 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
         //${NaContext.getIconAddress('process-demo-banner')}
         return <div className="mobile-page">
             <Layout>
-                <Header className="header fixed">
+                <Header className="mobile-page-header fixed">
                     <NavBar
                         mode="light">
                         <a className="left-icon"><img onClick={() => {
@@ -126,10 +126,10 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
                     </NavBar>
                     <div className={'a'}></div>
                 </Header>
-                <Content style={{minHeight: _siderHeight, marginTop: navHeight, marginBottom: tabHeight}}>
+                <Content className="mobile-page-content" style={{minHeight: _siderHeight, marginTop: navHeight, marginBottom: tabHeight}}>
                     {children}
                 </Content>
-                <Footer className="footer fixed" style={{top: _tabHeight}}>
+                <Footer className="mobile-page-footer fixed" style={{top: _tabHeight}}>
                     <TabBar unselectedTintColor="#949494"
                             tintColor="#e65922"
                             barTintColor="white"
