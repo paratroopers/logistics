@@ -6,7 +6,7 @@ const BasicsUrl = "http://www.famliytree.cn/_api/ver(1.0)/";
 
 export class DemoAPI {
     static async GetDemo(data?: DemoRequest) {
-        let url: string = "sockjs-node/info";
+        let url: string = "";
         return new Request<NaRequest, NaResponse>().get(url, data);
     }
 }
