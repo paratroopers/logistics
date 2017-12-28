@@ -37,13 +37,17 @@ class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
         const query = this.props.location.query;
         const {setFieldsValue} = this.props.form;
         setFieldsValue({...query});
-        if (this.homeToThisPage())
+        if (this.initHomeToThisPage())
             this.onOk();
+    }
+
+    initHomeToThisPage() {
+        return window.location.href.indexOf(PathConfig.CostEstimatePage) >= 0
+            && window.location.href.indexOf('country') >= 0;
     }
 
     homeToThisPage() {
         return window.location.href.indexOf(PathConfig.CostEstimatePage) >= 0
-            && window.location.href.indexOf('country') >= 0;
     }
 
     onCountryChange(v, name) {
