@@ -183,7 +183,7 @@ class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
             <Menu.Divider></Menu.Divider>
             <Menu.Item key="2">
                 <Icon type="poweroff"/>
-                <span>注销</span>
+                <span>退出</span>
             </Menu.Item>
         </Menu>;
     }
