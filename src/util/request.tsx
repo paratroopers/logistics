@@ -50,7 +50,7 @@ export class Request<TRequest, TResponse extends NaResponse> {
             request.query(param.Querys);
         }
 
-        if (param.FormData) {xi
+        if (param.FormData) {
             request.send(param.FormData);
         } else {
             request.type("json");
