@@ -24,4 +24,6 @@ export interface CostTableModal {
     channelID?: string;
     channelName?: string;
     weight?: number;
+    WeightLimit?:string,
+    SizeLimit?:string
 }

@@ -123,9 +123,18 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
             dataIndex: 'Prescription',
             width: '10%'
         }, {
+            title: <span>重量限制</span>,
+            dataIndex: 'WeightLimit',
+            width: '10%'
+        }, {
+            title: <span>尺寸限制</span>,
+            dataIndex: 'SizeLimit',
+            width: '10%'
+        },
+            {
             title: <span>服务费(RMB)</span>,
             dataIndex: 'ServiceAmount',
-            width: '10%'
+            width: '18%'
         }, {
             title: <span>总费用</span>,
             dataIndex: 'AllCount',
@@ -185,9 +194,18 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
                                     <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>运费(RMB)</h3>
                                     <p style={{fontSize: '12px'}}>{item.Amount}</p>
                                 </Row>
+
                                 <Row>
                                     <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>送达时间(工作日)</h3>
                                     <p style={{fontSize: '12px'}}>{item.Prescription}</p>
+                                </Row>
+                                <Row>
+                                    <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>重量限制</h3>
+                                    <p style={{fontSize: '12px'}}>{item.WeightLimit}</p>
+                                </Row>
+                                <Row>
+                                    <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>尺寸限制</h3>
+                                    <p style={{fontSize: '12px'}}>{item.SizeLimit}</p>
                                 </Row>
                                 <Row>
                                     <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>服务费(RMB)</h3>
