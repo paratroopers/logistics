@@ -4,9 +4,9 @@ import {reducers} from "./reducers/index";
 import router from "./config/router";
 import NaMasterPage from "./page/master/na-master-page";
 
-require.ensure([], () => {
+//require.ensure([], () => {
     require("./themes/index.less")
-}, "app.css");
+//}, "app.css");
 
 // fix firefox drag will open a tab in background bug
 document.body.ondrop = function (event) {
