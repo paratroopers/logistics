@@ -9,9 +9,10 @@ import {WebAction} from "../../../actions/index";
 import {LoginRequest} from '../../../api/model/request/login-request';
 import {LoginApi} from '../../../api/login';
 import {Cookies} from '../../../util/cookie';
-import {NaConstants,NaContext} from '../../../util/common';
+import {NaConstants,NaContext,NaResponse} from '../../../util/common';
 import {NaNotification} from '../../../components/controls/na-notification';
-
+import {AccountValidateRequest} from "../../../api/model/request/common-request";
+import {RegisterAPI}from "../../../api/common-api";
 const {Header, Content} = Layout;
 
 interface NaLoginFormControlProps extends FormComponentProps {
@@ -24,12 +25,40 @@ interface NaLoginFormControlStates {
 }
 
 class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLoginFormControlStates> {
+    /* 验证账号的Timeout*/
+    timeout: any;
+    /* 验证账号的value*/
+    currentValue: string;
     constructor(props, content) {
         super(props, content);
         this.state = {
             visible: false,
             loading: false
         }
+    }
+
+    /** 账号是否存在*/
+    validatorAccount = (value: string, callback) => {
+        const topThis = this;
+        const {timeout} = topThis;
+        if (timeout) {
+            clearTimeout(timeout);
+            topThis.timeout = null;
+        }
+        topThis.currentValue = value;
+
+        topThis.timeout = setTimeout(function () {
+            const request: AccountValidateRequest = {
+                user: value
+            };
+            RegisterAPI.AccountValidate(request).then((result: NaResponse) => {
+                if (result.Data === true) {
+                    callback("该账号未被注册!");
+                } else {
+                    callback();
+                }
+            })
+        }, 1000);
     }
 
     componentDidMount() {
@@ -77,6 +106,7 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
     }
 
     render() {
+        const topThis=this;
         const inputSize = 'large';
         const iconSize = {fontSize: '18px', marginTop: '-8px'};
         const {getFieldDecorator} = this.props.form;
@@ -101,7 +131,7 @@ class NaLoginFormControl extends React.Component<NaLoginFormControlProps, NaLogi
                     <Col className="na-login-content-col">
                         {<NaLoginForget onCancel={() => {
                             this.setState({visible: false})
-                        }} visible={this.state.visible}></NaLoginForget>}
+                        }} visible={this.state.visible} validatorAccount={topThis.validatorAccount.bind(this)}></NaLoginForget>}
                         <div className="na-login-content-img">
                             <img style={{cursor: 'pointer'}} onClick={() => {
                                 hashHistory.push(PathConfig.HomePage);

@@ -4,30 +4,48 @@ import {Form, Input, Button, Modal, Row, Col} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {Steps, Icon} from 'antd-mobile';
 import {PathConfig} from '../../../config/pathconfig';
+import {call} from "redux-saga/effects";
+import {isNullOrUndefined} from "util";
+import {RegisterAPI}from "../../../api/common-api";
+import {LoginApi}from "../../../api/login";
+import {GetCodeRequest} from "../../../api/model/request/common-request";
+import {ForgetRequest} from "../../../api/model/request/login-request";
+import {NaGlobal, NaResponse, NaContext} from '../../../util/common';
+import {NaNotification} from "../../../components/controls/na-notification";
 
 interface NaLoginForgetProps extends FormComponentProps {
     visible?: boolean;
     onCancel?: () => void;
+    /** 验证账号是否存在*/
+    validatorAccount?: (value:string,callback) => void;
 }
 
 interface NaLoginForgetStates {
     visible?: boolean;
     current?: number;
     countDown?: number;
+    /** 验证密码*/
+    confirmDirty:boolean;
+    loading:boolean;
 }
 
 
 class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetStates> {
-
     constructor(props, content) {
         super(props, content);
         this.state = {
             visible: props.visible ? props.visible : false,
             current: 0,
-            countDown: 0
+            countDown: 0,
+            confirmDirty:false,
+            loading: false
         }
     }
 
+    componentDidMount() {
+        this.props.form.resetFields();
+        this.setState({loading: false});
+    }
 
     componentWillReceiveProps(nextProps) {
         if ('visible' in nextProps && nextProps.visible !== this.props.visible) {
@@ -51,58 +69,177 @@ class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetSta
         this.props.onCancel && this.props.onCancel();
     }
 
-    onCodeOk() {
-        const {getFieldValue} = this.props.form;
-        const v = getFieldValue('PhoneNumber');
-        var regex = new RegExp(/^1\d{10}$/);
-        if (regex.test(v)) {
-            this.setState({current: 1, countDown: 60})
-            this.setTimeoutPhone();
+    handleConfirmBlur = (e) => {
+        const value = e.target.value;
+        const topThis = this;
+        const {state:{confirmDirty}}=topThis;
+        topThis.setState({ confirmDirty: confirmDirty || !!value });
+    }
+
+    checkPassword = (rule, value, callback) => {
+        const topThis = this;
+        const {props: {form}} = topThis;
+        if (value && value !== form.getFieldValue('Password')) {
+            callback('两次密码输入不一致!');
+        } else {
+            callback();
         }
     }
 
+    checkConfirm = (rule, value, callback) => {
+        const topThis = this;
+        const {props: {form},state:{confirmDirty}} = topThis;
+        if (value && confirmDirty) {
+            form.validateFields(['NextPassword'], { force: true },()=>{
+
+            });
+        }
+        callback();
+    }
+
+    /** 重置密码*/
+    Submit(){
+        const topThis=this;
+        const {props:{form}}=topThis;
+        form.validateFields({},(err,values)=>{
+            if(!err) {
+                const isMail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(values.account);
+                /** 发送验证码*/
+                const request: ForgetRequest = !isMail? {
+                    tel: values.account,
+                    pwd:values.Password,
+                    code:values.Code
+                }: {
+                    mail: values.account,
+                    pwd:values.Password,
+                    code:values.Code
+                }
+                this.setState({loading: true});
+                LoginApi.Forget(request).then((data: NaResponse) => {
+                    this.setState({loading: false});
+                    if (data.Data === true) {
+                        NaNotification.success({
+                            message: 'Tip',
+                            description: '密码重置成功!'
+                        });
+                        topThis.onCancel();
+                    } else {
+                        NaContext.OpenMessage(data.Status);
+                    }
+                });
+            }
+        });
+    }
+
+    onCodeOk() {
+        const topThis=this;
+        const {props:{form}}=topThis;
+        form.validateFields(["account"],(err,values)=>{
+            if(!err) {
+                const isMail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(values.account);
+                const type=  (isMail ? "1" : "0");
+                /** 发送验证码*/
+                const request: GetCodeRequest = !isMail? {
+                    tel: values.account,
+                    type: type
+                }: {
+                    mail: values.account,
+                    type: type
+                }
+                RegisterAPI.GetCode(request).then((data: NaResponse) => {
+                    if (data.Data === true) {
+                        NaNotification.success({
+                            message: 'Tip',
+                            description: '验证码发送成功!'
+                        });
+                        topThis.setState({current: 1, countDown: 60});
+                        topThis.setTimeoutPhone();
+                    } else {
+                        NaContext.OpenMessage(data.Status);
+                    }
+                });
+            }
+        })
+    }
+
     renderSteps(steps?: number) {
+        const topThis = this;
+        const {props:{validatorAccount}}=topThis;
         const size = 'default';
         const {getFieldDecorator} = this.props.form;
         const {countDown} = this.state;
         let stepsContent: any[] = [];
 
         stepsContent.push(<Col span={!steps ? 14 : 24}>
-            <Form.Item>
-                {getFieldDecorator('PhoneNumber', {
-                    rules: [{required: true, message: '请输入你的手机号码!'}]
-                })(<Input size={size} placeholder="新密码"/>)}
+            <Form.Item hasFeedback>
+                {getFieldDecorator('account', {
+                    rules: [{
+                        validator: (rule, value, callback) => {
+                            if (isNullOrUndefined(value) || value === "") {
+                                callback('请正确输入你的账号');
+                            } else if (!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(value) && !/^1\d{10}$/.test(value)) {
+                                callback('请正确输入你的账号');
+                            } else {
+                                /* 验证账号是否已经存在*/
+                                if(validatorAccount)
+                                {
+                                    validatorAccount(value,(message)=>{
+                                        callback(message);
+                                    });
+
+                                }else
+                                {
+                                    callback();
+                                }
+                            }
+                        }
+                    }]
+                })(<Input size={size} placeholder="账号"/>)}
             </Form.Item>
         </Col>);
-        if (steps) {
-            stepsContent.push(
-                <Col span={24}>
-                    <Form.Item>
-                        {getFieldDecorator('Password', {
-                            rules: [{required: true, message: '请输入你的手机号码!'}]
-                        })(<Input size={size} type="password" placeholder="新密码"/>)}
-                    </Form.Item>
-                </Col>
-            );
-            stepsContent.push(<Col span={14}>
+        stepsContent.push(
+            <Col span={steps ? 24 : 0}>
                 <Form.Item>
-                    <Input size={size} placeholder="手机收到的6位数验证码"/>
+                    {getFieldDecorator('Password', {
+                        rules: [{required: true, message: '请输入你的新密码!'}, {
+                            validator: topThis.checkConfirm,
+                        }]
+                    })(<Input size={size} type="password" placeholder="新密码"/>)}
                 </Form.Item>
-            </Col>);
-        }
+            </Col>
+        );
+        stepsContent.push(
+            <Col span={steps ? 24 : 0}>
+                <Form.Item>
+                    {getFieldDecorator('NextPassword', {
+                        rules: [{required: true, message: '请再次输入你的新密码!'}, {
+                            validator: topThis.checkPassword,
+                        }]
+                    })(<Input size={size} type="password" onBlur={topThis.handleConfirmBlur} placeholder="再次输入新密码"/>)}
+                </Form.Item>
+            </Col>
+        );
+        stepsContent.push(<Col span={steps ? 14 : 0}>
+            <Form.Item>
+                {getFieldDecorator('Code', {
+                    rules: [{pattern:/^\d{4}$/,required: true, message: '请正确输入你的验证码'}],
+                })(
+                    <Input size={size} placeholder="验证码"/>
+                )}
+            </Form.Item>
+        </Col>);
         stepsContent.push(<Col offset={1} span={9}>
             <Form.Item>
                 <Button size={size} type="primary" style={{width: '100%'}} onClick={this.onCodeOk.bind(this)}
                         disabled={countDown === 0 ? false : true}>{countDown === 0 ? "获取验证码" : countDown + "秒"}</Button>
             </Form.Item>
         </Col>);
-        if (steps) {
-            stepsContent.push(<Col span={24} style={{textAlign: 'center'}}>
-                <Form.Item>
-                    <Button style={{width: '100%'}} size={size} type="primary">重设密码</Button>
-                </Form.Item>
-            </Col>);
-        }
+        stepsContent.push(<Col span={steps ? 24 : 0} style={{textAlign: 'center'}}>
+            <Form.Item>
+                <Button style={{width: '100%'}} size={size} type="primary" loading={this.state.loading}
+                        onClick={topThis.Submit.bind(this)}>重设密码</Button>
+            </Form.Item>
+        </Col>);
         return stepsContent;
     }
 
