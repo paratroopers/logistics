@@ -7,7 +7,8 @@ import {FormComponentProps} from 'antd/lib/form/Form';
 import {NaCostCountry} from './na-cost-country';
 import {CostModal} from '../../api/model/quotation';
 import {QuotationApi} from '../../api/quotation';
-import {isNumber} from "util";
+import {NaToast} from '../../components/mobile-controls/na-toast';
+import {NaUtil} from '../../util/util';
 
 
 interface HomeCostProps extends FormComponentProps, ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
@@ -20,13 +21,16 @@ interface HomeCostProps extends FormComponentProps, ReactRouter.RouteComponentPr
 }
 
 interface HomeCostStates {
-
+    loading?: boolean;
 }
 
 @withRouter
 class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
     constructor(props, context) {
         super(props, context);
+        this.state = {
+            loading: false
+        }
     }
 
     componentDidMount() {
@@ -63,12 +67,15 @@ class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
                 return;
             } else {
                 if (this.homeToThisPage()) {
+                    this.setState({loading: true});
                     delete values.searchName;
                     delete values.volume;
                     this.props.onClick && this.props.onClick(null);
                     QuotationApi.GetQuotation({...values}).then(result => {
-                        if (result.Status === 0)
+                        if (result.Status === 0) {
+                            this.setState({loading: false});
                             this.props.onClick && this.props.onClick(result.Data);
+                        }
                     });
                 } else
                     hashHistory.push({
@@ -143,7 +150,8 @@ class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
                     </Form.Item>
                     <Form.Item>
                         <Row type="flex" justify="center">
-                            <Button size="large" type="primary" onClick={this.onOk.bind(this)}>开始计算</Button>
+                            <Button size="large" loading={this.state.loading} type="primary"
+                                    onClick={this.onOk.bind(this)}>开始计算</Button>
                         </Row>
                     </Form.Item>
                 </Form>

@@ -387,4 +387,8 @@ export class NaUtil {
         }
         return mode;
     }
+
+    static isMobile() {
+        return window.innerWidth < 768;
+    }
 }
