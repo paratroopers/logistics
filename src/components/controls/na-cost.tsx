@@ -42,7 +42,8 @@ class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
     }
 
     homeToThisPage() {
-        return window.location.href.indexOf(PathConfig.CostEstimatePage);
+        return window.location.href.indexOf(PathConfig.CostEstimatePage) >= 0
+            && window.location.href.indexOf('country') >= 0;
     }
 
     onCountryChange(v, name) {
