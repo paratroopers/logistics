@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Component} from "react";
 import {hashHistory} from 'react-router';
-import {Row, Col, Menu, Select, Popover, Avatar, Icon} from 'antd';
+import {Row, Col, Menu, Select, Popover, Avatar, Icon, Dropdown} from 'antd';
 import {NaGlobal, NaContext} from "../../util/common";
 import {CommonLocale} from "../../locales/localeid";
 import {PathConfig} from "../../config/pathconfig";
@@ -215,10 +215,7 @@ class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
         return <Row className="tool" type="flex" justify="space-between" align="middle"
                     style={{height: 80}}>
             {/*<Col >{topThis.renderLanguageSelect()}</Col>*/}
-            {/*<Col className="tool-tel">*/}
-            {/*<i className={NaContext.getIconClassName('icon-dianhua')}></i>*/}
-            {/*<span>400-820-8820</span>*/}
-            {/*</Col>*/}
+            {/*<Col lg={0} xl={0}>{topThis.renderButtonNavigation()}</Col>*/}
             <Col className="tool-doubt">
                 <Popover placement="bottom" content={this.renderDoubtContent()}>
                     <i className={NaContext.getIconClassName('icon-zixun')}></i>
@@ -227,6 +224,27 @@ class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
             </Col>
             <Col>{topThis.renderUser()}</Col>
         </Row>;
+    }
+
+    /** 按钮型导航*/
+    renderButtonNavigation() {
+        const topThis = this;
+        const {formatMessage} = NaGlobal.intl;
+        const menu = <Menu onClick={topThis.onClickNavigation.bind(this)}
+        >
+            <Menu.Item key={PathConfig.HomePage}>{formatMessage({id: CommonLocale.HeaderMenuHome})}</Menu.Item>
+            <Menu.Item
+                key={PathConfig.CostEstimatePage}>{formatMessage({id: CommonLocale.HeaderMenuCostEstimate})}</Menu.Item>
+            <Menu.Item
+                key={PathConfig.CompanyProfilePage}>{formatMessage({id: CommonLocale.HeaderMenuCompanyProfile})}</Menu.Item>
+            <Menu.Item
+                key={PathConfig.VIPCenterPage}>{formatMessage({id: CommonLocale.HeaderMenuVIPCenter})}</Menu.Item>
+        </Menu>
+        return <Dropdown overlay={menu} placement="bottomRight" trigger={['click']}>
+            <Row type="flex" justify="start" align="middle" style={{cursor:"pointer"}}>
+                <Icon type="bars" style={{marginRight:4,fontSize:19}}/>菜单
+            </Row>
+        </Dropdown>
     }
 
     onClickLogo() {
@@ -249,10 +267,10 @@ class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
             </Col>
             <Col style={{width: 'calc(100% - 220px)'}}>
                 <Row type="flex" align="middle">
-                    <Col xs={0} sm={0} md={0} lg={16} xl={16}>
+                    <Col xs={0} sm={0} md={16} lg={16} xl={16}>
                         {topThis.renderNavigation()}
                     </Col>
-                    <Col xs={0} sm={0} md={24} lg={8} xl={8}>
+                    <Col xs={0} sm={0} md={8} lg={8} xl={8}>
                         {topThis.renderTool()}
                     </Col>
                 </Row>
