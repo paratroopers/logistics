@@ -125,7 +125,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
         }, {
             title: <span>服务费(RMB)</span>,
             dataIndex: 'ServiceAmount',
-            width: '5%'
+            width: '10%'
         }, {
             title: <span>总费用</span>,
             dataIndex: 'AllCount',
@@ -140,7 +140,7 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
         }, {
             title: <span>注意事项</span>,
             dataIndex: '',
-            width: '5%',
+            width: '10%',
             render: (text, record, index) => {
                 return <a onClick={v => {
                     this.onTableRowClick(record.Clause);
@@ -173,6 +173,10 @@ export class NaCostEstimatePage extends Component<NaCostEstimatePageProps, NaCos
                                     style={{fontSize: '12px', color: '#e65922', cursor: 'pointer'}}>注意事项</a>}
                             />
                             <Card.Body>
+                                <Row>
+                                    <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>运输方式</h3>
+                                    <p style={{fontSize: '12px'}}>{item.channelName}</p>
+                                </Row>
                                 <Row>
                                     <h3 style={{fontSize: '14px', fontWeight: 'bold'}}>计费重量(kg)</h3>
                                     <p style={{fontSize: '12px'}}>{item.weight}</p>
