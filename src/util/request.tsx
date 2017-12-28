@@ -56,7 +56,7 @@ export class Request<TRequest, TResponse extends NaResponse> {
             request.type("json");
         }
 
-        // request.send({crossDomain: true});
+        //request.send({crossDomain: true});
 
         if (param.RequireToken) {
             request.set("Authorization", NaContext.getToken());

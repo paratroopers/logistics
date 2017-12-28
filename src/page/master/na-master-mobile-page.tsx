@@ -118,7 +118,8 @@ class NaMasterMobilePage extends React.Component<NaMasterMobilePageProps, NaMast
             <Layout>
                 <Header className="mobile-page-header fixed">
                     <NavBar
-                        mode="light">
+                        mode="light"
+                        rightContent={this.renderHeaderRight()}>
                         <a className="left-icon"><img onClick={() => {
                                                           hashHistory.push(PathConfig.HomePage)
                                                       }}
