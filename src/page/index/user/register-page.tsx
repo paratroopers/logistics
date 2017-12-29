@@ -1,26 +1,26 @@
 import * as React from "react";
 import {Component} from "react";
 import {withRouter, Link, hashHistory} from "react-router";
-import {PathConfig}from "../../config/pathconfig";
+import {PathConfig}from "../../../config/pathconfig";
 import {Layout, Row, Col, Tabs, Button, Checkbox, Select, Icon, Form, Modal} from "antd";
-import {RegisterEnum}from "../../../src/api/model/common-model";
+import {RegisterEnum}from "../../../api/model/common-model";
 const {Header, Content, Footer} = Layout;
-import {NaGlobal, NaResponse, NaContext} from '../../util/common';
+import {NaGlobal, NaResponse, NaContext} from '../../../util/common';
 import {connect} from "react-redux";
-import {WebAction} from "../../actions/index";
+import {WebAction} from "../../../actions/index";
 const {TabPane} = Tabs;
-import PhoneRegisterForm from "../../components/controls/na-phone-register-form";
-import MailRegisterForm from "../../components/controls/na-mail-register-form";
-import {NaNotification} from "../../components/controls/na-notification";
-import {RegisterAPI} from "../../api/user";
-import {GetCodeRequest, RegisterRequest, AccountValidateRequest} from "../../api/model/request/common-request";
+import PhoneRegisterForm from "../../../components/controls/na-phone-register-form";
+import MailRegisterForm from "../../../components/controls/na-mail-register-form";
+import {NaNotification} from "../../../components/controls/na-notification";
+import {RegisterAPI}from "../../../api/common-api";
+import {GetCodeRequest, RegisterRequest, AccountValidateRequest} from "../../../api/model/request/common-request";
 const FormItem = Form.Item;
 
-interface NaRegisterPageProps {
+interface RegisterPageProps {
     localeKey?: string;
 }
 
-interface NaRegisterPageStates {
+interface RegisterPageStates {
     localeKey?: string;
     /** 注册类型*/
     tabKey: string;
@@ -31,7 +31,7 @@ interface NaRegisterPageStates {
 }
 
 @withRouter
-class NaRegisterPage extends Component<NaRegisterPageProps, NaRegisterPageStates> {
+class NaRegisterPage extends Component<RegisterPageProps, RegisterPageStates> {
     phoneFromComponent: any;
     mailFromComponent: any;
     /* 验证账号的Timeout*/
