@@ -7,12 +7,13 @@ import NaLoginForget from './na-login-forget';
 import {NaGlobal} from '../../../util/common';
 import {WebAction} from "../../../actions/index";
 import {LoginRequest} from '../../../api/model/request/login-request';
-import {LoginApi} from '../../../api/login';
+import  {LoginApi} from "../../../api/user";
 import {Cookies} from '../../../util/cookie';
 import {NaConstants,NaContext,NaResponse} from '../../../util/common';
 import {NaNotification} from '../../../components/controls/na-notification';
 import {AccountValidateRequest} from "../../../api/model/request/common-request";
-import {RegisterAPI}from "../../../api/common-api";
+import  {RegisterAPI} from "../../../api/user";
+
 const {Header, Content} = Layout;
 
 interface NaLoginFormControlProps extends FormComponentProps {
