@@ -6,14 +6,14 @@ import {CompanyPage} from "./index/company-page";
 import {MemberConsigneePage} from "./index/member/member-consignee-page";
 import {MemberWelcomePage} from "./index/member/member-welcome-page";
 import {NaMobileTabBar} from "./demo/na-mobile-tabbar";
-import RegisterPage from "./index/user/register-page";
-import LoginFormPage from "./index/user/login-form-page";
+import UserRegisterPage from "./index/user/user-register-page";
+import UserLoginPage from "./index/user/user-login-page";
 import {NaMasterMainPage} from './master/na-mater-main-page';
 
 export {
     NaMasterMainPage,
-    LoginFormPage,
-    RegisterPage,
+    UserLoginPage,
+    UserRegisterPage,
     NaDemoPage,
     HomePage,
     CostPage,

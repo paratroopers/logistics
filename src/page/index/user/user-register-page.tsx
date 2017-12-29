@@ -16,11 +16,11 @@ import {RegisterAPI}from "../../../api/common-api";
 import {GetCodeRequest, RegisterRequest, AccountValidateRequest} from "../../../api/model/request/common-request";
 const FormItem = Form.Item;
 
-interface RegisterPageProps {
+interface UserRegisterPageProps {
     localeKey?: string;
 }
 
-interface RegisterPageStates {
+interface UserRegisterPageStates {
     localeKey?: string;
     /** 注册类型*/
     tabKey: string;
@@ -31,7 +31,7 @@ interface RegisterPageStates {
 }
 
 @withRouter
-class NaRegisterPage extends Component<RegisterPageProps, RegisterPageStates> {
+class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPageStates> {
     phoneFromComponent: any;
     mailFromComponent: any;
     /* 验证账号的Timeout*/
@@ -378,4 +378,4 @@ const mapStateToProps = (state) => {
         localeKey: state.web.languageKey
     }
 }
-export default connect(mapStateToProps)(NaRegisterPage);
+export default connect(mapStateToProps)(UserRegisterPage);

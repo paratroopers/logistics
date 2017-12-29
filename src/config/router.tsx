@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Router, Route, hashHistory, IndexRoute} from 'react-router';
 import {PathConfig, MobilePathConfig} from './pathconfig';
 import {
-    LoginFormPage,
+    UserLoginPage,
     NaMasterMainPage,
     HomePage,
     CostPage,
@@ -11,7 +11,7 @@ import {
     MemberPage,
     MemberConsigneePage,
     MemberWelcomePage,
-    RegisterPage
+    UserRegisterPage
 } from '../page/index';
 import {
     MemberPage as MobileMemberPage,
@@ -36,8 +36,8 @@ const routerConfig = (
                 <Route path={PathConfig.VIPConsigneeAddressPage} component={MemberConsigneePage}/>
             </Route>
         </Route>
-        <Route path={PathConfig.LoginPage} component={LoginFormPage}/>
-        <Route path={PathConfig.RegisterPage} component={RegisterPage}/>
+        <Route path={PathConfig.LoginPage} component={UserLoginPage}/>
+        <Route path={PathConfig.RegisterPage} component={UserRegisterPage}/>
     </Router>
 );
 export default routerConfig;

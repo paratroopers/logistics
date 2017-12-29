@@ -3,19 +3,19 @@ import {Form, Input, Button, Modal, Row, Col} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {Steps} from 'antd-mobile';
 
-interface LoginForgetPageProps extends FormComponentProps {
+interface UserLoginForgetPageProps extends FormComponentProps {
     visible?: boolean;
     onCancel?: () => void;
 }
 
-interface LoginForgetPageStates {
+interface UserLoginForgetPageStates {
     visible?: boolean;
     current?: number;
     countDown?: number;
 }
 
 
-class LoginForgetPage extends React.Component<LoginForgetPageProps, LoginForgetPageStates> {
+class UserLoginForgetPage extends React.Component<UserLoginForgetPageProps, UserLoginForgetPageStates> {
 
     constructor(props, content) {
         super(props, content);
@@ -129,4 +129,4 @@ class LoginForgetPage extends React.Component<LoginForgetPageProps, LoginForgetP
     }
 }
 
-export default Form.create<any>()(LoginForgetPage);
+export default Form.create<any>()(UserLoginForgetPage);

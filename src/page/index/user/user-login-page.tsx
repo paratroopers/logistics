@@ -3,7 +3,7 @@ import {hashHistory, Link} from 'react-router';
 import {Form, Icon, Input, Button, Checkbox, Row, Col, Layout, message} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {PathConfig, MobilePathConfig} from '../../../config/pathconfig';
-import LoginForgetPage from './login-forget-page';
+import UserLoginForgetPage from './user-login-forget-page';
 import {NaGlobal} from '../../../util/common';
 import {WebAction} from "../../../actions/index";
 import {LoginRequest} from '../../../api/model/request/login-request';
@@ -14,16 +14,16 @@ import {NaNotification} from '../../../components/controls/na-notification';
 
 const {Header, Content} = Layout;
 
-interface LoginFormPageProps extends FormComponentProps {
+interface UserLoginPageProps extends FormComponentProps {
 
 }
 
-interface LoginFormPageStates {
+interface UserLoginPageStates {
     visible?: boolean;
     loading?: boolean;
 }
 
-class LoginFormPage extends React.Component<LoginFormPageProps, LoginFormPageStates> {
+class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageStates> {
     constructor(props, content) {
         super(props, content);
         this.state = {
@@ -99,9 +99,9 @@ class LoginFormPage extends React.Component<LoginFormPageProps, LoginFormPageSta
             <Content className="na-login-content">
                 <Row align="middle" justify="center" type="flex">
                     <Col className="na-login-content-col">
-                        {<LoginForgetPage onCancel={() => {
+                        {<UserLoginForgetPage onCancel={() => {
                             this.setState({visible: false})
-                        }} visible={this.state.visible}></LoginForgetPage>}
+                        }} visible={this.state.visible}></UserLoginForgetPage>}
                         <div className="na-login-content-img">
                             <img style={{cursor: 'pointer'}} onClick={() => {
                                 hashHistory.push(PathConfig.HomePage);
@@ -159,4 +159,4 @@ class LoginFormPage extends React.Component<LoginFormPageProps, LoginFormPageSta
         </Layout>;
     }
 }
-export default Form.create<any>()(LoginFormPage);
+export default Form.create<any>()(UserLoginPage);
