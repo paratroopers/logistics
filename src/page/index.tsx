@@ -1,26 +1,26 @@
 import {NaDemoPage} from "./demo/na-demo-page";
-import {NaHomePage} from "./index/na-home-page";
+import {HomePage} from "./index/home-page";
 import NaVIPCenterPage from "./index/na-vip-center-page";
-import {NaCostEstimatePage} from "./index/na-cost-estimate-page";
-import {NaCompanyProfilePage} from "./index/na-company-profile-page";
+import {CostPage} from "./index/cost-page";
+import {CompanyPage} from "./index/company-page";
 import {NaVIPConsigneeAddressPage} from "./vip/na-vip-consignee-address-page";
 import {NaVIPWelcomePage} from "./vip/na-vip-welcome-page";
 import {NaMobileTabBar} from "./demo/na-mobile-tabbar";
 import {MbUserHelp} from './mobile/user-help';
 import {MbUserCenter} from "./mobile/user-center";
 import MbUserCenterDetail from './mobile/user-center-detail';
-import NaRegisterPage from "./index/na-register-page";
-import NaLoginForm from "./index/login/na-login-form";
+import RegisterPage from "./index/user/register-page";
+import LoginForm from "./index/user/login-form";
 import {NaMasterMainPage} from './master/na-mater-main-page';
 
 export {
     NaMasterMainPage,
-    NaLoginForm,
-    NaRegisterPage,
+    LoginForm,
+    RegisterPage,
     NaDemoPage,
-    NaHomePage,
-    NaCostEstimatePage,
-    NaCompanyProfilePage,
+    HomePage,
+    CostPage,
+    CompanyPage,
     NaVIPCenterPage,
     NaVIPConsigneeAddressPage,
     NaVIPWelcomePage,

@@ -2,11 +2,11 @@ import * as React from 'react';
 import {Router, Route, hashHistory, IndexRoute} from 'react-router';
 import {PathConfig, MobilePathConfig} from './pathconfig';
 import {
-    NaLoginForm,
+    LoginForm,
     NaMasterMainPage,
-    NaHomePage,
-    NaCostEstimatePage,
-    NaCompanyProfilePage,
+    HomePage,
+    CostPage,
+    CompanyPage,
     NaMobileTabBar,
     NaVIPCenterPage,
     NaVIPConsigneeAddressPage,
@@ -14,16 +14,16 @@ import {
     MbUserCenter,
     MbUserHelp,
     MbUserCenterDetail,
-    NaRegisterPage
+    RegisterPage
 } from '../page/index';
 
 const routerConfig = (
     <Router history={hashHistory}>
         <Route path={PathConfig.MasterPage} component={NaMasterMainPage}>
-            <IndexRoute component={NaHomePage}></IndexRoute>
-            <Route path={PathConfig.HomePage} component={NaHomePage}/>
-            <Route path={PathConfig.CostEstimatePage} component={NaCostEstimatePage}/>
-            <Route path={PathConfig.CompanyProfilePage} component={NaCompanyProfilePage}/>
+            <IndexRoute component={HomePage}></IndexRoute>
+            <Route path={PathConfig.HomePage} component={HomePage}/>
+            <Route path={PathConfig.CostEstimatePage} component={CostPage}/>
+            <Route path={PathConfig.CompanyProfilePage} component={CompanyPage}/>
             <Route path={PathConfig.MobilePage} component={NaMobileTabBar}/>
             <Route path={MobilePathConfig.UserCenter} component={MbUserCenter}/>
             <Route path={MobilePathConfig.UserCenterDetail} component={MbUserCenterDetail}/>
@@ -33,8 +33,8 @@ const routerConfig = (
                 <Route path={PathConfig.VIPConsigneeAddressPage} component={NaVIPConsigneeAddressPage}/>
             </Route>
         </Route>
-        <Route path={PathConfig.LoginPage} component={NaLoginForm}/>
-        <Route path={PathConfig.RegisterPage} component={NaRegisterPage}/>
+        <Route path={PathConfig.LoginPage} component={LoginForm}/>
+        <Route path={PathConfig.RegisterPage} component={RegisterPage}/>
     </Router>
 );
 export default routerConfig;
