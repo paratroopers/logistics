@@ -12,7 +12,7 @@ const {TabPane} = Tabs;
 import PhoneRegisterForm from "../../components/controls/na-phone-register-form";
 import MailRegisterForm from "../../components/controls/na-mail-register-form";
 import {NaNotification} from "../../components/controls/na-notification";
-import {RegisterAPI}from "../../api/common-api";
+import {RegisterAPI} from "../../api/user";
 import {GetCodeRequest, RegisterRequest, AccountValidateRequest} from "../../api/model/request/common-request";
 const FormItem = Form.Item;
 

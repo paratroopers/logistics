@@ -10,8 +10,6 @@
 }
 
 .@{na-header} {
-  //padding-left: 15%;
-  /*  padding-right: 15%;*/
   .ant-menu-horizontal {
     border-bottom: none;
   }
@@ -36,21 +34,12 @@
       line-height: 28px
     }
   }
-  //.title {
-  //  padding-top: 10px;
-  //  text-align: center;
-  //  h1 {
-  //    line-height: 40px;
-  //    font-family: "palatino linotype", palatino, serif;
-  //    color: #5b5b5b;
-  //    text-transform: uppercase;
-  //    word-spacing: -2pt;
-  //  }
-  //  p {
-  //    line-height: 20px;
-  //  }
-  //}
   .tool {
+    @media screen and (min-width: 768px) {
+      & {
+        justify-content: flex-end;
+      }
+    }
     a:hover {
       color: @primary-color;
     }
@@ -175,7 +164,7 @@
       top: 50%;
       transform: translateY(-50%);
     }
-    .icon-dianhua-yuankuang,.icon-qq {
+    .icon-dianhua-yuankuang, .icon-qq {
       font-size: 25px;
     }
     .icon-youxiang, .icon-weixin {
@@ -184,7 +173,7 @@
     .title {
       cursor: pointer;
     }
-    .icon-dianhua-yuankuang,.icon-qq, .icon-youxiang, .icon-weixin {
+    .icon-dianhua-yuankuang, .icon-qq, .icon-youxiang, .icon-weixin {
       color: @main-color;
     }
   }

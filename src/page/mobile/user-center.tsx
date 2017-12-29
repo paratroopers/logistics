@@ -22,7 +22,6 @@ export class MbUserCenter extends React.Component<MbUserCenterProps, MbUserCente
     }
 
     componentDidMount() {
-        console.log(Cookies.get('Authorization'));
         if (!Cookies.get('Authorization'))
             hashHistory.push(PathConfig.LoginPage);
     }

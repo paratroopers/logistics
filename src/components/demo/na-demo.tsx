@@ -4,7 +4,7 @@ import {Row} from 'antd';
 import {connect} from "react-redux";
 
 
-import {DemoAPI} from '../../api/common-api';
+import {DemoAPI} from "../../api/user";
 
 interface DemoControlProps {
     todoCount?: any;
