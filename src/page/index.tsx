@@ -10,12 +10,12 @@ import {MbUserHelp} from './mobile/user-help';
 import {MbUserCenter} from "./mobile/user-center";
 import MbUserCenterDetail from './mobile/user-center-detail';
 import RegisterPage from "./index/user/register-page";
-import LoginForm from "./index/user/login-form";
+import LoginFormPage from "./index/user/login-form-page";
 import {NaMasterMainPage} from './master/na-mater-main-page';
 
 export {
     NaMasterMainPage,
-    LoginForm,
+    LoginFormPage,
     RegisterPage,
     NaDemoPage,
     HomePage,
