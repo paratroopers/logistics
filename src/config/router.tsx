@@ -12,7 +12,7 @@ import {
     MemberConsigneePage,
     MemberWelcomePage,
     UserRegisterPage
-} from '../page/index';
+} from '../page';
 import {
     MemberPage as MobileMemberPage,
     MemberDetailPage,

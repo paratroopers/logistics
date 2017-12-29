@@ -1,13 +1,13 @@
 import {NaDemoPage} from "./demo/na-demo-page";
-import {HomePage} from "./index/home-page";
-import MemberPage from "./index/member-page";
-import {CostPage} from "./index/cost-page";
-import {CompanyPage} from "./index/company-page";
-import {MemberConsigneePage} from "./index/member/member-consignee-page";
-import {MemberWelcomePage} from "./index/member/member-welcome-page";
+import {HomePage} from "./web/home-page";
+import MemberPage from "./web/member-page";
+import {CostPage} from "./web/cost-page";
+import {CompanyPage} from "./web/company-page";
+import {MemberConsigneePage} from "./web/member/member-consignee-page";
+import {MemberWelcomePage} from "./web/member/member-welcome-page";
 import {NaMobileTabBar} from "./demo/na-mobile-tabbar";
-import UserRegisterPage from "./index/user/user-register-page";
-import UserLoginPage from "./index/user/user-login-page";
+import UserRegisterPage from "./web/user/user-register-page";
+import UserLoginPage from "./web/user/user-login-page";
 import {NaMasterMainPage} from './master/na-mater-main-page';
 
 export {
