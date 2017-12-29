@@ -8,14 +8,17 @@ import {
     CostPage,
     CompanyPage,
     NaMobileTabBar,
-    NaVIPCenterPage,
-    NaVIPConsigneeAddressPage,
-    NaVIPWelcomePage,
-    MbUserCenter,
-    MbUserHelp,
-    MbUserCenterDetail,
+    MemberPage,
+    MemberConsigneePage,
+    MemberWelcomePage,
     RegisterPage
 } from '../page/index';
+import {
+    MemberPage as MobileMemberPage,
+    MemberDetailPage,
+    CustomerServicePage
+} from '../page/mobile/index';
+
 
 const routerConfig = (
     <Router history={hashHistory}>
@@ -25,12 +28,12 @@ const routerConfig = (
             <Route path={PathConfig.CostEstimatePage} component={CostPage}/>
             <Route path={PathConfig.CompanyProfilePage} component={CompanyPage}/>
             <Route path={PathConfig.MobilePage} component={NaMobileTabBar}/>
-            <Route path={MobilePathConfig.UserCenter} component={MbUserCenter}/>
-            <Route path={MobilePathConfig.UserCenterDetail} component={MbUserCenterDetail}/>
-            <Route path={MobilePathConfig.UserHelper} component={MbUserHelp}/>
-            <Route path={PathConfig.VIPCenterPage} component={NaVIPCenterPage}>
-                <IndexRoute component={NaVIPWelcomePage}></IndexRoute>
-                <Route path={PathConfig.VIPConsigneeAddressPage} component={NaVIPConsigneeAddressPage}/>
+            <Route path={MobilePathConfig.UserCenter} component={MobileMemberPage}/>
+            <Route path={MobilePathConfig.UserCenterDetail} component={MemberDetailPage}/>
+            <Route path={MobilePathConfig.UserHelper} component={CustomerServicePage}/>
+            <Route path={PathConfig.VIPCenterPage} component={MemberPage}>
+                <IndexRoute component={MemberWelcomePage}></IndexRoute>
+                <Route path={PathConfig.VIPConsigneeAddressPage} component={MemberConsigneePage}/>
             </Route>
         </Route>
         <Route path={PathConfig.LoginPage} component={LoginFormPage}/>

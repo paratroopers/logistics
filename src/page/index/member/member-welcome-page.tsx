@@ -3,14 +3,14 @@ import {Component} from "react";
 import {withRouter} from "react-router";
 import {Row, Col} from "antd";
 
-interface NaVIPWelcomePageProps {
+interface MemberWelcomePageProps {
 }
 
-interface NaVIPWelcomePageStates {
+interface MemberWelcomePageStates {
 }
 
 @withRouter
-export class NaVIPWelcomePage extends Component<NaVIPWelcomePageProps, NaVIPWelcomePageStates> {
+export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberWelcomePageStates> {
     constructor(props, context) {
         super(props, context);
     }

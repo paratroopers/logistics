@@ -14,16 +14,16 @@ import {PathConfig} from '../../config/pathconfig';
 import {Cookies} from '../../util/cookie';
 import {MobileNavTreeAction} from '../../actions/index';
 
-interface NaVIPCenterPageProps {
+interface MemberPageProps {
     showNav?: boolean;
 }
 
-interface NaVIPCenterPageStates {
+interface NMemberPageStates {
     collapsed: boolean;
 }
 
 @withRouter
-class NaVIPCenterPage extends Component<NaVIPCenterPageProps, NaVIPCenterPageStates> {
+class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
     constructor(props, context) {
         super(props, context)
         this.state = {
@@ -76,4 +76,4 @@ const mapStateToProps = (state) => {
         showNav: state.nav.showModal
     }
 }
-export default connect(mapStateToProps)(NaVIPCenterPage);
+export default connect(mapStateToProps)(MemberPage);

@@ -2,14 +2,14 @@ import * as React from 'react';
 import {withRouter} from 'react-router';
 import {Layout, Row, Col} from 'antd';
 
-interface UserHelpProps {
+interface CustomerServicePageProps {
 }
 
-interface UserHelpStates {
+interface CustomerServicePageStates {
 }
 
 @withRouter
-export class MbUserHelp extends React.Component<UserHelpProps, UserHelpStates> {
+export class CustomerServicePage extends React.Component<CustomerServicePageProps, CustomerServicePageStates> {
 
     render() {
         return <Layout className="user-help-layout">

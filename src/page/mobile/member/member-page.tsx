@@ -2,21 +2,21 @@ import * as React from 'react';
 import {withRouter} from 'react-router';
 import {List, Badge} from 'antd-mobile';
 import {hashHistory} from 'react-router';
-import {NaGlobal} from '../../util/common';
-import MobileNavTree from '../../config/mobile-navconfig';
-import {MobileNavTreeAction} from '../../actions/index';
-import {MobilePathConfig, PathConfig} from '../../config/pathconfig';
-import {Cookies} from '../../util/cookie';
+import {NaGlobal} from '../../../util/common';
+import MobileNavTree from '../../../config/mobile-navconfig';
+import {MobileNavTreeAction} from '../../../actions/index';
+import {MobilePathConfig, PathConfig} from '../../../config/pathconfig';
+import {Cookies} from '../../../util/cookie';
 
-interface MbUserCenterProps {
+interface MemberPageProps {
 }
 
-interface MbUserCenterStates {
+interface MemberPageStates {
 }
 
 
 @withRouter
-export class MbUserCenter extends React.Component<MbUserCenterProps, MbUserCenterStates> {
+export class MemberPage extends React.Component<MemberPageProps, MemberPageStates> {
     constructor(props, context) {
         super(props, context)
     }

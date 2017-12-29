@@ -2,18 +2,18 @@ import * as React from 'react';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux'
 import {Grid, Carousel} from 'antd-mobile';
-import {NaGlobal} from '../../util/common';
+import {NaGlobal} from '../../../util/common';
 
 
-interface MbUserCenterDetailProps {
+interface MemberDetailPageProps {
     data?: any;
 }
 
-interface MbUserCenterDetailStates {
+interface MemberDetailPageStates {
 }
 
 @withRouter
-class MbUserCenterDetail extends React.Component<MbUserCenterDetailProps, MbUserCenterDetailStates> {
+class MemberDetailPage extends React.Component<MemberDetailPageProps, MemberDetailPageStates> {
 
     renderGridItem() {
         return this.props.data.map(item => {
@@ -63,4 +63,4 @@ const mapStateToProps = (state) => {
         data: state.nav.data
     }
 }
-export default connect(mapStateToProps)(MbUserCenterDetail);
+export default connect(mapStateToProps)(MemberDetailPage);
