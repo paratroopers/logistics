@@ -8,13 +8,12 @@ import {PathConfig} from "../../../config/pathconfig";
 import {connect} from "react-redux";
 import {Cookies} from '../../../util/cookie';
 import {isBoolean, isNullOrUndefined} from "util";
+import {HeaderLogo} from './header-logo';
 
 interface HeaderProps {
     /* na-header 同级样式*/
     className?: string;
     logo?: string | React.ReactNode;
-    /* logo点击事件*/
-    onClickLogo?: () => void;
     /* Menu Theme*/
     menuTheme?: "light" | "dark";
     /* 语言选项发生改变*/
@@ -241,17 +240,10 @@ class Header extends Component<HeaderProps, HeaderStates> {
                 key={PathConfig.VIPCenterPage}>{formatMessage({id: CommonLocale.HeaderMenuVIPCenter})}</Menu.Item>
         </Menu>
         return <Dropdown overlay={menu} placement="bottomRight" trigger={['click']}>
-            <Row type="flex" justify="start" align="middle" style={{cursor:"pointer"}}>
-                <Icon type="bars" style={{marginRight:4,fontSize:19}}/>菜单
+            <Row type="flex" justify="start" align="middle" style={{cursor: "pointer"}}>
+                <Icon type="bars" style={{marginRight: 4, fontSize: 19}}/>菜单
             </Row>
         </Dropdown>
-    }
-
-    onClickLogo() {
-        const topThis = this;
-        const {props: {onClickLogo}} = topThis;
-        if (onClickLogo)
-            onClickLogo();
     }
 
     render() {
@@ -259,11 +251,7 @@ class Header extends Component<HeaderProps, HeaderStates> {
         const {props: {className, logo}} = topThis;
         return <Row type="flex" className={className ? className + " na-header" : "na-header"}>
             <Col>
-                <a className="logo" onClick={topThis.onClickLogo.bind(this)}>
-                    {typeof logo === "string" ? <img onClick={() => {
-                        hashHistory.push(PathConfig.HomePage);
-                    }} src={logo}></img> : logo}
-                </a>
+                <HeaderLogo></HeaderLogo>
             </Col>
             <Col style={{width: 'calc(100% - 220px)'}}>
                 <Row type="flex" align="middle">
