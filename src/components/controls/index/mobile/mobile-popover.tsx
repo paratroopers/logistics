@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {hashHistory} from 'react-router';
 import {Popover, Icon, Modal} from 'antd-mobile';
-import {NaContext} from '../../../util/common';
-import {Cookies} from '../../../util/cookie';
-import {PathConfig} from '../../../config/pathconfig';
-import {MobileNavTreeAction} from '../../../actions/index';
+import {NaContext} from '../../../../util/common';
+import {Cookies} from '../../../../util/cookie';
+import {PathConfig} from '../../../../config/pathconfig';
+import {MobileNavTreeAction} from '../../../../actions/index';
 
 interface MobilePopoverProps {
     visible?: boolean;

@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 import {Cookies} from '../../../util/cookie';
 import {isBoolean, isNullOrUndefined} from "util";
 import {HeaderLogo} from './header-logo';
+import {HeaderNavigation, NavigationType} from './header-navigation';
 
 interface HeaderProps {
     /* na-header 同级样式*/
@@ -70,48 +71,6 @@ class Header extends Component<HeaderProps, HeaderStates> {
             default:
                 break;
         }
-    }
-
-    onClickNavigation({item, key, keyPath}) {
-        const topThis = this;
-        const {state: {isLogin}} = topThis;
-        switch (key) {
-            case PathConfig.VIPCenterPage:
-                if (isLogin === true) {
-                    hashHistory.push({pathname: PathConfig.VIPCenterPage});
-                } else {
-                    hashHistory.push({pathname: PathConfig.LoginPage});
-                }
-                break;
-            default:
-                hashHistory.push({pathname: key});
-                break;
-        }
-    }
-
-    /* 导航*/
-    renderNavigation() {
-        const topThis = this;
-        const {props: {menuTheme}} = topThis;
-        const {formatMessage} = NaGlobal.intl;
-
-        //Menu style背景透明 background: transparent;
-        return <Row type="flex" justify="end">
-            <Menu theme={menuTheme ? menuTheme : "dark"}
-                  mode="horizontal"
-                  defaultSelectedKeys={['1']}
-                  style={{lineHeight: '78px', height: 78, fontSize: 16}}
-                  onClick={topThis.onClickNavigation.bind(this)}
-            >
-                <Menu.Item key={PathConfig.HomePage}>{formatMessage({id: CommonLocale.HeaderMenuHome})}</Menu.Item>
-                <Menu.Item
-                    key={PathConfig.CostEstimatePage}>{formatMessage({id: CommonLocale.HeaderMenuCostEstimate})}</Menu.Item>
-                <Menu.Item
-                    key={PathConfig.CompanyProfilePage}>{formatMessage({id: CommonLocale.HeaderMenuCompanyProfile})}</Menu.Item>
-                <Menu.Item
-                    key={PathConfig.VIPCenterPage}>{formatMessage({id: CommonLocale.HeaderMenuVIPCenter})}</Menu.Item>
-            </Menu>
-        </Row>;
     }
 
     renderLanguageSelect() {
@@ -225,30 +184,9 @@ class Header extends Component<HeaderProps, HeaderStates> {
         </Row>;
     }
 
-    /** 按钮型导航*/
-    renderButtonNavigation() {
-        const topThis = this;
-        const {formatMessage} = NaGlobal.intl;
-        const menu = <Menu onClick={topThis.onClickNavigation.bind(this)}
-        >
-            <Menu.Item key={PathConfig.HomePage}>{formatMessage({id: CommonLocale.HeaderMenuHome})}</Menu.Item>
-            <Menu.Item
-                key={PathConfig.CostEstimatePage}>{formatMessage({id: CommonLocale.HeaderMenuCostEstimate})}</Menu.Item>
-            <Menu.Item
-                key={PathConfig.CompanyProfilePage}>{formatMessage({id: CommonLocale.HeaderMenuCompanyProfile})}</Menu.Item>
-            <Menu.Item
-                key={PathConfig.VIPCenterPage}>{formatMessage({id: CommonLocale.HeaderMenuVIPCenter})}</Menu.Item>
-        </Menu>
-        return <Dropdown overlay={menu} placement="bottomRight" trigger={['click']}>
-            <Row type="flex" justify="start" align="middle" style={{cursor: "pointer"}}>
-                <Icon type="bars" style={{marginRight: 4, fontSize: 19}}/>菜单
-            </Row>
-        </Dropdown>
-    }
-
     render() {
         const topThis = this;
-        const {props: {className, logo}} = topThis;
+        const {props: {className, menuTheme}, state: {isLogin}} = topThis;
         return <Row type="flex" className={className ? className + " na-header" : "na-header"}>
             <Col>
                 <HeaderLogo></HeaderLogo>
@@ -256,7 +194,8 @@ class Header extends Component<HeaderProps, HeaderStates> {
             <Col style={{width: 'calc(100% - 220px)'}}>
                 <Row type="flex" align="middle">
                     <Col xs={0} sm={0} md={16} lg={16} xl={16}>
-                        {topThis.renderNavigation()}
+                        <HeaderNavigation type={NavigationType.Default} theme={menuTheme}
+                                          member={isLogin}></HeaderNavigation>
                     </Col>
                     <Col xs={0} sm={0} md={8} lg={8} xl={8}>
                         {topThis.renderTool()}

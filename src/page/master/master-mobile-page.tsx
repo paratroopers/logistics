@@ -7,7 +7,7 @@ import {Icon as WebIcon, Layout} from 'antd';
 import {NaGlobal} from '../../util/common';
 import {MobileSelectTabAction, MobileNavTreeAction} from '../../actions/index';
 import {PathConfig, MobilePathConfig} from '../../config/pathconfig';
-import {MobilePopover} from '../../components/controls/index/mobile-popover';
+import {MobilePopover} from '../../components/controls/index/mobile/mobile-popover';
 import {NaContext} from '../../util/common';
 
 interface MasterMobilePageProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
