@@ -3,7 +3,7 @@ import * as Mock from "mockjs";
 import * as moment from "moment";
 import {NaRequestParam, NaResponse, NaGlobal, NaConstants, NaContext} from './common';
 import {CommonLocale} from "../locales/localeid";
-import {NaNotification} from "../components/controls/na-notification";
+import {Notification} from "../components/controls/index/notification";
 import {message} from 'antd';
 
 export class Request<TRequest, TResponse extends NaResponse> {
@@ -74,7 +74,7 @@ export class Request<TRequest, TResponse extends NaResponse> {
                 .end(function (error, response: request.Response): void {
                     if (!response) {
                         if (!param.IgnoreError) {
-                            NaNotification.error({
+                            Notification.error({
                                 message: NaGlobal.intl.formatMessage({id: CommonLocale.Error}),
                                 description: NaGlobal.intl.formatMessage({id: CommonLocale.ResponseError})
                             },);

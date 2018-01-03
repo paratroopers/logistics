@@ -7,7 +7,7 @@ import {Icon as WebIcon, Layout} from 'antd';
 import {NaGlobal} from '../../util/common';
 import {MobileSelectTabAction, MobileNavTreeAction} from '../../actions/index';
 import {PathConfig, MobilePathConfig} from '../../config/pathconfig';
-import {NaMobileNavbarPopover} from '../../components/controls/na-mobile-navbar-popover';
+import {MobilePopover} from '../../components/controls/index/mobile-popover';
 import {NaContext} from '../../util/common';
 
 interface MasterMobilePageProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
@@ -89,7 +89,7 @@ class MasterMobilePage extends React.Component<MasterMobilePageProps, MasterMobi
     }
 
     renderHeaderRight() {
-        return <NaMobileNavbarPopover className="right-button"></NaMobileNavbarPopover>;
+        return <MobilePopover className="right-button"></MobilePopover>;
     }
 
     renderHeaderLeft() {
@@ -121,13 +121,14 @@ class MasterMobilePage extends React.Component<MasterMobilePageProps, MasterMobi
                         mode="light"
                         rightContent={this.renderHeaderRight()}>
                         <a className="left-icon"><img onClick={() => {
-                                                          hashHistory.push(PathConfig.HomePage)
-                                                      }}
+                            hashHistory.push(PathConfig.HomePage)
+                        }}
                                                       src="http://www.famliytree.cn/icon/logo_mobile.png"/></a>
                     </NavBar>
                     <div className={'a'}></div>
                 </Header>
-                <Content className="mobile-page-content" style={{minHeight: _siderHeight, marginTop: navHeight, marginBottom: tabHeight}}>
+                <Content className="mobile-page-content"
+                         style={{minHeight: _siderHeight, marginTop: navHeight, marginBottom: tabHeight}}>
                     {children}
                 </Content>
                 <Footer className="mobile-page-footer fixed" style={{top: _tabHeight}}>

@@ -2,7 +2,7 @@ import {SagaMiddleware} from "redux-saga";
 import {Cookies} from "./cookie";
 import {Store} from "redux";
 import {CommonLocale} from "../locales/localeid";
-import {NaNotification} from "../components/controls/na-notification";
+import {Notification} from "../components/controls/index/notification";
 
 export interface NaBase {
 }
@@ -202,7 +202,7 @@ export class NaContext {
     /** 返回系统Status*/
     static OpenMessage(Status:number){
         const messageId = NaConstants.CommonServerStatusLocale + Status;
-        NaNotification.error({
+        Notification.error({
             message: NaGlobal.intl.formatMessage({id: CommonLocale.Error}),
             description: NaGlobal.intl.formatMessage({id: messageId})
         },);

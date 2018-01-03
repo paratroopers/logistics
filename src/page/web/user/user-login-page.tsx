@@ -10,7 +10,6 @@ import {LoginRequest} from '../../../api/model/request/login-request';
 import {LoginApi} from '../../../api/login';
 import {Cookies} from '../../../util/cookie';
 import {NaConstants,NaContext} from '../../../util/common';
-import {NaNotification} from '../../../components/controls/na-notification';
 
 const {Header, Content} = Layout;
 

@@ -9,9 +9,9 @@ import {NaGlobal, NaResponse, NaContext} from '../../../util/common';
 import {connect} from "react-redux";
 import {WebAction} from "../../../actions/index";
 const {TabPane} = Tabs;
-import PhoneRegisterForm from "../../../components/controls/na-phone-register-form";
-import MailRegisterForm from "../../../components/controls/na-mail-register-form";
-import {NaNotification} from "../../../components/controls/na-notification";
+import UserRegisterEmail from "../../../components/controls/user/user-register-email";
+import UserRegisterPhone from "../../../components/controls/user/user-register-phone";
+import {Notification} from "../../../components/controls/index/notification";
 import {RegisterAPI}from "../../../api/common-api";
 import {GetCodeRequest, RegisterRequest, AccountValidateRequest} from "../../../api/model/request/common-request";
 const FormItem = Form.Item;
@@ -102,7 +102,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                         topThis.phoneFromComponent.onDownCode();
                         RegisterAPI.GetCode(request).then((data: NaResponse) => {
                             if (data.Data === true) {
-                                NaNotification.success({
+                                Notification.success({
                                     message: 'Tip',
                                     description: '验证码发送成功!'
                                 });
@@ -125,7 +125,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
 
                         RegisterAPI.GetCode(request).then((data: NaResponse) => {
                             if (data.Data === true) {
-                                NaNotification.success({
+                                Notification.success({
                                     message: 'Tip',
                                     description: '验证码发送成功!'
                                 });
@@ -154,7 +154,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
 
                     /** 是否勾选法律声明*/
                     if (!isCheckBox) {
-                        NaNotification.warning({
+                        Notification.warning({
                             message: '提示',
                             description: '请勾选同意法律声明!'
                         });
@@ -168,7 +168,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                         }
                         RegisterAPI.Register(request).then((data: NaResponse) => {
                             if (data.Data === true) {
-                                NaNotification.success({
+                                Notification.success({
                                     message: 'Tip',
                                     description: '注册成功!'
                                 });
@@ -184,7 +184,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                 topThis.mailFromComponent.props.form.validateFields({}, function (err, values) {
                     /** 是否勾选法律声明*/
                     if (!isCheckBox) {
-                        NaNotification.warning({
+                        Notification.warning({
                             message: '提示',
                             description: '请勾选同意法律声明!'
                         });
@@ -198,7 +198,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                         }
                         RegisterAPI.Register(request).then((data: NaResponse) => {
                             if (data.Data === true) {
-                                NaNotification.success({
+                                Notification.success({
                                     message: 'Tip',
                                     description: '注册成功!'
                                 });
@@ -325,16 +325,16 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                                       {/*}*/}
                                   }}>
                                 <TabPane tab="手机注册" key={RegisterEnum.phone.toString()}>
-                                    <PhoneRegisterForm
+                                    <UserRegisterPhone
                                         validatorAccount={topThis.validatorAccount.bind(this)}
                                         onClickCode={topThis.onClickCode.bind(this)}
-                                        wrappedComponentRef={(inst) => topThis.phoneFromComponent = inst}></PhoneRegisterForm>
+                                        wrappedComponentRef={(inst) => topThis.phoneFromComponent = inst}></UserRegisterPhone>
                                 </TabPane>
                                 <TabPane tab="邮箱注册" key={RegisterEnum.mail.toString()}>
-                                    <MailRegisterForm
+                                    <UserRegisterEmail
                                         validatorAccount={topThis.validatorAccount.bind(this)}
                                         onClickCode={topThis.onClickCode.bind(this)}
-                                        wrappedComponentRef={(inst) => topThis.mailFromComponent = inst}></MailRegisterForm>
+                                        wrappedComponentRef={(inst) => topThis.mailFromComponent = inst}></UserRegisterEmail>
                                 </TabPane>
                             </Tabs>
                         </Row>}

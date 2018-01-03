@@ -2,16 +2,14 @@ import * as React from 'react';
 import {hashHistory, withRouter} from 'react-router';
 import {InjectedIntlProps} from "react-intl";
 import {Button, Row, Col, Form, InputNumber, Input} from 'antd';
-import {PathConfig} from '../../config/pathconfig';
+import {PathConfig} from '../../../config/pathconfig';
 import {FormComponentProps} from 'antd/lib/form/Form';
-import {NaCostCountry} from './na-cost-country';
-import {CostModal} from '../../api/model/quotation';
-import {QuotationApi} from '../../api/quotation';
-import {NaToast} from '../../components/mobile-controls/na-toast';
-import {NaUtil} from '../../util/util';
+import {CostCountry} from './cost-country';
+import {CostModal} from '../../../api/model/quotation';
+import {QuotationApi} from '../../../api/quotation';
 
 
-interface HomeCostProps extends FormComponentProps, ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
+interface CostProps extends FormComponentProps, ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
     className?: string;
     style?: any;
     isHeard?: boolean;
@@ -20,12 +18,12 @@ interface HomeCostProps extends FormComponentProps, ReactRouter.RouteComponentPr
     onClick?: (v) => void;
 }
 
-interface HomeCostStates {
+interface CostStates {
     loading?: boolean;
 }
 
 @withRouter
-class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
+class Cost extends React.Component<CostProps, CostStates> {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -113,8 +111,8 @@ class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
                     <Form.Item>
                         {getFieldDecorator('country', {
                             rules: [{required: true, message: '请填写收货国家!'}]
-                        })(<NaCostCountry searchName={getFieldValue('searchName')}
-                                          onChange={(v, name) => this.onCountryChange(v, name)}></NaCostCountry>)}
+                        })(<CostCountry searchName={getFieldValue('searchName')}
+                                          onChange={(v, name) => this.onCountryChange(v, name)}></CostCountry>)}
                     </Form.Item>
                     <Form.Item>
                         {getFieldDecorator('weight', {
@@ -164,6 +162,4 @@ class HomeCostForm extends React.Component<HomeCostProps, HomeCostStates> {
         </Row>;
     }
 }
-
-const CostQuery = Form.create<any>()(HomeCostForm);
-export default CostQuery;
+export default Form.create<any>()(Cost);

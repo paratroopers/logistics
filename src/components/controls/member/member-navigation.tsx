@@ -1,21 +1,21 @@
 import * as React from 'react';
 import {Menu, Icon} from 'antd';
 import {hashHistory} from 'react-router';
-import {NaGlobal} from '../../util/common';
-import NavTree from '../../config/navconfig';
+import {NaGlobal} from '../../../util/common';
+import NavTree from '../../../config/navconfig';
 
 
 const {SubMenu} = Menu;
 
-interface NaVIPNavigationProps {
+interface MemberNavigationProps {
     style?: any ;
 }
 
-interface NaVIPNavigationStates {
+interface MemberNavigationStates {
 
 }
 
-export class NaVIPNavigation extends React.Component<NaVIPNavigationProps, NaVIPNavigationStates> {
+export class MemberNavigation extends React.Component<MemberNavigationProps, MemberNavigationStates> {
     constructor(props, context) {
         super(props, context);
     }

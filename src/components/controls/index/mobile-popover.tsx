@@ -1,22 +1,22 @@
 import * as React from 'react';
 import {hashHistory} from 'react-router';
 import {Popover, Icon, Modal} from 'antd-mobile';
-import {NaContext} from '../../util/common';
-import {Cookies} from '../../util/cookie';
-import {PathConfig} from '../../config/pathconfig';
-import {MobileNavTreeAction} from '../../actions/index';
+import {NaContext} from '../../../util/common';
+import {Cookies} from '../../../util/cookie';
+import {PathConfig} from '../../../config/pathconfig';
+import {MobileNavTreeAction} from '../../../actions/index';
 
-interface NaMobileNavbarPopoverProps {
+interface MobilePopoverProps {
     visible?: boolean;
     className?: string;
 }
 
-interface NaMobileNavbarPopoverStates {
+interface MobilePopoverStates {
     visible?: boolean;
     selected?: string;
 }
 
-export class NaMobileNavbarPopover extends React.Component<NaMobileNavbarPopoverProps, NaMobileNavbarPopoverStates> {
+export class MobilePopover extends React.Component<MobilePopoverProps, MobilePopoverStates> {
     constructor(props, context) {
         super(props, context)
         this.state = {

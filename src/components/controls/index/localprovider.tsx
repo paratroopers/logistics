@@ -2,22 +2,22 @@ import * as React from 'react'
 import {Component} from 'react'
 import {LocaleProvider} from 'antd';
 import {connect} from "react-redux";
-import {AppLocaleStatic} from "../../api/model/common-model";
-import {getLocale} from "../../locales";
+import {AppLocaleStatic} from "../../../api/model/common-model";
+import {getLocale} from "../../../locales";
 import {IntlProvider, injectIntl} from 'react-intl';
-import {NaGlobal} from "../../util/common";
+import {NaGlobal} from "../../../util/common";
 
-export interface NaLocalProviderProps {
+export interface LocalProviderProps {
     localeKey?: string;
     onLoaded?: (appLocale?: AppLocaleStatic, theme?: string) => Promise<any>;
 }
 
-export interface NaLocalProviderStates {
+export interface LocalProviderStates {
     localeKey?: string;
     appLocale?: AppLocaleStatic;
 }
 
-class NaLocalProvider extends Component<NaLocalProviderProps, NaLocalProviderStates> {
+class LocalProvider extends Component<LocalProviderProps, LocalProviderStates> {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -78,4 +78,4 @@ const mapStateToProps = (state) => {
         localeKey: state.web.languageKey
     }
 }
-export default connect(mapStateToProps)(NaLocalProvider);
+export default connect(mapStateToProps)(LocalProvider);

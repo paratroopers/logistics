@@ -3,8 +3,9 @@ import {Layout} from "antd";
 import {NaGlobal} from '../../util/common';
 import {WebAction} from "../../actions/index";
 import {connect} from "react-redux";
-import NaHeader from "../../components/controls/na-header";
-const {Header, Content, Footer} = Layout;
+import Header from "../../components/controls/index/header";
+
+const {Content, Footer} = Layout;
 import MotionFooterControl from "../../components/motion/motion-footer";
 
 interface MasterWebPageProps {
@@ -42,7 +43,7 @@ class MasterWebPage extends React.Component<MasterWebPageProps, MasterWebPageSta
         const {props: {children}, state: {localeKey}} = this;
 
         return <Layout>
-            <Header style={{
+            <Layout.Header style={{
                 position: 'fixed',
                 width: '100%',
                 height: 80,
@@ -51,13 +52,13 @@ class MasterWebPage extends React.Component<MasterWebPageProps, MasterWebPageSta
                 borderBottom: "1px solid #c2c2c2"
             }}>
                 <div className="content-template">
-                    <NaHeader
-                    menuTheme={"light"}
-                    logo={logo}
-                    defaultLanguageKey={localeKey}
-                    onChangeLanguage={topThis.onChangeLanguage.bind(this)}></NaHeader>
+                    <Header
+                        menuTheme={"light"}
+                        logo={logo}
+                        defaultLanguageKey={localeKey}
+                        onChangeLanguage={topThis.onChangeLanguage.bind(this)}></Header>
                 </div>
-            </Header>
+            </Layout.Header>
             <Content style={{background: "#FFF", marginTop: 80}}>
                 {children}
             </Content>

@@ -2,14 +2,14 @@ import * as React from "react";
 import {Component} from "react";
 import {hashHistory} from 'react-router';
 import {Row, Col, Menu, Select, Popover, Avatar, Icon, Dropdown} from 'antd';
-import {NaGlobal, NaContext} from "../../util/common";
-import {CommonLocale} from "../../locales/localeid";
-import {PathConfig} from "../../config/pathconfig";
+import {NaGlobal, NaContext} from "../../../util/common";
+import {CommonLocale} from "../../../locales/localeid";
+import {PathConfig} from "../../../config/pathconfig";
 import {connect} from "react-redux";
-import {Cookies} from '../../util/cookie';
+import {Cookies} from '../../../util/cookie';
 import {isBoolean, isNullOrUndefined} from "util";
 
-interface NaHeaderProps {
+interface HeaderProps {
     /* na-header 同级样式*/
     className?: string;
     logo?: string | React.ReactNode;
@@ -25,12 +25,12 @@ interface NaHeaderProps {
     isLogin?: boolean;
 }
 
-interface NaHeaderStates {
+interface HeaderStates {
     /** 是否已经登录*/
     isLogin: boolean;
 }
 
-class NaHeader extends Component<NaHeaderProps, NaHeaderStates> {
+class Header extends Component<HeaderProps, HeaderStates> {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -284,4 +284,4 @@ const mapStateToProps = (state) => {
         isLogin: state.web.isLogin
     }
 }
-export default connect(mapStateToProps)(NaHeader);
+export default connect(mapStateToProps)(Header);

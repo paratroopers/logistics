@@ -23,7 +23,7 @@ export interface ConfigProps {
     getContainer?: () => HTMLElement;
 }
 
-export class NaNotification {
+export class Notification {
     static info(args : ArgsProps) : void {
         return notification.info(args as any);
     };

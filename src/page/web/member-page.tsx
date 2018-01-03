@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 import {Layout} from "antd";
 
 const {Content, Sider} = Layout;
-import {NaVIPNavigation} from "../../components/controls/na-vip-navigation";
+import {MemberNavigation} from "../../components/controls/member/member-navigation";
 import {NaUtil} from "../../util/util";
 import {NaConstants} from '../../util/common';
 import {ScreenModeEnum} from "../../api/model/common-model";
@@ -62,7 +62,7 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
                    className='na-side'
                    {...sider}
                    collapsed={collapsed}>
-                <NaVIPNavigation></NaVIPNavigation>
+                <MemberNavigation></MemberNavigation>
             </Sider>
             <Content style={{margin: 16, padding: 16, backgroundColor: '#FFF'}}>
                 {children}

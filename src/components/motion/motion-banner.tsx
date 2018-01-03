@@ -9,7 +9,7 @@ import {isNullOrUndefined} from "util";
 
 const OverPack = ScrollAnim.OverPack;
 import {CommonLocale} from '../../locales/localeid';
-import NaCost from '../../components/controls/na-cost';
+import Cost from '../../components/controls/cost/cost';
 import {NaGlobal} from '../../util/common';
 import {InjectedIntlProps} from "react-intl";
 
@@ -36,7 +36,7 @@ export default class MotionBannerControl extends Component<MotionBannerControlPr
                       className={isNullOrUndefined(className) ? "motion-banner" : className}>
                 <QueueAnim className={`${isNullOrUndefined(className) ? "motion-banner" : className}-wrapper-right`}
                            key="from">
-                    {<NaCost></NaCost>}
+                    {<Cost></Cost>}
                 </QueueAnim>
                 <QueueAnim delay={200}
                            type="left"

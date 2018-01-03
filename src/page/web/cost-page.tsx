@@ -3,7 +3,7 @@ import {Component} from "react";
 import {withRouter} from "react-router";
 import {InjectedIntlProps} from "react-intl";
 import {Layout, Row, Col, Input, Button, Tag, Table, Modal as WebModal, Icon} from "antd";
-import CostQuery from "../../components/controls/na-cost";
+import Cost from "../../components/controls/cost/cost";
 import {CostTableModal} from '../../api/model/quotation';
 
 const {Content} = Layout;
@@ -211,9 +211,9 @@ export class CostPage extends Component<CostPageProps, CostPageStates> {
         const {isMobile} = topThis;
         return <Row type="flex" justify="space-between">
             <Col xs={24} sm={24} md={24} lg={10} xl={10} style={{marginBottom: '30px'}}>
-                <CostQuery onClick={v => {
+                <Cost onClick={v => {
                     this.setState({data: v});
-                }}></CostQuery>
+                }}></Cost>
                 <Row>
                     <Col style={{
                         border: '1px solid #e65922',

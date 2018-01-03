@@ -4,7 +4,7 @@ import {ReducersMapObject, createStore, combineReducers} from "redux";
 import {Provider} from "react-redux";
 import {getLocale} from "../../locales";
 import {AppLocaleStatic, ScreenModeEnum} from "../../api/model/common-model";
-import NaLocalProvider from '../../components/controls/na-localprovider';
+import LocalProvider from '../../components/controls/index/localprovider';
 import {NaGlobal} from "../../util/common";
 import {NaUtil} from "../../util/util";
 import {message} from 'antd';
@@ -38,7 +38,7 @@ class MasterPage extends Component<MasterPageProps, MasterPageStates> {
         const topThis = this;
         const {props: {children}} = topThis;
         return <Provider store={NaGlobal.store}>
-            <NaLocalProvider>{children}</NaLocalProvider>
+            <LocalProvider>{children}</LocalProvider>
         </Provider>;
     }
 }

@@ -2,17 +2,17 @@ import * as React from 'react';
 import {Select, Spin} from 'antd';
 import {InjectedIntlProps} from "react-intl";
 import {withRouter} from 'react-router';
-import {CountryRequest} from '../../api/model/request/quotation-request';
-import {CountryModel} from '../../api/model/quotation';
-import {QuotationApi} from '../../api/quotation';
+import {CountryRequest} from '../../../api/model/request/quotation-request';
+import {CountryModel} from '../../../api/model/quotation';
+import {QuotationApi} from '../../../api/quotation';
 
-export interface NaCostCountryProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
+export interface CostCountryProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
     onChange?: (v, name) => void;
     value?: any;
     searchName?: string;
 }
 
-export interface NaCostCountryStates {
+export interface CostCountryStates {
     data?: CountryModel[];
     value?: any;
     fetching?: boolean;
@@ -20,7 +20,7 @@ export interface NaCostCountryStates {
 }
 
 @withRouter
-export class NaCostCountry extends React.Component<NaCostCountryProps, NaCostCountryStates> {
+export class CostCountry extends React.Component<CostCountryProps, CostCountryStates> {
     search?: string;
     loadingTime?: number;
 
