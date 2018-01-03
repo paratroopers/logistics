@@ -8,7 +8,7 @@ import {MemberWelcomePage} from "./web/member/member-welcome-page";
 import {NaMobileTabBar} from "./demo/na-mobile-tabbar";
 import UserRegisterPage from "./web/user/user-register-page";
 import UserLoginPage from "./web/user/user-login-page";
-import {NaMasterMainPage} from './master/mater-main-page';
+import {NaMasterMainPage} from './master/master-main-page';
 
 export {
     NaMasterMainPage,

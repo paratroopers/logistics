@@ -122,8 +122,7 @@ class MasterMobilePage extends React.Component<MasterMobilePageProps, MasterMobi
                         rightContent={this.renderHeaderRight()}>
                         <a className="left-icon"><img onClick={() => {
                             hashHistory.push(PathConfig.HomePage)
-                        }}
-                                                      src="http://www.famliytree.cn/icon/logo_mobile.png"/></a>
+                        }}src="http://www.famliytree.cn/icon/logo_mobile.png"/></a>
                     </NavBar>
                     <div className={'a'}></div>
                 </Header>
