@@ -84,7 +84,6 @@ class UserRegisterPhone extends Component<UserRegisterPhoneProps, UserRegisterPh
         })(
             <Select style={{width: 70}}>
                 <SelectOption value="86">+86</SelectOption>
-                <SelectOption value="87">+87</SelectOption>
             </Select>
         );
         return (
