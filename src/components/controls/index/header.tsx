@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 import {Cookies} from '../../../util/cookie';
 import {isBoolean, isNullOrUndefined} from "util";
 import {HeaderLogo} from './header-logo';
+import {HeaderUserimg} from './header-userimg';
 import {HeaderNavigation, NavigationType} from './header-navigation';
 
 interface HeaderProps {
@@ -54,24 +55,6 @@ class Header extends Component<HeaderProps, HeaderStates> {
         }
     }
 
-    /** User setting*/
-    onClickUserMenu({item, key, keyPath}) {
-        const topThis = this;
-        const {state: {isLogin}} = topThis;
-        switch (key) {
-            case "0":
-                hashHistory.push({pathname: PathConfig.VIPCenterPage});
-                break;
-            case "2":
-                NaContext.setMerchantData({isLogin: false});
-                hashHistory.push({pathname: PathConfig.HomePage});
-                topThis.setState({isLogin: false});
-                Cookies.remove("Authorization");
-                break;
-            default:
-                break;
-        }
-    }
 
     renderLanguageSelect() {
         const topThis = this;
@@ -127,45 +110,6 @@ class Header extends Component<HeaderProps, HeaderStates> {
         ]
     }
 
-    renderUserNameContent() {
-        const topThis = this;
-        return <Menu onClick={topThis.onClickUserMenu.bind(this)}>
-            <Menu.Item key="0">
-                <Icon type="user"/>
-                <span>个人中心</span>
-            </Menu.Item>
-            <Menu.Item key="1">
-                <Icon type="setting"/>
-                <span>个人设置</span>
-            </Menu.Item>
-            <Menu.Divider></Menu.Divider>
-            <Menu.Item key="2">
-                <Icon type="poweroff"/>
-                <span>退出</span>
-            </Menu.Item>
-        </Menu>;
-    }
-
-    /** 用户*/
-    renderUser() {
-        const topThis = this;
-        const {state: {isLogin}} = topThis;
-        return isLogin ? <Row className="tool-user">
-            <Col></Col>
-            <Col className="tool-user-right">
-                <Popover placement="bottomRight"
-                         overlayClassName="tool-user-popover"
-                         autoAdjustOverflow={true}
-                         content={topThis.renderUserNameContent()}
-                         trigger="click">
-                    <a className="tool-user-right-name">
-                        <Avatar style={{marginRight: 5}} src="http://www.famliytree.cn/icon/timor.png"/>
-                        Handy
-                    </a>
-                </Popover>
-            </Col>
-        </Row> : null;
-    }
 
     /** 工具*/
     renderTool() {
@@ -180,7 +124,7 @@ class Header extends Component<HeaderProps, HeaderStates> {
                     <span>咨询客服</span>
                 </Popover>
             </Col>
-            <Col>{topThis.renderUser()}</Col>
+            <Col><HeaderUserimg member={this.state.isLogin}></HeaderUserimg></Col>
         </Row>;
     }
 
