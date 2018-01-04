@@ -391,4 +391,9 @@ export class NaUtil {
     static isMobile() {
         return window.innerWidth < 768;
     }
+
+    /** 获取表单错误*/
+    static hasErrors(fieldsError) {
+        return Object.keys(fieldsError).some(field => fieldsError[field]);
+    }
 }

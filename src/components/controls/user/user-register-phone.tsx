@@ -79,13 +79,6 @@ class UserRegisterPhone extends Component<UserRegisterPhoneProps, UserRegisterPh
         const topThis = this;
         const {props: {form: {getFieldDecorator}, onClickCode,validatorAccount}, state: {countDown}} = topThis;
 
-        const prefixSelector = getFieldDecorator('PhonePrefix', {
-            initialValue: '86',
-        })(
-            <Select style={{width: 70}}>
-                <SelectOption value="86">+86</SelectOption>
-            </Select>
-        );
         return (
             <Form className="na-page-register-form">
                 <FormItem hasFeedback>
@@ -112,7 +105,7 @@ class UserRegisterPhone extends Component<UserRegisterPhoneProps, UserRegisterPh
                             }
                         }],
                     })(
-                        <Input addonBefore={prefixSelector}
+                        <Input addonBefore={"+86"}
                                size="large"
                                prefix={<Icon type="mobile" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                placeholder="手机号码"/>
