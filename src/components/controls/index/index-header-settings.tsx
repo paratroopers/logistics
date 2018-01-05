@@ -64,6 +64,7 @@ export class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSet
         </Menu>;
     }
 
+
     render() {
         const topThis = this;
         const {state: {member}} = topThis;
