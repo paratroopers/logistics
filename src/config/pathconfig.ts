@@ -8,7 +8,7 @@ export class PathConfig {
     /* 首页*/
     static HomePage = "/home";
     /* 费用估算*/
-    static CostEstimatePage = "/cost/estimate";
+    static CostEstimatePage = "/quotation/estimate";
     /* 公司简介*/
     static CompanyProfilePage = "/company/profile";
     /* 会员中心*/

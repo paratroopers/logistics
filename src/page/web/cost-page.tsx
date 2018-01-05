@@ -3,7 +3,7 @@ import {Component} from "react";
 import {withRouter} from "react-router";
 import {InjectedIntlProps} from "react-intl";
 import {Layout, Row, Col, Input, Button, Tag, Table, Modal as WebModal, Icon} from "antd";
-import Cost from "../../components/controls/cost/cost";
+import Cost from "../../components/controls/quotation/quotation-user-query";
 import {CostTableModal} from '../../api/model/quotation';
 
 const {Content} = Layout;

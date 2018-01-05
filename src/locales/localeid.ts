@@ -11,7 +11,7 @@ export class CommonLocale {
     /* 头部-导航-首页*/
     static HeaderMenuHome = "common.header.menu.home";
     /* 头部-导航-费用估算*/
-    static HeaderMenuCostEstimate = "common.header.menu.cost.estimate";
+    static HeaderMenuCostEstimate = "common.header.menu.quotation.estimate";
     /* 头部-导航-咨询中心*/
     static HeaderMenuConsultingCenter = "common.header.menu.consulting.center";
     /* 头部-导航-公司简介*/

@@ -4,7 +4,7 @@ import {InjectedIntlProps} from "react-intl";
 import {Button, Row, Col, Form, InputNumber, Input} from 'antd';
 import {PathConfig} from '../../../config/pathconfig';
 import {FormComponentProps} from 'antd/lib/form/Form';
-import {CostCountry} from './cost-country';
+import {CostCountry} from './quotation-country';
 import {CostModal} from '../../../api/model/quotation';
 import {QuotationApi} from '../../../api/quotation';
 

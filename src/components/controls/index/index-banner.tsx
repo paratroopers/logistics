@@ -9,7 +9,7 @@ import {isNullOrUndefined} from "util";
 
 const OverPack = ScrollAnim.OverPack;
 import {CommonLocale} from '../../../locales/localeid';
-import Cost from '../cost/cost';
+import Cost from '../quotation/quotation-user-query';
 import {NaGlobal} from '../../../util/common';
 import {InjectedIntlProps} from "react-intl";
 
