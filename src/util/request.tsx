@@ -1,19 +1,19 @@
 import * as request from "superagent";
 import * as Mock from "mockjs";
 import * as moment from "moment";
-import {NaRequestParam, NaResponse, NaGlobal, NaConstants, Context} from './common';
+import {BaseRequestParam, BaseResponse, NaGlobal, NaConstants, Context} from './common';
 import {CommonLocale} from "../locales/localeid";
 import {Notification} from "../components/controls/common/notification";
 import {message} from 'antd';
 
-export class Request<TRequest, TResponse extends NaResponse> {
+export class Request<TRequest, TResponse extends BaseResponse> {
     /**
      * 默认参数
      *
-     * @type {NaRequestParam < TRequest >}
+     * @type {BaseRequestParam < TRequest >}
      * @memberOf Request
      */
-    defaultParam: NaRequestParam<TRequest> = {
+    defaultParam: BaseRequestParam<TRequest> = {
         Url: '',
         Data: null,
         Querys: null,
@@ -27,12 +27,12 @@ export class Request<TRequest, TResponse extends NaResponse> {
      * 处理Http请求
      *
      * @param {(url : string) => request.SuperAgentRequest} func
-     * @param {NaRequestParam < TRequest >} [param]
+     * @param {BaseRequestParam < TRequest >} [param]
      * @returns
      *
      * @memberOf Request
      */
-    async processResponse(func: (url: string) => request.SuperAgentRequest, param?: NaRequestParam<TRequest>, emptyData?: any) {
+    async processResponse(func: (url: string) => request.SuperAgentRequest, param?: BaseRequestParam<TRequest>, emptyData?: any) {
         //初始化 商户API URL
         if (!param.Url.startsWith("http") && !param.Prefix) {
             param.Prefix = null;
@@ -136,11 +136,11 @@ export class Request<TRequest, TResponse extends NaResponse> {
      * 构造请求数据
      *
      * @param {IArguments} args
-     * @returns {NaRequestParam < TRequest >}
+     * @returns {BaseRequestParam < TRequest >}
      *
      * @memberOf Request
      */
-    buildData(args: IArguments | any[]): NaRequestParam<TRequest> {
+    buildData(args: IArguments | any[]): BaseRequestParam<TRequest> {
 
         if (typeof (args[0]) === "string") {
             return Object.assign({}, this.defaultParam, {

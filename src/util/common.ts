@@ -4,18 +4,18 @@ import {Store} from "redux";
 import {CommonLocale} from "../locales/localeid";
 import {Notification} from "../components/controls/common/notification";
 
-export interface NaBase {
+export interface Base {
 }
 
-export interface NaRequest extends NaBase {
+export interface BaseRequest extends Base {
 }
 
-export interface NaResponse extends NaBase {
+export interface BaseResponse extends Base {
     /**
      * 数据
      *
      * @type {任意类型}
-     * @memberOf NaResponse
+     * @memberOf BaseResponse
      */
     Data?: any;
     /**
@@ -32,7 +32,7 @@ export interface NaResponse extends NaBase {
     TotalCount?: number;
 }
 
-export interface NaRequestParam<T> {
+export interface BaseRequestParam<T> {
     /**
      * URL 请求访问的路径
      *
@@ -63,7 +63,7 @@ export interface NaRequestParam<T> {
      * @type {WObject}
      * @memberOf RequestParam
      */
-    Querys?: NaBase;
+    Querys?: Base;
     /**
      * 访问接口前缀
      *
