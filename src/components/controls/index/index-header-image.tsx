@@ -3,8 +3,8 @@ import BannerAnim, {Element} from 'rc-banner-anim';
 import {Icon} from 'antd';
 import 'rc-banner-anim/assets/index.css';
 import TweenOne from 'rc-tween-one';
-import Cost from '../../components/controls/cost/cost';
-import {NaConstants} from '../../util/common';
+import Cost from '../cost/cost';
+import {NaConstants} from '../../../util/common';
 
 const BgElement = Element.BgElement;
 

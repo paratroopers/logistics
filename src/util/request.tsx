@@ -3,7 +3,7 @@ import * as Mock from "mockjs";
 import * as moment from "moment";
 import {NaRequestParam, NaResponse, NaGlobal, NaConstants, NaContext} from './common';
 import {CommonLocale} from "../locales/localeid";
-import {Notification} from "../components/controls/index/notification";
+import {Notification} from "../components/controls/common/notification";
 import {message} from 'antd';
 
 export class Request<TRequest, TResponse extends NaResponse> {

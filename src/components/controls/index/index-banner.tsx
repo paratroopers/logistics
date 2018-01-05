@@ -8,9 +8,9 @@ import ScrollAnim from 'rc-scroll-anim';
 import {isNullOrUndefined} from "util";
 
 const OverPack = ScrollAnim.OverPack;
-import {CommonLocale} from '../../locales/localeid';
-import Cost from '../../components/controls/cost/cost';
-import {NaGlobal} from '../../util/common';
+import {CommonLocale} from '../../../locales/localeid';
+import Cost from '../cost/cost';
+import {NaGlobal} from '../../../util/common';
 import {InjectedIntlProps} from "react-intl";
 
 interface MotionBannerControlProps extends InjectedIntlProps {

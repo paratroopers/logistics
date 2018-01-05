@@ -1,10 +1,10 @@
 import * as React from "react";
 import {Component} from "react";
 import {withRouter} from "react-router";
-import {MotionHeaderImage} from '../../components/motion/motion-header-image';
-import MotionBannerControl from "../../components/motion/motion-banner";
-import MotionContentAControl from "../../components/motion/motion-content-a";
-import MotionContentBControl from "../../components/motion/motion-content-b";
+import {MotionHeaderImage} from '../../components/controls/index/index-header-image';
+import MotionBannerControl from "../../components/controls/index/index-banner";
+import MotionContentAControl from "../../components/controls/index/index-content-a";
+import MotionContentBControl from "../../components/controls/index/index-content-b";
 
 interface HomePageProps {
 }

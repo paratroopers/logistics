@@ -4,7 +4,7 @@ import {ReducersMapObject, createStore, combineReducers} from "redux";
 import {Provider} from "react-redux";
 import {getLocale} from "../../locales";
 import {AppLocaleStatic, ScreenModeEnum} from "../../api/model/common-model";
-import LocalProvider from '../../components/controls/index/localprovider';
+import LocalProvider from '../../components/controls/common/localprovider';
 import {NaGlobal} from "../../util/common";
 import {NaUtil} from "../../util/util";
 import {message} from 'antd';

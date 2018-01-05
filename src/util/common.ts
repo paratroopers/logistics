@@ -2,7 +2,7 @@ import {SagaMiddleware} from "redux-saga";
 import {Cookies} from "./cookie";
 import {Store} from "redux";
 import {CommonLocale} from "../locales/localeid";
-import {Notification} from "../components/controls/index/notification";
+import {Notification} from "../components/controls/common/notification";
 
 export interface NaBase {
 }

@@ -8,9 +8,9 @@ import {PathConfig} from "../../../config/pathconfig";
 import {connect} from "react-redux";
 import {Cookies} from '../../../util/cookie';
 import {isBoolean, isNullOrUndefined} from "util";
-import {HeaderLogo} from './header-logo';
+import {HeaderLogo} from './index-header-logo';
 import {HeaderUserimg} from './header-userimg';
-import {HeaderNavigation, NavigationType} from './header-navigation';
+import {HeaderNavigation, NavigationType} from './index-header-navigation';
 
 interface HeaderProps {
     /* na-header 同级样式*/

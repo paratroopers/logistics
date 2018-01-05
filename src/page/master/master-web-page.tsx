@@ -3,10 +3,10 @@ import {Layout} from "antd";
 import {NaGlobal} from '../../util/common';
 import {WebAction} from "../../actions/index";
 import {connect} from "react-redux";
-import Header from "../../components/controls/index/header";
+import Header from "../../components/controls/index/index-header";
 
 const {Content, Footer} = Layout;
-import MotionFooterControl from "../../components/motion/motion-footer";
+import MotionFooterControl from "../../components/controls/index/index-footer";
 
 interface MasterWebPageProps {
     localeKey?: string;
