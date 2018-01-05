@@ -1,12 +1,14 @@
 import * as React from 'react';
 import {hashHistory, withRouter} from 'react-router';
 import {InjectedIntlProps} from "react-intl";
-import {Button, Row, Col, Form, InputNumber, Input} from 'antd';
+import {Button, Row, Col, Form, InputNumber, Input, Switch} from 'antd';
 import {PathConfig} from '../../../config/pathconfig';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {CostCountry} from './quotation-country';
 import {CostModal} from '../../../api/model/quotation';
 import {QuotationApi} from '../../../api/quotation';
+import {QuotationUserSwitch} from './quotation-user-switch';
+import {QuotationUserQueryAdvanced} from './quotation-user-query-advanced';
 
 
 interface CostProps extends FormComponentProps, ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
@@ -20,6 +22,7 @@ interface CostProps extends FormComponentProps, ReactRouter.RouteComponentProps<
 
 interface CostStates {
     loading?: boolean;
+    isAdvanced?: boolean;
 }
 
 @withRouter
@@ -27,7 +30,8 @@ class Cost extends React.Component<CostProps, CostStates> {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            loading: false
+            loading: false,
+            isAdvanced: false
         }
     }
 
@@ -89,6 +93,10 @@ class Cost extends React.Component<CostProps, CostStates> {
         })
     }
 
+    onSwitchChange(checked: boolean) {
+        this.setState({isAdvanced: checked});
+    }
+
     render() {
         const topThis = this;
         const {props: {isHeard, isMobile, form: {getFieldDecorator, getFieldValue}}} = topThis;
@@ -112,7 +120,7 @@ class Cost extends React.Component<CostProps, CostStates> {
                         {getFieldDecorator('country', {
                             rules: [{required: true, message: '请填写收货国家!'}]
                         })(<CostCountry searchName={getFieldValue('searchName')}
-                                          onChange={(v, name) => this.onCountryChange(v, name)}></CostCountry>)}
+                                        onChange={(v, name) => this.onCountryChange(v, name)}></CostCountry>)}
                     </Form.Item>
                     <Form.Item>
                         {getFieldDecorator('weight', {
@@ -120,37 +128,11 @@ class Cost extends React.Component<CostProps, CostStates> {
                         })(<InputNumber min={0} style={{width: "100%"}} placeholder="重量（kg）公斤" size="large"/>)}
                     </Form.Item>
                     <Form.Item>
-                        <Row type="flex" justify="center" align="top">
-                            <Col span={7}>
-                                {getFieldDecorator('length', {
-                                    rules: [{required: true, message: '请填写长度!'}],
-                                })(<InputNumber min={0} style={{width: "100%"}} onChange={v => {
-                                    this.onVolumeChange(v)
-                                }} placeholder="长（cm）"
-                                                size="large"/>)}
-                            </Col>
-                            <Col span={7} offset={1}>
-                                {getFieldDecorator('width', {
-                                    rules: [{required: true, message: '请填写宽度!'}],
-                                })(<InputNumber min={0} style={{width: "100%"}} onChange={v => {
-                                    this.onVolumeChange(null, v)
-                                }} placeholder="宽（cm）" size="large"/>)}
-                            </Col>
-                            <Col span={8} offset={1}>
-                                {getFieldDecorator('height', {
-                                    rules: [{required: true, message: '请填写高度!'}],
-                                })(<InputNumber min={0} style={{width: "100%"}} onChange={v => {
-                                    this.onVolumeChange(null, null, v)
-                                }} placeholder="高（cm）" size="large"/>)}
-                            </Col>
-                            <Col span={1}></Col>
-                        </Row>
+                        <QuotationUserSwitch placeholder={'高级查询'} size={'default'} checked={this.state.isAdvanced}
+                                             onChange={this.onSwitchChange.bind(this)}></QuotationUserSwitch>
                     </Form.Item>
-                    <Form.Item>
-                        {getFieldDecorator('volume', {
-                            rules: [{required: true, message: '请填写体积!'}],
-                        })(<Input readOnly={true} placeholder="体积（cm3）" size="large"/>)}
-                    </Form.Item>
+                    <QuotationUserQueryAdvanced visible={this.state.isAdvanced} form={this.props.form}
+                                                onChange={this.onVolumeChange.bind(this)}></QuotationUserQueryAdvanced>
                     <Form.Item>
                         <Row type="flex" justify="center">
                             <Button size="large" loading={this.state.loading} type="primary"
@@ -162,4 +144,5 @@ class Cost extends React.Component<CostProps, CostStates> {
         </Row>;
     }
 }
+
 export default Form.create<any>()(Cost);
