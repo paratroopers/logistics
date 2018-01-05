@@ -9,7 +9,7 @@ import {connect} from "react-redux";
 import {Cookies} from '../../../util/cookie';
 import {isBoolean, isNullOrUndefined} from "util";
 import {HeaderLogo} from './index-header-logo';
-import {HeaderUserimg} from './header-userimg';
+import {HeaderUserimg} from './index-header-settings';
 import {HeaderNavigation, NavigationType} from './index-header-navigation';
 
 interface HeaderProps {
