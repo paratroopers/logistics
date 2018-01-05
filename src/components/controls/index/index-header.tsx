@@ -9,7 +9,7 @@ import {connect} from "react-redux";
 import {Cookies} from '../../../util/cookie';
 import {isBoolean, isNullOrUndefined} from "util";
 import {HeaderLogo} from './index-header-logo';
-import {HeaderUserimg} from './index-header-settings';
+import {HeaderSetting} from './index-header-settings';
 import {HeaderNavigation, NavigationType} from './index-header-navigation';
 
 interface HeaderProps {
@@ -114,6 +114,7 @@ class Header extends Component<HeaderProps, HeaderStates> {
     /** 工具*/
     renderTool() {
         const topThis = this;
+        const {state: {isLogin}} = topThis;
         return <Row className="tool" type="flex" justify="space-between" align="middle"
                     style={{height: 80}}>
             {/*<Col >{topThis.renderLanguageSelect()}</Col>*/}
@@ -124,7 +125,7 @@ class Header extends Component<HeaderProps, HeaderStates> {
                     <span>咨询客服</span>
                 </Popover>
             </Col>
-            <Col><HeaderUserimg member={this.state.isLogin}></HeaderUserimg></Col>
+            <Col><HeaderSetting member={isLogin}></HeaderSetting></Col>
         </Row>;
     }
 
