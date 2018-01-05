@@ -5,7 +5,7 @@ import {PathConfig}from "../../../config/pathconfig";
 import {Layout, Row, Col, Tabs, Button, Checkbox, Select, Icon, Form, Modal} from "antd";
 import {RegisterEnum}from "../../../api/model/common-model";
 const {Header, Content, Footer} = Layout;
-import {NaGlobal, NaResponse, Context} from '../../../util/common';
+import {NaGlobal, BaseResponse, Context} from '../../../util/common';
 import {connect} from "react-redux";
 import {WebAction} from "../../../actions/index";
 const {TabPane} = Tabs;
@@ -76,7 +76,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
             const request: AccountValidateRequest = {
                 user: value
             };
-            RegisterAPI.AccountValidate(request).then((result: NaResponse) => {
+            RegisterAPI.AccountValidate(request).then((result: BaseResponse) => {
                 if (result.Data === true) {
                     callback();
                 } else {
@@ -100,7 +100,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                             type: RegisterEnum.phone.toString()
                         }
                         topThis.phoneFromComponent.onDownCode();
-                        RegisterAPI.GetCode(request).then((data: NaResponse) => {
+                        RegisterAPI.GetCode(request).then((data: BaseResponse) => {
                             if (data.Data === true) {
                                 Notification.success({
                                     message: 'Tip',
@@ -123,7 +123,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                             type: RegisterEnum.mail.toString()
                         }
 
-                        RegisterAPI.GetCode(request).then((data: NaResponse) => {
+                        RegisterAPI.GetCode(request).then((data: BaseResponse) => {
                             if (data.Data === true) {
                                 Notification.success({
                                     message: 'Tip',
@@ -166,7 +166,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                             rePwd: values.NextPassword,
                             code: values.Code
                         }
-                        RegisterAPI.Register(request).then((data: NaResponse) => {
+                        RegisterAPI.Register(request).then((data: BaseResponse) => {
                             if (data.Data === true) {
                                 Notification.success({
                                     message: 'Tip',
@@ -196,7 +196,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                             rePwd: values.NextPassword,
                             code: values.Code
                         }
-                        RegisterAPI.Register(request).then((data: NaResponse) => {
+                        RegisterAPI.Register(request).then((data: BaseResponse) => {
                             if (data.Data === true) {
                                 Notification.success({
                                     message: 'Tip',
