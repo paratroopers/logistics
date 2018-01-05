@@ -49,9 +49,8 @@ export class HeaderUserimg extends React.Component<HeaderUserimgProps, HeaderUse
             </Menu.Item>
         </Menu>;
     }
-
-    render() {
-        return <Row className="tool-user">
+    renderUserSettings(){
+        return  <Row className="tool-user" >
             <Col></Col>
             <Col className="tool-user-right">
                 <Popover placement="bottomRight"
@@ -65,6 +64,10 @@ export class HeaderUserimg extends React.Component<HeaderUserimgProps, HeaderUse
                     </a>
                 </Popover>
             </Col>
-        </Row>
+        </Row>;
+    }
+
+    render() {
+        return this.props.member ? this.renderUserSettings(): null;
     }
 }
