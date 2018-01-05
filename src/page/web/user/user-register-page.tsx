@@ -12,7 +12,7 @@ const {TabPane} = Tabs;
 import UserRegisterEmail from "../../../components/controls/user/user-register-email";
 import UserRegisterPhone from "../../../components/controls/user/user-register-phone";
 import {Notification} from "../../../components/controls/common/notification";
-import {RegisterAPI}from "../../../api/common-api";
+import {RegisterAPI}from "../../../api/user";
 import {GetCodeRequest, RegisterRequest, AccountValidateRequest} from "../../../api/model/request/common-request";
 const FormItem = Form.Item;
 

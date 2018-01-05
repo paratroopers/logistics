@@ -1,4 +1,4 @@
-import {NaDemoPage} from "./demo/na-demo-page";
+
 import {HomePage} from "./web/home-page";
 import MemberPage from "./web/member-page";
 import {CostPage} from "./web/cost-page";
@@ -14,7 +14,6 @@ export {
     NaMasterMainPage,
     UserLoginPage,
     UserRegisterPage,
-    NaDemoPage,
     HomePage,
     CostPage,
     CompanyPage,

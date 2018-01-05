@@ -7,7 +7,7 @@ import UserLoginForgetPage from './user-login-forget-page';
 import {NaGlobal} from '../../../util/common';
 import {WebAction} from "../../../actions/index";
 import {LoginRequest} from '../../../api/model/request/login-request';
-import {LoginApi} from '../../../api/login';
+import {LoginApi} from '../../../api/user';
 import {Cookies} from '../../../util/cookie';
 import {NaConstants,NaContext} from '../../../util/common';
 

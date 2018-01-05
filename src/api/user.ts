@@ -1,15 +1,14 @@
-//用户操作；包括注册，登录，注册，发送验证码；目前把的common-api和login的请求都放在这里；
-//以后涉及到用户操作部分api都放在这里；enzo.shi 20171229
-
-import {LoginRequest,ForgetRequest} from './model/request/login-request';
 import {DemoRequest, GetCodeRequest, RegisterRequest, AccountValidateRequest} from "./model/request/common-request";
 import {NaRequest, NaResponse} from "../util/common"
 import {Request} from '../util/request';
 
+import {LoginRequest} from './model/request/login-request';
+
 const BasicsUrl = "http://www.famliytree.cn/_api/ver(1.0)/";
+
 export class DemoAPI {
     static async GetDemo(data?: DemoRequest) {
-        let url: string = "";
+        let url: string = "sockjs-node/info";
         return new Request<NaRequest, NaResponse>().get(url, data);
     }
 }
@@ -35,16 +34,9 @@ export class RegisterAPI {
 }
 
 
-
-
 export class LoginApi {
     static async Login(data: LoginRequest) {
         let url: string = BasicsUrl + "User/Login";
         return new Request<LoginRequest, NaResponse>().post(url, data);
-    }
-    /** 重置密码*/
-    static async Forget(data: ForgetRequest) {
-        let url: string = BasicsUrl + "User/Forget";
-        return new Request<ForgetRequest, NaResponse>().post(url, data);
     }
 }
