@@ -1,7 +1,7 @@
 import * as request from "superagent";
 import * as Mock from "mockjs";
 import * as moment from "moment";
-import {NaRequestParam, NaResponse, NaGlobal, NaConstants, NaContext} from './common';
+import {NaRequestParam, NaResponse, NaGlobal, NaConstants, Context} from './common';
 import {CommonLocale} from "../locales/localeid";
 import {Notification} from "../components/controls/common/notification";
 import {message} from 'antd';
@@ -59,7 +59,7 @@ export class Request<TRequest, TResponse extends NaResponse> {
         //request.send({crossDomain: true});
 
         if (param.RequireToken) {
-            request.set("Authorization", NaContext.getToken());
+            request.set("Authorization", Context.getToken());
         }
 
         request.set("ClientTimeZone", (moment().utcOffset() / 60).toString());
@@ -285,7 +285,7 @@ export class Request<TRequest, TResponse extends NaResponse> {
             });
         }
         if (hasToken) {
-            xmlhttp.setRequestHeader("Authorization", NaContext.getToken());
+            xmlhttp.setRequestHeader("Authorization", Context.getToken());
         }
         if (type === "GET" || type === "get" || type === "Get") {//大小写
             xmlhttp.send(data);

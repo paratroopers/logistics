@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {hashHistory} from 'react-router';
 import {Popover, Icon, Modal} from 'antd-mobile';
-import {NaContext} from '../../../../util/common';
+import {Context} from '../../../../util/common';
 import {Cookies} from '../../../../util/cookie';
 import {PathConfig} from '../../../../config/pathconfig';
 import {MobileNavTreeAction} from '../../../../actions/index';
@@ -52,7 +52,7 @@ export class MobilePopover extends React.Component<MobilePopoverProps, MobilePop
                         overlay={[
                             (<Popover.Item key="4" value="scan"
                                            icon={<i style={{fontSize: '25px', lineHeight: '22px'}}
-                                                    className={NaContext.getIconClassName('icon-tuichu')}></i>}
+                                                    className={Context.getIconClassName('icon-tuichu')}></i>}
                                            data-seed="logId"><span
                                 style={{
                                     width: '30px',

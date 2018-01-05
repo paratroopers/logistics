@@ -8,7 +8,7 @@ import {NaGlobal} from '../../util/common';
 import {MobileSelectTabAction, MobileNavTreeAction} from '../../actions/index';
 import {PathConfig, MobilePathConfig} from '../../config/pathconfig';
 import {MobilePopover} from '../../components/controls/index/mobile/mobile-popover';
-import {NaContext} from '../../util/common';
+import {Context} from '../../util/common';
 
 interface MasterMobilePageProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
     selectedTab?: TabType;
@@ -113,7 +113,7 @@ class MasterMobilePage extends React.Component<MasterMobilePageProps, MasterMobi
         const {props: {children}} = topThis;
         const _tabHeight: string = window.innerHeight - tabHeight + 'px';
         const _siderHeight: string = window.innerHeight - tabHeight - navHeight + 'px';
-        //${NaContext.getIconAddress('process-demo-banner')}
+        //${Context.getIconAddress('process-demo-banner')}
         return <div className="mobile-page">
             <Layout>
                 <Header className="mobile-page-header fixed">

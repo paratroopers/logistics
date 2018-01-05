@@ -109,7 +109,7 @@ export class NaConstants {
     static minXL = window.innerWidth < NaConstants.xl;
 }
 
-export class NaContext {
+export class Context {
     /**
      * 登录后的用户信息
      */
@@ -135,20 +135,20 @@ export class NaContext {
      */
     static setMerchantData(data) {
         try {
-            window.localStorage.setItem(NaContext.Keys.TokenDataKey, JSON.stringify(data));
+            window.localStorage.setItem(Context.Keys.TokenDataKey, JSON.stringify(data));
         } catch (e) {
-            NaContext.MerchantData = data;
+            Context.MerchantData = data;
         }
     }
 
     /** 获取登录信息 */
     static getMerchantData() {
-        if (NaContext.MerchantData) {
-            return NaContext.MerchantData;
+        if (Context.MerchantData) {
+            return Context.MerchantData;
         }
         var data = null;
         try {
-            data = JSON.parse(window.localStorage.getItem(NaContext.Keys.TokenDataKey));
+            data = JSON.parse(window.localStorage.getItem(Context.Keys.TokenDataKey));
         } catch (e) {
             data = null;
         }
@@ -159,9 +159,9 @@ export class NaContext {
      * 获取当前语言,如果用户没有选择，默认走公司语言,兼容两个版版本
      */
     static getLanguage(): string {
-        let language = Cookies.get(NaContext.Keys.LanguageKey) === "undefined" ? undefined : Cookies.get(NaContext.Keys.LanguageKey);
+        let language = Cookies.get(Context.Keys.LanguageKey) === "undefined" ? undefined : Cookies.get(Context.Keys.LanguageKey);
         if (!language) {
-            let data = NaContext.getMerchantData();
+            let data = Context.getMerchantData();
             if (data) {
                 language = data.CompanyInfo.LanguageCode;
             }
@@ -176,7 +176,7 @@ export class NaContext {
     static setLanguage(language: string) {
         var secretExpiresDate = new Date();
         secretExpiresDate.setTime(secretExpiresDate.getTime() + (3600 * 24 * 365 * 1000));
-        Cookies.set(NaContext.Keys.LanguageKey, language.toLowerCase(), {
+        Cookies.set(Context.Keys.LanguageKey, language.toLowerCase(), {
             path: '/',
             expires: secretExpiresDate
         });

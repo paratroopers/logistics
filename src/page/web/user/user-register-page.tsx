@@ -5,7 +5,7 @@ import {PathConfig}from "../../../config/pathconfig";
 import {Layout, Row, Col, Tabs, Button, Checkbox, Select, Icon, Form, Modal} from "antd";
 import {RegisterEnum}from "../../../api/model/common-model";
 const {Header, Content, Footer} = Layout;
-import {NaGlobal, NaResponse, NaContext} from '../../../util/common';
+import {NaGlobal, NaResponse, Context} from '../../../util/common';
 import {connect} from "react-redux";
 import {WebAction} from "../../../actions/index";
 const {TabPane} = Tabs;
@@ -109,7 +109,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                                 /** 锁定按钮*/
                                 topThis.phoneFromComponent.onDownCode();
                             } else {
-                                NaContext.OpenMessage(data.Status);
+                                Context.OpenMessage(data.Status);
                             }
                         });
                     }
@@ -132,7 +132,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                                 /** 锁定按钮*/
                                 topThis.mailFromComponent.onDownCode();
                             } else {
-                                NaContext.OpenMessage(data.Status);
+                                Context.OpenMessage(data.Status);
                             }
                         });
                     }
@@ -174,7 +174,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                                 });
                                 topThis.setState({visibleSuccess: true});
                             } else {
-                                NaContext.OpenMessage(data.Status);
+                                Context.OpenMessage(data.Status);
                             }
                         });
                     }
@@ -204,7 +204,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                                 });
                                 topThis.setState({visibleSuccess: true});
                             } else {
-                                NaContext.OpenMessage(data.Status);
+                                Context.OpenMessage(data.Status);
                             }
                         });
                     }

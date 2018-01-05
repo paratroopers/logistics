@@ -9,7 +9,7 @@ import {WebAction} from "../../../actions/index";
 import {LoginRequest} from '../../../api/model/request/login-request';
 import {LoginApi} from '../../../api/user';
 import {Cookies} from '../../../util/cookie';
-import {NaConstants,NaContext} from '../../../util/common';
+import {NaConstants,Context} from '../../../util/common';
 
 const {Header, Content} = Layout;
 
@@ -56,7 +56,7 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
                     if (result.Status === 0) {
                         Cookies.set("Authorization", result.Data);
                         /** 设置登录信息*/
-                        NaContext.setMerchantData({isLogin: true});
+                        Context.setMerchantData({isLogin: true});
                         /** 更改登录的状态*/
                         NaGlobal.store.dispatch(WebAction.GetLoginState(true));
                         if (window.innerWidth <= NaConstants.xs)

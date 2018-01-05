@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {hashHistory} from 'react-router';
 import {PathConfig} from "../../../config/pathconfig";
-import {NaContext} from "../../../util/common";
+import {Context} from "../../../util/common";
 import {Cookies} from '../../../util/cookie';
 import {Row, Col, Popover, Avatar, Menu, Icon} from 'antd';
 
@@ -22,7 +22,7 @@ export class HeaderUserimg extends React.Component<HeaderUserimgProps, HeaderUse
                 hashHistory.push({pathname: PathConfig.VIPCenterPage});
                 break;
             case "2":
-                NaContext.setMerchantData({isLogin: false});
+                Context.setMerchantData({isLogin: false});
                 hashHistory.push({pathname: PathConfig.HomePage});
                 topThis.setState({isLogin: false});
                 Cookies.remove("Authorization");

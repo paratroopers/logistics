@@ -1,4 +1,4 @@
-import { NaContext } from './common';
+import { Context } from './common';
 /**
  * URL 管理类，管理所有2.0版本的URL
  */

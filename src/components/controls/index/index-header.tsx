@@ -2,7 +2,7 @@ import * as React from "react";
 import {Component} from "react";
 import {hashHistory} from 'react-router';
 import {Row, Col, Menu, Select, Popover, Avatar, Icon, Dropdown} from 'antd';
-import {NaGlobal, NaContext} from "../../../util/common";
+import {NaGlobal, Context} from "../../../util/common";
 import {CommonLocale} from "../../../locales/localeid";
 import {PathConfig} from "../../../config/pathconfig";
 import {connect} from "react-redux";
@@ -41,7 +41,7 @@ class Header extends Component<HeaderProps, HeaderStates> {
 
     componentDidMount() {
         const topThis = this;
-        const data = NaContext.getMerchantData();
+        const data = Context.getMerchantData();
         if (!isNullOrUndefined(data) && isBoolean(data.isLogin)) {
             topThis.setState({isLogin: data.isLogin});
         }
@@ -73,7 +73,7 @@ class Header extends Component<HeaderProps, HeaderStates> {
         return [
             <Row key="0" type="flex" className="tool-doubt-content">
                 <Col span={6}>
-                    <i className={NaContext.getIconClassName('icon-dianhua-yuankuang')}></i>
+                    <i className={Context.getIconClassName('icon-dianhua-yuankuang')}></i>
                 </Col>
                 <Col span={18} className="title">
                     <p className="tool-doubt-content-num-title">客服电话</p>
@@ -82,7 +82,7 @@ class Header extends Component<HeaderProps, HeaderStates> {
             </Row>,
             <Row key="1" type="flex" className="tool-doubt-content qq">
                 <Col span={6}>
-                    <i className={NaContext.getIconClassName('icon-qq')}></i>
+                    <i className={Context.getIconClassName('icon-qq')}></i>
                 </Col>
                 <Col span={18} className="title">
                     <p className="tool-doubt-content-num-title">客服QQ</p>
@@ -91,7 +91,7 @@ class Header extends Component<HeaderProps, HeaderStates> {
             </Row>,
             <Row key="2" type="flex" className="tool-doubt-content">
                 <Col span={6}>
-                    <i className={NaContext.getIconClassName('icon-youxiang')}></i>
+                    <i className={Context.getIconClassName('icon-youxiang')}></i>
                 </Col>
                 <Col span={18} className="title">
                     <p className="tool-doubt-content-eml-title">客服邮箱</p>
@@ -100,7 +100,7 @@ class Header extends Component<HeaderProps, HeaderStates> {
             </Row>,
             <Row key="3" type="flex" className="tool-doubt-content">
                 <Col span={6}>
-                    <i className={NaContext.getIconClassName('icon-weixin')}></i>
+                    <i className={Context.getIconClassName('icon-weixin')}></i>
                 </Col>
                 <Col span={18} className="title">
                     <p className="tool-doubt-content-wx-title">关注我</p>
@@ -120,7 +120,7 @@ class Header extends Component<HeaderProps, HeaderStates> {
             {/*<Col lg={0} xl={0}>{topThis.renderButtonNavigation()}</Col>*/}
             <Col className="tool-doubt">
                 <Popover placement="bottom" content={this.renderDoubtContent()}>
-                    <i className={NaContext.getIconClassName('icon-zixun')}></i>
+                    <i className={Context.getIconClassName('icon-zixun')}></i>
                     <span>咨询客服</span>
                 </Popover>
             </Col>
