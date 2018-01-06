@@ -23,7 +23,7 @@ class MasterPage extends Component<MasterPageProps, MasterPageStates> {
     constructor(props, context) {
         super(props, context);
         window["CDN"] = 'http://www.famliytree.cn/'//this.props.cdn;
-        console.log(this.props.cdn);
+        //console.log(this.props.cdn);
         this.initRedux();
         const messageTop = window.innerHeight * 0.1;
         message.config({top: messageTop});

@@ -129,7 +129,7 @@ class Cost extends React.Component<CostProps, CostStates> {
                     </Form.Item>
                     <Form.Item>
                         <QuotationUserSwitch placeholder={'高级查询'} size={'default'} checked={this.state.isAdvanced}
-                                             onChange={this.onSwitchChange.bind(this)}></QuotationUserSwitch>
+                                             onChange={this.onSwitchChange.bind(this)} type="switch"></QuotationUserSwitch>
                     </Form.Item>
                     <QuotationUserQueryAdvanced visible={this.state.isAdvanced} form={this.props.form}
                                                 onChange={this.onVolumeChange.bind(this)}></QuotationUserQueryAdvanced>

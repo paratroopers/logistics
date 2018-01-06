@@ -5,7 +5,7 @@ import router from "./config/router";
 import MasterPage from "./page/master/master-page";
 
 //require.ensure([], () => {
-    require("./themes/index.less")
+require("./themes/index.less")
 //}, "app.css");
 
 // fix firefox drag will open a tab in background bug
@@ -15,4 +15,5 @@ document.body.ondrop = function (event) {
 };
 
 render(<MasterPage cdn={`${process.env.CDN}`}
-                     reducers={reducers}>{router}</MasterPage>, document.getElementById("app_content"));
+                   reducers={reducers}>{router}</MasterPage>, document.getElementById("app_content"));
+
