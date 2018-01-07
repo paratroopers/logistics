@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {hashHistory, withRouter} from 'react-router';
 import {InjectedIntlProps} from "react-intl";
-import {Button, Row, Col, Form, InputNumber, Input, Switch} from 'antd';
+import {Button, Row, Col, Form, InputNumber} from 'antd';
 import {PathConfig} from '../../../config/pathconfig';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {CostCountry} from './quotation-country';
@@ -129,7 +129,7 @@ class Cost extends React.Component<CostProps, CostStates> {
                     </Form.Item>
                     <Form.Item>
                         <QuotationUserSwitch placeholder={'高级查询'} size={'default'} checked={this.state.isAdvanced}
-                                             onChange={this.onSwitchChange.bind(this)} type="switch"></QuotationUserSwitch>
+                                             onChange={this.onSwitchChange.bind(this)}></QuotationUserSwitch>
                     </Form.Item>
                     <QuotationUserQueryAdvanced visible={this.state.isAdvanced} form={this.props.form}
                                                 onChange={this.onVolumeChange.bind(this)}></QuotationUserQueryAdvanced>

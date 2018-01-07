@@ -1,15 +1,12 @@
 import * as React from "react";
 import {Component} from "react";
-import {hashHistory} from 'react-router';
-import {Row, Col, Menu, Select, Popover, Avatar, Icon, Dropdown} from 'antd';
-import {NaGlobal, Context} from "../../../util/common";
-import {CommonLocale} from "../../../locales/localeid";
-import {PathConfig} from "../../../config/pathconfig";
+import {Row, Col, Select, Popover} from 'antd';
+import {Context} from "../../../util/common";
 import {connect} from "react-redux";
-import {Cookies} from '../../../util/cookie';
 import {isBoolean, isNullOrUndefined} from "util";
 import {HeaderLogo} from './index-header-logo';
 import {HeaderSetting} from './index-header-settings';
+import {CustomerserviceDropdown} from '../customerservice/customerservice-dropdown';
 import {HeaderNavigation, NavigationType} from './index-header-navigation';
 
 interface HeaderProps {
@@ -69,48 +66,6 @@ class Header extends Component<HeaderProps, HeaderStates> {
         </Select>;
     }
 
-    renderDoubtContent() {
-        return [
-            <Row key="0" type="flex" className="tool-doubt-content">
-                <Col span={6}>
-                    <i className={Context.getIconClassName('icon-dianhua-yuankuang')}></i>
-                </Col>
-                <Col span={18} className="title">
-                    <p className="tool-doubt-content-num-title">客服电话</p>
-                    <p className="tool-doubt-content-num">400-820-8820</p>
-                </Col>
-            </Row>,
-            <Row key="1" type="flex" className="tool-doubt-content qq">
-                <Col span={6}>
-                    <i className={Context.getIconClassName('icon-qq')}></i>
-                </Col>
-                <Col span={18} className="title">
-                    <p className="tool-doubt-content-num-title">客服QQ</p>
-                    <p className="tool-doubt-content-num">738114990</p>
-                </Col>
-            </Row>,
-            <Row key="2" type="flex" className="tool-doubt-content">
-                <Col span={6}>
-                    <i className={Context.getIconClassName('icon-youxiang')}></i>
-                </Col>
-                <Col span={18} className="title">
-                    <p className="tool-doubt-content-eml-title">客服邮箱</p>
-                    <p className="tool-doubt-content-eml">xuke_break@163.com</p>
-                </Col>
-            </Row>,
-            <Row key="3" type="flex" className="tool-doubt-content">
-                <Col span={6}>
-                    <i className={Context.getIconClassName('icon-weixin')}></i>
-                </Col>
-                <Col span={18} className="title">
-                    <p className="tool-doubt-content-wx-title">关注我</p>
-                    <img className="code" src="http://www.famliytree.cn/icon/wx_ewm.jpg"/>
-                </Col>
-            </Row>
-        ]
-    }
-
-
     /** 工具*/
     renderTool() {
         const topThis = this;
@@ -120,7 +75,7 @@ class Header extends Component<HeaderProps, HeaderStates> {
             {/*<Col >{topThis.renderLanguageSelect()}</Col>*/}
             {/*<Col lg={0} xl={0}>{topThis.renderButtonNavigation()}</Col>*/}
             <Col className="tool-doubt">
-                <Popover placement="bottom" content={this.renderDoubtContent()}>
+                <Popover placement="bottom" content={<CustomerserviceDropdown></CustomerserviceDropdown>}>
                     <i className={Context.getIconClassName('icon-zixun')}></i>
                     <span>咨询客服</span>
                 </Popover>
