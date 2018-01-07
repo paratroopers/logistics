@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Context} from "../../../util/common";
-import {Row, Col} from 'antd';
+import {Row, Col, Popover} from 'antd';
 
 interface CustomerserviceDropdownProps {
 }
@@ -10,7 +10,7 @@ interface CustomerserviceDropdownStates {
 
 export class CustomerserviceDropdown extends React.Component<CustomerserviceDropdownProps, CustomerserviceDropdownStates> {
 
-    render() {
+    renderContent(): JSX.Element {
         return <div>
             <Row key="0" type="flex" className="tool-doubt-content">
                 <Col span={6}>
@@ -49,5 +49,13 @@ export class CustomerserviceDropdown extends React.Component<CustomerserviceDrop
                 </Col>
             </Row>
         </div>
+    }
+
+    render() {
+        return <Popover placement="bottom" content={this.renderContent()}>
+            <i className={Context.getIconClassName('icon-zixun')}></i>
+            <span>咨询客服</span>
+        </Popover>
+
     }
 }

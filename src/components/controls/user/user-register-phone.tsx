@@ -3,20 +3,21 @@ import {Component} from "react";
 import {Form, Input, Icon, Button, Select, Row, Col} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {isNullOrUndefined} from "util";
+
 const FormItem = Form.Item;
 const SelectOption = Select.Option;
 
 export interface UserRegisterPhoneProps extends FormComponentProps {
     onClickCode?: React.FormEventHandler<any>;
     /** 验证账号是否已经存在*/
-    validatorAccount?: (value:string,callback) => void;
+    validatorAccount?: (value: string, callback) => void;
 }
 
 export interface UserRegisterPhoneStates {
     /** 验证码禁用倒计时*/
     countDown: number;
     /** 验证密码*/
-    confirmDirty:boolean;
+    confirmDirty: boolean;
 }
 
 class UserRegisterPhone extends Component<UserRegisterPhoneProps, UserRegisterPhoneStates> {
@@ -24,15 +25,15 @@ class UserRegisterPhone extends Component<UserRegisterPhoneProps, UserRegisterPh
         super(props, context);
         this.state = {
             countDown: 0,
-            confirmDirty:false
+            confirmDirty: false
         }
     }
 
     handleConfirmBlur = (e) => {
         const value = e.target.value;
         const topThis = this;
-        const {state:{confirmDirty}}=topThis;
-        topThis.setState({ confirmDirty: confirmDirty || !!value });
+        const {state: {confirmDirty}} = topThis;
+        topThis.setState({confirmDirty: confirmDirty || !!value});
     }
 
     checkPassword = (rule, value, callback) => {
@@ -47,9 +48,9 @@ class UserRegisterPhone extends Component<UserRegisterPhoneProps, UserRegisterPh
 
     checkConfirm = (rule, value, callback) => {
         const topThis = this;
-        const {props: {form},state:{confirmDirty}} = topThis;
+        const {props: {form}, state: {confirmDirty}} = topThis;
         if (value && confirmDirty) {
-            form.validateFields(['NextPassword'], { force: true },()=>{
+            form.validateFields(['NextPassword'], {force: true}, () => {
 
             });
         }
@@ -77,28 +78,26 @@ class UserRegisterPhone extends Component<UserRegisterPhoneProps, UserRegisterPh
 
     render() {
         const topThis = this;
-        const {props: {form: {getFieldDecorator}, onClickCode,validatorAccount}, state: {countDown}} = topThis;
+        const {props: {form: {getFieldDecorator}, onClickCode, validatorAccount}, state: {countDown}} = topThis;
 
         return (
             <Form className="na-page-register-form">
                 <FormItem hasFeedback>
                     {getFieldDecorator('PhoneNumber', {
                         rules: [{
-                            validator:(rule, value, callback)=>{
-                                if(isNullOrUndefined(value)||value===""){
+                            validator: (rule, value, callback) => {
+                                if (isNullOrUndefined(value) || value === "") {
                                     callback('请正确输入你的手机号码!');
-                                }else if(!/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/.test(value)) {
+                                } else if (!/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/.test(value)) {
                                     callback('请正确输入你的手机号码!');
-                                }else {
+                                } else {
                                     /* 验证账号是否已经存在*/
-                                    if(validatorAccount)
-                                    {
-                                        validatorAccount(value,(message)=>{
+                                    if (validatorAccount) {
+                                        validatorAccount(value, (message) => {
                                             callback(message);
                                         });
 
-                                    }else
-                                    {
+                                    } else {
                                         callback();
                                     }
                                 }
@@ -115,7 +114,7 @@ class UserRegisterPhone extends Component<UserRegisterPhoneProps, UserRegisterPh
                     <Row style={{margin: '0 -4px'}}>
                         <Col span={16} style={{padding: '0 4px'}}>
                             {getFieldDecorator('Code', {
-                                rules: [{pattern:/^\d{4}$/,required: true, message: '请正确输入你的手机验证码!'}],
+                                rules: [{pattern: /^\d{4}$/, required: true, message: '请正确输入你的手机验证码!'}],
                             })(
                                 <Input prefix={<Icon type="barcode" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                        size="large"
@@ -159,4 +158,5 @@ class UserRegisterPhone extends Component<UserRegisterPhoneProps, UserRegisterPh
         );
     }
 }
+
 export default Form.create<any>()(UserRegisterPhone);

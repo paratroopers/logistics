@@ -75,10 +75,7 @@ class Header extends Component<HeaderProps, HeaderStates> {
             {/*<Col >{topThis.renderLanguageSelect()}</Col>*/}
             {/*<Col lg={0} xl={0}>{topThis.renderButtonNavigation()}</Col>*/}
             <Col className="tool-doubt">
-                <Popover placement="bottom" content={<CustomerserviceDropdown></CustomerserviceDropdown>}>
-                    <i className={Context.getIconClassName('icon-zixun')}></i>
-                    <span>咨询客服</span>
-                </Popover>
+                <CustomerserviceDropdown></CustomerserviceDropdown>
             </Col>
             <Col><HeaderSetting member={isLogin}></HeaderSetting></Col>
         </Row>;
