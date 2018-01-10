@@ -56,6 +56,5 @@ export class CustomerserviceDropdown extends React.Component<CustomerserviceDrop
             <i className={Context.getIconClassName('icon-zixun')}></i>
             <span>咨询客服</span>
         </Popover>
-
     }
 }
