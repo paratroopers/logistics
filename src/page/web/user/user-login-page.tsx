@@ -79,6 +79,7 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
         const inputSize = 'large';
         const iconSize = {fontSize: '18px', marginTop: '-8px'};
         const {getFieldDecorator} = this.props.form;
+        const {visible}=this.state;
         return <Layout className="na-login">
             <Header className="na-login-header" style={{
                 background: "#FFF"
@@ -98,9 +99,9 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
             <Content className="na-login-content">
                 <Row align="middle" justify="center" type="flex">
                     <Col className="na-login-content-col">
-                        {<UserLoginForgetPage onCancel={() => {
+                        {visible&&<UserLoginForgetPage onCancel={() => {
                             this.setState({visible: false})
-                        }} visible={this.state.visible}></UserLoginForgetPage>}
+                        }} visible={visible}></UserLoginForgetPage>}
                         <div className="na-login-content-img">
                             <img style={{cursor: 'pointer'}} onClick={() => {
                                 hashHistory.push(PathConfig.HomePage);
