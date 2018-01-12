@@ -34,8 +34,8 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
 
     componentDidMount() {
         console.log(Cookies.get('Authorization'));
-        if (!Cookies.get('Authorization'))
-            hashHistory.push(PathConfig.LoginPage);
+        // if (!Cookies.get('Authorization'))
+        //     hashHistory.push(PathConfig.LoginPage);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -55,19 +55,21 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
         const siderStyle = NaConstants.minSM ? {height: (window.innerHeight - 95) + 'px'} : {};
         const siderHidden = showNav ? {disaplay: 'block'} : {disaplay: 'none'};
         // collapsedWidth={NaUtil.getScrrenMode(window.innerWidth) !== ScreenModeEnum.sm ? '' : 0}
-        return <Layout style={{minHeight: '100%'}}>
-            <Sider style={{zIndex: 1, ...siderStyle, ...siderHidden}}
-                   trigger={null}
-                   collapsible={true}
-                   className='na-side'
-                   {...sider}
-                   collapsed={collapsed}>
-                <MemberNavigation></MemberNavigation>
-            </Sider>
-            <Content style={{margin: 16, padding: 16, backgroundColor: '#FFF'}}>
-                {children}
-            </Content>
-        </Layout>;
+        return <div className="member-page">
+            <Layout style={{minHeight: '100%'}}>
+                <Sider style={{zIndex: 1, minHeight: "calc(100vh - 80px)",backgroundColor:"#FFF", ...siderStyle, ...siderHidden}}
+                       trigger={null}
+                       collapsible={true}
+                       className='na-side'
+                       {...sider}
+                       collapsed={collapsed}>
+                    <MemberNavigation></MemberNavigation>
+                </Sider>
+                <Content style={{backgroundColor: '#FFF'}}>
+                    {children}
+                </Content>
+            </Layout>
+        </div>;
     }
 }
 
