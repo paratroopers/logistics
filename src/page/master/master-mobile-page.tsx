@@ -112,21 +112,21 @@ export class MasterMobilePage extends React.Component<MasterMobilePageProps, Mas
     }
 
     render() {
-        const topThis = this;
-        const {tabHeight, navHeight} = this.state;
         const {Header, Content, Footer} = Layout;
-        const {props: {children}} = topThis;
-        const footerTop: string = window.innerHeight - tabHeight + 'px';
-        const contentHeight: string = window.innerHeight - tabHeight - navHeight + 'px';
+        const {props: {children}, state: {tabHeight, navHeight}} = this;
+        const footerTop: string = window.innerHeight - tabHeight + 'px',
+            contentHeight: string = window.innerHeight - tabHeight - navHeight + 'px';
         return <div className="mobile-page">
             <Layout>
                 <Header className="mobile-page-header fixed">
                     <NavBar
                         mode="light"
                         rightContent={this.renderHeaderRight()}>
-                        <a className="left-icon"><img onClick={() => {
-                            hashHistory.push(PathConfig.HomePage)
-                        }} src="http://www.famliytree.cn/icon/logo_mobile.png"/></a>
+                        <a className="left-icon">
+                            <img onClick={() => {
+                                hashHistory.push(PathConfig.HomePage)
+                            }} src="http://www.famliytree.cn/icon/logo_mobile.png"/>
+                        </a>
                     </NavBar>
                     <div className={'a'}></div>
                 </Header>
