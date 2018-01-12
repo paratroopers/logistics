@@ -2,7 +2,7 @@ import * as React from 'react';
 import {NaUtil} from "../../util/util";
 import {withRouter} from "react-router";
 import {ScreenModeEnum} from "../../api/model/common-model";
-import MasterMobilePage from './master-mobile-page';
+import {MasterMobilePage} from './master-mobile-page';
 import MasterWebPage from './master-web-page';
 
 interface NaMasterMainPageProps {

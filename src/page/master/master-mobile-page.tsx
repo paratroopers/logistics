@@ -2,13 +2,12 @@ import * as React from 'react';
 import {InjectedIntlProps} from "react-intl";
 import {hashHistory} from 'react-router';
 import {connect} from 'react-redux';
-import {TabBar, NavBar, Icon} from 'antd-mobile';
+import {TabBar, NavBar} from 'antd-mobile';
 import {Icon as WebIcon, Layout} from 'antd';
 import {NaGlobal} from '../../util/common';
 import {MobileSelectTabAction, MobileNavTreeAction} from '../../actions/index';
 import {PathConfig, MobilePathConfig} from '../../config/pathconfig';
 import {MobilePopover} from '../../components/controls/index/mobile/mobile-popover';
-import {Context} from '../../util/common';
 
 interface MasterMobilePageProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
     selectedTab?: TabType;
@@ -29,13 +28,20 @@ export enum TabType {
     Service = 4
 }
 
-class MasterMobilePage extends React.Component<MasterMobilePageProps, MasterMobilePageStates> {
+@connect(state => ({selectedTab: state.tab.tabName, callBack: state.nav.routerAddress}))
+export class MasterMobilePage extends React.Component<MasterMobilePageProps, MasterMobilePageStates> {
     defaultConfig: MasterMobilePageStates = {
         selectedTab: TabType.Home,
         tabHeight: 50,
         navHeight: 45,
         collapsed: true
     }
+    tabBarDatas = [
+        {title: '首页', key: TabType.Home, icon: 'home'},
+        {title: '费用', key: TabType.Order, icon: 'pay-circle-o'},
+        {title: '客服', key: TabType.Warehouse, icon: 'customer-service'},
+        {title: '会员', key: TabType.Service, icon: 'user'}
+    ]
 
     constructor(props, context) {
         super(props, context);
@@ -50,22 +56,6 @@ class MasterMobilePage extends React.Component<MasterMobilePageProps, MasterMobi
         if ('selectedTab' in nextProps && nextProps.selectedTab !== this.props.selectedTab) {
             this.setState({selectedTab: nextProps.selectedTab});
         }
-    }
-
-    onSelectHome() {
-        return this.state.selectedTab === TabType.Home
-    }
-
-    onSelectOrder() {
-        return this.state.selectedTab === TabType.Order
-    }
-
-    onSelectWarehouse() {
-        return this.state.selectedTab === TabType.Warehouse
-    }
-
-    onSelectService() {
-        return this.state.selectedTab === TabType.Service
     }
 
     onTabChange(type: TabType) {
@@ -106,14 +96,28 @@ class MasterMobilePage extends React.Component<MasterMobilePageProps, MasterMobi
         return <WebIcon type={iconName} className="button"></WebIcon>;
     }
 
+    renderTabBarItem() {
+        return this.tabBarDatas.map(d => {
+            return <TabBar.Item
+                title={d.title}
+                key={d.key}
+                icon={this.renderWebIcon(d.icon)}
+                selectedIcon={this.renderWebIcon(d.icon)}
+                selected={this.state.selectedTab === d.key}
+                onPress={() => {
+                    this.onTabChange(d.key);
+                }}>
+            </TabBar.Item>;
+        });
+    }
+
     render() {
         const topThis = this;
         const {tabHeight, navHeight} = this.state;
         const {Header, Content, Footer} = Layout;
         const {props: {children}} = topThis;
-        const _tabHeight: string = window.innerHeight - tabHeight + 'px';
-        const _siderHeight: string = window.innerHeight - tabHeight - navHeight + 'px';
-        //${Context.getIconAddress('process-demo-banner')}
+        const footerTop: string = window.innerHeight - tabHeight + 'px';
+        const contentHeight: string = window.innerHeight - tabHeight - navHeight + 'px';
         return <div className="mobile-page">
             <Layout>
                 <Header className="mobile-page-header fixed">
@@ -122,71 +126,23 @@ class MasterMobilePage extends React.Component<MasterMobilePageProps, MasterMobi
                         rightContent={this.renderHeaderRight()}>
                         <a className="left-icon"><img onClick={() => {
                             hashHistory.push(PathConfig.HomePage)
-                        }}src="http://www.famliytree.cn/icon/logo_mobile.png"/></a>
+                        }} src="http://www.famliytree.cn/icon/logo_mobile.png"/></a>
                     </NavBar>
                     <div className={'a'}></div>
                 </Header>
                 <Content className="mobile-page-content"
-                         style={{minHeight: _siderHeight, marginTop: navHeight, marginBottom: tabHeight}}>
+                         style={{minHeight: contentHeight, marginTop: navHeight, marginBottom: tabHeight}}>
                     {children}
                 </Content>
-                <Footer className="mobile-page-footer fixed" style={{top: _tabHeight}}>
+                <Footer className="mobile-page-footer fixed" style={{top: footerTop}}>
                     <TabBar unselectedTintColor="#949494"
                             tintColor="#e65922"
                             barTintColor="white"
                             hidden={false}>
-                        <TabBar.Item
-                            title={'首页'}
-                            key={TabType.Home}
-                            icon={this.renderWebIcon('home')}
-                            selectedIcon={this.renderWebIcon('home')}
-                            selected={this.onSelectHome()}
-                            onPress={() => {
-                                this.onTabChange(TabType.Home);
-                            }}>
-                        </TabBar.Item>
-                        <TabBar.Item
-                            icon={this.renderWebIcon('pay-circle-o')}
-                            selectedIcon={this.renderWebIcon('pay-circle')}
-                            title="费用"
-                            key={TabType.Order}
-                            dot={true}
-                            selected={this.onSelectOrder()}
-                            onPress={() => {
-                                this.onTabChange(TabType.Order);
-                            }}>
-                        </TabBar.Item>
-                        <TabBar.Item
-                            icon={this.renderWebIcon('customer-service')}
-                            selectedIcon={this.renderWebIcon('customer-service')}
-                            title={"客服"}
-                            key={TabType.Warehouse}
-                            selected={this.onSelectWarehouse()}
-                            onPress={() => {
-                                this.onTabChange(TabType.Warehouse);
-                            }}>
-                        </TabBar.Item>
-                        <TabBar.Item
-                            icon={this.renderWebIcon('user')}
-                            selectedIcon={this.renderWebIcon('user')}
-                            title={"会员"}
-                            key={TabType.Service}
-                            selected={this.onSelectService()}
-                            onPress={() => {
-                                this.onTabChange(TabType.Service);
-                            }}>
-                        </TabBar.Item>
+                        {this.renderTabBarItem()}
                     </TabBar>
                 </Footer>
             </Layout>
         </div>
     }
 }
-
-const mapStateToProps = (state) => {
-    return {
-        selectedTab: state.tab.tabName,
-        callBack: state.nav.routerAddress
-    }
-}
-export default connect(mapStateToProps)(MasterMobilePage);
