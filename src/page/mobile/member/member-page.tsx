@@ -59,24 +59,25 @@ export class MemberPage extends React.Component<MemberPageProps, MemberPageState
     render() {
         return <div className='mobile-nav'>
             <List>
-                <List.Item arrow="horizontal"
-                           thumb={<img style={{width: '80px', height: '80px', margin: '10px 0px 10px 0px'}}
-                                       src='http://www.famliytree.cn/icon/green.jpg'/>}>
-                    <span style={{display: 'block', fontSize: '14px'}}>早安，Antd design,祝你开心每一天</span>
-                    <span style={{fontSize: '12px'}}>欢饮你来到大陆网，体验便捷的服务</span>
+                <List.Item arrow="horizontal" className="mobile-nav-userinfo">
+                    <img className="user-img" src='http://www.famliytree.cn/icon/green.jpg'/>
+                    <div className="some-information">
+                        <strong className="some-information-conetnt">早安，Araysa</strong>
+                        <span className="some-information-welcome">欢饮你来到大陆网，体验便捷的服务</span>
+                    </div>
                 </List.Item>
                 <List.Item>
                     <div className="mobile-nav-topbar">
                         <div className="left">
-                            <strong className="count">0</strong>
+                            <strong>0</strong>
                             <span>待打包</span>
                         </div>
                         <div className="center">
-                            <strong className="count">12</strong>
+                            <strong>12</strong>
                             <span>待付款</span>
                         </div>
                         <div className="right">
-                            <strong className="count">14</strong>
+                            <strong>14</strong>
                             <span>待发货</span>
                         </div>
                     </div>
