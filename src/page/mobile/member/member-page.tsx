@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
 import {List, Badge} from 'antd-mobile';
+import {UserAvatar} from '../../../components/controls/user/user-avatar';
 import {hashHistory} from 'react-router';
 import {NaGlobal} from '../../../util/common';
 import MobileNavTree from '../../../config/mobile-navconfig';
@@ -60,9 +61,10 @@ export class MemberPage extends React.Component<MemberPageProps, MemberPageState
         return <div className='mobile-nav'>
             <List>
                 <List.Item arrow="horizontal" className="mobile-nav-userinfo">
-                    <img className="user-img" src='http://www.famliytree.cn/icon/green.jpg'/>
+                    <div></div>
+                    <UserAvatar className="user-img" size={55} attr="Photo"></UserAvatar>
                     <div className="some-information">
-                        <strong className="some-information-conetnt">早安，Araysa</strong>
+                        <div className="some-information-conetnt">早安，Araysa</div>
                         <span className="some-information-welcome">欢饮你来到大陆网，体验便捷的服务</span>
                     </div>
                 </List.Item>

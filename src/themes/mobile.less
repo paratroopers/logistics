@@ -99,28 +99,30 @@
 }
 
 .mobile-nav {
-  @font-color: #373d41;
+  @font-color: rgba(0, 0, 0, .85);
   .iconfont {
     font-size: 22px !important;
   }
   &-userinfo {
-    .some-information, .user-img {
-      display: inline-block;
-    }
+    display: flex;
     .user-img {
-      width: 80px;
-      height: 80px;
-      margin: 10px 0px 10px 0px;
+      margin-bottom: 8px;
     }
     .some-information {
-      vertical-align: middle;
+      margin-left: 24px;
+      color: rgba(0,0,0,.45);
+      line-height: 22px;
       &-conetnt {
-        display: block;
-        fontSize: 14px;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 500;
+        margin-bottom: 5px;
         color: @font-color;
       }
       &-welcome {
-        font-size: 12px;
+        color: rgba(0, 0, 0, 0.45);
+        line-height: 18px;
+        font-size: 14px;
       }
     }
   }
