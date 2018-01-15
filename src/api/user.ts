@@ -1,10 +1,11 @@
 import {DemoRequest, GetCodeRequest, RegisterRequest, AccountValidateRequest} from "./model/request/common-request";
 import {BaseRequest, BaseResponse} from "../util/common"
 import {Request} from '../util/request';
+import {CommonAPI} from './common';
 
 import {LoginRequest,ForgetRequest} from './model/request/login-request';
 
-const BasicsUrl = "http://www.famliytree.cn/_api/ver(1.0)/";
+const BasicsUrl = CommonAPI.baseURL;
 
 export class DemoAPI {
     static async GetDemo(data?: DemoRequest) {
