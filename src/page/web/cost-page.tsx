@@ -225,7 +225,7 @@ export class CostPage extends Component<CostPageProps, CostPageStates> {
             </Col>
             <Col xs={0} sm={0} md={24} lg={10} xl={10}>
                 <Layout style={{background: '#fff'}}>
-                    <Layout.Header style={{background: '#fff', paddingLeft: '0px'}}>
+                       <Layout.Header style={{background: '#fff', paddingLeft: '0px'}}>
                         <Icon type="info-circle" onClick={()=>{
                             topThis.onTableRowClick("ddddddddddddddddddddddddddd");
                         }}/>

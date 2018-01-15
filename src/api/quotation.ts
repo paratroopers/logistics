@@ -3,8 +3,9 @@ import {Request} from '../util/request';
 import {CountryRequest, QuotationRequest} from './model/request/quotation-request';
 import  {QuotationResponse} from './model/response/quotation'
 import {url} from "inspector";
+import {CommonAPI} from './common';
 
-const BasicsUrl = "http://www.famliytree.cn/_api/ver(1.0)/";
+const BasicsUrl = CommonAPI.baseURL;
 
 export class QuotationApi {
     static async GetCountry(data: CountryRequest) {
