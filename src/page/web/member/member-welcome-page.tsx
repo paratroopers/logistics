@@ -56,20 +56,20 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
                     <Row className="content-card-warehouse">
                         <Col className="warehouse-header">
                             <p>
-                                <span>收件人</span>
+                                <span>收件人：</span>
                                 <span>大陆17477号仓库</span>
                             </p>
                             <p>
-                                <span>地址</span>
+                                <span>地址：</span>
                                 <span>上海市黄浦区河南南路和蓬莱路交叉口24号楼402房间</span>
-                                <span>（ML0001）</span>
+                                <span style={{fontWeight:'bold',fontSize:24}}>（ML0001）</span>
                             </p>
                             <p>
-                                <span>邮编</span>
+                                <span>邮编：</span>
                                 <span>4761111</span>
                             </p>
                             <p>
-                                <span>电话</span>
+                                <span>电话：</span>
                                 <span>0376-588 7777 777</span>
                             </p>
                         </Col>
