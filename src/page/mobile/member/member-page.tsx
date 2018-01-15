@@ -23,8 +23,8 @@ export class MemberPage extends React.Component<MemberPageProps, MemberPageState
     }
 
     componentDidMount() {
-        if (!Cookies.get('Authorization'))
-            hashHistory.push(PathConfig.LoginPage);
+        /*        if (!Cookies.get('Authorization'))
+                    hashHistory.push(PathConfig.LoginPage);*/
     }
 
     renderIcon(icon: string, colorCode: string) {
@@ -61,8 +61,7 @@ export class MemberPage extends React.Component<MemberPageProps, MemberPageState
         return <div className='mobile-nav'>
             <List>
                 <List.Item arrow="horizontal" className="mobile-nav-userinfo">
-                    <div></div>
-                    <UserAvatar className="user-img" size={55} attr="Photo"></UserAvatar>
+                    <UserAvatar className="user-img" size={46} attr="Photo"></UserAvatar>
                     <div className="some-information">
                         <div className="some-information-conetnt">早安，Araysa</div>
                         <span className="some-information-welcome">欢饮你来到大陆网，体验便捷的服务</span>

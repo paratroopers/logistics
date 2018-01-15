@@ -54,7 +54,8 @@ class MemberDetailPage extends React.Component<MemberDetailPageProps, MemberDeta
                   columnNum={3}
                   carouselMaxRow={1}
                   data={this.renderGridItem()}
-                  isCarousel/></div>
+                  isCarousel/>
+        </div>
     }
 }
 
