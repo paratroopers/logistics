@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Component} from "react";
 import {withRouter} from "react-router";
-import {Row, Col, Avatar, Breadcrumb} from "antd";
+import {Row, Col, Avatar, Card } from "antd";
 
 interface MemberWelcomePageProps {
 }
@@ -17,21 +17,15 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
 
     renderHeader() {
         const topThis = this;
-        return <Row type="flex" justify="space-between" align="middle" style={{marginBottom: 16}}>
+        return <Row type="flex" justify="space-between" align="middle">
             <Col>
                 <Row type="flex" justify="start" align="middle">
                     <Col>
-                        <Avatar style={{
-                            borderRadius: '72px',
-                            display: 'block',
-                            width: '72px',
-                            height: '72px',
-                            backgroundColor: '#FFF'
-                        }}
+                        <Avatar className="header-avatar"
                                 size="large" icon="user"
                                 src="http://www.famliytree.cn/icon/timor.png"/>
                     </Col>
-                    <Col style={{marginLeft: 16, position: 'relative', top: 4}}>
+                    <Col className="header-content">
                         <Row>
                             <h2>早安，Handy，祝你开心每一天！</h2>
                         </Row>
@@ -54,12 +48,44 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
     render() {
         const topThis = this;
         return <Row className="member-welcome-page">
-            <Col style={{padding: 16}}>
-                <Breadcrumb style={{marginBottom: 16}}>
-                    <Breadcrumb.Item>首页</Breadcrumb.Item>
-                    <Breadcrumb.Item>个人信息</Breadcrumb.Item>
-                </Breadcrumb>
+            <Col className="welcome-header">
                 {topThis.renderHeader()}
+            </Col>
+            <Col span={16} className="welcome-content welcome-content-left">
+                <Card className="content-card" title="您的专属仓库">
+                    <Row className="content-card-warehouse">
+                        <Col className="warehouse-header">
+                            <p>
+                                <span>收件人</span>
+                                <span>大陆17477号仓库</span>
+                            </p>
+                            <p>
+                                <span>地址</span>
+                                <span>上海市黄浦区河南南路和蓬莱路交叉口24号楼402房间</span>
+                                <span>（ML0001）</span>
+                            </p>
+                            <p>
+                                <span>邮编</span>
+                                <span>4761111</span>
+                            </p>
+                            <p>
+                                <span>电话</span>
+                                <span>0376-588 7777 777</span>
+                            </p>
+                        </Col>
+                    </Row>
+                </Card>
+                <Card className="content-card" title="大陆动态" extra={<a href="#">更多</a>}>
+
+                </Card>
+            </Col>
+            <Col span={8} className="welcome-content welcome-content-right">
+                <Card className="content-card" title="温馨提示：操作流程">
+
+                </Card>
+                <Card className="content-card" title="联系客户">
+
+                </Card>
             </Col>
         </Row>;
     }

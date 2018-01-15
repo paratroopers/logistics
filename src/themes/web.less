@@ -63,8 +63,52 @@
 
 /** 会员中心*/
 .member-page{
-
+  .member-page-content{
+    background-color: #f0f2f5;
+  }
+  /** 欢迎界面*/
+  .member-welcome-page{
+    .welcome-header{
+      background: #fff;
+      padding: 16px 32px;
+      border-bottom: 1px solid #e8e8e8;
+      margin-bottom: 16px;
+      .header-avatar{
+        border-radius: 72px;
+        display: block;
+        width: 72px;
+        height: 72px;
+        background-color:#FFF;
+      }
+      .header-content{
+        margin-left: 16px;
+        position: relative;
+      }
+    }
+    .welcome-content{
+      .content-card{
+        width: 100%;
+        margin-bottom:16px;
+        &-warehouse{
+          .warehouse-header{
+            text-align: center;
+            margin: 32px;
+            border: 1px solid #e65922;
+            background-color: #e65922;
+          }
+        }
+      }
+      &-left{
+        padding:0 8px 0px 16px;
+      }
+      &-right{
+        padding:0 16px 0px 8px;
+      }
+    }
+  }
 }
+
+
 
 @media screen and (max-width: 767px) {
   /* 注册*/

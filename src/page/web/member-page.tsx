@@ -65,7 +65,7 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
                        collapsed={collapsed}>
                     <MemberNavigation></MemberNavigation>
                 </Sider>
-                <Content style={{backgroundColor: '#FFF'}}>
+                <Content className="member-page-content">
                     {children}
                 </Content>
             </Layout>
