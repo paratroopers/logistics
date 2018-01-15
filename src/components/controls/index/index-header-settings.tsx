@@ -4,6 +4,7 @@ import {PathConfig} from "../../../config/pathconfig";
 import {Context} from "../../../util/common";
 import {Cookies} from '../../../util/cookie';
 import {Row, Col, Popover, Avatar, Menu, Icon} from 'antd';
+import {HeaderMessage} from './index-header-message';
 
 interface HeaderSettingProps {
     member?: boolean;
@@ -64,23 +65,34 @@ export class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSet
         </Menu>;
     }
 
-
     render() {
         const topThis = this;
         const {state: {member}} = topThis;
-        return <Row className="tool-user">
-            <Col></Col>
+        return <Row className="tool-user" type="flex" align="middle" justify="start">
+            <Col>
+                <HeaderMessage></HeaderMessage>
+            </Col>
             <Col className="tool-user-right">
-                {member && <Popover placement="bottomRight"
-                                    overlayClassName="tool-user-popover"
-                                    autoAdjustOverflow={true}
-                                    content={this.renderUserNameContent()}
-                                    trigger="click">
+                <Popover placement="bottomRight"
+                         overlayClassName="tool-user-popover"
+                         autoAdjustOverflow={true}
+                         content={this.renderUserNameContent()}
+                         trigger="click">
                     <a className="tool-user-right-name">
                         <Avatar style={{marginRight: 5}} src="http://www.famliytree.cn/icon/timor.png"/>
                         Handy
                     </a>
-                </Popover>}
+                </Popover>
+                {/*{member && <Popover placement="bottomRight"*/}
+                                    {/*overlayClassName="tool-user-popover"*/}
+                                    {/*autoAdjustOverflow={true}*/}
+                                    {/*content={this.renderUserNameContent()}*/}
+                                    {/*trigger="click">*/}
+                    {/*<a className="tool-user-right-name">*/}
+                        {/*<Avatar style={{marginRight: 5}} src="http://www.famliytree.cn/icon/timor.png"/>*/}
+                        {/*Handy*/}
+                    {/*</a>*/}
+                {/*</Popover>}*/}
             </Col>
         </Row>
     }
