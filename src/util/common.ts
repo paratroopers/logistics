@@ -190,17 +190,19 @@ export class Context {
     }
 
     /**
-     * 获取当前ICON地址*/
-    static getIconAddress(name: string) {
-        return (window['CDN'] + 'icon/' + name + '.jpg');
+     * 获取图片文件的地址*/
+    static getImageUrl(Image: string) {
+        return (window['CDN'] + 'icon/' + Image);
     }
 
+    /**
+     * 获取Icon的ClassName*/
     static getIconClassName(name: string): string {
         return "iconfont " + name;
     }
 
     /** 返回系统Status*/
-    static OpenMessage(Status:number){
+    static OpenMessage(Status: number) {
         const messageId = NaConstants.CommonServerStatusLocale + Status;
         Notification.error({
             message: NaGlobal.intl.formatMessage({id: CommonLocale.Error}),
