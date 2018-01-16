@@ -6,7 +6,7 @@ import {MasterMobilePage} from './master-mobile-page';
 import MasterWebPage from './master-web-page';
 
 interface NaMasterMainPageProps {
-
+    children?: any;
 }
 
 interface NaMasterMainPageStates {

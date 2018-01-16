@@ -3,17 +3,17 @@ import {Form, Input, Button, Modal, Row, Col} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {Steps} from 'antd-mobile';
 import {isNullOrUndefined} from "util";
-import {RegisterAPI,LoginApi}from "../../../api/user";
+import {RegisterAPI, LoginApi}from "../../../api/user";
 import {GetCodeRequest} from "../../../api/model/request/common-request";
 import {ForgetRequest} from "../../../api/model/request/login-request";
-import { BaseResponse, Context} from '../../../util/common';
+import {BaseResponse, Context} from '../../../util/common';
 import {Notification} from "../../../components/controls/common/notification";
 
 interface NaLoginForgetProps extends FormComponentProps {
     visible?: boolean;
     onCancel?: () => void;
     /** 验证账号是否存在*/
-    validatorAccount?: (value:string,callback) => void;
+    validatorAccount?: (value: string, callback) => void;
 }
 
 interface NaLoginForgetStates {
@@ -21,8 +21,8 @@ interface NaLoginForgetStates {
     current?: number;
     countDown?: number;
     /** 验证密码*/
-    confirmDirty:boolean;
-    loading:boolean;
+    confirmDirty: boolean;
+    loading: boolean;
 }
 
 
@@ -33,7 +33,7 @@ class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetSta
             visible: props.visible ? props.visible : false,
             current: 0,
             countDown: 0,
-            confirmDirty:false,
+            confirmDirty: false,
             loading: false
         }
     }
@@ -70,8 +70,8 @@ class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetSta
     handleConfirmBlur = (e) => {
         const value = e.target.value;
         const topThis = this;
-        const {state:{confirmDirty}}=topThis;
-        topThis.setState({ confirmDirty: confirmDirty || !!value });
+        const {state: {confirmDirty}} = topThis;
+        topThis.setState({confirmDirty: confirmDirty || !!value});
     }
 
     checkPassword = (rule, value, callback) => {
@@ -86,9 +86,9 @@ class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetSta
 
     checkConfirm = (rule, value, callback) => {
         const topThis = this;
-        const {props: {form},state:{confirmDirty}} = topThis;
+        const {props: {form}, state: {confirmDirty}} = topThis;
         if (value && confirmDirty) {
-            form.validateFields(['NextPassword'], { force: true },()=>{
+            form.validateFields(['NextPassword'], {force: true}, () => {
 
             });
         }
@@ -96,21 +96,21 @@ class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetSta
     }
 
     /** 重置密码*/
-    Submit(){
-        const topThis=this;
-        const {props:{form}}=topThis;
-        form.validateFields({},(err,values)=>{
-            if(!err) {
+    Submit() {
+        const topThis = this;
+        const {props: {form}} = topThis;
+        form.validateFields({}, (err, values) => {
+            if (!err) {
                 const isMail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(values.account);
                 /** 发送验证码*/
-                const request: ForgetRequest = !isMail? {
+                const request: ForgetRequest = !isMail ? {
                     tel: values.account,
-                    pwd:values.Password,
-                    code:values.Code
-                }: {
+                    pwd: values.Password,
+                    code: values.Code
+                } : {
                     mail: values.account,
-                    pwd:values.Password,
-                    code:values.Code
+                    pwd: values.Password,
+                    code: values.Code
                 }
                 this.setState({loading: true});
                 LoginApi.Forget(request).then((data: BaseResponse) => {
@@ -130,17 +130,17 @@ class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetSta
     }
 
     onCodeOk() {
-        const topThis=this;
-        const {props:{form}}=topThis;
-        form.validateFields(["account"],(err,values)=>{
-            if(!err) {
+        const topThis = this;
+        const {props: {form}} = topThis;
+        form.validateFields(["account"], (err, values) => {
+            if (!err) {
                 const isMail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(values.account);
-                const type=  (isMail ? "1" : "0");
+                const type = (isMail ? "1" : "0");
                 /** 发送验证码*/
-                const request: GetCodeRequest = !isMail? {
+                const request: GetCodeRequest = !isMail ? {
                     tel: values.account,
                     type: type
-                }: {
+                } : {
                     mail: values.account,
                     type: type
                 }
@@ -162,7 +162,7 @@ class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetSta
 
     renderSteps(steps?: number) {
         const topThis = this;
-        const {props:{validatorAccount}}=topThis;
+        const {props: {validatorAccount}} = topThis;
         const size = 'default';
         const {getFieldDecorator} = this.props.form;
         const {countDown} = this.state;
@@ -179,14 +179,12 @@ class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetSta
                                 callback('请正确输入你的账号');
                             } else {
                                 /* 验证账号是否已经存在*/
-                                if(validatorAccount)
-                                {
-                                    validatorAccount(value,(message)=>{
+                                if (validatorAccount) {
+                                    validatorAccount(value, (message) => {
                                         callback(message);
                                     });
 
-                                }else
-                                {
+                                } else {
                                     callback();
                                 }
                             }
@@ -220,7 +218,7 @@ class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetSta
         stepsContent.push(<Col span={steps ? 14 : 0}>
             <Form.Item>
                 {getFieldDecorator('Code', {
-                    rules: [{pattern:/^\d{4}$/,required: true, message: '请正确输入你的验证码'}],
+                    rules: [{pattern: /^\d{4}$/, required: true, message: '请正确输入你的验证码'}],
                 })(
                     <Input size={size} placeholder="验证码"/>
                 )}
