@@ -4,6 +4,7 @@ import {withRouter} from "react-router";
 import {Row, Col, Avatar, Card} from "antd";
 import {FormMessageList} from '../../../components/form/form-message-list';
 import {FormSteps} from '../../../components/form/form-steps';
+import {CustomerserviceDropdown} from '../../../components/controls/customerservice/customerservice-dropdown';
 
 interface MemberWelcomePageProps {
 }
@@ -107,10 +108,11 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
             </Col>
             <Col span={8} className="welcome-content welcome-content-right">
                 <Card className="content-card" title="温馨提示：操作流程">
-                    <FormSteps direction="vertical" size="small" itemClassStyle={{height: '80px'}}
+                    <FormSteps direction="vertical" size="small" itemClassStyle={{height: '40px'}}
                                data={this.getStrpsData()}></FormSteps>
                 </Card>
                 <Card className="content-card" title="联系客户">
+                    <CustomerserviceDropdown></CustomerserviceDropdown>
                 </Card>
             </Col>
         </Row>;
