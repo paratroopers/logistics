@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {Row, Col, Popover,Avatar,Icon,Badge} from 'antd';
+import {Row, Col, Popover,Avatar,Icon,Badge,Card} from 'antd';
+import {FormMessageList}from '../../form/form-message-list';
 
 interface HeaderMessageProps {
 
@@ -9,36 +10,22 @@ interface HeaderMessageStates {
 
 }
 
-const data = [
-    {
-        title: 'Ant Design Title 1',
-    },
-    {
-        title: 'Ant Design Title 2',
-    },
-    {
-        title: 'Ant Design Title 3',
-    },
-    {
-        title: 'Ant Design Title 4',
-    },
-];
-
-
 export class HeaderMessage extends React.Component<HeaderMessageProps, HeaderMessageStates> {
     constructor(props, context) {
         super(props, context);
     }
 
 
-    renderContent(){
-        return <div>11111111</div>
+    renderContent() {
+        return <Card title="大陆动态" extra={<a href="#">更多</a>} className="header-message-card">
+            <FormMessageList></FormMessageList>
+        </Card>
     }
 
     render() {
         const topThis = this;
         return <Popover placement="bottomRight"
-                        overlayClassName="tool-user-popover"
+                        overlayClassName="tool-message-popover"
                         autoAdjustOverflow={true}
                         content={topThis.renderContent()}
                         trigger="click">
