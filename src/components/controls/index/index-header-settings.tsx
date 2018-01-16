@@ -69,7 +69,7 @@ export class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSet
         const topThis = this;
         const {state: {member}} = topThis;
         return <Row className="tool-user" type="flex" align="middle" justify="start">
-            <Col>
+            <Col className="tool-user-message">
                 <HeaderMessage></HeaderMessage>
             </Col>
             <Col className="tool-user-right">
