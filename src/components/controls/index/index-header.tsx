@@ -91,7 +91,7 @@ class Header extends Component<HeaderProps, HeaderStates> {
             <Col>
                 <HeaderLogo></HeaderLogo>
             </Col>
-            <Col style={{width: 'calc(100% - 220px)'}}>
+            <Col style={{width: 'calc(100% - 252px)'}}>
                 <Row type="flex" align="middle">
                     <Col xs={0} sm={0} md={16} lg={16} xl={16}>
                         <HeaderNavigation type={NavigationType.Default} theme={menuTheme}
