@@ -249,7 +249,7 @@ class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetSta
             <p>验证码将会发送至你的注册邮箱或手机</p>
             <Row align="top" type="flex" justify="start">
                 <Col span={24} style={{marginBottom: '14px'}}>
-                    <Steps children={{}} direction="horizontal" size="small" current={this.state.current}>
+                    <Steps direction="horizontal" size="small" current={this.state.current}>
                         <Steps.Step key="1" description={"获取验证码"}></Steps.Step>
                         <Steps.Step key="2" description={"重置密码"}></Steps.Step>
                     </Steps>
