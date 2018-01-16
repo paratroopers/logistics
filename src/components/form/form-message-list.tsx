@@ -4,6 +4,7 @@ import {InfiniteScroll} from 'react-infinite-scroller';
 
 interface FormMessageListProps {
 }
+
 interface FormMessageListStates {
     data: any,
     loading: boolean,
@@ -46,27 +47,27 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
 
     render() {
         return <div className="demo-infinite-container">
-                <InfiniteScroll
-                    initialLoad={false}
-                    pageStart={0}
-                    loadMore={this.handleInfiniteOnLoad}
-                    hasMore={!this.state.loading && this.state.hasMore}
-                    useWindow={false}>
-                    <List dataSource={this.state.data}
-                          renderItem={item => (
-                              <List.Item key={item.id}>
-                                  <List.Item.Meta
-                                      avatar={<Avatar
-                                          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
-                                      title={<a href="https://ant.design">{item.name.last}</a>}
-                                      description={item.email}
-                                  />
-                                  <div>Content</div>
-                              </List.Item>
-                          )}>
-                        {this.state.loading && this.state.hasMore && <Spin className="demo-loading"/>}
-                    </List>
-                </InfiniteScroll>
-            </div>;
+            <InfiniteScroll
+                initialLoad={false}
+                pageStart={0}
+                loadMore={this.handleInfiniteOnLoad}
+                hasMore={!this.state.loading && this.state.hasMore}
+                useWindow={false}>
+                <List dataSource={this.state.data}
+                      renderItem={item => (
+                          <List.Item key={item.id} extra={null}>
+                              <List.Item.Meta
+                                  avatar={<Avatar
+                                      src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
+                                  title={<a href="https://ant.design">{item.name.last}</a>}
+                                  description={item.email}
+                              />
+                              <div>Content</div>
+                          </List.Item>
+                      )}>
+                    {this.state.loading && this.state.hasMore && <Spin className="demo-loading"/>}
+                </List>
+            </InfiniteScroll>
+        </div>;
     }
 }
