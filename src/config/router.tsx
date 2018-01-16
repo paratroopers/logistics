@@ -11,7 +11,8 @@ import {
     MemberPage,
     MemberConsigneePage,
     MemberWelcomePage,
-    UserRegisterPage
+    UserRegisterPage,
+    WarehouseStoragePage
 } from '../page';
 import {
     MemberPage as MobileMemberPage,
@@ -34,6 +35,7 @@ const routerConfig = (
             <Route path={PathConfig.VIPCenterPage} component={MemberPage}>
                 <IndexRoute component={MemberWelcomePage}></IndexRoute>
                 <Route path={PathConfig.VIPConsigneeAddressPage} component={MemberConsigneePage}/>
+                <Route path={PathConfig.WarehouseStoragePage} component={WarehouseStoragePage}/>
             </Route>
         </Route>
         <Route path={PathConfig.LoginPage} component={UserLoginPage}/>

@@ -1,4 +1,5 @@
 import {NavLocale} from '../locales/localeid';
+import {PathConfig} from './pathconfig';
 import {NaGlobal} from '../util/common';
 
 const NavTree = [
@@ -163,7 +164,7 @@ const NavTree = [
         Icon: 'home',
         Children: [{
             Title: NavLocale.Storage,
-            Key: NavLocale.Storage,
+            Key: PathConfig.WarehouseStoragePage,
             Icon: ''
         }, {
             Title: NavLocale.Pack,

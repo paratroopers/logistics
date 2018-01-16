@@ -55,6 +55,16 @@
       color: @primary-color;
     }
     &-user {
+      &-message{
+        height: 80px;
+        line-height: 80px;
+        padding: 0px 16px;
+        cursor: pointer;
+        &:hover {
+          background-color: #e6f7ff;
+          border-bottom: 1px solid rgb(194, 194, 194);
+        }
+      }
       &-right {
         height: 80px;
         line-height: 80px;
@@ -74,6 +84,12 @@
           :hover {
             //background-color: @na-orange-1;
           }
+        }
+      }
+      &-popover {
+        .ant-popover-inner-content {
+          padding: 0px !important;
+          width: 120px;
         }
       }
     }
@@ -118,12 +134,10 @@
   }
 }
 
-.tool-user {
-  &-popover {
-    .ant-popover-inner-content {
-      padding: 0px !important;
-      width: 120px;
-    }
+.tool-user-popover {
+  .ant-popover-inner-content {
+    padding: 0px !important;
+    width: 120px;
   }
 }
 

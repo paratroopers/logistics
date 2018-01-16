@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Row, Col, Popover,Avatar,Icon} from 'antd';
+import {Row, Col, Popover,Avatar,Icon,Badge} from 'antd';
 
 interface HeaderMessageProps {
 
@@ -31,17 +31,20 @@ export class HeaderMessage extends React.Component<HeaderMessageProps, HeaderMes
     }
 
 
-    renderUserNameContent(){
-        return <div></div>
+    renderContent(){
+        return <div>11111111</div>
     }
 
     render() {
         const topThis = this;
         return <Popover placement="bottomRight"
+                        overlayClassName="tool-user-popover"
                         autoAdjustOverflow={true}
-                        content={topThis.renderUserNameContent()}
+                        content={topThis.renderContent()}
                         trigger="click">
-            <Icon type="bell" />
+            <Badge count={99}>
+                <Icon type="bell" style={{fontSize:16,padding:4}}/>
+            </Badge>
         </Popover>;
     }
 }

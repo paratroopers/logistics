@@ -19,6 +19,8 @@ export class PathConfig {
     static MobilePage = "/demo-mobile";
     /** 注册*/
     static RegisterPage = "/register";
+    /* 入库*/
+    static WarehouseStoragePage="/warehouse/storage";
 }
 
 export class MobilePathConfig {

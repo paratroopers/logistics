@@ -9,6 +9,7 @@ import {NaMobileTabBar} from "./demo/na-mobile-tabbar";
 import UserRegisterPage from "./web/user/user-register-page";
 import UserLoginPage from "./web/user/user-login-page";
 import {NaMasterMainPage} from './master/master-main-page';
+import {WarehouseStoragePage} from './web/warehouseadmin/warehouse-storage-page';
 
 export {
     NaMasterMainPage,
@@ -20,5 +21,6 @@ export {
     MemberPage,
     MemberConsigneePage,
     MemberWelcomePage,
-    NaMobileTabBar
+    NaMobileTabBar,
+    WarehouseStoragePage
 }
