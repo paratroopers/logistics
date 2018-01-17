@@ -46,3 +46,10 @@ export class LoginApi {
         return new Request<ForgetRequest, BaseResponse>().post(url, data);
     }
 }
+
+export  class  MememberApi{
+    static async LoginOut() {
+        let url: string = BasicsUrl + "Memeber/Logout";
+        return new Request<LoginRequest, BaseResponse>().post(url);
+    }
+}
