@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Layout} from "antd";
-import {NaGlobal} from '../../util/common';
+import {Global} from '../../util/common';
 import {WebAction} from "../../actions/index";
 import {connect} from "react-redux";
 import Header from "../../components/controls/index/index-header";
@@ -27,7 +27,7 @@ class MasterWebPage extends React.Component<MasterWebPageProps, MasterWebPageSta
     }
 
     onChangeLanguage(key: any) {
-        NaGlobal.store.dispatch(WebAction.onChangeLanguage(key));
+        Global.store.dispatch(WebAction.onChangeLanguage(key));
     }
 
     componentWillReceiveProps(nextProps) {

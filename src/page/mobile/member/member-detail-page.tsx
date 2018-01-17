@@ -2,7 +2,7 @@ import * as React from 'react';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux'
 import {Grid, Carousel} from 'antd-mobile';
-import {NaGlobal} from '../../../util/common';
+import {Global} from '../../../util/common';
 
 
 interface MemberDetailPageProps {
@@ -20,7 +20,7 @@ class MemberDetailPage extends React.Component<MemberDetailPageProps, MemberDeta
             return {
                 icon: <i style={{fontSize: item.FontSize, lineHeight: '22px', color: item.Color}}
                          className={'iconfont ' + item.Icon}></i>,
-                text: NaGlobal.intl.formatMessage({id: item.Title})
+                text: Global.intl.formatMessage({id: item.Title})
             };
         });
     }

@@ -14,7 +14,7 @@ import {
     defaultsDeep,
 } from "lodash";
 import * as scrollIntoView from "dom-scroll-into-view";
-import {NaConstants}from "./common";
+import {Constants}from "./common";
 import {ScreenModeEnum}from "../api/model/common-model";
 
 
@@ -370,19 +370,19 @@ export class NaUtil {
 
     static getScrrenMode(innerWidth) {
         let mode = 0;
-        if (innerWidth < NaConstants.xl) {
+        if (innerWidth < Constants.xl) {
             mode = ScreenModeEnum.xl;
         }
-        if (innerWidth < NaConstants.lg) {
+        if (innerWidth < Constants.lg) {
             mode = ScreenModeEnum.lg;
         }
-        if (innerWidth < NaConstants.md) {
+        if (innerWidth < Constants.md) {
             mode = ScreenModeEnum.md;
         }
-        if (innerWidth < NaConstants.sm) {
+        if (innerWidth < Constants.sm) {
             mode = ScreenModeEnum.sm;
         }
-        if (innerWidth < NaConstants.xs) {
+        if (innerWidth < Constants.xs) {
             mode = ScreenModeEnum.sm;
         }
         return mode;

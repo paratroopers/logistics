@@ -81,14 +81,14 @@ export interface BaseRequestParam<T> {
     FormData?: FormData;
 }
 
-export class NaGlobal {
+export class Global {
     static store: Store<any>;
     static intl: ReactIntl.InjectedIntl;
     static saga: SagaMiddleware;
     static user: SagaMiddleware;
 }
 
-export class NaConstants {
+export class Constants {
     /**
      *服务器状态
      */
@@ -102,11 +102,11 @@ export class NaConstants {
     static md = 992;
     static lg = 1200;
     static xl = 1600;
-    static minXS = window.innerWidth < NaConstants.xs;
-    static minSM = window.innerWidth < NaConstants.sm;
-    static minMD = window.innerWidth < NaConstants.md;
-    static minLG = window.innerWidth < NaConstants.lg;
-    static minXL = window.innerWidth < NaConstants.xl;
+    static minXS = window.innerWidth < Constants.xs;
+    static minSM = window.innerWidth < Constants.sm;
+    static minMD = window.innerWidth < Constants.md;
+    static minLG = window.innerWidth < Constants.lg;
+    static minXL = window.innerWidth < Constants.xl;
 }
 
 export class Context {
@@ -203,10 +203,10 @@ export class Context {
 
     /** 返回系统Status*/
     static OpenMessage(Status: number) {
-        const messageId = NaConstants.CommonServerStatusLocale + Status;
+        const messageId = Constants.CommonServerStatusLocale + Status;
         Notification.error({
-            message: NaGlobal.intl.formatMessage({id: CommonLocale.Error}),
-            description: NaGlobal.intl.formatMessage({id: messageId})
+            message: Global.intl.formatMessage({id: CommonLocale.Error}),
+            description: Global.intl.formatMessage({id: messageId})
         },);
     }
 }

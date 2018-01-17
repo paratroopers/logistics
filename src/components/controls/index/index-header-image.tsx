@@ -4,14 +4,14 @@ import {Icon} from 'antd';
 import 'rc-banner-anim/assets/index.css';
 import TweenOne from 'rc-tween-one';
 import Cost from '../quotation/quotation-user-query';
-import {NaConstants} from '../../../util/common';
+import {Constants} from '../../../util/common';
 
 const BgElement = Element.BgElement;
 
 export class MotionHeaderImage extends React.Component<any, any> {
     render() {
         const height = window.innerHeight - 80 + 'px';
-        const isMobile = window.innerWidth <= NaConstants.sm;
+        const isMobile = window.innerWidth <= Constants.sm;
         return (<div>
                 <Cost isHeard={true} isMobile={true} className="motion-banner-wrapper-right"
                                style={{zIndex: 1000}}></Cost>

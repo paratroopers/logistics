@@ -1,14 +1,14 @@
 import * as React from "react";
 import {Component} from "react";
 import {withRouter, hashHistory} from "react-router";
-import {NaGlobal} from '../../util/common';
+import {Global} from '../../util/common';
 import {connect} from 'react-redux'
 import {Layout} from "antd";
 
 const {Content, Sider} = Layout;
 import {MemberNavigation} from "../../components/controls/member/member-navigation";
 import {NaUtil} from "../../util/util";
-import {NaConstants} from '../../util/common';
+import {Constants} from '../../util/common';
 import {ScreenModeEnum} from "../../api/model/common-model";
 import {PathConfig} from '../../config/pathconfig';
 import {Cookies} from '../../util/cookie';
@@ -52,7 +52,7 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
         const topThis = this;
         const {state: {collapsed}, props: {children, showNav}} = topThis;
         const sider = {collapsedWidth: NaUtil.getScrrenMode(window.innerWidth) !== ScreenModeEnum.sm ? 64 : 0};
-        const siderStyle = NaConstants.minSM ? {height: (window.innerHeight - 95) + 'px'} : {};
+        const siderStyle = Constants.minSM ? {height: (window.innerHeight - 95) + 'px'} : {};
         const siderHidden = showNav ? {disaplay: 'block'} : {disaplay: 'none'};
         // collapsedWidth={NaUtil.getScrrenMode(window.innerWidth) !== ScreenModeEnum.sm ? '' : 0}
         return <div className="member-page" style={{maxWidth: '1200px', margin: '0 auto'}}>

@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import {AppLocaleStatic} from "../../../api/model/common-model";
 import {getLocale} from "../../../locales";
 import {IntlProvider, injectIntl} from 'react-intl';
-import {NaGlobal} from "../../../util/common";
+import {Global} from "../../../util/common";
 
 export interface LocalProviderProps {
     localeKey?: string;
@@ -55,7 +55,7 @@ class LocalProvider extends Component<LocalProviderProps, LocalProviderStates> {
     }
 
     renderInjectIntl = injectIntl((props) => {
-        NaGlobal.intl = props.intl;
+        Global.intl = props.intl;
         const topThis = this;
         const {props: {children}} = topThis;
         return <div>{children}</div>;

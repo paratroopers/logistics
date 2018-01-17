@@ -1,7 +1,7 @@
 import * as request from "superagent";
 import * as Mock from "mockjs";
 import * as moment from "moment";
-import {BaseRequestParam, BaseResponse, NaGlobal, NaConstants, Context} from './common';
+import {BaseRequestParam, BaseResponse, Global, Constants, Context} from './common';
 import {CommonLocale} from "../locales/localeid";
 import {Notification} from "../components/controls/common/notification";
 import {message} from 'antd';
@@ -75,8 +75,8 @@ export class Request<TRequest, TResponse extends BaseResponse> {
                     if (!response) {
                         if (!param.IgnoreError) {
                             Notification.error({
-                                message: NaGlobal.intl.formatMessage({id: CommonLocale.Error}),
-                                description: NaGlobal.intl.formatMessage({id: CommonLocale.ResponseError})
+                                message: Global.intl.formatMessage({id: CommonLocale.Error}),
+                                description: Global.intl.formatMessage({id: CommonLocale.ResponseError})
                             },);
                         }
                         resolve(({
@@ -93,8 +93,8 @@ export class Request<TRequest, TResponse extends BaseResponse> {
                                 resolve(Mock.mock(response.body))
                             }
                             if (response.body.Status > 0) {
-                                const messageId = NaConstants.CommonServerStatusLocale + response.body.Status;
-                                let message = NaGlobal.intl.formatMessage({id: messageId});
+                                const messageId = Constants.CommonServerStatusLocale + response.body.Status;
+                                let message = Global.intl.formatMessage({id: messageId});
                                 if (message !== messageId) {
                                     //如果定义了status对应的消息，替换消息内容
                                     response.body.Message = message;
@@ -110,15 +110,15 @@ export class Request<TRequest, TResponse extends BaseResponse> {
                     } else {
                         if (!param.IgnoreError) {
                             if (response.unauthorized) {
-                                message.error(NaGlobal.intl.formatMessage({id: CommonLocale.ResponseUnauthorized}));
+                                message.error(Global.intl.formatMessage({id: CommonLocale.ResponseUnauthorized}));
                             } else if (response.notFound) {
-                                message.error(NaGlobal.intl.formatMessage({id: CommonLocale.ResponseNotFound}));
+                                message.error(Global.intl.formatMessage({id: CommonLocale.ResponseNotFound}));
 
                             } else if (response.badRequest) {
-                                message.error(NaGlobal.intl.formatMessage({id: CommonLocale.ResponseBadRequest}));
+                                message.error(Global.intl.formatMessage({id: CommonLocale.ResponseBadRequest}));
 
                             } else {
-                                message.error(NaGlobal.intl.formatMessage({id: CommonLocale.ResponseError}));
+                                message.error(Global.intl.formatMessage({id: CommonLocale.ResponseError}));
                             }
                         }
                         resolve(({

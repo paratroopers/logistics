@@ -1,6 +1,6 @@
 import {NavLocale} from '../locales/localeid';
 import {PathConfig} from './pathconfig';
-import {NaGlobal} from '../util/common';
+import {Global} from '../util/common';
 
 const NavTree = [
     {

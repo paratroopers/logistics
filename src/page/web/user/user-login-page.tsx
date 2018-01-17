@@ -4,12 +4,12 @@ import {Form, Icon, Input, Button, Checkbox, Row, Col, Layout, message} from 'an
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {PathConfig, MobilePathConfig} from '../../../config/pathconfig';
 import UserLoginForgetPage from './user-login-forget-page';
-import {NaGlobal} from '../../../util/common';
+import {Global} from '../../../util/common';
 import {WebAction} from "../../../actions/index";
 import {LoginRequest} from '../../../api/model/request/login-request';
 import {LoginApi} from '../../../api/user';
 import {Cookies} from '../../../util/cookie';
-import {NaConstants,Context} from '../../../util/common';
+import {Constants,Context} from '../../../util/common';
 
 const {Header, Content} = Layout;
 
@@ -58,8 +58,8 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
                         /** 设置登录信息*/
                         Context.setMerchantData({isLogin: true});
                         /** 更改登录的状态*/
-                        NaGlobal.store.dispatch(WebAction.GetLoginState(true));
-                        if (window.innerWidth <= NaConstants.xs)
+                        Global.store.dispatch(WebAction.GetLoginState(true));
+                        if (window.innerWidth <= Constants.xs)
                             hashHistory.push(MobilePathConfig.UserCenter);
                         else
                             hashHistory.push(PathConfig.VIPCenterPage);

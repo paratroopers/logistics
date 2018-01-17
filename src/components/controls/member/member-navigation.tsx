@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Menu, Icon} from 'antd';
 import {hashHistory} from 'react-router';
-import {NaGlobal} from '../../../util/common';
+import {Global} from '../../../util/common';
 import NavTree from '../../../config/navconfig';
 
 
@@ -25,11 +25,11 @@ export class MemberNavigation extends React.Component<MemberNavigationProps, Mem
         return tree.map(item => {
             if (item.Children)
                 return <SubMenu key={item.Key} title={<span><Icon
-                    type={item.Icon}/><span>{NaGlobal.intl.formatMessage({id: item.Title})}</span></span>}>
+                    type={item.Icon}/><span>{Global.intl.formatMessage({id: item.Title})}</span></span>}>
                     {this.renderMenu(item.Children)}
                 </SubMenu>;
             else {
-                return <Menu.Item key={item.Key}>{NaGlobal.intl.formatMessage({id: item.Title})}</Menu.Item>
+                return <Menu.Item key={item.Key}>{Global.intl.formatMessage({id: item.Title})}</Menu.Item>
             }
         });
     }

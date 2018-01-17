@@ -1,7 +1,7 @@
 import * as React from "react";
 import {hashHistory} from 'react-router';
 import {Row, Menu, Dropdown, Icon} from 'antd';
-import {NaGlobal} from "../../../util/common";
+import {Global} from "../../../util/common";
 import {CommonLocale} from "../../../locales/localeid";
 import {PathConfig} from "../../../config/pathconfig";
 
@@ -40,7 +40,7 @@ export class HeaderNavigation extends React.Component<HeaderNavigationProps, Hea
     }
 
     renderButtonNavigation(): JSX.Element {
-        const {formatMessage} = NaGlobal.intl;
+        const {formatMessage} = Global.intl;
         const menu = <Menu className="na-header-button-navigation">
             <Menu.Item
                 key={PathConfig.HomePage}>{formatMessage({id: CommonLocale.HeaderMenuHome})}</Menu.Item>
@@ -67,13 +67,13 @@ export class HeaderNavigation extends React.Component<HeaderNavigationProps, Hea
                   className="na-header-navigation"
                   onClick={this.onClickNavigation.bind(this)}>
                 <Menu.Item
-                    key={PathConfig.HomePage}>{NaGlobal.intl.formatMessage({id: CommonLocale.HeaderMenuHome})}</Menu.Item>
+                    key={PathConfig.HomePage}>{Global.intl.formatMessage({id: CommonLocale.HeaderMenuHome})}</Menu.Item>
                 <Menu.Item
-                    key={PathConfig.CostEstimatePage}>{NaGlobal.intl.formatMessage({id: CommonLocale.HeaderMenuCostEstimate})}</Menu.Item>
+                    key={PathConfig.CostEstimatePage}>{Global.intl.formatMessage({id: CommonLocale.HeaderMenuCostEstimate})}</Menu.Item>
                 <Menu.Item
-                    key={PathConfig.CompanyProfilePage}>{NaGlobal.intl.formatMessage({id: CommonLocale.HeaderMenuCompanyProfile})}</Menu.Item>
+                    key={PathConfig.CompanyProfilePage}>{Global.intl.formatMessage({id: CommonLocale.HeaderMenuCompanyProfile})}</Menu.Item>
                 <Menu.Item
-                    key={PathConfig.VIPCenterPage}>{NaGlobal.intl.formatMessage({id: CommonLocale.HeaderMenuVIPCenter})}</Menu.Item>
+                    key={PathConfig.VIPCenterPage}>{Global.intl.formatMessage({id: CommonLocale.HeaderMenuVIPCenter})}</Menu.Item>
             </Menu>
         </Row>;
     }

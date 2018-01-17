@@ -10,7 +10,7 @@ import {isNullOrUndefined} from "util";
 const OverPack = ScrollAnim.OverPack;
 import {CommonLocale} from '../../../locales/localeid';
 import Cost from '../quotation/quotation-user-query';
-import {NaGlobal} from '../../../util/common';
+import {Global} from '../../../util/common';
 import {InjectedIntlProps} from "react-intl";
 
 interface MotionBannerControlProps extends InjectedIntlProps {
@@ -30,7 +30,7 @@ export default class MotionBannerControl extends Component<MotionBannerControlPr
     render() {
         const topThis = this;
         const {props, props: {className}} = topThis;
-        const {formatMessage} = NaGlobal.intl;
+        const {formatMessage} = Global.intl;
         return (
             <OverPack replay playScale={[0.3, 0.1]} {...props}
                       className={isNullOrUndefined(className) ? "motion-banner" : className}>

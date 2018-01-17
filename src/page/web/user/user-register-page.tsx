@@ -5,7 +5,7 @@ import {PathConfig}from "../../../config/pathconfig";
 import {Layout, Row, Col, Tabs, Button, Checkbox, Select, Icon, Form, Modal} from "antd";
 import {RegisterEnum}from "../../../api/model/common-model";
 const {Header, Content, Footer} = Layout;
-import {NaGlobal, BaseResponse, Context} from '../../../util/common';
+import {Global, BaseResponse, Context} from '../../../util/common';
 import {connect} from "react-redux";
 import {WebAction} from "../../../actions/index";
 const {TabPane} = Tabs;
@@ -59,7 +59,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
 
     onChangeLanguage(key: any) {
         console.log(key);
-        NaGlobal.store.dispatch(WebAction.onChangeLanguage(key));
+        Global.store.dispatch(WebAction.onChangeLanguage(key));
     }
 
     /** 账号是否存在*/

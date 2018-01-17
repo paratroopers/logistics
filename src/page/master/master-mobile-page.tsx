@@ -4,7 +4,7 @@ import {hashHistory} from 'react-router';
 import {connect} from 'react-redux';
 import {TabBar, NavBar} from 'antd-mobile';
 import {Icon as WebIcon, Layout} from 'antd';
-import {NaGlobal} from '../../util/common';
+import {Global} from '../../util/common';
 import {MobileSelectTabAction, MobileNavTreeAction} from '../../actions/index';
 import {PathConfig, MobilePathConfig} from '../../config/pathconfig';
 import {MobilePopover} from '../../components/controls/index/mobile/mobile-popover';
@@ -74,7 +74,7 @@ export class MasterMobilePage extends React.Component<MasterMobilePageProps, Mas
                 pathname = MobilePathConfig.UserHelper;
                 break;
         }
-        NaGlobal.store.dispatch(MobileSelectTabAction.SelectTabLoaded(Number(type)));
+        Global.store.dispatch(MobileSelectTabAction.SelectTabLoaded(Number(type)));
         hashHistory.push({pathname: pathname, query: {selectedTab: type}});
     }
 
@@ -86,7 +86,7 @@ export class MasterMobilePage extends React.Component<MasterMobilePageProps, Mas
         if (this.props.callBack)
             return <a className="mian-theme-color" onClick={x => {
                 hashHistory.push({pathname: this.props.callBack});
-                NaGlobal.store.dispatch(MobileNavTreeAction.SelectTabLoaded(null, null));
+                Global.store.dispatch(MobileNavTreeAction.SelectTabLoaded(null, null));
             }}><i className="iconfont icon-disclosureindicator"></i></a>
         else
             return <a className="left-icon"><img src="http://www.famliytree.cn/icon/logo.png"/></a>;

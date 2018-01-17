@@ -3,7 +3,7 @@ import {withRouter} from 'react-router';
 import {List, Badge} from 'antd-mobile';
 import {UserAvatar} from '../../../components/controls/user/user-avatar';
 import {hashHistory} from 'react-router';
-import {NaGlobal} from '../../../util/common';
+import {Global} from '../../../util/common';
 import MobileNavTree from '../../../config/mobile-navconfig';
 import {MobileNavTreeAction} from '../../../actions/index';
 import {MobilePathConfig, PathConfig} from '../../../config/pathconfig';
@@ -34,13 +34,13 @@ export class MemberPage extends React.Component<MemberPageProps, MemberPageState
 
     onItemClick(data: any) {
         if (data) {
-            NaGlobal.store.dispatch(MobileNavTreeAction.SelectTabLoaded(data, MobilePathConfig.UserCenter));
+            Global.store.dispatch(MobileNavTreeAction.SelectTabLoaded(data, MobilePathConfig.UserCenter));
             hashHistory.push({pathname: MobilePathConfig.UserCenterDetail});
         }
     }
 
     renderList(data) {
-        const FormatMessage = NaGlobal.intl.formatMessage;
+        const FormatMessage = Global.intl.formatMessage;
         return data.map(item => {
             return <List key={item.Title} renderHeader={() => FormatMessage({id: item.Title})}>
                 {
