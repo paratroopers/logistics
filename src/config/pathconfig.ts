@@ -20,11 +20,14 @@ export class PathConfig {
     /** 注册*/
     static RegisterPage = "/register";
     /* 入库*/
-    static WarehouseStoragePage="/warehouse/storage";
+    static WarehouseStoragePage = "/warehouse/storage";
+
 }
 
 export class MobilePathConfig {
     static UserCenter = "/mb/user";
     static UserCenterDetail = "/mb/user/detail";
     static UserHelper = "/mb/user/helper";
+    /* 手机端用户主页*/
+    static UserHome = "/mb/user/home";
 }

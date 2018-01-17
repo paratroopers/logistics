@@ -39,6 +39,10 @@ export class MemberPage extends React.Component<MemberPageProps, MemberPageState
         }
     }
 
+    onUserItemClick() {
+        hashHistory.push({pathname: MobilePathConfig.UserHome});
+    }
+
     renderList(data) {
         const FormatMessage = Global.intl.formatMessage;
         return data.map(item => {
@@ -60,7 +64,7 @@ export class MemberPage extends React.Component<MemberPageProps, MemberPageState
     render() {
         return <div className='mobile-nav'>
             <List>
-                <List.Item arrow="horizontal" className="mobile-nav-userinfo">
+                <List.Item arrow="horizontal" className="mobile-nav-userinfo" onClick={this.onUserItemClick.bind(this)}>
                     <UserAvatar className="user-img" size={46} attr="Photo"></UserAvatar>
                     <div className="some-information">
                         <div className="some-information-conetnt">早安，Araysa</div>
