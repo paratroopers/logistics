@@ -37,6 +37,7 @@ export class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSet
                 hashHistory.push({pathname: PathConfig.VIPCenterPage});
                 break;
             case "2":
+
                 Context.setMerchantData({isLogin: false});
                 hashHistory.push({pathname: PathConfig.LoginPage});
                 topThis.setState({member: false});
