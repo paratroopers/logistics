@@ -35,9 +35,13 @@ export class MemberNavigation extends React.Component<MemberNavigationProps, Mem
     }
 
     render() {
+        const defaultKey=NavTree.map(function (item,index) {
+            return item.Key;
+        })
+
         return <Menu
             style={this.props.style}
-            defaultOpenKeys={['sub1']}
+            defaultOpenKeys={defaultKey}
             mode={"inline"}
             onClick={(obj: { item, key, keyPath }) => {
                 hashHistory.push({pathname: obj.key});
