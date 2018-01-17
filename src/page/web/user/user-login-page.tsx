@@ -131,7 +131,7 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
                                     <Input  prefix={<Icon type="lock" style={iconSize}/>}
                                            size={inputSize}
                                            type={this.state.type}
-                                           placeholder="密码" onClick ={this.changeType.bind(this)}/>
+                                           placeholder="密码" onFocus={this.changeType.bind(this)}/>
                                 )}
                             </Form.Item>
                             <Form.Item>
