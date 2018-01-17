@@ -20,6 +20,7 @@ interface UserLoginPageProps extends FormComponentProps {
 interface UserLoginPageStates {
     visible?: boolean;
     loading?: boolean;
+    type:string;
 }
 
 class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageStates> {
@@ -27,7 +28,8 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
         super(props, content);
         this.state = {
             visible: false,
-            loading: false
+            loading: false,
+            type:'text'
         }
     }
 
@@ -75,6 +77,11 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
         })
     }
 
+    changeType(){
+        this.setState({type:'password'});
+    }
+
+
     render() {
         const inputSize = 'large';
         const iconSize = {fontSize: '18px', marginTop: '-8px'};
@@ -110,7 +117,7 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
                         <div className="na-login-content-title">
                             <p>为你的境外物流，提供专业优质的服务</p>
                         </div>
-                        <Form className="na-login-content-form">
+                        <Form className="na-login-content-form" >
                             <Form.Item>
                                 {getFieldDecorator('user', {
                                     rules: [{required: true, message: '请输入手机或者邮箱!'}],
@@ -121,10 +128,10 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
                                 {getFieldDecorator('pwd', {
                                     rules: [{required: true, message: '请输入密码!'}],
                                 })(
-                                    <Input prefix={<Icon type="lock" style={iconSize}/>}
+                                    <Input  prefix={<Icon type="lock" style={iconSize}/>}
                                            size={inputSize}
-                                           type="password"
-                                           placeholder="密码"/>
+                                           type={this.state.type}
+                                           placeholder="密码" onClick ={this.changeType.bind(this)}/>
                                 )}
                             </Form.Item>
                             <Form.Item>
