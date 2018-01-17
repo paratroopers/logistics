@@ -114,7 +114,7 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
                             <Form.Item>
                                 {getFieldDecorator('user', {
                                     rules: [{required: true, message: '请输入手机或者邮箱!'}],
-                                })(<Input prefix={<Icon type="user" style={iconSize}/>} size={inputSize}
+                                })(<Input prefix={<Icon type="user" style={iconSize}/>}  size={inputSize}
                                           placeholder="手机或邮箱"/>)}
                             </Form.Item>
                             <Form.Item>
@@ -128,12 +128,6 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
                                 )}
                             </Form.Item>
                             <Form.Item>
-                                {getFieldDecorator('remember', {
-                                    valuePropName: 'checked',
-                                    initialValue: true,
-                                })(
-                                    <Checkbox className="na-login-content-form-remember">记住我</Checkbox>
-                                )}
                                 <a className="na-login-content-form-forgot" onClick={() => {
                                     this.setState({visible: true})
                                 }}>无法登录?</a>
