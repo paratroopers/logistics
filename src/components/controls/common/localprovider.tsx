@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {Component} from 'react'
 import {LocaleProvider} from 'antd';
-import {Locale} from 'antd/lib/locale-provider';
 import {connect} from "react-redux";
 import {AppLocaleStatic} from "../../../api/model/common-model";
 import {getLocale} from "../../../locales";
@@ -64,7 +63,7 @@ class LocalProvider extends Component<LocalProviderProps, LocalProviderStates> {
     render() {
         const topThis = this;
         const {state: {appLocale}} = topThis;
-        return appLocale ? <LocaleProvider locale={appLocale.antd as Locale}>
+        return appLocale ? <LocaleProvider locale={appLocale.antd}>
             <IntlProvider key={appLocale.locale}
                           locale={appLocale.locale}
                           messages={appLocale.messages}>
