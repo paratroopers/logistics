@@ -8,7 +8,7 @@ import {CostTableModal} from '../../api/model/quotation';
 
 const {Content} = Layout;
 const {TextArea} = Input;
-import {NaUtil} from "../../util/util";
+import {Util} from "../../util/util";
 import {ScreenModeEnum} from "../../api/model/common-model";
 import {Card, WingBlank, WhiteSpace, Modal} from 'antd-mobile';
 
@@ -57,7 +57,7 @@ export class CostPage extends Component<CostPageProps, CostPageStates> {
             },
             data: []
         }
-        this.isMobile = (NaUtil.getScrrenMode(window.innerWidth) === ScreenModeEnum.sm);
+        this.isMobile = (Util.getScrrenMode(window.innerWidth) === ScreenModeEnum.sm);
     }
 
     onWrapTouchStart = (e) => {

@@ -6,7 +6,7 @@ import {getLocale} from "../../locales";
 import {AppLocaleStatic, ScreenModeEnum} from "../../api/model/common-model";
 import LocalProvider from '../../components/controls/common/localprovider';
 import {Global} from "../../util/common";
-import {NaUtil} from "../../util/util";
+import {Util} from "../../util/util";
 import {message} from 'antd';
 
 interface MasterPageProps extends ReactRouter.RouteComponentProps<any, any> {

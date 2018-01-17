@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {NaUtil} from "../../util/util";
+import {Util} from "../../util/util";
 import {withRouter} from "react-router";
 import {ScreenModeEnum} from "../../api/model/common-model";
 import {MasterMobilePage} from './master-mobile-page';
@@ -22,7 +22,7 @@ export class NaMasterMainPage extends React.Component<NaMasterMainPageProps, NaM
     constructor(props, context) {
         super(props, context);
         this.state = {
-            mode: NaUtil.getScrrenMode(window.innerWidth)
+            mode: Util.getScrrenMode(window.innerWidth)
         }
     }
 
@@ -52,7 +52,7 @@ export class NaMasterMainPage extends React.Component<NaMasterMainPageProps, NaM
 
         function fake() {
             if (currentValue === value) {
-                callback(NaUtil.getScrrenMode(value));
+                callback(Util.getScrrenMode(value));
             }
         }
 

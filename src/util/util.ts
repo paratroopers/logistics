@@ -18,7 +18,7 @@ import {Constants}from "./common";
 import {ScreenModeEnum}from "../api/model/common-model";
 
 
-export class NaUtil {
+export class Util {
     /**
      * 生成guid
      * @returns {string}

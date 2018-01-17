@@ -7,7 +7,7 @@ import {Layout} from "antd";
 
 const {Content, Sider} = Layout;
 import {MemberNavigation} from "../../components/controls/member/member-navigation";
-import {NaUtil} from "../../util/util";
+import {Util} from "../../util/util";
 import {Constants} from '../../util/common';
 import {ScreenModeEnum} from "../../api/model/common-model";
 import {PathConfig} from '../../config/pathconfig';
@@ -33,7 +33,7 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
 
 
     componentDidMount() {
-        console.log(Cookies.get('Authorization'));
+        //console.log(Cookies.get('Authorization'));
         if (!Cookies.get('Authorization'))
             hashHistory.push(PathConfig.LoginPage);
     }
@@ -51,10 +51,10 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
     render() {
         const topThis = this;
         const {state: {collapsed}, props: {children, showNav}} = topThis;
-        const sider = {collapsedWidth: NaUtil.getScrrenMode(window.innerWidth) !== ScreenModeEnum.sm ? 64 : 0};
+        const sider = {collapsedWidth: Util.getScrrenMode(window.innerWidth) !== ScreenModeEnum.sm ? 64 : 0};
         const siderStyle = Constants.minSM ? {height: (window.innerHeight - 95) + 'px'} : {};
         const siderHidden = showNav ? {disaplay: 'block'} : {disaplay: 'none'};
-        // collapsedWidth={NaUtil.getScrrenMode(window.innerWidth) !== ScreenModeEnum.sm ? '' : 0}
+        // collapsedWidth={Util.getScrrenMode(window.innerWidth) !== ScreenModeEnum.sm ? '' : 0}
         return <div className="member-page" style={{maxWidth: '1200px', margin: '0 auto'}}>
             <Layout style={{minHeight: '100%'}}>
                 <Sider style={{zIndex: 1, minHeight: "calc(100vh - 80px)",backgroundColor:"#FFF", ...siderStyle, ...siderHidden}}
