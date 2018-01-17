@@ -22,3 +22,12 @@ export enum RegisterEnum{
     phone = 0,
     mail = 1
 }
+
+/** 基础类*/
+export interface BaseModel {
+    TenantID?:string;
+    CreatedBy?: string;
+    ModifiedBy?: string;
+    Created?: Date;
+    Modified?: Date;
+}
