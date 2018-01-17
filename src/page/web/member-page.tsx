@@ -34,8 +34,8 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
 
     componentDidMount() {
         console.log(Cookies.get('Authorization'));
-        // if (!Cookies.get('Authorization'))
-        //     hashHistory.push(PathConfig.LoginPage);
+        if (!Cookies.get('Authorization'))
+            hashHistory.push(PathConfig.LoginPage);
     }
 
     componentWillReceiveProps(nextProps) {
