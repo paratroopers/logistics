@@ -93,11 +93,11 @@ class Header extends Component<HeaderProps, HeaderStates> {
             </Col>
             <Col style={{width: 'calc(100% - 252px)'}}>
                 <Row type="flex" align="middle">
-                    <Col xs={0} sm={0} md={16} lg={16} xl={16}>
+                    <Col xs={0} sm={0} md={14} lg={16} xl={16}>
                         <HeaderNavigation type={NavigationType.Default} theme={menuTheme}
                                           member={isLogin}></HeaderNavigation>
                     </Col>
-                    <Col xs={0} sm={0} md={8} lg={8} xl={8}>
+                    <Col xs={0} sm={0} md={10} lg={8} xl={8}>
                         {topThis.renderTool()}
                     </Col>
                 </Row>
