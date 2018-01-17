@@ -57,7 +57,7 @@
 }
 
 /** 登录*/
-.na-login{
+.na-login {
 
 }
 
@@ -65,8 +65,11 @@
 .member-page {
   max-width: 1200px;
   margin: 0 auto;
-  .na-side{
+  .na-side {
     .ant-layout-sider-children {
+      > .ant-menu-inline {
+        border: none !important;
+      }
       > .ant-menu {
         height: 100%;
       }
@@ -80,7 +83,7 @@
     .welcome-header {
       background: #fff;
       padding: 16px 32px;
-      border-bottom: 1px solid #e8e8e8;
+      //border-bottom: 1px solid #e8e8e8;
       margin-bottom: 16px;
       .header-avatar {
         border-radius: 72px;
@@ -118,8 +121,6 @@
   }
 }
 
-
-
 @media screen and (max-width: 767px) {
   /* 注册*/
   .na-page-register {
@@ -138,14 +139,14 @@
   }
 
   /* 登录*/
-  .na-login{
+  .na-login {
     &-header {
       padding: 0 16px;
       height: 32px;
       line-height: 32px;
       background-color: @na-orange-7 !important;
     }
-    &-content{
+    &-content {
       padding-top: 16px;
     }
   }
