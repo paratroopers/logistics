@@ -94,39 +94,48 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
             </Col>
             <Col span={16} className="welcome-content welcome-content-left">
                 <Card className="content-card" title="您的专属仓库">
-                    <Row className="content-card-warehouse">
+                    <Card.Grid className="content-card-grid">
+                        <p>
+                            <i className="iconfont icon-shoujianchenggong" title="收件人"></i>
+                            <span>大陆17477号仓库</span>
+                        </p>
+                        <p>
+                            <i className="iconfont icon-dizhi2" title="地址"></i>
+                            <span>上海市黄浦区河南南路和蓬莱路交叉口24号楼402房间</span>
+                            <span>（ML0001）</span>
+                        </p>
+                        <p>
+                            <i className="iconfont icon-youxiang2" title="邮编"></i>
+                            <span>4761111</span>
+                        </p>
+                        <p>
+                            <i className="iconfont icon-dianhua1" title="电话"></i>
+                            <span>0376-588 7777 777</span>
+                        </p>
+                    </Card.Grid>
+                    {/*                    <Row className="content-card-warehouse">
                         <Col className="warehouse-header">
-                            <p>
-                                <span>收件人：</span>
-                                <span>大陆17477号仓库</span>
-                            </p>
-                            <p>
-                                <span>地址：</span>
-                                <span>上海市黄浦区河南南路和蓬莱路交叉口24号楼402房间</span>
-                                <span style={{fontWeight: 'bold', fontSize: 24}}>（ML0001）</span>
-                            </p>
-                            <p>
-                                <span>邮编：</span>
-                                <span>4761111</span>
-                            </p>
-                            <p>
-                                <span>电话：</span>
-                                <span>0376-588 7777 777</span>
-                            </p>
+
                         </Col>
-                    </Row>
+                    </Row>*/}
                 </Card>
                 <Card className="content-card" title="大陆动态" extra={<a href="#">更多</a>}>
-                    <FormMessageList></FormMessageList>
+                    <Card.Grid className="content-card-grid">
+                        <FormMessageList></FormMessageList>
+                    </Card.Grid>
                 </Card>
             </Col>
             <Col span={8} className="welcome-content welcome-content-right">
                 <Card className="content-card" title="温馨提示：操作流程">
-                    <FormSteps direction="vertical" size="small" itemClassStyle={{height: '40px'}}
-                               data={this.getStrpsData()}></FormSteps>
+                    <Card.Grid className="content-card-grid">
+                        <FormSteps direction="vertical" size="small" itemClassStyle={{height: '40px'}}
+                                   data={this.getStrpsData()}></FormSteps>
+                    </Card.Grid>
                 </Card>
                 <Card className="content-card" title="联系客户">
-                    <CustomerserviceDropdown></CustomerserviceDropdown>
+                    <Card.Grid className="content-card-grid">
+                        <CustomerserviceDropdown></CustomerserviceDropdown>
+                    </Card.Grid>
                 </Card>
             </Col>
         </Row>;
