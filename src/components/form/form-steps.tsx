@@ -13,7 +13,7 @@ interface FormStepsStates {
 export interface FormStepsData {
     status?: string;
     title?: string;
-    icon?: string;
+    icon?: any;
     description?: string;
 }
 
@@ -26,7 +26,7 @@ export class FormSteps extends React.Component<FormStepsProps, FormStepsStates> 
         const {itemClassStyle} = this.props;
         return this.props.data.map(d => {
             return <Steps.Step style={itemClassStyle} status={d.status} title={d.title} description={d.description}
-                               icon={<Icon type={d.icon}/>}/>;
+                               icon={d.icon}/>;
         });
     }
 
