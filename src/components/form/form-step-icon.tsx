@@ -22,12 +22,25 @@ export class FormStepIcon extends React.Component<FormStepIconProps, FormStepIco
 
 
     renderIcon() {
+        let icon = "";
+        const size = this.props.size;
+        const style = size ? {width: size, height: size, lineHeight: size + 'px', marginRight: '0px'} : {};
+        switch (this.props.type) {
+            case  FormStepEnum.Delivered:
+                return <i style={style} className="iconfont icon-fahuoxinxi"></i>;
+            case  FormStepEnum.WaitForPay:
+                return <i style={style} className="iconfont icon-daifukuan"></i>;
+            case  FormStepEnum.WarehousePackge:
+                return <i style={style} className="iconfont icon-cangkumingcheng"></i>;
+            case  FormStepEnum.CustomerServiceConfirm:
+                return <i style={style} className="iconfont icon-custom-service"></i>;
+            case  FormStepEnum.WarehouseIn:
+                return <i style={style} className="iconfont icon-ruku1"></i>;
+        }
+        return " iconfont " + icon;
     }
 
     render() {
-        const size = this.props.size;
-        const style = size ? {width: size, height: size, borderRadius: size} : {};
-        return <Avatar className={this.props.className} style={style}
-                       src="http://www.famliytree.cn/icon/message.png"/>;
+        return <div>{this.renderIcon()}</div>;
     }
 }
