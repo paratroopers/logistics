@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
 import {Row, Col, Card, Button, Icon, Table, Alert} from 'antd';
+import {PaginationProps} from 'antd/lib/pagination';
 import FormAdvancedSearch from "../../../components/form/form-advanced-search";
 import {WarehouseListModel}from "../../../api/model/member";
 
@@ -17,6 +18,12 @@ interface WarehouseStoragePageStates {
     filteredInfo: any,
     /** 排序*/
     sortedInfo: any,
+    // /** 当前页数*/
+    // current:number,
+    // /** 每页条数*/
+    // pageSize:number,
+    // /** 总数*/
+    // total:number
 }
 
 @withRouter
@@ -140,14 +147,15 @@ export class WarehouseStoragePage extends React.Component<WarehouseStoragePagePr
     /** 选中事件*/
     onSelectChange = (selectedRowKeys) => {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
-        this.setState({ selectedRowKeys });
+        this.setState({selectedRowKeys});
     }
 
     renderTable() {
         const topThis = this;
-        const {state: {listData,selectedRowKeys,sortedInfo, filteredInfo}} = topThis;
+        const {state: {listData, selectedRowKeys, sortedInfo, filteredInfo}} = topThis;
+
         const rowSelection = {
-            fixed:true,
+            fixed: true,
             selectedRowKeys,
             onChange: topThis.onSelectChange,
         };
@@ -195,8 +203,8 @@ export class WarehouseStoragePage extends React.Component<WarehouseStoragePagePr
             dataIndex: 'Status',
             key: 'Status',
             filters: [
-                { text: '已入库', value: '已入库' },
-                { text: '违禁品', value: '违禁品' },
+                {text: '已入库', value: '已入库'},
+                {text: '违禁品', value: '违禁品'},
             ],
             filteredValue: filteredInfo.Status || null,
             onFilter: (value, record) => record.Status.includes(value),
@@ -206,8 +214,29 @@ export class WarehouseStoragePage extends React.Component<WarehouseStoragePagePr
             key: 'Remark'
         }];
 
+        const pagination: PaginationProps = {
+            defaultCurrent: 1,//默认页码
+            total: 500,//数据总数
+            showSizeChanger: true,//是否可以改变 pageSize
+            onShowSizeChange: (current, pageSize) => {
+                console.log(current, pageSize);
+            },
+            showQuickJumper: true,//是否可以快速跳转至某页
+            onChange: (pageNumber) => {
+                console.log('Page: ', pageNumber);
+            },
+            showTotal: (total, range) => {
+               return `${range[0]}-${range[1]} of ${total} items`;
+            }
+        };
+
         return <Table columns={columns}
-                      scroll={{ x: 1500 }}
+                      pagination={pagination}
+                      title={(currentPageData: Object[]) => {
+                          console.log(currentPageData);
+                          return <Alert message={"总计有 10项 已入库，5项 异常"} type="info" showIcon></Alert>;
+                      }}
+                      scroll={{x: 1500}}
                       rowSelection={rowSelection}
                       bordered={false}
                       dataSource={listData}
@@ -232,9 +261,9 @@ export class WarehouseStoragePage extends React.Component<WarehouseStoragePagePr
         const topThis = this;
         return <Row className="warehouse-storage-page">
             <Card className="warehouse-storage-header" bordered={false} title={"入库操作"} extra={topThis.renderButton()}>
-                <Row style={{marginBottom:16}}><FormAdvancedSearch onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch></Row>
-                <Row style={{marginBottom:16}}><Alert message={"总计有 10项 已入库，5项 异常"} type="info" showIcon/></Row>
-                <Row style={{marginBottom:16}}>{topThis.renderTable()}</Row>
+                <Row style={{marginBottom: 16}}><FormAdvancedSearch
+                    onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch></Row>
+                <Row style={{marginBottom: 16}}>{topThis.renderTable()}</Row>
             </Card>
         </Row>;
     }
