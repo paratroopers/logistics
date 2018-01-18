@@ -10,4 +10,5 @@ export class BaseAPI {
         let url: string = BaseAPI.baseURL + "Message/latest";
         return new Request<BaseRequest, BaseResponse>().get(url);
     }
+
 }

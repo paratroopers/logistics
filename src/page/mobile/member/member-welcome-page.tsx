@@ -61,7 +61,7 @@ export class MemberWelcomePage extends React.Component<MemberWelcomePageProps, M
                             <span>大陆17477号仓库</span>
                         </p>
                         <p>
-                            <i className="iconfont icon-dizhi2" title="地址"></i>
+                            <i className="iconfont icon-diclszhi2" title="地址"></i>
                             <span>上海市黄浦区河南南路和蓬莱路交叉口24号楼402房间</span>
                             <span>（ML0001）</span>
                         </p>
