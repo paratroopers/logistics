@@ -6,6 +6,6 @@ export interface MessageLaterModel {
     ModifiedBy?: string;
     TenantID?: string;
     message?: string;
-    type?: string;
+    type?: number;
     userid?: string;
 }

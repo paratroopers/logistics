@@ -24,6 +24,7 @@
     "enquire": "0.0.2",
     "lodash": "4.17.2",
     "mockjs": "^1.0.1-beta3",
+    "moment": "^2.20.1",
     "moment-timezone": "^0.5.13",
     "rangy": "1.3.0",
     "rc-banner-anim": "^1.0.1",

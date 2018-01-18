@@ -1,59 +1,59 @@
 import * as React from 'react';
-import {List, Avatar, Spin} from 'antd';
+import {BaseAPI} from '../../api/base';
+import {List, Spin} from 'antd';
+import {MessageLaterModel} from '../../api/model/base';
+import {FormStepIcon, FormStepEnum} from '../form/form-step-icon';
+import * as  moment from 'moment'
 
 interface FormMessageListProps {
 }
 
 interface FormMessageListStates {
-    data: any,
     loading: boolean,
     hasMore: boolean,
+    messageItems?: MessageLaterModel[];
 }
 
 export class FormMessageList extends React.Component<FormMessageListProps, FormMessageListStates> {
     constructor(props, content) {
         super(props, content);
         this.state = {
-            data: [{
-                last: '2017-08-19',
-                email: '378183456@qq.com'
-            }, {
-                last: '2017-08-19',
-                email: '378183456@qq.com'
-            }, {
-                last: '2017-08-19',
-                email: '378183456@qq.com'
-            }, {
-                last: '2017-08-19',
-                email: '378183456@qq.com'
-            }],
             loading: false,
             hasMore: true,
         }
     }
 
-    componentWillMount() {
-        this.getData();
+    componentDidMount() {
+        this.getMessageData();
     }
 
-    getData() {
+    getMessageData() {
+        BaseAPI.GetMesaageLatest().then(result => {
+            if (result.Status === 0) {
+                this.setState({messageItems: result.Data});
+            }
+        });
+    }
 
+    componentWillMount() {
+
+    }
+
+    renderItem(item: MessageLaterModel) {
+        return <List.Item>
+            <List.Item.Meta
+                avatar={<FormStepIcon size={32}
+                                      type={item.type as FormStepEnum}></FormStepIcon>}
+                title={item.message}
+                description={moment(item.Created).fromNow()}/>
+            <div></div>
+        </List.Item>;
     }
 
     render() {
         return <div className="demo-infinite-container">
-            <List dataSource={this.state.data}
-                  renderItem={item => (
-                      <List.Item>
-                          <List.Item.Meta
-                              avatar={<Avatar
-                                  src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
-                              title={<a href="https://ant.design">{item.last}</a>}
-                              description={item.email}
-                          />
-                          <div></div>
-                      </List.Item>
-                  )}>
+            <List dataSource={this.state.messageItems}
+                  renderItem={item => this.renderItem(item)}>
                 {this.state.loading && this.state.hasMore && <Spin className="demo-loading"/>}
             </List>
         </div>;

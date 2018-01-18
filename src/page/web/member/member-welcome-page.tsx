@@ -2,7 +2,7 @@ import * as React from "react";
 import {Component} from "react";
 import {withRouter} from "react-router";
 import {Row, Col, Avatar, Card} from "antd";
-import {BaseAPI} from '../../../api/base';
+
 import {FormMessageList} from '../../../components/form/form-message-list';
 import {FormSteps} from '../../../components/form/form-steps';
 import {CustomerserviceDropdown} from '../../../components/controls/customerservice/customerservice-dropdown';
@@ -11,25 +11,13 @@ interface MemberWelcomePageProps {
 }
 
 interface MemberWelcomePageStates {
-    messageItems?: any[];
+
 }
 
 @withRouter
 export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberWelcomePageStates> {
     constructor(props, context) {
         super(props, context);
-    }
-
-    componentDidMount() {
-        this.getMessageData();
-    }
-
-    getMessageData() {
-        BaseAPI.GetMesaageLatest().then(result => {
-            if (result.Status === 0) {
-                this.setState({messageItems: result.Data});
-            }
-        });
     }
 
     getStrpsData() {

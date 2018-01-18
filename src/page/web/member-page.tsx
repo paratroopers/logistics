@@ -4,7 +4,7 @@ import {withRouter, hashHistory} from "react-router";
 import {Global} from '../../util/common';
 import {connect} from 'react-redux'
 import {Layout} from "antd";
-import  {MememberApi} from "../../api/member";
+import {MememberApi} from "../../api/member";
 
 const {Content, Sider} = Layout;
 import {MemberNavigation} from "../../components/controls/member/member-navigation";
@@ -26,7 +26,8 @@ interface NMemberPageStates {
 @withRouter
 class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
 
-    interval:any;
+    interval: any;
+
     constructor(props, context) {
         super(props, context)
         this.state = {
@@ -34,9 +35,9 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
         }
     }
 
-    getToken(){
-        MememberApi.GetToken().then(result =>{
-            if (result.Data !== ""){
+    getToken() {
+        MememberApi.GetToken().then(result => {
+            if (result.Data !== "") {
                 Cookies.set("Authorization", result.Data);
             }
         })
@@ -48,10 +49,10 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
         //console.log(Cookies.get('Authorization'));
         if (!Cookies.get('Authorization'))
             hashHistory.push(PathConfig.LoginPage);
-        this.interval = setInterval(() => this.getToken(), 1000*60*30);
-
+        this.interval = setInterval(() => this.getToken(), 1000 * 60 * 30);
     }
-    componentWillUnmount(){
+
+    componentWillUnmount() {
         clearInterval(this.interval);
     }
 
@@ -73,8 +74,12 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
         const siderHidden = showNav ? {disaplay: 'block'} : {disaplay: 'none'};
         // collapsedWidth={Util.getScrrenMode(window.innerWidth) !== ScreenModeEnum.sm ? '' : 0}
         return <div className="member-page" style={{maxWidth: '1200px', margin: '0 auto'}}>
-            <Layout style={{minHeight: '100%',backgroundColor:'#fafafa'}}>
-                <Sider style={{zIndex: 1, minHeight: "calc(100vh - 80px)",backgroundColor:"#FFF", ...siderStyle, ...siderHidden}}
+            <Layout style={{minHeight: '100%', backgroundColor: '#fafafa'}}>
+                <Sider style={{
+                    zIndex: 1,
+                    minHeight: "calc(100vh - 80px)",
+                    backgroundColor: "#FFF", ...siderStyle, ...siderHidden
+                }}
                        trigger={null}
                        collapsible={true}
                        className='na-side'
