@@ -4,7 +4,6 @@ import {withRouter, hashHistory} from "react-router";
 import {Global} from '../../util/common';
 import {connect} from 'react-redux'
 import {Layout} from "antd";
-import {MememberApi} from "../../api/member";
 
 const {Content, Sider} = Layout;
 import {MemberNavigation} from "../../components/controls/member/member-navigation";
@@ -35,21 +34,14 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
         }
     }
 
-    getToken() {
-        MememberApi.GetToken().then(result => {
-            if (result.Data !== "") {
-                Cookies.set("Authorization", result.Data);
-            }
-        })
 
-    }
 
 
     componentDidMount() {
         //console.log(Cookies.get('Authorization'));
         if (!Cookies.get('Authorization'))
             hashHistory.push(PathConfig.LoginPage);
-        this.interval = setInterval(() => this.getToken(), 1000 * 60 * 30);
+
     }
 
     componentWillUnmount() {

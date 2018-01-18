@@ -10,6 +10,7 @@ import {LoginRequest} from '../../../api/model/request/login-request';
 import {LoginApi} from '../../../api/user';
 import {Cookies} from '../../../util/cookie';
 import {Constants,Context} from '../../../util/common';
+import {MememberApi} from "../../../api/member";
 
 const {Header, Content} = Layout;
 
@@ -43,6 +44,15 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
         hashHistory.push(PathConfig.RegisterPage);
     }
 
+    getToken() {
+        MememberApi.GetToken().then(result => {
+            if (result.Data !== "") {
+                Cookies.set("Authorization", result.Data);
+            }
+        })
+
+    }
+
     onLogin() {
         this.props.form.validateFields((err, vas) => {
             if (err) {
@@ -61,6 +71,8 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
                         Context.setMerchantData({isLogin: true});
                         /** 更改登录的状态*/
                         Global.store.dispatch(WebAction.GetLoginState(true));
+
+                        setInterval(() => this.getToken(), 1000 * 60 * 30);
                         if (window.innerWidth <= Constants.xs)
                             hashHistory.push(MobilePathConfig.UserCenter);
                         else
