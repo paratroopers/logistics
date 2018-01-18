@@ -2,6 +2,7 @@ export class Cookies {
     static decoded(s) {
         return decodeURIComponent(s.replace(/\+/g, ' '));
     }
+
     static converted(s) {
         if (s.indexOf('"') === 0) {
             // This is a quoted cookie as according to RFC2068, unescape
@@ -9,10 +10,12 @@ export class Cookies {
         }
         try {
             return s;
-        } catch (er) { }
+        } catch (er) {
+        }
     }
+
     static set(key, value, options?) {
-        options = { ...{}, ...options };
+        options = {...{}, ...options};
 
         if (typeof options.expires === 'number') {
             var days = options.expires, t = options.expires = new Date();
@@ -30,6 +33,7 @@ export class Cookies {
             options.secure ? '; secure' : ''
         ].join(''));
     }
+
     static get(key): any {
         var decode = this.decoded;
         var cookies = document.cookie.split('; ');
@@ -50,16 +54,18 @@ export class Cookies {
         }
         return result;
     }
+
     static getJSON(key) {
         if (this.get(key)) {
             return JSON.parse(this.get(key));
         }
         return null;
     }
+
     static remove(key) {
 
         if (this.get(key)) {
-            this.set(key, '', { expires: -1 });
+            this.set(key, '', {expires: -1});
             return true;
         }
         return false;

@@ -5,7 +5,7 @@ import {Context} from "../../../util/common";
 import {Cookies} from '../../../util/cookie';
 import {Row, Col, Popover, Avatar, Menu, Icon} from 'antd';
 import {HeaderMessage} from './index-header-message';
-import  {MememberApi} from '../../../api/user';
+import  {MememberApi} from '../../../api/member';
 
 interface HeaderSettingProps {
     member?: boolean;

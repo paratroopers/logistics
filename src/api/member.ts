@@ -6,9 +6,13 @@ import {CommonAPI} from './common';
 
 const BasicsUrl = CommonAPI.baseURL;
 
-export class WarehouseAPI {
-    static async GetWarehouseStorageList(data: GetWarehouseStorageListRequest) {
-        let url: string = BasicsUrl + "Quotation/Country/Items";
-        return new Request<BaseRequest, BaseResponse>().get(url, data);
+export  class  MememberApi{
+    static async LoginOut() {
+        let url: string = BasicsUrl + "Memeber/Logout";
+        return new Request<BaseRequest, BaseResponse>().post(url);
+    }
+    static  async GetToken(){
+        let url:string = BasicsUrl +"Token/Item";
+        return new Request<BaseRequest,BaseResponse>().get(url);
     }
 }
