@@ -8,6 +8,7 @@ import MobileNavTree from '../../../config/mobile-navconfig';
 import {MobileNavTreeAction} from '../../../actions/index';
 import {MobilePathConfig, PathConfig} from '../../../config/pathconfig';
 import {Cookies} from '../../../util/cookie';
+import  {enumAvatarType}from '../../../components/controls/common/common'
 
 interface MemberPageProps {
 }
@@ -65,7 +66,7 @@ export class MemberPage extends React.Component<MemberPageProps, MemberPageState
         return <div className='mobile-nav'>
             <List>
                 <List.Item arrow="horizontal" className="mobile-nav-userinfo" onClick={this.onUserItemClick.bind(this)}>
-                    <UserAvatar className="user-img" size={46} attr="Photo"></UserAvatar>
+                    <UserAvatar className="user-img" size={46} attr="Photo" type={enumAvatarType.user}></UserAvatar>
                     <div className="some-information">
                         <div className="some-information-conetnt">早安，Araysa</div>
                         <span className="some-information-welcome">欢饮你来到大陆网，体验便捷的服务</span>
