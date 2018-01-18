@@ -5,7 +5,7 @@ import {Context} from "../../../util/common";
 import {Cookies} from '../../../util/cookie';
 import {Row, Col, Popover, Avatar, Menu, Icon} from 'antd';
 import {HeaderMessage} from './index-header-message';
-import  {MememberApi} from '../../../api/user';
+import  {MememberApi} from '../../../api/member';
 
 interface HeaderSettingProps {
     member?: boolean;
@@ -38,17 +38,17 @@ export class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSet
                 hashHistory.push({pathname: PathConfig.VIPCenterPage});
                 break;
             case "2":
+                Context.setMerchantData({isLogin: false});
+                hashHistory.push({pathname: PathConfig.LoginPage});
+                topThis.setState({member: false});
+                Cookies.remove("Authorization");
 
-
-                MememberApi.LoginOut().then(result =>{
-                    if (result.Data == "True")
-                    {
-                        Context.setMerchantData({isLogin: false});
-                        hashHistory.push({pathname: PathConfig.LoginPage});
-                        topThis.setState({member: false});
-                        Cookies.remove("Authorization");
-                    }
-                });
+                // MememberApi.LoginOut().then(result =>{
+                //     if (result.Data == "True")
+                //     {
+                //
+                //     }
+                // });
 
                 break;
             default:
