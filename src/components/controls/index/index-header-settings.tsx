@@ -38,17 +38,17 @@ export class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSet
                 hashHistory.push({pathname: PathConfig.VIPCenterPage});
                 break;
             case "2":
+                Context.setMerchantData({isLogin: false});
+                hashHistory.push({pathname: PathConfig.LoginPage});
+                topThis.setState({member: false});
+                Cookies.remove("Authorization");
 
-
-                MememberApi.LoginOut().then(result =>{
-                    if (result.Data == "True")
-                    {
-                        Context.setMerchantData({isLogin: false});
-                        hashHistory.push({pathname: PathConfig.LoginPage});
-                        topThis.setState({member: false});
-                        Cookies.remove("Authorization");
-                    }
-                });
+                // MememberApi.LoginOut().then(result =>{
+                //     if (result.Data == "True")
+                //     {
+                //
+                //     }
+                // });
 
                 break;
             default:
