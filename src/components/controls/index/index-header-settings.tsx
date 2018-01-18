@@ -5,7 +5,7 @@ import {Context} from "../../../util/common";
 import {Cookies} from '../../../util/cookie';
 import {Row, Col, Popover, Avatar, Menu, Icon} from 'antd';
 import {HeaderMessage} from './index-header-message';
-import  {MememberApi} from '../../../api/member';
+import  {MememberAPI} from '../../../api/member';
 
 interface HeaderSettingProps {
     member?: boolean;
@@ -43,7 +43,7 @@ export class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSet
                 topThis.setState({member: false});
                 Cookies.remove("Authorization");
 
-                // MememberApi.LoginOut().then(result =>{
+                // MememberAPI.LoginOut().then(result =>{
                 //     if (result.Data == "True")
                 //     {
                 //
