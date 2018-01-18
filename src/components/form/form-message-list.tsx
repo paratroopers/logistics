@@ -4,6 +4,7 @@ import {List, Spin} from 'antd';
 import {MessageLaterModel} from '../../api/model/base';
 import {FormStepIcon, FormStepEnum} from '../form/form-step-icon';
 import * as  moment from 'moment'
+moment.locale('zh-cn');
 
 interface FormMessageListProps {
 }
