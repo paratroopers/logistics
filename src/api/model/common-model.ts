@@ -1,6 +1,8 @@
+import {Locale} from 'antd/lib/locale-provider';
+
 /** 国际化*/
 export interface AppLocaleStatic {
-    antd?: Object;
+    antd?: any;
     locale?: string;
     formats?: Object;
     messages?: Object;
@@ -21,4 +23,13 @@ export enum ScreenModeEnum{
 export enum RegisterEnum{
     phone = 0,
     mail = 1
+}
+
+/** 基础类*/
+export interface BaseModel {
+    TenantID?:string;
+    CreatedBy?: string;
+    ModifiedBy?: string;
+    Created?: Date;
+    Modified?: Date;
 }
