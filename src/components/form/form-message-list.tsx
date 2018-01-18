@@ -10,7 +10,6 @@ interface FormMessageListProps {
 
 interface FormMessageListStates {
     loading: boolean,
-    hasMore: boolean,
     messageItems?: MessageLaterModel[];
 }
 
@@ -18,8 +17,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
     constructor(props, content) {
         super(props, content);
         this.state = {
-            loading: false,
-            hasMore: true,
+            loading: false
         }
     }
 
@@ -28,15 +26,12 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
     }
 
     getMessageData() {
+        this.setState({loading: true});
         BaseAPI.GetMesaageLatest().then(result => {
             if (result.Status === 0) {
-                this.setState({messageItems: result.Data});
+                this.setState({messageItems: result.Data, loading: false});
             }
         });
-    }
-
-    componentWillMount() {
-
     }
 
     renderItem(item: MessageLaterModel) {
@@ -44,18 +39,19 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
             <List.Item.Meta
                 avatar={<FormStepIcon size={32}
                                       type={item.type as FormStepEnum}></FormStepIcon>}
-                title={item.message}
+                title={<a>{item.message}</a>}
                 description={moment(item.Created).fromNow()}/>
             <div></div>
         </List.Item>;
     }
 
     render() {
-        return <div className="demo-infinite-container">
-            <List dataSource={this.state.messageItems}
-                  renderItem={item => this.renderItem(item)}>
-                {this.state.loading && this.state.hasMore && <Spin className="demo-loading"/>}
-            </List>
-        </div>;
+        return <Spin spinning={this.state.loading}>
+            <div className="demo-infinite-container">
+                <List dataSource={this.state.messageItems}
+                      renderItem={item => this.renderItem(item)}>
+                </List>
+            </div>
+        </Spin>;
     }
 }
