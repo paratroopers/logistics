@@ -51,22 +51,22 @@ class MasterWebPage extends React.Component<MasterWebPageProps, MasterWebPageSta
                 background: "#FFF",
                 borderBottom: "1px solid #c2c2c2"
             }}>
-                {/*<div className="content-template" style={{maxWidth: '1200px', margin: '0 auto'}}>*/}
-                    {/*<Header*/}
-                        {/*menuTheme={"light"}*/}
-                        {/*logo={logo}*/}
-                        {/*defaultLanguageKey={localeKey}*/}
-                        {/*onChangeLanguage={topThis.onChangeLanguage.bind(this)}></Header>*/}
-                {/*</div>*/}
+                <div className="content-template" style={{maxWidth: '1200px', margin: '0 auto'}}>
+                    <Header
+                        menuTheme={"light"}
+                        logo={logo}
+                        defaultLanguageKey={localeKey}
+                        onChangeLanguage={topThis.onChangeLanguage.bind(this)}></Header>
+                </div>
             </Layout.Header>
             <Content style={{background: "#FFF", marginTop: 80}}>
                 {children}
             </Content>
-            {/*<Footer style={{padding: 0}}>*/}
-                {/*<div className="templates-wrapper">*/}
-                    {/*<MotionFooterControl></MotionFooterControl>*/}
-                {/*</div>*/}
-            {/*</Footer>*/}
+            <Footer style={{padding: 0}}>
+                <div className="templates-wrapper">
+                    <MotionFooterControl></MotionFooterControl>
+                </div>
+            </Footer>
         </Layout>
     }
 }
