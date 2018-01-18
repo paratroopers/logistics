@@ -1,4 +1,5 @@
 
+import {DemoPage} from "./demo/demo";
 import {HomePage} from "./web/home-page";
 import MemberPage from "./web/member-page";
 import {CostPage} from "./web/cost-page";
@@ -12,6 +13,7 @@ import {NaMasterMainPage} from './master/master-main-page';
 import {WarehouseStoragePage} from './web/warehouseadmin/warehouse-storage-page';
 
 export {
+    DemoPage,
     NaMasterMainPage,
     UserLoginPage,
     UserRegisterPage,

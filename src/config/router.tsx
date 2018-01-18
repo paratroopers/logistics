@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Router, Route, hashHistory, IndexRoute} from 'react-router';
 import {PathConfig, MobilePathConfig} from './pathconfig';
 import {
+    DemoPage,
     UserLoginPage,
     NaMasterMainPage,
     HomePage,
@@ -24,6 +25,7 @@ import {
 
 const routerConfig = (
     <Router history={hashHistory}>
+        <Route path={PathConfig.DemoPage} component={DemoPage}/>
         <Route path={PathConfig.MasterPage} component={NaMasterMainPage}>
             <IndexRoute component={HomePage}></IndexRoute>
             <Route path={PathConfig.HomePage} component={HomePage}/>
