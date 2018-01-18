@@ -34,10 +34,6 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         });
     }
 
-    componentWillMount() {
-
-    }
-
     renderItem(item: MessageLaterModel) {
         return <List.Item>
             <List.Item.Meta
