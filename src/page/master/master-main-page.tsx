@@ -33,7 +33,7 @@ export class NaMasterMainPage extends React.Component<NaMasterMainPageProps, NaM
         const topThis = this;
         const {state: {mode}} = topThis;
         topThis.fetch(window.innerWidth, (data) => {
-            console.log(data);
+            // console.log(data);
             if ((data === ScreenModeEnum.sm && mode !== ScreenModeEnum.sm) || (data !== ScreenModeEnum.sm && mode === ScreenModeEnum.sm)) {
                 topThis.setState({mode: data});
             }

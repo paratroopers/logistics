@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { Form, Row, Col, Input, Button, Icon,Alert } from 'antd';
+import { Form, Row, Col, Input, Button, Icon } from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 const FormItem = Form.Item;
 
 interface FormAdvancedSearchProps extends FormComponentProps {
-    alertText?: string;
     onClickSearch?: () => void;
 }
 
@@ -65,15 +64,12 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
 
     render() {
         const topThis = this;
-        const {props: {alertText},state:{expand}} = topThis;
+        const {state:{expand}} = topThis;
         return <Form className="na-advanced-search-form"
                      onSubmit={topThis.handleSearch.bind(this)}>
             <Row gutter={24}>{topThis.getFields()}</Row>
             <Row>
-                <Col span={14}>
-                    {alertText&&<Alert message={alertText} type="info" showIcon/>}
-                </Col>
-                <Col span={10} style={{textAlign: 'right'}}>
+                <Col span={24} style={{textAlign: 'right'}}>
                     <Button type="primary" htmlType="submit">搜索</Button>
                     <Button style={{marginLeft: 8}} onClick={topThis.handleReset.bind(this)}>重置</Button>
                     <a style={{marginLeft: 8, fontSize: 12}} onClick={topThis.toggle.bind(this)}>

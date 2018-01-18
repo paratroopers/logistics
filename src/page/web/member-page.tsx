@@ -56,7 +56,7 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
         const siderHidden = showNav ? {disaplay: 'block'} : {disaplay: 'none'};
         // collapsedWidth={Util.getScrrenMode(window.innerWidth) !== ScreenModeEnum.sm ? '' : 0}
         return <div className="member-page" style={{maxWidth: '1200px', margin: '0 auto'}}>
-            <Layout style={{minHeight: '100%'}}>
+            <Layout style={{minHeight: '100%',backgroundColor:'#fafafa'}}>
                 <Sider style={{zIndex: 1, minHeight: "calc(100vh - 80px)",backgroundColor:"#FFF", ...siderStyle, ...siderHidden}}
                        trigger={null}
                        collapsible={true}
