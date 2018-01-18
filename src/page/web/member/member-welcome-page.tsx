@@ -26,25 +26,25 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
             {
                 status: 'finish',
                 title: '用户无需下单直接发货到大陆的专属仓库',
-                icon: <Icon style={{color: '#079bef'}} type="user"/>
+                icon: <Icon type="user"/>
             },
             {
                 status: 'finish',
                 title: '大陆收货确认，帮您在我的仓库中生成订单',
-                icon: <Icon style={{color: '#079bef'}} type="check-square"/>
+                icon: <Icon type="check-square"/>
             },
             {
                 status: 'finish',
                 title: '用户在我的仓库中进行合并打包',
                 icon: <i style={{
-                    color: '#079bef', fontSize: '24px',
+                    fontSize: '24px',
                     marginRight: '0px'
                 }} className="iconfont icon-shoujianchenggong"></i>
             },
             {
                 status: 'finish',
                 title: '待客服确认，仓库人员打包之后，用户选择渠道付款发货',
-                icon: <Icon style={{color: '#079bef'}} type="check"/>
+                icon: <Icon type="check"/>
             }]
     }
 
@@ -128,7 +128,7 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
             <Col span={16} className="welcome-content welcome-content-left">
                 <Card className="content-card" title="您的专属仓库">
                     <Card.Grid className="content-card-grid">
-                        <MemberBaseInformation></MemberBaseInformation>
+                        <MemberBaseInformation size={25}></MemberBaseInformation>
                     </Card.Grid>
                 </Card>
                 <Card className="content-card" title="大陆动态" extra={<a href="#">更多</a>}>
