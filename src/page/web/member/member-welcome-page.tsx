@@ -2,7 +2,7 @@ import * as React from "react";
 import {Component} from "react";
 import {withRouter} from "react-router";
 import {Row, Col, Avatar, Card, Icon} from "antd";
-
+const CardMeta=Card.Meta;
 import {FormMessageList} from '../../../components/form/form-message-list';
 import {FormSteps} from '../../../components/form/form-steps';
 import {CustomerserviceDropdown} from '../../../components/controls/customerservice/customerservice-dropdown';
@@ -51,7 +51,7 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
     renderHeader() {
         const topThis = this;
         return <Row type="flex" justify="space-between" align="middle">
-            <Col>
+            <Col span={12}>
                 <Row type="flex" justify="start" align="middle">
                     <Col>
                         <Avatar className="header-avatar"
@@ -59,20 +59,61 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
                                 src="http://www.famliytree.cn/icon/timor.png"/>
                     </Col>
                     <Col className="header-content">
-                        <Row>
-                            <h2>早安，Handy，祝你开心每一天！</h2>
-                        </Row>
-                        <Row>
-                            <p>交互专家 | 蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED</p>
-                        </Row>
+                        <h2>早安，Handy</h2>
+                        <p>欢迎你来到大陆网，体验便捷的服务</p>
                     </Col>
                 </Row>
             </Col>
-            <Col>
-                <Row type="flex" justify="end" align="middle">
-                    <Col>待打包</Col>
-                    <Col>待打包</Col>
-                    <Col>待打包</Col>
+            <Col span={12}>
+                <Row gutter={16}>
+                    <Col span={8}>
+                        <Card hoverable={true}>
+                            <Row>
+                                <Col>
+                                    <i style={{
+                                        color: '#079bef', fontSize: '24px',
+                                        marginRight: '0px'
+                                    }} className="iconfont icon-shoujianchenggong"></i>
+                                </Col>
+                                <Col>
+                                    <span>待打包</span>
+                                    <span>12</span>
+                                </Col>
+                            </Row>
+                        </Card>
+                    </Col>
+                    <Col span={8}>
+                        <Card hoverable={true}>
+                            <Row>
+                                <Col>
+                                    <i style={{
+                                        color: '#079bef', fontSize: '24px',
+                                        marginRight: '0px'
+                                    }} className="iconfont icon-shoujianchenggong"></i>
+                                </Col>
+                                <Col>
+                                    <span>待打包</span>
+                                    <span>12</span>
+                                </Col>
+                            </Row>
+                        </Card>
+                    </Col>
+                    <Col span={8}>
+                        <Card hoverable={true}>
+                            <Row>
+                                <Col>
+                                    <i style={{
+                                        color: '#079bef', fontSize: '24px',
+                                        marginRight: '0px'
+                                    }} className="iconfont icon-shoujianchenggong"></i>
+                                </Col>
+                                <Col>
+                                    <span>待打包</span>
+                                    <span>12</span>
+                                </Col>
+                            </Row>
+                        </Card>
+                    </Col>
                 </Row>
             </Col>
         </Row>
