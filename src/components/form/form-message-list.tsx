@@ -44,7 +44,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
             <List.Item.Meta
                 avatar={<FormStepIcon size={32}
                                       type={item.type as FormStepEnum}></FormStepIcon>}
-                title={item.message}
+                title={<a>{item.message}</a>}
                 description={moment(item.Created).fromNow()}/>
             <div></div>
         </List.Item>;
