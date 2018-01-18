@@ -1,6 +1,8 @@
+import {Locale} from 'antd/lib/locale-provider';
+
 /** 国际化*/
 export interface AppLocaleStatic {
-    antd?: Object;
+    antd?: any;
     locale?: string;
     formats?: Object;
     messages?: Object;

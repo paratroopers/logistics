@@ -2,7 +2,8 @@ import {addLocaleData} from "react-intl";
 import * as en from "react-intl/locale-data/en";
 import * as zh from "react-intl/locale-data/zh";
 import {AppLocaleStatic}  from "../api/model/common-model";
-import * as antdEn from "antd/lib/locale-provider/en_US";
+import antdEn from "antd/lib/locale-provider/en_US";
+import antdCN from "antd/lib/locale-provider/zh_CN";
 
 export async function getLocale(language?: string): Promise<AppLocaleStatic> {
     if (!language) {
@@ -28,7 +29,7 @@ export async function getLocale(language?: string): Promise<AppLocaleStatic> {
                 addLocaleData([...zh]);
                 require.ensure([], () => {
                     appLocaleStatic.locale = languageWithoutRegionCode;
-                    appLocaleStatic.antd = null;
+                    appLocaleStatic.antd = antdCN;
                     appLocaleStatic.messages = require("./zh.json");
                     resolve(appLocaleStatic);
                 }, "zh.json");
