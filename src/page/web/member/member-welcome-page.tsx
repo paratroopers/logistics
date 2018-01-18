@@ -6,6 +6,7 @@ import {Row, Col, Avatar, Card, Icon} from "antd";
 import {FormMessageList} from '../../../components/form/form-message-list';
 import {FormSteps} from '../../../components/form/form-steps';
 import {CustomerserviceDropdown} from '../../../components/controls/customerservice/customerservice-dropdown';
+import {MemberBaseInformation} from '../../../components/controls/member/member-base-information';
 
 interface MemberWelcomePageProps {
 }
@@ -86,29 +87,8 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
             <Col span={16} className="welcome-content welcome-content-left">
                 <Card className="content-card" title="您的专属仓库">
                     <Card.Grid className="content-card-grid">
-                        <p>
-                            <i className="iconfont icon-shoujianchenggong" title="收件人"></i>
-                            <span>大陆17477号仓库</span>
-                        </p>
-                        <p>
-                            <i className="iconfont icon-dizhi2" title="地址"></i>
-                            <span>上海市黄浦区河南南路和蓬莱路交叉口24号楼402房间</span>
-                            <span>（ML0001）</span>
-                        </p>
-                        <p>
-                            <i className="iconfont icon-youxiang2" title="邮编"></i>
-                            <span>4761111</span>
-                        </p>
-                        <p>
-                            <i className="iconfont icon-dianhua1" title="电话"></i>
-                            <span>0376-588 7777 777</span>
-                        </p>
+                        <MemberBaseInformation></MemberBaseInformation>
                     </Card.Grid>
-                    {/*                    <Row className="content-card-warehouse">
-                        <Col className="warehouse-header">
-
-                        </Col>
-                    </Row>*/}
                 </Card>
                 <Card className="content-card" title="大陆动态" extra={<a href="#">更多</a>}>
                     <Card.Grid className="content-card-grid">

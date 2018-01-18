@@ -36,6 +36,7 @@ export class RegisterAPI {
 
 
 export class LoginApi {
+    /** 登录*/
     static async Login(data: LoginRequest) {
         let url: string = BasicsUrl + "User/Login";
         return new Request<LoginRequest, BaseResponse>().post(url, data);
