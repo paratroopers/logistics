@@ -56,6 +56,7 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
     getToken() {
         MememberAPI.GetToken().then(result => {
             if (result.Data !== "") {
+                console.log(result.Data);
                 Cookies.set("Authorization", result.Data);
             }
         })
