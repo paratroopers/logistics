@@ -83,20 +83,45 @@
   .member-welcome-page {
     .welcome-header {
       background: #fff;
-      padding: 16px 32px;
+      padding: 16px;
       //border-bottom: 1px solid #e8e8e8;
       margin-bottom: 16px;
-      .header-avatar {
-        border-radius: 72px;
-        display: block;
-        width: 72px;
-        height: 72px;
-        background-color: #FFF;
-      }
-      .header-content {
-        margin-left: 16px;
-        position: relative;
-        height: 72px;
+      &-content{
+        .welcome-tab-button{
+          .ant-card-body{
+            padding: 0px;
+          }
+          .p-top{
+            color: rgba(0,0,0,.45);
+            font-size: 14px;
+            line-height: 22px;
+            margin-top: 5px;
+            margin-bottom: 4px;
+          }
+          .p-bottom{
+            color: rgba(0,0,0,.85);
+            font-size: 30px;
+            line-height: 38px;
+            margin: 0;
+          }
+          .welcome-icon {
+            color: #079bef;
+            font-size: 50px;
+            margin: 0 16px;
+          }
+        }
+        .header-avatar {
+          border-radius: 72px;
+          display: block;
+          width: 72px;
+          height: 72px;
+          background-color: #FFF;
+        }
+        .header-content {
+          margin-left: 16px;
+          position: relative;
+          height: 72px;
+        }
       }
     }
     .welcome-content {
@@ -171,4 +196,10 @@
       padding-top: 16px;
     }
   }
+}
+
+/** Demo*/
+.demo-page{
+  max-width: 900px;
+
 }

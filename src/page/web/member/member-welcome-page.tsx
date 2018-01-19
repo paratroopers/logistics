@@ -50,8 +50,8 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
 
     renderHeader() {
         const topThis = this;
-        return <Row type="flex" justify="space-between" align="middle">
-            <Col span={12}>
+        return <Row type="flex" justify="space-between" align="middle" className="welcome-header-content">
+            <Col md={24} lg={24} xl={12}>
                 <Row type="flex" justify="start" align="middle">
                     <Col>
                         <Avatar className="header-avatar"
@@ -64,52 +64,43 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
                     </Col>
                 </Row>
             </Col>
-            <Col span={12}>
-                <Row gutter={16}>
+            <Col md={24} lg={24} xl={12}>
+                <Row gutter={16} className="welcome-tab-button">
                     <Col span={8}>
-                        <Card hoverable={true}>
-                            <Row>
+                        <Card hoverable={true} bordered={false}>
+                            <Row type="flex" justify="start">
                                 <Col>
-                                    <i style={{
-                                        color: '#079bef', fontSize: '24px',
-                                        marginRight: '0px'
-                                    }} className="iconfont icon-shoujianchenggong"></i>
+                                    <i className="iconfont icon-shoujianchenggong welcome-icon"></i>
                                 </Col>
                                 <Col>
-                                    <span>待打包</span>
-                                    <span>12</span>
+                                    <p className="p-top">待打包</p>
+                                    <p className="p-bottom">2</p>
                                 </Col>
                             </Row>
                         </Card>
                     </Col>
                     <Col span={8}>
-                        <Card hoverable={true}>
-                            <Row>
+                        <Card hoverable={true} bordered={false}>
+                            <Row type="flex" justify="start">
                                 <Col>
-                                    <i style={{
-                                        color: '#079bef', fontSize: '24px',
-                                        marginRight: '0px'
-                                    }} className="iconfont icon-shoujianchenggong"></i>
+                                    <i className="iconfont icon-shoujianchenggong welcome-icon"></i>
                                 </Col>
                                 <Col>
-                                    <span>待打包</span>
-                                    <span>12</span>
+                                    <p className="p-top">待付款</p>
+                                    <p className="p-bottom">5</p>
                                 </Col>
                             </Row>
                         </Card>
                     </Col>
                     <Col span={8}>
-                        <Card hoverable={true}>
-                            <Row>
+                        <Card hoverable={true} bordered={false}>
+                            <Row type="flex" justify="start">
                                 <Col>
-                                    <i style={{
-                                        color: '#079bef', fontSize: '24px',
-                                        marginRight: '0px'
-                                    }} className="iconfont icon-shoujianchenggong"></i>
+                                    <i className="iconfont icon-shoujianchenggong welcome-icon"></i>
                                 </Col>
                                 <Col>
-                                    <span>待打包</span>
-                                    <span>12</span>
+                                    <p className="p-top">已发货</p>
+                                    <p className="p-bottom">10</p>
                                 </Col>
                             </Row>
                         </Card>
