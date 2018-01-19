@@ -1,16 +1,12 @@
 import {WarehouseListModel} from "../member";
 import {UserContext} from "../common-model";
+import {BaseModelResponse} from './base';
 
-export interface GetWarehouseStorageListResponse {
-    Data?: WarehouseListModel[]|WarehouseListModel;
-    TotalCount?: number;
-    Message?: string;
-    Status?: number;
+export  interface  GetWarehouseStorageListResponse extends  BaseModelResponse<WarehouseListModel>{
+
 }
 
-export interface GetUserContextResponse{
-    Data?: UserContext;
-    TotalCount?: number;
-    Message?: string;
-    Status?: number;
+
+export interface GetUserContextResponse extends  BaseModelResponse<UserContext>{
+
 }
