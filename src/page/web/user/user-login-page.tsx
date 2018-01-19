@@ -72,7 +72,7 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
                         /** 更改登录的状态*/
                         Global.store.dispatch(WebAction.GetLoginState(true));
 
-                        setInterval(() => this.getToken(), 1000 * 60 * 30);
+                      // setInterval(() => this.getToken(), 1000 * 60 * 30);
                         if (window.innerWidth <= Constants.xs)
                             hashHistory.push(MobilePathConfig.UserCenter);
                         else

@@ -40,6 +40,7 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
         //console.log(Cookies.get('Authorization'));
         if (!Cookies.get('Authorization'))
             hashHistory.push(PathConfig.LoginPage);
+       this.interval = setInterval(() => this.getToken(), 1000 * 60 * 3);
     }
 
     componentWillUnmount() {
@@ -50,6 +51,15 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
         if ('showNav' in nextProps && nextProps.showNav !== this.props.showNav) {
             this.setState({collapsed: nextProps.showNav});
         }
+    }
+
+    getToken() {
+        MememberAPI.GetToken().then(result => {
+            if (result.Data !== "") {
+                Cookies.set("Authorization", result.Data);
+            }
+        })
+
     }
 
     onCollapse = (collapsed) => {
