@@ -2,7 +2,8 @@ import * as React from "react";
 import {Component} from "react";
 import {withRouter} from "react-router";
 import {Row, Col, Avatar, Card, Icon} from "antd";
-const CardMeta=Card.Meta;
+
+const CardMeta = Card.Meta;
 import {FormMessageList} from '../../../components/form/form-message-list';
 import {FormSteps} from '../../../components/form/form-steps';
 import {CustomerserviceDropdown} from '../../../components/controls/customerservice/customerservice-dropdown';
@@ -124,7 +125,7 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
                 </Card>
                 <Card className="content-card" title="大陆动态" extra={<a href="#">更多</a>}>
                     <Card.Grid className="content-card-grid">
-                        <FormMessageList></FormMessageList>
+                        <FormMessageList layoutText={true}></FormMessageList>
                     </Card.Grid>
                 </Card>
             </Col>

@@ -18,7 +18,7 @@ export class HeaderMessage extends React.Component<HeaderMessageProps, HeaderMes
 
     renderContent() {
         return <Card title="大陆动态" extra={<a href="#">更多</a>} className="header-message-card">
-            <FormMessageList></FormMessageList>
+            <FormMessageList layoutText={true}></FormMessageList>
         </Card>
     }
 

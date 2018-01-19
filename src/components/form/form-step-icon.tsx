@@ -27,20 +27,20 @@ export class FormStepIcon extends React.Component<FormStepIconProps, FormStepIco
         const style = size ? {fontSize: size+ 'px', lineHeight: size + 'px'} : {};
         switch (this.props.type) {
             case  FormStepEnum.Delivered:
-                return <i style={style} className="iconfont icon-fahuoxinxi"></i>;
+                return <i style={style} className="iconfont icon-daifahuosel"></i>;
             case  FormStepEnum.WaitForPay:
-                return <i style={style} className="iconfont icon-daifukuan"></i>;
+                return <i style={style} className="iconfont icon-fukuansel"></i>;
             case  FormStepEnum.WarehousePackge:
-                return <i style={style} className="iconfont icon-cangkumingcheng"></i>;
+                return <i style={style} className="iconfont icon-yuanxingxuanzhong-fill"></i>;
             case  FormStepEnum.CustomerServiceConfirm:
-                return <i style={style} className="iconfont icon-custom-service"></i>;
+                return <i style={style} className="iconfont icon-qunfengkefujingli"></i>;
             case  FormStepEnum.WarehouseIn:
-                return <i style={style} className="iconfont icon-ruku1"></i>;
+                return <i style={style} className="iconfont icon-rukuguanli"></i>;
         }
         return " iconfont " + icon;
     }
 
     render() {
-        return <div>{this.renderIcon()}</div>;
+        return <div className='message-step-icon'>{this.renderIcon()}</div>;
     }
 }
