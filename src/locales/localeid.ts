@@ -20,6 +20,21 @@ export class CommonLocale {
     static HeaderMenuVIPCenter = "common.header.menu.vip.center";
 }
 
+export class MessageLocale {
+    /* 您的订单*/
+    static YourOrder = "message.status.your.order";
+    /* 入库*/
+    static WarehouseIn = "message.status.warehouse.in";
+    /* 客户确认*/
+    static CustomerServiceConfirm = "message.status.customer.service.confirm";
+    /* 仓库打包*/
+    static WarehousePackge = "message.status.warehouse.packge";
+    /*代付款*/
+    static WaitForPay = "message.status.wait.for.pay";
+    /*交付*/
+    static Delivered = "message.status.delivered";
+}
+
 export class NavLocale {
     /*我的仓库*/
     static MyWarehouse = "common.nav.my.warehouse";

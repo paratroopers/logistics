@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {Row, Col, Popover,Avatar,Icon,Badge,Card} from 'antd';
-import {FormMessageList}from '../../form/form-message-list';
+import {Row, Col, Popover, Avatar, Icon, Badge, Card} from 'antd';
+import {FormMessageList} from '../../form/form-message-list';
 
 interface HeaderMessageProps {
 
@@ -18,7 +18,7 @@ export class HeaderMessage extends React.Component<HeaderMessageProps, HeaderMes
 
     renderContent() {
         return <Card title="大陆动态" extra={<a href="#">更多</a>} className="header-message-card">
-            <FormMessageList layoutText={true}></FormMessageList>
+            <FormMessageList layoutText={true} tagStatus={true}></FormMessageList>
         </Card>
     }
 
@@ -30,7 +30,7 @@ export class HeaderMessage extends React.Component<HeaderMessageProps, HeaderMes
                         content={topThis.renderContent()}
                         trigger="click">
             <Badge count={99}>
-                <Icon type="bell" style={{fontSize:16,padding:4}}/>
+                <Icon type="bell" style={{fontSize: 16, padding: 4}}/>
             </Badge>
         </Popover>;
     }

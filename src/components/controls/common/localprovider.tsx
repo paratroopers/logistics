@@ -63,7 +63,7 @@ class LocalProvider extends Component<LocalProviderProps, LocalProviderStates> {
     render() {
         const topThis = this;
         const {state: {appLocale}} = topThis;
-        return appLocale ? <LocaleProvider locale={null}>
+        return appLocale ? <LocaleProvider locale={appLocale.antd}>
             <IntlProvider key={appLocale.locale}
                           locale={appLocale.locale}
                           messages={appLocale.messages}>

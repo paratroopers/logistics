@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Avatar} from 'antd';
+import {FormMessageList} from './form-message-list';
 
 interface FormStepIconProps {
     type?: FormStepEnum;
@@ -24,18 +24,21 @@ export class FormStepIcon extends React.Component<FormStepIconProps, FormStepIco
     renderIcon() {
         let icon = "";
         const size = this.props.size;
-        const style = size ? {fontSize: size+ 'px', lineHeight: size + 'px'} : {};
+        const style = size ? {fontSize: size + 'px', lineHeight: size + 'px'} : {};
+        const color = FormMessageList.defaultColor;
         switch (this.props.type) {
             case  FormStepEnum.Delivered:
-                return <i style={style} className="iconfont icon-daifahuosel"></i>;
+                return <i style={style} className={"iconfont icon-daifahuosel " + color.Delivered}></i>;
             case  FormStepEnum.WaitForPay:
-                return <i style={style} className="iconfont icon-fukuansel"></i>;
+                return <i style={style} className={"iconfont icon-fukuansel " + color.WaitForPay}></i>;
             case  FormStepEnum.WarehousePackge:
-                return <i style={style} className="iconfont icon-yuanxingxuanzhong-fill"></i>;
+                return <i style={style}
+                          className={"iconfont icon-yuanxingxuanzhong-fill " + color.WarehousePackge}></i>;
             case  FormStepEnum.CustomerServiceConfirm:
-                return <i style={style} className="iconfont icon-qunfengkefujingli"></i>;
+                return <i style={style}
+                          className={"iconfont icon-qunfengkefujingli " + color.CustomerServiceConfirm}></i>;
             case  FormStepEnum.WarehouseIn:
-                return <i style={style} className="iconfont icon-rukuguanli"></i>;
+                return <i style={style} className={"iconfont icon-rukuguanli " + color.WarehouseIn}></i>;
         }
         return " iconfont " + icon;
     }
