@@ -1,7 +1,8 @@
 import * as React from 'react';
-import {Row, Col} from 'antd';
+import {Row, Col, Tooltip , Button,message} from 'antd';
 import {MememberAPI} from "../../../api/member";
 import {GetUserContextResponse} from '../../../api/model/response/member';
+import * as copy from 'copy-to-clipboard';
 
 interface MemberBaseInformationProps {
     size?: number;
@@ -29,6 +30,16 @@ export class MemberBaseInformation extends React.Component<MemberBaseInformation
         });
     }
 
+    renderCopy() {
+        const topThis = this;
+        const {state: {MemeberCode}} = topThis;
+        return <span style={{cursor:"pointer"}} onClick={() => {
+            const copyText="上海市黄浦区河南南路和蓬莱路交叉口24号楼402房间" + MemeberCode;
+            copy(copyText);
+            message.success("复制成功!");
+        }}>复制</span>;
+    }
+
     render() {
         const topThis = this;
         const {state: {MemeberCode}, props: {size}} = topThis;
@@ -38,10 +49,12 @@ export class MemberBaseInformation extends React.Component<MemberBaseInformation
                 <i style={style} className="iconfont icon-shoujianchenggong" title="收件人"></i>
                 <span>大陆仓库</span>
             </p>
-            <p>
-                <i style={style} className="iconfont icon-dizhi2" title="地址"></i>
-                <span>上海市黄浦区河南南路和蓬莱路交叉口24号楼402房间</span>
-                <span>{`( ${MemeberCode})`}</span>
+            <p style={{cursor:"pointer"}}>
+                <Tooltip  title={topThis.renderCopy()} trigger="hover" placement="topRight">
+                    <i style={style} className="iconfont icon-dizhi2" title="地址"></i>
+                    <span>上海市黄浦区河南南路和蓬莱路交叉口24号楼402房间</span>
+                    <span>{`( ${MemeberCode})`}</span>
+                </Tooltip >
             </p>
             <p>
                 <i style={style} className="iconfont icon-youxiang2" title="邮编"></i>
