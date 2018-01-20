@@ -28,12 +28,14 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap'
     }
+
     static defaultColor = {
         WarehouseIn: 'warehouse-in',
         CustomerServiceConfirm: 'customer-service-confirm',
         WarehousePackge: 'warehouse-packge',
         WaitForPay: 'wait-for-pay',
-        Delivered: 'delivered'
+        Delivered: 'delivered',
+        WaitForPack:'wait-for-pack'
     }
 
     constructor(props, content) {

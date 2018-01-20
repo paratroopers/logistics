@@ -105,10 +105,36 @@
             margin: 0;
           }
           .welcome-icon {
-            color: #079bef;
-            font-size: 50px;
-            margin: 0 16px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            .iconfont{
+              font-size: 50px;
+              margin: 0 16px;
+            }
+            .wait-for-pack {
+              color: #1abc9c !important;
+            }
+            .wait-for-pay {
+              color: #fe5d58 !important;
+            }
+            .delivered {
+              color: #7c51b8 !important;
+            }
           }
+        }
+        .welcome-tab-division{
+          &:after{
+            background-color: #e8e8e8;
+            position: absolute;
+            top: 8px;
+            right: 0;
+            width: 1px;
+            height: 40px;
+            content: "";
+            box-sizing: border-box;
+          }
+
         }
         .header-avatar {
           border-radius: 72px;

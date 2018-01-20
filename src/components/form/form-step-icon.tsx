@@ -15,7 +15,8 @@ export enum FormStepEnum {
     CustomerServiceConfirm = 1,
     WarehousePackge = 2,
     WaitForPay = 3,
-    Delivered = 4
+    Delivered = 4,
+    WaitForPack = 5
 }
 
 export class FormStepIcon extends React.Component<FormStepIconProps, FormStepIconStates> {
@@ -39,6 +40,8 @@ export class FormStepIcon extends React.Component<FormStepIconProps, FormStepIco
                           className={"iconfont icon-qunfengkefujingli " + color.CustomerServiceConfirm}></i>;
             case  FormStepEnum.WarehouseIn:
                 return <i style={style} className={"iconfont icon-rukuguanli " + color.WarehouseIn}></i>;
+            case  FormStepEnum.WaitForPack:
+                return <i style={style} className={"iconfont icon-jianyanceshizhenglidabao " + color.WaitForPack}></i>;
         }
         return " iconfont " + icon;
     }
