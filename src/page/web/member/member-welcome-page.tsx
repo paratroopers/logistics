@@ -2,7 +2,7 @@ import * as React from "react";
 import {Component} from "react";
 import {withRouter} from "react-router";
 import {Row, Col, Avatar, Card, Icon, Tooltip} from "antd";
-import {Global} from '../../../util/common';
+import {Global, Context} from '../../../util/common';
 import {CommonLocale} from '../../../locales/localeid';
 import {FormStepIcon, FormStepEnum} from '../../../components/form/form-step-icon';
 import * as moment from 'moment';
@@ -74,7 +74,7 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
                                 src="http://www.famliytree.cn/icon/timor.png"/>
                     </Col>
                     <Col className="header-content">
-                        <h2>{this.timeInterval()}，Handy</h2>
+                        <h2>{this.timeInterval()}，{Context.getCurrentUser().userInfo.UserName}</h2>
                         <p>欢迎你来到大陆网，体验更便捷的服务</p>
                     </Col>
                 </Row>

@@ -58,7 +58,7 @@ interface UserInfoModel {
 }
 
 export interface UserModel {
-    navigations?: UserNavigationsChildrenModel[];
+    navigations?: UserNavigationsModel[];
     role?: UserRoleModel;
     userInfo?: UserInfoModel;
 }

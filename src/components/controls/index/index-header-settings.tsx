@@ -5,7 +5,7 @@ import {Context} from "../../../util/common";
 import {Cookies} from '../../../util/cookie';
 import {Row, Col, Popover, Avatar, Menu, Icon} from 'antd';
 import {HeaderMessage} from './index-header-message';
-import  {MememberAPI} from '../../../api/member';
+import {MememberAPI} from '../../../api/member';
 
 interface HeaderSettingProps {
     member?: boolean;
@@ -86,18 +86,18 @@ export class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSet
                          trigger="click">
                     <a className="tool-user-right-name">
                         <Avatar style={{marginRight: 5}} src="http://www.famliytree.cn/icon/timor.png"/>
-                        Handy
+                        {Context.getCurrentUser().userInfo.UserName}
                     </a>
                 </Popover>
                 {/*{member && <Popover placement="bottomRight"*/}
-                                    {/*overlayClassName="tool-user-popover"*/}
-                                    {/*autoAdjustOverflow={true}*/}
-                                    {/*content={this.renderUserNameContent()}*/}
-                                    {/*trigger="click">*/}
-                    {/*<a className="tool-user-right-name">*/}
-                        {/*<Avatar style={{marginRight: 5}} src="http://www.famliytree.cn/icon/timor.png"/>*/}
-                        {/*Handy*/}
-                    {/*</a>*/}
+                {/*overlayClassName="tool-user-popover"*/}
+                {/*autoAdjustOverflow={true}*/}
+                {/*content={this.renderUserNameContent()}*/}
+                {/*trigger="click">*/}
+                {/*<a className="tool-user-right-name">*/}
+                {/*<Avatar style={{marginRight: 5}} src="http://www.famliytree.cn/icon/timor.png"/>*/}
+                {/*Handy*/}
+                {/*</a>*/}
                 {/*</Popover>}*/}
             </Col>
         </Row>
