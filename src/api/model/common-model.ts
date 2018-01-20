@@ -54,20 +54,8 @@ export interface RoleInfo extends BaseModel{
 
 /** 用户导航类*/
 export interface MemberNavigationModel{
-    parentItem?:MemberParentNavigationModel;
+    parentItem?:MemberChildNavigationModel;
     childItems?:MemberChildNavigationModel[];
-}
-
-/** 用户导航父级类*/
-export interface MemberParentNavigationModel{
-    ID?: number;
-    Name_CN?: string;
-    Name_EN?: string;
-    Summary?: string;
-    Image?: string;
-    Url?: string;
-    ParentID?: number;
-    SortID?: number;
 }
 
 /** 用户导航子级类*/
