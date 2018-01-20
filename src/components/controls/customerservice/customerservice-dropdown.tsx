@@ -4,6 +4,7 @@ import {Row, Col} from 'antd';
 
 interface CustomerserviceDropdownProps {
     size?: number;
+    style?: any;
 }
 
 interface CustomerserviceDropdownStates {
@@ -13,7 +14,7 @@ export class CustomerserviceDropdown extends React.Component<CustomerserviceDrop
 
     render() {
         const style = this.props.size ? {fontSize: this.props.size} : {};
-        return <div>
+        return <div style={this.props.style}>
             <Row key="0" type="flex" className="tool-doubt-content">
                 <Col span={6}>
                     <i className={Context.getIconClassName('icon-dianhua-yuankuang')} style={style}></i>

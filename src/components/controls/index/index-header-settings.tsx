@@ -73,7 +73,6 @@ export class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSet
 
     render() {
         const topThis = this;
-        const {state: {member}} = topThis;
         const userName = Context.getCurrentUser().userInfo.MemeberCode;
         return <Row className="tool-user" type="flex" align="middle" justify="start">
             <Col className="tool-user-message">
