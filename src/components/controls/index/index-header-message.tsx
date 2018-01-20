@@ -29,7 +29,7 @@ export class HeaderMessage extends React.Component<HeaderMessageProps, HeaderMes
                         autoAdjustOverflow={true}
                         content={topThis.renderContent()}
                         trigger="click">
-            <Badge count={99}>
+            <Badge>
                 <Icon type="bell" style={{fontSize: 16, padding: 4}}/>
             </Badge>
         </Popover>;

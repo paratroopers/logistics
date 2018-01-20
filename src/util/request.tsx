@@ -5,6 +5,8 @@ import {BaseRequestParam, BaseResponse, Global, Constants, Context} from './comm
 import {CommonLocale} from "../locales/localeid";
 import {Notification} from "../components/controls/common/notification";
 import {message} from 'antd';
+import {PathConfig} from '../config/pathconfig';
+import { hashHistory} from "react-router";
 
 export class Request<TRequest, TResponse extends BaseResponse> {
     /**
@@ -119,6 +121,7 @@ export class Request<TRequest, TResponse extends BaseResponse> {
 
                             } else {
                                 message.error(Global.intl.formatMessage({id: CommonLocale.ResponseError}));
+                                hashHistory.push(PathConfig.LoginPage);
                             }
                         }
                         resolve(({
