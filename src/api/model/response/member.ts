@@ -1,5 +1,5 @@
 import {WarehouseListModel} from "../member";
-import {UserContext} from "../common-model";
+import {UserModel} from "../base";
 import {BaseModelResponse} from './base';
 
 export  interface  GetWarehouseStorageListResponse extends  BaseModelResponse<WarehouseListModel>{
@@ -7,6 +7,6 @@ export  interface  GetWarehouseStorageListResponse extends  BaseModelResponse<Wa
 }
 
 
-export interface GetUserContextResponse extends  BaseModelResponse<UserContext>{
+export interface GetUserContextResponse extends  BaseModelResponse<UserModel>{
 
 }

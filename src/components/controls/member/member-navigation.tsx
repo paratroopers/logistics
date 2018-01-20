@@ -1,13 +1,8 @@
 import * as React from 'react';
 import {Menu, Icon} from 'antd';
 import {hashHistory} from 'react-router';
-import {Global} from '../../../util/common';
-import NavTree from '../../../config/navconfig';
-import {MemberNavigationModel, MemberChildNavigationModel} from "../../../api/model/common-model";
-import {MememberAPI} from "../../../api/member";
 import {Context} from '../../../util/common';
 import {UserNavigationsModel, UserNavigationsChildrenModel} from '../../../api/model/base';
-import {GetUserContextResponse} from '../../../api/model/response/member';
 import {isNullOrUndefined} from "util";
 
 const {SubMenu} = Menu;
@@ -33,40 +28,40 @@ export class MemberNavigation extends React.Component<MemberNavigationProps, Mem
     }
 
     renderChildMenu(treeData: UserNavigationsChildrenModel[]) {
-        return treeData.map((item, index) => {
-            return <Menu.Item key={index}>{item.Name_CN}</Menu.Item>
+        return treeData.map((item) => {
+            return <Menu.Item key={item.Url}>{item.Name_CN}</Menu.Item>
         });
     }
 
     renderMenu(treeData: UserNavigationsModel[]) {
         const topThis = this;
-        return treeData.map((item, index) => {
+        return treeData.map((item) => {
             if (!isNullOrUndefined(item.childItems) && item.childItems.length > 0)
-                return <SubMenu key={index} title={<span><Icon
+                return <SubMenu key={item.parentItem.Url} title={<span><Icon
                     type={item.parentItem.Image}/><span>{item.parentItem.Name_CN}</span></span>}>
                     {topThis.renderChildMenu(item.childItems)}
                 </SubMenu>;
             else {
-                return <Menu.Item key={index}>{item.parentItem.Name_CN}</Menu.Item>
+                return <Menu.Item key={item.parentItem.Url}>{item.parentItem.Name_CN}</Menu.Item>
             }
         });
     }
 
     render() {
         const topThis = this;
-        const {state: {treeData}} = topThis;
-        const defaultKey = NavTree.map(function (item, index) {
-            return item.Key;
-        })
+        const {state: {treeData}, props: {style}} = topThis;
+        const defaultKey = treeData && treeData.map(function (item) {
+                return item.parentItem.Url;
+            });
         return <Menu
             className="member-navigation-control"
-            style={this.props.style}
+            style={style}
             defaultOpenKeys={defaultKey}
             mode={"inline"}
             onClick={(obj: { item, key, keyPath }) => {
                 hashHistory.push({pathname: obj.key});
             }}>
-            {this.renderMenu(treeData)}
+            {treeData && topThis.renderMenu(treeData)}
         </Menu>;
     }
 }

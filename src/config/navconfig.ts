@@ -164,7 +164,7 @@ const NavTree = [
         Icon: 'home',
         Children: [{
             Title: NavLocale.Storage,
-            Key: PathConfig.WarehouseStoragePage,
+            Key: PathConfig.WarehouseInPage,
             Icon: ''
         }, {
             Title: NavLocale.Pack,

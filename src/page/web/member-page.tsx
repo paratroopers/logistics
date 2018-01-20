@@ -10,7 +10,7 @@ const {Content, Sider} = Layout;
 import {MemberNavigation} from "../../components/controls/member/member-navigation";
 import {Util} from "../../util/util";
 import {Constants} from '../../util/common';
-import {ScreenModeEnum} from "../../api/model/common-model";
+import {ScreenModeEnum} from "../../api/model/common";
 import {PathConfig} from '../../config/pathconfig';
 import {Cookies} from '../../util/cookie';
 import {MobileNavTreeAction} from '../../actions/index';

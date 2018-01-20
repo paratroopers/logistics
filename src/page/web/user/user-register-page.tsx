@@ -3,7 +3,7 @@ import {Component} from "react";
 import {withRouter, Link, hashHistory} from "react-router";
 import {PathConfig}from "../../../config/pathconfig";
 import {Layout, Row, Col, Tabs, Button, Checkbox, Select, Icon, Form, Modal} from "antd";
-import {RegisterEnum}from "../../../api/model/common-model";
+import {RegisterEnum}from "../../../api/model/common";
 const {Header, Content, Footer} = Layout;
 import {Global, BaseResponse, Context} from '../../../util/common';
 import {connect} from "react-redux";

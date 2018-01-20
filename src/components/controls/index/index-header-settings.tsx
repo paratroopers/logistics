@@ -5,7 +5,6 @@ import {Context} from "../../../util/common";
 import {Cookies} from '../../../util/cookie';
 import {Row, Col, Popover, Avatar, Menu, Icon} from 'antd';
 import {HeaderMessage} from './index-header-message';
-import {MememberAPI} from '../../../api/member';
 
 interface HeaderSettingProps {
     member?: boolean;
@@ -35,7 +34,7 @@ export class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSet
         const topThis = this;
         switch (key) {
             case "0":
-                hashHistory.push({pathname: PathConfig.MemberIndex});
+                hashHistory.push({pathname: PathConfig.MemberIndexPage});
                 break;
             case "2":
                 Context.setMerchantData({isLogin: false});
@@ -72,7 +71,6 @@ export class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSet
     }
 
     render() {
-        const topThis = this;
         const userName = Context.getCurrentUser().userInfo.MemeberCode;
         return <Row className="tool-user" type="flex" align="middle" justify="start">
             <Col className="tool-user-message">

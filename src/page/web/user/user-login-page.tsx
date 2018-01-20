@@ -79,14 +79,14 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
                             if (window.innerWidth <= Constants.xs)
                                 hashHistory.push(MobilePathConfig.UserCenter);
                             else
-                                hashHistory.push(PathConfig.MemberIndex);
+                                hashHistory.push(PathConfig.MemberIndexPage);
                         });
 
                         // setInterval(() => this.getToken(), 1000 * 60 * 30);
                         /*                        if (window.innerWidth <= Constants.xs)
                                                     hashHistory.push(MobilePathConfig.UserCenter);
                                                 else
-                                                    hashHistory.push(PathConfig.MemberIndex);*/
+                                                    hashHistory.push(PathConfig.MemberIndexPage);*/
                     } else {
                         message.error(result.Message);
                         /* NaNotification.error({

@@ -9,7 +9,7 @@ import {CostTableModal} from '../../api/model/quotation';
 const {Content} = Layout;
 const {TextArea} = Input;
 import {Util} from "../../util/util";
-import {ScreenModeEnum} from "../../api/model/common-model";
+import {ScreenModeEnum} from "../../api/model/common";
 import {Card, WingBlank, WhiteSpace, Modal} from 'antd-mobile';
 
 interface CostPageProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {

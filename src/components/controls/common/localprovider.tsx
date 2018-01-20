@@ -2,7 +2,7 @@ import * as React from 'react'
 import {Component} from 'react'
 import {LocaleProvider} from 'antd';
 import {connect} from "react-redux";
-import {AppLocaleStatic} from "../../../api/model/common-model";
+import {AppLocaleStatic} from "../../../api/model/common";
 import {getLocale} from "../../../locales";
 import {IntlProvider, injectIntl} from 'react-intl';
 import {Global} from "../../../util/common";

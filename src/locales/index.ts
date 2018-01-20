@@ -1,7 +1,7 @@
 import {addLocaleData} from "react-intl";
 import * as en from "react-intl/locale-data/en";
 import * as zh from "react-intl/locale-data/zh";
-import {AppLocaleStatic}  from "../api/model/common-model";
+import {AppLocaleStatic}  from "../api/model/common";
 import antdEn from "antd/lib/locale-provider/en_US";
 import antdCN from "antd/lib/locale-provider/zh_CN";
 

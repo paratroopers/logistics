@@ -5,11 +5,11 @@ import {PaginationProps} from 'antd/lib/pagination';
 import FormAdvancedSearch from "../../../components/form/form-advanced-search";
 import {WarehouseListModel}from "../../../api/model/member";
 
-interface WarehouseStoragePageProps {
+interface WarehouseInPageProps {
 
 }
 
-interface WarehouseStoragePageStates {
+interface WarehouseInPageStates {
     /** 数据源*/
     listData: WarehouseListModel[],
     /** 选中行*/
@@ -27,7 +27,7 @@ interface WarehouseStoragePageStates {
 }
 
 @withRouter
-export class WarehouseStoragePage extends React.Component<WarehouseStoragePageProps, WarehouseStoragePageStates> {
+export class WarehouseInPage extends React.Component<WarehouseInPageProps, WarehouseInPageStates> {
     constructor(props) {
         super(props);
         this.state = {
@@ -259,8 +259,8 @@ export class WarehouseStoragePage extends React.Component<WarehouseStoragePagePr
 
     render() {
         const topThis = this;
-        return <Row className="warehouse-storage-page">
-            <Card className="warehouse-storage-header" bordered={false} title={"入库操作"} extra={topThis.renderButton()}>
+        return <Row className="warehouse-in-page">
+            <Card className="warehouse-in-header" bordered={false} title={"入库操作"} extra={topThis.renderButton()}>
                 <Row style={{marginBottom: 16}}><FormAdvancedSearch
                     onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch></Row>
                 <Row style={{marginBottom: 16}}>{topThis.renderTable()}</Row>

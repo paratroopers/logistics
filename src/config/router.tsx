@@ -10,10 +10,7 @@ import {
     CompanyPage,
     NaMobileTabBar,
     MemberPage,
-    MemberConsigneePage,
-    MemberWelcomePage,
-    UserRegisterPage,
-    WarehouseStoragePage
+    UserRegisterPage,WarehouseInPage,MemberAddressPage,MemberDeliveredPage,MemberMessageListPage,MemberMyOrderPage,MemberUserInformationPage,MemberWaitPayPage,MemberWarehouseInQueryPage,MemberWelcomePage
 } from '../page';
 import {
     MemberPage as MobileMemberPage,
@@ -36,10 +33,16 @@ const routerConfig = (
             <Route path={MobilePathConfig.UserCenterDetail} component={MemberDetailPage}/>
             <Route path={MobilePathConfig.UserHelper} component={CustomerServicePage}/>
             <Route path={MobilePathConfig.UserHome} component={MobileMemberWelcomePage}/>
-            <Route path={PathConfig.MemberIndex} component={MemberPage}>
+            <Route path={PathConfig.MemberIndexPage} component={MemberPage}>
                 <IndexRoute component={MemberWelcomePage}></IndexRoute>
-                <Route path={PathConfig.MemberSettingsAddressMaintain} component={MemberConsigneePage}/>
-                <Route path={PathConfig.WarehouseStoragePage} component={WarehouseStoragePage}/>
+                <Route path={PathConfig.MemberIndexPage} component={MemberWelcomePage}/>
+                <Route path={PathConfig.MemberAddressPage} component={MemberAddressPage}/>
+                <Route path={PathConfig.MemberDeliveredPage} component={MemberDeliveredPage}/>
+                <Route path={PathConfig.MemberMessageListPage} component={MemberMessageListPage}/>
+                <Route path={PathConfig.MemberMyOrderPage} component={MemberMyOrderPage}/>
+                <Route path={PathConfig.MemberUserInformationPage} component={MemberUserInformationPage}/>
+                <Route path={PathConfig.MemberWaitPayPage} component={MemberWaitPayPage}/>
+                <Route path={PathConfig.MemberWarehouseInQueryPage} component={MemberWarehouseInQueryPage}/>
             </Route>
         </Route>
         <Route path={PathConfig.LoginPage} component={UserLoginPage}/>

@@ -1,4 +1,6 @@
-export interface MessageLaterModel {
+import {BaseModel}from "./common";
+
+export interface MessageLaterModel{
     Created?: string;
     CreatedBy?: string;
     ID?: string;
@@ -10,51 +12,38 @@ export interface MessageLaterModel {
     userid?: string;
 }
 
-export interface UserNavigationsModel {
-    childItems?: UserNavigationsChildrenModel[];
-    parentItem?: UserNavigationsChildrenModel;
+export interface UserNavigationsModel{
+    parentItem?:UserNavigationsChildrenModel;
+    childItems?:UserNavigationsChildrenModel[];
 }
 
-export interface UserNavigationsChildrenModel {
-    Created?: string;
-    CreatedBy?: string;
-    ID?: string;
-    Image?: string;
-    Modified?: string;
-    ModifiedBy?: string;
+export interface UserNavigationsChildrenModel extends BaseModel{
+    ID?: number;
     Name_CN?: string;
     Name_EN?: string;
-    ParentID?: string;
-    SortID?: string;
     Summary?: string;
-    TenantID?: string;
+    Image?: string;
+    Url?: string;
+    ParentID?: number;
+    SortID?: number;
 }
 
-interface UserRoleModel {
-    reated?: string;
-    CreatedBy?: string;
-    Modified?: string;
-    ModifiedBy?: string;
-    RoleID?: string;
-    TenantID?: string;
+interface UserRoleModel extends BaseModel{
+    RoleID?: number;
     roleName?: string;
 }
 
-interface UserInfoModel {
-    reated?: string;
-    CreatedBy?: string;
+interface UserInfoModel extends BaseModel{
     Email?: string;
-    LastLoginTime?: string;
-    MemeberCode?: string;
-    ModifiedBy?: string;
-    Pwd?: string;
     Tel?: string;
-    TenantID?: string;
-    Ticket?: string;
-    Token?: string;
     UserName?: string;
-    Userid?: string;
+    Userid?: number;
+    Pwd?: string;
     WebChatID?: string;
+    Token?: string;
+    MemeberCode?: string;
+    LastLoginTime?: string
+    Ticket?: string;
 }
 
 export interface UserModel {

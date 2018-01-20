@@ -1,4 +1,4 @@
-import {BaseModel} from "./common-model";
+import {BaseModel} from "./common";
 
 /** 附件*/
 export interface Attachment extends BaseModel {

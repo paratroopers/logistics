@@ -3,7 +3,7 @@ import {Component} from "react";
 import {ReducersMapObject, createStore, combineReducers} from "redux";
 import {Provider} from "react-redux";
 import {getLocale} from "../../locales";
-import {AppLocaleStatic, ScreenModeEnum} from "../../api/model/common-model";
+import {AppLocaleStatic, ScreenModeEnum} from "../../api/model/common";
 import LocalProvider from '../../components/controls/common/localprovider';
 import {Global} from "../../util/common";
 import {Util} from "../../util/util";

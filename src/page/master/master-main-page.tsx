@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Util} from "../../util/util";
 import {withRouter} from "react-router";
-import {ScreenModeEnum} from "../../api/model/common-model";
+import {ScreenModeEnum} from "../../api/model/common";
 import {MasterMobilePage} from './master-mobile-page';
 import MasterWebPage from './master-web-page';
 
