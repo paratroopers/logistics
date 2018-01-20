@@ -136,9 +136,9 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
                                    data={this.getStrpsData()}></FormSteps>
                     </Card.Grid>
                 </Card>
-                <Card className="content-card" title="联系客户">
+                <Card className="content-card" title="联系客服">
                     <Card.Grid className="content-card-grid">
-                        <CustomerserviceDropdown></CustomerserviceDropdown>
+                        <CustomerserviceDropdown size={25}></CustomerserviceDropdown>
                     </Card.Grid>
                 </Card>
             </Col>
