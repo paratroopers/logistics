@@ -2,6 +2,7 @@ import * as React from "react";
 import {Component} from "react";
 import {withRouter} from "react-router";
 import {Row, Col, Avatar, Card, Icon, Tooltip} from "antd";
+import {FormStepIcon, FormStepEnum} from '../../../components/form/form-step-icon';
 
 const CardMeta = Card.Meta;
 import {FormMessageList} from '../../../components/form/form-message-list';
@@ -52,7 +53,7 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
     renderHeader() {
         const topThis = this;
         return <Row type="flex" justify="space-between" align="middle" className="welcome-header-content">
-            <Col md={24} lg={24} xl={12}>
+            <Col>
                 <Row type="flex" justify="start" align="middle">
                     <Col>
                         <Avatar className="header-avatar"
@@ -65,13 +66,14 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
                     </Col>
                 </Row>
             </Col>
-            <Col md={24} lg={24} xl={12}>
-                <Row gutter={16} className="welcome-tab-button">
-                    <Col span={8}>
-                        <Card hoverable={true} bordered={false}>
+            <Col>
+                <Row type="flex" justify="end" align="middle" className="welcome-tab-button">
+                    <Col>
+                        <Card bordered={false} className="welcome-tab-division">
                             <Row type="flex" justify="start">
-                                <Col>
-                                    <i className="iconfont icon-shoujianchenggong welcome-icon"></i>
+                                <Col className="welcome-icon">
+                                    <FormStepIcon size={40}
+                                                  type={FormStepEnum.WaitForPack}></FormStepIcon>
                                 </Col>
                                 <Col>
                                     <p className="p-top">待打包</p>
@@ -80,11 +82,12 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
                             </Row>
                         </Card>
                     </Col>
-                    <Col span={8}>
-                        <Card hoverable={true} bordered={false}>
+                    <Col>
+                        <Card bordered={false} className="welcome-tab-division">
                             <Row type="flex" justify="start">
-                                <Col>
-                                    <i className="iconfont icon-shoujianchenggong welcome-icon"></i>
+                                <Col className="welcome-icon">
+                                    <FormStepIcon size={40}
+                                                  type={FormStepEnum.WaitForPay}></FormStepIcon>
                                 </Col>
                                 <Col>
                                     <p className="p-top">待付款</p>
@@ -93,11 +96,12 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
                             </Row>
                         </Card>
                     </Col>
-                    <Col span={8}>
-                        <Card hoverable={true} bordered={false}>
+                    <Col>
+                        <Card bordered={false}>
                             <Row type="flex" justify="start">
-                                <Col>
-                                    <i className="iconfont icon-shoujianchenggong welcome-icon"></i>
+                                <Col className="welcome-icon">
+                                    <FormStepIcon size={40}
+                                                  type={FormStepEnum.Delivered}></FormStepIcon>
                                 </Col>
                                 <Col>
                                     <p className="p-top">已发货</p>
