@@ -1,12 +1,11 @@
 import {BaseRequest, BaseResponse} from "../util/common";
 import {Request} from '../util/request';
-import {GetWarehouseStorageListRequest} from './model/request/member-request';
-import {GetWarehouseStorageListResponse,GetUserContextResponse} from './model/response/member';
+import {GetUserContextResponse,GetMemberOrderStatusResponse} from './model/response/member';
 import {CommonAPI} from './common';
 
 const BasicsUrl = CommonAPI.baseURL;
 
-export class MememberAPI {
+export class MemberAPI {
     /** 注销*/
     static async LoginOut() {
         let url: string = BasicsUrl + "Memeber/Logout";
@@ -25,4 +24,9 @@ export class MememberAPI {
         return new Request<BaseRequest, GetUserContextResponse>().get(url, null);
     }
 
+    /** 获取会员订单状态-三个Tab*/
+    static async GetMemberOrderStatus() {
+        let url: string = BasicsUrl + "CustomerOrderStatus/OrderSummary";
+        return new Request<BaseRequest, GetMemberOrderStatusResponse>().post(url, null);
+    }
 }

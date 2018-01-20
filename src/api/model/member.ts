@@ -60,3 +60,10 @@ export interface WarehouseListModel extends BaseModel {
     /** 附件*/
     Attachment?: Attachment[];
 }
+
+/** 客户订单状态*/
+export interface MemberOrderStatusModel extends BaseModel {
+    DeliveryDoneCount?: number;
+    waitForCustomerPackgeCount?: number;
+    waitForPayCount?: number;
+}

@@ -4,7 +4,7 @@ import {withRouter, hashHistory} from "react-router";
 import {Global} from '../../util/common';
 import {connect} from 'react-redux'
 import {Layout} from "antd";
-import  {MememberAPI} from "../../api/member";
+import  {MemberAPI} from "../../api/member";
 
 const {Content, Sider} = Layout;
 import {MemberNavigation} from "../../components/controls/member/member-navigation";
@@ -54,7 +54,7 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
     }
 
     getToken() {
-        MememberAPI.GetToken().then(result => {
+        MemberAPI.GetToken().then(result => {
             if (result.Data !== "") {
                 console.log(result.Data);
                 Cookies.set("Authorization", result.Data,1);//cookie保存一天

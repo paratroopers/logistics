@@ -4,10 +4,8 @@ import {withRouter} from "react-router";
 import {Row, Col, Avatar, Card, Icon, Tooltip} from "antd";
 import {Global, Context} from '../../../util/common';
 import {CommonLocale} from '../../../locales/localeid';
-import {FormStepIcon, FormStepEnum} from '../../../components/form/form-step-icon';
 import * as moment from 'moment';
-
-const CardMeta = Card.Meta;
+import {MemberWelcomeTab} from "../../../components/controls/member/member-welcome-tab";
 import {FormMessageList} from '../../../components/form/form-message-list';
 import {FormSteps} from '../../../components/form/form-steps';
 import {CustomerserviceDropdown} from '../../../components/controls/customerservice/customerservice-dropdown';
@@ -80,50 +78,7 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
                 </Row>
             </Col>
             <Col>
-                <Row type="flex" justify="end" align="middle" className="welcome-tab-button">
-                    <Col>
-                        <Card bordered={false} className="welcome-tab-division">
-                            <Row type="flex" justify="start">
-                                <Col className="welcome-icon">
-                                    <FormStepIcon size={40}
-                                                  type={FormStepEnum.WaitForPack}></FormStepIcon>
-                                </Col>
-                                <Col>
-                                    <p className="p-top">待打包</p>
-                                    <p className="p-bottom">2</p>
-                                </Col>
-                            </Row>
-                        </Card>
-                    </Col>
-                    <Col>
-                        <Card bordered={false} className="welcome-tab-division">
-                            <Row type="flex" justify="start">
-                                <Col className="welcome-icon">
-                                    <FormStepIcon size={40}
-                                                  type={FormStepEnum.WaitForPay}></FormStepIcon>
-                                </Col>
-                                <Col>
-                                    <p className="p-top">待付款</p>
-                                    <p className="p-bottom">5</p>
-                                </Col>
-                            </Row>
-                        </Card>
-                    </Col>
-                    <Col>
-                        <Card bordered={false}>
-                            <Row type="flex" justify="start">
-                                <Col className="welcome-icon">
-                                    <FormStepIcon size={40}
-                                                  type={FormStepEnum.Delivered}></FormStepIcon>
-                                </Col>
-                                <Col>
-                                    <p className="p-top">已发货</p>
-                                    <p className="p-bottom">10</p>
-                                </Col>
-                            </Row>
-                        </Card>
-                    </Col>
-                </Row>
+                <MemberWelcomeTab></MemberWelcomeTab>
             </Col>
         </Row>
     }

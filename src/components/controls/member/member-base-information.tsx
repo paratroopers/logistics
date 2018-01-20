@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Row, Col, Tooltip, Button, message} from 'antd';
 import {Context} from '../../../util/common';
-import {MememberAPI} from "../../../api/member";
+import {MemberAPI} from "../../../api/member";
 import {GetUserContextResponse} from '../../../api/model/response/member';
 import * as copy from 'copy-to-clipboard';
 

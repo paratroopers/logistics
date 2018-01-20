@@ -10,7 +10,7 @@ import {LoginRequest} from '../../../api/model/request/login-request';
 import {LoginApi} from '../../../api/user';
 import {Cookies} from '../../../util/cookie';
 import {Constants, Context} from '../../../util/common';
-import {MememberAPI} from "../../../api/member";
+import {MemberAPI} from "../../../api/member";
 import {GetUserContextResponse} from '../../../api/model/response/member';
 
 const {Header, Content} = Layout;
@@ -46,7 +46,7 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
     }
 
     getToken() {
-        MememberAPI.GetToken().then(result => {
+        MemberAPI.GetToken().then(result => {
             if (result.Data !== "") {
                 Cookies.set("Authorization", result.Data);
             }
@@ -72,7 +72,7 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
                         Context.setMerchantData({isLogin: true});
                         /** 更改登录的状态*/
                         Global.store.dispatch(WebAction.GetLoginState(true));
-                        MememberAPI.GetUserContextInfo().then((r: GetUserContextResponse) => {
+                        MemberAPI.GetUserContextInfo().then((r: GetUserContextResponse) => {
                             if (r.Status === 0) {
                                 window.localStorage.setItem('UserInfo', JSON.stringify(r.Data));
                             }
