@@ -25,9 +25,9 @@ export class HeaderNavigation extends React.Component<HeaderNavigationProps, Hea
 
     onClickNavigation({item, key, keyPath}) {
         switch (key) {
-            case PathConfig.VIPCenterPage:
+            case PathConfig.MemberIndex:
                 if (this.props.member) {
-                    hashHistory.push({pathname: PathConfig.VIPCenterPage});
+                    hashHistory.push({pathname: PathConfig.MemberIndex});
                 } else {
                     hashHistory.push({pathname: PathConfig.LoginPage});
                 }
@@ -49,7 +49,7 @@ export class HeaderNavigation extends React.Component<HeaderNavigationProps, Hea
             <Menu.Item
                 key={PathConfig.CompanyProfilePage}>{formatMessage({id: CommonLocale.HeaderMenuCompanyProfile})}</Menu.Item>
             <Menu.Item
-                key={PathConfig.VIPCenterPage}>{formatMessage({id: CommonLocale.HeaderMenuVIPCenter})}</Menu.Item>
+                key={PathConfig.MemberIndex}>{formatMessage({id: CommonLocale.HeaderMenuVIPCenter})}</Menu.Item>
         </Menu>
         return <Dropdown overlay={menu} placement="bottomRight" trigger={['click']}>
             <Row type="flex" justify="start" align="middle" style={{cursor: "pointer"}}>
@@ -73,7 +73,7 @@ export class HeaderNavigation extends React.Component<HeaderNavigationProps, Hea
                 <Menu.Item
                     key={PathConfig.CompanyProfilePage}>{Global.intl.formatMessage({id: CommonLocale.HeaderMenuCompanyProfile})}</Menu.Item>
                 <Menu.Item
-                    key={PathConfig.VIPCenterPage}>{Global.intl.formatMessage({id: CommonLocale.HeaderMenuVIPCenter})}</Menu.Item>
+                    key={PathConfig.MemberIndex}>{Global.intl.formatMessage({id: CommonLocale.HeaderMenuVIPCenter})}</Menu.Item>
             </Menu>
         </Row>;
     }

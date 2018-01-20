@@ -36,9 +36,9 @@ const routerConfig = (
             <Route path={MobilePathConfig.UserCenterDetail} component={MemberDetailPage}/>
             <Route path={MobilePathConfig.UserHelper} component={CustomerServicePage}/>
             <Route path={MobilePathConfig.UserHome} component={MobileMemberWelcomePage}/>
-            <Route path={PathConfig.VIPCenterPage} component={MemberPage}>
+            <Route path={PathConfig.MemberIndex} component={MemberPage}>
                 <IndexRoute component={MemberWelcomePage}></IndexRoute>
-                <Route path={PathConfig.VIPConsigneeAddressPage} component={MemberConsigneePage}/>
+                <Route path={PathConfig.MemberSettingsAddressMaintain} component={MemberConsigneePage}/>
                 <Route path={PathConfig.WarehouseStoragePage} component={WarehouseStoragePage}/>
             </Route>
         </Route>

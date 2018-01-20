@@ -12,15 +12,34 @@ export class PathConfig {
     /* 公司简介*/
     static CompanyProfilePage = "/company/profile";
     /* 会员中心*/
-    static VIPCenterPage = "/vip/center";
+
     /* 会员中心-收货人地址*/
-    static VIPConsigneeAddressPage = "/vip/consignee/address";
+
     /*mobile Demo*/
     static MobilePage = "/demo-mobile";
     /** 注册*/
     static RegisterPage = "/register";
     /* 入库*/
-    static WarehouseStoragePage = "/warehouse/storage";
+
+    /*会员*/
+    static MemberIndex = "/member/index";
+    static MemberSettingsAddressMaintain = "/membersettings/address";
+    static  MemmberMyOrder = "/member/myorder";
+    static  MemberWaitForPay = "/member/waitforpay";
+    static  MemberDelivered = "/member/delivered";
+    static  MemberWarehouseIn = "/member/warehousein";
+    static  MemberSettingsMessageList = "/membersettings/messagelist";
+    static  MemberSettingsUserInforamtion = "/membersettings/userinformation";
+    /*仓库*/
+    static WarehouseStoragePage = "/warehouse/warehousein";
+
+    /*客服*/
+
+    /*财务*/
+
+    /*报表*/
+
+    /*系统设置*/
 
 }
 
