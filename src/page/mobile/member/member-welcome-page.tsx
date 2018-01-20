@@ -53,7 +53,7 @@ export class MemberWelcomePage extends React.Component<MemberWelcomePageProps, M
     render() {
         const topThis = this;
         return <Row className="member-welcome-page">
-            <Col span={24} className="welcome-content welcome-content-left">
+            <Col span={23} className="welcome-content welcome-content-left">
                 <Card className="content-card" title="您的专属仓库">
                     <Card.Grid className="content-card-grid">
                         <p>
