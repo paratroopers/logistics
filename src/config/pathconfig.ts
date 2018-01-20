@@ -32,8 +32,12 @@ export class PathConfig {
     static  MemberSettingsUserInforamtion = "/membersettings/userinformation";
     /*仓库*/
     static WarehouseStoragePage = "/warehouse/warehousein";
+    static  WarehousePackage = "/warehouse/package";
+    static  WarehouseDeliver = "/warehouse/deliver";
 
     /*客服*/
+    static  CustomerServerPage = "/cusertomerservice/orderconfirm";
+
 
     /*财务*/
 
