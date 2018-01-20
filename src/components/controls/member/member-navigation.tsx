@@ -3,8 +3,10 @@ import {Menu, Icon} from 'antd';
 import {hashHistory} from 'react-router';
 import {Global} from '../../../util/common';
 import NavTree from '../../../config/navconfig';
-import {MemberNavigationModel,MemberChildNavigationModel} from "../../../api/model/common-model";
+import {MemberNavigationModel, MemberChildNavigationModel} from "../../../api/model/common-model";
 import {MememberAPI} from "../../../api/member";
+import {Context} from '../../../util/common';
+import {UserNavigationsModel, UserNavigationsChildrenModel} from '../../../api/model/base';
 import {GetUserContextResponse} from '../../../api/model/response/member';
 import {isNullOrUndefined} from "util";
 
@@ -15,7 +17,7 @@ interface MemberNavigationProps {
 }
 
 interface MemberNavigationStates {
-    treeData?:MemberNavigationModel[];
+    treeData?: UserNavigationsModel[];
 }
 
 export class MemberNavigation extends React.Component<MemberNavigationProps, MemberNavigationStates> {
@@ -26,24 +28,19 @@ export class MemberNavigation extends React.Component<MemberNavigationProps, Mem
         }
     }
 
-    componentDidMount(){
-        const topThis = this;
-        MememberAPI.GetUserContextInfo().then((result: GetUserContextResponse) => {
-            if (result.Status === 0) {
-                topThis.setState({treeData: result.Data.navigations});
-            }
-        });
+    componentDidMount() {
+        this.setState({treeData: Context.getCurrentUser().navigations});
     }
 
-    renderChildMenu(treeData:MemberChildNavigationModel[]) {
+    renderChildMenu(treeData: UserNavigationsChildrenModel[]) {
         return treeData.map((item, index) => {
             return <Menu.Item key={index}>{item.Name_CN}</Menu.Item>
         });
     }
 
-    renderMenu(treeData:MemberNavigationModel[]) {
+    renderMenu(treeData: UserNavigationsModel[]) {
         const topThis = this;
-        return treeData.map((item,index) => {
+        return treeData.map((item, index) => {
             if (!isNullOrUndefined(item.childItems) && item.childItems.length > 0)
                 return <SubMenu key={index} title={<span><Icon
                     type={item.parentItem.Image}/><span>{item.parentItem.Name_CN}</span></span>}>
@@ -58,7 +55,7 @@ export class MemberNavigation extends React.Component<MemberNavigationProps, Mem
     render() {
         const topThis = this;
         const {state: {treeData}} = topThis;
-        const defaultKey=NavTree.map(function (item,index) {
+        const defaultKey = NavTree.map(function (item, index) {
             return item.Key;
         })
         return <Menu

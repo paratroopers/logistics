@@ -9,8 +9,9 @@ import {WebAction} from "../../../actions/index";
 import {LoginRequest} from '../../../api/model/request/login-request';
 import {LoginApi} from '../../../api/user';
 import {Cookies} from '../../../util/cookie';
-import {Constants,Context} from '../../../util/common';
+import {Constants, Context} from '../../../util/common';
 import {MememberAPI} from "../../../api/member";
+import {GetUserContextResponse} from '../../../api/model/response/member';
 
 const {Header, Content} = Layout;
 
@@ -21,7 +22,7 @@ interface UserLoginPageProps extends FormComponentProps {
 interface UserLoginPageStates {
     visible?: boolean;
     loading?: boolean;
-    type:string;
+    type: string;
 }
 
 class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageStates> {
@@ -30,7 +31,7 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
         this.state = {
             visible: false,
             loading: false,
-            type:'text'
+            type: 'text'
         }
     }
 
@@ -71,12 +72,21 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
                         Context.setMerchantData({isLogin: true});
                         /** 更改登录的状态*/
                         Global.store.dispatch(WebAction.GetLoginState(true));
+                        MememberAPI.GetUserContextInfo().then((r: GetUserContextResponse) => {
+                            if (r.Status === 0) {
+                                window.localStorage.setItem('UserInfo', JSON.stringify(r.Data));
+                            }
+                            if (window.innerWidth <= Constants.xs)
+                                hashHistory.push(MobilePathConfig.UserCenter);
+                            else
+                                hashHistory.push(PathConfig.VIPCenterPage);
+                        });
 
-                      // setInterval(() => this.getToken(), 1000 * 60 * 30);
-                        if (window.innerWidth <= Constants.xs)
-                            hashHistory.push(MobilePathConfig.UserCenter);
-                        else
-                            hashHistory.push(PathConfig.VIPCenterPage);
+                        // setInterval(() => this.getToken(), 1000 * 60 * 30);
+                        /*                        if (window.innerWidth <= Constants.xs)
+                                                    hashHistory.push(MobilePathConfig.UserCenter);
+                                                else
+                                                    hashHistory.push(PathConfig.VIPCenterPage);*/
                     } else {
                         message.error(result.Message);
                         /* NaNotification.error({
@@ -89,8 +99,8 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
         })
     }
 
-    changeType(){
-        this.setState({type:'password'});
+    changeType() {
+        this.setState({type: 'password'});
     }
 
 
@@ -98,7 +108,7 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
         const inputSize = 'large';
         const iconSize = {fontSize: '18px', marginTop: '-8px'};
         const {getFieldDecorator} = this.props.form;
-        const {visible}=this.state;
+        const {visible} = this.state;
         return <Layout className="na-login">
             <Header className="na-login-header" style={{
                 background: "#FFF"
@@ -118,7 +128,7 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
             <Content className="na-login-content">
                 <Row align="middle" justify="center" type="flex">
                     <Col className="na-login-content-col">
-                        {visible&&<UserLoginForgetPage onCancel={() => {
+                        {visible && <UserLoginForgetPage onCancel={() => {
                             this.setState({visible: false})
                         }} visible={visible}></UserLoginForgetPage>}
                         <div className="na-login-content-img">
@@ -129,18 +139,18 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
                         <div className="na-login-content-title">
                             <p>为你的境外物流，提供专业优质的服务</p>
                         </div>
-                        <Form className="na-login-content-form" >
+                        <Form className="na-login-content-form">
                             <Form.Item>
                                 {getFieldDecorator('user', {
                                     rules: [{required: true, message: '请输入手机或者邮箱!'}],
-                                })(<Input prefix={<Icon type="user" style={iconSize}/>}  size={inputSize}
+                                })(<Input prefix={<Icon type="user" style={iconSize}/>} size={inputSize}
                                           placeholder="手机或邮箱"/>)}
                             </Form.Item>
                             <Form.Item>
                                 {getFieldDecorator('pwd', {
                                     rules: [{required: true, message: '请输入密码!'}],
                                 })(
-                                    <Input  prefix={<Icon type="lock" style={iconSize}/>}
+                                    <Input prefix={<Icon type="lock" style={iconSize}/>}
                                            size={inputSize}
                                            type={this.state.type}
                                            placeholder="密码" onFocus={this.changeType.bind(this)}/>
@@ -172,4 +182,5 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
         </Layout>;
     }
 }
+
 export default Form.create<any>()(UserLoginPage);

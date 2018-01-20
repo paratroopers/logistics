@@ -2,6 +2,7 @@ import {SagaMiddleware} from "redux-saga";
 import {Cookies} from "./cookie";
 import {Store} from "redux";
 import {CommonLocale} from "../locales/localeid";
+import {UserModel} from '../api/model/base';
 import {Notification} from "../components/controls/common/notification";
 
 export interface Base {
@@ -153,6 +154,11 @@ export class Context {
             data = null;
         }
         return data;
+    }
+
+    /** 获取用户信息*/
+    static getCurrentUser(): UserModel {
+        return JSON.parse(window.localStorage.getItem('UserInfo'));
     }
 
     /**

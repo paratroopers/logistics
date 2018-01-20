@@ -18,6 +18,12 @@ export class CommonLocale {
     static HeaderMenuCompanyProfile = "common.header.menu.company.profile";
     /* 头部-导航-会员中心*/
     static HeaderMenuVIPCenter = "common.header.menu.vip.center";
+    /*早上好*/
+    static HeaderGoodMorning = "common.header.good.morning";
+    /*中午好*/
+    static HeaderGoodNoon = "common.header.good.noon";
+    /*晚上好*/
+    static HeaderGoodEvening = "common.header.good.evening";
 }
 
 export class MessageLocale {

@@ -2,7 +2,10 @@ import * as React from "react";
 import {Component} from "react";
 import {withRouter} from "react-router";
 import {Row, Col, Avatar, Card, Icon, Tooltip} from "antd";
+import {Global} from '../../../util/common';
+import {CommonLocale} from '../../../locales/localeid';
 import {FormStepIcon, FormStepEnum} from '../../../components/form/form-step-icon';
+import * as moment from 'moment';
 
 const CardMeta = Card.Meta;
 import {FormMessageList} from '../../../components/form/form-message-list';
@@ -50,6 +53,16 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
             }]
     }
 
+    timeInterval() {
+        const hours = moment().hour();
+        const {HeaderGoodMorning, HeaderGoodNoon, HeaderGoodEvening} = CommonLocale
+        let helloMessage: string;
+        if (hours >= 0 && hours <= 12) helloMessage = Global.intl.formatMessage({id: HeaderGoodMorning});
+        if (hours > 12 && hours <= 18) helloMessage = Global.intl.formatMessage({id: HeaderGoodNoon});
+        if (hours > 18 && hours <= 24) helloMessage = Global.intl.formatMessage({id: HeaderGoodEvening});
+        return helloMessage;
+    }
+
     renderHeader() {
         const topThis = this;
         return <Row type="flex" justify="space-between" align="middle" className="welcome-header-content">
@@ -61,8 +74,8 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
                                 src="http://www.famliytree.cn/icon/timor.png"/>
                     </Col>
                     <Col className="header-content">
-                        <h2>早安，Handy</h2>
-                        <p>欢迎你来到大陆网，体验便捷的服务</p>
+                        <h2>{this.timeInterval()}，Handy</h2>
+                        <p>欢迎你来到大陆网，体验更便捷的服务</p>
                     </Col>
                 </Row>
             </Col>
@@ -121,7 +134,7 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
             <Tooltip
                 title={<span
                     style={{whiteSpace: 'pre-line'}}>{"1、（ML0001）非常重要，请勿遗漏填写。若需联系人和手机号，请填写（曾先生）（18521327695）\r\n 2、为了航运安全，本公司不受理活体动植物、及任何形式的不明物品（没有包装说明的三无产品）\r\n 3、为了更好的进出口清关，请提醒发货方去除包裹内关于商品价格的信息，例如收据、发票、吊牌等"}</span>}>
-                <Icon type="question-circle" style={{fontSize: '14px',marginLeft: '430px'}}/>
+                <Icon type="question-circle" className="title"/>
             </Tooltip>
         </div>
     }
