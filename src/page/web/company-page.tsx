@@ -18,6 +18,7 @@ interface CompanyPageStates {
 export class CompanyPage extends Component<CompanyPageProps, CompanyPageStates> {
     constructor(props, context) {
         super(props, context)
+
     }
 
     renderContent() {

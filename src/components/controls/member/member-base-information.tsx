@@ -45,21 +45,21 @@ export class MemberBaseInformation extends React.Component<MemberBaseInformation
         const {state: {MemeberCode}, props: {size}} = topThis;
         const style = size ? {fontSize: size + 'px', lineHeight: size + 'px'} : {};
         return <Row>
-            <p>
+            <p style={{cursor: "pointer"}}>
                 <i style={style} className="iconfont icon-shoujianchenggong" title="收件人"></i>
                 <div className="self-warehouse">大陆仓库</div>
             </p>
-            <p style={{cursor: "pointer"}}>
+            <p style={{cursor: "pointer", marginTop:30}}>
+                <i style={style} className="iconfont icon-dizhi2" title="地址"></i>
                 <Tooltip title={topThis.renderCopy()} trigger="hover" placement="topRight">
-                    <i style={style} className="iconfont icon-dizhi2" title="地址"></i>
                     <div className="self-warehouse">上海市黄浦区河南南路和蓬莱路交叉口24号楼402房间{`( ${MemeberCode})`}</div>
                 </Tooltip>
             </p>
-            <p>
+            <p style={{cursor: "pointer", marginTop:30}}>
                 <i style={style} className="iconfont icon-youxiang2" title="邮编"></i>
                 <div className="self-warehouse">4761111</div>
             </p>
-            <p>
+            <p style={{cursor: "pointer", marginTop:30}}>
                 <i style={style} className="iconfont icon-dianhua1" title="电话"></i>
                 <div className="self-warehouse">0376-588 7777 777</div>
             </p>
