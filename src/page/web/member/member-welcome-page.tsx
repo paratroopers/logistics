@@ -74,7 +74,7 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
                                 src="http://www.famliytree.cn/icon/timor.png"/>
                     </Col>
                     <Col className="header-content">
-                        <h2>{this.timeInterval()}，{Context.getCurrentUser().userInfo.UserName}</h2>
+                        <h2>{this.timeInterval()}，{Context.getCurrentUser().userInfo.MemeberCode}</h2>
                         <p>欢迎你来到大陆网，体验更便捷的服务</p>
                     </Col>
                 </Row>
