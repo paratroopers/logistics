@@ -3,6 +3,7 @@ import {Row, Col, Card, Tooltip, Icon} from "antd";
 import {withRouter} from "react-router";
 import {FormSteps} from '../../../components/form/form-steps';
 import {MemberBaseInformation} from '../../../components/controls/member/member-base-information';
+import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
 
 interface MemberWelcomePageProps {
 }
@@ -52,6 +53,7 @@ export class MemberWelcomePage extends React.Component<MemberWelcomePageProps, M
 
     render() {
         return <div className="member-page">
+            <ContentHeaderControl title="我的仓库"></ContentHeaderControl>
             <Row className="member-welcome-page">
                 <Col span={24} className="welcome-content">
                     <Card className="content-card" title={this.renderTitle()}>

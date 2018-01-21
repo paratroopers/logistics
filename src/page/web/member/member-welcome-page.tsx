@@ -10,6 +10,7 @@ import {FormMessageList} from '../../../components/form/form-message-list';
 import {FormSteps} from '../../../components/form/form-steps';
 import {CustomerserviceDropdown} from '../../../components/controls/customerservice/customerservice-dropdown';
 import {MemberBaseInformation} from '../../../components/controls/member/member-base-information';
+import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
 
 interface MemberWelcomePageProps {
 }
@@ -97,6 +98,7 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
     render() {
         const topThis = this;
         return <Row className="member-welcome-page">
+            <ContentHeaderControl title="我的仓库"></ContentHeaderControl>
             <Col className="welcome-header">
                 {topThis.renderHeader()}
             </Col>
