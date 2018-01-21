@@ -90,8 +90,8 @@ export class MasterMobilePage extends React.Component<MasterMobilePageProps, Mas
                 hashHistory.push({pathname: this.props.callBack});
                 Global.store.dispatch(MobileNavTreeAction.SelectTabLoaded(null, null));
             }}><i className="iconfont icon-disclosureindicator"></i></a>
-        else
-            return <a className="left-icon"><img src="http://www.famliytree.cn/icon/logo.png"/></a>;
+/*        else
+            return <a className="left-icon"><img src="http://www.famliytree.cn/icon/logo.png"/></a>;*/
     }
 
     renderWebIcon(iconName: string) {
