@@ -14,12 +14,15 @@ interface FormMessageListProps {
     layoutText?: boolean;
     /* 状态是否显示为tag模式*/
     tagStatus?: boolean;
+    /* 是否全屏展示*/
+    fullScreen?: boolean;
 }
 
 interface FormMessageListStates {
     loading: boolean,
     messageItems?: MessageLaterModel[];
     textStyle?: any;
+
 }
 
 export class FormMessageList extends React.Component<FormMessageListProps, FormMessageListStates> {
@@ -35,7 +38,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         WarehousePackge: 'warehouse-packge',
         WaitForPay: 'wait-for-pay',
         Delivered: 'delivered',
-        WaitForPack:'wait-for-pack'
+        WaitForPack: 'wait-for-pack'
     }
 
     constructor(props, content) {

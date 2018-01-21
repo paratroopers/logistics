@@ -45,20 +45,28 @@ export class MobilePopover extends React.Component<MobilePopoverProps, MobilePop
         }
     }
 
+    renderOverlay() {
+        const style = {fontSize: '25px', lineHeight: '22px'};
+        const textStyle = {width: '60px', display: 'inline-block'};
+        return [
+            <Popover.Item key="4"
+                          icon={<i style={style}
+                                   className={Context.getIconClassName('icon-tuichu')}></i>}><span
+                style={textStyle}>退出</span>
+            </Popover.Item>,
+            <Popover.Item key="5"
+                          icon={<i style={style}
+                                   className={Context.getIconClassName('icon-tuichu')}></i>}><span
+                style={textStyle}>修改密码</span>
+            </Popover.Item>
+        ]
+    }
+
     render() {
         return <Popover mask
                         overlayStyle={{color: 'currentColor'}}
                         visible={this.state.visible}
-                        overlay={[
-                            (<Popover.Item key="4" value="scan"
-                                           icon={<i style={{fontSize: '25px', lineHeight: '22px'}}
-                                                    className={Context.getIconClassName('icon-tuichu')}></i>}
-                                           data-seed="logId"><span
-                                style={{
-                                    width: '30px',
-                                    display: 'inline-block'
-                                }}>退出</span></Popover.Item>)
-                        ]}
+                        overlay={this.renderOverlay()}
                         onVisibleChange={this.onVisibleChange.bind(this)}
                         onSelect={this.onSelect.bind(this)}>
             <div style={{
