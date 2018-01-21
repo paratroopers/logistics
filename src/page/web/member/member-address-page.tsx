@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
 import {Row} from "antd";
+import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
 
 interface MemberAddressPageStates {
 
@@ -17,6 +18,9 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
     }
 
     render() {
-        return <Row className="member-address-page">MemberAddressPage</Row>
+        return <Row className="member-address-page">
+            <ContentHeaderControl title="地址维护"></ContentHeaderControl>
+            <Row>MemberAddressPage</Row>
+        </Row>
     }
 }

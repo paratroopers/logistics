@@ -4,6 +4,7 @@ import {Row, Col, Card, Button, Icon, Table, Alert} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import FormAdvancedSearch from "../../../components/form/form-advanced-search";
 import {WarehouseListModel}from "../../../api/model/member";
+import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
 
 interface WarehouseInPageProps {
 
@@ -260,11 +261,12 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
     render() {
         const topThis = this;
         return <Row className="warehouse-in-page">
-            <Card className="warehouse-in-header" bordered={false} title={"入库操作"} extra={topThis.renderButton()}>
+            <ContentHeaderControl title="入库操作" extra={topThis.renderButton()}></ContentHeaderControl>
+            <Col className="warehouse-in-header">
                 <Row style={{marginBottom: 16}}><FormAdvancedSearch
                     onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch></Row>
                 <Row style={{marginBottom: 16}}>{topThis.renderTable()}</Row>
-            </Card>
+            </Col>
         </Row>;
     }
 }

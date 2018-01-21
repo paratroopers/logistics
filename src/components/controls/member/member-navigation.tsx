@@ -29,7 +29,8 @@ export class MemberNavigation extends React.Component<MemberNavigationProps, Mem
 
     renderChildMenu(treeData: UserNavigationsChildrenModel[]) {
         return treeData.map((item) => {
-            return <Menu.Item key={item.Url}>{item.Name_CN}</Menu.Item>
+            return <Menu.Item key={item.Url}>{<span><Icon
+                type={item.Image}/><span>{item.Name_CN}</span></span>}</Menu.Item>
         });
     }
 

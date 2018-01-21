@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
 import {Row} from "antd";
+    import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
 
 interface MemberWaitPayPageStates {
 
@@ -17,6 +18,9 @@ export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, M
     }
 
     render() {
-        return <Row className="member-wait-pay-page">MemberWaitPayPage</Row>
+        return <Row className="member-wait-pay-page">
+            <ContentHeaderControl title="代付款"></ContentHeaderControl>
+            <Row>MemberWaitPayPage</Row>
+        </Row>
     }
 }

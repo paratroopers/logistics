@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
-import {Row, Col, Avatar, Card, Icon} from "antd";
-import {MemberBaseInformation} from "../../components/controls/member/member-base-information";
+import {Row,Col,Button} from "antd";
+import {ContentHeaderControl} from "../../components/controls/common/content-header-control";
 
 interface DemoStates {
 
@@ -17,9 +17,21 @@ export class DemoPage extends React.Component<DemoProps, DemoStates> {
         super(props);
     }
 
+    renderButton() {
+        return <Row type="flex" justify="end" align="middle">
+            <Col style={{marginRight: 16}}>
+                <Button type="primary" icon="plus">新增入库</Button>
+            </Col>
+            <Col>
+                <Button type="primary" icon="download">导出</Button>
+            </Col>
+        </Row>
+    }
+
     render() {
+        const topThis=this;
         return <Row className="demo-page">
-            <MemberBaseInformation></MemberBaseInformation>
+            <ContentHeaderControl title="专属仓库" extra={topThis.renderButton()}></ContentHeaderControl>
         </Row>
     }
 }

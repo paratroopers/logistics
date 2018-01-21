@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
 import {Row} from "antd";
+import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
 
 interface MemberMessageListPageStates {
 
@@ -17,6 +18,9 @@ export class MemberMessageListPage extends React.Component<MemberMessageListPage
     }
 
     render() {
-        return <Row className="member-message-list-page">MemberMessageListPage</Row>
+        return <Row className="member-message-list-page">
+            <ContentHeaderControl title="大陆动态"></ContentHeaderControl>
+            <Row>MemberMessageListPage</Row>
+        </Row>
     }
 }
