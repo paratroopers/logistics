@@ -37,12 +37,12 @@ export class MemberNavigation extends React.Component<MemberNavigationProps, Mem
         const topThis = this;
         return treeData.map((item) => {
             if (!isNullOrUndefined(item.childItems) && item.childItems.length > 0)
-                return <SubMenu key={item.parentItem.Url} title={<span><Icon
+                return <SubMenu key={item.parentItem.Url}  title={<span><Icon
                     type={item.parentItem.Image}/><span>{item.parentItem.Name_CN}</span></span>}>
                     {topThis.renderChildMenu(item.childItems)}
                 </SubMenu>;
             else {
-                return <Menu.Item key={item.parentItem.Url}>{item.parentItem.Name_CN}</Menu.Item>
+                return <Menu.Item key={item.parentItem.Url} >{item.parentItem.Name_CN}</Menu.Item>
             }
         });
     }
@@ -53,11 +53,13 @@ export class MemberNavigation extends React.Component<MemberNavigationProps, Mem
         const defaultKey = treeData && treeData.map(function (item) {
                 return item.parentItem.Url;
             });
+        /* 默认打开 我的仓库 用户设置*/
         return <Menu
             className="member-navigation-control"
             style={style}
             defaultOpenKeys={defaultKey}
             mode={"inline"}
+            openKeys={['890331594632818690','892231594632818690']}
             onClick={(obj: { item, key, keyPath }) => {
                 hashHistory.push({pathname: obj.key});
             }}>
