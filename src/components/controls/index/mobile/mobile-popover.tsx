@@ -57,7 +57,7 @@ export class MobilePopover extends React.Component<MobilePopoverProps, MobilePop
             <Popover.Item key="5"
                           icon={<i style={style}
                                    className={Context.getIconClassName('icon-tuichu')}></i>}><span
-                style={textStyle}>修改密码</span>
+                style={textStyle}>个人信息</span>
             </Popover.Item>
         ]
     }
