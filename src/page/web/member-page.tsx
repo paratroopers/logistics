@@ -4,7 +4,7 @@ import {withRouter, hashHistory} from "react-router";
 import {Global} from '../../util/common';
 import {connect} from 'react-redux'
 import {Layout} from "antd";
-import  {MemberAPI} from "../../api/member";
+import {MemberAPI} from "../../api/member";
 
 const {Content, Sider} = Layout;
 import {MemberNavigation} from "../../components/controls/member/member-navigation";
@@ -40,7 +40,7 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
         //console.log(Cookies.get('Authorization'));
         if (!Cookies.get('Authorization'))
             hashHistory.push(PathConfig.LoginPage);
-       this.interval = setInterval(() => this.getToken(), 1000 * 60 * 3);
+        this.interval = setInterval(() => this.getToken(), 1000 * 60 * 3);
     }
 
     componentWillUnmount() {
@@ -57,7 +57,7 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
         MemberAPI.GetToken().then(result => {
             if (result.Data !== "") {
                 console.log(result.Data);
-                Cookies.set("Authorization", result.Data,1);//cookie保存一天
+                Cookies.set("Authorization", result.Data, 1);//cookie保存一天
             }
         })
 
@@ -73,10 +73,12 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
         const sider = {collapsedWidth: Util.getScrrenMode(window.innerWidth) !== ScreenModeEnum.sm ? 64 : 0};
         const siderStyle = Constants.minSM ? {height: (window.innerHeight - 95) + 'px'} : {};
         const siderHidden = showNav ? {disaplay: 'block'} : {disaplay: 'none'};
+        const isMobile = window.innerWidth <= 768;
         // collapsedWidth={Util.getScrrenMode(window.innerWidth) !== ScreenModeEnum.sm ? '' : 0}
         return <div className="member-page" style={{maxWidth: '1200px', margin: '0 auto'}}>
             <Layout style={{minHeight: '100%', backgroundColor: '#fafafa'}}>
                 <Sider style={{
+                    display: isMobile ? 'none' : '',
                     zIndex: 1,
                     minHeight: "calc(100vh - 80px)",
                     backgroundColor: "#FFF", ...siderStyle, ...siderHidden
