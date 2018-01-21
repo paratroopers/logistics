@@ -7,6 +7,7 @@ import {Icon as WebIcon, Layout} from 'antd';
 import {Global} from '../../util/common';
 import {MobileSelectTabAction, MobileNavTreeAction} from '../../actions/index';
 import {PathConfig, MobilePathConfig} from '../../config/pathconfig';
+import {HeaderMessage} from '../../components/controls/index/index-header-message';
 import {MobilePopover} from '../../components/controls/index/mobile/mobile-popover';
 
 interface MasterMobilePageProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
@@ -79,7 +80,8 @@ export class MasterMobilePage extends React.Component<MasterMobilePageProps, Mas
     }
 
     renderHeaderRight() {
-        return <MobilePopover className="right-button"></MobilePopover>;
+        return [<HeaderMessage fullScreen={true}></HeaderMessage>,
+            <MobilePopover className="right-button"></MobilePopover>];
     }
 
     renderHeaderLeft() {
