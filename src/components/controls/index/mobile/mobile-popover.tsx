@@ -67,8 +67,7 @@ export class MobilePopover extends React.Component<MobilePopoverProps, MobilePop
                 marginRight: '-15px',
                 display: 'flex',
                 alignItems: 'center',
-            }}
-            >
+            }}>
                 <Icon type="ellipsis"/>
             </div>
         </Popover>

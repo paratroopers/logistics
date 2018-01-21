@@ -3,11 +3,13 @@ import {withRouter} from 'react-router';
 import {List, Badge} from 'antd-mobile';
 import {UserAvatar} from '../../../components/controls/user/user-avatar';
 import {hashHistory} from 'react-router';
-import {Global} from '../../../util/common';
+import {Global, Context} from '../../../util/common';
+import {CommonLocale} from '../../../locales/localeid';
 import MobileNavTree from '../../../config/mobile-navconfig';
 import {MobileNavTreeAction} from '../../../actions/index';
 import {MobilePathConfig} from '../../../config/pathconfig';
 import {MemberWelcomeTab} from "../../../components/controls/member/member-welcome-tab";
+import * as moment from 'moment';
 
 interface MemberPageProps {
 }
@@ -62,31 +64,28 @@ export class MemberPage extends React.Component<MemberPageProps, MemberPageState
         })
     }
 
+    timeInterval() {
+        const hours = moment().hour();
+        const {HeaderGoodMorning, HeaderGoodNoon, HeaderGoodEvening} = CommonLocale;
+        let helloMessage: string;
+        if (hours >= 0 && hours <= 12) helloMessage = Global.intl.formatMessage({id: HeaderGoodMorning});
+        if (hours > 12 && hours <= 18) helloMessage = Global.intl.formatMessage({id: HeaderGoodNoon});
+        if (hours > 18 && hours <= 24) helloMessage = Global.intl.formatMessage({id: HeaderGoodEvening});
+        return helloMessage;
+    }
+
     render() {
         return <div className='mobile-nav'>
             <List>
                 <List.Item arrow="horizontal" className="mobile-nav-userinfo" onClick={this.onUserItemClick.bind(this)}>
                     <UserAvatar className="user-img" size={46} attr="Photo"></UserAvatar>
                     <div className="some-information">
-                        <div className="some-information-conetnt">早安，Araysa</div>
-                        <span className="some-information-welcome">欢饮你来到大陆网，体验便捷的服务</span>
+                        <div
+                            className="some-information-conetnt">{this.timeInterval()}，{Context.getCurrentUser().userInfo.MemeberCode}</div>
+                        <span className="some-information-welcome">欢迎你来到大陆网，体验更便捷的服务</span>
                     </div>
                 </List.Item>
                 <List.Item>
-                    {/*                    <div className="mobile-nav-topbar">
-                        <div className="left">
-                            <strong>0</strong>
-                            <span>待打包</span>
-                        </div>
-                        <div className="center">
-                            <strong>12</strong>
-                            <span>待付款</span>
-                        </div>
-                        <div className="right">
-                            <strong>14</strong>
-                            <span>待发货</span>
-                        </div>
-                    </div>*/}
                     <MemberWelcomeTab></MemberWelcomeTab>
                 </List.Item>
             </List>
