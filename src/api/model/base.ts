@@ -26,6 +26,7 @@ export interface UserNavigationsChildrenModel extends BaseModel{
     Url?: string;
     ParentID?: number;
     SortID?: number;
+    color?:string;
 }
 
 interface UserRoleModel extends BaseModel{

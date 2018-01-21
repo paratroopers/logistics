@@ -9,12 +9,15 @@ import MobileNavTree from '../../../config/mobile-navconfig';
 import {MobileNavTreeAction} from '../../../actions/index';
 import {MobilePathConfig} from '../../../config/pathconfig';
 import {MemberWelcomeTab} from "../../../components/controls/member/member-welcome-tab";
+import {UserNavigationsModel} from '../../../api/model/base';
 import * as moment from 'moment';
+import {isNullOrUndefined} from "util";
 
 interface MemberPageProps {
 }
 
 interface MemberPageStates {
+    treeData?: UserNavigationsModel[];
 }
 
 
@@ -22,11 +25,13 @@ interface MemberPageStates {
 export class MemberPage extends React.Component<MemberPageProps, MemberPageStates> {
     constructor(props, context) {
         super(props, context)
+        this.state = {
+            treeData: []
+        }
     }
 
     componentDidMount() {
-        /*        if (!Cookies.get('Authorization'))
-                    hashHistory.push(PathConfig.LoginPage);*/
+        this.setState({treeData: Context.getCurrentUser().navigations});
     }
 
     renderIcon(icon: string, colorCode: string) {
@@ -34,10 +39,10 @@ export class MemberPage extends React.Component<MemberPageProps, MemberPageState
         return <i style={style} className={'iconfont ' + icon}></i>;
     }
 
-    onItemClick(data: any) {
-        if (data) {
-            Global.store.dispatch(MobileNavTreeAction.SelectTabLoaded(data, MobilePathConfig.UserCenter));
-            hashHistory.push({pathname: MobilePathConfig.UserCenterDetail});
+    onItemClick(url: string) {
+        if (url) {
+            Global.store.dispatch(MobileNavTreeAction.SelectTabLoaded(url, MobilePathConfig.UserCenter));
+            hashHistory.push({pathname: url});
         }
     }
 
@@ -45,23 +50,25 @@ export class MemberPage extends React.Component<MemberPageProps, MemberPageState
         hashHistory.push({pathname: MobilePathConfig.UserHome});
     }
 
-    renderList(data) {
-        const FormatMessage = Global.intl.formatMessage;
-        return data.map(item => {
-            return <List key={item.Title} renderHeader={() => FormatMessage({id: item.Title})}>
+    renderList() {
+        const topThis = this;
+        const {state: {treeData}} = topThis;
+        {/*<Badge text={77} overflowCount={55}></Badge>*/}
+        return treeData ? treeData.map(item => {
+            return <List key={item.parentItem.Url} renderHeader={() => item.parentItem.Name_CN}>
                 {
-                    item.Children ? item.Children.map(child => {
-                        return <List.Item className="list-tree" extra={<Badge text={77} overflowCount={55}></Badge>}
-                                          onClick={x => {
-                                              this.onItemClick(child.Children)
-                                          }} key={child.Title} thumb={this.renderIcon(child.Icon, child.Color)}
+                    (!isNullOrUndefined(item.childItems) && item.childItems.length > 0) ? item.childItems.map(child => {
+                        return <List.Item className="list-tree" extra={""}
+                                          onClick={() => {
+                                              this.onItemClick(child.Url)
+                                          }} key={child.Url} thumb={this.renderIcon(child.Image, child.color?child.color:'#e65922')}
                                           arrow="horizontal">
-                            {FormatMessage({id: child.Title})}
+                            {child.Name_CN}
                         </List.Item>
-                    }) : {}
+                    }) : null
                 }
             </List>
-        })
+        }) : null
     }
 
     timeInterval() {
@@ -89,7 +96,7 @@ export class MemberPage extends React.Component<MemberPageProps, MemberPageState
                     <MemberWelcomeTab></MemberWelcomeTab>
                 </List.Item>
             </List>
-            {this.renderList(MobileNavTree)}
+            {this.renderList()}
         </div>;
     }
 }
