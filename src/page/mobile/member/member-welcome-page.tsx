@@ -1,10 +1,6 @@
 import * as React from 'react';
 import {Row, Col, Card, Tooltip, Icon} from "antd";
 import {withRouter} from "react-router";
-import {FormMessageList} from '../../../components/form/form-message-list';
-import {FormSteps} from '../../../components/form/form-steps';
-import {BaseAPI} from '../../../api/base';
-import {CustomerserviceDropdown} from '../../../components/controls/customerservice/customerservice-dropdown';
 import {MemberBaseInformation} from '../../../components/controls/member/member-base-information';
 
 interface MemberWelcomePageProps {

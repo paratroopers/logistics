@@ -6,9 +6,8 @@ import {hashHistory} from 'react-router';
 import {Global} from '../../../util/common';
 import MobileNavTree from '../../../config/mobile-navconfig';
 import {MobileNavTreeAction} from '../../../actions/index';
-import {MobilePathConfig, PathConfig} from '../../../config/pathconfig';
-import {Cookies} from '../../../util/cookie';
-import  {enumAvatarType}from '../../../components/controls/common/common'
+import {MobilePathConfig} from '../../../config/pathconfig';
+import {MemberWelcomeTab} from "../../../components/controls/member/member-welcome-tab";
 
 interface MemberPageProps {
 }
@@ -50,9 +49,10 @@ export class MemberPage extends React.Component<MemberPageProps, MemberPageState
             return <List key={item.Title} renderHeader={() => FormatMessage({id: item.Title})}>
                 {
                     item.Children ? item.Children.map(child => {
-                        return <List.Item extra={<Badge text={77} overflowCount={55}></Badge>} onClick={x => {
-                            this.onItemClick(child.Children)
-                        }} key={child.Title} thumb={this.renderIcon(child.Icon, child.Color)}
+                        return <List.Item className="list-tree" extra={<Badge text={77} overflowCount={55}></Badge>}
+                                          onClick={x => {
+                                              this.onItemClick(child.Children)
+                                          }} key={child.Title} thumb={this.renderIcon(child.Icon, child.Color)}
                                           arrow="horizontal">
                             {FormatMessage({id: child.Title})}
                         </List.Item>
@@ -66,14 +66,14 @@ export class MemberPage extends React.Component<MemberPageProps, MemberPageState
         return <div className='mobile-nav'>
             <List>
                 <List.Item arrow="horizontal" className="mobile-nav-userinfo" onClick={this.onUserItemClick.bind(this)}>
-                    <UserAvatar className="user-img" size={46} attr="Photo" ></UserAvatar>
+                    <UserAvatar className="user-img" size={46} attr="Photo"></UserAvatar>
                     <div className="some-information">
                         <div className="some-information-conetnt">早安，Araysa</div>
                         <span className="some-information-welcome">欢饮你来到大陆网，体验便捷的服务</span>
                     </div>
                 </List.Item>
                 <List.Item>
-                    <div className="mobile-nav-topbar">
+                    {/*                    <div className="mobile-nav-topbar">
                         <div className="left">
                             <strong>0</strong>
                             <span>待打包</span>
@@ -86,7 +86,8 @@ export class MemberPage extends React.Component<MemberPageProps, MemberPageState
                             <strong>14</strong>
                             <span>待发货</span>
                         </div>
-                    </div>
+                    </div>*/}
+                    <MemberWelcomeTab></MemberWelcomeTab>
                 </List.Item>
             </List>
             {this.renderList(MobileNavTree)}

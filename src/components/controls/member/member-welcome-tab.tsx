@@ -57,7 +57,7 @@ export class MemberWelcomeTab extends React.Component<MemberWelcomeTabProps, Mem
         }];
 
         return data.map(item => {
-            return <Col>
+            return <Col span={8}>
                 <Link to={item.key}>
                     <Card bordered={false} className={item.isDivision ? "member-welcome-tab-division" : ""}>
                         <Row type="flex" justify="start">
