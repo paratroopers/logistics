@@ -43,6 +43,7 @@ const routerConfig = (
                 <Route path={PathConfig.MemberUserInformationPage} component={MemberUserInformationPage}/>
                 <Route path={PathConfig.MemberWaitPayPage} component={MemberWaitPayPage}/>
                 <Route path={PathConfig.MemberWarehouseInQueryPage} component={MemberWarehouseInQueryPage}/>
+                <Route path={PathConfig.WarehouseInPage} component={WarehouseInPage}/>
             </Route>
         </Route>
         <Route path={PathConfig.LoginPage} component={UserLoginPage}/>

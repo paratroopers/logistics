@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Form, Row, Col, Input, Button, Icon } from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 const FormItem = Form.Item;
+import {Util} from "../../util/util";
 
 interface FormAdvancedSearchProps extends FormComponentProps {
     onClickSearch?: () => void;
@@ -45,12 +46,14 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
 
     // To generate mock Form.Item
     getFields() {
+
+
         const count = this.state.expand ? 6 : 3;
         const { getFieldDecorator } = this.props.form;
         const children = [];
         for (let i = 0; i < 6; i++) {
             children.push(
-                <Col span={8} key={i} style={{ display: i < count ? 'block' : 'none' }}>
+                <Col span={8} xs={24} key={i} style={{ display: i < count ? 'block' : 'none' }}>
                     <FormItem label={`Field ${i}`}>
                         {getFieldDecorator(`field-${i}`)(
                             <Input placeholder="" />
@@ -65,7 +68,9 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
     render() {
         const topThis = this;
         const {state:{expand}} = topThis;
+        const formLayout=Util.isMobile()?"vertical":"horizontal";
         return <Form className="na-advanced-search-form"
+                     layout={formLayout}
                      onSubmit={topThis.handleSearch.bind(this)}>
             <Row gutter={24}>{topThis.getFields()}</Row>
             <Row>
