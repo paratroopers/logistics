@@ -40,7 +40,7 @@ export class MemberBaseInformation extends React.Component<MemberBaseInformation
         const topThis = this;
         const {state: {MemeberCode}, props: {size}} = topThis;
         const style = size ? {fontSize: size + 'px', lineHeight: size + 'px'} : {};
-        return <Row>
+        return <Row className="member-information">
             <p style={{cursor: "pointer"}}>
                 <i style={style} className="iconfont icon-shoujianchenggong" title="收件人"></i>
                 <div className="self-warehouse">大陆仓库</div>
