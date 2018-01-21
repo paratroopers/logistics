@@ -59,7 +59,7 @@ export class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSet
         return <Menu onClick={this.onClickUserMenu.bind(this)}>
             <Menu.Item key="0">
                 <Icon type="user"/>
-                <span>修改密码</span>
+                <span>个人信息</span>
             </Menu.Item>
 
             <Menu.Divider></Menu.Divider>
