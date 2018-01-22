@@ -1,6 +1,6 @@
-import {BaseModel}from "./common";
+import {BaseModel} from "./common";
 
-export interface MessageLaterModel{
+export interface MessageLaterModel {
     Created?: string;
     CreatedBy?: string;
     ID?: string;
@@ -12,12 +12,12 @@ export interface MessageLaterModel{
     userid?: string;
 }
 
-export interface UserNavigationsModel{
-    parentItem?:UserNavigationsChildrenModel;
-    childItems?:UserNavigationsChildrenModel[];
+export interface UserNavigationsModel {
+    parentItem?: UserNavigationsChildrenModel;
+    childItems?: UserNavigationsChildrenModel[];
 }
 
-export interface UserNavigationsChildrenModel extends BaseModel{
+export interface UserNavigationsChildrenModel extends BaseModel {
     ID?: number;
     Name_CN?: string;
     Name_EN?: string;
@@ -26,15 +26,15 @@ export interface UserNavigationsChildrenModel extends BaseModel{
     Url?: string;
     ParentID?: number;
     SortID?: number;
-    color?:string;
+    color?: string;
 }
 
-interface UserRoleModel extends BaseModel{
+interface UserRoleModel extends BaseModel {
     RoleID?: number;
     roleName?: string;
 }
 
-interface UserInfoModel extends BaseModel{
+interface UserInfoModel extends BaseModel {
     Email?: string;
     Tel?: string;
     UserName?: string;
@@ -51,4 +51,26 @@ export interface UserModel {
     navigations?: UserNavigationsModel[];
     role?: UserRoleModel;
     userInfo?: UserInfoModel;
+}
+
+export enum orderMergeStepEnum {
+    /*待打包*/
+    WaitForPackage = 0,
+    /*客户确认*/
+    CustomerConfirm = 1,
+    /*仓库打包*/
+    WarehousePackege = 2,
+    /*代付款*/
+    WaitForPay = 3,
+    /*代发货*/
+    WaitForDelivery = 4
+}
+
+export enum waitForPackageStatusEnum {
+    /*待确认*/
+    WaitConfirm = 0,
+    /*已确认*/
+    Confirmed = 1,
+    /*仓库退货*/
+    WarehouseRefuse = 2
 }
