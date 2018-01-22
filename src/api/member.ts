@@ -26,7 +26,7 @@ export class MemberAPI {
 
     /** 获取会员订单状态-三个Tab*/
     static async GetMemberOrderStatus() {
-        let url: string = BasicsUrl + "CustomerOrderStatus/OrderSummary";
+        let url: string = BasicsUrl + "CustomerOrder/Status";
         return new Request<BaseRequest, GetMemberOrderStatusResponse>().post(url, null);
     }
 }
