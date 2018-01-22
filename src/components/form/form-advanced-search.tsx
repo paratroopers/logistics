@@ -1,26 +1,46 @@
+/**
+ * 自定义高级搜索
+ * Created by Handy
+ * */
 import * as React from 'react';
-import { Form, Row, Col, Input, Button, Icon } from 'antd';
+import { Form, Row, Col, Button, Icon } from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
+import {isArray} from "util";
 const FormItem = Form.Item;
-import {Util} from "../../util/util";
 
 interface FormAdvancedSearchProps extends FormComponentProps {
-    onClickSearch?: () => void;
+    /** 控件列表*/
+    formAdvancedItems?: FormAdvancedItemModel[];
+    /** 点击搜索*/
+    onClickSearch?: (values:any) => void;
 }
 
 interface FormAdvancedSearchStates {
+    /** 是否展示高级搜索的控件*/
     expand:boolean;
+}
+
+export class FormAdvancedItemModel {
+    /** 是否默认显示*/
+    defaultDisplay?: boolean;
+    /** 显示名称*/
+    displayName?:string;
+    /** 字段名称*/
+    fieldName: string;
+    /** 控件*/
+    control: React.ReactNode;
 }
 
 class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAdvancedSearchStates> {
     constructor(props) {
         super(props);
         this.state = {
-            expand: false,
+            expand: false
         };
     }
 
-    handleSearch = (e) => {
+    /** 点击搜索*/
+    onSearch = (e) => {
         e.preventDefault();
         const topThis = this;
         const {props: {onClickSearch}} = topThis;
@@ -28,12 +48,13 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
             console.log('Received values of form: ', values);
             if (!err) {
                 if (onClickSearch)
-                    onClickSearch();
+                    onClickSearch(values);
             }
         });
     }
 
-    handleReset = () => {
+    /** 点击重置*/
+    onReset = () => {
         this.props.form.resetFields();
     }
 
@@ -44,39 +65,42 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
         this.setState({expand: !expand});
     }
 
-    // To generate mock Form.Item
-    getFields() {
+    // 创建高级搜索的Items
+    renderFormAdvancedItems() {
+        const topThis = this;
+        const {props: {formAdvancedItems, form: {getFieldDecorator}}, state: {expand}} = topThis;
 
+        const formItemLayout = {
+            labelCol: { span: 4 },
+            wrapperCol: { span: 14 },
+        };
 
-        const count = this.state.expand ? 6 : 3;
-        const { getFieldDecorator } = this.props.form;
         const children = [];
-        for (let i = 0; i < 6; i++) {
-            children.push(
-                <Col span={8} xs={24} key={i} style={{ display: i < count ? 'block' : 'none' }}>
-                    <FormItem label={`Field ${i}`}>
-                        {getFieldDecorator(`field-${i}`)(
-                            <Input placeholder="" />
-                        )}
+        if (isArray(formAdvancedItems)) {
+            formAdvancedItems.map(function (item, index) {
+                const display = expand ? 'block' : item.defaultDisplay ? 'block' : 'none';
+                children.push(<Col span={8} key={index} style={{display: display}}>
+                    <FormItem label={item.displayName} {...formItemLayout}>
+                        {getFieldDecorator(item.fieldName)(item.control)}
                     </FormItem>
-                </Col>
-            );
+                </Col>)
+            })
         }
         return children;
     }
 
     render() {
         const topThis = this;
-        const {state:{expand}} = topThis;
-        const formLayout=Util.isMobile()?"vertical":"horizontal";
+        const {state: {expand}} = topThis;
+        const formLayout = window.innerWidth < 768 ? "vertical" : "horizontal";
         return <Form className="na-advanced-search-form"
                      layout={formLayout}
-                     onSubmit={topThis.handleSearch.bind(this)}>
-            <Row gutter={24}>{topThis.getFields()}</Row>
+                     onSubmit={topThis.onSearch.bind(this)}>
+            <Row gutter={24}>{topThis.renderFormAdvancedItems()}</Row>
             <Row>
                 <Col span={24} style={{textAlign: 'right'}}>
                     <Button type="primary" htmlType="submit">搜索</Button>
-                    <Button style={{marginLeft: 8}} onClick={topThis.handleReset.bind(this)}>重置</Button>
+                    <Button style={{marginLeft: 8}} onClick={topThis.onReset.bind(this)}>重置</Button>
                     <a style={{marginLeft: 8, fontSize: 12}} onClick={topThis.toggle.bind(this)}>
                         高级搜索 <Icon type={expand ? 'up' : 'down'}/>
                     </a>
