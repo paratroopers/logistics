@@ -13,7 +13,6 @@ interface FormTableStates {
 
 export class FormTable extends React.Component<FormTableProps, FormTableStates> {
     defaultConfig: any;
-
     constructor(props, context) {
         super(props, context);
     }

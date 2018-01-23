@@ -7,26 +7,26 @@ import {Row, Col, Popover, Avatar, Menu, Icon} from 'antd';
 import {HeaderMessage} from './index-header-message';
 
 interface HeaderSettingProps {
-    member?: boolean;
+    isLogin?: boolean;
 }
 
 interface HeaderSettingStates {
-    member?: boolean;
+    isLogin?: boolean;
 }
 
 export class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSettingStates> {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            member: props.member ? props.member : false
+            isLogin: props.isLogin ? props.isLogin : false
         }
     }
 
     componentWillReceiveProps(nextProps) {
         const topThis = this;
-        const {props: {member}} = topThis;
-        if ('member' in nextProps && nextProps.member !== member) {
-            topThis.setState({member: nextProps.member});
+        const {props: {isLogin}} = topThis;
+        if ('isLogin' in nextProps && nextProps.isLogin !== isLogin) {
+            topThis.setState({isLogin: nextProps.isLogin});
         }
     }
 
@@ -39,7 +39,7 @@ export class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSet
             case "2":
                 Context.setMerchantData({isLogin: false});
                 hashHistory.push({pathname: PathConfig.LoginPage});
-                topThis.setState({member: false});
+                topThis.setState({isLogin: false});
                 Cookies.remove("Authorization");
 
                 // MememberAPI.LoginOut().then(result =>{
@@ -71,6 +71,7 @@ export class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSet
     }
 
     render() {
+        if (!this.state.isLogin) return <div></div>;
         const userName = Context.getCurrentUser().userInfo.MemeberCode;
         return <Row className="tool-user" type="flex" align="middle" justify="start">
             <Col className="tool-user-message">

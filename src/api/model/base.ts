@@ -1,5 +1,10 @@
 import {BaseModel} from "./common";
 
+export interface BaseListRequest {
+    pageIndex: number;
+    pageSize: number;
+}
+
 export interface MessageLaterModel {
     Created?: string;
     CreatedBy?: string;

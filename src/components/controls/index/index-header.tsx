@@ -80,7 +80,7 @@ class Header extends Component<HeaderProps, HeaderStates> {
                     <span>咨询客服</span>
                 </Popover>
             </Col>
-            <Col><HeaderSetting member={isLogin}></HeaderSetting></Col>
+            <Col><HeaderSetting isLogin={isLogin}></HeaderSetting></Col>
         </Row>;
     }
 

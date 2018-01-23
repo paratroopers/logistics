@@ -4,6 +4,7 @@ import {Row, Col, Button, Icon, Table, Alert} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {WarehouseListModel}from "../../../api/model/member";
 import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
+import {FormCustomerOrder} from "../../../components/form/index";
 
 import {Input,DatePicker} from "antd";
 const { RangePicker } = DatePicker;
@@ -310,6 +311,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         const topThis = this;
         return <Row className="warehouse-in-page">
             <ContentHeaderControl title="入库操作" extra={topThis.renderButton()}></ContentHeaderControl>
+            <FormCustomerOrder />
             <Col className="warehouse-in-header">
                 <Row style={{marginBottom: 16}}>
                     <FormAdvancedSearch
