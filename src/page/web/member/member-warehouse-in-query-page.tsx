@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
-import {Row, Table, Menu} from "antd";
+import {Row, Table, Menu, Dropdown, Icon, Alert, Button, Tabs} from "antd";
 import {ColumnProps} from 'antd/lib/table';
 import {ContentHeaderControl} from "../../../components/controls/common/content-header-control";
 
@@ -45,34 +45,50 @@ export class MemberWarehouseInQueryPage extends React.Component<MemberWarehouseI
     renderTable() {
         const columns: ColumnProps<any>[] = [
             {
-                title: 'orderName',
+                title: '客户订单',
                 dataIndex: 'orderName'
             },
             {
-                title: 'code',
+                title: '物流单号',
                 dataIndex: 'code'
             },
             {
-                title: 'mode',
+                title: '物流方式',
                 dataIndex: 'mode'
             },
             {
-                title: 'status',
+                title: '状态',
                 dataIndex: 'status'
             },
             {
-                title: 'date',
+                title: '入库时间',
                 dataIndex: 'date'
             },
             {
-                title: 'service',
+                title: '客服备注',
                 dataIndex: 'service'
             },
             {
-                title: 'handle',
+                title: '操作',
                 dataIndex: 'handle',
                 render: (txt, record) => {
-                    return <Menu></Menu>
+                    const menu = <Menu>
+                        <Menu.Item>
+                            <span><Icon type="search"></Icon>View</span>
+                        </Menu.Item>
+                        <Menu.Item>
+                            <span><Icon type="edit"></Icon>Edit</span>
+                        </Menu.Item>
+                        <Menu.Item>
+                            <span><Icon type="delete"></Icon>Delete</span>
+                        </Menu.Item>
+                    </Menu>;
+                    return <Dropdown overlay={menu}>
+                        <a className="ant-dropdown-link">
+                            Hover me <Icon type="down"/>
+                        </a>
+                    </Dropdown>
+
                 }
             }
         ];
@@ -89,9 +105,20 @@ export class MemberWarehouseInQueryPage extends React.Component<MemberWarehouseI
     render() {
         return <Row className="member-warehouse-in-query-page">
             <ContentHeaderControl title="入库查询"></ContentHeaderControl>
-            <Row>
-                {this.renderTable()}
-            </Row>
+            <Tabs defaultActiveKey="1">
+                <Tabs.TabPane tab="待打包" key="1">
+                    <Row style={{marginBottom: '15px'}}>
+                        <Button>合并打包</Button>
+                    </Row>
+                    <Row>
+                        <Alert message="总计有十项 待打包订单" type="info" showIcon/>
+                    </Row>
+                    <Row>
+                        {this.renderTable()}
+                    </Row>
+                </Tabs.TabPane>
+                <Tabs.TabPane tab="待审核" key="2">Content of Tab Pane 2</Tabs.TabPane>
+            </Tabs>
         </Row>
     }
 }

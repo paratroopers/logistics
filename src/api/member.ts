@@ -1,6 +1,7 @@
 import {BaseRequest, BaseResponse} from "../util/common";
 import {Request} from '../util/request';
-import {GetUserContextResponse,GetMemberOrderStatusResponse} from './model/response/member';
+import {CustomerOrdersRequest} from './model/request/member-request';
+import {GetUserContextResponse, GetMemberOrderStatusResponse} from './model/response/member';
 import {CommonAPI} from './common';
 
 const BasicsUrl = CommonAPI.baseURL;
@@ -28,5 +29,10 @@ export class MemberAPI {
     static async GetMemberOrderStatus() {
         let url: string = BasicsUrl + "CustomerOrder/Status";
         return new Request<BaseRequest, GetMemberOrderStatusResponse>().post(url, null);
+    }
+
+    static async GetCustomerOrders(data: CustomerOrdersRequest) {
+        let url: string = BasicsUrl + "CustomerOrder/items/page";
+        return new Request<BaseRequest, BaseResponse>().get(url, data);
     }
 }

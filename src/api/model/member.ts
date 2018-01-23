@@ -10,7 +10,7 @@ export interface Attachment extends BaseModel {
 }
 
 /** 新建入库*/
-export interface WarehouseInModel extends BaseModel{
+export interface WarehouseInModel extends BaseModel {
     /** 会员号*/
     MemeberCode?: string;
     /** 物流方式*/
