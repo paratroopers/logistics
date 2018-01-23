@@ -5,7 +5,7 @@ import {FormExpressSelect} from "./form-express-select";
 import {FormWarehouseSelect} from "./form-warehouse-select";
 import {FormStepIcon} from "./form-step-icon";
 import {FormSteps} from "./form-steps";
-
+import  {FormCustomerOrder} from "./form-customer-order";
 export{
     FormAdvancedSearch,
     FormMessageList,
@@ -13,5 +13,6 @@ export{
     FormExpressSelect,
     FormWarehouseSelect,
     FormStepIcon,
-    FormSteps
+    FormSteps,
+    FormCustomerOrder
 }
