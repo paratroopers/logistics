@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
-import {Row,Col,Button,Input} from "antd";
+import {Row,Input,DatePicker} from "antd";
+const { RangePicker } = DatePicker;
 import {FormAdvancedSearch,FormStatusSelect,FormExpressSelect,FormWarehouseSelect} from "../../components/form/index";
 import {FormAdvancedItemModel} from "../../components/form/form-advanced-search";
 
@@ -39,8 +40,9 @@ export class DemoPage extends React.Component<DemoProps, DemoStates> {
             }, {
                 defaultDisplay: false,
                 fieldName: "D",
-                displayName:"控件",
-                control: <Input></Input>
+                displayName:"时间范围",
+                control: <RangePicker></RangePicker>,
+                multiple:2
             }, {
                 defaultDisplay: false,
                 fieldName: "E",
