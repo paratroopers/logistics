@@ -5,6 +5,9 @@ import {CommonLocale} from "../locales/localeid";
 import {UserModel} from '../api/model/base';
 import {Notification} from "../components/controls/common/notification";
 
+
+export enum SelectType {CustomerOrder = 1, User= 2, ExpressNo = 3}
+
 export interface Base {
 }
 

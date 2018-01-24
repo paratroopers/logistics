@@ -2,39 +2,40 @@ import * as React from 'react';
 import {Select, Spin} from 'antd';
 const Option = Select.Option;
 import debounce from 'lodash.debounce';
+import {SelectType} from '../../util/common';
 
 export interface FormCustomerOrderProps{
+placeholder:string;
+    type:SelectType;
+}
+
+export interface FormCustomerOrderStates<T> {
+    data:T[];
+    value?:string[];
+    fetching: boolean,
 
 }
 
-export interface FormCustomerOrderStates {
-
-}
-
-export class FormCustomerOrder extends React.Component<FormCustomerOrderProps, FormCustomerOrderStates> {
+export class FormCustomerOrder extends React.Component<FormCustomerOrderProps, FormCustomerOrderStates<any>> {
 
     constructor(props, context) {
         super(props, context);
-       // this.lastFetchId = 0;
-       // this.fetchUser = debounce(this.fetchUser, 800);
     }
-
-
     componentDidMount() {
 
     }
+    // state = {
+    //     data: [],
+    //     value: [],
+    //     fetching: false,
+    // };
 
-    state = {
-        data: [],
-        value: [],
-        fetching: false,
-    };
-
-    fetchUser = (value) => {
+    fetchData = (value) => {
         console.log('fetching user', value);
+
       //  this.lastFetchId += 1;
       //  const fetchId = this.lastFetchId;
-        this.setState({ data: [], fetching: true });
+        this.setState({ data:[], fetching: true });
         fetch('https://randomuser.me/api/?results=5')
             .then(response => response.json())
             .then((body) => {
@@ -63,13 +64,13 @@ export class FormCustomerOrder extends React.Component<FormCustomerOrderProps, F
         const { fetching, data, value } = this.state;
 
         return <Select
-            mode="multiple"
+            mode="tags"
             labelInValue
             value={value}
-            placeholder="Select users"
+            placeholder={this.props.placeholder}
             notFoundContent={fetching ? <Spin size="small" /> : null}
             filterOption={false}
-            onSearch={this.fetchUser}
+            onSearch={this.fetchData}
             onChange={this.handleChange}
             style={{ width: '100%' }}
         >
