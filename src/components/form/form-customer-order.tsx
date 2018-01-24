@@ -32,7 +32,11 @@ export class FormCustomerOrder extends React.Component<FormCustomerOrderProps, F
 
     fetchData = (value) => {
         console.log('fetching user', value);
-
+        switch (this.props.type){
+            case SelectType.CustomerOrder:;
+            case  SelectType.ExpressNo:;
+            case  SelectType.User:;
+        }
       //  this.lastFetchId += 1;
       //  const fetchId = this.lastFetchId;
         this.setState({ data:[], fetching: true });
