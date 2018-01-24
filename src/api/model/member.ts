@@ -67,3 +67,22 @@ export interface MemberOrderStatusModel extends BaseModel {
     waitForCustomerPackgeCount?: number;
     waitForPayCount?: number;
 }
+
+export interface CustomerOrderModel extends BaseModel {
+    CustomerOrderNo?: string;
+    CustomerServiceID?: string;
+    ID?: string;
+    InHeight?: number;
+    InLength?: number;
+    InPackageCount?: number;
+    InVolume?: number;
+    InWareHouseTime?: string;
+    InWeight?: number;
+    InWidth?: number;
+    TransferNo?: string;
+    WareHouseID?: string;
+    expressNo?: string;
+    expressTypeID?: string;
+    expressTypeName?: string;
+    userid?: string;
+}

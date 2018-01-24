@@ -1,26 +1,133 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
-import {Row} from "antd";
-import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
+import {Row, Table, Menu, Dropdown, Icon, Alert, Button, Tabs} from "antd";
+import {ColumnProps} from 'antd/lib/table';
+import {MemberAPI} from '../../../api/member';
+import {CustomerOrderModel} from '../../../api/model/member';
+import {CustomerOrdersRequest} from '../../../api/model/request/member-request';
+import {ContentHeaderControl} from "../../../components/controls/common/content-header-control";
+import * as moment from 'moment';
 
 interface MemberMyOrderPageStates {
-
+    pageIndex: number;
+    pageSize: number;
+    data?: CustomerOrderModel[];
 }
 
 interface MemberMyOrderPageProps {
 
 }
 
+class MemberMyOrderPageTable extends Table<any> {
+}
+
 @withRouter
 export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, MemberMyOrderPageStates> {
     constructor(props) {
         super(props);
+        this.state = {
+            pageIndex: 1,
+            pageSize: 20,
+            data: []
+        }
+    }
+
+    componentDidMount() {
+        this.getData();
+    }
+
+    getData(pageIndex?: number) {
+        const request: CustomerOrdersRequest = {
+            type: 0,
+            pageSize: pageIndex ? pageIndex : this.state.pageSize,
+            pageIndex: this.state.pageIndex
+        };
+        MemberAPI.GetCustomerOrders(request).then(r => {
+            r.Status === 0 && this.setState({data: r.Data, pageIndex: pageIndex});
+        });
+    }
+
+    renderTable() {
+        const columns: ColumnProps<CustomerOrderModel>[] = [
+            {
+                title: '客户订单',
+                dataIndex: 'CustomerOrderNo'
+            },
+            {
+                title: '物流单号',
+                dataIndex: 'expressNo'
+            },
+            {
+                title: '物流方式',
+                dataIndex: 'expressTypeName'
+            },
+            {
+                title: '状态',
+                dataIndex: 'status',
+                render: () => {
+                    return <span>待打包</span>
+                }
+            },
+            {
+                title: '入库时间',
+                dataIndex: 'InWareHouseTime',
+                render: (txt) => {
+                    return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
+                }
+            },
+            {
+                title: '',
+                dataIndex: 'handle',
+                render: (txt, record) => {
+                    const menu = <Menu>
+                        <Menu.Item>
+                            <span><Icon type="search"></Icon>查看</span>
+                        </Menu.Item>
+                    </Menu>;
+                    return <Dropdown overlay={menu}>
+                        <a className="ant-dropdown-link">
+                            操作 <Icon type="down"/>
+                        </a>
+                    </Dropdown>
+                }
+            }
+        ];
+        const rowSelection = {
+            onChange: (selectedRowKeys, selectedRows) => {
+                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            }
+        };
+
+        return <MemberMyOrderPageTable columns={columns}
+                                       pagination={{
+                                           pageSize: this.state.pageSize,
+                                           current: this.state.pageIndex,
+                                           onChange: (current) => {
+                                               this.getData(current);
+                                           }
+                                       }}
+                                       rowKey="ID"
+                                       rowSelection={rowSelection}
+                                       dataSource={this.state.data}/>
     }
 
     render() {
-        return <Row className="member-my-order-page">
+        return <Row className="member-warehouse-in-query-page">
             <ContentHeaderControl title="我的订单"></ContentHeaderControl>
-            <Row>MemberMyOrderPage</Row>
+            <Tabs defaultActiveKey="1">
+                <Tabs.TabPane tab="待打包" key="1">
+                    <Row style={{marginBottom: '15px'}}>
+                        <Button>合并打包</Button>
+                    </Row>
+                    <Row>
+                        <Alert message="总计有十项 待打包订单" type="info" showIcon/>
+                    </Row>
+                    <Row>
+                        {this.renderTable()}
+                    </Row>
+                </Tabs.TabPane>
+                <Tabs.TabPane tab="待审核" key="2">Content of Tab Pane 2</Tabs.TabPane>
+            </Tabs>
         </Row>
     }
 }
