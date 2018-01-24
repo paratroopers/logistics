@@ -1,12 +1,16 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
-import {Row, Col, Card, Button, Icon, Table, Alert} from 'antd';
+import {Row, Col, Button, Icon, Table, Alert} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
-import FormAdvancedSearch from "../../../components/form/form-advanced-search";
 import {WarehouseListModel}from "../../../api/model/member";
 import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
 import {FormCustomerOrder} from "../../../components/form/index";
 import {SelectType} from "../../../util/common";
+
+import {Input,DatePicker} from "antd";
+const { RangePicker } = DatePicker;
+import {FormAdvancedSearch,FormStatusSelect,FormExpressSelect,FormWarehouseSelect} from "../../../components/form/index";
+import {FormAdvancedItemModel} from "../../../components/form/form-advanced-search";
 
 interface WarehouseInPageProps {
 
@@ -260,14 +264,61 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         </Row>
     }
 
+    renderFormAdvancedItems() {
+        const items: FormAdvancedItemModel[] = [
+            {
+                defaultDisplay: true,
+                fieldName: "A",
+                displayName:"状态",
+                control: <FormStatusSelect></FormStatusSelect>
+            },
+            {
+                defaultDisplay: true,
+                fieldName: "B",
+                displayName:"物流方式",
+                control: <FormExpressSelect></FormExpressSelect>
+            }, {
+                defaultDisplay: true,
+                fieldName: "C",
+                displayName:"仓库",
+                control: <FormWarehouseSelect></FormWarehouseSelect>
+            }, {
+                defaultDisplay: false,
+                fieldName: "D",
+                displayName:"时间范围",
+                control: <RangePicker></RangePicker>,
+                multiple:2
+            }, {
+                defaultDisplay: false,
+                fieldName: "E",
+                displayName:"控件",
+                control: <Input></Input>
+            }, {
+                defaultDisplay: false,
+                fieldName: "F",
+                displayName:"控件",
+                control: <Input></Input>
+            }, {
+                defaultDisplay: false,
+                fieldName: "G",
+                displayName:"控件",
+                control: <Input></Input>
+            }
+        ];
+        return items;
+    }
+
     render() {
         const topThis = this;
         return <Row className="warehouse-in-page">
             <ContentHeaderControl title="入库操作" extra={topThis.renderButton()}></ContentHeaderControl>
             <FormCustomerOrder placeholder="客户订单号" type={SelectType.CustomerOrder}/>
             <Col className="warehouse-in-header">
-                <Row style={{marginBottom: 16}}><FormAdvancedSearch
-                    onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch></Row>
+                <Row style={{marginBottom: 16}}>
+                    <FormAdvancedSearch
+                        formAdvancedItems={topThis.renderFormAdvancedItems()}
+                        onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch>
+                </Row>
                 <Row style={{marginBottom: 16}}>{topThis.renderTable()}</Row>
             </Col>
         </Row>;

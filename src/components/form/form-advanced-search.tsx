@@ -5,7 +5,7 @@
 import * as React from 'react';
 import { Form, Row, Col, Button, Icon } from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
-import {isArray} from "util";
+import {isArray, isNullOrUndefined} from "util";
 const FormItem = Form.Item;
 
 interface FormAdvancedSearchProps extends FormComponentProps {
@@ -29,6 +29,8 @@ export class FormAdvancedItemModel {
     fieldName: string;
     /** 控件*/
     control: React.ReactNode;
+    /** 占用控件为正常的几倍*/
+    multiple?:number;
 }
 
 class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAdvancedSearchStates> {
@@ -69,17 +71,23 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
     renderFormAdvancedItems() {
         const topThis = this;
         const {props: {formAdvancedItems, form: {getFieldDecorator}}, state: {expand}} = topThis;
-
-        const formItemLayout = {
-            labelCol: { span: 4 },
-            wrapperCol: { span: 14 },
-        };
-
         const children = [];
         if (isArray(formAdvancedItems)) {
             formAdvancedItems.map(function (item, index) {
+                const multiple = !isNullOrUndefined(item.multiple) ? item.multiple : 1;
+                const spanLayout = {
+                    xs: 24,
+                    sm: 12,
+                    md: 12 * multiple,
+                    lg: 8 * multiple,
+                    xl: 8 * multiple
+                }
+                const formItemLayout = window.innerWidth < 768 ? null : {
+                    labelCol: {span: 6 / multiple},
+                    wrapperCol: {span: 24 - 6 / multiple},
+                };
                 const display = expand ? 'block' : item.defaultDisplay ? 'block' : 'none';
-                children.push(<Col span={8} key={index} style={{display: display}}>
+                children.push(<Col {...spanLayout} key={index} style={{display: display}}>
                     <FormItem label={item.displayName} {...formItemLayout}>
                         {getFieldDecorator(item.fieldName)(item.control)}
                     </FormItem>
@@ -96,7 +104,7 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
         return <Form className="na-advanced-search-form"
                      layout={formLayout}
                      onSubmit={topThis.onSearch.bind(this)}>
-            <Row gutter={24}>{topThis.renderFormAdvancedItems()}</Row>
+            <Row gutter={16}>{topThis.renderFormAdvancedItems()}</Row>
             <Row>
                 <Col span={24} style={{textAlign: 'right'}}>
                     <Button type="primary" htmlType="submit">搜索</Button>
