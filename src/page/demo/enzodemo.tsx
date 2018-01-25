@@ -75,17 +75,16 @@ export namespace FormControl {
             this.lastFetchId += 1;
             let fetchId = this.lastFetchId;
             this.setState({data: [], fetching: true});
-            switch (this.props.type){
-                case SelectType.Member:
-                var request:UserSearchIndexRequest ={
-                    name:value,
-                    type:2
-                };
+            const type = this.props.type;
+            var request:UserSearchIndexRequest ={
+                name:value,
+                type:type
+            };
+            if(type === SelectType.Member|| type === SelectType.CustomerService|| type ===SelectType.WarehouseAdmin){
                 MemberAPI.UserSearchIndex(request).then(result =>{
                     if (fetchId !== this.lastFetchId) { // for fetch callback order
                         return;
                     }
-
                     if(result.Status === 0){
                         const data = result.Data.map(o =>({
                             text:`${o.MemeberCode}`,
@@ -97,6 +96,9 @@ export namespace FormControl {
 
                     }
                 });
+            }
+            else  if(type === SelectType.ExpressNo || type === SelectType.CustomerOrder) {
+
             }
         }
 
