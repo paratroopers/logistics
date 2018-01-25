@@ -5,6 +5,7 @@ const Option = Select.Option;
 import  {SelectType} from '../../util/common';
 import  {UserSearchIndexRequest} from '../../api/model/request/member-request'
 import  {MemberAPI} from '../../api/member';
+import  {API} from '../../api/customerorder';
 
 export namespace FormControl {
 
@@ -97,8 +98,39 @@ export namespace FormControl {
                     }
                 });
             }
-            else  if(type === SelectType.ExpressNo || type === SelectType.CustomerOrder) {
+            else  if( type === SelectType.CustomerOrder) {
+                API.CustomerOrderAPI.OrderSearchIndex(request).then(result =>{
+                    if (fetchId !== this.lastFetchId) { // for fetch callback order
+                        return;
+                    }
+                    if(result.Status === 0){
+                        const data = result.Data.map(o =>({
+                            text:`${o.CustomerOrderNo}`,
+                            value:o.CustomerOrderNo
+                        }));
+                        this.setState({
+                            data:data,fetching:false
+                        });
 
+                    }
+                });
+            }
+            else  if(type === SelectType.ExpressNo){
+                API.CustomerOrderAPI.OrderSearchIndex(request).then(result =>{
+                    if (fetchId !== this.lastFetchId) { // for fetch callback order
+                        return;
+                    }
+                    if(result.Status === 0){
+                        const data = result.Data.map(o =>({
+                            text:`${o.expressNo}`,
+                            value:o.expressNo
+                        }));
+                        this.setState({
+                            data:data,fetching:false
+                        });
+
+                    }
+                });
             }
         }
 

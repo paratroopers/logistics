@@ -8,6 +8,7 @@ export interface MemberOrderStatusRequest {
 
 }
 
+
 export interface CustomerOrdersRequest extends BaseListRequest {
     type: number;
 }
@@ -17,7 +18,13 @@ export interface  UserSearchModel{
     type:number;
 }
 
+
 export  interface UserSearchIndexRequest {
+    name:string;
+    type:number;
+}
+
+export  interface OrderSearchIndexRequest{
     name:string;
     type:number;
 }
