@@ -4,6 +4,8 @@ import {Row,Input,DatePicker} from "antd";
 const { RangePicker } = DatePicker;
 import {FormAdvancedSearch,FormStatusSelect,FormExpressSelect,FormWarehouseSelect} from "../../components/form/index";
 import {FormAdvancedItemModel} from "../../components/form/form-advanced-search";
+import {FormControl} from './enzodemo';
+import  {SelectType} from '../../util/common';
 
 interface DemoStates {
 
@@ -58,7 +60,37 @@ export class DemoPage extends React.Component<DemoProps, DemoStates> {
                 fieldName: "G",
                 displayName:"控件",
                 control: <Input></Input>
+            },{
+                defaultDisplay: false,
+                fieldName: "H",
+                displayName:"会员",
+                control: <FormControl.FormSelect type={SelectType.Member} placeholder="搜索会员"/>
+            },{
+                defaultDisplay: false,
+                fieldName: "I",
+                displayName:"客服",
+                control: <FormControl.FormSelect type={SelectType.CustomerService} placeholder="搜索客服"/>
+            },
+            {
+                defaultDisplay: false,
+                fieldName: "I",
+                displayName:"仓库管理员",
+                control: <FormControl.FormSelect type={SelectType.WarehouseAdmin} placeholder="搜索仓库管理员"/>
+            },
+            {
+                defaultDisplay: false,
+                fieldName: "J",
+                displayName:"客服订单号",
+                control: <FormControl.FormSelect type={SelectType.CustomerOrder} placeholder="搜索客服订单号"/>
+            },
+            {
+                defaultDisplay: false,
+                fieldName: "K",
+                displayName:"快递单号",
+                control: <FormControl.FormSelect type={SelectType.ExpressNo} placeholder="搜索快递单号"/>
             }
+
+
         ];
         return items;
     }
