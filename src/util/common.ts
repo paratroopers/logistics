@@ -6,7 +6,7 @@ import {UserModel} from '../api/model/base';
 import {Notification} from "../components/controls/common/notification";
 
 
-export enum SelectType {CustomerOrder = 1, User= 2, ExpressNo = 3}
+export enum SelectType {CustomerOrder = 1, Member= 2, WarehouseAdmin = 3, CustomerService =4, ExpressNo =5}
 
 export interface Base {
 }
