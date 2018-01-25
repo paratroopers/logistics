@@ -312,6 +312,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         const topThis = this;
         return <Row className="warehouse-in-page">
             <ContentHeaderControl title="入库操作" extra={topThis.renderButton()}></ContentHeaderControl>
+            
             <FormCustomerOrder placeholder="会员号" type={SelectType.Member}/>
             <Col className="warehouse-in-header">
                 <Row style={{marginBottom: 16}}>

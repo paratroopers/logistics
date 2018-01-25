@@ -21,69 +21,68 @@ export interface FormCustomerOrderStates {
 
 export class FormCustomerOrder extends React.Component<FormCustomerOrderProps, FormCustomerOrderStates> {
 
+
     constructor(props, context) {
         super(props, context);
-       // this.setState({data:[], value:[], fetching: true });
     }
+
     componentDidMount() {
 
     }
     state = {
         data: [],
-        value: [],
+        value:[],
         fetching: false,
     };
 
     fetchData = (value) => {
-        console.log('fetching user', value);
-
-        this.setState({ data:[], value:[], fetching: true });
-
+       // console.log('fetching user', value);
+        this.setState({ data:[],  fetching: true });
         switch (this.props.type){
-            case SelectType.CustomerOrder:
-                var request:UserSearchIndexRequest ={
-                    name:value,
-                    type:2
-                };
-                MemberAPI.UserSearchIndex(request).then(result =>{
-                    if(result.Status === 0){
-                        const data = result.Data.map(o =>({
-                            text:`${o.MemeberCode}`,
-                            value:o.Userid
-                        }));
-                        this.setState({
-                            data:data,fetching:false
-                        });
+            case SelectType.Member:
+                // var request:UserSearchIndexRequest ={
+                //     name:value,
+                //     type:2
+                // };
+                // MemberAPI.UserSearchIndex(request).then(result =>{
+                //     if(result.Status === 0){
+                //         const data = result.Data.map(o =>({
+                //             text:`${o.MemeberCode}`,
+                //             value:o.Userid
+                //         }));
+                //         this.setState({
+                //             data:data,fetching:false
+                //         });
+                //
+                //     }
+                // });
 
-                    }
-                });
-
-            case  SelectType.ExpressNo:
-                // request.type = SelectType.ExpressNo;
-                // MemberAPI.UserSearchIndex(request);
-            case  SelectType.CustomerService:
-                 // request.type = SelectType.CustomerService;
-                 // MemberAPI.UserSearchIndex(request);
-
-            case  SelectType.Member:
-                 request ={
-                    name:value,
-                    type:2
-                };
-                MemberAPI.UserSearchIndex(request).then(result =>{
-                    if(result.Status === 0){
-                        const data = result.Data.map(o =>({
-                            text:`${o.MemeberCode}`,
-                            value:o.Userid
-                        }));
-                        this.setState({
-                            data:data,fetching:false
-                        });
-
-                    }
-                });
-
-            case  SelectType.WarehouseAdmin:;
+            // case  SelectType.ExpressNo:
+            //     // request.type = SelectType.ExpressNo;
+            //     // MemberAPI.UserSearchIndex(request);
+            // case  SelectType.CustomerService:
+            //      // request.type = SelectType.CustomerService;
+            //      // MemberAPI.UserSearchIndex(request);
+            //
+            // case  SelectType.Member:
+            //      request ={
+            //         name:value,
+            //         type:2
+            //     };
+            //     MemberAPI.UserSearchIndex(request).then(result =>{
+            //         if(result.Status === 0){
+            //             const r = result.Data.map(o =>({
+            //                 text:`${r.MemeberCode}`,
+            //                 value:r.Userid
+            //             }));
+            //             this.setState({
+            //                 data:r,fetching:false
+            //             });
+            //
+            //         }
+            //     });
+            //
+            // case  SelectType.WarehouseAdmin:;
                    // request.type = SelectType.WarehouseAdmin;
                    // MemberAPI.UserSearchIndex(request);
         }
@@ -92,15 +91,14 @@ export class FormCustomerOrder extends React.Component<FormCustomerOrderProps, F
 
     handleChange = (value) => {
         this.setState({
-            value,
+            value:value,
             data: [],
             fetching: false,
         });
     }
 
     render() {
-        const {data, value,fetching } = this.state;
-
+        const {data,value, fetching } = this.state;
         return <Select
             mode="tags"
             labelInValue

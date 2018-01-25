@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Router, Route, hashHistory, IndexRoute} from 'react-router';
 import {PathConfig, MobilePathConfig} from './pathconfig';
+import  {EnzoDemoPage} from '../page/demo/enzodemo';
 import {
     DemoPage,
     UserLoginPage,
@@ -10,7 +11,7 @@ import {
     CompanyPage,
     NaMobileTabBar,
     MemberPage,
-    UserRegisterPage,WarehouseInPage,MemberAddressPage,MemberDeliveredPage,MemberMessageListPage,MemberMyOrderPage,MemberUserInformationPage,MemberWaitPayPage,MemberWarehouseInQueryPage,MemberWelcomePage
+    UserRegisterPage,WarehouseInPage,MemberAddressPage,MemberDeliveredPage,MemberMessageListPage,MemberMyOrderPage,MemberUserInformationPage,MemberWaitPayPage,MemberWarehouseInQueryPage,MemberWelcomePage,
 } from '../page';
 import {
     MemberPage as MobileMemberPage,
@@ -22,6 +23,7 @@ import {
 
 const routerConfig = (
     <Router history={hashHistory}>
+        <Route path={PathConfig.EnzoDemoPage} component={EnzoDemoPage}/>
         <Route path={PathConfig.DemoPage} component={DemoPage}/>
         <Route path={PathConfig.MasterPage} component={NaMasterMainPage}>
             <IndexRoute component={HomePage}></IndexRoute>

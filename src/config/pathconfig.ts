@@ -3,6 +3,7 @@ export class PathConfig {
 
     /** Demo*/
     static DemoPage = "/demo";
+    static  EnzoDemoPage = "/enzodemo";
     /** mobile Demo*/
     static MobilePage = "/demo-mobile";
 
