@@ -1,7 +1,10 @@
 import * as React from 'react';
 import {Router, Route, hashHistory, IndexRoute} from 'react-router';
 import {PathConfig, MobilePathConfig} from './pathconfig';
-import  {EnzoDemoPage} from '../page/demo/enzodemo';
+
+/// <reference path="../page/demo/enzodemo.tsx" />
+import  {FormControl} from  '../page/demo/enzodemo';
+
 import {
     DemoPage,
     UserLoginPage,
@@ -23,7 +26,7 @@ import {
 
 const routerConfig = (
     <Router history={hashHistory}>
-        <Route path={PathConfig.EnzoDemoPage} component={EnzoDemoPage}/>
+        <Route path={PathConfig.EnzoDemoPage} component={FormControl.EnzoDemoPage}/>
         <Route path={PathConfig.DemoPage} component={DemoPage}/>
         <Route path={PathConfig.MasterPage} component={NaMasterMainPage}>
             <IndexRoute component={HomePage}></IndexRoute>
