@@ -2,18 +2,23 @@ import * as React from 'react';
 import {withRouter} from 'react-router';
 import { Select, Spin } from 'antd';
 const Option = Select.Option;
-
-
-
-interface EnzoDemoDemoStates {
-
-}
-
-interface EnzoDemoDemoProps {
-
-}
+import  {SelectType} from '../../util/common';
+import  {UserSearchIndexRequest} from '../../api/model/request/member-request'
+import  {MemberAPI} from '../../api/member';
 
 export namespace FormControl {
+
+
+    interface EnzoDemoDemoStates {
+
+    }
+
+    interface EnzoDemoDemoProps {
+
+    }
+
+
+
 
     @withRouter
     export class EnzoDemoPage extends React.Component {
@@ -34,45 +39,65 @@ export namespace FormControl {
 
 
         render() {
-            return (<FormSelect/>);
+            return (<FormSelect placeholder="会员号" type={SelectType.Member}/>);
         }
 
     }
 
 
-    export class FormSelect extends React.Component {
+    export interface FormSelectProps{
+        placeholder:string;
+        type:SelectType;
+    }
 
-        constructor(props) {
-            super(props);
-            this.lastFetchId = 0;
-            //  this.fetchUser = debounce(this.fetchUser, 800);
-        }
+    export interface FormSelectStates {
+        data:any[];
+        value?:string[];
+        fetching?: boolean,
 
+    }
+
+    export class FormSelect extends React.Component<FormSelectProps,FormSelectStates> {
         lastFetchId: number;
 
-        state = {
-            data: [],
-            value: [],
-            fetching: false,
+        constructor(props,context) {
+            super(props,context);
+            this.lastFetchId = 0;
+            this.state = {
+                data: [],
+                value: [],
+                fetching: false,
+            }
         }
 
-        fetchUser = (value) => {
+        fetchData = (value) => {
             console.log('fetching user', value);
             this.lastFetchId += 1;
-            const fetchId = this.lastFetchId;
+            let fetchId = this.lastFetchId;
             this.setState({data: [], fetching: true});
-            fetch('https://randomuser.me/api/?results=5')
-                .then(response => response.json())
-                .then((body) => {
+            switch (this.props.type){
+                case SelectType.Member:
+                var request:UserSearchIndexRequest ={
+                    name:value,
+                    type:2
+                };
+                MemberAPI.UserSearchIndex(request).then(result =>{
                     if (fetchId !== this.lastFetchId) { // for fetch callback order
                         return;
                     }
-                    const data = body.results.map(user => ({
-                        text: `${user.name.first} ${user.name.last}`,
-                        value: user.login.username,
-                    }));
-                    this.setState({data, fetching: false});
+
+                    if(result.Status === 0){
+                        const data = result.Data.map(o =>({
+                            text:`${o.MemeberCode}`,
+                            value:o.Userid
+                        }));
+                        this.setState({
+                            data:data,fetching:false
+                        });
+
+                    }
                 });
+            }
         }
 
         handleChange = (value) => {
@@ -91,10 +116,10 @@ export namespace FormControl {
                     mode="multiple"
                     labelInValue
                     value={value}
-                    placeholder="Select users"
+                    placeholder={this.props.placeholder}
                     notFoundContent={fetching ? <Spin size="small"/> : null}
                     filterOption={false}
-                    onSearch={this.fetchUser}
+                    onSearch={this.fetchData}
                     onChange={this.handleChange}
                     style={{width: '100%'}}
                 >
