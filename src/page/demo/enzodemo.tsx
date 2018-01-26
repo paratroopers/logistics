@@ -6,20 +6,9 @@ import  {SelectType} from '../../util/common';
 import  {UserSearchIndexRequest} from '../../api/model/request/member-request'
 import  {MemberAPI} from '../../api/member';
 import  {API} from '../../api/customerorder';
+import {SelectProps} from "antd/lib/select";
 
 export namespace FormControl {
-
-
-    interface EnzoDemoDemoStates {
-
-    }
-
-    interface EnzoDemoDemoProps {
-
-    }
-
-
-
 
     @withRouter
     export class EnzoDemoPage extends React.Component {
@@ -40,25 +29,24 @@ export namespace FormControl {
 
 
         render() {
-            return (<FormSelect placeholder="会员号" type={SelectType.Member}/>);
+            return (<FormSelectIndex placeholder="会员号" type={SelectType.Member}/>);
         }
 
     }
 
-
-    export interface FormSelectProps{
+    export interface FormSelectIndexProps extends SelectProps{
         placeholder:string;
         type:SelectType;
     }
 
-    export interface FormSelectStates {
+    export interface FormSelectIndexStates {
         data:any[];
         value?:string[];
         fetching?: boolean,
 
     }
 
-    export class FormSelect extends React.Component<FormSelectProps,FormSelectStates> {
+    export class FormSelectIndex extends React.Component<FormSelectIndexProps,FormSelectIndexStates> {
         lastFetchId: number;
 
         constructor(props,context) {
@@ -140,6 +128,7 @@ export namespace FormControl {
                 data: [],
                 fetching: false,
             });
+            this.props.onChange(value);
         }
 
 
@@ -163,6 +152,8 @@ export namespace FormControl {
         }
 
     }
+
+
 }
 
 

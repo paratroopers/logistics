@@ -64,30 +64,30 @@ export class DemoPage extends React.Component<DemoProps, DemoStates> {
                 defaultDisplay: false,
                 fieldName: "H",
                 displayName:"会员",
-                control: <FormControl.FormSelect type={SelectType.Member} placeholder="搜索会员"/>
+                control: <FormControl.FormSelectIndex type={SelectType.Member} placeholder="搜索会员"/>
             },{
                 defaultDisplay: false,
                 fieldName: "I",
                 displayName:"客服",
-                control: <FormControl.FormSelect type={SelectType.CustomerService} placeholder="搜索客服"/>
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerService} placeholder="搜索客服"/>
             },
             {
                 defaultDisplay: false,
                 fieldName: "I",
                 displayName:"仓库管理员",
-                control: <FormControl.FormSelect type={SelectType.WarehouseAdmin} placeholder="搜索仓库管理员"/>
+                control: <FormControl.FormSelectIndex type={SelectType.WarehouseAdmin} placeholder="搜索仓库管理员"/>
             },
             {
                 defaultDisplay: false,
                 fieldName: "J",
                 displayName:"客服订单号",
-                control: <FormControl.FormSelect type={SelectType.CustomerOrder} placeholder="搜索客服订单号"/>
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客服订单号"/>
             },
             {
                 defaultDisplay: false,
                 fieldName: "K",
                 displayName:"快递单号",
-                control: <FormControl.FormSelect type={SelectType.ExpressNo} placeholder="搜索快递单号"/>
+                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="搜索快递单号"/>
             }
 
 
