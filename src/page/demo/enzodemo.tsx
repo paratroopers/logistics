@@ -86,7 +86,7 @@ export namespace FormControl {
                     if (fetchId !== this.lastFetchId) { // for fetch callback order
                         return;
                     }
-                    if(result.Status === 0){
+                    if(result.Status === 0 && result.Data !== null){
                         const data = result.Data.map(o =>({
                             text:`${o.MemeberCode}`,
                             value:o.Userid
@@ -103,7 +103,7 @@ export namespace FormControl {
                     if (fetchId !== this.lastFetchId) { // for fetch callback order
                         return;
                     }
-                    if(result.Status === 0){
+                    if(result.Status === 0 && result.Data !== null){
                         const data = result.Data.map(o =>({
                             text:`${o.CustomerOrderNo}`,
                             value:o.CustomerOrderNo
@@ -120,7 +120,7 @@ export namespace FormControl {
                     if (fetchId !== this.lastFetchId) { // for fetch callback order
                         return;
                     }
-                    if(result.Status === 0){
+                    if(result.Status === 0 && result.Data !== null){
                         const data = result.Data.map(o =>({
                             text:`${o.expressNo}`,
                             value:o.expressNo
