@@ -7,6 +7,7 @@ import {Select} from 'antd';
 import {SelectProps,LabeledValue} from "antd/lib/select";
 import {isNullOrUndefined} from "util";
 const Option = Select.Option;
+import {BaseAPI} from "../../api/base";
 
 interface FormExpressSelectProps extends SelectProps{}
 
@@ -29,26 +30,18 @@ export class FormExpressSelect extends React.Component<FormExpressSelectProps, F
     /** 获取数据源*/
     onLoadData() {
         const topThis = this;
-        const data: LabeledValue[] = [{
-            key: "0",
-            label: "顺丰快递"
-        }, {
-            key: "1",
-            label: "菜鸟快递"
-        }, {
-            key: "2",
-            label: "圆通快递"
-        }, {
-            key: "3",
-            label: "韵达快递"
-        }, {
-            key: "4",
-            label: "天天快递"
-        }]
+        let data:LabeledValue[];
+        BaseAPI.GetExpressTypeAll().then((result) =>{
+            if (result.Data !== null && result.Status === 0){
+                    data = result.Data.map(o =>({
+                    key:o.ID,
+                    label:o.Name
+                }));
+                topThis.setState({selectData: data});
+            }
+        })
 
-        topThis.setState({selectData: data});
     }
-
 
 
     renderOption() {

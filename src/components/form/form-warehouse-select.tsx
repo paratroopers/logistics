@@ -7,6 +7,7 @@ import {Select} from 'antd';
 import {SelectProps,LabeledValue} from "antd/lib/select";
 import {isNullOrUndefined} from "util";
 const Option = Select.Option;
+import {BaseAPI} from "../../api/base";
 
 interface FormWarehouseSelectProps extends SelectProps{}
 
@@ -29,24 +30,16 @@ export class FormWarehouseSelect extends React.Component<FormWarehouseSelectProp
     /** 获取数据源*/
     onLoadData() {
         const topThis = this;
-        const data: LabeledValue[] = [{
-            key: "0",
-            label: "仓库A"
-        }, {
-            key: "1",
-            label: "仓库B"
-        }, {
-            key: "2",
-            label: "仓库C"
-        }, {
-            key: "3",
-            label: "仓库D"
-        }, {
-            key: "4",
-            label: "仓库E"
-        }]
-
-        topThis.setState({selectData: data});
+        let data:LabeledValue[];
+        BaseAPI.GetWareHouseAll().then((result) =>{
+            if (result.Data !== null && result.Status === 0){
+                data = result.Data.map(o =>({
+                    key:o.ID,
+                    label:o.code
+                }));
+                topThis.setState({selectData: data});
+            }
+        })
     }
 
 
