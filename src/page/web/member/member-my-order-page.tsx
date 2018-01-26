@@ -12,6 +12,8 @@ interface MemberMyOrderPageStates {
     pageIndex: number;
     pageSize: number;
     data?: CustomerOrderModel[];
+    totalCount?: number;
+    loading?: boolean;
 }
 
 interface MemberMyOrderPageProps {
@@ -27,8 +29,10 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
         super(props);
         this.state = {
             pageIndex: 1,
-            pageSize: 20,
-            data: []
+            pageSize: 1,
+            data: [],
+            totalCount: 0,
+            loading: false
         }
     }
 
@@ -39,15 +43,22 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
     getData(pageIndex?: number) {
         const request: CustomerOrdersRequest = {
             type: 0,
-            pageSize: pageIndex ? pageIndex : this.state.pageSize,
-            pageIndex: this.state.pageIndex
+            pageSize: this.state.pageSize,
+            pageIndex: pageIndex ? pageIndex : this.state.pageIndex,
         };
+        this.setState({loading: true});
         MemberAPI.GetCustomerOrders(request).then(r => {
-            r.Status === 0 && this.setState({data: r.Data, pageIndex: pageIndex});
+            r.Status === 0 && this.setState({
+                data: r.Data,
+                pageIndex: pageIndex,
+                totalCount: r.TotalCount,
+                loading: false
+            });
         });
     }
 
     renderTable() {
+        const {state: {pageSize, pageIndex, totalCount, data, loading}} = this;
         const columns: ColumnProps<CustomerOrderModel>[] = [
             {
                 title: '客户订单',
@@ -97,18 +108,19 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                 console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             }
         };
-
         return <MemberMyOrderPageTable columns={columns}
+                                       loading={loading}
                                        pagination={{
-                                           pageSize: this.state.pageSize,
-                                           current: this.state.pageIndex,
+                                           pageSize: pageSize,
+                                           current: pageIndex,
                                            onChange: (current) => {
                                                this.getData(current);
-                                           }
+                                           },
+                                           total: totalCount
                                        }}
                                        rowKey="ID"
                                        rowSelection={rowSelection}
-                                       dataSource={this.state.data}/>
+                                       dataSource={data}/>
     }
 
     render() {
