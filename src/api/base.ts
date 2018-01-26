@@ -11,4 +11,15 @@ export class BaseAPI {
         return new Request<BaseRequest, BaseResponse>().get(url);
     }
 
+    static async GetWareHouseAll(){
+        let url: string = BaseAPI.baseURL + "Warehouse/all";
+        return new Request<BaseRequest, BaseResponse>().get(url);
+    }
+
+    static  async  GetExpressTypeAll(){
+        let url: string = BaseAPI.baseURL + "ExpressType/all";
+        return new Request<BaseRequest, BaseResponse>().get(url);
+    }
+
+
 }
