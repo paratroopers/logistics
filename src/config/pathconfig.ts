@@ -3,7 +3,7 @@ export class PathConfig {
 
     /** Demo*/
     static DemoPage = "/demo";
-    static  EnzoDemoPage = "/enzodemo";
+    static EnzoDemoPage = "/enzodemo";
     /** mobile Demo*/
     static MobilePage = "/demo-mobile";
 
@@ -42,12 +42,15 @@ export class PathConfig {
 
     /** 财务*/
     /*客服*/
-    static  CustomerServerPage = "/cusertomerservice/orderconfirm";
+    static CustomerServerPage = "/cusertomerservice/orderconfirm";
 
 
     /** 报表*/
 
     /** 系统设置*/
+
+    /** 合并打包*/
+    static MemberMergePackage = "/member/merge/package";
 
 }
 

@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {withRouter} from 'react-router';
+import {withRouter, hashHistory} from 'react-router';
 import {Row, Table, Menu, Dropdown, Icon, Alert, Button, Tabs} from "antd";
 import {ColumnProps} from 'antd/lib/table';
 import {MemberAPI} from '../../../api/member';
+import {PathConfig} from '../../../config/pathconfig';
 import {CustomerOrderModel} from '../../../api/model/member';
 import {CustomerOrdersRequest} from '../../../api/model/request/member-request';
 import {ContentHeaderControl} from "../../../components/controls/common/content-header-control";
@@ -55,6 +56,10 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                 loading: false
             });
         });
+    }
+
+    onPackageClick() {
+        hashHistory.push(PathConfig.MemberMergePackage);
     }
 
     renderTable() {
@@ -129,10 +134,10 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             <Tabs defaultActiveKey="1">
                 <Tabs.TabPane tab="待打包" key="1">
                     <Row style={{marginBottom: '15px'}}>
-                        <Button>合并打包</Button>
+                        <Button onClick={this.onPackageClick.bind(this)}>合并打包</Button>
                     </Row>
                     <Row>
-                        <Alert message="总计有十项 待打包订单" type="info" showIcon/>
+                        <Alert message={`总计有${this.state.totalCount}项 待打包订单`} type="info" showIcon/>
                     </Row>
                     <Row>
                         {this.renderTable()}

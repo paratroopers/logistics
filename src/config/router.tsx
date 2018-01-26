@@ -3,7 +3,7 @@ import {Router, Route, hashHistory, IndexRoute} from 'react-router';
 import {PathConfig, MobilePathConfig} from './pathconfig';
 
 /// <reference path="../page/demo/enzodemo.tsx" />
-import  {FormControl} from  '../page/demo/enzodemo';
+import {FormControl} from '../page/demo/enzodemo';
 
 import {
     DemoPage,
@@ -14,7 +14,17 @@ import {
     CompanyPage,
     NaMobileTabBar,
     MemberPage,
-    UserRegisterPage,WarehouseInPage,MemberAddressPage,MemberDeliveredPage,MemberMessageListPage,MemberMyOrderPage,MemberUserInformationPage,MemberWaitPayPage,MemberWarehouseInQueryPage,MemberWelcomePage,
+    UserRegisterPage,
+    WarehouseInPage,
+    MemberAddressPage,
+    MemberDeliveredPage,
+    MemberMessageListPage,
+    MemberMyOrderPage,
+    MemberUserInformationPage,
+    MemberWaitPayPage,
+    MemberWarehouseInQueryPage,
+    MemberWelcomePage,
+    MemberMergePackage
 } from '../page';
 import {
     MemberPage as MobileMemberPage,
@@ -49,6 +59,7 @@ const routerConfig = (
                 <Route path={PathConfig.MemberWaitPayPage} component={MemberWaitPayPage}/>
                 <Route path={PathConfig.MemberWarehouseInQueryPage} component={MemberWarehouseInQueryPage}/>
                 <Route path={PathConfig.WarehouseInPage} component={WarehouseInPage}/>
+                <Route path={PathConfig.MemberMergePackage} component={MemberMergePackage}/>
             </Route>
         </Route>
         <Route path={PathConfig.LoginPage} component={UserLoginPage}/>
