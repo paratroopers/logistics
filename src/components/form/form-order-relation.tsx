@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Row, Col, Table} from 'antd';
 import {ColumnProps} from 'antd/lib/table';
-import {FormSettingTitle} from './form-setting-title'
+import {FormSettingGroup} from './form-setting-group'
 
 export interface FormOrderRelationProps {
 }
@@ -70,15 +70,8 @@ export class FormOrderRelation extends React.Component<FormOrderRelationProps, F
     }
 
     render() {
-        return <div className="form-control-group">
-            <Row>
-                <Col>
-                    <FormSettingTitle size={16} title={"关联订单信息"}></FormSettingTitle>
-                </Col>
-                <Col>
-                    {this.renderTable()}
-                </Col>
-            </Row>
-        </div>
+        return <FormSettingGroup size={16} title={"关联订单信息"} span={24}>
+            {this.renderTable()}
+        </FormSettingGroup>
     }
 }

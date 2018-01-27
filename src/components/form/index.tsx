@@ -6,7 +6,7 @@ import {FormWarehouseSelect} from "./form-warehouse-select";
 import {FormStepIcon} from "./form-step-icon";
 import {FormSteps} from "./form-steps";
 import {FormCustomerOrder} from "./form-customer-order";
-import {FormSettingTitle} from './form-setting-title';
+import {FormSettingGroup} from './form-setting-group';
 import {FormOrderInfo} from './form-order-info';
 import {FormOrderRelation} from './form-order-relation';
 
@@ -19,7 +19,7 @@ export {
     FormStepIcon,
     FormSteps,
     FormCustomerOrder,
-    FormSettingTitle,
+    FormSettingGroup,
     FormOrderInfo,
     FormOrderRelation
 }
