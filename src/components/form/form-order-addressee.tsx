@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Row, Col, Form, Input, Button} from 'antd';
-import {FormSettingGroup} from './form-setting-group'
+import {FormSettingGroup} from './form-setting-group';
 
 export interface FormOrderAddresseeProps {
     readOnly?: boolean;

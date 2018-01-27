@@ -10,6 +10,7 @@ import {FormSettingGroup} from './form-setting-group';
 import {FormOrderInfo} from './form-order-info';
 import {FormOrderRelation} from './form-order-relation';
 import {FormOrderAddressee} from './form-order-addressee';
+import {FormOrderDeclare} from './form-order-declare';
 
 export {
     FormAdvancedSearch,
@@ -23,5 +24,6 @@ export {
     FormSettingGroup,
     FormOrderInfo,
     FormOrderRelation,
-    FormOrderAddressee
+    FormOrderAddressee,
+    FormOrderDeclare
 }
