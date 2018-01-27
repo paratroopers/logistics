@@ -1,4 +1,3 @@
-
 import {DemoPage} from "./demo/demo";
 import {HomePage} from "./web/home-page";
 import MemberPage from "./web/member-page";
@@ -9,7 +8,17 @@ import UserRegisterPage from "./web/user/user-register-page";
 import UserLoginPage from "./web/user/user-login-page";
 import {NaMasterMainPage} from './master/master-main-page';
 import {WarehouseInPage} from './web/warehouseadmin/warehouse-in-page';
-import {MemberAddressPage,MemberDeliveredPage,MemberMessageListPage,MemberMyOrderPage,MemberUserInformationPage,MemberWaitPayPage,MemberWarehouseInQueryPage,MemberWelcomePage} from "./web/member/index";
+import {
+    MemberAddressPage,
+    MemberDeliveredPage,
+    MemberMessageListPage,
+    MemberMyOrderPage,
+    MemberUserInformationPage,
+    MemberWaitPayPage,
+    MemberWarehouseInQueryPage,
+    MemberWelcomePage,
+    MemberMergePackage
+} from "./web/member/index";
 
 export {
     DemoPage,
@@ -29,5 +38,6 @@ export {
     MemberUserInformationPage,
     MemberWaitPayPage,
     MemberWarehouseInQueryPage,
-    MemberWelcomePage
+    MemberWelcomePage,
+    MemberMergePackage
 }

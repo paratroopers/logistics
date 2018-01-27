@@ -5,8 +5,12 @@ import {FormExpressSelect} from "./form-express-select";
 import {FormWarehouseSelect} from "./form-warehouse-select";
 import {FormStepIcon} from "./form-step-icon";
 import {FormSteps} from "./form-steps";
-import  {FormCustomerOrder} from "./form-customer-order";
-export{
+import {FormCustomerOrder} from "./form-customer-order";
+import {FormSettingTitle} from './form-setting-title';
+import {FormOrderInfo} from './form-orderinfo';
+import {FormOrderRelation} from './form-order-relation';
+
+export {
     FormAdvancedSearch,
     FormMessageList,
     FormStatusSelect,
@@ -14,5 +18,8 @@ export{
     FormWarehouseSelect,
     FormStepIcon,
     FormSteps,
-    FormCustomerOrder
+    FormCustomerOrder,
+    FormSettingTitle,
+    FormOrderInfo,
+    FormOrderRelation
 }
