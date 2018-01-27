@@ -3,6 +3,7 @@ import {withRouter} from 'react-router';
 import {Layout, Row, Col, Button, Icon} from 'antd';
 import {FormOrderInfo} from '../../../components/form'
 import {FormOrderRelation} from '../../../components/form';
+import {FormOrderAddressee} from '../../../components/form';
 
 export interface MemberMergePackageProps {
 }
@@ -31,6 +32,7 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
             <Layout.Content>
                 <FormOrderInfo></FormOrderInfo>
                 <FormOrderRelation></FormOrderRelation>
+                <FormOrderAddressee></FormOrderAddressee>
             </Layout.Content>
         </Layout>;
     }
