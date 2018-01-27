@@ -18,7 +18,7 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
                 <Row>
                     <Col span={24}>
                         <div className="merge-package-header-title">
-                            <Icon type="exclamation-circle-o"/>
+                            <Icon type="tag" style={{color: '#f2804b', marginRight: '15px'}}/>
                             <span>单号：201801270052</span>
                         </div>
                         <Button.Group size="default" className="merge-package-header-button">
