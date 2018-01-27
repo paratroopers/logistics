@@ -43,23 +43,7 @@ export class DemoPage extends React.Component<DemoProps, DemoStates> {
                 defaultDisplay: false,
                 fieldName: "D",
                 displayName:"时间范围",
-                control: <RangePicker></RangePicker>,
-                multiple:2
-            }, {
-                defaultDisplay: false,
-                fieldName: "E",
-                displayName:"控件",
-                control: <Input></Input>
-            }, {
-                defaultDisplay: false,
-                fieldName: "F",
-                displayName:"控件",
-                control: <Input></Input>
-            }, {
-                defaultDisplay: false,
-                fieldName: "G",
-                displayName:"控件",
-                control: <Input></Input>
+                control: <RangePicker></RangePicker>
             },{
                 defaultDisplay: false,
                 fieldName: "H",
@@ -89,8 +73,6 @@ export class DemoPage extends React.Component<DemoProps, DemoStates> {
                 displayName:"快递单号",
                 control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="搜索快递单号"/>
             }
-
-
         ];
         return items;
     }

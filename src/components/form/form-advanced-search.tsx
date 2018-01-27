@@ -29,8 +29,6 @@ export class FormAdvancedItemModel {
     fieldName: string;
     /** 控件*/
     control: React.ReactNode;
-    /** 占用控件为正常的几倍*/
-    multiple?:number;
 }
 
 class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAdvancedSearchStates> {
@@ -72,23 +70,20 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
         const topThis = this;
         const {props: {formAdvancedItems, form: {getFieldDecorator}}, state: {expand}} = topThis;
         const children = [];
+
         if (isArray(formAdvancedItems)) {
             formAdvancedItems.map(function (item, index) {
-                const multiple = !isNullOrUndefined(item.multiple) ? item.multiple : 1;
                 const spanLayout = {
                     xs: 24,
                     sm: 12,
-                    md: 12 * multiple,
-                    lg: 8 * multiple,
-                    xl: 8 * multiple
+                    md: 12,
+                    lg: 8,
+                    xl: 8
                 }
-                const formItemLayout = window.innerWidth < 768 ? null : {
-                    labelCol: {span: 6 / multiple},
-                    wrapperCol: {span: 24 - 6 / multiple},
-                };
+
                 const display = expand ? 'block' : item.defaultDisplay ? 'block' : 'none';
                 children.push(<Col {...spanLayout} key={index} style={{display: display}}>
-                    <FormItem label={item.displayName} {...formItemLayout}>
+                    <FormItem label={item.displayName}>
                         {getFieldDecorator(item.fieldName)(item.control)}
                     </FormItem>
                 </Col>)
@@ -100,9 +95,8 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
     render() {
         const topThis = this;
         const {state: {expand}} = topThis;
-        const formLayout = window.innerWidth < 768 ? "vertical" : "horizontal";
         return <Form className="na-advanced-search-form"
-                     layout={formLayout}
+                     layout={"vertical"}
                      onSubmit={topThis.onSearch.bind(this)}>
             <Row gutter={16}>{topThis.renderFormAdvancedItems()}</Row>
             <Row>

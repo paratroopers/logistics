@@ -6,8 +6,8 @@ import {WarehouseListModel}from "../../../api/model/member";
 import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
 import {FormCustomerOrder} from "../../../components/form/index";
 import {SelectType} from "../../../util/common";
-
-import {Input,DatePicker} from "antd";
+import {FormControl} from '../../demo/enzodemo';
+import {DatePicker} from "antd";
 const { RangePicker } = DatePicker;
 import {FormAdvancedSearch,FormStatusSelect,FormExpressSelect,FormWarehouseSelect} from "../../../components/form/index";
 import {FormAdvancedItemModel} from "../../../components/form/form-advanced-search";
@@ -233,11 +233,12 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 console.log('Page: ', pageNumber);
             },
             showTotal: (total, range) => {
-               return `${range[0]}-${range[1]} of ${total} items`;
+                return `${range[0]}-${range[1]} of ${total} items`;
             }
         };
 
         return <Table columns={columns}
+                      style={{padding: '12px'}}
                       pagination={pagination}
                       title={(currentPageData: Object[]) => {
                           console.log(currentPageData);
@@ -269,40 +270,52 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             {
                 defaultDisplay: true,
                 fieldName: "A",
-                displayName:"状态",
-                control: <FormStatusSelect></FormStatusSelect>
+                displayName: "状态",
+                control: <FormStatusSelect placeholder="搜索订单状态"></FormStatusSelect>
             },
             {
                 defaultDisplay: true,
                 fieldName: "B",
-                displayName:"物流方式",
-                control: <FormExpressSelect></FormExpressSelect>
+                displayName: "物流方式",
+                control: <FormExpressSelect placeholder="搜索物流方式"></FormExpressSelect>
             }, {
                 defaultDisplay: true,
                 fieldName: "C",
-                displayName:"仓库",
-                control: <FormWarehouseSelect></FormWarehouseSelect>
+                displayName: "仓库",
+                control: <FormWarehouseSelect placeholder="搜索仓库"></FormWarehouseSelect>
             }, {
                 defaultDisplay: false,
                 fieldName: "D",
-                displayName:"时间范围",
-                control: <RangePicker></RangePicker>,
-                multiple:2
+                displayName: "入库时间",
+                control: <RangePicker></RangePicker>
             }, {
                 defaultDisplay: false,
-                fieldName: "E",
-                displayName:"控件",
-                control: <Input></Input>
+                fieldName: "H",
+                displayName: "会员",
+                control: <FormControl.FormSelectIndex type={SelectType.Member} placeholder="搜索会员"/>
             }, {
                 defaultDisplay: false,
-                fieldName: "F",
-                displayName:"控件",
-                control: <Input></Input>
-            }, {
+                fieldName: "I",
+                displayName: "客服",
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerService} placeholder="搜索客服"/>
+            },
+            {
                 defaultDisplay: false,
-                fieldName: "G",
-                displayName:"控件",
-                control: <Input></Input>
+                fieldName: "I",
+                displayName: "仓库管理员",
+                control: <FormControl.FormSelectIndex type={SelectType.WarehouseAdmin} placeholder="搜索仓库管理员"/>
+            },
+            {
+                defaultDisplay: false,
+                fieldName: "J",
+                displayName: "客服订单号",
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客服订单号"/>
+            },
+            {
+                defaultDisplay: false,
+                fieldName: "K",
+                displayName: "快递单号",
+                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="搜索快递单号"/>
             }
         ];
         return items;
@@ -312,16 +325,10 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         const topThis = this;
         return <Row className="warehouse-in-page">
             <ContentHeaderControl title="入库操作" extra={topThis.renderButton()}></ContentHeaderControl>
-            
-            <FormCustomerOrder placeholder="会员号" type={SelectType.Member}/>
-            <Col className="warehouse-in-header">
-                <Row style={{marginBottom: 16}}>
-                    <FormAdvancedSearch
-                        formAdvancedItems={topThis.renderFormAdvancedItems()}
-                        onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch>
-                </Row>
-                <Row style={{marginBottom: 16}}>{topThis.renderTable()}</Row>
-            </Col>
+            <FormAdvancedSearch
+                formAdvancedItems={topThis.renderFormAdvancedItems()}
+                onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch>
+            {topThis.renderTable()}
         </Row>;
     }
 }
