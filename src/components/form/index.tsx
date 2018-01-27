@@ -7,7 +7,7 @@ import {FormStepIcon} from "./form-step-icon";
 import {FormSteps} from "./form-steps";
 import {FormCustomerOrder} from "./form-customer-order";
 import {FormSettingTitle} from './form-setting-title';
-import {FormOrderInfo} from './form-orderinfo';
+import {FormOrderInfo} from './form-order-info';
 import {FormOrderRelation} from './form-order-relation';
 
 export {
