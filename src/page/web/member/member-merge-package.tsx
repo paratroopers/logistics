@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
 import {Layout, Row, Col, Button, Icon} from 'antd';
+import {FormOrderInfo} from '../../../components/form'
+import {FormOrderRelation} from '../../../components/form';
 
 export interface MemberMergePackageProps {
 }
@@ -27,11 +29,8 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
                 </Row>
             </Layout.Header>
             <Layout.Content>
-                <Row className="form-control-title">
-                    <Col span={24} className="sign">
-                        <span>订单基本信息</span>
-                    </Col>
-                </Row>
+                <FormOrderInfo></FormOrderInfo>
+                <FormOrderRelation></FormOrderRelation>
             </Layout.Content>
         </Layout>;
     }
