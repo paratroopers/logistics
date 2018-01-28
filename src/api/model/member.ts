@@ -39,6 +39,8 @@ export interface WarehouseListModel extends BaseModel {
     ID?: number;
     /** 会员ID*/
     userid?: string;
+    /** 会员编号*/
+    MemeberCode?:string;
     /** 客户订单号*/
     CustomerOrderNo?: string,
     /** 快递单号*/

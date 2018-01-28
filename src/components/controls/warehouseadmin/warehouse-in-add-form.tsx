@@ -69,7 +69,7 @@ class WarehouseInAddForm extends Component<WarehouseInAddFormProps, WarehouseInA
                         <FormItem label={"快递单号"}>
                             {getFieldDecorator("expressNo", {
                                 rules: [{required: true, message: '请选择快递单号!'}],
-                            })(<FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="快递单号"/>)}
+                            })(<Input placeholder="快递单号"/>)}
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>

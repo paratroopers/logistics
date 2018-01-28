@@ -1,11 +1,12 @@
 import * as React from 'react';
-import {withRouter} from 'react-router';
+import {withRouter,hashHistory} from 'react-router';
 import {Row, Col, Button,message} from 'antd';
 import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
 import WarehouseInAddForm from "../../../components/controls/warehouseadmin/warehouse-in-add-form";
 import {WarehouseAPI}from "../../../api/admin";
 import {WarehouseInAddRequest}from "../../../api/model/request/admin";
 import {BaseResponse}from "../../../api/model/response/base";
+import {PathConfig}from "../../../config/pathconfig";
 
 interface WarehouseInAddPageProps {
 
@@ -27,7 +28,7 @@ export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps,
             /** 会员ID*/
             userid: values.user[0].key,
             /** 快递单号*/
-            expressNo: values.expressNo[0].key,
+            expressNo: values.expressNo,
             /** 快递类型ID*/
             expressTypeID: values.expressType.key,
             /** 快递类型名称*/
@@ -59,6 +60,7 @@ export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps,
         WarehouseAPI.WarehouseInAdd(request).then((result: BaseResponse) => {
             if (result.Status === 0) {
                 message.success("新增成功!");
+                hashHistory.push(PathConfig.WarehouseInPage);
             }
         })
     }

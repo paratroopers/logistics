@@ -108,11 +108,17 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             title: "物流方式",
             dataIndex: 'expressTypeName'
         }, {
+            title: "会员编号",
+            dataIndex: 'MemeberCode'
+        }, {
             title: "物流单号",
             dataIndex: 'expressNo'
         }, {
-            title: "入库体积",
-            dataIndex: 'InVolume'
+            title: "入库体积(c㎡)",
+            dataIndex: 'InVolume',
+            render: (val, record, index) => {
+                return record.InLength + "*" + record.InWeight + "*" + record.InHeight;
+            }
         }, {
             title: "入库重量",
             dataIndex: 'InWeight'
