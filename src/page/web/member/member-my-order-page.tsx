@@ -1,8 +1,9 @@
 import * as React from 'react';
 import {withRouter, hashHistory} from 'react-router';
-import {Row, Table, Menu, Dropdown, Icon, Alert, Button, Tabs} from "antd";
+import {Row, Table, Menu, Dropdown, Icon, Alert, Button, Tabs, Badge} from "antd";
 import {ColumnProps} from 'antd/lib/table';
 import {MemberAPI} from '../../../api/member';
+import {PageContext} from '../../common';
 import {PathConfig} from '../../../config/pathconfig';
 import {CustomerOrderModel} from '../../../api/model/member';
 import {CustomerOrdersRequest} from '../../../api/model/request/member-request';
@@ -15,6 +16,7 @@ interface MemberMyOrderPageStates {
     data?: CustomerOrderModel[];
     totalCount?: number;
     loading?: boolean;
+    selected?: { selectedRowKeys?: string[], selectedRows?: CustomerOrderModel[] };
 }
 
 interface MemberMyOrderPageProps {
@@ -30,10 +32,11 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
         super(props);
         this.state = {
             pageIndex: 1,
-            pageSize: 1,
+            pageSize: 3,
             data: [],
             totalCount: 0,
-            loading: false
+            loading: false,
+            selected: {}
         }
     }
 
@@ -59,11 +62,14 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
     }
 
     onPackageClick() {
-        hashHistory.push(PathConfig.MemberMergePackage);
+        hashHistory.push({
+            pathname: PathConfig.MemberMergePackage,
+            query: {ids: this.state.selected.selectedRowKeys},
+        })
     }
 
     renderTable() {
-        const {state: {pageSize, pageIndex, totalCount, data, loading}} = this;
+        const {state: {pageSize, pageIndex, totalCount, data, loading, selected}} = this;
         const columns: ColumnProps<CustomerOrderModel>[] = [
             {
                 title: '客户订单',
@@ -109,8 +115,9 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             }
         ];
         const rowSelection = {
+            selectedRowKeys: selected.selectedRowKeys,
             onChange: (selectedRowKeys, selectedRows) => {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                this.setState({selected: {selectedRowKeys, selectedRows}})
             }
         };
         return <MemberMyOrderPageTable columns={columns}
@@ -129,15 +136,21 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
     }
 
     render() {
+        const {state: {totalCount, selected}} = this;
+        const selects = selected.selectedRowKeys ? selected.selectedRowKeys.length : 0;
         return <Row className="member-warehouse-in-query-page">
             <ContentHeaderControl title="我的订单"></ContentHeaderControl>
             <Tabs defaultActiveKey="1">
                 <Tabs.TabPane tab="待打包" key="1">
                     <Row style={{marginBottom: '15px'}}>
-                        <Button onClick={this.onPackageClick.bind(this)}>合并打包</Button>
+                        <Badge count={selects} style={{backgroundColor: '#52c41a'}}>
+                            <Button disabled={!selects}
+                                    type="primary"
+                                    onClick={this.onPackageClick.bind(this)}>合并打包</Button>
+                        </Badge>
                     </Row>
                     <Row>
-                        <Alert message={`总计有${this.state.totalCount}项 待打包订单`} type="info" showIcon/>
+                        <Alert message={`总计有${totalCount}项 待打包订单`} type="info" showIcon/>
                     </Row>
                     <Row>
                         {this.renderTable()}
