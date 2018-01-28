@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps} from 'react-router';
 import {Layout, Row, Col, Button, Icon} from 'antd';
+import {ContentHeaderControl} from "../../../components/controls/common/content-header-control";
 import {CustomerOrderModel} from '../../../api/model/member';
 import {MemberAPI} from '../../../api/member';
 import {
@@ -65,7 +66,14 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
         const {state: {orderInfo, data}} = this;
         return <Layout className="merge-package">
             <Layout.Header className="merge-package-header">
-                <Row>
+                <Row justify="start" type="flex">
+                    <Col span={24}>
+                        <ContentHeaderControl title="待打包"></ContentHeaderControl>
+                    </Col>
+                </Row>
+            </Layout.Header>
+            <Layout.Content>
+                <Row justify="start" type="flex" style={{margin: '10px 0px 10px 0px'}}>
                     <Col span={24}>
                         <div className="merge-package-header-title">
                             <Icon type="tag" style={{color: '#f2804b', marginRight: '15px'}}/>
@@ -77,8 +85,6 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
                         </Button.Group>
                     </Col>
                 </Row>
-            </Layout.Header>
-            <Layout.Content>
                 <FormOrderInfo data={orderInfo}></FormOrderInfo>
                 <FormOrderRelation data={data}></FormOrderRelation>
                 <FormOrderAddressee></FormOrderAddressee>
