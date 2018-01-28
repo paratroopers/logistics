@@ -51,16 +51,12 @@ export class MemberNavigation extends React.Component<MemberNavigationProps, Mem
     render() {
         const topThis = this;
         const {state: {treeData}, props: {style}} = topThis;
-        const defaultKey = treeData && treeData.map(function (item) {
-                return item.parentItem.Url;
-            });
         /* 默认打开 我的仓库 用户设置*/
         return <Menu
             className="member-navigation-control"
             style={style}
-            defaultOpenKeys={defaultKey}
+            defaultOpenKeys={['890331594632818690','892231594632818690']}
             mode={"inline"}
-            openKeys={['890331594632818690','892231594632818690']}
             onClick={(obj: { item, key, keyPath }) => {
                 hashHistory.push({pathname: obj.key});
             }}>

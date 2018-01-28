@@ -23,6 +23,12 @@ export enum RegisterEnum{
     mail = 1
 }
 
+/** 查询类型*/
+export enum OrderTypeEnum{
+    /** 入库查询*/
+    WarehouseIn = 0
+}
+
 /** 基础类*/
 export interface BaseModel {
     TenantID?:string;

@@ -5,7 +5,7 @@
 import * as React from 'react';
 import { Form, Row, Col, Button, Icon } from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
-import {isArray, isNullOrUndefined} from "util";
+import {isArray} from "util";
 const FormItem = Form.Item;
 
 interface FormAdvancedSearchProps extends FormComponentProps {
