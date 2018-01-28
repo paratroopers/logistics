@@ -36,8 +36,6 @@ export class MemberAPI {
         return new Request<BaseRequest, BaseResponse>().get(url, data);
     }
 
-
-
     /*会员,客服，仓库管理员 模糊查询*/
     static  async  UserSearchIndex(data:UserSearchIndexRequest){
         let url:string = BasicsUrl + "Memeber/users/Index";

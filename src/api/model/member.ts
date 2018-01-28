@@ -35,30 +35,38 @@ export interface WarehouseInModel extends BaseModel {
 
 /** 入库列表*/
 export interface WarehouseListModel extends BaseModel {
-    /** 入库单号*/
-    WareHouseOrder?: string;
+    /** 主键*/
+    ID?: number;
+    /** 会员ID*/
+    userid?: string;
     /** 客户订单号*/
-    CustomerOrder?: string;
-    /** 会员号*/
-    MemeberCode?: string;
-    /** 物流方式*/
-    LogisticsType?: string;
-    /** 物流单号*/
-    LogisticsOrder?: string;
-    /** 验收单号*/
-    AcceptanceNumber?: string;
-    /** 入库体积*/
-    WarehouseInVolume?: string;
+    CustomerOrderNo?: string,
+    /** 快递单号*/
+    expressNo?: string,
+    /** 快递类型ID*/
+    expressTypeID?: number,
+    /** 快递类型Name*/
+    expressTypeName?: string,
+    /** 交接单*/
+    TransferNo?: string,
+    /** 件数*/
+    InPackageCount?: number,
     /** 入库重量*/
-    WarehouseInWeight?: string;
+    InWeight?: number,
+    /** 入库体积*/
+    InVolume?: number,
+    /** 入库长度*/
+    InLength?: number,
+    /** 入库宽度*/
+    InWidth?: number,
+    /** 入库高度*/
+    InHeight?: number,
+    /** 仓库ID*/
+    WareHouseID?: number,
     /** 入库时间*/
-    WarehouseInTime?: string;
-    /** 状态*/
-    Status?: string;
-    /** 备注*/
-    Remark?: string;
-    /** 附件*/
-    Attachment?: Attachment[];
+    InWareHouseTime?: Date,
+    /** 客服ID*/
+    CustomerServiceID?: number
 }
 
 /** 客户订单状态*/

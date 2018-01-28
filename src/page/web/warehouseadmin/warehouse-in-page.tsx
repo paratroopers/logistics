@@ -4,13 +4,17 @@ import {Row, Col, Button, Icon, Table, Alert} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {WarehouseListModel}from "../../../api/model/member";
 import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
-import {FormCustomerOrder} from "../../../components/form/index";
 import {SelectType} from "../../../util/common";
 import {FormControl} from '../../demo/enzodemo';
 import {DatePicker} from "antd";
 const { RangePicker } = DatePicker;
 import {FormAdvancedSearch,FormStatusSelect,FormExpressSelect,FormWarehouseSelect} from "../../../components/form/index";
 import {FormAdvancedItemModel} from "../../../components/form/form-advanced-search";
+import {WarehouseAPI}from "../../../api/admin";
+import {GetWarehouseInListRequest}from "../../../api/model/request/admin";
+import {GetWarehouseInListResponse}from "../../../api/model/response/admin";
+import {OrderTypeEnum}from "../../../api/model/common";
+import {ColumnProps} from 'antd/lib/table';
 
 interface WarehouseInPageProps {
 
@@ -21,16 +25,14 @@ interface WarehouseInPageStates {
     listData: WarehouseListModel[],
     /** 选中行*/
     selectedRowKeys: any[],
-    /** 筛选*/
-    filteredInfo: any,
-    /** 排序*/
-    sortedInfo: any,
-    // /** 当前页数*/
-    // current:number,
-    // /** 每页条数*/
-    // pageSize:number,
-    // /** 总数*/
-    // total:number
+    /** 当前页数*/
+    pageIndex:number,
+    /** 每页条数*/
+    pageSize:number,
+    /** 总数*/
+    totalCount:number
+    /** 列表是否正在查询*/
+    loading?: boolean;
 }
 
 @withRouter
@@ -40,115 +42,23 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         this.state = {
             listData: [],
             selectedRowKeys: [],
-            filteredInfo: {},
-            sortedInfo: {}
+            pageIndex: 1,
+            pageSize: 10,
+            totalCount: 0,
+            loading: false
         }
     }
 
-    /** 清空筛选和排序*/
-    clearAll = () => {
-        this.setState({
-            filteredInfo: {},
-            sortedInfo: {},
-        });
+    componentDidMount() {
+        this.loadData();
     }
 
     /** 高级搜索*/
     onClickSearch = () => {
         const topThis = this;
-        const data = [
-            {
-                key: "0",
-                WareHouseOrder: "WH2018010500001",
-                CustomerOrder: "ML2018010500002",
-                MemeberCode: "ML0000011",
-                LogisticsType: "顺丰",
-                LogisticsOrder: "MLO 2018010500001",
-                AcceptanceNumber: "ML2018010500003",
-                WarehouseInVolume: "20.00",
-                WarehouseInWeight: "20.00",
-                WarehouseInTime: "2018年1月17日23:59:24",
-                Status: "已入库",
-                Remark: "",
-                Attachment: []
-            },
-            {
-                key: "1",
-                WareHouseOrder: "WH2018010500002",
-                CustomerOrder: "ML2018010500002",
-                MemeberCode: "ML0000011",
-                LogisticsType: "顺丰",
-                LogisticsOrder: "MLO 2018010500001",
-                AcceptanceNumber: "ML2018010500003",
-                WarehouseInVolume: "20.00",
-                WarehouseInWeight: "20.00",
-                WarehouseInTime: "2018年1月17日23:59:24",
-                Status: "已入库",
-                Remark: "",
-                Attachment: []
-            },
-            {
-                key: "2",
-                WareHouseOrder: "WH2018010500003",
-                CustomerOrder: "ML2018010500002",
-                MemeberCode: "ML0000011",
-                LogisticsType: "顺丰",
-                LogisticsOrder: "MLO 2018010500001",
-                AcceptanceNumber: "ML2018010500003",
-                WarehouseInVolume: "20.00",
-                WarehouseInWeight: "20.00",
-                WarehouseInTime: "2018年1月17日23:59:24",
-                Status: "已入库",
-                Remark: "",
-                Attachment: []
-            },
-            {
-                key: "3",
-                WareHouseOrder: "WH2018010500004",
-                CustomerOrder: "ML2018010500002",
-                MemeberCode: "ML0000011",
-                LogisticsType: "顺丰",
-                LogisticsOrder: "MLO 2018010500001",
-                AcceptanceNumber: "ML2018010500003",
-                WarehouseInVolume: "20.00",
-                WarehouseInWeight: "20.00",
-                WarehouseInTime: "2018年1月17日23:59:24",
-                Status: "已入库",
-                Remark: "",
-                Attachment: []
-            },
-            {
-                key: "4",
-                WareHouseOrder: "WH2018010500005",
-                CustomerOrder: "ML2018010500002",
-                MemeberCode: "ML0000011",
-                LogisticsType: "顺丰",
-                LogisticsOrder: "MLO 2018010500001",
-                AcceptanceNumber: "ML2018010500003",
-                WarehouseInVolume: "20.00",
-                WarehouseInWeight: "20.00",
-                WarehouseInTime: "2018年1月17日23:59:24",
-                Status: "已入库",
-                Remark: "",
-                Attachment: []
-            },
-            {
-                key: "5",
-                WareHouseOrder: "WH2018010500006",
-                CustomerOrder: "ML2018010500002",
-                MemeberCode: "ML0000011",
-                LogisticsType: "顺丰",
-                LogisticsOrder: "MLO 2018010500001",
-                AcceptanceNumber: "ML2018010500003",
-                WarehouseInVolume: "20.00",
-                WarehouseInWeight: "20.00",
-                WarehouseInTime: "2018年1月17日23:59:24",
-                Status: "已入库",
-                Remark: "",
-                Attachment: []
-            }
-        ];
-        topThis.setState({listData: data});
+        const {state: {pageSize}} = topThis;
+        /** 查询第一页*/
+        topThis.loadData(1, pageSize);
     }
 
     /** 选中事件*/
@@ -157,9 +67,32 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         this.setState({selectedRowKeys});
     }
 
+    /** 获取数据源*/
+    loadData = (index?:number,size?:number) => {
+        const topThis = this;
+        const {state: {pageIndex, pageSize}} = topThis;
+        const request: GetWarehouseInListRequest = {
+            type: OrderTypeEnum.WarehouseIn,
+            pageIndex: index ? index : pageIndex,
+            pageSize: size ? size : pageSize
+        }
+
+        topThis.setState({loading: true});
+        WarehouseAPI.GetWarehouseInItems(request).then((result: GetWarehouseInListResponse) => {
+            if (result.Status === 0) {
+                topThis.setState({
+                    listData: result.Data,
+                    pageIndex: index ? index : pageIndex,
+                    totalCount: result.TotalCount,
+                    loading: false
+                });
+            }
+        })
+    }
+
     renderTable() {
         const topThis = this;
-        const {state: {listData, selectedRowKeys, sortedInfo, filteredInfo}} = topThis;
+        const {state: {listData, selectedRowKeys, pageIndex, pageSize, totalCount,loading}} = topThis;
 
         const rowSelection = {
             fixed: true,
@@ -167,81 +100,50 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             onChange: topThis.onSelectChange,
         };
 
-        const columns = [{
-            title: "入库单号",
-            dataIndex: 'WareHouseOrder',
-            key: 'WareHouseOrder'
-        }, {
+        const columns:ColumnProps<WarehouseListModel>[]= [{
             title: "客户订单号",
-            dataIndex: 'CustomerOrder',
-            key: 'CustomerOrder'
-        }, {
-            title: "会员号",
-            dataIndex: 'MemeberCode',
-            key: 'MemeberCode'
+            dataIndex: 'CustomerOrderNo'
         }, {
             title: "物流方式",
-            dataIndex: 'LogisticsType',
-            key: 'LogisticsType',
-            sorter: (a, b) => a.LogisticsType.length - b.LogisticsType.length,
-            sortOrder: sortedInfo.columnKey === 'LogisticsType' && sortedInfo.order,
+            dataIndex: 'expressTypeName'
         }, {
             title: "物流单号",
-            dataIndex: 'LogisticsOrder',
-            key: 'LogisticsOrder'
-        }, {
-            title: "验收单号",
-            dataIndex: 'AcceptanceNumber',
-            key: 'AcceptanceNumber'
+            dataIndex: 'expressNo'
         }, {
             title: "入库体积",
-            dataIndex: 'WarehouseInVolume',
-            key: 'WarehouseInVolume'
+            dataIndex: 'InVolume'
         }, {
             title: "入库重量",
-            dataIndex: 'WarehouseInWeight',
-            key: 'WarehouseInWeight'
+            dataIndex: 'InWeight'
         }, {
             title: "入库时间",
-            dataIndex: 'WarehouseInTime',
-            key: 'WarehouseInTime'
-        }, {
-            title: "状态",
-            dataIndex: 'Status',
-            key: 'Status',
-            filters: [
-                {text: '已入库', value: '已入库'},
-                {text: '违禁品', value: '违禁品'},
-            ],
-            filteredValue: filteredInfo.Status || null,
-            onFilter: (value, record) => record.Status.includes(value),
-        }, {
-            title: "备注",
-            dataIndex: 'Remark',
-            key: 'Remark'
+            dataIndex: 'InWareHouseTime'
         }];
 
         const pagination: PaginationProps = {
-            defaultCurrent: 1,//默认页码
-            total: 500,//数据总数
+            current: pageIndex,
+            pageSize: pageSize,
+            total: totalCount,//数据总数
+            onChange: (a) => {
+                topThis.loadData(a,pageSize);
+            },
             showSizeChanger: true,//是否可以改变 pageSize
-            onShowSizeChange: (current, pageSize) => {
-                console.log(current, pageSize);
+            onShowSizeChange: (a, b) => {
+                topThis.setState({pageIndex: a, pageSize: b});
+                topThis.loadData(a,b);
             },
             showQuickJumper: true,//是否可以快速跳转至某页
-            onChange: (pageNumber) => {
-                console.log('Page: ', pageNumber);
-            },
             showTotal: (total, range) => {
                 return `${range[0]}-${range[1]} of ${total} items`;
             }
         };
 
         return <Table columns={columns}
+                      rowKey={"ID"}
+                      loading={loading}
                       style={{padding: '12px'}}
                       pagination={pagination}
                       title={(currentPageData: Object[]) => {
-                          console.log(currentPageData);
                           return <Alert message={"总计有 10项 已入库，5项 异常"} type="info" showIcon></Alert>;
                       }}
                       scroll={{x: 1500}}
