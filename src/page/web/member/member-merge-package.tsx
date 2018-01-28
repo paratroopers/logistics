@@ -1,16 +1,28 @@
 import * as React from 'react';
-import {withRouter} from 'react-router';
+import {withRouter, RouteComponentProps} from 'react-router';
 import {Layout, Row, Col, Button, Icon} from 'antd';
 import {FormOrderRelation, FormOrderDeclare, FormOrderAddressee, FormOrderInfo} from '../../../components/form';
 
-export interface MemberMergePackageProps {
+export interface MemberMergePackageProps extends RouteComponentProps<any, any> {
 }
 
 export interface MemberMergePackageStates {
+    selectedKeys?: string[];
+}
+
+export interface queryData {
+    ids?: string[]
 }
 
 @withRouter
 export class MemberMergePackage extends React.Component<MemberMergePackageProps, MemberMergePackageStates> {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            selectedKeys: (this.props.location.query as queryData).ids
+        }
+    }
+
     render() {
         return <Layout className="merge-package">
             <Layout.Header className="merge-package-header">

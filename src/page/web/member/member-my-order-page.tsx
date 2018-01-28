@@ -3,6 +3,7 @@ import {withRouter, hashHistory} from 'react-router';
 import {Row, Table, Menu, Dropdown, Icon, Alert, Button, Tabs, Badge} from "antd";
 import {ColumnProps} from 'antd/lib/table';
 import {MemberAPI} from '../../../api/member';
+import {PageContext} from '../../common';
 import {PathConfig} from '../../../config/pathconfig';
 import {CustomerOrderModel} from '../../../api/model/member';
 import {CustomerOrdersRequest} from '../../../api/model/request/member-request';
@@ -31,7 +32,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
         super(props);
         this.state = {
             pageIndex: 1,
-            pageSize: 1,
+            pageSize: 3,
             data: [],
             totalCount: 0,
             loading: false,
@@ -61,7 +62,10 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
     }
 
     onPackageClick() {
-        hashHistory.push(PathConfig.MemberMergePackage);
+        hashHistory.push({
+            pathname: PathConfig.MemberMergePackage,
+            query: {ids: this.state.selected.selectedRowKeys},
+        })
     }
 
     renderTable() {
