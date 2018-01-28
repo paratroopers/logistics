@@ -1,13 +1,25 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps} from 'react-router';
 import {Layout, Row, Col, Button, Icon} from 'antd';
-import {FormOrderRelation, FormOrderDeclare, FormOrderAddressee, FormOrderInfo} from '../../../components/form';
+import {CustomerOrderModel} from '../../../api/model/member';
+import {MemberAPI} from '../../../api/member';
+import {
+    FormOrderRelation,
+    FormOrderDeclare,
+    FormOrderAddressee,
+    FormOrderInfo
+} from '../../../components/form';
+import {FormOrderInfoModel} from '../../../components/form/form-order-info';
+import * as moment from 'moment';
 
 export interface MemberMergePackageProps extends RouteComponentProps<any, any> {
 }
 
 export interface MemberMergePackageStates {
     selectedKeys?: string[];
+    data?: CustomerOrderModel[];
+    orderInfo?: FormOrderInfoModel;
+
 }
 
 export interface queryData {
@@ -23,7 +35,32 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
         }
     }
 
+    componentDidMount() {
+        this.getMergeOrderInfo();
+    }
+
+    initOrderInfo(data: CustomerOrderModel[]) {
+        let orderInfo: FormOrderInfoModel = {
+            weight: 0,
+            volume: 0,
+            count: data.length,
+            created: moment().format('YYYY-MM-DD')
+        };
+        data.forEach(d => {
+            orderInfo.weight += d.InWeight;
+            orderInfo.volume += d.InVolume;
+        });
+        this.setState({orderInfo: orderInfo, data: data});
+    }
+
+    getMergeOrderInfo() {
+        MemberAPI.GetOrderItemsByID(this.state.selectedKeys.join(",")).then(r => {
+            r.Status === 0 && this.initOrderInfo(r.Data);
+        });
+    }
+
     render() {
+        const {state: {orderInfo}} = this;
         return <Layout className="merge-package">
             <Layout.Header className="merge-package-header">
                 <Row>
@@ -40,7 +77,7 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
                 </Row>
             </Layout.Header>
             <Layout.Content>
-                <FormOrderInfo></FormOrderInfo>
+                <FormOrderInfo data={orderInfo}></FormOrderInfo>
                 <FormOrderRelation></FormOrderRelation>
                 <FormOrderAddressee></FormOrderAddressee>
                 <FormOrderDeclare></FormOrderDeclare>
