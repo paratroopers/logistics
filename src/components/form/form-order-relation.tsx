@@ -1,72 +1,70 @@
 import * as React from 'react';
 import {Row, Col, Table} from 'antd';
 import {ColumnProps} from 'antd/lib/table';
-import {FormSettingGroup} from './form-setting-group'
+import {CustomerOrderModel} from '../../api/model/member';
+import {FormSettingGroup} from './form-setting-group';
+import * as moment from 'moment';
 
 export interface FormOrderRelationProps {
+    data?: CustomerOrderModel[];
 }
 
 export interface FormOrderRelationStates {
+    data?: CustomerOrderModel[];
+    loading?: boolean;
 }
 
 class FormOrderRelationTable extends Table<any> {
 }
 
 export class FormOrderRelation extends React.Component<FormOrderRelationProps, FormOrderRelationStates> {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            data: props.data ? props.data : [],
+            loading: true
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if ('data' in nextProps && nextProps.data !== this.props.data) {
+            this.setState({data: nextProps.data, loading: false});
+        }
+    }
 
     renderTable() {
         const colums: ColumnProps<any>[] = [
             {
                 title: '客服订单号',
-                dataIndex: 'orderName'
+                dataIndex: 'CustomerOrderNo'
             },
             {
                 title: '物流订单号',
-                dataIndex: '1'
+                dataIndex: 'expressNo'
             }, {
                 title: '物流方式',
-                dataIndex: '2'
+                dataIndex: 'expressTypeName'
             }, {
                 title: '入库时间',
-                dataIndex: '3'
+                dataIndex: 'InWareHouseTime',
+                render: (txt) => {
+                    return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
+                }
             }, {
                 title: '初始重量(KG)',
-                dataIndex: '4'
+                dataIndex: 'InWeight'
             }, {
                 title: '初始体积(cm³)',
-                dataIndex: '5'
+                dataIndex: 'InVolume'
             }, {
                 title: '客服备注',
                 dataIndex: '6'
             }
         ]
         return <FormOrderRelationTable columns={colums}
+                                       loading={this.state.loading}
                                        pagination={false}
-                                       dataSource={[{
-                                           orderName: 'Code21',
-                                           '1': '20180127',
-                                           2: 'USD',
-                                           3: '01-27',
-                                           4: '10.22',
-                                           5: '10.22',
-                                           6: '挺好的'
-                                       }, {
-                                           orderName: 'Code21',
-                                           '1': '20180127',
-                                           2: 'USD',
-                                           3: '01-27',
-                                           4: '10.22',
-                                           5: '10.22',
-                                           6: '挺好的'
-                                       }, {
-                                           orderName: 'Code21',
-                                           '1': '20180127',
-                                           2: 'USD',
-                                           3: '01-27',
-                                           4: '10.22',
-                                           5: '10.22',
-                                           6: '挺好的'
-                                       }]}></FormOrderRelationTable>
+                                       dataSource={this.state.data}></FormOrderRelationTable>
     }
 
     render() {

@@ -1,6 +1,6 @@
 import {BaseRequest, BaseResponse} from "../util/common";
 import {Request} from '../util/request';
-import {CustomerOrdersRequest,UserSearchIndexRequest} from './model/request/member-request';
+import {CustomerOrdersRequest, UserSearchIndexRequest} from './model/request/member-request';
 import {GetUserContextResponse, GetMemberOrderStatusResponse} from './model/response/member';
 import {CommonAPI} from './common';
 
@@ -37,9 +37,14 @@ export class MemberAPI {
     }
 
     /*会员,客服，仓库管理员 模糊查询*/
-    static  async  UserSearchIndex(data:UserSearchIndexRequest){
-        let url:string = BasicsUrl + "Memeber/users/Index";
+    static async UserSearchIndex(data: UserSearchIndexRequest) {
+        let url: string = BasicsUrl + "Memeber/users/Index";
         return new Request<BaseRequest, BaseResponse>().get(url, data);
+    }
+
+    static async GetOrderItemsByID(data: string) {
+        let url: string = BasicsUrl + "CustomerOrder/order/items";
+        return new Request<BaseRequest, BaseResponse>().get(url, {request: data});
     }
 }
 
