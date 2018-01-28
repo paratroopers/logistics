@@ -11,12 +11,13 @@ import {
 } from '../../../components/form';
 import {FormOrderInfoModel} from '../../../components/form/form-order-info';
 import * as moment from 'moment';
+import * as util from "util";
 
 export interface MemberMergePackageProps extends RouteComponentProps<any, any> {
 }
 
 export interface MemberMergePackageStates {
-    selectedKeys?: string[];
+    selectedKeys?: string[] | string;
     data?: CustomerOrderModel[];
     orderInfo?: FormOrderInfoModel;
 
@@ -54,7 +55,8 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
     }
 
     getMergeOrderInfo() {
-        MemberAPI.GetOrderItemsByID(this.state.selectedKeys.join(",")).then(r => {
+        const request = util.isArray(this.state.selectedKeys) ? (this.state.selectedKeys as string[]).join(",") : this.state.selectedKeys.toString();
+        MemberAPI.GetOrderItemsByID(request).then(r => {
             r.Status === 0 && this.initOrderInfo(r.Data);
         });
     }
