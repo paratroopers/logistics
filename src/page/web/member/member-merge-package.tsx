@@ -66,11 +66,7 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
         const {state: {orderInfo, data}} = this;
         return <Layout className="merge-package">
             <Layout.Header className="merge-package-header">
-                <Row justify="start" type="flex">
-                    <Col span={24}>
-                        <ContentHeaderControl title="待打包"></ContentHeaderControl>
-                    </Col>
-                </Row>
+                <ContentHeaderControl title="待打包"></ContentHeaderControl>
             </Layout.Header>
             <Layout.Content>
                 <Row justify="start" type="flex" style={{margin: '10px 0px 10px 0px'}}>
