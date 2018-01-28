@@ -59,7 +59,7 @@ export class FormExpressSelect extends React.Component<FormExpressSelectProps, F
     render() {
         const topThis = this;
         const {props:{...otherProps}} = topThis;
-        return <Select {...otherProps} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+        return <Select labelInValue {...otherProps} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0}>
             {topThis.renderOption()}
         </Select>;
     }

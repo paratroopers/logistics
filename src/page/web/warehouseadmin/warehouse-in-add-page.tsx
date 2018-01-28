@@ -29,9 +29,9 @@ export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps,
             /** 快递单号*/
             expressNo: values.expressNo[0].key,
             /** 快递类型ID*/
-            expressTypeID: values.expressType,
+            expressTypeID: values.expressType.key,
             /** 快递类型名称*/
-            expressTypeName: values.expressType,
+            expressTypeName: values.expressType.label,
             /** 交接单号*/
             TransferNo: values.transferNo,
             /** 件数*/
@@ -47,7 +47,7 @@ export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps,
             /** 入库高度*/
             InHeight: values.inHeight,
             /** 仓库ID*/
-            WareHouseID: values.wareHouse,
+            WareHouseID: values.wareHouse.key,
             /** 客服ID*/
             CustomerServiceID: values.customerService[0].key,
             /** 入库状态*/
