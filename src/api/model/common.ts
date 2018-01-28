@@ -23,10 +23,18 @@ export enum RegisterEnum{
     mail = 1
 }
 
-/** 查询类型*/
+/** 订单类型*/
 export enum OrderTypeEnum{
-    /** 入库查询*/
-    WarehouseIn = 0
+    /** 仓库入库*/
+    WarehouseIn = 0,
+    /** 客服确认阶段*/
+    CustomerConfirm = 1,
+    /** 仓库打包阶段*/
+    WarehousePackage = 2,
+    /** 客服付款阶段*/
+    CustomerPayment = 3,
+        /** 发货阶段*/
+    WaitForDelivered = 4
 }
 
 /** 基础类*/

@@ -36,6 +36,8 @@ export class PathConfig {
     static MemberWarehouseInQueryPage = "/member/warehouse/in/query";
     /** 订单入库*/
     static WarehouseInPage = "/warehouse/in";
+    /** 订单入库-新增*/
+    static WarehouseInAddPage = "/warehouse/in/add";
     static WarehousePackage = "/warehouse/package";
     static WarehouseDeliver = "/warehouse/deliver";
     /** 客服*/

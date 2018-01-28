@@ -24,7 +24,8 @@ import {
     MemberWaitPayPage,
     MemberWarehouseInQueryPage,
     MemberWelcomePage,
-    MemberMergePackage
+    MemberMergePackage,
+    WarehouseInAddPage
 } from '../page';
 import {
     MemberPage as MobileMemberPage,
@@ -59,6 +60,7 @@ const routerConfig = (
                 <Route path={PathConfig.MemberWaitPayPage} component={MemberWaitPayPage}/>
                 <Route path={PathConfig.MemberWarehouseInQueryPage} component={MemberWarehouseInQueryPage}/>
                 <Route path={PathConfig.WarehouseInPage} component={WarehouseInPage}/>
+                <Route path={PathConfig.WarehouseInAddPage} component={WarehouseInAddPage}/>
                 <Route path={PathConfig.MemberMergePackage} component={MemberMergePackage}/>
             </Route>
         </Route>

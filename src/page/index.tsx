@@ -8,6 +8,7 @@ import UserRegisterPage from "./web/user/user-register-page";
 import UserLoginPage from "./web/user/user-login-page";
 import {NaMasterMainPage} from './master/master-main-page';
 import {WarehouseInPage} from './web/warehouseadmin/warehouse-in-page';
+import {WarehouseInAddPage} from './web/warehouseadmin/warehouse-in-add-page';
 import {
     MemberAddressPage,
     MemberDeliveredPage,
@@ -39,5 +40,6 @@ export {
     MemberWaitPayPage,
     MemberWarehouseInQueryPage,
     MemberWelcomePage,
-    MemberMergePackage
+    MemberMergePackage,
+    WarehouseInAddPage
 }

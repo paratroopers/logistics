@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {withRouter} from 'react-router';
+import {withRouter,hashHistory} from 'react-router';
 import {Row, Col, Button, Icon, Table, Alert} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {WarehouseListModel}from "../../../api/model/member";
@@ -15,6 +15,7 @@ import {GetWarehouseInListRequest}from "../../../api/model/request/admin";
 import {GetWarehouseInListResponse}from "../../../api/model/response/admin";
 import {OrderTypeEnum}from "../../../api/model/common";
 import {ColumnProps} from 'antd/lib/table';
+import {PathConfig}from "../../../config/pathconfig";
 
 interface WarehouseInPageProps {
 
@@ -159,7 +160,9 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         const hasSelected = selectedRowKeys.length > 0;
         return <Row type="flex" justify="end">
             <Col style={{marginRight: 16}}>
-                <Button type="primary" icon="plus">新增入库</Button>
+                <Button type="primary" icon="plus" onClick={()=>{
+                    hashHistory.push({pathname: PathConfig.WarehouseInAddPage});
+                }}>新增入库</Button>
             </Col>
             <Col>
                 <Button type="primary" icon="download" disabled={!hasSelected}>导出</Button>

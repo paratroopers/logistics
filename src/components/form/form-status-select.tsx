@@ -7,8 +7,11 @@ import {Select} from 'antd';
 import {SelectProps,LabeledValue} from "antd/lib/select";
 import {isNullOrUndefined} from "util";
 const Option = Select.Option;
+import {OrderTypeEnum}from "../../api/model/common"
 
-interface FormStatusSelectProps extends SelectProps{}
+interface FormStatusSelectProps extends SelectProps {
+    dataType?: OrderTypeEnum;
+}
 
 interface FormStatusSelectStates {
     selectData?:LabeledValue[]
@@ -29,23 +32,41 @@ export class FormStatusSelect extends React.Component<FormStatusSelectProps, For
     /** 获取数据源*/
     onLoadData() {
         const topThis = this;
-        const data: LabeledValue[] = [{
-            key: "0",
-            label: "待打包"
-        }, {
-            key: "1",
-            label: "客服确认"
-        }, {
-            key: "2",
-            label: "仓库打包"
-        }, {
-            key: "3",
-            label: "待付款"
-        }, {
-            key: "4",
-            label: "待发货"
-        }]
-
+        const {props:{dataType}}=topThis;
+        const data: LabeledValue[] = [];
+        switch(dataType){
+            case OrderTypeEnum.WarehouseIn:
+                data.push({key: "0",label: "未确认"});
+                data.push({key: "1",label: "已确认"});
+                data.push({key: "2",label: "仓库退货"});
+                break;
+            case OrderTypeEnum.WarehousePackage:
+                data.push({key: "0",label: "未确认"});
+                data.push({key: "1",label: "已确认"});
+                data.push({key: "2",label: "客服退货"});
+                data.push({key: "3",label: "客服拒绝"});
+                break;
+            case OrderTypeEnum.CustomerConfirm:
+                data.push({key: "0",label: "未确认"});
+                data.push({key: "1",label: "已确认"});
+                break;
+            case OrderTypeEnum.CustomerPayment:
+                data.push({key: "0",label: "未确认"});
+                data.push({key: "1",label: "已付款"});
+                data.push({key: "2",label: "付款失败"});
+                break;
+            case OrderTypeEnum.WaitForDelivered:
+                data.push({key: "0",label: "未发货"});
+                data.push({key: "1",label: "已发货"});
+                break;
+            default:
+                data.push({key: "0",label: "待打包"});
+                data.push({key: "1",label: "客服确认"});
+                data.push({key: "2",label: "仓库打包"});
+                data.push({key: "3",label: "待付款"});
+                data.push({key: "4",label: "待发货"});
+                break;
+        }
         topThis.setState({selectData: data});
     }
 
