@@ -60,7 +60,7 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
     }
 
     render() {
-        const {state: {orderInfo}} = this;
+        const {state: {orderInfo, data}} = this;
         return <Layout className="merge-package">
             <Layout.Header className="merge-package-header">
                 <Row>
@@ -78,7 +78,7 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
             </Layout.Header>
             <Layout.Content>
                 <FormOrderInfo data={orderInfo}></FormOrderInfo>
-                <FormOrderRelation></FormOrderRelation>
+                <FormOrderRelation data={data}></FormOrderRelation>
                 <FormOrderAddressee></FormOrderAddressee>
                 <FormOrderDeclare></FormOrderDeclare>
             </Layout.Content>
