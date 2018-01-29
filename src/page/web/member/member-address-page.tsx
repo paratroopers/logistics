@@ -1,13 +1,17 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
 import {Row,Table, Button, Divider} from "antd";
-// import  {} from '';
+import {APINameSpace} from '../../../model/api';
+import {ModelNameSpace} from '../../../model/model';
+import {requestNameSpace} from '../../../model/request';
+import {ResponseNameSpace} from '../../../model/response';
+
 
 
 import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
 
 interface MemberAddressPageStates {
-    // dataSource:[]
+     dataSource:any;
 }
 
 interface MemberAddressPageProps {
@@ -18,34 +22,31 @@ interface MemberAddressPageProps {
 export class MemberAddressPage extends React.Component<MemberAddressPageProps, MemberAddressPageStates> {
     constructor(props) {
         super(props);
+        this.state ={dataSource:[]};
     }
 
-     dataSource = [{
-        key: '1',
-        name: '胡彦斌',
-        age: 32,
-        address: '西湖区湖底公园1号'
-    }, {
-        key: '2',
-        name: '胡彦祖',
-        age: 42,
-        address: '西湖区湖底公园1号'
-    }];
+    returnVaule = [];
+    loadData(){
+        APINameSpace.MemberAPI.GetRecipientsAddressAll().then((result)=>{
+            if (result.Data !== null){
+                result.Data.map((r) =>{
+                    this.returnVaule.push({key:r.ID,recipient:r.recipient,country:r.country,Address:r.Address,Tel:r.Tel});
+                });
+                this.setState({dataSource:this.returnVaule});
+            }
+        });
+    }
 
      columns = [{
-         title: 'ID',
-         dataIndex: 'ID',
-         key: 'ID',
-     },{
         title: '收件人',
         dataIndex: 'recipient',
         key: 'recipient',
     }, {
-        title: '收件人国家',
+        title: '国家',
         dataIndex: 'country',
         key: 'country',
     }, {
-        title: '收件人地址',
+        title: '地址',
         dataIndex: 'Address',
         key: 'Address',
     },{
@@ -76,6 +77,9 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
         }),
     };
 
+     componentDidMount(){
+         this.loadData();
+     }
 
     render() {
         return (<Row className="member-address-page">
@@ -83,7 +87,10 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
             <Button type="primary">
                 确认
             </Button>
-            <Table rowSelection={this.rowSelection} dataSource={this.dataSource} columns={this.columns} />
+            <Button type="primary">
+                新增收件人
+            </Button>
+            <Table rowSelection={this.rowSelection} dataSource={this.state.dataSource} columns={this.columns}  pagination ={false}/>
         </Row>)
     }
 
