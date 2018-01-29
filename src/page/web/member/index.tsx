@@ -1,4 +1,5 @@
 import {MemberAddressPage} from "./member-address-page";
+import {MemberAddressCombinationPage} from "./member-address-Combination-page";
 import {MemberDeliveredPage} from "./member-delivered-page";
 import {MemberMessageListPage} from "./member-message-list-page";
 import {MemberMyOrderPage} from "./member-my-order-page";
@@ -10,6 +11,7 @@ import {MemberMergePackage} from './member-merge-package';
 
 export {
     MemberAddressPage,
+    MemberAddressCombinationPage,
     MemberDeliveredPage,
     MemberMessageListPage,
     MemberMyOrderPage,
