@@ -6,12 +6,13 @@ import {PathConfig, MobilePathConfig} from '../../../config/pathconfig';
 import UserLoginForgetPage from './user-login-forget-page';
 import {Global} from '../../../util/common';
 import {WebAction} from "../../../actions/index";
-import {LoginRequest} from '../../../api/model/request/login-request';
-import {LoginApi} from '../../../api/user';
+
 import {Cookies} from '../../../util/cookie';
 import {Constants, Context} from '../../../util/common';
-import {MemberAPI} from "../../../api/member";
-import {GetUserContextResponse} from '../../../api/model/response/member';
+import {requestNameSpace} from '../../../model/request';
+import {ModelNameSpace} from '../../../model/model';
+import {APINameSpace} from '../../../model/api';
+import {ResponseNameSpace} from '../../../model/response';
 
 const {Header, Content} = Layout;
 
@@ -46,7 +47,7 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
     }
 
     getToken() {
-        MemberAPI.GetToken().then(result => {
+        APINameSpace.MemberAPI.GetToken().then(result => {
             if (result.Data !== "") {
                 Cookies.set("Authorization", result.Data);
             }
@@ -59,12 +60,12 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
             if (err) {
                 return;
             } else {
-                const data: LoginRequest = {
+                const data: requestNameSpace.LoginRequest = {
                     pwd: vas['pwd'],
                     user: vas['user']
                 };
                 this.setState({loading: true});
-                LoginApi.Login(data).then(result => {
+                APINameSpace.LoginApi.Login(data).then(result => {
                     this.setState({loading: false});
                     if (result.Status === 0) {
                         Cookies.set("Authorization", result.Data);
@@ -72,7 +73,7 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
                         Context.setMerchantData({isLogin: true});
                         /** 更改登录的状态*/
                         Global.store.dispatch(WebAction.GetLoginState(true));
-                        MemberAPI.GetUserContextInfo().then((r: GetUserContextResponse) => {
+                        APINameSpace.MemberAPI.GetUserContextInfo().then((r: ResponseNameSpace.GetUserContextResponse) => {
                             if (r.Status === 0) {
                                 window.localStorage.setItem('UserInfo', JSON.stringify(r.Data));
                             }

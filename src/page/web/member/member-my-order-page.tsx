@@ -2,20 +2,23 @@ import * as React from 'react';
 import {withRouter, hashHistory} from 'react-router';
 import {Row, Table, Menu, Dropdown, Icon, Alert, Button, Tabs, Badge} from "antd";
 import {ColumnProps} from 'antd/lib/table';
-import {MemberAPI} from '../../../api/member';
+
 import {PathConfig} from '../../../config/pathconfig';
-import {CustomerOrderModel} from '../../../api/model/member';
-import {CustomerOrdersRequest} from '../../../api/model/request/member-request';
+
+
+import {requestNameSpace} from '../../../model/request';
+import {ModelNameSpace} from '../../../model/model';
+import {APINameSpace} from '../../../model/api';
 import {ContentHeaderControl} from "../../../components/controls/common/content-header-control";
 import * as moment from 'moment';
 
 interface MemberMyOrderPageStates {
     pageIndex: number;
     pageSize: number;
-    data?: CustomerOrderModel[];
+    data?: ModelNameSpace.CustomerOrderModel[];
     totalCount?: number;
     loading?: boolean;
-    selected?: { selectedRowKeys?: string[], selectedRows?: CustomerOrderModel[] };
+    selected?: { selectedRowKeys?: string[], selectedRows?: ModelNameSpace.CustomerOrderModel[] };
 }
 
 interface MemberMyOrderPageProps {
@@ -44,13 +47,13 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
     }
 
     getData(pageIndex?: number) {
-        const request: CustomerOrdersRequest = {
+        const request: requestNameSpace.CustomerOrdersRequest = {
             type: 0,
             pageSize: this.state.pageSize,
             pageIndex: pageIndex ? pageIndex : this.state.pageIndex,
         };
         this.setState({loading: true});
-        MemberAPI.GetCustomerOrders(request).then(r => {
+        APINameSpace.MemberAPI.GetCustomerOrders(request).then(r => {
             r.Status === 0 && this.setState({
                 data: r.Data,
                 pageIndex: pageIndex,
@@ -69,7 +72,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
 
     renderTable() {
         const {state: {pageSize, pageIndex, totalCount, data, loading, selected}} = this;
-        const columns: ColumnProps<CustomerOrderModel>[] = [
+        const columns: ColumnProps<ModelNameSpace.CustomerOrderModel>[] = [
             {
                 title: '客户订单',
                 dataIndex: 'CustomerOrderNo'

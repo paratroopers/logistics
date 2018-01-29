@@ -2,8 +2,9 @@ import * as React from 'react';
 import {withRouter, RouteComponentProps} from 'react-router';
 import {Layout, Row, Col, Button, Icon} from 'antd';
 import {ContentHeaderControl} from "../../../components/controls/common/content-header-control";
-import {CustomerOrderModel} from '../../../api/model/member';
-import {MemberAPI} from '../../../api/member';
+import {ModelNameSpace} from '../../../model/model';
+import {APINameSpace} from '../../../model/api';
+
 import {
     FormOrderRelation,
     FormOrderDeclare,
@@ -19,7 +20,7 @@ export interface MemberMergePackageProps extends RouteComponentProps<any, any> {
 
 export interface MemberMergePackageStates {
     selectedKeys?: string[] | string;
-    data?: CustomerOrderModel[];
+    data?: ModelNameSpace.CustomerOrderModel[];
     orderInfo?: FormOrderInfoModel;
 
 }
@@ -41,7 +42,7 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
         this.getMergeOrderInfo();
     }
 
-    initOrderInfo(data: CustomerOrderModel[]) {
+    initOrderInfo(data: ModelNameSpace.CustomerOrderModel[]) {
         let orderInfo: FormOrderInfoModel = {
             weight: 0,
             volume: 0,
@@ -57,7 +58,7 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
 
     getMergeOrderInfo() {
         const request = util.isArray(this.state.selectedKeys) ? (this.state.selectedKeys as string[]).join(",") : this.state.selectedKeys.toString();
-        MemberAPI.GetOrderItemsByID(request).then(r => {
+        APINameSpace.MemberAPI.GetOrderItemsByID(request).then(r => {
             r.Status === 0 && this.initOrderInfo(r.Data);
         });
     }

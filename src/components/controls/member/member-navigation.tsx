@@ -2,7 +2,8 @@ import * as React from 'react';
 import {Menu, Icon} from 'antd';
 import {hashHistory} from 'react-router';
 import {Context} from '../../../util/common';
-import {UserNavigationsModel, UserNavigationsChildrenModel} from '../../../api/model/base';
+// import {UserNavigationsModel, UserNavigationsChildrenModel} from '../../../api/model/base';
+import {ModelNameSpace} from '../../../model/model';
 import {isNullOrUndefined} from "util";
 
 const {SubMenu} = Menu;
@@ -12,7 +13,7 @@ interface MemberNavigationProps {
 }
 
 interface MemberNavigationStates {
-    treeData?: UserNavigationsModel[];
+    treeData?: ModelNameSpace.UserNavigationsModel[];
 }
 
 export class MemberNavigation extends React.Component<MemberNavigationProps, MemberNavigationStates> {
@@ -27,14 +28,14 @@ export class MemberNavigation extends React.Component<MemberNavigationProps, Mem
         this.setState({treeData: Context.getCurrentUser().navigations});
     }
 
-    renderChildMenu(treeData: UserNavigationsChildrenModel[]) {
+    renderChildMenu(treeData: ModelNameSpace.UserNavigationsChildrenModel[]) {
         return treeData.map((item) => {
             return <Menu.Item key={item.Url}>{<span><Icon
                 type={item.Image}/><span>{item.Name_CN}</span></span>}</Menu.Item>
         });
     }
 
-    renderMenu(treeData: UserNavigationsModel[]) {
+    renderMenu(treeData: ModelNameSpace.UserNavigationsModel[]) {
         const topThis = this;
         return treeData.map((item) => {
             if (!isNullOrUndefined(item.childItems) && item.childItems.length > 0)

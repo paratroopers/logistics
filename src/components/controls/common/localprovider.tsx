@@ -2,19 +2,19 @@ import * as React from 'react'
 import {Component} from 'react'
 import {LocaleProvider} from 'antd';
 import {connect} from "react-redux";
-import {AppLocaleStatic} from "../../../api/model/common";
+import {ModelNameSpace} from "../../../model/model";
 import {getLocale} from "../../../locales";
 import {IntlProvider, injectIntl} from 'react-intl';
 import {Global} from "../../../util/common";
 
 export interface LocalProviderProps {
     localeKey?: string;
-    onLoaded?: (appLocale?: AppLocaleStatic, theme?: string) => Promise<any>;
+    onLoaded?: (appLocale?: ModelNameSpace.AppLocaleStatic, theme?: string) => Promise<any>;
 }
 
 export interface LocalProviderStates {
     localeKey?: string;
-    appLocale?: AppLocaleStatic;
+    appLocale?: ModelNameSpace.AppLocaleStatic;
 }
 
 class LocalProvider extends Component<LocalProviderProps, LocalProviderStates> {

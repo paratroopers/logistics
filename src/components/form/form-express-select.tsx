@@ -7,7 +7,7 @@ import {Select} from 'antd';
 import {SelectProps,LabeledValue} from "antd/lib/select";
 import {isNullOrUndefined} from "util";
 const Option = Select.Option;
-import {BaseAPI} from "../../api/base";
+import {APINameSpace} from '../../model/api';
 
 interface FormExpressSelectProps extends SelectProps{}
 
@@ -31,7 +31,7 @@ export class FormExpressSelect extends React.Component<FormExpressSelectProps, F
     onLoadData() {
         const topThis = this;
         let data:LabeledValue[];
-        BaseAPI.GetExpressTypeAll().then((result) =>{
+        APINameSpace.SystemAPI.GetExpressTypeAll().then((result) =>{
             if (result.Data !== null && result.Status === 0){
                     data = result.Data.map(o =>({
                     key:o.ID,

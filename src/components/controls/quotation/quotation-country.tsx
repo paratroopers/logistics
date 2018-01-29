@@ -2,9 +2,9 @@ import * as React from 'react';
 import {Select, Spin} from 'antd';
 import {InjectedIntlProps} from "react-intl";
 import {withRouter} from 'react-router';
-import {CountryRequest} from '../../../api/model/request/quotation-request';
-import {CountryModel} from '../../../api/model/quotation';
-import {QuotationApi} from '../../../api/quotation';
+import {requestNameSpace} from '../../../model/request';
+import {ModelNameSpace} from '../../../model/model';
+import {APINameSpace} from '../../../model/api';
 
 export interface CostCountryProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
     onChange?: (v, name) => void;
@@ -13,7 +13,7 @@ export interface CostCountryProps extends ReactRouter.RouteComponentProps<any, a
 }
 
 export interface CostCountryStates {
-    data?: CountryModel[];
+    data?: ModelNameSpace.CountryModel[];
     value?: any;
     fetching?: boolean;
     searchName?: string;
@@ -48,12 +48,12 @@ export class CostCountry extends React.Component<CostCountryProps, CostCountrySt
 
     getCountry(name?: string) {
         this.setState({data: [], fetching: true, searchName: name});
-        const data: CountryRequest = {
+        const data: requestNameSpace.CountryRequest = {
             request: {
                 name: name
             }
         }
-        QuotationApi.GetCountry(data).then(result => {
+        APINameSpace.QuotationApi.GetCountry(data).then(result => {
             if (result.Status === 0) {
                 this.setState({data: result.Data, fetching: false});
             }

@@ -3,9 +3,8 @@ import {withRouter} from 'react-router';
 import { Select, Spin } from 'antd';
 const Option = Select.Option;
 import  {SelectType} from '../../util/common';
-import  {UserSearchIndexRequest} from '../../api/model/request/member-request'
-import  {MemberAPI} from '../../api/member';
-import  {API} from '../../api/customerorder';
+import {APINameSpace} from '../../model/api';
+import {requestNameSpace} from '../../model/request';
 import {SelectProps} from "antd/lib/select";
 
 export namespace FormControl {
@@ -65,12 +64,12 @@ export namespace FormControl {
             let fetchId = this.lastFetchId;
             this.setState({data: [], fetching: true});
             const type = this.props.type;
-            var request:UserSearchIndexRequest ={
+            var request:requestNameSpace.UserSearchIndexRequest ={
                 name:value,
                 type:type
             };
             if(type === SelectType.Member|| type === SelectType.CustomerService|| type ===SelectType.WarehouseAdmin){
-                MemberAPI.UserSearchIndex(request).then(result =>{
+                APINameSpace.MemberAPI.UserSearchIndex(request).then(result =>{
                     if (fetchId !== this.lastFetchId) { // for fetch callback order
                         return;
                     }
@@ -87,7 +86,7 @@ export namespace FormControl {
                 });
             }
             else  if( type === SelectType.CustomerOrder) {
-                API.CustomerOrderAPI.OrderSearchIndex(request).then(result =>{
+                APINameSpace.CustomerOrderAPI.OrderSearchIndex(request).then(result =>{
                     if (fetchId !== this.lastFetchId) { // for fetch callback order
                         return;
                     }
@@ -104,7 +103,7 @@ export namespace FormControl {
                 });
             }
             else  if(type === SelectType.ExpressNo){
-                API.CustomerOrderAPI.OrderSearchIndex(request).then(result =>{
+                APINameSpace.CustomerOrderAPI.OrderSearchIndex(request).then(result =>{
                     if (fetchId !== this.lastFetchId) { // for fetch callback order
                         return;
                     }

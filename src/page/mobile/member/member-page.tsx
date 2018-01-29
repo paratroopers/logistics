@@ -9,7 +9,7 @@ import MobileNavTree from '../../../config/mobile-navconfig';
 import {MobileNavTreeAction} from '../../../actions/index';
 import {MobilePathConfig} from '../../../config/pathconfig';
 import {MemberWelcomeTab} from "../../../components/controls/member/member-welcome-tab";
-import {UserNavigationsModel} from '../../../api/model/base';
+import {ModelNameSpace} from '../../../model/model';
 import * as moment from 'moment';
 import {isNullOrUndefined} from "util";
 
@@ -17,7 +17,7 @@ interface MemberPageProps {
 }
 
 interface MemberPageStates {
-    treeData?: UserNavigationsModel[];
+    treeData?: ModelNameSpace.UserNavigationsModel[];
 }
 
 

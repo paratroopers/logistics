@@ -7,10 +7,10 @@ import {Select} from 'antd';
 import {SelectProps,LabeledValue} from "antd/lib/select";
 import {isNullOrUndefined} from "util";
 const Option = Select.Option;
-import {OrderTypeEnum}from "../../api/model/common"
+import {ModelNameSpace} from '../../model/model';
 
 interface FormStatusSelectProps extends SelectProps {
-    dataType?: OrderTypeEnum;
+    dataType?: ModelNameSpace.OrderTypeEnum;
 }
 
 interface FormStatusSelectStates {
@@ -35,27 +35,27 @@ export class FormStatusSelect extends React.Component<FormStatusSelectProps, For
         const {props:{dataType}}=topThis;
         const data: LabeledValue[] = [];
         switch(dataType){
-            case OrderTypeEnum.WarehouseIn:
+            case ModelNameSpace.OrderTypeEnum.WarehouseIn:
                 data.push({key: "0",label: "未确认"});
                 data.push({key: "1",label: "已确认"});
                 data.push({key: "2",label: "仓库退货"});
                 break;
-            case OrderTypeEnum.WarehousePackage:
+            case ModelNameSpace.OrderTypeEnum.WarehousePackage:
                 data.push({key: "0",label: "未确认"});
                 data.push({key: "1",label: "已确认"});
                 data.push({key: "2",label: "客服退货"});
                 data.push({key: "3",label: "客服拒绝"});
                 break;
-            case OrderTypeEnum.CustomerConfirm:
+            case ModelNameSpace.OrderTypeEnum.CustomerConfirm:
                 data.push({key: "0",label: "未确认"});
                 data.push({key: "1",label: "已确认"});
                 break;
-            case OrderTypeEnum.CustomerPayment:
+            case ModelNameSpace.OrderTypeEnum.CustomerPayment:
                 data.push({key: "0",label: "未确认"});
                 data.push({key: "1",label: "已付款"});
                 data.push({key: "2",label: "付款失败"});
                 break;
-            case OrderTypeEnum.WaitForDelivered:
+            case ModelNameSpace.OrderTypeEnum.WaitForDelivered:
                 data.push({key: "0",label: "未发货"});
                 data.push({key: "1",label: "已发货"});
                 break;

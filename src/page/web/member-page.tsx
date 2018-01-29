@@ -4,13 +4,13 @@ import {withRouter, hashHistory} from "react-router";
 import {Global} from '../../util/common';
 import {connect} from 'react-redux'
 import {Layout} from "antd";
-import {MemberAPI} from "../../api/member";
+import {APINameSpace} from "../../model/api";
 
 const {Content, Sider} = Layout;
 import {MemberNavigation} from "../../components/controls/member/member-navigation";
 import {Util} from "../../util/util";
 import {Constants} from '../../util/common';
-import {ScreenModeEnum} from "../../api/model/common";
+import {ModelNameSpace} from "../../model/model";
 import {PathConfig} from '../../config/pathconfig';
 import {Cookies} from '../../util/cookie';
 import {MobileNavTreeAction} from '../../actions/index';
@@ -54,7 +54,7 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
     }
 
     getToken() {
-        MemberAPI.GetToken().then(result => {
+        APINameSpace.MemberAPI.GetToken().then(result => {
             if (result.Data !== "") {
                 console.log(result.Data);
                 Cookies.set("Authorization", result.Data, 1);//cookie保存一天
@@ -70,7 +70,7 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
     render() {
         const topThis = this;
         const {state: {collapsed}, props: {children, showNav}} = topThis;
-        const sider = {collapsedWidth: Util.getScrrenMode(window.innerWidth) !== ScreenModeEnum.sm ? 64 : 0};
+        const sider = {collapsedWidth: Util.getScrrenMode(window.innerWidth) !== ModelNameSpace.ScreenModeEnum.sm ? 64 : 0};
         const siderStyle = Constants.minSM ? {height: (window.innerHeight - 95) + 'px'} : {};
         const siderHidden = showNav ? {disaplay: 'block'} : {disaplay: 'none'};
         const isMobile = window.innerWidth <= 768;

@@ -1,17 +1,16 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
 import {Row, Table, Menu, Dropdown, Icon, Alert, Button, Tabs} from "antd";
-import {ColumnProps} from 'antd/lib/table';
-import {MemberAPI} from '../../../api/member';
-import {CustomerOrderModel} from '../../../api/model/member';
-import {CustomerOrdersRequest} from '../../../api/model/request/member-request';
+
+import {ModelNameSpace} from '../../../model/model';
+import {APINameSpace} from '../../../model/api';
 import {ContentHeaderControl} from "../../../components/controls/common/content-header-control";
 import * as moment from 'moment';
 
 interface MemberWarehouseInQueryPageStates {
     pageIndex: number;
     pageSize: number;
-    data?: CustomerOrderModel[];
+    data?: ModelNameSpace.CustomerOrderModel[];
 }
 
 interface MemberWarehouseInQueryPageProps {

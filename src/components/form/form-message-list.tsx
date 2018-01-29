@@ -1,11 +1,13 @@
 import * as React from 'react';
-import {BaseAPI} from '../../api/base';
 import {List, Spin, Tag} from 'antd';
 import {Global} from '../../util/common';
 import {MessageLocale} from '../../locales/localeid';
-import {MessageLaterModel} from '../../api/model/base';
 import {FormStepIcon, FormStepEnum} from '../form/form-step-icon';
-import * as  moment from 'moment'
+import {requestNameSpace} from '../../model/request';
+import {ModelNameSpace} from '../../model/model';
+import {APINameSpace} from '../../model/api';
+
+import * as  moment from 'moment';
 
 moment.locale('zh-cn');
 
@@ -20,7 +22,7 @@ interface FormMessageListProps {
 
 interface FormMessageListStates {
     loading: boolean,
-    messageItems?: MessageLaterModel[];
+    messageItems?: ModelNameSpace.MessageLaterModel[];
     textStyle?: any;
 
 }
@@ -55,7 +57,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
 
     getMessageData() {
         this.setState({loading: true});
-        BaseAPI.GetMesaageLatest().then(result => {
+        APINameSpace.MemberAPI.GetMesaageLatest().then(result => {
             if (result.Status === 0) {
                 this.setState({messageItems: result.Data, loading: false});
             }
@@ -104,7 +106,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         </div>;
     }
 
-    renderItem(item: MessageLaterModel) {
+    renderItem(item: ModelNameSpace.MessageLaterModel) {
         return <List.Item>
             <List.Item.Meta
                 avatar={<FormStepIcon size={40}

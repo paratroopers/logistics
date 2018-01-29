@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Util} from "../../util/util";
 import {withRouter} from "react-router";
-import {ScreenModeEnum} from "../../api/model/common";
+import {ModelNameSpace} from '../../model/model';
 import {MasterMobilePage} from './master-mobile-page';
 import MasterWebPage from './master-web-page';
 
@@ -10,7 +10,7 @@ interface NaMasterMainPageProps {
 }
 
 interface NaMasterMainPageStates {
-    mode: ScreenModeEnum;
+    mode: ModelNameSpace.ScreenModeEnum;
 
 }
 
@@ -34,7 +34,7 @@ export class NaMasterMainPage extends React.Component<NaMasterMainPageProps, NaM
         const {state: {mode}} = topThis;
         topThis.fetch(window.innerWidth, (data) => {
             // console.log(data);
-            if ((data === ScreenModeEnum.sm && mode !== ScreenModeEnum.sm) || (data !== ScreenModeEnum.sm && mode === ScreenModeEnum.sm)) {
+            if ((data === ModelNameSpace.ScreenModeEnum.sm && mode !== ModelNameSpace.ScreenModeEnum.sm) || (data !== ModelNameSpace.ScreenModeEnum.sm && mode === ModelNameSpace.ScreenModeEnum.sm)) {
                 topThis.setState({mode: data});
             }
         });
@@ -75,7 +75,7 @@ export class NaMasterMainPage extends React.Component<NaMasterMainPageProps, NaM
     render() {
         const topThis = this;
         const {props: {children}, state: {mode}} = topThis;
-        const Master = (mode === ScreenModeEnum.sm) ?
+        const Master = (mode === ModelNameSpace.ScreenModeEnum.sm) ?
             <MasterMobilePage>{children}</MasterMobilePage> :
             <MasterWebPage>{children}</MasterWebPage>;
         return Master;

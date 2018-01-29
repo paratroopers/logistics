@@ -4,12 +4,13 @@ import {withRouter} from "react-router";
 import {InjectedIntlProps} from "react-intl";
 import {Layout, Row, Col, Input, Button, Tag, Table, Modal as WebModal, Icon} from "antd";
 import Cost from "../../components/controls/quotation/quotation-user-query";
-import {CostTableModal} from '../../api/model/quotation';
+// import {ModelNameSpace.CostTableModal} from '../../api/model/quotation';
 
 const {Content} = Layout;
 const {TextArea} = Input;
 import {Util} from "../../util/util";
-import {ScreenModeEnum} from "../../api/model/common";
+// import {ScreenModeEnum} from "../../api/model/common";
+import {ModelNameSpace} from '../../model/model';
 import {Card, WingBlank, WhiteSpace, Modal} from 'antd-mobile';
 
 interface CostPageProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
@@ -26,7 +27,7 @@ interface CostPageStates {
     /** 首页带过来的费用估算信息*/
     costInfo?: any;
     /** 列表字段model*/
-    data?: CostTableModal[];
+    data?: ModelNameSpace.CostTableModal[];
 }
 
 function closest(el, selector) {
@@ -57,7 +58,7 @@ export class CostPage extends Component<CostPageProps, CostPageStates> {
             },
             data: []
         }
-        this.isMobile = (Util.getScrrenMode(window.innerWidth) === ScreenModeEnum.sm);
+        this.isMobile = (Util.getScrrenMode(window.innerWidth) === ModelNameSpace.ScreenModeEnum.sm);
     }
 
     onWrapTouchStart = (e) => {
@@ -225,7 +226,7 @@ export class CostPage extends Component<CostPageProps, CostPageStates> {
             </Col>
             <Col xs={0} sm={0} md={24} lg={10} xl={10}>
                 <Layout style={{background: '#fff'}}>
-                       <Layout.Header style={{background: '#fff', paddingLeft: '0px'}}>
+                    <Layout.Header style={{background: '#fff', paddingLeft: '0px'}}>
                         <Icon type="info-circle" onClick={()=>{
                             topThis.onTableRowClick("ddddddddddddddddddddddddddd");
                         }}/>

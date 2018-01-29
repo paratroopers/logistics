@@ -15,7 +15,8 @@ import {
 } from "lodash";
 import * as scrollIntoView from "dom-scroll-into-view";
 import {Constants}from "./common";
-import {ScreenModeEnum}from "../api/model/common";
+// import {ScreenModeEnum}from "../api/model/common";
+import {ModelNameSpace} from '../model/model';
 
 
 export class Util {
@@ -371,19 +372,19 @@ export class Util {
     static getScrrenMode(innerWidth) {
         let mode = 0;
         if (innerWidth < Constants.xl) {
-            mode = ScreenModeEnum.xl;
+            mode = ModelNameSpace.ScreenModeEnum.xl;
         }
         if (innerWidth < Constants.lg) {
-            mode = ScreenModeEnum.lg;
+            mode = ModelNameSpace.ScreenModeEnum.lg;
         }
         if (innerWidth < Constants.md) {
-            mode = ScreenModeEnum.md;
+            mode = ModelNameSpace.ScreenModeEnum.md;
         }
         if (innerWidth < Constants.sm) {
-            mode = ScreenModeEnum.sm;
+            mode = ModelNameSpace.ScreenModeEnum.sm;
         }
         if (innerWidth < Constants.xs) {
-            mode = ScreenModeEnum.sm;
+            mode = ModelNameSpace.ScreenModeEnum.sm;
         }
         return mode;
     }

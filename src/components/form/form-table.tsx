@@ -1,10 +1,11 @@
 import * as React from 'react';
-import {orderMergeStepEnum} from '../../api/model/base';
+import {ModelNameSpace} from '../../model/model';
+
 
 
 interface FormTableProps {
     /*阶段*/
-    step: orderMergeStepEnum;
+    step: ModelNameSpace.orderMergeStepEnum;
 }
 
 interface FormTableStates {

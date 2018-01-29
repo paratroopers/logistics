@@ -2,7 +2,6 @@ import * as React from 'react';
 import {withRouter,hashHistory} from 'react-router';
 import {Row, Col, Button, Icon, Table, Alert} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
-import {WarehouseListModel}from "../../../api/model/member";
 import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
 import {SelectType} from "../../../util/common";
 import {FormControl} from '../../demo/enzodemo';
@@ -10,10 +9,17 @@ import {DatePicker} from "antd";
 const { RangePicker } = DatePicker;
 import {FormAdvancedSearch,FormStatusSelect,FormExpressSelect,FormWarehouseSelect} from "../../../components/form/index";
 import {FormAdvancedItemModel} from "../../../components/form/form-advanced-search";
-import {WarehouseAPI}from "../../../api/admin";
-import {GetWarehouseInListRequest}from "../../../api/model/request/admin";
-import {GetWarehouseInListResponse}from "../../../api/model/response/admin";
-import {OrderTypeEnum}from "../../../api/model/common";
+// import {WarehouseAPI}from "../../../api/admin";
+// import {GetWarehouseInListRequest}from "../../../api/model/request/admin";
+// import {GetWarehouseInListResponse}from "../../../api/model/response/admin";
+// import {OrderTypeEnum}from "../../../api/model/common";
+
+import {requestNameSpace} from '../../../model/request';
+import {ModelNameSpace} from '../../../model/model';
+import {APINameSpace} from '../../../model/api';
+import {ResponseNameSpace} from '../../../model/response';
+
+
 import {ColumnProps} from 'antd/lib/table';
 import {PathConfig}from "../../../config/pathconfig";
 
@@ -23,7 +29,7 @@ interface WarehouseInPageProps {
 
 interface WarehouseInPageStates {
     /** 数据源*/
-    listData: WarehouseListModel[],
+    listData: ModelNameSpace.WarehouseListModel[],
     /** 选中行*/
     selectedRowKeys: any[],
     /** 当前页数*/
@@ -72,14 +78,14 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
     loadData = (index?:number,size?:number) => {
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
-        const request: GetWarehouseInListRequest = {
-            type: OrderTypeEnum.WarehouseIn,
+        const request: requestNameSpace.GetWarehouseInListRequest = {
+            type: ModelNameSpace.OrderTypeEnum.WarehouseIn,
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize
         }
 
         topThis.setState({loading: true});
-        WarehouseAPI.GetWarehouseInItems(request).then((result: GetWarehouseInListResponse) => {
+        APINameSpace.WarehouseAPI.GetWarehouseInItems(request).then((result: ResponseNameSpace.GetWarehouseInListResponse) => {
             if (result.Status === 0) {
                 topThis.setState({
                     listData: result.Data,
@@ -101,7 +107,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             onChange: topThis.onSelectChange,
         };
 
-        const columns:ColumnProps<WarehouseListModel>[]= [{
+        const columns:ColumnProps<ModelNameSpace.WarehouseListModel>[]= [{
             title: "客户订单号",
             dataIndex: 'CustomerOrderNo'
         }, {

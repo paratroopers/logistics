@@ -3,8 +3,9 @@ import {Select, Spin} from 'antd';
 const Option = Select.Option;
 import debounce from 'lodash.debounce';
 import {SelectType} from '../../util/common';
-import {MemberAPI}  from '../../api/member';
-import  {UserSearchIndexRequest} from '../../api/model/request/member-request';
+import {requestNameSpace} from '../../model/request';
+import {ModelNameSpace} from '../../model/model';
+import {APINameSpace} from '../../model/api';
 import {type} from "os";
 
 export interface FormCustomerOrderProps{

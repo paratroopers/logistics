@@ -3,14 +3,14 @@ import {Component} from "react";
 import {ReducersMapObject, createStore, combineReducers} from "redux";
 import {Provider} from "react-redux";
 import {getLocale} from "../../locales";
-import {AppLocaleStatic, ScreenModeEnum} from "../../api/model/common";
+import {ModelNameSpace} from '../../model/model';
 import LocalProvider from '../../components/controls/common/localprovider';
 import {Global} from "../../util/common";
 import {Util} from "../../util/util";
 import {message} from 'antd';
 
 interface MasterPageProps extends ReactRouter.RouteComponentProps<any, any> {
-    onLoaded?: (appLocale?: AppLocaleStatic, theme?: string) => Promise<any>;
+    onLoaded?: (appLocale?: ModelNameSpace.AppLocaleStatic, theme?: string) => Promise<any>;
     reducers?: ReducersMapObject;
     cdn?: string;
 }

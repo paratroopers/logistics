@@ -3,9 +3,9 @@ import {Form, Input, Button, Modal, Row, Col} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {Steps} from 'antd-mobile';
 import {isNullOrUndefined} from "util";
-import {RegisterAPI, LoginApi}from "../../../api/user";
-import {GetCodeRequest} from "../../../api/model/request/common-request";
-import {ForgetRequest} from "../../../api/model/request/login-request";
+import {requestNameSpace} from '../../../model/request';
+import {ModelNameSpace} from '../../../model/model';
+import {APINameSpace} from '../../../model/api';
 import {BaseResponse, Context} from '../../../util/common';
 import {Notification} from "../../../components/controls/common/notification";
 
@@ -103,7 +103,7 @@ class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetSta
             if (!err) {
                 const isMail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(values.account);
                 /** 发送验证码*/
-                const request: ForgetRequest = !isMail ? {
+                const request: requestNameSpace.ForgetRequest = !isMail ? {
                     tel: values.account,
                     pwd: values.Password,
                     code: values.Code
@@ -113,7 +113,7 @@ class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetSta
                     code: values.Code
                 }
                 this.setState({loading: true});
-                LoginApi.Forget(request).then((data: BaseResponse) => {
+                APINameSpace.LoginApi.Forget(request).then((data: BaseResponse) => {
                     this.setState({loading: false});
                     if (data.Data === true) {
                         Notification.success({
@@ -137,14 +137,14 @@ class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetSta
                 const isMail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(values.account);
                 const type = (isMail ? "1" : "0");
                 /** 发送验证码*/
-                const request: GetCodeRequest = !isMail ? {
+                const request: requestNameSpace.GetCodeRequest = !isMail ? {
                     tel: values.account,
                     type: type
                 } : {
                     mail: values.account,
                     type: type
                 }
-                RegisterAPI.GetCode(request).then((data: BaseResponse) => {
+                APINameSpace.RegisterAPI.GetCode(request).then((data: BaseResponse) => {
                     if (data.Data === true) {
                         Notification.success({
                             message: 'Tip',

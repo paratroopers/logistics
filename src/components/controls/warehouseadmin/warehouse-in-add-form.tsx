@@ -7,7 +7,8 @@ import {FormComponentProps} from 'antd/lib/form/Form';
 import {FormControl} from '../../../page/demo/enzodemo';
 import {SelectType} from "../../../util/common";
 import {FormStatusSelect,FormExpressSelect,FormWarehouseSelect} from "../../form/index";
-import {OrderTypeEnum}from "../../../api/model/common";
+// import {OrderTypeEnum}from "../../../api/model/common";
+import {ModelNameSpace} from '../../../model/model';
 
 export interface WarehouseInAddFormProps extends FormComponentProps {
     /** 点击提交*/
@@ -90,7 +91,7 @@ class WarehouseInAddForm extends Component<WarehouseInAddFormProps, WarehouseInA
                         <FormItem label={"入库状态"}>
                             {getFieldDecorator("inWareHouseStatus", {
                                 rules: [{required: true, message: '请选择状态!'}],
-                            })(<FormStatusSelect dataType={OrderTypeEnum.WarehouseIn} placeholder="入库状态"></FormStatusSelect>)}
+                            })(<FormStatusSelect dataType={ModelNameSpace.OrderTypeEnum.WarehouseIn} placeholder="入库状态"></FormStatusSelect>)}
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>

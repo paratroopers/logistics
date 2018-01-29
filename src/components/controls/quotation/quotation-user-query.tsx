@@ -5,8 +5,9 @@ import {Button, Row, Col, Form, InputNumber} from 'antd';
 import {PathConfig} from '../../../config/pathconfig';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {CostCountry} from './quotation-country';
-import {CostModal} from '../../../api/model/quotation';
-import {QuotationApi} from '../../../api/quotation';
+import {ModelNameSpace} from '../../../model/model';
+import {APINameSpace} from '../../../model/api';
+
 import {QuotationUserSwitch} from './quotation-user-switch';
 import {QuotationUserQueryAdvanced} from './quotation-user-query-advanced';
 
@@ -16,7 +17,7 @@ interface CostProps extends FormComponentProps, ReactRouter.RouteComponentProps<
     style?: any;
     isHeard?: boolean;
     isMobile?: boolean;
-    costInfo?: CostModal;
+    costInfo?: ModelNameSpace.CostModal;
     onClick?: (v) => void;
 }
 
@@ -78,7 +79,7 @@ class Cost extends React.Component<CostProps, CostStates> {
                     delete values.searchName;
                     delete values.volume;
                     this.props.onClick && this.props.onClick(null);
-                    QuotationApi.GetQuotation({...values}).then(result => {
+                    APINameSpace.QuotationApi.GetQuotation({...values}).then(result => {
                         if (result.Status === 0) {
                             this.setState({loading: false});
                             this.props.onClick && this.props.onClick(result.Data);

@@ -1,16 +1,16 @@
 import * as React from 'react';
 import {Row, Col, Table} from 'antd';
 import {ColumnProps} from 'antd/lib/table';
-import {CustomerOrderModel} from '../../api/model/member';
+import {ModelNameSpace} from '../../model/model';
 import {FormSettingGroup} from './form-setting-group';
 import * as moment from 'moment';
 
 export interface FormOrderRelationProps {
-    data?: CustomerOrderModel[];
+    data?: ModelNameSpace.CustomerOrderModel[];
 }
 
 export interface FormOrderRelationStates {
-    data?: CustomerOrderModel[];
+    data?: ModelNameSpace.CustomerOrderModel[];
     loading?: boolean;
 }
 

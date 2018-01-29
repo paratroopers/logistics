@@ -3,7 +3,6 @@ import {Component} from "react";
 import {withRouter, Link, hashHistory} from "react-router";
 import {PathConfig}from "../../../config/pathconfig";
 import {Layout, Row, Col, Tabs, Button, Checkbox, Select, Icon, Form, Modal} from "antd";
-import {RegisterEnum}from "../../../api/model/common";
 const {Header, Content, Footer} = Layout;
 import {Global, BaseResponse, Context} from '../../../util/common';
 import {connect} from "react-redux";
@@ -12,8 +11,10 @@ const {TabPane} = Tabs;
 import UserRegisterEmail from "../../../components/controls/user/user-register-email";
 import UserRegisterPhone from "../../../components/controls/user/user-register-phone";
 import {Notification} from "../../../components/controls/common/notification";
-import {RegisterAPI}from "../../../api/user";
-import {GetCodeRequest, RegisterRequest, AccountValidateRequest} from "../../../api/model/request/common-request";
+import {requestNameSpace} from '../../../model/request';
+import {ModelNameSpace} from '../../../model/model';
+import {APINameSpace} from '../../../model/api';
+
 const FormItem = Form.Item;
 
 interface UserRegisterPageProps {
@@ -42,7 +43,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
     constructor(props, context) {
         super(props, context);
         this.state = {
-            tabKey: RegisterEnum.phone.toString(),
+            tabKey: ModelNameSpace.RegisterEnum.phone.toString(),
             localeKey: props.localeKey ? props.localeKey : "zh",
             visibleSuccess: false,
             isCheckBox: true
@@ -73,10 +74,10 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
         topThis.currentValue = value;
 
         topThis.timeout = setTimeout(function () {
-            const request: AccountValidateRequest = {
+            const request: requestNameSpace.AccountValidateRequest = {
                 user: value
             };
-            RegisterAPI.AccountValidate(request).then((result: BaseResponse) => {
+            APINameSpace.RegisterAPI.AccountValidate(request).then((result: BaseResponse) => {
                 if (result.Data === true) {
                     callback();
                 } else {
@@ -92,15 +93,15 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
         const topThis = this;
         const {state: {tabKey}} = topThis;
         switch (tabKey) {
-            case RegisterEnum.phone.toString():
+            case ModelNameSpace.RegisterEnum.phone.toString():
                 topThis.phoneFromComponent.props.form.validateFields(["PhoneNumber"], {force: true}, function (err, values) {
                     if (!err) {
-                        const request: GetCodeRequest = {
+                        const request: requestNameSpace.GetCodeRequest = {
                             tel: values.PhoneNumber,
-                            type: RegisterEnum.phone.toString()
+                            type: ModelNameSpace.RegisterEnum.phone.toString()
                         }
                         topThis.phoneFromComponent.onDownCode();
-                        RegisterAPI.GetCode(request).then((data: BaseResponse) => {
+                        APINameSpace.RegisterAPI.GetCode(request).then((data: BaseResponse) => {
                             if (data.Data === true) {
                                 Notification.success({
                                     message: 'Tip',
@@ -115,15 +116,15 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                     }
                 });
                 break;
-            case RegisterEnum.mail.toString():
+            case ModelNameSpace.RegisterEnum.mail.toString():
                 topThis.mailFromComponent.props.form.validateFields(["Mail"], {force: true}, function (err, values) {
                     if (!err) {
-                        const request: GetCodeRequest = {
+                        const request: requestNameSpace.GetCodeRequest = {
                             mail: values.Mail,
-                            type: RegisterEnum.mail.toString()
+                            type: ModelNameSpace.RegisterEnum.mail.toString()
                         }
 
-                        RegisterAPI.GetCode(request).then((data: BaseResponse) => {
+                        APINameSpace.RegisterAPI.GetCode(request).then((data: BaseResponse) => {
                             if (data.Data === true) {
                                 Notification.success({
                                     message: 'Tip',
@@ -149,7 +150,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
         const {state: {tabKey, isCheckBox}} = topThis;
 
         switch (tabKey) {
-            case RegisterEnum.phone.toString():
+            case ModelNameSpace.RegisterEnum.phone.toString():
                 topThis.phoneFromComponent.props.form.validateFields({}, function (err, values) {
 
                     /** 是否勾选法律声明*/
@@ -160,13 +161,13 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                         });
                         return;
                     } else if (!err) {
-                        const request: RegisterRequest = {
+                        const request: requestNameSpace.RegisterRequest = {
                             tel: values.PhoneNumber,
                             pwd: values.Password,
                             rePwd: values.NextPassword,
                             code: values.Code
                         }
-                        RegisterAPI.Register(request).then((data: BaseResponse) => {
+                        APINameSpace.RegisterAPI.Register(request).then((data: BaseResponse) => {
                             if (data.Data === true) {
                                 Notification.success({
                                     message: 'Tip',
@@ -180,7 +181,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                     }
                 });
                 break;
-            case RegisterEnum.mail.toString():
+            case ModelNameSpace.RegisterEnum.mail.toString():
                 topThis.mailFromComponent.props.form.validateFields({}, function (err, values) {
                     /** 是否勾选法律声明*/
                     if (!isCheckBox) {
@@ -190,13 +191,13 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                         });
                         return;
                     } else if (!err) {
-                        const request: RegisterRequest = {
+                        const request: requestNameSpace.RegisterRequest = {
                             mail: values.Mail,
                             pwd: values.Password,
                             rePwd: values.NextPassword,
                             code: values.Code
                         }
-                        RegisterAPI.Register(request).then((data: BaseResponse) => {
+                        APINameSpace.RegisterAPI.Register(request).then((data: BaseResponse) => {
                             if (data.Data === true) {
                                 Notification.success({
                                     message: 'Tip',
@@ -243,10 +244,10 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
         const {state: {tabKey}} = topThis;
         let account = "";
         switch (tabKey) {
-            case RegisterEnum.phone.toString():
+            case ModelNameSpace.RegisterEnum.phone.toString():
                 account = topThis.phoneFromComponent.props.form.getFieldValue("Phone");
                 break;
-            case RegisterEnum.mail.toString():
+            case ModelNameSpace.RegisterEnum.mail.toString():
                 account = topThis.mailFromComponent.props.form.getFieldValue("Mail");
                 break;
         }
@@ -316,21 +317,21 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                                   onChange={(key) => {
                                       topThis.setState({tabKey: key});
                                       {/*switch (key) {*/}
-                                          {/*case RegisterEnum.phone.toString():*/}
-                                              {/*topThis.mailFromComponent.props.form.resetFields();*/}
-                                              {/*break;*/}
-                                          {/*case RegisterEnum.mail.toString():*/}
-                                              {/*topThis.phoneFromComponent.props.form.resetFields();*/}
-                                              {/*break;*/}
+                                      {/*case RegisterEnum.phone.toString():*/}
+                                      {/*topThis.mailFromComponent.props.form.resetFields();*/}
+                                      {/*break;*/}
+                                      {/*case RegisterEnum.mail.toString():*/}
+                                      {/*topThis.phoneFromComponent.props.form.resetFields();*/}
+                                      {/*break;*/}
                                       {/*}*/}
                                   }}>
-                                <TabPane tab="手机注册" key={RegisterEnum.phone.toString()}>
+                                <TabPane tab="手机注册" key={ModelNameSpace.RegisterEnum.phone.toString()}>
                                     <UserRegisterPhone
                                         validatorAccount={topThis.validatorAccount.bind(this)}
                                         onClickCode={topThis.onClickCode.bind(this)}
                                         wrappedComponentRef={(inst) => topThis.phoneFromComponent = inst}></UserRegisterPhone>
                                 </TabPane>
-                                <TabPane tab="邮箱注册" key={RegisterEnum.mail.toString()}>
+                                <TabPane tab="邮箱注册" key={ModelNameSpace.RegisterEnum.mail.toString()}>
                                     <UserRegisterEmail
                                         validatorAccount={topThis.validatorAccount.bind(this)}
                                         onClickCode={topThis.onClickCode.bind(this)}

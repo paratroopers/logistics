@@ -2,7 +2,9 @@ import {SagaMiddleware} from "redux-saga";
 import {Cookies} from "./cookie";
 import {Store} from "redux";
 import {CommonLocale} from "../locales/localeid";
-import {UserModel} from '../api/model/base';
+// import {UserModel} from '../api/model/base';
+import {ModelNameSpace} from '../model/model';
+
 import {Notification} from "../components/controls/common/notification";
 
 
@@ -160,7 +162,7 @@ export class Context {
     }
 
     /** 获取用户信息*/
-    static getCurrentUser(): UserModel {
+    static getCurrentUser(): ModelNameSpace.UserModel {
         return JSON.parse(window.localStorage.getItem('UserInfo'));
     }
 

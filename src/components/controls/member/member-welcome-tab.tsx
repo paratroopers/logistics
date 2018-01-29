@@ -2,10 +2,13 @@ import * as React from 'react';
 import {Row, Col, Card} from 'antd';
 import {hashHistory, Link} from 'react-router';
 import {FormStepIcon, FormStepEnum} from '../../../components/form/form-step-icon';
-import {MemberAPI} from "../../../api/member";
-import {GetMemberOrderStatusResponse} from '../../../api/model/response/member';
-import {MemberOrderStatusModel}from '../../../api/model/member';
+// import {MemberAPI} from "../../../api/member";
+// import {GetMemberOrderStatusResponse} from '../../../api/model/response/member';
+// import {MemberOrderStatusModel}from '../../../api/model/member';
+import {ResponseNameSpace} from '../../../model/response';
+import {ModelNameSpace} from '../../../model/model';
 import {PathConfig}from "../../../config/pathconfig";
+import {APINameSpace} from '../../../model/api';
 import {isNullOrUndefined} from "util";
 
 interface MemberWelcomeTabProps {
@@ -13,7 +16,7 @@ interface MemberWelcomeTabProps {
 }
 
 interface MemberWelcomeTabStates {
-    statusData?:MemberOrderStatusModel;
+    statusData?:ModelNameSpace.MemberOrderStatusModel;
 }
 
 export class MemberWelcomeTab extends React.Component<MemberWelcomeTabProps, MemberWelcomeTabStates> {
@@ -26,7 +29,7 @@ export class MemberWelcomeTab extends React.Component<MemberWelcomeTabProps, Mem
 
     componentDidMount() {
         const topThis = this;
-        MemberAPI.GetMemberOrderStatus().then((result: GetMemberOrderStatusResponse) => {
+        APINameSpace.MemberAPI.GetMemberOrderStatus().then((result: ResponseNameSpace.GetMemberOrderStatusResponse) => {
             if (result.Status === 0) {
                 topThis.setState({statusData: result.Data});
             }
