@@ -236,33 +236,39 @@ export  namespace  ModelNameSpace{
         /** 会员ID*/
         userid?: string;
         /** 客户订单号*/
-        CustomerOrderNo?: string,
+        CustomerOrderNo?: string;
         /** 快递单号*/
-        expressNo?: string,
+        expressNo?: string;
         /** 快递类型ID*/
-        expressTypeID?: number,
+        expressTypeID?: number;
         /** 快递类型Name*/
-        expressTypeName?: string,
+        expressTypeName?: string;
         /** 交接单*/
-        TransferNo?: string,
+        TransferNo?: string;
         /** 件数*/
-        InPackageCount?: number,
+        InPackageCount?: number;
         /** 入库重量*/
-        InWeight?: number,
+        InWeight?: number;
         /** 入库体积*/
-        InVolume?: number,
+        InVolume?: number;
         /** 入库长度*/
-        InLength?: number,
+        InLength?: number;
         /** 入库宽度*/
-        InWidth?: number,
+        InWidth?: number;
         /** 入库高度*/
-        InHeight?: number,
+        InHeight?: number;
         /** 仓库ID*/
-        WareHouseID?: number,
+        WareHouseID?: number;
         /** 入库时间*/
-        InWareHouseTime?: Date,
+        InWareHouseTime?: Date;
         /** 客服ID*/
-        CustomerServiceID?: number
+        CustomerServiceID?: number;
+        /** 会员编号*/
+        MemeberCode?:string;
+        /** 状态编号*/
+        currentStatus?:string;
+        /** 状态名称*/
+        currentStep?:string;
     }
     /** 客户订单状态*/
     export interface MemberOrderStatusModel extends BaseModel {

@@ -99,7 +99,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
 
     renderTable() {
         const topThis = this;
-        const {state: {listData, selectedRowKeys, pageIndex, pageSize, totalCount,loading}} = topThis;
+        const {state: {listData, selectedRowKeys, pageIndex, pageSize, totalCount, loading}} = topThis;
 
         const rowSelection = {
             fixed: true,
@@ -107,30 +107,49 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             onChange: topThis.onSelectChange,
         };
 
-        const columns:ColumnProps<ModelNameSpace.WarehouseListModel>[]= [{
+        const columns: ColumnProps<ModelNameSpace.WarehouseListModel>[] = [{
             title: "客户订单号",
-            dataIndex: 'CustomerOrderNo'
-        }, {
-            title: "物流方式",
-            dataIndex: 'expressTypeName'
+            dataIndex: 'CustomerOrderNo',
+            fixed: 'left'
         }, {
             title: "会员编号",
             dataIndex: 'MemeberCode'
         }, {
-            title: "物流单号",
+            title: "快递方式",
+            dataIndex: 'expressTypeName'
+        }, {
+            title: "快递单号",
             dataIndex: 'expressNo'
         }, {
-            title: "入库体积(c㎡)",
+            title: "客服",
+            dataIndex: 'CustomerServiceID'
+        }, {
+            title: "仓库",
+            dataIndex: 'WareHouseID'
+        }, {
+            title: "初始体积(c㎡)",
             dataIndex: 'InVolume',
             render: (val, record, index) => {
                 return record.InLength + "*" + record.InWeight + "*" + record.InHeight;
             }
         }, {
-            title: "入库重量",
+            title: "初始重量",
             dataIndex: 'InWeight'
+        }, {
+            title: "入库人",
+            dataIndex: 'CreatedBy'
+        }, {
+            title: "状态",
+            dataIndex: 'currentStep'
         }, {
             title: "入库时间",
             dataIndex: 'InWareHouseTime'
+        },{
+            title: '操作',
+            fixed: 'right',
+            render: () => {
+                return "";
+            }
         }];
 
         const pagination: PaginationProps = {
@@ -138,12 +157,12 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             pageSize: pageSize,
             total: totalCount,//数据总数
             onChange: (a) => {
-                topThis.loadData(a,pageSize);
+                topThis.loadData(a, pageSize);
             },
             showSizeChanger: true,//是否可以改变 pageSize
             onShowSizeChange: (a, b) => {
                 topThis.setState({pageIndex: a, pageSize: b});
-                topThis.loadData(a,b);
+                topThis.loadData(a, b);
             },
             showQuickJumper: true,//是否可以快速跳转至某页
             showTotal: (total, range) => {
@@ -157,7 +176,8 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                       style={{padding: '12px'}}
                       pagination={pagination}
                       title={(currentPageData: Object[]) => {
-                          return <Alert message={"总计有 10项 已入库，5项 异常"} type="info" showIcon></Alert>;
+                          // 总计已入库的数量
+                          return <Alert message={"总计有 " + totalCount + "项 已入库"} type="info" showIcon></Alert>;
                       }}
                       scroll={{x: 1500}}
                       rowSelection={rowSelection}
