@@ -1,11 +1,10 @@
 import * as React from "react";
 import {Component} from "react";
 import {withRouter, hashHistory} from "react-router";
-import {Global} from '../../util/common';
+import {Context} from '../../util/common';
 import {connect} from 'react-redux'
 import {Layout} from "antd";
 import {APINameSpace} from "../../model/api";
-
 const {Content, Sider} = Layout;
 import {MemberNavigation} from "../../components/controls/member/member-navigation";
 import {Util} from "../../util/util";
@@ -13,7 +12,6 @@ import {Constants} from '../../util/common';
 import {ModelNameSpace} from "../../model/model";
 import {PathConfig} from '../../config/pathconfig';
 import {Cookies} from '../../util/cookie';
-import {MobileNavTreeAction} from '../../actions/index';
 
 interface MemberPageProps {
     showNav?: boolean;
@@ -38,7 +36,7 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
 
     componentDidMount() {
         //console.log(Cookies.get('Authorization'));
-        if (!Cookies.get('Authorization'))
+        if (!Cookies.get('Authorization')||!Context.getCurrentUser())
             hashHistory.push(PathConfig.LoginPage);
         this.interval = setInterval(() => this.getToken(), 1000 * 60 * 3);
     }

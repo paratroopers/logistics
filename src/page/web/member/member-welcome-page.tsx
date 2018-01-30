@@ -63,7 +63,8 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
     }
 
     renderHeader() {
-        const topThis = this;
+        var MemberCode="";
+        try {MemberCode=Context.getCurrentUser().userInfo.MemeberCode;}catch (ex) {MemberCode = "";}
         return <Row type="flex" justify="space-between" align="middle" className="welcome-header-content">
             <Col>
                 <Row type="flex" justify="start" align="middle">
@@ -73,7 +74,7 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
                                 src="http://www.famliytree.cn/icon/timor.png"/>
                     </Col>
                     <Col className="header-content">
-                        <h2>{this.timeInterval()}，{Context.getCurrentUser().userInfo.MemeberCode}</h2>
+                        <h2>{this.timeInterval()}，{MemberCode}</h2>
                         <p>欢迎你来到大陆网，体验更便捷的服务</p>
                     </Col>
                 </Row>
