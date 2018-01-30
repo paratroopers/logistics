@@ -6,20 +6,18 @@ import {ModelNameSpace} from '../../../model/model';
 import {requestNameSpace} from '../../../model/request';
 import {ResponseNameSpace} from '../../../model/response';
 
-
-
 import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
 
-interface MemberAddressPageStates {
-     dataSource:any;
+interface MemberAddressCombinationPageStates {
+    dataSource:any;
 }
 
-interface MemberAddressPageProps {
+interface MemberAddressCombinationPageProps {
 
 }
 
 @withRouter
-export class MemberAddressPage extends React.Component<MemberAddressPageProps, MemberAddressPageStates> {
+export class MemberAddressCombinationPage extends React.Component<MemberAddressCombinationPageProps, MemberAddressCombinationPageStates> {
     constructor(props) {
         super(props);
         this.state ={dataSource:[]};
@@ -37,7 +35,7 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
         });
     }
 
-     columns = [{
+    columns = [{
         title: '收件人',
         dataIndex: 'recipient',
         key: 'recipient',
@@ -50,25 +48,25 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
         dataIndex: 'Address',
         key: 'Address',
     },{
-         title: '电话',
-         dataIndex: 'Tel',
-         key: 'Tel',
-     },{
-         title: '',
-         key: 'action',
-         render: (text, record) => (
-             <span>
+        title: '电话',
+        dataIndex: 'Tel',
+        key: 'Tel',
+    },{
+        title: '',
+        key: 'action',
+        render: (text, record) => (
+            <span>
       <a href="#">查看</a>
       <Divider type="vertical" />
       <a href="#">修改</a>
       <Divider type="vertical" />
       <a href="#">删除</a>
     </span>
-         ),
-     }];
+        ),
+    }];
 
 
-     rowSelection = {
+    rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
         },
@@ -77,9 +75,9 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
         }),
     };
 
-     componentDidMount(){
-         this.loadData();
-     }
+    componentDidMount(){
+        this.loadData();
+    }
 
     render() {
         return (<Row className="member-address-page">

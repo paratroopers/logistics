@@ -17,6 +17,7 @@ import {
     UserRegisterPage,
     WarehouseInPage,
     MemberAddressPage,
+    MemberAddressCombinationPage,
     MemberDeliveredPage,
     MemberMessageListPage,
     MemberMyOrderPage,
@@ -62,6 +63,7 @@ const routerConfig = (
                 <Route path={PathConfig.WarehouseInPage} component={WarehouseInPage}/>
                 <Route path={PathConfig.WarehouseInAddPage} component={WarehouseInAddPage}/>
                 <Route path={PathConfig.MemberMergePackage} component={MemberMergePackage}/>
+                <Route path={PathConfig.MemberAddressCombinationPage} component={MemberAddressCombinationPage}/>
             </Route>
         </Route>
         <Route path={PathConfig.LoginPage} component={UserLoginPage}/>
