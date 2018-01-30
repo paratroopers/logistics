@@ -2,7 +2,7 @@ import * as React from 'react';
 import {withRouter} from 'react-router';
 import {Row,Input,DatePicker} from "antd";
 const { RangePicker } = DatePicker;
-import {FormAdvancedSearch,FormStatusSelect,FormExpressSelect,FormWarehouseSelect} from "../../components/form/index";
+import {FormAdvancedSearch,FormStatusSelect,FormExpressSelect,FormWarehouseSelect,FormCollapse} from "../../components/form/index";
 import {FormAdvancedItemModel} from "../../components/form/form-advanced-search";
 import {FormControl} from './enzodemo';
 import  {SelectType} from '../../util/common';
@@ -80,9 +80,11 @@ export class DemoPage extends React.Component<DemoProps, DemoStates> {
     render() {
         const topThis = this;
         return <Row className="demo-page">
-            <FormAdvancedSearch formAdvancedItems={topThis.renderFormAdvancedItems()} onClickSearch={(values) => {
-                console.log(values);
-            }}></FormAdvancedSearch>
+            <FormCollapse>
+                <FormAdvancedSearch formAdvancedItems={topThis.renderFormAdvancedItems()} onClickSearch={(values) => {
+                    console.log(values);
+                }}></FormAdvancedSearch>
+            </FormCollapse>
         </Row>
     }
 }

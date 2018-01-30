@@ -11,6 +11,7 @@ import {FormOrderInfo} from './form-order-info';
 import {FormOrderRelation} from './form-order-relation';
 import {FormOrderAddressee} from './form-order-addressee';
 import {FormOrderDeclare} from './form-order-declare';
+import {FormCollapse} from "./form-collapse";
 
 export {
     FormAdvancedSearch,
@@ -25,5 +26,6 @@ export {
     FormOrderInfo,
     FormOrderRelation,
     FormOrderAddressee,
-    FormOrderDeclare
+    FormOrderDeclare,
+    FormCollapse
 }
