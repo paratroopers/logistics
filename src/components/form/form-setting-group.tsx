@@ -7,6 +7,7 @@ export interface FormSettingGroupProps {
     span?: number;
     footer?: JSX.Element;
     loading?: boolean;
+    header?: JSX.Element;
 }
 
 export interface FormSettingGroupStates {
@@ -15,11 +16,12 @@ export interface FormSettingGroupStates {
 
 export class FormSettingGroup extends React.Component<FormSettingGroupProps, FormSettingGroupStates> {
     render() {
-        const {props: {title, size, span, footer, loading}} = this;
+        const {props: {title, size, span, footer, loading, header}} = this;
         return <Spin spinning={(loading === true)}>
             <Row className="form-control-group">
                 <Col className="form-control-title" style={{fontSize: size}} span={24}>
                     <span className="sign">{title}</span>
+                    {header}
                 </Col>
                 {!loading ?
                     [

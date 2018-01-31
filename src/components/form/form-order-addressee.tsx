@@ -11,13 +11,14 @@ export interface FormOrderAddresseeStates {
 
 export class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOrderAddresseeStates> {
 
-    renderFooter() {
-        return <Button type="dashed">添加联系人</Button>
+    renderHeader() {
+        return <div style={{display:'inline-block'}}><Button type="dashed">添加联系人</Button>,
+            <Button type="dashed">另存为联系人</Button></div>;
     }
 
     render() {
         const formItemLayout = {labelCol: {span: 10}, wrapperCol: {span: 14}};
-        return <FormSettingGroup size={16} title={"收件人基本信息"} span={24} footer={this.renderFooter()}>
+        return <FormSettingGroup size={16} title={"收件人基本信息"} span={24} header={this.renderHeader()}>
             <Form>
                 <Row>
                     <Col span={6}>
