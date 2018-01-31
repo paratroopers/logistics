@@ -13,3 +13,5 @@ export const onChangeLanguage = "onChangeLanguage";
 export const GetLoginState = "GetLoginState";
 /** 国家下拉内容*/
 export const QOUNTRY_COUNTLOADED = "QOUNTRY_COUNTLOADED";
+/** 传递入库订单详情*/
+export const props_warehouse_in_model="PROPS_WAREHOUSE_IN_MODEL";

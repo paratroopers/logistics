@@ -205,7 +205,6 @@ export  namespace  ModelNameSpace{
         path?: string;
         customerOrderID?: string;
     }
-
     /** 新建入库*/
     export interface WarehouseInModel extends BaseModel {
         /** 会员号*/
@@ -349,7 +348,6 @@ export  namespace  ModelNameSpace{
     }
 
     //endregion
-
 
     //region 客户待打包定义区
     //endregion

@@ -26,7 +26,8 @@ import {
     MemberWarehouseInQueryPage,
     MemberWelcomePage,
     MemberMergePackage,
-    WarehouseInAddPage
+    WarehouseInAddPage,
+    WarehouseInViewPage
 } from '../page';
 import {
     MemberPage as MobileMemberPage,
@@ -62,6 +63,7 @@ const routerConfig = (
                 <Route path={PathConfig.MemberWarehouseInQueryPage} component={MemberWarehouseInQueryPage}/>
                 <Route path={PathConfig.WarehouseInPage} component={WarehouseInPage}/>
                 <Route path={PathConfig.WarehouseInAddPage} component={WarehouseInAddPage}/>
+                <Route path={PathConfig.WarehouseInViewPage} component={WarehouseInViewPage}/>
                 <Route path={PathConfig.MemberMergePackage} component={MemberMergePackage}/>
                 <Route path={PathConfig.MemberAddressCombinationPage} component={MemberAddressCombinationPage}/>
             </Route>

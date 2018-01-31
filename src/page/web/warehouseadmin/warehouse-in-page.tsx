@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {withRouter,hashHistory} from 'react-router';
+import {withRouter,hashHistory,Link} from 'react-router';
 import {Row, Col, Button, Icon, Table, Alert} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
@@ -9,10 +9,6 @@ import {DatePicker} from "antd";
 const { RangePicker } = DatePicker;
 import {FormAdvancedSearch,FormStatusSelect,FormExpressSelect,FormWarehouseSelect} from "../../../components/form/index";
 import {FormAdvancedItemModel} from "../../../components/form/form-advanced-search";
-// import {WarehouseAPI}from "../../../api/admin";
-// import {GetWarehouseInListRequest}from "../../../api/model/request/admin";
-// import {GetWarehouseInListResponse}from "../../../api/model/response/admin";
-// import {OrderTypeEnum}from "../../../api/model/common";
 
 import {requestNameSpace} from '../../../model/request';
 import {ModelNameSpace} from '../../../model/model';
@@ -147,8 +143,9 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         },{
             title: '操作',
             fixed: 'right',
-            render: () => {
-                return "";
+            render: (val, record, index) => {
+                /** 传值到查看页面*/
+                return <Link to={{pathname:PathConfig.WarehouseInViewPage,state:record}}>查看</Link>;
             }
         }];
 
@@ -179,7 +176,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                           // 总计已入库的数量
                           return <Alert message={"总计有 " + totalCount + "项 已入库"} type="info" showIcon></Alert>;
                       }}
-                      scroll={{x: 1500}}
+                      scroll={{x: 1800}}
                       rowSelection={rowSelection}
                       bordered={false}
                       dataSource={listData}

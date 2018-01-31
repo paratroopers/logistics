@@ -8,8 +8,10 @@ import {
     NAVTREE_COUNTLOADED,
     QOUNTRY_COUNTLOADED,
     onChangeLanguage,
-    GetLoginState
+    GetLoginState,
+    props_warehouse_in_model
 } from "./ActionTypes";
+import {ModelNameSpace} from '../model/model';
 
 export class TaskAction {
     static requestTaskCount = createAction(REQUEST_TASKCOUNT);
@@ -39,11 +41,18 @@ export class CountryAction {
 }
 
 export class WebAction {
+    /** 多语言*/
     static onChangeLanguage = createAction(onChangeLanguage, (languageKey: string) => {
         return {languageKey: languageKey};
     });
 
+    /** 获取登录状态*/
     static GetLoginState = createAction(GetLoginState, (isLogin: boolean) => {
         return {isLogin: isLogin};
+    });
+
+    /** 传递入库订单详情*/
+    static props_warehouse_in_model = createAction(props_warehouse_in_model, (model: ModelNameSpace.WarehouseListModel) => {
+        return {props_warehouse_in_model: model};
     });
 }
