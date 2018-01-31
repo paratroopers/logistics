@@ -45,8 +45,15 @@ export namespace FormControl {
                 <FormButtonControl title="审批" savingdata={this.savingdata} type={FormControl.ButtonType.approve}/>
                 <FormButtonControl title="拒绝" savingdata={this.savingdata} type={FormControl.ButtonType.reject}/>
                 <FormButtonControl title="确认及审批" savingdata={this.savingdata} type={FormControl.ButtonType.confirmApprove}/>
-                <FormButtonControl title="打包" savingdata={this.savingdata} type={FormControl.ButtonType.package}/>
-
+                <FormButtonControl title="导出" savingdata={this.savingdata} type={FormControl.ButtonType.export}/>
+                <FormButtonControl title="删除" savingdata={this.savingdata} type={FormControl.ButtonType.delete}/>
+                <FormButtonControl title="新增" savingdata={this.savingdata} type={FormControl.ButtonType.add}/>
+                <FormButtonControl title="另存为联系人" savingdata={this.savingdata} type={FormControl.ButtonType.saveascontact}/>
+                <FormButtonControl title="选择联系人" savingdata={this.savingdata} type={FormControl.ButtonType.choosecontact}/>
+                <FormButtonControl title="查看" savingdata={this.savingdata} type={FormControl.ButtonType.view}/>
+                <FormButtonControl title="查询" savingdata={this.savingdata} type={FormControl.ButtonType.search}/>
+                <FormButtonControl title="重置" savingdata={this.savingdata} type={FormControl.ButtonType.reset}/>
+                <FormButtonControl title="付款" savingdata={this.savingdata} type={FormControl.ButtonType.pay}/>
             </div>);
         }
 
@@ -177,7 +184,16 @@ export namespace FormControl {
         approve = 3,
         reject = 4,
         confirmApprove = 5,
-        package = 6
+        package = 6,
+        export = 7,
+        delete = 8,
+        add = 9,
+        saveascontact =10,
+        choosecontact =11,
+        view = 12,
+        search = 13,
+        reset =14,
+        pay = 15
 
     }
 
@@ -214,6 +230,34 @@ export namespace FormControl {
             }else  if(this.props.type === FormControl.ButtonType.package){
                 return "icon-dabaocaiji";
             }
+            else  if(this.props.type === FormControl.ButtonType.delete){
+                return "icon-105";
+            }
+            else  if(this.props.type === FormControl.ButtonType.add){
+                return "icon-tianjia";
+            }
+            else  if(this.props.type === FormControl.ButtonType.saveascontact){
+                return "icon-tianjialianxiren";
+            }
+            else  if(this.props.type === FormControl.ButtonType.choosecontact){
+                return "icon-xuanzelianxiren";
+            }
+            else  if(this.props.type === FormControl.ButtonType.view){
+                return "icon-chakan";
+            }
+            else  if(this.props.type === FormControl.ButtonType.search){
+                return "icon-sousuo";
+            }
+            else  if(this.props.type === FormControl.ButtonType.reset){
+                return "icon-11zhongzhi";
+            }
+            else  if(this.props.type === FormControl.ButtonType.pay){
+                return "icon-shouye";
+            }
+            else  if(this.props.type === FormControl.ButtonType.export){
+                return "icon-daochu";
+            }
+
         }
 
 
