@@ -11,6 +11,7 @@ import {ModelNameSpace} from '../model/model';
 
 const FormItem = Form.Item;
 const {TextArea} = Input;
+import  {MemberAddressPage} from './member-address-page';
 
 
 export namespace FormControl {
@@ -40,20 +41,7 @@ export namespace FormControl {
         //   WrappedApp = Form.create()(MemberPageNameSpace.MemberAddressCombinationPage);
 
         render() {
-            return (<div><FormButtonControl title="确认" savingdata={this.savingdata} type={FormControl.ButtonType.confirm}/>
-                <FormButtonControl title="取消" savingdata={this.savingdata} type={FormControl.ButtonType.cancel}/>
-                <FormButtonControl title="审批" savingdata={this.savingdata} type={FormControl.ButtonType.approve}/>
-                <FormButtonControl title="拒绝" savingdata={this.savingdata} type={FormControl.ButtonType.reject}/>
-                <FormButtonControl title="确认及审批" savingdata={this.savingdata} type={FormControl.ButtonType.confirmApprove}/>
-                <FormButtonControl title="导出" savingdata={this.savingdata} type={FormControl.ButtonType.export}/>
-                <FormButtonControl title="删除" savingdata={this.savingdata} type={FormControl.ButtonType.delete}/>
-                <FormButtonControl title="新增" savingdata={this.savingdata} type={FormControl.ButtonType.add}/>
-                <FormButtonControl title="另存为联系人" savingdata={this.savingdata} type={FormControl.ButtonType.saveascontact}/>
-                <FormButtonControl title="选择联系人" savingdata={this.savingdata} type={FormControl.ButtonType.choosecontact}/>
-                <FormButtonControl title="查看" savingdata={this.savingdata} type={FormControl.ButtonType.view}/>
-                <FormButtonControl title="查询" savingdata={this.savingdata} type={FormControl.ButtonType.search}/>
-                <FormButtonControl title="重置" savingdata={this.savingdata} type={FormControl.ButtonType.reset}/>
-                <FormButtonControl title="付款" savingdata={this.savingdata} type={FormControl.ButtonType.pay}/>
+            return (<div><MemberAddressPage></MemberAddressPage>
             </div>);
         }
 

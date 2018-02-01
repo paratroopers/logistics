@@ -151,16 +151,11 @@ export  namespace FormControl{
         }
 
     }
-
-
     export class FormButtonControl extends React.Component<FormButtonControlProps, FormButtonControlState> {
         constructor(props, context) {
             super(props, context);
             this.state = {loading: false};
         }
-
-
-
         loadingIcon = ():string => {
             if (this.props.type === ButtonType.confirm) {
                 return "icon-queding";
@@ -204,8 +199,6 @@ export  namespace FormControl{
             }
 
         }
-
-
         enterLoading = () => {
             this.setState({loading: true});
             console.log(this.props.savingdata());
@@ -215,12 +208,10 @@ export  namespace FormControl{
             }
 
         }
-
         cancelLoading = () => {
 
             this.setState({loading: false});
         }
-
         render() {
             const style = this.props.size ? {fontSize: this.props.size} : {};
             const  icon = Context.getIconClassName(this.loadingIcon().toString());
