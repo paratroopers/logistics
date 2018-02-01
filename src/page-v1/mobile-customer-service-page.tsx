@@ -9,7 +9,7 @@ interface CustomerServicePageStates {
 }
 
 @withRouter
-export class CustomerServicePage extends React.Component<CustomerServicePageProps, CustomerServicePageStates> {
+export class MobileCustomerServicePage extends React.Component<CustomerServicePageProps, CustomerServicePageStates> {
 
     render() {
         return <Layout className="user-help-layout">

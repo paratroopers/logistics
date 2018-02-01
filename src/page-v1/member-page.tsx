@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 import {Layout} from "antd";
 import {APINameSpace} from "../model/api";
 const {Content, Sider} = Layout;
-import {MemberNavigation} from "../components/controls/member/member-navigation";
+import {MemberNavigation} from "../components-v1/member-navigation";
 import {Util} from "../util/util";
 import {Constants} from '../util/common';
 import {ModelNameSpace} from "../model/model";
@@ -22,7 +22,7 @@ interface NMemberPageStates {
 }
 
 @withRouter
-class IndexMemberPage extends Component<MemberPageProps, NMemberPageStates> {
+class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
 
     interval: any;
 
@@ -66,6 +66,10 @@ class IndexMemberPage extends Component<MemberPageProps, NMemberPageStates> {
     }
 
     render() {
+        /** 不存在登录信息、需要登录*/
+        if (!Cookies.get('Authorization')||!Context.getCurrentUser())
+            hashHistory.push(PathConfig.LoginPage);
+
         const topThis = this;
         const {state: {collapsed}, props: {children, showNav}} = topThis;
         const sider = {collapsedWidth: Util.getScrrenMode(window.innerWidth) !== ModelNameSpace.ScreenModeEnum.sm ? 64 : 0};
@@ -101,4 +105,4 @@ const mapStateToProps = (state) => {
         showNav: state.nav.showModal
     }
 }
-export default connect(mapStateToProps)(IndexMemberPage);
+export default connect(mapStateToProps)(MemberPage);

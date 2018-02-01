@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {withRouter,hashHistory} from 'react-router';
+import {withRouter,hashHistory,Link} from 'react-router';
 import {Row, Col, Button, Icon, Table, Alert} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 // import {ContentHeaderControl}from "../components-v1/common-content-header-control";
@@ -33,7 +33,6 @@ import {ResponseNameSpace} from "../model/response";
 import {FormStatusSelect} from "../components-v1/form-status-select";
 import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import {APINameSpace} from "../model/api";
-import Link from "react-router/lib/Link";
 
 // import {PathConfig}from "../../../config/pathconfig";
 

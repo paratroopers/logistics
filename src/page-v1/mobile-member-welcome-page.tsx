@@ -14,7 +14,7 @@ interface MemberWelcomePageStates {
 }
 
 @withRouter
-export class MemberWelcomePage extends React.Component<MemberWelcomePageProps, MemberWelcomePageStates> {
+export class MobileMemberWelcomePage extends React.Component<MemberWelcomePageProps, MemberWelcomePageStates> {
     renderTitle() {
         return <div>
             <span>{"您的专属仓库"}</span>

@@ -21,7 +21,7 @@ interface MemberPageStates {
 
 
 @withRouter
-export class MemberPage extends React.Component<MemberPageProps, MemberPageStates> {
+export class MobileMemberPage extends React.Component<MemberPageProps, MemberPageStates> {
     constructor(props, context) {
         super(props, context)
         this.state = {

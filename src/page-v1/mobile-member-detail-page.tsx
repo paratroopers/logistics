@@ -13,7 +13,7 @@ interface MemberDetailPageStates {
 }
 
 @withRouter
-class MemberDetailPage extends React.Component<MemberDetailPageProps, MemberDetailPageStates> {
+class MobileMemberDetailPage extends React.Component<MemberDetailPageProps, MemberDetailPageStates> {
 
     renderGridItem() {
         return this.props.data.map(item => {
@@ -64,4 +64,4 @@ const mapStateToProps = (state) => {
         data: state.nav.data
     }
 }
-export default connect(mapStateToProps)(MemberDetailPage);
+export default connect(mapStateToProps)(MobileMemberDetailPage);
