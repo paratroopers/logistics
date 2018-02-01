@@ -66,6 +66,10 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
     }
 
     render() {
+        /** 不存在登录信息、需要登录*/
+        if (!Cookies.get('Authorization')||!Context.getCurrentUser())
+            hashHistory.push(PathConfig.LoginPage);
+
         const topThis = this;
         const {state: {collapsed}, props: {children, showNav}} = topThis;
         const sider = {collapsedWidth: Util.getScrrenMode(window.innerWidth) !== ModelNameSpace.ScreenModeEnum.sm ? 64 : 0};

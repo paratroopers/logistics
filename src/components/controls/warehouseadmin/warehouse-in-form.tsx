@@ -7,19 +7,25 @@ import {FormComponentProps} from 'antd/lib/form/Form';
 import {FormControl} from '../../../page/demo/enzodemo';
 import {SelectType} from "../../../util/common";
 import {FormStatusSelect,FormExpressSelect,FormWarehouseSelect} from "../../form/index";
-// import {OrderTypeEnum}from "../../../api/model/common";
 import {ModelNameSpace} from '../../../model/model';
+import {isNullOrUndefined} from "util";
 
-export interface WarehouseInAddFormProps extends FormComponentProps {
+export interface WarehouseInFormProps extends FormComponentProps {
     /** 点击提交*/
-    onSubmit?: (values:any) => void;
+    onSubmit?: (values: any) => void;
+    /** Data*/
+    Data?: ModelNameSpace.WarehouseListModel;
+    /** 是否全部只读*/
+    readOnly?: boolean;
+    /** 类型*/
+    type?: 'add' | 'edit' | 'view'
 }
 
-export interface WarehouseInAddFormStates {
+export interface WarehouseInFormStates {
 
 }
 
-class WarehouseInAddForm extends Component<WarehouseInAddFormProps, WarehouseInAddFormStates> {
+class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormStates> {
     constructor(props, context) {
         super(props, context);
     }
@@ -35,6 +41,37 @@ class WarehouseInAddForm extends Component<WarehouseInAddFormProps, WarehouseInA
                     onSubmit(values);
             }
         });
+    }
+    
+    componentDidMount() {
+        const topThis = this;
+        const {props: {Data, type, form: {setFieldsValue}}} = topThis;
+        switch (type) {
+            case "view":
+                setFieldsValue({
+                    expressType: {key: Data.expressTypeID, label: Data.expressTypeName}
+                });
+                break;
+            case "edit":
+                setFieldsValue({
+                    user: Data.userid,
+                    expressType: {key: Data.expressTypeID, label: Data.expressTypeName},
+                    expressNo: "",
+                    customerService: Data.CustomerServiceID,
+                    wareHouse: Data.WareHouseID,
+                    inWareHouseStatus: Data.currentStatus,
+                    inPackageCount: Data.InPackageCount,
+                    inWeight: Data.InWeight,
+                    inLength: Data.InLength,
+                    inWidth: Data.InWidth,
+                    inHeight: Data.InHeight,
+                    transferNo: Data.TransferNo,
+                    warehouseAdminRemark: ""
+                });
+                break;
+            default:
+                break;
+        }
     }
 
     render() {
@@ -131,9 +168,7 @@ class WarehouseInAddForm extends Component<WarehouseInAddFormProps, WarehouseInA
                     </Col>
                     <Col {...spanLayout}>
                         <FormItem label={"交接单"}>
-                            {getFieldDecorator("transferNo", {
-                                rules: [{required: true, message: '请填写交接单!'}],
-                            })(<Input placeholder="交接单"></Input >)}
+                            {getFieldDecorator("transferNo")(<Input placeholder="交接单"></Input >)}
                         </FormItem>
                     </Col>
                     <Col span={24}>
@@ -153,4 +188,4 @@ class WarehouseInAddForm extends Component<WarehouseInAddFormProps, WarehouseInA
     }
 }
 
-export default Form.create<any>()(WarehouseInAddForm);
+export default Form.create<any>()(WarehouseInForm);

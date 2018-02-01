@@ -9,7 +9,7 @@ import UserLoginPage from "./web/user/user-login-page";
 import {NaMasterMainPage} from './master/master-main-page';
 import {WarehouseInPage} from './web/warehouseadmin/warehouse-in-page';
 import {WarehouseInAddPage} from './web/warehouseadmin/warehouse-in-add-page';
-
+import {WarehouseInViewPage} from './web/warehouseadmin/warehouse-in-view-page';
 
 
 import {
@@ -46,5 +46,6 @@ export {
     MemberWarehouseInQueryPage,
     MemberWelcomePage,
     MemberMergePackage,
-    WarehouseInAddPage
+    WarehouseInAddPage,
+    WarehouseInViewPage
 }

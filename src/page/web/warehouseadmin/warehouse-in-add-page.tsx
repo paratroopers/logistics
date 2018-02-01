@@ -1,13 +1,9 @@
 import * as React from 'react';
 import {withRouter,hashHistory} from 'react-router';
-import {Row, Col, Button,message} from 'antd';
+import {Row,message} from 'antd';
 import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
-import WarehouseInAddForm from "../../../components/controls/warehouseadmin/warehouse-in-add-form";
-// import {APINameSpace.WarehouseAPI}from "../../../api/admin";
-// import {requestNameSpace.WarehouseInAddRequest}from "../../../api/model/request/admin";
-// import {ResponseNameSpace.BaseResponse}from "../../../api/model/response/base";
+import WarehouseInForm from "../../../components/controls/warehouseadmin/warehouse-in-form";
 import {requestNameSpace} from '../../../model/request';
-import {ModelNameSpace} from '../../../model/model';
 import {APINameSpace} from '../../../model/api';
 import {ResponseNameSpace} from '../../../model/response';
 import {PathConfig}from "../../../config/pathconfig";
@@ -73,7 +69,7 @@ export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps,
         const topThis = this;
         return <Row className="warehouse-in-page">
             <ContentHeaderControl title="新增入库"></ContentHeaderControl>
-            <WarehouseInAddForm onSubmit={topThis.onSubmit.bind(this)}></WarehouseInAddForm>
+            <WarehouseInForm onSubmit={topThis.onSubmit.bind(this)}></WarehouseInForm>
         </Row>;
     }
 }

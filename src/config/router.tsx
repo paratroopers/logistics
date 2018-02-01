@@ -3,37 +3,33 @@ import {Router, Route, hashHistory, IndexRoute} from 'react-router';
 import {PathConfig, MobilePathConfig} from './pathconfig';
 
 /// <reference path="../page/demo/enzodemo.tsx" />
-import {FormControl} from '../page/demo/enzodemo';
+import {FormControl} from '../page-v1/enzodemo';
+import {DemoPage} from "../page-v1/demo";
+import {NaMasterMainPage} from "../page-v1/master-main-page";
+import {MemberWelcomePage} from "../page-v1/member-welcome-page";
+import {MemberAddressPage} from "../page-v1/member-address-page";
+import {MemberDeliveredPage} from "../page-v1/member-delivered-page";
+import {MemberMessageListPage} from "../page-v1/member-message-list-page";
+import {MemberMyOrderPage} from "../page-v1/member-my-order-page";
+import {MemberUserInformationPage} from "../page-v1/member-user-information";
+import {MemberWaitPayPage} from "../page-v1/member-wait-pay-page";
+import {MemberWarehouseInQueryPage} from "../page-v1/member-warehouse-in-query-page";
+import {WarehouseInPage} from "../page-v1/warehouse-in-page";
+import {WarehouseInAddPage} from "../page-v1/warehouse-in-add-page";
+import {WarehouseInViewPage} from "../page-v1/warehouse-in-view-page";
+import {MemberMergePackage} from "../page-v1/member-merge-package";
+import {MemberAddressCombinationPage} from "../page-v1/member-address-Combination-page";
+import {UserLoginPage, UserRegisterPage} from "../page/index";
+import {NaMobileTabBar} from "../page/demo/na-mobile-tabbar";
+import {IndexCompanyPage} from "../page-v1/index-company-page";
+import {IndexCostPage} from "../page-v1/index-cost-page";
+import {IndexHomePage} from "../page-v1/index-home-page";
+import MemberPage from "../page-v1/member-page";
 
-import {
-    DemoPage,
-    UserLoginPage,
-    NaMasterMainPage,
-    HomePage,
-    CostPage,
-    CompanyPage,
-    NaMobileTabBar,
-    MemberPage,
-    UserRegisterPage,
-    WarehouseInPage,
-    MemberAddressPage,
-    MemberAddressCombinationPage,
-    MemberDeliveredPage,
-    MemberMessageListPage,
-    MemberMyOrderPage,
-    MemberUserInformationPage,
-    MemberWaitPayPage,
-    MemberWarehouseInQueryPage,
-    MemberWelcomePage,
-    MemberMergePackage,
-    WarehouseInAddPage
-} from '../page';
-import {
-    MemberPage as MobileMemberPage,
-    MemberDetailPage,
-    CustomerServicePage,
-    MemberWelcomePage as MobileMemberWelcomePage
-} from '../page/mobile/index';
+import {MobileMemberPage} from "../page-v1/mobile-member-page";
+import MobileMemberDetailPage from "../page-v1/mobile-member-detail-page";
+import {MobileMemberWelcomePage} from "../page-v1/mobile-member-welcome-page";
+import {MobileCustomerServicePage} from "../page-v1/mobile-customer-service-page";
 
 
 const routerConfig = (
@@ -41,14 +37,14 @@ const routerConfig = (
         <Route path={PathConfig.EnzoDemoPage} component={FormControl.EnzoDemoPage}/>
         <Route path={PathConfig.DemoPage} component={DemoPage}/>
         <Route path={PathConfig.MasterPage} component={NaMasterMainPage}>
-            <IndexRoute component={HomePage}></IndexRoute>
-            <Route path={PathConfig.HomePage} component={HomePage}/>
-            <Route path={PathConfig.CostEstimatePage} component={CostPage}/>
-            <Route path={PathConfig.CompanyProfilePage} component={CompanyPage}/>
+            <IndexRoute component={IndexHomePage}></IndexRoute>
+            <Route path={PathConfig.HomePage} component={IndexHomePage}/>
+            <Route path={PathConfig.CostEstimatePage} component={IndexCostPage}/>
+            <Route path={PathConfig.CompanyProfilePage} component={IndexCompanyPage}/>
             <Route path={PathConfig.MobilePage} component={NaMobileTabBar}/>
             <Route path={MobilePathConfig.UserCenter} component={MobileMemberPage}/>
-            <Route path={MobilePathConfig.UserCenterDetail} component={MemberDetailPage}/>
-            <Route path={MobilePathConfig.UserHelper} component={CustomerServicePage}/>
+            <Route path={MobilePathConfig.UserCenterDetail} component={MobileMemberDetailPage}/>
+            <Route path={MobilePathConfig.UserHelper} component={MobileCustomerServicePage}/>
             <Route path={MobilePathConfig.UserHome} component={MobileMemberWelcomePage}/>
             <Route path={PathConfig.MemberIndexPage} component={MemberPage}>
                 <IndexRoute component={MemberWelcomePage}></IndexRoute>
@@ -62,6 +58,7 @@ const routerConfig = (
                 <Route path={PathConfig.MemberWarehouseInQueryPage} component={MemberWarehouseInQueryPage}/>
                 <Route path={PathConfig.WarehouseInPage} component={WarehouseInPage}/>
                 <Route path={PathConfig.WarehouseInAddPage} component={WarehouseInAddPage}/>
+                <Route path={PathConfig.WarehouseInViewPage} component={WarehouseInViewPage}/>
                 <Route path={PathConfig.MemberMergePackage} component={MemberMergePackage}/>
                 <Route path={PathConfig.MemberAddressCombinationPage} component={MemberAddressCombinationPage}/>
             </Route>
