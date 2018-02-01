@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
 import {Select, Spin, Input, Button, Form} from 'antd';
-
 const Option = Select.Option;
 import {Context, SelectType} from '../util/common';
 import {APINameSpace} from '../model/api';
 import {requestNameSpace} from '../model/request';
 import {SelectProps} from "antd/lib/select";
 import {hashHistory} from 'react-router';
+import {ModelNameSpace} from '../model/model';
 
 const FormItem = Form.Item;
 const {TextArea} = Input;

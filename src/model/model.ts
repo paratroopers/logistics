@@ -347,6 +347,26 @@ export  namespace  ModelNameSpace{
         xl = 4
     }
 
+    export  enum ButtonTypeEnum {
+        confirm = 1,
+        cancel = 2,
+        approve = 3,
+        reject = 4,
+        confirmApprove = 5,
+        package = 6,
+        export = 7,
+        delete = 8,
+        add = 9,
+        saveascontact =10,
+        choosecontact =11,
+        view = 12,
+        search = 13,
+        reset =14,
+        pay = 15
+
+    }
+
+
     //endregion
 
     //region 客户待打包定义区
