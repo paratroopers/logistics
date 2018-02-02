@@ -49,7 +49,6 @@ export  namespace FormControl{
     //region select 控件, Button控件
     export class FormSelectIndex extends React.Component<FormSelectIndexProps, FormSelectIndexStates> {
         lastFetchId: number;
-
         constructor(props, context) {
             super(props, context);
             this.lastFetchId = 0;
@@ -226,7 +225,7 @@ export  namespace FormControl{
             return (
                 <span>
         <Button type="primary" loading={this.state.loading}
-                onClick={this.enterLoading}>     <i className={icon} style={style}>{this.props.title}  </i> </Button>
+                onClick={this.enterLoading} htmlType="submit">     <i className={icon} style={style}>{this.props.title}  </i> </Button>
       </span>
             );
         }

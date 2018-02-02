@@ -12,6 +12,8 @@ import {ModelNameSpace} from '../model/model';
 const FormItem = Form.Item;
 const {TextArea} = Input;
 import  {MemberAddressPage} from './member-address-page';
+import  {MemberAddressAdd} from '../components-v1/member-address'
+
 
 
 export namespace FormControl {
@@ -41,7 +43,8 @@ export namespace FormControl {
         //   WrappedApp = Form.create()(MemberPageNameSpace.MemberAddressCombinationPage);
 
         render() {
-            return (<div><MemberAddressPage></MemberAddressPage>
+            const MemberAddressAddForm = Form.create()(MemberAddressAdd);
+            return (<div><MemberAddressAddForm ></MemberAddressAddForm>
             </div>);
         }
 

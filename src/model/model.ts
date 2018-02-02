@@ -65,22 +65,22 @@ export  namespace  ModelNameSpace{
         userInfo?: UserInfoModel;
     }
 
-    export interface  RecipientsAddressModel{
-        taxno:string;
-        companyName:string;
-        recipient:string;
-        country:string;
-        ID:string;
-        Userid:string;
-        ProvinceID:string;
-        City:string;
-        postalcode:string;
-        Tel:string;
-        Address:string;
-        Created:string;
-        Modified:string;
-        CreatedBy:string;
-        ModifiedBy:string;
+    export interface  AddressModel{
+        taxno?:string;
+        companyName?:string;
+        recipient?:string;
+        country?:string;
+        ID?:string;
+        Userid?:string;
+        ProvinceID?:string;
+        City?:string;
+        postalcode?:string;
+        Tel?:string;
+        Address?:string;
+        Created?:string;
+        Modified?:string;
+        CreatedBy?:string;
+        ModifiedBy?:string;
     }
 
     export interface  UserSearchModel{
