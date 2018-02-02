@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Select, Spin, Input, Button, Form} from 'antd';
+
 const Option = Select.Option;
 import {Context, SelectType} from '../util/common';
 import {APINameSpace} from '../model/api';
@@ -8,11 +9,12 @@ import {SelectProps} from "antd/lib/select";
 import {hashHistory} from 'react-router';
 import {ModelNameSpace} from '../model/model';
 import {isNullOrUndefined} from "util";
+
 const FormItem = Form.Item;
 const {TextArea} = Input;
-const  ButtonType = ModelNameSpace.ButtonTypeEnum;
+const ButtonType = ModelNameSpace.ButtonTypeEnum;
 
-export  namespace FormControl{
+export namespace FormControl {
 
 
     //region    属性  状态定义区
@@ -34,8 +36,8 @@ export  namespace FormControl{
         title: string;
         savingdata: () => boolean;
         type: ModelNameSpace.ButtonTypeEnum;
-        size?:any;
-        url?:any;
+        size?: any;
+        url?: any;
     }
 
 
@@ -49,6 +51,7 @@ export  namespace FormControl{
     //region select 控件, Button控件
     export class FormSelectIndex extends React.Component<FormSelectIndexProps, FormSelectIndexStates> {
         lastFetchId: number;
+
         constructor(props, context) {
             super(props, context);
             this.lastFetchId = 0;
@@ -152,12 +155,14 @@ export  namespace FormControl{
         }
 
     }
+
     export class FormButtonControl extends React.Component<FormButtonControlProps, FormButtonControlState> {
         constructor(props, context) {
             super(props, context);
             this.state = {loading: false};
         }
-        loadingIcon = ():string => {
+
+        loadingIcon = (): string => {
             if (this.props.type === ButtonType.confirm) {
                 return "icon-queding";
             } else if (this.props.type === ButtonType.cancel)
@@ -166,36 +171,36 @@ export  namespace FormControl{
                 return "icon-icon-";
             } else if (this.props.type === ButtonType.confirmApprove) {
                 return "icon-shengpi";
-            } else  if (this.props.type === ButtonType.approve){
+            } else if (this.props.type === ButtonType.approve) {
                 return "icon-shengpi";
-            }else  if(this.props.type === ButtonType.package){
+            } else if (this.props.type === ButtonType.package) {
                 return "icon-dabaocaiji";
             }
-            else  if(this.props.type === ButtonType.delete){
+            else if (this.props.type === ButtonType.delete) {
                 return "icon-105";
             }
-            else  if(this.props.type === ButtonType.add){
+            else if (this.props.type === ButtonType.add) {
                 return "icon-tianjia";
             }
-            else  if(this.props.type === ButtonType.saveascontact){
+            else if (this.props.type === ButtonType.saveascontact) {
                 return "icon-tianjialianxiren";
             }
-            else  if(this.props.type === ButtonType.choosecontact){
+            else if (this.props.type === ButtonType.choosecontact) {
                 return "icon-xuanzelianxiren";
             }
-            else  if(this.props.type === ButtonType.view){
+            else if (this.props.type === ButtonType.view) {
                 return "icon-chakan";
             }
-            else  if(this.props.type === ButtonType.search){
+            else if (this.props.type === ButtonType.search) {
                 return "icon-sousuo";
             }
-            else  if(this.props.type === ButtonType.reset){
+            else if (this.props.type === ButtonType.reset) {
                 return "icon-11zhongzhi";
             }
-            else  if(this.props.type === ButtonType.pay){
+            else if (this.props.type === ButtonType.pay) {
                 return "icon-shouye";
             }
-            else  if(this.props.type === ButtonType.export){
+            else if (this.props.type === ButtonType.export) {
                 return "icon-daochu";
             }
 
@@ -205,13 +210,13 @@ export  namespace FormControl{
             console.log(this.props.savingdata());
             if (this.props.savingdata()) {
                 this.cancelLoading();
-                if (!isNullOrUndefined(this.props.url)){
+                if (!isNullOrUndefined(this.props.url)) {
                     hashHistory.push(this.props.url);
                 }
                 else {
                     hashHistory.goBack();
                 }
-             //   hashHistory.push({pathname: obj.key});
+                //   hashHistory.push({pathname: obj.key});
             }
 
         }
@@ -219,13 +224,15 @@ export  namespace FormControl{
 
             this.setState({loading: false});
         }
+
         render() {
             const style = this.props.size ? {fontSize: this.props.size} : {};
-            const  icon = Context.getIconClassName(this.loadingIcon().toString());
+            const icon = Context.getIconClassName(this.loadingIcon().toString());
             return (
                 <span>
         <Button type="primary" loading={this.state.loading}
-                onClick={this.enterLoading} htmlType="submit">     <i className={icon} style={style}>{this.props.title}  </i> </Button>
+                onClick={this.enterLoading} htmlType="submit">
+            <i className={icon} style={style}>{this.props.title}  </i> </Button>
       </span>
             );
         }
