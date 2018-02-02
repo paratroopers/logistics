@@ -1,9 +1,11 @@
+import {ModelNameSpace} from './model';
+import {Util} from '../util/util';
 
-import  {ModelNameSpace} from './model';
-
-export  namespace  requestNameSpace {
+export namespace requestNameSpace {
 
     //region 基类定义区
+    import Guid = SP.Guid;
+
     export interface BaseListRequest {
         pageIndex: number;
         pageSize: number;
@@ -15,38 +17,42 @@ export  namespace  requestNameSpace {
     //region 用户或者会员模块定义区
 
     /** 验证账号是否已经注册*/
-    export  interface  GetRecipientsAddressRequest{
-        id:string;
-    }
-    export  interface InsertRecipientsAddressRequest{
-        country:string;
-        recipient:string;
-        City:string;
-        postalcode:string;
-        Tel:string;
-        taxno:string;
-        companyName:string;
-        Address:string;
+    export interface GetRecipientsAddressRequest {
+        id: string;
     }
 
-    export  interface UpdateRecipientsAddressRequest{
-        id:string;
-        country:string;
-        recipient:string;
-        City:string;
-        postalcode:string;
-        Tel:string;
-        taxno:string;
-        companyName:string;
-        Address:string;
+    export interface InsertRecipientsAddressRequest {
+        country: string;
+        recipient: string;
+        City: string;
+        postalcode: string;
+        Tel: string;
+        taxno: string;
+        companyName: string;
+        Address: string;
     }
-    export  interface DeleteRecipientsAddressRequest {
-        id :string;
+
+    export interface UpdateRecipientsAddressRequest {
+        id: string;
+        country: string;
+        recipient: string;
+        City: string;
+        postalcode: string;
+        Tel: string;
+        taxno: string;
+        companyName: string;
+        Address: string;
     }
-    export interface AccountValidateRequest{
-        user?:string;
+
+    export interface DeleteRecipientsAddressRequest {
+        id: string;
+    }
+
+    export interface AccountValidateRequest {
+        user?: string;
         tenantID?: string;
     }
+
     export interface LoginRequest {
         user: string;
         pwd: string;
@@ -59,11 +65,10 @@ export  namespace  requestNameSpace {
         code?: string;
     }
 
-    export  interface UserSearchIndexRequest {
-        name:string;
-        type:number;
+    export interface UserSearchIndexRequest {
+        name: string;
+        type: number;
     }
-
 
 
     //endregion
@@ -88,8 +93,6 @@ export  namespace  requestNameSpace {
     }
 
 
-
-
     //endregion
 
     //region 报价定义区
@@ -101,27 +104,26 @@ export  namespace  requestNameSpace {
         request: CountryModal;
     }
 
-    export  interface  QuotationModel{
-        country?:string,
-        weight?:string,
-        length?:string,
-        width?:string,
-        height?:string
+    export interface QuotationModel {
+        country?: string,
+        weight?: string,
+        length?: string,
+        width?: string,
+        height?: string
     }
 
-    export interface  QuotationRequest{
-        request:QuotationModel;
+    export interface QuotationRequest {
+        request: QuotationModel;
     }
-
 
 
     //endregion
 
     //region 仓库入库，打包，出库定义区
     export interface GetWarehouseInListRequest {
-        type:ModelNameSpace.OrderTypeEnum;
-        pageIndex:number;
-        pageSize:number;
+        type: ModelNameSpace.OrderTypeEnum;
+        pageIndex: number;
+        pageSize: number;
     }
 
     export interface WarehouseInAddRequest {
@@ -154,16 +156,57 @@ export  namespace  requestNameSpace {
         /** 入库状态*/
         InWareHouseStatus: string,
         /** 备注*/
-        WarehouseAdminRemark:string
+        WarehouseAdminRemark: string
     }
+
     export interface CustomerOrdersRequest extends BaseListRequest {
         type: number;
     }
 
-    export  interface OrderSearchIndexRequest{
-        name:string;
-        type:number;
+    export interface OrderSearchIndexRequest {
+        name: string;
+        type: number;
     }
+
+    export interface OrderMergeCustomerOrderListModel {
+        customerOrderID?: string;
+    }
+
+    export class OrderMergeProductListModel {
+        constructor() {
+            this.productName = "";
+            this.productNameEN = "";
+            this.HSCode = "美元";
+            this.declareUnitPrice = 0;
+            this.count = 0;
+            this.ID = Util.guid();
+        }
+
+        ID?: string;
+        productName?: string;
+        productNameEN?: string;
+        HSCode?: string;
+        declareUnitPrice?: number;
+        count?: number;
+    }
+
+    export interface OrderMergeRequest {
+        userid?: string;
+        CustomerMark?: string;
+        CustomerChooseChannelID?: string;
+        recipient?: string;
+        country?: string;
+        address?: string;
+        city?: string;
+        code?: string;
+        tel?: string;
+        company?: string;
+        taxNo?: string;
+        customerOrderList?: OrderMergeCustomerOrderListModel[];
+        productList?: OrderMergeProductListModel[];
+        TenantID?: string;
+    }
+
     //endregion
 
     //region 客户待打包定义区

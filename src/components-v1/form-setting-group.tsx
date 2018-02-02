@@ -5,6 +5,7 @@ export interface FormSettingGroupProps {
     title?: string;
     size?: number;
     span?: number;
+    header?: JSX.Element;
     footer?: JSX.Element;
     loading?: boolean;
 }
@@ -14,11 +15,21 @@ export interface FormSettingGroupStates {
 }
 
 export class FormSettingGroup extends React.Component<FormSettingGroupProps, FormSettingGroupStates> {
+
+    renderTitle() {
+        const {props: {title, header}} = this;
+        return <div className="header-title">
+            <span>{title}</span>
+            <div className="header-button">{header}</div>
+        </div>
+    }
+
     render() {
-        const {props: {title, size, span, footer, loading}} = this;
+        const {props: {size, span, footer, loading}} = this;
         return <Spin spinning={(loading === true)}>
             <Collapse className="form-control-group" defaultActiveKey={['1']}>
-                <Collapse.Panel key="1" header={title} style={{fontSize: size}} showArrow={false} className="panel">
+                <Collapse.Panel key="1" header={this.renderTitle()} style={{fontSize: size}} showArrow={false}
+                                className="panel">
                     <Row>
                         {!loading ?
                             [

@@ -1,9 +1,9 @@
-export  namespace  ModelNameSpace{
+export namespace ModelNameSpace {
 
     //region 基类定义区
     /** 基础类*/
     export interface BaseModel {
-        TenantID?:string;
+        TenantID?: string;
         CreatedBy?: string;
         ModifiedBy?: string;
         Created?: Date;
@@ -30,6 +30,7 @@ export  namespace  ModelNameSpace{
         parentItem?: UserNavigationsChildrenModel;
         childItems?: UserNavigationsChildrenModel[];
     }
+
     export interface UserNavigationsChildrenModel extends BaseModel {
         ID?: number;
         Name_CN?: string;
@@ -59,39 +60,40 @@ export  namespace  ModelNameSpace{
         LastLoginTime?: string
         Ticket?: string;
     }
+
     export interface UserModel {
         navigations?: UserNavigationsModel[];
         role?: UserRoleModel;
         userInfo?: UserInfoModel;
     }
 
-    export interface  AddressModel{
-        taxno?:string;
-        companyName?:string;
-        recipient?:string;
-        country?:string;
-        ID?:string;
-        Userid?:string;
-        ProvinceID?:string;
-        City?:string;
-        postalcode?:string;
-        Tel?:string;
-        Address?:string;
-        Created?:string;
-        Modified?:string;
-        CreatedBy?:string;
-        ModifiedBy?:string;
+    export interface AddressModel {
+        taxno?: string;
+        companyName?: string;
+        recipient?: string;
+        country?: string;
+        ID?: string;
+        Userid?: string;
+        ProvinceID?: string;
+        City?: string;
+        postalcode?: string;
+        Tel?: string;
+        Address?: string;
+        Created?: string;
+        Modified?: string;
+        CreatedBy?: string;
+        ModifiedBy?: string;
     }
 
-    export interface  UserSearchModel{
-        name:string;
-        type:number;
+    export interface UserSearchModel {
+        name: string;
+        type: number;
     }
 
 
-    export  interface UserSearchIndexRequest {
-        name:string;
-        type:number;
+    export interface UserSearchIndexRequest {
+        name: string;
+        type: number;
     }
 
     //endregion
@@ -119,8 +121,6 @@ export  namespace  ModelNameSpace{
         defaultLocale?: string;
         defaultFormats?: Object;
     }
-
-
 
 
     //endregion
@@ -153,8 +153,8 @@ export  namespace  ModelNameSpace{
         channelID?: string;
         channelName?: string;
         weight?: number;
-        WeightLimit?:string,
-        SizeLimit?:string
+        WeightLimit?: string,
+        SizeLimit?: string
     }
 
 
@@ -167,8 +167,8 @@ export  namespace  ModelNameSpace{
         channelID?: string;
         channelName?: string;
         weight?: number;
-        WeightLimit?:string,
-        SizeLimit?:string
+        WeightLimit?: string,
+        SizeLimit?: string
     }
 
     export interface QuotationModel {
@@ -180,18 +180,14 @@ export  namespace  ModelNameSpace{
         channelID?: string;
         channelName?: string;
         weight?: number;
-        WeightLimit?:string,
-        SizeLimit?:string
+        WeightLimit?: string,
+        SizeLimit?: string
     }
-
 
 
     //endregion
 
     //region 用户或者会员模块定义区
-
-
-
 
 
     //endregion
@@ -205,6 +201,7 @@ export  namespace  ModelNameSpace{
         path?: string;
         customerOrderID?: string;
     }
+
     /** 新建入库*/
     export interface WarehouseInModel extends BaseModel {
         /** 会员号*/
@@ -228,6 +225,7 @@ export  namespace  ModelNameSpace{
         /** 附件*/
         Attachment?: Attachment[];
     }
+
     /** 入库列表*/
     export interface WarehouseListModel extends BaseModel {
         /** 主键*/
@@ -267,7 +265,7 @@ export  namespace  ModelNameSpace{
         /** 客服名称*/
         CustomerServiceName?:string;
         /** 会员编号*/
-        MemeberCode?:string;
+        MemeberCode?: string;
         /** 状态编号*/
         currentStatus?:string;
         /** 状态名称*/
@@ -281,6 +279,7 @@ export  namespace  ModelNameSpace{
         waitForCustomerPackgeCount?: number;
         waitForPayCount?: number;
     }
+
     export interface CustomerOrderModel extends BaseModel {
         CustomerOrderNo?: string;
         CustomerServiceID?: string;
@@ -299,6 +298,7 @@ export  namespace  ModelNameSpace{
         expressTypeName?: string;
         userid?: string;
     }
+
     //endregion
 
     //region 泛型定义区
@@ -325,13 +325,13 @@ export  namespace  ModelNameSpace{
     }
 
     /** 注册类型*/
-    export enum RegisterEnum{
+    export enum RegisterEnum {
         phone = 0,
         mail = 1
     }
 
     /** 订单类型*/
-    export enum OrderTypeEnum{
+    export enum OrderTypeEnum {
         /** 仓库入库*/
         WarehouseIn = 0,
         /** 客服确认阶段*/
@@ -345,7 +345,7 @@ export  namespace  ModelNameSpace{
     }
 
     /** 屏幕尺寸*/
-    export enum ScreenModeEnum{
+    export enum ScreenModeEnum {
         xs = 0,
         sm = 1,
         md = 2,
@@ -363,11 +363,11 @@ export  namespace  ModelNameSpace{
         export = 7,
         delete = 8,
         add = 9,
-        saveascontact =10,
-        choosecontact =11,
+        saveascontact = 10,
+        choosecontact = 11,
         view = 12,
         search = 13,
-        reset =14,
+        reset = 14,
         pay = 15
 
     }
