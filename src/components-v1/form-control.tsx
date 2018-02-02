@@ -7,6 +7,7 @@ import {requestNameSpace} from '../model/request';
 import {SelectProps} from "antd/lib/select";
 import {hashHistory} from 'react-router';
 import {ModelNameSpace} from '../model/model';
+import {isNullOrUndefined} from "util";
 const FormItem = Form.Item;
 const {TextArea} = Input;
 const  ButtonType = ModelNameSpace.ButtonTypeEnum;
@@ -34,6 +35,7 @@ export  namespace FormControl{
         savingdata: () => boolean;
         type: ModelNameSpace.ButtonTypeEnum;
         size?:any;
+        url?:any;
     }
 
 
@@ -204,7 +206,13 @@ export  namespace FormControl{
             console.log(this.props.savingdata());
             if (this.props.savingdata()) {
                 this.cancelLoading();
-                hashHistory.goBack();
+                if (!isNullOrUndefined(this.props.url)){
+                    hashHistory.push(this.props.url);
+                }
+                else {
+                    hashHistory.goBack();
+                }
+             //   hashHistory.push({pathname: obj.key});
             }
 
         }
