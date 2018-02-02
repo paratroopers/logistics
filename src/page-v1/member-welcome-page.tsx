@@ -5,7 +5,7 @@ import {Row, Col, Avatar, Card, Icon, Tooltip} from "antd";
 import {Global, Context} from '../util/common';
 import {CommonLocale} from '../locales/localeid';
 import * as moment from 'moment';
-import {MemberWelcomeTab} from "../components/controls/member/member-welcome-tab";
+import {MemberWelcomeTab} from "../components-v1/member-welcome-tab";
 import {FormMessageList} from '../components-v1/form-message-list';
 import {FormSteps} from '../components-v1/form-steps';
 import {CustomerserviceDropdown} from '../components-v1/customer-service-dropdown';

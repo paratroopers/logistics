@@ -2,7 +2,7 @@ import * as React from "react";
 import {Component} from "react";
 import {withRouter} from "react-router";
 import {MotionHeaderImage} from '../components-v1/index-header-image';
-import MotionBannerControl from "../components/controls/index/index-banner";
+import MotionBannerControl from "../components-v1/index-banner";
 import MotionContentAControl from "../components-v1/index-content-a";
 import MotionContentBControl from "../components-v1//index-content-b";
 

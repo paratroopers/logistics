@@ -18,9 +18,10 @@ import {WarehouseInPage} from "../page-v1/warehouse-in-page";
 import {WarehouseInAddPage} from "../page-v1/warehouse-in-add-page";
 import {WarehouseInViewPage} from "../page-v1/warehouse-in-view-page";
 import {MemberMergePackage} from "../page-v1/member-merge-package";
-import {MemberAddressCombinationPage} from "../page-v1/member-address-Combination-page";
-import {UserLoginPage, UserRegisterPage} from "../page/index";
-import {NaMobileTabBar} from "../page/demo/na-mobile-tabbar";
+ // import {UserLoginPage, UserRegisterPage} from "../page-v1/index";
+ import  UserLoginPage from '../page-v1/user-login-page';
+import  UserRegisterPage from '../page-v1/user-register-page';
+ // import {NaMobileTabBar} from "../page-v1/na-mobile-tabbar";
 import {IndexCompanyPage} from "../page-v1/index-company-page";
 import {IndexCostPage} from "../page-v1/index-cost-page";
 import {IndexHomePage} from "../page-v1/index-home-page";
@@ -41,7 +42,7 @@ const routerConfig = (
             <Route path={PathConfig.HomePage} component={IndexHomePage}/>
             <Route path={PathConfig.CostEstimatePage} component={IndexCostPage}/>
             <Route path={PathConfig.CompanyProfilePage} component={IndexCompanyPage}/>
-            <Route path={PathConfig.MobilePage} component={NaMobileTabBar}/>
+            {/*<Route path={PathConfig.MobilePage} component={NaMobileTabBar}/>*/}
             <Route path={MobilePathConfig.UserCenter} component={MobileMemberPage}/>
             <Route path={MobilePathConfig.UserCenterDetail} component={MobileMemberDetailPage}/>
             <Route path={MobilePathConfig.UserHelper} component={MobileCustomerServicePage}/>
@@ -60,7 +61,7 @@ const routerConfig = (
                 <Route path={PathConfig.WarehouseInAddPage} component={WarehouseInAddPage}/>
                 <Route path={PathConfig.WarehouseInViewPage} component={WarehouseInViewPage}/>
                 <Route path={PathConfig.MemberMergePackage} component={MemberMergePackage}/>
-                <Route path={PathConfig.MemberAddressCombinationPage} component={MemberAddressCombinationPage}/>
+
             </Route>
         </Route>
         <Route path={PathConfig.LoginPage} component={UserLoginPage}/>

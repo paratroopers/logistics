@@ -3,7 +3,7 @@ import * as Mock from "mockjs";
 import * as moment from "moment";
 import {BaseRequestParam, BaseResponse, Global, Constants, Context} from './common';
 import {CommonLocale} from "../locales/localeid";
-import {Notification} from "../components/controls/common/notification";
+import {Notification} from "../components-v1/notification";
 import {message} from 'antd';
 import {PathConfig} from '../config/pathconfig';
 import { hashHistory} from "react-router";
