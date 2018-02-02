@@ -40,6 +40,7 @@ export class PathConfig {
     /** 订单入库-新增*/
     static WarehouseInAddPage = "/warehouse/in/add";
     static WarehouseInViewPage = "/warehouse/in/view";
+    static WarehouseInEditPage = "/warehouse/in/edit";
     static WarehousePackage = "/warehouse/package";
     static WarehouseDeliver = "/warehouse/deliver";
     /** 客服*/

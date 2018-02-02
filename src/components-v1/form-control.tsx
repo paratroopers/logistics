@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Select, Spin, Input, Button, Form} from 'antd';
+import {Select, Spin, Button} from 'antd';
 const Option = Select.Option;
 import {Context, SelectType} from '../util/common';
 import {APINameSpace} from '../model/api';
@@ -7,10 +7,9 @@ import {requestNameSpace} from '../model/request';
 import {SelectProps} from "antd/lib/select";
 import {hashHistory} from 'react-router';
 import {ModelNameSpace} from '../model/model';
-import {isNullOrUndefined} from "util";
-const FormItem = Form.Item;
-const {TextArea} = Input;
+import {isArray, isNullOrUndefined} from "util";
 const  ButtonType = ModelNameSpace.ButtonTypeEnum;
+import {LabeledValue} from "antd/lib/select";
 
 export  namespace FormControl{
 
@@ -20,15 +19,14 @@ export  namespace FormControl{
     export interface FormSelectIndexProps extends SelectProps {
         placeholder: string;
         type: SelectType;
+        readonly?:boolean;
+        value?:LabeledValue;
     }
 
     export interface FormSelectIndexStates {
         data: any[];
-        value?: string[];
-        fetching?: boolean,
-
+        fetching?: boolean
     }
-
 
     interface FormButtonControlProps {
         title: string;
@@ -49,12 +47,12 @@ export  namespace FormControl{
     //region select 控件, Button控件
     export class FormSelectIndex extends React.Component<FormSelectIndexProps, FormSelectIndexStates> {
         lastFetchId: number;
+
         constructor(props, context) {
             super(props, context);
             this.lastFetchId = 0;
             this.state = {
                 data: [],
-                value: [],
                 fetching: false,
             }
         }
@@ -124,17 +122,16 @@ export  namespace FormControl{
 
         handleChange = (value) => {
             this.setState({
-                value,
                 data: [],
                 fetching: false,
             });
             this.props.onChange(value);
         }
 
-
         render() {
-            const {fetching, data, value} = this.state;
-            return (
+            const topThis = this;
+            const {props: {value}, state: {fetching, data}} = topThis;
+            return !this.props.readonly ?
                 <Select
                     mode="multiple"
                     labelInValue
@@ -148,10 +145,11 @@ export  namespace FormControl{
                 >
                     {data.map(d => <Option key={d.value}>{d.text}</Option>)}
                 </Select>
-            );
+                :
+                <label>{isArray(value) ? value.map(item => item.label + ";") : (!isNullOrUndefined(value) ? value.label : "")}</label>;
         }
-
     }
+
     export class FormButtonControl extends React.Component<FormButtonControlProps, FormButtonControlState> {
         constructor(props, context) {
             super(props, context);

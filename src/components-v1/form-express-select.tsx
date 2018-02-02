@@ -9,7 +9,10 @@ import {isNullOrUndefined} from "util";
 const Option = Select.Option;
 import {APINameSpace} from '../model/api';
 
-interface FormExpressSelectProps extends SelectProps{}
+interface FormExpressSelectProps extends SelectProps {
+    readonly?: boolean;
+    value?: LabeledValue
+}
 
 interface FormExpressSelectStates {
     selectData?:LabeledValue[]
@@ -58,9 +61,9 @@ export class FormExpressSelect extends React.Component<FormExpressSelectProps, F
 
     render() {
         const topThis = this;
-        const {props:{...otherProps}} = topThis;
-        return <Select labelInValue {...otherProps} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+        const {props:{readonly,value,...otherProps}} = topThis;
+        return !readonly ?<Select labelInValue value={value} {...otherProps} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0}>
             {topThis.renderOption()}
-        </Select>;
+        </Select>:<label>{!isNullOrUndefined(value)?value.label:""}</label>;
     }
 }

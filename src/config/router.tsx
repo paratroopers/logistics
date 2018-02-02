@@ -1,9 +1,6 @@
 import * as React from 'react';
 import {Router, Route, hashHistory, IndexRoute} from 'react-router';
 import {PathConfig, MobilePathConfig} from './pathconfig';
-
-/// <reference path="../page/demo/enzodemo.tsx" />
-import {FormControl} from '../page-v1/enzodemo';
 import {DemoPage} from "../page-v1/demo";
 import {NaMasterMainPage} from "../page-v1/master-main-page";
 import {MemberWelcomePage} from "../page-v1/member-welcome-page";
@@ -17,11 +14,10 @@ import {MemberWarehouseInQueryPage} from "../page-v1/member-warehouse-in-query-p
 import {WarehouseInPage} from "../page-v1/warehouse-in-page";
 import {WarehouseInAddPage} from "../page-v1/warehouse-in-add-page";
 import {WarehouseInViewPage} from "../page-v1/warehouse-in-view-page";
+import {WarehouseInEditPage} from "../page-v1/warehouse-in-edit-page";
 import {MemberMergePackage} from "../page-v1/member-merge-package";
- // import {UserLoginPage, UserRegisterPage} from "../page-v1/index";
- import  UserLoginPage from '../page-v1/user-login-page';
+import  UserLoginPage from '../page-v1/user-login-page';
 import  UserRegisterPage from '../page-v1/user-register-page';
- // import {NaMobileTabBar} from "../page-v1/na-mobile-tabbar";
 import {IndexCompanyPage} from "../page-v1/index-company-page";
 import {IndexCostPage} from "../page-v1/index-cost-page";
 import {IndexHomePage} from "../page-v1/index-home-page";
@@ -35,7 +31,7 @@ import {MobileCustomerServicePage} from "../page-v1/mobile-customer-service-page
 
 const routerConfig = (
     <Router history={hashHistory}>
-        <Route path={PathConfig.EnzoDemoPage} component={FormControl.EnzoDemoPage}/>
+        {/*<Route path={PathConfig.EnzoDemoPage} component={FormControl.EnzoDemoPage}/>*/}
         <Route path={PathConfig.DemoPage} component={DemoPage}/>
         <Route path={PathConfig.MasterPage} component={NaMasterMainPage}>
             <IndexRoute component={IndexHomePage}></IndexRoute>
@@ -60,6 +56,7 @@ const routerConfig = (
                 <Route path={PathConfig.WarehouseInPage} component={WarehouseInPage}/>
                 <Route path={PathConfig.WarehouseInAddPage} component={WarehouseInAddPage}/>
                 <Route path={PathConfig.WarehouseInViewPage} component={WarehouseInViewPage}/>
+                <Route path={PathConfig.WarehouseInEditPage} component={WarehouseInEditPage}/>
                 <Route path={PathConfig.MemberMergePackage} component={MemberMergePackage}/>
 
             </Route>

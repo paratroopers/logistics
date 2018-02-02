@@ -1,24 +1,9 @@
 import * as React from 'react';
-import {withRouter,hashHistory,Link} from 'react-router';
+import {withRouter,hashHistory} from 'react-router';
 import {Row, Col, Button, Icon, Table, Alert} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
-// import {ContentHeaderControl}from "../components-v1/common-content-header-control";
-// import {SelectType} from "../../../util/common";
-// import {FormControl} from '../../demo/enzodemo';
 import {DatePicker} from "antd";
 const { RangePicker } = DatePicker;
-// import {FormAdvancedItemModel} from "../../../components/form/form-advanced-search";
-// import {WarehouseAPI}from "../../../api/admin";
-// import {GetWarehouseInListRequest}from "../../../api/model/request/admin";
-// import {GetWarehouseInListResponse}from "../../../api/model/response/admin";
-// import {OrderTypeEnum}from "../../../api/model/common";
-
-// import {requestNameSpace} from '../../../model/request';
-// import {ModelNameSpace} from '../../../model/model';
-// import {APINameSpace} from '../../../model/api';
-// import {ResponseNameSpace} from '../../../model/response';
-
-
 import {ColumnProps} from 'antd/lib/table';
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
@@ -27,14 +12,14 @@ import {PathConfig} from "../config/pathconfig";
 import {FormWarehouseSelect} from "../components-v1/form-warehouse-select";
 import {FormExpressSelect} from "../components-v1/form-express-select";
 import {SelectType} from "../util/common";
-import {FormControl} from "./enzodemo";
+import {FormControl} from "../components-v1/form-control";
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import {ResponseNameSpace} from "../model/response";
 import {FormStatusSelect} from "../components-v1/form-status-select";
 import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import {APINameSpace} from "../model/api";
-
-// import {PathConfig}from "../../../config/pathconfig";
+import {ClickParam} from "antd/lib/menu";
+import {FormTableOperation,FormTableOperationModel} from "../components-v1/form-table-operation";
 
 interface WarehouseInPageProps {
 
@@ -135,10 +120,10 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             dataIndex: 'expressNo'
         }, {
             title: "客服",
-            dataIndex: 'CustomerServiceID'
+            dataIndex: 'CustomerServiceName'
         }, {
             title: "仓库",
-            dataIndex: 'WareHouseID'
+            dataIndex: 'WareHouseName'
         }, {
             title: "初始体积(c㎡)",
             dataIndex: 'InVolume',
@@ -149,9 +134,6 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             title: "初始重量",
             dataIndex: 'InWeight'
         }, {
-            title: "入库人",
-            dataIndex: 'CreatedBy'
-        }, {
             title: "状态",
             dataIndex: 'currentStep'
         }, {
@@ -161,8 +143,22 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             title: '操作',
             fixed: 'right',
             render: (val, record, index) => {
-                /** 传值到查看页面*/
-                return <Link to={{pathname:PathConfig.WarehouseInViewPage,state:record}}>查看</Link>;
+                const menu:FormTableOperationModel[]=[
+                    {
+                        key: PathConfig.WarehouseInViewPage,
+                        type: "search",
+                        label: "查看"
+                    },
+                    {
+                        key: PathConfig.WarehouseInEditPage,
+                        type: "edit",
+                        label: "编辑"
+                    }
+                ]
+
+                return <FormTableOperation onClick={(param:ClickParam)=>{
+                    hashHistory.push({pathname:param.key,state:record});
+                }} value={menu}></FormTableOperation>;
             }
         }];
 

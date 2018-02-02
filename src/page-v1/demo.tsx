@@ -1,17 +1,15 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
-import {Row,Input,DatePicker} from "antd";
+import {Row,DatePicker} from "antd";
 const { RangePicker } = DatePicker;
 // import {FormAdvancedSearch,FormStatusSelect,FormExpressSelect,FormWarehouseSelect,FormCollapse} from "../../components/form/index";
 
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
-import {FormControl} from './enzodemo';
 import  {SelectType} from '../util/common';
 import {FormCollapse} from "../components-v1/form-collapse";
 import {FormStatusSelect} from "../components-v1/form-status-select";
 import {FormExpressSelect} from "../components-v1/form-express-select";
 import {FormWarehouseSelect} from "../components-v1/form-warehouse-select";
-import FormAdvancedSearch from "../components-v1/form-warehouse-select";
 
 interface DemoStates {
 
@@ -50,41 +48,12 @@ export class DemoPage extends React.Component<DemoProps, DemoStates> {
                 fieldName: "D",
                 displayName:"时间范围",
                 control: <RangePicker></RangePicker>
-            },{
-                defaultDisplay: false,
-                fieldName: "H",
-                displayName:"会员",
-                control: <FormControl.FormSelectIndex type={SelectType.Member} placeholder="搜索会员"/>
-            },{
-                defaultDisplay: false,
-                fieldName: "I",
-                displayName:"客服",
-                control: <FormControl.FormSelectIndex type={SelectType.CustomerService} placeholder="搜索客服"/>
-            },
-            {
-                defaultDisplay: false,
-                fieldName: "I",
-                displayName:"仓库管理员",
-                control: <FormControl.FormSelectIndex type={SelectType.WarehouseAdmin} placeholder="搜索仓库管理员"/>
-            },
-            {
-                defaultDisplay: false,
-                fieldName: "J",
-                displayName:"客服订单号",
-                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客服订单号"/>
-            },
-            {
-                defaultDisplay: false,
-                fieldName: "K",
-                displayName:"快递单号",
-                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="搜索快递单号"/>
             }
         ];
         return items;
     }
 
     render() {
-        const topThis = this;
         return <Row className="demo-page">
             <FormCollapse>
                 {/*<FormAdvancedSearch formAdvancedItems={topThis.renderFormAdvancedItems()} onClickSearch={(values) => {*/}

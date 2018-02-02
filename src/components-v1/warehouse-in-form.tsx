@@ -4,22 +4,20 @@ import {Form, Button, Row, Col,InputNumber,Input} from 'antd';
 const FormItem=Form.Item;
 const { TextArea } = Input;
 import {FormComponentProps} from 'antd/lib/form/Form';
-import {FormControl} from '../page-v1/enzodemo';
+import {FormControl} from '../components-v1/form-control';
 import {SelectType} from "../util/common";
-// import {FormStatusSelect,FormExpressSelect,FormWarehouseSelect} from "./index";
 import {ModelNameSpace} from '../model/model';
-import {isNullOrUndefined} from "util";
 import {FormExpressSelect} from "./form-express-select";
 import {FormWarehouseSelect} from "./form-warehouse-select";
 import {FormStatusSelect} from "./form-status-select";
+import {FormInput} from "./form-input";
+import {FormInputNumber} from "./form-input-number";
 
 export interface WarehouseInFormProps extends FormComponentProps {
     /** 点击提交*/
     onSubmit?: (values: any) => void;
     /** Data*/
     Data?: ModelNameSpace.WarehouseListModel;
-    /** 是否全部只读*/
-    readOnly?: boolean;
     /** 类型*/
     type?: 'add' | 'edit' | 'view'
 }
@@ -45,31 +43,59 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
             }
         });
     }
-    
+
     componentDidMount() {
         const topThis = this;
         const {props: {Data, type, form: {setFieldsValue}}} = topThis;
         switch (type) {
             case "view":
                 setFieldsValue({
-                    expressType: {key: Data.expressTypeID, label: Data.expressTypeName}
-                });
-                break;
-            case "edit":
-                setFieldsValue({
-                    user: Data.userid,
+                    /** 会员*/
+                    user: {key: Data.userid, label: Data.MemeberCode},
+                    /** 快递方式*/
                     expressType: {key: Data.expressTypeID, label: Data.expressTypeName},
-                    expressNo: "",
-                    customerService: Data.CustomerServiceID,
-                    wareHouse: Data.WareHouseID,
+                    expressNo: Data.expressNo,
+                    /** 入库状态*/
                     inWareHouseStatus: Data.currentStatus,
+                    /** 件数*/
                     inPackageCount: Data.InPackageCount,
                     inWeight: Data.InWeight,
                     inLength: Data.InLength,
                     inWidth: Data.InWidth,
                     inHeight: Data.InHeight,
+                    /** 交接单*/
                     transferNo: Data.TransferNo,
-                    warehouseAdminRemark: ""
+                    /** 备注*/
+                    warehouseAdminRemark: Data.WarehouseAdminRemark,
+                    /** 客服*/
+                    customerService: {key: Data.CustomerServiceID, label: Data.CustomerServiceName},
+                    /** 仓库*/
+                    wareHouse: {key: Data.WareHouseID, label: Data.WareHouseName}
+                });
+                break;
+            case "edit":
+                setFieldsValue({
+                    /** 会员*/
+                    user: {key: Data.userid, label: Data.MemeberCode},
+                    /** 快递方式*/
+                    expressType: {key: Data.expressTypeID, label: Data.expressTypeName},
+                    expressNo: Data.expressNo,
+                    /** 入库状态*/
+                    inWareHouseStatus: Data.currentStatus,
+                    /** 件数*/
+                    inPackageCount: Data.InPackageCount,
+                    inWeight: Data.InWeight,
+                    inLength: Data.InLength,
+                    inWidth: Data.InWidth,
+                    inHeight: Data.InHeight,
+                    /** 交接单*/
+                    transferNo: Data.TransferNo,
+                    /** 备注*/
+                    warehouseAdminRemark: Data.WarehouseAdminRemark,
+                    /** 客服*/
+                    customerService: {key: Data.CustomerServiceID, label: Data.CustomerServiceName},
+                    /** 仓库*/
+                    wareHouse: {key: Data.WareHouseID, label: Data.WareHouseName}
                 });
                 break;
             default:
@@ -79,99 +105,118 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
 
     render() {
         const topThis = this;
-        const {props: {form: {getFieldDecorator}}} = topThis;
+        const {props: {form: {getFieldDecorator}, type}} = topThis;
+
+        /** 控件栅格*/
         const spanLayout = {
             xs: 24,
             sm: 12,
-            md: 12,
-            lg: 8,
-            xl: 8
+            md: 8
         }
 
+        /** 是否必填*/
+        const required = type === "view" ? false : true;
+
+        /** 是否只读*/
+        const readonly = type === "view" ? true : false;
+
+        /** 表单布局*/
+        const formLayout = type === "view" ? "horizontal" : "vertical";
+        const formItemLayout = formLayout === 'horizontal' ? {
+            labelCol: {span: 6},
+            wrapperCol: {span: 14},
+        } : null;
+
         return (
-            <Form className="warehouse-in-add-form" layout={"vertical"}
+            <Form className="warehouse-in-add-form" layout={formLayout}
                   onSubmit={topThis.onSubmit.bind(this)}>
                 <Row gutter={16}>
                     <Col {...spanLayout}>
-                        <FormItem label={"会员"}>
+                        <FormItem {...formItemLayout} label={"会员"}>
                             {getFieldDecorator("user", {
-                                rules: [{required: true, message: '请选择会员!'}],
-                            })(<FormControl.FormSelectIndex type={SelectType.Member} placeholder="会员"/>)}
+                                rules: [{required: required, message: '请选择会员!'}],
+                            })(<FormControl.FormSelectIndex readonly={readonly} type={SelectType.Member}
+                                                            placeholder="会员"/>)}
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>
-                        <FormItem label={"物流方式"}>
+                        <FormItem {...formItemLayout} label={"快递方式"}>
                             {getFieldDecorator("expressType", {
-                                rules: [{required: true, message: '请选择物流方式!'}],
-                            })(<FormExpressSelect placeholder="物流方式"></FormExpressSelect>)}
+                                rules: [{required: required, message: '请选择快递方式!'}],
+                            })(<FormExpressSelect readonly={readonly} placeholder="快递方式"></FormExpressSelect>)}
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>
-                        <FormItem label={"快递单号"}>
+                        <FormItem {...formItemLayout} label={"快递单号"}>
                             {getFieldDecorator("expressNo", {
-                                rules: [{required: true, message: '请选择快递单号!'}],
-                            })(<Input placeholder="快递单号"/>)}
+                                rules: [{required: required, message: '请选择快递单号!'}],
+                            })(<FormInput readonly={readonly} placeholder="快递单号"/>)}
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>
-                        <FormItem label={"客服"}>
+                        <FormItem {...formItemLayout} label={"客服"}>
                             {getFieldDecorator("customerService", {
-                                rules: [{required: true, message: '请选择客服!'}],
-                            })(<FormControl.FormSelectIndex type={SelectType.CustomerService} placeholder="客服"/>)}
+                                rules: [{required: required, message: '请选择客服!'}],
+                            })(<FormControl.FormSelectIndex readonly={readonly} type={SelectType.CustomerService}
+                                                            placeholder="客服"/>)}
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>
-                        <FormItem label={"仓库"}>
+                        <FormItem {...formItemLayout} label={"仓库"}>
                             {getFieldDecorator("wareHouse", {
-                                rules: [{required: true, message: '请选择仓库!'}],
-                            })(<FormWarehouseSelect placeholder="仓库"></FormWarehouseSelect>)}
+                                rules: [{required: required, message: '请选择仓库!'}],
+                            })(<FormWarehouseSelect readonly={readonly} placeholder="仓库"></FormWarehouseSelect>)}
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>
-                        <FormItem label={"入库状态"}>
+                        <FormItem {...formItemLayout} label={"入库状态"}>
                             {getFieldDecorator("inWareHouseStatus", {
-                                rules: [{required: true, message: '请选择状态!'}],
-                            })(<FormStatusSelect dataType={ModelNameSpace.OrderTypeEnum.WarehouseIn} placeholder="入库状态"></FormStatusSelect>)}
+                                rules: [{required: required, message: '请选择状态!'}],
+                            })(<FormStatusSelect dataType={ModelNameSpace.OrderTypeEnum.WarehouseIn}
+                                                 placeholder="入库状态"></FormStatusSelect>)}
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>
-                        <FormItem label={"件数"}>
+                        <FormItem {...formItemLayout} label={"件数"}>
                             {getFieldDecorator("inPackageCount", {
-                                rules: [{required: true, message: '请填写件数!'}],
-                            })(<InputNumber style={{width: '100%'}} placeholder="件数"></InputNumber >)}
+                                rules: [{required: required, message: '请填写件数!'}],
+                            })(<FormInputNumber readonly={readonly} style={{width: '100%'}} placeholder="件数"/>)}
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>
-                        <FormItem label={"初始重量"}>
+                        <FormItem {...formItemLayout} label={"初始重量"}>
                             {getFieldDecorator("inWeight", {
-                                rules: [{required: true, message: '请填写重量!'}],
-                            })(<InputNumber style={{width: '100%'}} placeholder="初始重量"></InputNumber >)}
+                                rules: [{required: required, message: '请填写重量!'}],
+                            })(<FormInputNumber readonly={readonly} style={{width: '100%'}} placeholder="初始重量"/>)}
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>
-                        <FormItem label={"初始体积"}>
+                        <FormItem {...formItemLayout} label={"初始体积"}>
                             <Row gutter={8} type="flex" justify="center" align="top">
                                 <Col span={8}>
                                     {getFieldDecorator('inLength', {
-                                        rules: [{required: true, message: '请填写长度!'}],
-                                    })(<InputNumber min={0} placeholder="长（cm）"/>)}
+                                        rules: [{required: required, message: '请填写长度!'}],
+                                    })(<FormInputNumber readonly={readonly} style={{width: '100%'}} min={0}
+                                                        placeholder="长（cm）"/>)}
                                 </Col>
                                 <Col span={8}>
                                     {getFieldDecorator('inWidth', {
-                                        rules: [{required: true, message: '请填写宽度!'}],
-                                    })(<InputNumber min={0} placeholder="宽（cm）"/>)}
+                                        rules: [{required: required, message: '请填写宽度!'}],
+                                    })(<FormInputNumber readonly={readonly} style={{width: '100%'}} min={0}
+                                                        placeholder="宽（cm）"/>)}
                                 </Col>
                                 <Col span={8}>
                                     {getFieldDecorator('inHeight', {
-                                        rules: [{required: true, message: '请填写高度!'}],
-                                    })(<InputNumber min={0} placeholder="高（cm）"/>)}
+                                        rules: [{required: required, message: '请填写高度!'}],
+                                    })(<FormInputNumber readonly={readonly} style={{width: '100%'}} min={0}
+                                                        placeholder="高（cm）"/>)}
                                 </Col>
                             </Row>
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>
-                        <FormItem label={"交接单"}>
-                            {getFieldDecorator("transferNo")(<Input placeholder="交接单"></Input >)}
+                        <FormItem {...formItemLayout} label={"交接单"}>
+                            {getFieldDecorator("transferNo")(<FormInput readonly={readonly} placeholder="交接单"/>)}
                         </FormItem>
                     </Col>
                     <Col span={24}>
@@ -180,12 +225,12 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                         </FormItem>
                     </Col>
                 </Row>
-                <Row>
+                {!readonly ? <Row>
                     <Col span={24}>
                         <Button type="primary" htmlType="submit">确定</Button>
                         <Button style={{marginLeft: 8}}>取消</Button>
                     </Col>
-                </Row>
+                </Row> : null}
             </Form>
         );
     }

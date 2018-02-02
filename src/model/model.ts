@@ -258,16 +258,22 @@ export  namespace  ModelNameSpace{
         InHeight?: number;
         /** 仓库ID*/
         WareHouseID?: number;
+        /** 仓库名称*/
+        WareHouseName?:string;
         /** 入库时间*/
         InWareHouseTime?: Date;
         /** 客服ID*/
         CustomerServiceID?: number;
+        /** 客服名称*/
+        CustomerServiceName?:string;
         /** 会员编号*/
         MemeberCode?:string;
         /** 状态编号*/
         currentStatus?:string;
         /** 状态名称*/
         currentStep?:string;
+        /** 备注*/
+        WarehouseAdminRemark?:string;
     }
     /** 客户订单状态*/
     export interface MemberOrderStatusModel extends BaseModel {
