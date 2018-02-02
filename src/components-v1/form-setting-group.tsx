@@ -18,9 +18,9 @@ export class FormSettingGroup extends React.Component<FormSettingGroupProps, For
 
     renderTitle() {
         const {props: {title, header}} = this;
-        return <div>
+        return <div className="header-title">
             <span>{title}</span>
-            {header}
+            <div className="header-button">{header}</div>
         </div>
     }
 

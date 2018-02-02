@@ -19,7 +19,7 @@ export class FormOrderAddressee extends React.Component<FormOrderAddresseeProps,
     }
 
     renderHeader() {
-        return <div style={{display: 'inline-block'}}>
+        return <div>
             <FormControl.FormButtonControl title="添加联系人"
                                            type={ModelNameSpace.ButtonTypeEnum.confirm}
                                            savingdata={() => true}></FormControl.FormButtonControl>
