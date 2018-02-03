@@ -4,8 +4,7 @@ import * as classNames from 'classnames';
 
 export interface FormSettingGroupProps {
     title?: string;
-    size?: number;
-    span?: number;
+    tabBar?: JSX.Element;
     loading?: boolean;
 }
 
@@ -30,11 +29,11 @@ export class FormSettingGroup extends React.Component<FormSettingGroupProps, For
     }
 
     render() {
-        const {props: {loading, title}, state: {isHidden}} = this;
+        const {props: {loading, title, tabBar}, state: {isHidden}} = this;
         let className = classNames({
             "hidden": isHidden
         }, "akfc-section-content");
-        return <Spin spinning={(loading === true)} >
+        return <Spin spinning={(loading === true)}>
             <div className="header-section" style={{marginBottom: '20px'}}>
                 <Row type="flex" align="top" justify="space-between" className="header-section-title">
                     <Col>
@@ -50,7 +49,14 @@ export class FormSettingGroup extends React.Component<FormSettingGroupProps, For
                         }
                     </Col>
                 </Row>
-                <div className={className}>{this.props.children}</div>
+                <div className={className}>
+                    <Row type="flex" justify="start" align="bottom" style={{marginBottom: '10px'}}>
+                        <Col span={16}>
+                            {tabBar}
+                        </Col>
+                    </Row>
+                    {this.props.children}
+                </div>
             </div>
         </Spin>
     }
