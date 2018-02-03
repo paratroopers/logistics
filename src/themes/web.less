@@ -234,37 +234,33 @@
   }
 }
 
-.form-control-group {
+.header-section {
   margin-bottom: 5px;
   border: none;
-  .panel {
-    background: #f7f7f7;
-    margin-bottom: 10px;
-    border-radius: 0px !important;
-    border: 0;
-    overflow: hidden;
-    .ant-collapse-header {
-      padding: 5px 0 !important;
-      border-radius: 0 !important;
-      background-color: #fff;
-      border-bottom: 1px solid #e4e4e4;
-      .header-title {
-        padding-left: 10px;
-        border-left: 3px solid #f2804b;
-        display: flex;
-        .header-button {
-          display: inline-block;
-          flex: 1;
-          .anticon {
-            color: #ccc;
-            margin: 0 5px 0 15px;
-            font-weight: 600;
-          }
-        }
+  .hidden {
+    display: none;
+  }
+  &-title {
+    width: 100%;
+    font-size: 16px;
+    border-bottom: 1px solid #e9e9e9;
+    padding: 2px 0 7px 0;
+    min-height: 30px;
+    margin-bottom: 15px;
+    .fold {
+      cursor: pointer;
+      .anticon {
+        font-size: 14px;
+        margin-top: 3px;
       }
     }
-    .ant-collapse-content {
-      border-top: none !important;
+    .titleSpan {
+      width: 5px;
+      height: 24px;
+      display: inline-block;
+      float: left;
+      margin-right: 5px;
+      background-color: #108ee9;
     }
   }
   .orderinfo {
