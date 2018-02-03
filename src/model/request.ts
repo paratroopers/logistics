@@ -180,9 +180,11 @@ export namespace requestNameSpace {
             this.declareUnitPrice = 0;
             this.count = 0;
             this.ID = Util.guid();
+            this.total = '00.00';
         }
 
         ID?: string;
+        total?: string;
         productName?: string;
         productNameEN?: string;
         HSCode?: string;

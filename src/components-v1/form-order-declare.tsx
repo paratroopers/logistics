@@ -13,6 +13,7 @@ export interface FormOrderDeclareProps {
 
 export interface FormOrderDeclareStates {
     data?: requestNameSpace.OrderMergeProductListModel[];
+    total?: string;
 }
 
 class FormOrderDeclareTable extends Table<requestNameSpace.OrderMergeProductListModel> {
@@ -22,7 +23,8 @@ export class FormOrderDeclare extends React.Component<FormOrderDeclareProps, For
     constructor(props, context) {
         super(props, context);
         this.state = {
-            data: []
+            data: [],
+            total: '00.00'
         }
     }
 
@@ -39,20 +41,40 @@ export class FormOrderDeclare extends React.Component<FormOrderDeclareProps, For
         this.setState({data: data});
     }
 
+    onChange(value, record: requestNameSpace.OrderMergeProductListModel, fieldName: string) {
+        let total: number = 0, data = this.state.data;
+        Util.each(data, d => {
+            if (d.ID === record.ID)
+                d[fieldName] = value;
+            d.total = (d.declareUnitPrice * d.count).toFixed(2);
+            total += Number(d.total);
+        });
+        this.setState({total: total.toFixed(2), data: data});
+    }
+
     renderTable() {
         const colums: ColumnProps<requestNameSpace.OrderMergeProductListModel>[] = [
             {
                 title: '产品名称',
                 dataIndex: 'productName',
                 render: (txt, record) => {
-                    return !this.props.readOnly ? <Input defaultValue={txt}></Input> : <span>{txt}</span>;
+                    return !this.props.readOnly ?
+                        <Input value={txt}
+                               onChange={e => this.onChange(e.target.value, record, 'productName')}></Input> :
+                        <span>{txt}</span>;
                 }
             },
             {
                 title: '产品数量',
                 dataIndex: 'count',
                 render: (txt, record) => {
-                    return !this.props.readOnly ? <InputNumber defaultValue={txt}></InputNumber> : <span>{txt}</span>;
+                    return !this.props.readOnly ?
+                        <InputNumber defaultValue={txt}
+                                     step={1}
+                                     precision={0}
+                                     min={0}
+                                     onChange={v => this.onChange(v, record, 'count')}></InputNumber> :
+                        <span>{txt}</span>;
                 }
             }, {
                 title: '货币单位',
@@ -64,13 +86,19 @@ export class FormOrderDeclare extends React.Component<FormOrderDeclareProps, For
                 title: '申报单价',
                 dataIndex: 'declareUnitPrice',
                 render: (txt, record) => {
-                    return !this.props.readOnly ? <InputNumber defaultValue={txt}></InputNumber> : <span>{txt}</span>;
+                    return !this.props.readOnly ?
+                        <InputNumber defaultValue={txt}
+                                     step={0.01}
+                                     min={0}
+                                     precision={2}
+                                     onChange={v => this.onChange(v, record, 'declareUnitPrice')}></InputNumber> :
+                        <span>{txt}</span>;
                 }
             }, {
                 title: '申报总值',
                 dataIndex: 'total',
                 render: (txt, record) => {
-                    return !this.props.readOnly ? <Input disabled defaultValue={txt}></Input> : <span>{txt}</span>;
+                    return !this.props.readOnly ? <Input disabled value={txt}></Input> : <span>{txt}</span>;
                 }
             }, {
                 title: '操作',
@@ -90,20 +118,20 @@ export class FormOrderDeclare extends React.Component<FormOrderDeclareProps, For
     renderAddButton() {
         return <Row type="flex" justify="start" align="bottom">
             <Col span={16}>
-                <Icon type="plus"></Icon>
+                <Icon type="plus-circle-o" style={{marginRight: "5px"}}/>
                 <a onClick={this.onAddClick.bind(this)}>
                     <span>添加货品</span>
                 </a>
-            </Col>
-            <Col span={8}>
-                <span>申报总和:</span>
-                <a>23</a>
+                <span> | </span>
+                <span style={{paddingRight: '5px'}}>申报总和:</span>
+                <a>{this.state.total}</a>
             </Col>
         </Row>
     }
 
     render() {
-        return <FormSettingGroup size={16} title={"货品申报信息"} span={24} header={this.renderAddButton()}>
+        return <FormSettingGroup size={16} title={"货品申报信息"} span={24}>
+            {this.renderAddButton()}
             {this.renderTable()}
         </FormSettingGroup>
     }

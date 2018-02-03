@@ -1,49 +1,57 @@
 import * as React from 'react';
-import {Row, Col, Spin, Collapse} from 'antd';
+import {Row, Col, Spin, Icon} from 'antd';
+import * as classNames from 'classnames';
 
 export interface FormSettingGroupProps {
     title?: string;
     size?: number;
     span?: number;
-    header?: JSX.Element;
-    footer?: JSX.Element;
     loading?: boolean;
 }
 
 export interface FormSettingGroupStates {
-
+    isHidden?: boolean;
 }
 
 export class FormSettingGroup extends React.Component<FormSettingGroupProps, FormSettingGroupStates> {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            isHidden: false
+        }
+    }
 
-    renderTitle() {
-        const {props: {title, header}} = this;
-        return <div className="header-title">
-            <span>{title}</span>
-            <div className="header-button">{header}</div>
-        </div>
+    onHide() {
+        this.setState({isHidden: true});
+    }
+
+    onShow() {
+        this.setState({isHidden: false});
     }
 
     render() {
-        const {props: {size, span, footer, loading}} = this;
-        return <Spin spinning={(loading === true)}>
-            <Collapse className="form-control-group" defaultActiveKey={['1']}>
-                <Collapse.Panel key="1" header={this.renderTitle()} style={{fontSize: size}} showArrow={false}
-                                className="panel">
-                    <Row>
-                        {!loading ?
-                            [
-                                <Col key="children" span={span}>
-                                    {this.props.children}
-                                </Col>,
-                                <Col key="footer" span={span} className="form-control-button">
-                                    {footer}
-                                </Col>
-                            ] : null
+        const {props: {loading, title}, state: {isHidden}} = this;
+        let className = classNames({
+            "hidden": isHidden
+        }, "akfc-section-content");
+        return <Spin spinning={(loading === true)} >
+            <div className="header-section" style={{marginBottom: '20px'}}>
+                <Row type="flex" align="top" justify="space-between" className="header-section-title">
+                    <Col>
+                        <span className="titleSpan"></span>
+                        {title}
+                    </Col>
+                    <Col>
+                    </Col>
+                    <Col className="fold">
+                        {
+                            isHidden ? <Icon type="down" onClick={this.onShow.bind(this)}></Icon>
+                                : <Icon type="up" onClick={this.onHide.bind(this)}></Icon>
                         }
-                    </Row>
-                </Collapse.Panel>
-            </Collapse>
+                    </Col>
+                </Row>
+                <div className={className}>{this.props.children}</div>
+            </div>
         </Spin>
     }
 }
