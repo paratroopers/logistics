@@ -33,28 +33,45 @@ export class FormOrderAddressee extends React.Component<FormOrderAddresseeProps,
         </div>
     }
 
-    renderRow(label?: string, value?: string) {
-        const formItemLayout = {labelCol: {span: 10}, wrapperCol: {span: 14}};
-        return <Col span={8}>
+    renderRow(label?: string, value?: string, span?: number, isTextArea?: boolean) {
+        const formItemLayout = {labelCol: {span: 6}, wrapperCol: {span: 18}};
+        return <Col span={12}>
             <Form.Item label={label} {...formItemLayout} required>
-                <Input value={value} placeholder={'请输入'}></Input>
+                {
+                    isTextArea ? <Input.TextArea value={value} placeholder={'请输入'}></Input.TextArea>
+                        : <Input value={value} placeholder={'请输入'}></Input>
+                }
             </Form.Item>
-        </Col>;
+        </Col>
     }
 
     render() {
-        const defaultRowSetting: RowProps = {justify: "start", type: "flex", gutter: 8};
+        const defaultRowSetting: RowProps = {justify: "center", type: "flex"};
         return <FormSettingGroup title={"收件人基本信息"} topBar={this.renderHeader()}>
             <Form>
                 <Row {...defaultRowSetting}>
-                    {this.renderRow('收件人姓名')}
-                    {this.renderRow('收件国家')}
-                    {this.renderRow('收件城市')}
+                    {this.renderRow('收件人姓名', null)}
                 </Row>
                 <Row {...defaultRowSetting}>
-                    {this.renderRow('邮编')}
-                    {this.renderRow('电话')}
-                    {this.renderRow('公司名或税号')}
+                    {this.renderRow('电话', null)}
+                </Row>
+                <Row {...defaultRowSetting}>
+                    {this.renderRow('邮编', null)}
+                </Row>
+                <Row {...defaultRowSetting}>
+                    {this.renderRow('收件国家', null)}
+                </Row>
+                <Row {...defaultRowSetting}>
+                    {this.renderRow('收件城市', null)}
+                </Row>
+                <Row {...defaultRowSetting}>
+                    {this.renderRow('地址', null, 16, true)}
+                </Row>
+                <Row {...defaultRowSetting}>
+                    {this.renderRow('公司', null)}
+                </Row>
+                <Row {...defaultRowSetting}>
+                    {this.renderRow('税号', null)}
                 </Row>
             </Form>
         </FormSettingGroup>
