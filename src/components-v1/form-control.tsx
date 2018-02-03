@@ -23,8 +23,8 @@ export namespace FormControl {
     export interface FormSelectIndexProps extends SelectProps {
         placeholder: string;
         type: SelectType;
-        readonly?:boolean;
-        value?:LabeledValue;
+        readonly?: boolean;
+        value?: LabeledValue;
     }
 
     export interface FormSelectIndexStates {

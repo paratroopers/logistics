@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {withRouter} from 'react-router';
+import {withRouter,hashHistory} from 'react-router';
 import {Row, Table, Button, Divider} from "antd";
 import {APINameSpace} from '../model/api';
 import {ModelNameSpace} from '../model/model';
@@ -7,6 +7,10 @@ import {requestNameSpace} from '../model/request';
 import {ResponseNameSpace} from '../model/response';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import {FormControl} from '../components-v1/form-control';
+import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
+import {PathConfig} from "../config/pathconfig";
+import {ClickParam} from "antd/lib/menu";
+import {ColumnProps, RowSelectionType, TableRowSelection} from "antd/lib/table";
 
 
 
@@ -14,9 +18,11 @@ import {FormControl} from '../components-v1/form-control';
 
 interface MemberAddressPageStates {
     dataSource: any;
+    selectRow?:any;
 }
 
 interface MemberAddressPageProps {
+    selectValue:()=>{},
 
 }
 
@@ -24,7 +30,7 @@ interface MemberAddressPageProps {
 export class MemberAddressPage extends React.Component<MemberAddressPageProps, MemberAddressPageStates> {
     constructor(props) {
         super(props);
-        this.state = {dataSource: []};
+        this.state = {dataSource: [],selectRow:[]};
     }
 
     returnVaule = [];
@@ -46,7 +52,7 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
         });
     }
 
-    columns = [{
+    columns:ColumnProps<ModelNameSpace.AddressModel>[]= [{
         title: '收件人',
         dataIndex: 'recipient',
         key: 'recipient',
@@ -63,23 +69,36 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
         dataIndex: 'Tel',
         key: 'Tel',
     }, {
-        title: '',
-        key: 'action',
-        render: (text, record) => (
-            <span>
-      <a href="#">查看</a>
-      <Divider type="vertical"/>
-      <a href="#">修改</a>
-      <Divider type="vertical"/>
-      <a href="#">删除</a>
-    </span>
-        ),
+        title: '操作',
+        fixed: 'right',
+        render: (val, record, index) => {
+            const menu:FormTableOperationModel[]=[
+                {
+                    key: PathConfig.WarehouseInViewPage,
+                    type: "search",
+                    label: "查看"
+                },
+                {
+                    key: PathConfig.WarehouseInEditPage,
+                    type: "edit",
+                    label: "编辑"
+                }
+            ]
+
+            return <FormTableOperation onClick={(param:ClickParam)=>{
+                hashHistory.push({pathname:param.key,state:record});
+            }} value={menu}></FormTableOperation>;
+        }
     }];
 
 
-    rowSelection = {
+    rowSelection:TableRowSelection<any> = {
+        type:"radio",
         onChange: (selectedRowKeys, selectedRows) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+           // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            this.setState({selectRow:selectedRows});
+
+            console.log(this.state.selectRow);
         },
         getCheckboxProps: record => ({
             disabled: record.name === 'Disabled User', // Column configuration not to be checked
@@ -93,14 +112,14 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
     componentDidMount() {
         this.loadData();
     }
+    
 
     render() {
         return (<Row className="member-address-page">
             <ContentHeaderControl title="收件人地址"></ContentHeaderControl>
-            {/*<FormControl.FormButtonControl savingdata=true title="确认" type={ModelNameSpace.ButtonTypeEnum.confirm}/>*/}
+            <FormControl.FormButtonControl title="确认" type={ModelNameSpace.ButtonTypeEnum.confirm}/>
             {/*<FormControl.FormButtonControl savingdata=true title="新增收件人" type={ModelNameSpace.ButtonTypeEnum.add}/>*/}
-            <Table rowSelection={this.rowSelection} dataSource={this.state.dataSource} columns={this.columns}
-                   pagination={false}/>
+            <Table  rowKey={"ID"} rowSelection={this.rowSelection} dataSource={this.state.dataSource} columns={this.columns} pagination={false}/>
         </Row>)
     }
 
