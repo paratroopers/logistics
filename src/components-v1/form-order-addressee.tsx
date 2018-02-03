@@ -4,6 +4,7 @@ import {RowProps} from 'antd/lib/row';
 import {FormSettingGroup} from './form-setting-group';
 import {ModelNameSpace} from '../model/model';
 import {FormControl} from './form-control';
+import {Context} from '../util/common';
 
 export interface FormOrderAddresseeProps {
     readOnly?: boolean;
@@ -20,12 +21,12 @@ export class FormOrderAddressee extends React.Component<FormOrderAddresseeProps,
 
     renderHeader() {
         return <div>
-            <Icon type="plus-circle-o" style={{marginRight: "5px"}}/>
+            <i className={Context.getIconClassName("icon-tianjialianxiren")}/>
             <a>
                 <span>添加联系人</span>
             </a>
             <span> | </span>
-            <Icon type="check-circle-o" style={{marginRight: "5px"}}/>
+            <i className={Context.getIconClassName("icon-xuanzelianxiren")}/>
             <a>
                 <span>另存为联系人</span>
             </a>
@@ -43,7 +44,7 @@ export class FormOrderAddressee extends React.Component<FormOrderAddresseeProps,
 
     render() {
         const defaultRowSetting: RowProps = {justify: "start", type: "flex", gutter: 8};
-        return <FormSettingGroup title={"收件人基本信息"} tabBar={this.renderHeader()}>
+        return <FormSettingGroup title={"收件人基本信息"} topBar={this.renderHeader()}>
             <Form>
                 <Row {...defaultRowSetting}>
                     {this.renderRow('收件人姓名')}
