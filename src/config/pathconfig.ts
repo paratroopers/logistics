@@ -32,6 +32,10 @@ export class PathConfig {
     static MemberUserInformationPage = "/member/user/information";
     /** 地址维护*/
     static MemberAddressPage = "/member/address";
+    static MemberAddressPageAdd = "/member/address/add";
+    static MemberAddressPageEdit = "/member/address/edit";
+    static MemberAddressPageView = "/member/address/view";
+
     static  MemberAddressCombinationPage = "/member/address/combination";
     /** 入库查询*/
     static MemberWarehouseInQueryPage = "/member/warehouse/in/query";

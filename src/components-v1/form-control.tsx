@@ -10,6 +10,7 @@ import {hashHistory} from 'react-router';
 import {ModelNameSpace} from '../model/model';
 import {isArray, isNullOrUndefined} from "util";
 import {LabeledValue} from "antd/lib/select";
+import {ButtonProps} from "antd/lib/button";
 
 const FormItem = Form.Item;
 const {TextArea} = Input;
@@ -23,8 +24,8 @@ export namespace FormControl {
     export interface FormSelectIndexProps extends SelectProps {
         placeholder: string;
         type: SelectType;
-        readonly?:boolean;
-        value?:LabeledValue;
+        readonly?: boolean;
+        value?: LabeledValue;
     }
 
     export interface FormSelectIndexStates {
@@ -38,6 +39,7 @@ export namespace FormControl {
         type: ModelNameSpace.ButtonTypeEnum;
         size?: any;
         url?: any;
+        handleClick?:()=>{};
     }
 
 
@@ -205,25 +207,20 @@ export namespace FormControl {
 
         }
         enterLoading = () => {
+            this.props.handleClick();
             this.setState({loading: true});
-            if (!this.state.loading) {
-                if (!isNullOrUndefined(this.props.url)) {
-                    hashHistory.push(this.props.url);
-                }
-
+            if (!isNullOrUndefined(this.props.url)) {
+                hashHistory.push(this.props.url);
             }
         }
 
         componentWillReceiveProps(nextProps) {
             if ('loading' in nextProps) {
-                this.setState({loading: false});
+               this.setState({loading: false});
+
             }
         }
 
-        cancelLoading = () => {
-
-            this.setState({loading: false});
-        }
 
         render() {
             const style = this.props.size ? {fontSize: this.props.size} : {};
