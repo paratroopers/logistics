@@ -19,19 +19,17 @@ export class FormOrderAddressee extends React.Component<FormOrderAddresseeProps,
     }
 
     renderHeader() {
-        return <Row type="flex" justify="start" align="bottom">
-            <Col span={16}>
-                <Icon type="plus-circle-o" style={{marginRight: "5px"}}/>
-                <a>
-                    <span>添加联系人</span>
-                </a>
-                <span> | </span>
-                <Icon type="check-circle-o" style={{marginRight: "5px"}}/>
-                <a>
-                    <span>另存为联系人</span>
-                </a>
-            </Col>
-        </Row>
+        return <div>
+            <Icon type="plus-circle-o" style={{marginRight: "5px"}}/>
+            <a>
+                <span>添加联系人</span>
+            </a>
+            <span> | </span>
+            <Icon type="check-circle-o" style={{marginRight: "5px"}}/>
+            <a>
+                <span>另存为联系人</span>
+            </a>
+        </div>
     }
 
     renderRow(label?: string, value?: string) {
@@ -45,8 +43,7 @@ export class FormOrderAddressee extends React.Component<FormOrderAddresseeProps,
 
     render() {
         const defaultRowSetting: RowProps = {justify: "start", type: "flex", gutter: 8};
-        return <FormSettingGroup size={16} title={"收件人基本信息"} span={24}>
-            {this.renderHeader()}
+        return <FormSettingGroup title={"收件人基本信息"} tabBar={this.renderHeader()}>
             <Form>
                 <Row {...defaultRowSetting}>
                     {this.renderRow('收件人姓名')}

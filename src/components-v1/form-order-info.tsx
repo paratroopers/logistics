@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Spin} from 'antd';
+import {Row, Col} from 'antd';
 import {FormSettingGroup} from './form-setting-group'
 
 export interface FormOrderInfoProps {
@@ -38,12 +38,22 @@ export class FormOrderInfo extends React.Component<FormOrderInfoProps, FormOrder
 
     render() {
         const {state: {data, loading}} = this;
-        return <FormSettingGroup loading={loading} size={16} title={"订单基本信息"} span={24}>
+        return <FormSettingGroup loading={loading} title={"订单基本信息"}>
             <div className="orderinfo">
-                <span>创建时间: {data.created}</span>
-                <span> 净重量 : <a>{data.weight}</a>kg</span>
-                <span>净重体积: {data.volume}cm²</span>
-                <span>总件数: <a>{data.count}</a></span>
+                <Row type="flex">
+                    <Col span={6}>
+                        <span>创建时间: {data.created}</span>
+                    </Col>
+                    <Col span={6}>
+                        <span> 净重量 : <a>{data.weight}</a>kg</span>
+                    </Col>
+                    <Col span={6}>
+                        <span>净重体积: {data.volume}cm²</span>
+                    </Col>
+                    <Col span={6}>
+                        <span>总件数: <a>{data.count}</a></span>
+                    </Col>
+                </Row>
             </div>
         </FormSettingGroup>
     }

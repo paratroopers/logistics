@@ -68,7 +68,7 @@ export class FormOrderRelation extends React.Component<FormOrderRelationProps, F
     }
 
     render() {
-        return <FormSettingGroup size={16} title={"关联订单信息"} span={24}>
+        return <FormSettingGroup title={"关联订单信息"}>
             {this.renderTable()}
         </FormSettingGroup>
     }
