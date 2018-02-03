@@ -5,6 +5,9 @@ import {DemoPage} from "../page-v1/demo";
 import {NaMasterMainPage} from "../page-v1/master-main-page";
 import {MemberWelcomePage} from "../page-v1/member-welcome-page";
 import {MemberAddressPage} from "../page-v1/member-address-page";
+import {MemberAddressPageAdd} from "../page-v1/member-address-page-add";
+import {MemberAddressPageEdit} from "../page-v1/member-address-page-edit";
+import {MemberAddressPageView} from "../page-v1/member-address-page-view";
 import {MemberDeliveredPage} from "../page-v1/member-delivered-page";
 import {MemberMessageListPage} from "../page-v1/member-message-list-page";
 import {MemberMyOrderPage} from "../page-v1/member-my-order-page";
@@ -47,6 +50,9 @@ const routerConfig = (
                 <IndexRoute component={MemberWelcomePage}></IndexRoute>
                 <Route path={PathConfig.MemberIndexPage} component={MemberWelcomePage}/>
                 <Route path={PathConfig.MemberAddressPage} component={MemberAddressPage}/>
+                <Route path={PathConfig.MemberAddressPageAdd} component={MemberAddressPageAdd}/>
+                <Route path={PathConfig.MemberAddressPageEdit} component={MemberAddressPageEdit}/>
+                <Route path={PathConfig.MemberAddressPageView} component={MemberAddressPageView}/>
                 <Route path={PathConfig.MemberDeliveredPage} component={MemberDeliveredPage}/>
                 <Route path={PathConfig.MemberMessageListPage} component={MemberMessageListPage}/>
                 <Route path={PathConfig.MemberMyOrderPage} component={MemberMyOrderPage}/>
