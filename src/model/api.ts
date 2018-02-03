@@ -7,8 +7,8 @@ export namespace APINameSpace {
     //region 基类定义区
     export class CommonAPI {
         // static  uatURL = "http://localhost:8090/_api/ver(1.0)/";
-         static baseURL = "http://www.famliytree.cn/_api/ver(1.0)/";
-       //static  baseURL = "http://localhost:8090/_api/ver(1.0)/";
+        // static baseURL = "http://www.famliytree.cn/_api/ver(1.0)/";
+       static  baseURL = "http://localhost:8090/_api/ver(1.0)/";
 
     }
 
@@ -110,9 +110,9 @@ export namespace APINameSpace {
         }
 
 
-        static async GetRecipientsAddress() {
+        static async GetRecipientsAddress(data:requestNameSpace.GetRecipientsAddressRequest) {
             let url: string = CommonAPI.baseURL + "RecipientsAddress/Item";
-            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url);
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url,data);
         }
 
         static async GetMesaageLatest() {

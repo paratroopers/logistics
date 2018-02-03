@@ -34,7 +34,7 @@ export namespace FormControl {
 
     interface FormButtonControlProps {
         title: string;
-        savingdata: () => boolean;
+        loading?: boolean;
         type: ModelNameSpace.ButtonTypeEnum;
         size?: any;
         url?: any;
@@ -159,7 +159,7 @@ export namespace FormControl {
     export class FormButtonControl extends React.Component<FormButtonControlProps, FormButtonControlState> {
         constructor(props, context) {
             super(props, context);
-            this.state = {loading: false};
+            this.state = {loading: this.props.loading};
         }
 
         loadingIcon = (): string => {
@@ -207,19 +207,20 @@ export namespace FormControl {
         }
         enterLoading = () => {
             this.setState({loading: true});
-            console.log(this.props.savingdata());
-            if (this.props.savingdata()) {
-                this.cancelLoading();
+            if (!this.state.loading) {
                 if (!isNullOrUndefined(this.props.url)) {
                     hashHistory.push(this.props.url);
                 }
-                else {
-                    hashHistory.goBack();
-                }
-                //   hashHistory.push({pathname: obj.key});
-            }
 
+            }
         }
+
+        componentWillReceiveProps(nextProps) {
+            if ('loading' in nextProps) {
+                this.setState({loading: false});
+            }
+        }
+
         cancelLoading = () => {
 
             this.setState({loading: false});
@@ -231,8 +232,8 @@ export namespace FormControl {
             return (
                 <span>
         <Button type="primary" loading={this.state.loading}
-                onClick={this.enterLoading} htmlType="submit">
-            <i className={icon} style={style}>{this.props.title}  </i> </Button>
+                onClick={this.enterLoading} htmlType="submit">     <i className={icon}
+                                                                      style={style}>{this.props.title}  </i> </Button>
       </span>
             );
         }

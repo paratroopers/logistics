@@ -97,8 +97,8 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
     render() {
         return (<Row className="member-address-page">
             <ContentHeaderControl title="收件人地址"></ContentHeaderControl>
-            <FormControl.FormButtonControl savingdata={this.savingdata} title="确认" type={ModelNameSpace.ButtonTypeEnum.confirm}/>
-            <FormControl.FormButtonControl savingdata={this.savingdata} title="新增收件人" type={ModelNameSpace.ButtonTypeEnum.add}/>
+            {/*<FormControl.FormButtonControl savingdata=true title="确认" type={ModelNameSpace.ButtonTypeEnum.confirm}/>*/}
+            {/*<FormControl.FormButtonControl savingdata=true title="新增收件人" type={ModelNameSpace.ButtonTypeEnum.add}/>*/}
             <Table rowSelection={this.rowSelection} dataSource={this.state.dataSource} columns={this.columns}
                    pagination={false}/>
         </Row>)

@@ -14,7 +14,8 @@ import {FormComponentProps} from "antd/lib/form";
 
 //region 属性定义区，状态定义区
 interface MemberAddressAddStates {
-    dataSource: any;
+    dataSource?: any;
+    loading: boolean;
 }
 
 interface MemberAddressAddProps extends FormComponentProps {
@@ -26,16 +27,9 @@ interface MemberAddressViewStates {
 }
 
 interface MemberAddressViewProps extends FormComponentProps {
-
+    id: string;
 }
 
-interface MemberAddressEditStates {
-    dataSource: any;
-}
-
-interface MemberAddressEditProps extends FormComponentProps {
-
-}
 
 //endregion
 
@@ -43,6 +37,7 @@ interface MemberAddressEditProps extends FormComponentProps {
 export class MemberAddressAdd extends React.Component<MemberAddressAddProps, MemberAddressAddStates> {
     constructor(props, context) {
         super(props, context);
+        this.state = {loading: false};
     }
 
     handleSubmit = (e) => {
@@ -51,17 +46,23 @@ export class MemberAddressAdd extends React.Component<MemberAddressAddProps, Mem
             if (!err) {
                 console.log('Received values of form: ', values);
                 let model: requestNameSpace.InsertRecipientsAddressRequest = {
-                    recipient: values.recipient,
-                    Tel: values.Tel,
-                    Address: values.Address,
                     country: values.country,
+                    recipient: values.recipient,
                     City: values.City,
                     postalcode: values.postalcode,
+                    Tel: values.Tel,
+                    taxno: values.taxno,
                     companyName: values.companyName,
-                    taxno: values.taxno
+                    Address: values.Address
                 };
-                APINameSpace.MemberAPI.InsertRecipientsAddress(model).then(()=>{
-
+                console.log(model);
+                APINameSpace.MemberAPI.InsertRecipientsAddress(model).then(result => {
+                    if (result.Status === 0) {
+                        this.setState({loading: false});
+                    }
+                    else {
+                        this.setState({loading: true});
+                    }
                 });
 
             }
@@ -179,7 +180,7 @@ export class MemberAddressAdd extends React.Component<MemberAddressAddProps, Mem
                     wrapperCol={{span: 12, offset: 5}}
                 >
                     <FormControl.FormButtonControl type={ModelNameSpace.ButtonTypeEnum.confirm}
-                                                   savingdata={this.savingdata}
+                                                   loading={this.state.loading}
                                                    title="保存"></FormControl.FormButtonControl>
                     <Button type="primary" htmlType="submit">
                         保存
@@ -198,181 +199,212 @@ export class MemberAddressAdd extends React.Component<MemberAddressAddProps, Mem
 //endregion
 
 //region 查看 MemberAddressEidt
-export class MemberAddressEidt extends React.Component<MemberAddressEditProps, MemberAddressEditStates> {
-    constructor(props) {
-        super(props);
-        this.state = {dataSource: []};
+
+interface MemberAddressEditStates {
+    loading?: boolean;
+    dataSource?: ModelNameSpace.AddressModel;
+}
+
+interface MemberAddressEditProps extends FormComponentProps {
+    id: string;
+    type?:ModelNameSpace.FormOpertationEnum;
+}
+
+class MemberAddressEidt extends React.Component<MemberAddressEditProps, MemberAddressEditStates> {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            loading: false, dataSource: {
+                country: "",
+                recipient: "",
+                City: "",
+                postalcode: "",
+                Tel: "",
+                taxno: "",
+                companyName: "",
+                Address: ""
+            }
+        };
+        this.loadingData();
     }
 
-    returnVaule = [];
-
-    loadData() {
-        APINameSpace.MemberAPI.GetRecipientsAddressAll().then((result) => {
-            if (result.Data !== null) {
-                result.Data.map((r) => {
-                    this.returnVaule.push({
-                        key: r.ID,
-                        recipient: r.recipient,
-                        country: r.country,
-                        Address: r.Address,
-                        Tel: r.Tel
-                    });
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log('Received values of form: ', values);
+                let model: requestNameSpace.UpdateRecipientsAddressRequest = {
+                    id:this.props.id,
+                    country: values.country,
+                    recipient: values.recipient,
+                    City: values.City,
+                    postalcode: values.postalcode,
+                    Tel: values.Tel,
+                    taxno: values.taxno,
+                    companyName: values.companyName,
+                    Address: values.Address
+                };
+                console.log(model);
+                APINameSpace.MemberAPI.UpdateRecipientsAddress(model).then(result => {
+                    if (result.Status === 0) {
+                        this.setState({loading: false});
+                    }
+                    else {
+                        this.setState({loading: true});
+                    }
                 });
-                this.setState({dataSource: this.returnVaule});
+
             }
         });
     }
 
-    columns = [{
-        title: '收件人',
-        dataIndex: 'recipient',
-        key: 'recipient',
-    }, {
-        title: '国家',
-        dataIndex: 'country',
-        key: 'country',
-    }, {
-        title: '地址',
-        dataIndex: 'Address',
-        key: 'Address',
-    }, {
-        title: '电话',
-        dataIndex: 'Tel',
-        key: 'Tel',
-    }, {
-        title: '',
-        key: 'action',
-        render: (text, record) => (
-            <span>
-      <a href="#">查看</a>
-      <Divider type="vertical"/>
-      <a href="#">修改</a>
-      <Divider type="vertical"/>
-      <a href="#">删除</a>
-    </span>
-        ),
-    }];
-
-
-    rowSelection = {
-        onChange: (selectedRowKeys, selectedRows) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-        },
-        getCheckboxProps: record => ({
-            disabled: record.name === 'Disabled User', // Column configuration not to be checked
-        }),
-    };
-
-    savingdata = () => {
-        return true;
-    };
-
-    componentDidMount() {
-        this.loadData();
+    handleSelectChange = (value) => {
+        console.log(value);
+        // this.props.form.setFieldsValue({
+        //     note: `Hi, ${value === 'male' ? 'man' : 'lady'}!`,
+        // });
     }
 
-    render() {
-        return (<Row className="member-address-page">
-            <ContentHeaderControl title="收件人地址"></ContentHeaderControl>
-            <FormControl.FormButtonControl savingdata={this.savingdata} title="确认"
-                                           type={ModelNameSpace.ButtonTypeEnum.confirm}/>
-            <FormControl.FormButtonControl savingdata={this.savingdata} title="新增收件人"
-                                           type={ModelNameSpace.ButtonTypeEnum.add}/>
-            <Table rowSelection={this.rowSelection} dataSource={this.state.dataSource} columns={this.columns}
-                   pagination={false}/>
-        </Row>)
-    }
+    loadingData() {
+        let data: requestNameSpace.GetRecipientsAddressRequest = {
+            id: this.props.id
+        };
+        APINameSpace.MemberAPI.GetRecipientsAddress(data).then(result => {
 
-}
-
-//endregion
-
-//region 编辑 MemberAddressView
-export class MemberAddressView extends React.Component<MemberAddressViewProps, MemberAddressViewStates> {
-    constructor(props) {
-        super(props);
-        this.state = {dataSource: []};
-    }
-
-    returnVaule = [];
-
-    loadData() {
-        APINameSpace.MemberAPI.GetRecipientsAddressAll().then((result) => {
-            if (result.Data !== null) {
-                result.Data.map((r) => {
-                    this.returnVaule.push({
-                        key: r.ID,
-                        recipient: r.recipient,
-                        country: r.country,
-                        Address: r.Address,
-                        Tel: r.Tel
-                    });
+            if (result.Status === 0) {
+                var resultData = result.Data;
+                this.props.form.setFieldsValue({
+                    country: resultData.recipient,
+                    recipient: resultData.recipient,
+                    City: resultData.City,
+                    postalcode: resultData.postalcode,
+                    Tel: resultData.Tel,
+                    taxno: resultData.taxno,
+                    companyName: resultData.companyName,
+                    Address: resultData.Address
                 });
-                this.setState({dataSource: this.returnVaule});
+
+
             }
         });
     }
 
-    columns = [{
-        title: '收件人',
-        dataIndex: 'recipient',
-        key: 'recipient',
-    }, {
-        title: '国家',
-        dataIndex: 'country',
-        key: 'country',
-    }, {
-        title: '地址',
-        dataIndex: 'Address',
-        key: 'Address',
-    }, {
-        title: '电话',
-        dataIndex: 'Tel',
-        key: 'Tel',
-    }, {
-        title: '',
-        key: 'action',
-        render: (text, record) => (
-            <span>
-      <a href="#">查看</a>
-      <Divider type="vertical"/>
-      <a href="#">修改</a>
-      <Divider type="vertical"/>
-      <a href="#">删除</a>
-    </span>
-        ),
-    }];
-
-
-    rowSelection = {
-        onChange: (selectedRowKeys, selectedRows) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-        },
-        getCheckboxProps: record => ({
-            disabled: record.name === 'Disabled User', // Column configuration not to be checked
-        }),
-    };
-
-    savingdata = () => {
-        return true;
-    };
-
-    componentDidMount() {
-        this.loadData();
-    }
-
     render() {
-        return (<Row className="member-address-page">
-            <ContentHeaderControl title="收件人地址"></ContentHeaderControl>
-            <FormControl.FormButtonControl savingdata={this.savingdata} title="确认"
-                                           type={ModelNameSpace.ButtonTypeEnum.confirm}/>
-            <FormControl.FormButtonControl savingdata={this.savingdata} title="新增收件人"
-                                           type={ModelNameSpace.ButtonTypeEnum.add}/>
-            <Table rowSelection={this.rowSelection} dataSource={this.state.dataSource} columns={this.columns}
-                   pagination={false}/>
-        </Row>)
+        const {getFieldDecorator} = this.props.form;
+        const formType = this.props.type;
+        const  Read = this.props.type === ModelNameSpace.FormOpertationEnum.view
+        return (
+            <Form onSubmit={this.handleSubmit}>
+                <FormItem
+                    label="收件人:"
+                    labelCol={{span: 5}}
+                    wrapperCol={{span: 12}}
+                >
+                    {getFieldDecorator('recipient', {
+                        rules: [{required: true, message: '请填写收件人'}]
+                    })(
+                        <Input placeholder="请填写收件人" disabled={Read}/>
+                    )}
+                </FormItem>
+                <FormItem
+                    label="电话:"
+                    labelCol={{span: 5}}
+                    wrapperCol={{span: 12}}
+                >
+                    {getFieldDecorator('Tel', {
+                        rules: [{required: true, message: '请填写电话'}],
+                    })(
+                        <Input placeholder="请填写电话" disabled={Read}/>
+                    )}
+                </FormItem>
+                <FormItem
+                    label="地址:"
+                    labelCol={{span: 5}}
+                    wrapperCol={{span: 12}}
+                >
+                    {getFieldDecorator('Address', {
+                        rules: [{required: true, message: '请填写地址'}],
+                    })(
+                        <TextArea placeholder="请填写收人的详细地址" autosize={{minRows: 4, maxRows: 6}} disabled={Read}/>
+                    )}
+                </FormItem>
+                <FormItem
+                    label="国家:"
+                    labelCol={{span: 5}}
+                    wrapperCol={{span: 12}}
+                >
+                    {getFieldDecorator('country', {
+                        rules: [{required: false, message: '请填写国家'}],
+                    })(
+                        <Input placeholder="请填写国家" disabled={Read}/>
+                    )}
+                </FormItem>
+
+                <FormItem
+                    label="城市:"
+                    labelCol={{span: 5}}
+                    wrapperCol={{span: 12}}
+                >
+                    {getFieldDecorator('City', {
+                        rules: [{required: true, message: '请填写城市'}],
+                    })(
+                        <Input placeholder="请填写城市" disabled={Read}/>
+                    )}
+                </FormItem>
+
+                <FormItem
+                    label="邮编:"
+                    labelCol={{span: 5}}
+                    wrapperCol={{span: 12}}
+                >
+                    {getFieldDecorator('postalcode', {
+                        rules: [{required: true, message: '请填写邮编'}],
+                    })(
+                        <Input placeholder="请填写邮编" disabled={Read}/>
+                    )}
+                </FormItem>
+
+                <FormItem
+                    label="公司:"
+                    labelCol={{span: 5}}
+                    wrapperCol={{span: 12}}
+                >
+                    {getFieldDecorator('companyName', {
+                        rules: [{required: false, message: '请填写公司名称'}],
+                    })(
+                        <Input placeholder="请填写公司名称" disabled={Read}/>
+                    )}
+                </FormItem>
+                <FormItem
+                    label="税号:"
+                    labelCol={{span: 5}}
+                    wrapperCol={{span: 12}}
+                >
+                    {getFieldDecorator('taxno', {
+                        rules: [{required: false, message: '请填写税号'}],
+                    })(
+                        <Input placeholder="请填写税号" disabled={Read}/>
+                    )}
+                </FormItem>
+
+                <FormItem wrapperCol={{span: 12, offset: 5}}>
+
+                    {Read === true ?<FormControl.FormButtonControl type={ModelNameSpace.ButtonTypeEnum.confirm} loading={this.state.loading} title="确认"></FormControl.FormButtonControl>
+                        :
+                        <FormControl.FormButtonControl type={ModelNameSpace.ButtonTypeEnum.confirm} loading={this.state.loading} title="保存"></FormControl.FormButtonControl>}
+
+                    <FormControl.FormButtonControl type={ModelNameSpace.ButtonTypeEnum.cancel}  title="取消"></FormControl.FormButtonControl>
+
+                </FormItem>
+
+            </Form>
+        );
     }
 
 }
 
+
+export default Form.create<any>()(MemberAddressEidt);
+
 //endregion
+

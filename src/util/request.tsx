@@ -121,7 +121,7 @@ export class Request<TRequest, TResponse extends BaseResponse> {
 
                             } else {
                                 message.error(Global.intl.formatMessage({id: CommonLocale.ResponseError}));
-                                hashHistory.push(PathConfig.LoginPage);
+                              //  hashHistory.push(PathConfig.LoginPage);
                             }
                         }
                         resolve(({

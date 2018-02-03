@@ -296,6 +296,11 @@ export  namespace  ModelNameSpace{
     //endregion
 
     //region 泛型定义区
+    export  enum  FormOpertationEnum{
+        view = 0,
+        edit = 1,
+        add = 2
+    }
     export enum orderMergeStepEnum {
         /*待打包*/
         WaitForPackage = 0,

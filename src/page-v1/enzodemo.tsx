@@ -12,7 +12,8 @@ import {ModelNameSpace} from '../model/model';
 const FormItem = Form.Item;
 const {TextArea} = Input;
 import  {MemberAddressPage} from './member-address-page';
-import  {MemberAddressAdd} from '../components-v1/member-address'
+import  {MemberAddressAdd} from '../components-v1/member-address';
+import  MemberAddressEidt from '../components-v1/member-address';
 
 
 
@@ -44,7 +45,10 @@ export namespace FormControl {
 
         render() {
             const MemberAddressAddForm = Form.create()(MemberAddressAdd);
-            return (<div><MemberAddressAddForm ></MemberAddressAddForm>
+            return (<div>
+                {/*<MemberAddressAddForm ></MemberAddressAddForm>*/}
+                {/*<MemberAddressEidt id="957600051408265216"/>*/}
+                <MemberAddressEidt id="957600051408265216" type={ModelNameSpace.FormOpertationEnum.edit}/>
             </div>);
         }
 
