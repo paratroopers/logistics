@@ -50,11 +50,13 @@ export class FormSettingGroup extends React.Component<FormSettingGroupProps, For
                     </Col>
                 </Row>
                 <div className={className}>
-                    <Row type="flex" justify="start" align="bottom" style={{marginBottom: '10px'}}>
-                        <Col span={16}>
-                            {tabBar}
-                        </Col>
-                    </Row>
+                    {
+                        tabBar ? <Row type="flex" justify="start" align="bottom" style={{marginBottom: '10px'}}>
+                            <Col span={16}>
+                                {tabBar}
+                            </Col>
+                        </Row> : null
+                    }
                     {this.props.children}
                 </div>
             </div>
