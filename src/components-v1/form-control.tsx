@@ -161,6 +161,7 @@ export namespace FormControl {
         constructor(props, context) {
             super(props, context);
             this.state = {loading: this.props.loading};
+
         }
 
         loadingIcon = (): string => {
@@ -207,7 +208,11 @@ export namespace FormControl {
 
         }
         enterLoading = () => {
-            this.props.handleClick();
+            if (isNullOrUndefined(this.props.url))
+            {
+                this.props.handleClick();
+            }
+
             this.setState({loading: true});
             if (!isNullOrUndefined(this.props.url)) {
                 hashHistory.push(this.props.url);

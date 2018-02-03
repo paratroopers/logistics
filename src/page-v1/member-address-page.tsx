@@ -122,7 +122,7 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
         return (<Row className="member-address-page">
             <ContentHeaderControl title="收件人地址"></ContentHeaderControl>
             <FormControl.FormButtonControl title="确认" type={ModelNameSpace.ButtonTypeEnum.confirm} handleClick={this.handleClick.bind(this)} loading={this.state.savingLoading}/>
-            <FormControl.FormButtonControl title="新增收件人" type={ModelNameSpace.ButtonTypeEnum.add} url=""/>
+            <FormControl.FormButtonControl title="新增收件人" type={ModelNameSpace.ButtonTypeEnum.add} url={PathConfig.MemberAddressPageAdd}/>
             <Table  rowKey={"ID"} rowSelection={this.rowSelection} dataSource={this.state.dataSource} columns={this.columns} pagination={false}/>
         </Row>)
     }
