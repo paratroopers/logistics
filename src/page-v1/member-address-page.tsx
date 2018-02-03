@@ -17,20 +17,20 @@ import {ColumnProps, RowSelectionType, TableRowSelection} from "antd/lib/table";
 // import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
 
 interface MemberAddressPageStates {
-    dataSource: any;
+    dataSource?: any;
     selectRow?:any;
+    savingLoading?:boolean;
 }
 
 interface MemberAddressPageProps {
-    selectValue:()=>{},
-
+    selectValue?:()=>any
 }
 
 @withRouter
 export class MemberAddressPage extends React.Component<MemberAddressPageProps, MemberAddressPageStates> {
     constructor(props) {
         super(props);
-        this.state = {dataSource: [],selectRow:[]};
+        this.state = {dataSource: [],selectRow:[],savingLoading:false};
     }
 
     returnVaule = [];
@@ -112,13 +112,17 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
     componentDidMount() {
         this.loadData();
     }
-    
+    handleClick(){
+        console.log("click");
+        this.setState({savingLoading:false});
 
+    }
+    
     render() {
         return (<Row className="member-address-page">
             <ContentHeaderControl title="收件人地址"></ContentHeaderControl>
-            <FormControl.FormButtonControl title="确认" type={ModelNameSpace.ButtonTypeEnum.confirm}/>
-            {/*<FormControl.FormButtonControl savingdata=true title="新增收件人" type={ModelNameSpace.ButtonTypeEnum.add}/>*/}
+            <FormControl.FormButtonControl title="确认" type={ModelNameSpace.ButtonTypeEnum.confirm} handleClick={this.handleClick.bind(this)} loading={this.state.savingLoading}/>
+            <FormControl.FormButtonControl title="新增收件人" type={ModelNameSpace.ButtonTypeEnum.add} url=""/>
             <Table  rowKey={"ID"} rowSelection={this.rowSelection} dataSource={this.state.dataSource} columns={this.columns} pagination={false}/>
         </Row>)
     }
