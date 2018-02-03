@@ -38,7 +38,11 @@ export class FormOrderDeclare extends React.Component<FormOrderDeclareProps, For
     onDeleteClick(record: requestNameSpace.OrderMergeProductListModel) {
         let data = this.state.data;
         Util.remove(data, i => i.ID === record.ID);
-        this.setState({data: data});
+        let total: number = 0;
+        Util.each(data, d => {
+            total += Number(d.total);
+        });
+        this.setState({data: data, total: total.toFixed(2)});
     }
 
     onChange(value, record: requestNameSpace.OrderMergeProductListModel, fieldName: string) {
