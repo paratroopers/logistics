@@ -121,18 +121,19 @@ export class FormOrderDeclare extends React.Component<FormOrderDeclareProps, For
 
     renderAddButton() {
         return <div>
-            <Icon type="plus-circle-o" style={{marginRight: "5px"}}/>
+            <Icon type="plus-circle-o"/>
             <a onClick={this.onAddClick.bind(this)}>
                 <span>添加货品</span>
             </a>
-            <span> | </span>
-            <span style={{paddingRight: '5px'}}>申报总和:</span>
-            <a>{this.state.total}</a>
+            <div style={{float: 'right'}}>
+                <span style={{paddingRight: '5px'}}>申报总和:</span>
+                <a>{this.state.total}</a>
+            </div>
         </div>
     }
 
     render() {
-        return <FormSettingGroup title={"货品申报信息"} tabBar={this.renderAddButton()}>
+        return <FormSettingGroup title={"货品申报信息"} topBar={this.renderAddButton()}>
             {this.renderTable()}
         </FormSettingGroup>
     }

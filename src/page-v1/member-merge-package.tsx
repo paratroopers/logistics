@@ -82,10 +82,10 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
                             <Icon type="tag" style={{color: '#f2804b', marginRight: '15px'}}/>
                             <span>单号：201801270052</span>
                         </div>
-                        <Button.Group size="default" className="merge-package-header-button">
-                            <Button type="primary">确认合并打包</Button>
+                        <div className="merge-package-header-button">
+                            <Button type="primary" style={{marginRight: "10px"}}>确认合并打包</Button>
                             <Button type="primary">取消</Button>
-                        </Button.Group>
+                        </div>
                     </Col>
                 </Row>
                 <FormOrderInfo data={orderInfo}></FormOrderInfo>
