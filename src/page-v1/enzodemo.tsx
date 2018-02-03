@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import {withRouter} from 'react-router';
 import {Select, Spin, Input, Button, Form} from 'antd';
@@ -44,7 +45,7 @@ export namespace FormControl {
         //   WrappedApp = Form.create()(MemberPageNameSpace.MemberAddressCombinationPage);
 
         render() {
-            const MemberAddressAddForm = Form.create()(MemberAddressAdd);
+          //  const MemberAddressAddForm = Form.create()(MemberAddressAdd);
             return (<div>
                 {/*<MemberAddressAddForm ></MemberAddressAddForm>*/}
                 {/*<MemberAddressEidt id="957600051408265216"/>*/}
@@ -431,7 +432,3 @@ export namespace MemberPageNameSpace {
     }
 
 }
-
-
-
-

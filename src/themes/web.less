@@ -244,10 +244,24 @@
     border: 0;
     overflow: hidden;
     .ant-collapse-header {
-      border-left: 3px solid #f2804b;
-      padding: 5px 12px;
-      color: #f2804b;
+      padding: 5px 0 !important;
       border-radius: 0 !important;
+      background-color: #fff;
+      border-bottom: 1px solid #e4e4e4;
+      .header-title {
+        padding-left: 10px;
+        border-left: 3px solid #f2804b;
+        display: flex;
+        .header-button {
+          display: inline-block;
+          flex: 1;
+          .anticon {
+            color: #ccc;
+            margin: 0 5px 0 15px;
+            font-weight: 600;
+          }
+        }
+      }
     }
     .ant-collapse-content {
       border-top: none !important;

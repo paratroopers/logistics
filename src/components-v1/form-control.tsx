@@ -8,7 +8,8 @@ import {requestNameSpace} from '../model/request';
 import {SelectProps} from "antd/lib/select";
 import {hashHistory} from 'react-router';
 import {ModelNameSpace} from '../model/model';
-import {isNullOrUndefined} from "util";
+import {isArray, isNullOrUndefined} from "util";
+import {LabeledValue} from "antd/lib/select";
 
 const FormItem = Form.Item;
 const {TextArea} = Input;
@@ -22,15 +23,14 @@ export namespace FormControl {
     export interface FormSelectIndexProps extends SelectProps {
         placeholder: string;
         type: SelectType;
+        readonly?:boolean;
+        value?:LabeledValue;
     }
 
     export interface FormSelectIndexStates {
         data: any[];
-        value?: string[];
-        fetching?: boolean,
-
+        fetching?: boolean
     }
-
 
     interface FormButtonControlProps {
         title: string;
@@ -57,7 +57,6 @@ export namespace FormControl {
             this.lastFetchId = 0;
             this.state = {
                 data: [],
-                value: [],
                 fetching: false,
             }
         }
@@ -127,17 +126,16 @@ export namespace FormControl {
 
         handleChange = (value) => {
             this.setState({
-                value,
                 data: [],
                 fetching: false,
             });
             this.props.onChange(value);
         }
 
-
         render() {
-            const {fetching, data, value} = this.state;
-            return (
+            const topThis = this;
+            const {props: {value}, state: {fetching, data}} = topThis;
+            return !this.props.readonly ?
                 <Select
                     mode="multiple"
                     labelInValue
@@ -151,7 +149,8 @@ export namespace FormControl {
                 >
                     {data.map(d => <Option key={d.value}>{d.text}</Option>)}
                 </Select>
-            );
+                :
+                <label>{isArray(value) ? value.map(item => item.label + ";") : (!isNullOrUndefined(value) ? value.label : "")}</label>;
         }
 
     }
