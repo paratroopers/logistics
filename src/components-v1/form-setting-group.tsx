@@ -34,8 +34,8 @@ export class FormSettingGroup extends React.Component<FormSettingGroupProps, For
         let className = classNames({
             "hidden": isHidden
         }, "akfc-section-content");
-        return <Spin spinning={(loading === true)}>
-            <div className="header-section">
+        return <Spin spinning={(loading === true)} >
+            <div className="header-section" style={{marginBottom: '20px'}}>
                 <Row type="flex" align="top" justify="space-between" className="header-section-title">
                     <Col>
                         <span className="titleSpan"></span>
