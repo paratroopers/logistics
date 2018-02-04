@@ -1,18 +1,8 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps} from 'react-router';
 import {Layout, Row, Col, Button, Icon} from 'antd';
-// import {ContentHeaderControl} from "../components-v1/common-cancel-control";
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
-
-// import {
-//     FormOrderRelation,
-//     FormOrderDeclare,
-//     FormOrderAddressee,
-//     FormOrderInfo
-// } from '../components-v1/form-order-relation';
-
-// import {FormOrderInfoModel} from '../../../components/form/form-order-info';
 import * as moment from 'moment';
 import * as util from "util";
 import {FormOrderInfo, FormOrderInfoModel} from "../components-v1/form-order-info";
@@ -20,6 +10,7 @@ import {ContentHeaderControl} from "../components-v1/common-content-header";
 import {FormOrderRelation} from "../components-v1/form-order-relation";
 import FormOrderAddressee from "../components-v1/form-order-addressee";
 import {FormOrderDeclare} from "../components-v1/form-order-declare";
+import {FormOrderChannel} from "../components-v1/form-order-channel";
 
 export interface MemberMergePackageProps extends RouteComponentProps<any, any> {
 }
@@ -92,6 +83,7 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
                 <FormOrderRelation data={data}></FormOrderRelation>
                 <FormOrderAddressee></FormOrderAddressee>
                 <FormOrderDeclare></FormOrderDeclare>
+                <FormOrderChannel></FormOrderChannel>
             </Layout.Content>
         </Layout>;
     }
