@@ -9,6 +9,7 @@ import {ClickParam} from "antd/lib/menu";
 import {ColumnProps, TableRowSelection} from "antd/lib/table";
 
 export interface FormContactInfoProps {
+    readOnly?: boolean;
     onOk?: (user: ModelNameSpace.AddressModel) => void;
     onCancel?: () => void;
     visible?: boolean;
@@ -86,7 +87,7 @@ export class FormContactInfo extends React.Component<FormContactInfoProps, FormC
 
 
     renderTable() {
-        const columns: ColumnProps<ModelNameSpace.AddressModel>[] = [{
+        let columns: ColumnProps<ModelNameSpace.AddressModel>[] = [{
             title: '收件人',
             dataIndex: 'recipient',
             key: 'recipient',
@@ -100,13 +101,15 @@ export class FormContactInfo extends React.Component<FormContactInfoProps, FormC
             title: '地址',
             dataIndex: 'Address',
             key: 'Address',
-            width: '40%'
+            width: '55%'
         }, {
             title: '电话',
             dataIndex: 'Tel',
             key: 'Tel',
             width: '20%'
-        }, {
+        }];
+
+        (!this.props.readOnly) && columns.push({
             title: '操作',
             width: '15%',
             render: (val, record, index) => {
@@ -127,14 +130,14 @@ export class FormContactInfo extends React.Component<FormContactInfoProps, FormC
                         label: "删除"
                     }
                 ]
-
                 return <FormTableOperation onClick={(param: ClickParam) => {
                     if (param.key === "delete") {
                         this.onDeleteByID(record.ID);
                     }
                 }} value={menu}></FormTableOperation>;
             }
-        }];
+        })
+
 
         return <Table loading={this.state.loading}
                       rowKey={"ID"}

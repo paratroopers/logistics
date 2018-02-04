@@ -1,13 +1,12 @@
 import * as React from 'react';
-import {hashHistory} from 'react-router';
-import {Input, Button, Modal, Row, Col, Form} from 'antd';
+import {Input, Button, Row, Col, Form, message} from 'antd';
 import {RowProps} from 'antd/lib/row';
+import {APINameSpace} from '../model/api';
+import {requestNameSpace} from '../model/request';
 import {FormSettingGroup} from './form-setting-group';
 import {FormContactInfo} from './form-contact-info';
 import {ModelNameSpace} from '../model/model';
-import {FormControl} from './form-control';
 import {Context} from '../util/common';
-import {PathConfig} from '../config/pathconfig';
 
 export interface FormOrderAddresseeProps {
     readOnly?: boolean;
@@ -40,22 +39,28 @@ export class FormOrderAddressee extends React.Component<FormOrderAddresseeProps,
     }
 
     onAddClick() {
-        this.setState({visible: true})
+        this.setState({visible: true});
     }
 
     onSelect(contact: ModelNameSpace.AddressModel) {
         this.setState({selectContact: contact, visible: false});
     }
 
+    onSaveContact() {
+        APINameSpace.MemberAPI.InsertRecipientsAddress(this.state.selectContact as requestNameSpace.InsertRecipientsAddressRequest).then(r => {
+            r.Status === 0 && message.success("保存成功");
+        });
+    }
+
     renderHeader() {
         return <div>
             <i className={Context.getIconClassName("icon-tianjialianxiren")}/>
             <a onClick={this.onAddClick.bind(this)}>
-                <span>添加联系人</span>
+                <span>选择联系人</span>
             </a>
             <span> | </span>
             <i className={Context.getIconClassName("icon-xuanzelianxiren")}/>
-            <a>
+            <a onClick={this.onSaveContact.bind(this)}>
                 <span>另存为联系人</span>
             </a>
         </div>
@@ -103,7 +108,7 @@ export class FormOrderAddressee extends React.Component<FormOrderAddresseeProps,
                     {this.renderRow('税号', selectContact.postalcode)}
                 </Row>
             </Form>
-            <FormContactInfo width={800} onOk={this.onSelect.bind(this)} visible={this.state.visible}
+            <FormContactInfo readOnly width={800} onOk={this.onSelect.bind(this)} visible={this.state.visible}
                              onCancel={() => this.setState({visible: false})}></FormContactInfo>
         </FormSettingGroup>
     }
