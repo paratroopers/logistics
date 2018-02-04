@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {concat} from 'react-redux';
-import {Input, Button, Row, Col, Form, message} from 'antd';
+import {Input, Row, Col, Form, message} from 'antd';
 import {FormComponentProps} from 'antd/lib/form';
 import {RowProps} from 'antd/lib/row';
 import {APINameSpace} from '../model/api';
@@ -33,10 +32,6 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
         if ('selectContact' in nextProps && nextProps.selectContact !== this.props.selectContact) {
             this.setState({selectContact: nextProps.selectContact});
         }
-    }
-
-    renderFooter() {
-        return <Button type="dashed">添加联系人</Button>
     }
 
     onAddClick() {
@@ -112,10 +107,10 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
                     {this.renderRow('邮编', false, false, 'taxno')}
                 </Row>
                 <Row {...defaultRowSetting}>
-                    {this.renderRow('收件国家', false, false, 'country')}
+                    {this.renderRow('国家', false, false, 'country')}
                 </Row>
                 <Row {...defaultRowSetting}>
-                    {this.renderRow('收件城市', false, false, 'City')}
+                    {this.renderRow('城市', false, false, 'City')}
                 </Row>
                 <Row {...defaultRowSetting}>
                     {this.renderRow('公司', false, true, 'companyName')}
