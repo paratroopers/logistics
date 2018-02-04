@@ -11,6 +11,8 @@ import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import * as moment from 'moment';
+import  {MemberMyOrderWaitForApprovePage} from './member-my-order-wait-for-approve-page';
+
 
 interface MemberMyOrderPageStates {
     pageIndex: number;
@@ -158,7 +160,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                         {this.renderTable()}
                     </Row>
                 </Tabs.TabPane>
-                <Tabs.TabPane tab="待审核" key="2">Content of Tab Pane 2</Tabs.TabPane>
+                <Tabs.TabPane tab="待审核" key="2"><MemberMyOrderWaitForApprovePage></MemberMyOrderWaitForApprovePage></Tabs.TabPane>
             </Tabs>
         </Row>
     }
