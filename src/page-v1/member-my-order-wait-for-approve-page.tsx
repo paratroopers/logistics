@@ -110,56 +110,26 @@ export class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrd
             dataIndex: 'CustomerOrderNo',
             fixed: 'left'
         }, {
-            title: "会员编号",
+            title: "入库总体积",
             dataIndex: 'MemeberCode'
         }, {
-            title: "快递方式",
+            title: "入库总重量",
             dataIndex: 'expressTypeName'
         }, {
-            title: "快递单号",
+            title: "发往国家",
             dataIndex: 'expressNo'
         }, {
-            title: "客服",
+            title: "申报总额",
             dataIndex: 'CustomerServiceName'
         }, {
-            title: "仓库",
+            title: "客服备注",
             dataIndex: 'WareHouseName'
-        }, {
-            title: "初始体积(c㎡)",
-            dataIndex: 'InVolume',
-            render: (val, record, index) => {
-                return record.InLength + "*" + record.InWeight + "*" + record.InHeight;
-            }
-        }, {
-            title: "初始重量",
-            dataIndex: 'InWeight'
-        }, {
+        },  {
             title: "状态",
             dataIndex: 'currentStep'
         }, {
-            title: "入库时间",
+            title: "创建时间",
             dataIndex: 'InWareHouseTime'
-        },{
-            title: '操作',
-            fixed: 'right',
-            render: (val, record, index) => {
-                const menu:FormTableOperationModel[]=[
-                    {
-                        key: PathConfig.WarehouseInViewPage,
-                        type: "search",
-                        label: "查看"
-                    },
-                    {
-                        key: PathConfig.WarehouseInEditPage,
-                        type: "edit",
-                        label: "编辑"
-                    }
-                ]
-
-                return <FormTableOperation onClick={(param:ClickParam)=>{
-                    hashHistory.push({pathname:param.key,state:record});
-                }} value={menu}></FormTableOperation>;
-            }
         }];
 
         const pagination: PaginationProps = {
