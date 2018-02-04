@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {withRouter} from 'react-router';
-import {Row, Table, Button, Divider, Form} from "antd";
+import {withRouter,hashHistory} from 'react-router';
+import {Row, Table, Button, Divider, Form,message} from "antd";
 import {APINameSpace} from '../model/api';
 import {ModelNameSpace} from '../model/model';
 import {requestNameSpace} from '../model/request';
@@ -11,6 +11,9 @@ import FormItem from "antd/lib/form/FormItem";
 import Input from "antd/lib/input/Input";
 import TextArea from "antd/lib/input/TextArea";
 import {FormComponentProps} from "antd/lib/form";
+import {Notification} from '../components-v1/common';
+import {PathConfig}from "../config/pathconfig";
+import routerConfig from "../config/router";
 
 //region 属性定义区，状态定义区
 interface MemberAddressAddStates {
@@ -20,14 +23,6 @@ interface MemberAddressAddStates {
 
 interface MemberAddressAddProps extends FormComponentProps {
 
-}
-
-interface MemberAddressViewStates {
-    dataSource: any;
-}
-
-interface MemberAddressViewProps extends FormComponentProps {
-    id: string;
 }
 
 
@@ -59,6 +54,8 @@ export class MemberAddressAdd extends React.Component<MemberAddressAddProps, Mem
                 APINameSpace.MemberAPI.InsertRecipientsAddress(model).then(result => {
                     if (result.Status === 0) {
                         this.setState({loading: false});
+                        message.success('保存成功');
+                        this.returnUrl();
                     }
                     else {
                         this.setState({loading: true});
@@ -69,16 +66,10 @@ export class MemberAddressAdd extends React.Component<MemberAddressAddProps, Mem
         });
     }
 
-    handleSelectChange = (value) => {
-        console.log(value);
-        // this.props.form.setFieldsValue({
-        //     note: `Hi, ${value === 'male' ? 'man' : 'lady'}!`,
-        // });
-    }
 
-    savingdata = () => {
-        return false;
-    };
+    returnUrl(){
+        hashHistory.push(PathConfig.MemberAddressPage);
+    }
 
     render() {
         const {getFieldDecorator} = this.props.form;
@@ -123,7 +114,7 @@ export class MemberAddressAdd extends React.Component<MemberAddressAddProps, Mem
                     wrapperCol={{span: 12}}
                 >
                     {getFieldDecorator('country', {
-                        rules: [{required: false, message: '请填写国家'}],
+                        rules: [{required: true, message: '请填写国家'}],
                     })(
                         <Input placeholder="请填写国家"/>
                     )}
@@ -179,13 +170,11 @@ export class MemberAddressAdd extends React.Component<MemberAddressAddProps, Mem
                 <FormItem
                     wrapperCol={{span: 12, offset: 5}}
                 >
-                    <FormControl.FormButtonControl type={ModelNameSpace.ButtonTypeEnum.confirm}
-                                                   loading={this.state.loading}
-                                                   title="保存"></FormControl.FormButtonControl>
-                    <Button type="primary" htmlType="submit">
-                        保存
-                    </Button>
-                    <Button type="primary" htmlType="submit">
+                    {/*<FormControl.FormButtonControl type={ModelNameSpace.ButtonTypeEnum.confirm}*/}
+                                                   {/*loading={this.state.loading}*/}
+                                                   {/*title="保存" url={PathConfig.MemberAddressPage}></FormControl.FormButtonControl>*/}
+                    <Button type="primary" htmlType="submit">保存</Button>
+                    <Button type="primary" onClick={this.returnUrl.bind(this)}>
                         取消
                     </Button>
                 </FormItem>
@@ -198,34 +187,37 @@ export class MemberAddressAdd extends React.Component<MemberAddressAddProps, Mem
 
 //endregion
 
-//region 查看 MemberAddressEidt
+//region  收件人地址 编辑 查看
 
-interface MemberAddressEditStates {
-    loading?: boolean;
-    dataSource?: ModelNameSpace.AddressModel;
+interface MemberAddressEditViewStates {
+
 }
 
-interface MemberAddressEditProps extends FormComponentProps {
-    id: string;
+interface MemberAddressEditViewProps extends FormComponentProps {
     type?:ModelNameSpace.FormOpertationEnum;
+    model:ModelNameSpace.AddressModel;
 }
 
-class MemberAddressEidt extends React.Component<MemberAddressEditProps, MemberAddressEditStates> {
+
+class MemberAddressEidtView extends React.Component<MemberAddressEditViewProps, MemberAddressEditViewStates> {
     constructor(props, context) {
         super(props, context);
-        this.state = {
-            loading: false, dataSource: {
-                country: "",
-                recipient: "",
-                City: "",
-                postalcode: "",
-                Tel: "",
-                taxno: "",
-                companyName: "",
-                Address: ""
-            }
-        };
-        this.loadingData();
+
+
+    }
+    componentDidMount(){
+        const ViewModel = this.props.model;
+        this.props.form.setFieldsValue({
+            ID:ViewModel.ID,
+            country: ViewModel.recipient,
+            recipient: ViewModel.recipient,
+            City: ViewModel.City,
+            postalcode: ViewModel.postalcode,
+            Tel: ViewModel.Tel,
+            taxno: ViewModel.taxno,
+            companyName: ViewModel.companyName,
+            Address: ViewModel.Address
+        });
     }
 
     handleSubmit = (e) => {
@@ -234,7 +226,7 @@ class MemberAddressEidt extends React.Component<MemberAddressEditProps, MemberAd
             if (!err) {
                 console.log('Received values of form: ', values);
                 let model: requestNameSpace.UpdateRecipientsAddressRequest = {
-                    id:this.props.id,
+                    id:this.props.model.ID,
                     country: values.country,
                     recipient: values.recipient,
                     City: values.City,
@@ -247,10 +239,10 @@ class MemberAddressEidt extends React.Component<MemberAddressEditProps, MemberAd
                 console.log(model);
                 APINameSpace.MemberAPI.UpdateRecipientsAddress(model).then(result => {
                     if (result.Status === 0) {
-                        this.setState({loading: false});
+                        this.returnUrl();
                     }
                     else {
-                        this.setState({loading: true});
+
                     }
                 });
 
@@ -258,40 +250,12 @@ class MemberAddressEidt extends React.Component<MemberAddressEditProps, MemberAd
         });
     }
 
-    handleSelectChange = (value) => {
-        console.log(value);
-        // this.props.form.setFieldsValue({
-        //     note: `Hi, ${value === 'male' ? 'man' : 'lady'}!`,
-        // });
-    }
-
-    loadingData() {
-        let data: requestNameSpace.GetRecipientsAddressRequest = {
-            id: this.props.id
-        };
-        APINameSpace.MemberAPI.GetRecipientsAddress(data).then(result => {
-
-            if (result.Status === 0) {
-                var resultData = result.Data;
-                this.props.form.setFieldsValue({
-                    country: resultData.recipient,
-                    recipient: resultData.recipient,
-                    City: resultData.City,
-                    postalcode: resultData.postalcode,
-                    Tel: resultData.Tel,
-                    taxno: resultData.taxno,
-                    companyName: resultData.companyName,
-                    Address: resultData.Address
-                });
-
-
-            }
-        });
+    returnUrl(){
+        hashHistory.push(PathConfig.MemberAddressPage);
     }
 
     render() {
         const {getFieldDecorator} = this.props.form;
-        const formType = this.props.type;
         const  Read = this.props.type === ModelNameSpace.FormOpertationEnum.view
         return (
             <Form onSubmit={this.handleSubmit}>
@@ -389,11 +353,9 @@ class MemberAddressEidt extends React.Component<MemberAddressEditProps, MemberAd
 
                 <FormItem wrapperCol={{span: 12, offset: 5}}>
 
-                    {Read === true ?<FormControl.FormButtonControl type={ModelNameSpace.ButtonTypeEnum.confirm} loading={this.state.loading} title="确认"></FormControl.FormButtonControl>
-                        :
-                        <FormControl.FormButtonControl type={ModelNameSpace.ButtonTypeEnum.confirm} loading={this.state.loading} title="保存"></FormControl.FormButtonControl>}
-
-                    <FormControl.FormButtonControl type={ModelNameSpace.ButtonTypeEnum.cancel}  title="取消"></FormControl.FormButtonControl>
+                    {Read === true ?  <Button type="primary" onClick={this.returnUrl.bind(this)}>确认</Button>
+                        :<Button type="primary" htmlType="submit">保存</Button>}
+                    <Button type="primary" onClick={this.returnUrl.bind(this)}>取消</Button>
 
                 </FormItem>
 
@@ -404,7 +366,9 @@ class MemberAddressEidt extends React.Component<MemberAddressEditProps, MemberAd
 }
 
 
-export default Form.create<any>()(MemberAddressEidt);
+export default Form.create<any>()(MemberAddressEidtView);
 
 //endregion
+
+
 

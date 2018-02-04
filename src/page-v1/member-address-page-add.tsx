@@ -38,6 +38,7 @@ export class MemberAddressPageAdd extends React.Component<MemberAddressPageAddPr
     render() {
           const MemberAddressAddForm = Form.create()(MemberAddressAdd);
         return (<Row className="member-address-page">
+            <ContentHeaderControl title="添加收件人"></ContentHeaderControl>
             <MemberAddressAddForm></MemberAddressAddForm>
         </Row>)
     }
