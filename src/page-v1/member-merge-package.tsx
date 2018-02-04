@@ -18,7 +18,7 @@ import * as util from "util";
 import {FormOrderInfo, FormOrderInfoModel} from "../components-v1/form-order-info";
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import {FormOrderRelation} from "../components-v1/form-order-relation";
-import {FormOrderAddressee} from "../components-v1/form-order-addressee";
+import FormOrderAddressee from "../components-v1/form-order-addressee";
 import {FormOrderDeclare} from "../components-v1/form-order-declare";
 
 export interface MemberMergePackageProps extends RouteComponentProps<any, any> {
