@@ -9,6 +9,7 @@ const OrderMergeProductListModel = requestNameSpace.OrderMergeProductListModel;
 
 export interface FormOrderDeclareProps {
     readOnly?: boolean;
+    data?: requestNameSpace.OrderMergeProductListModel[];
 }
 
 export interface FormOrderDeclareStates {
@@ -23,8 +24,14 @@ export class FormOrderDeclare extends React.Component<FormOrderDeclareProps, For
     constructor(props, context) {
         super(props, context);
         this.state = {
-            data: [],
+            data: props.data ? props.data : [],
             total: '00.00'
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if ('data' in nextProps && nextProps.data !== this.props.data) {
+            this.setState({data: nextProps.data});
         }
     }
 
@@ -121,10 +128,15 @@ export class FormOrderDeclare extends React.Component<FormOrderDeclareProps, For
 
     renderAddButton() {
         return <div>
-            <Icon type="plus-circle-o"/>
-            <a onClick={this.onAddClick.bind(this)}>
-                <span>添加货品</span>
-            </a>
+            {
+                this.props.readOnly ? null :
+                    <span>
+                        <Icon type="plus-circle-o"/>
+                        <a onClick={this.onAddClick.bind(this)}>
+                            <span>添加货品</span>
+                        </a>
+                    </span>
+            }
             <div style={{float: 'right'}}>
                 <span style={{paddingRight: '5px'}}>申报总和:</span>
                 <a>{this.state.total}</a>

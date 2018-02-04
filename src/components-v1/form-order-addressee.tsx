@@ -55,7 +55,7 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
     }
 
     renderHeader() {
-        return <div>
+        return this.props.readOnly ? null : <div>
             <i className={Context.getIconClassName("icon-tianjialianxiren")}/>
             <a onClick={this.onAddClick.bind(this)}>
                 <span>选择联系人</span>
@@ -80,14 +80,14 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
                                 required: !noRequired,
                                 message: '请填写' + label
                             }]
-                        })(<Input.TextArea placeholder={'请输入'}></Input.TextArea>)
+                        })(<Input.TextArea disabled={this.props.readOnly} placeholder={'请输入'}></Input.TextArea>)
                         : getFieldDecorator(fieldName, {
                             initialValue: '',
                             rules: [{
                                 required: !noRequired,
                                 message: '请填写' + label
                             }]
-                        })(<Input placeholder={'请输入'}></Input>)
+                        })(<Input disabled={this.props.readOnly} placeholder={'请输入'}></Input>)
                 }
             </Form.Item>
         </Col>
