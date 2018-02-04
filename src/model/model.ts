@@ -67,7 +67,7 @@ export namespace ModelNameSpace {
         userInfo?: UserInfoModel;
     }
 
-    export interface AddressModel {
+    export interface AddressModel extends BaseModel{
         taxno?: string;
         companyName?: string;
         recipient?: string;
@@ -79,10 +79,6 @@ export namespace ModelNameSpace {
         postalcode?: string;
         Tel?: string;
         Address?: string;
-        Created?: string;
-        Modified?: string;
-        CreatedBy?: string;
-        ModifiedBy?: string;
     }
 
     export interface UserSearchModel {
@@ -257,22 +253,23 @@ export namespace ModelNameSpace {
         /** 仓库ID*/
         WareHouseID?: number;
         /** 仓库名称*/
-        WareHouseName?:string;
+        WareHouseName?: string;
         /** 入库时间*/
         InWareHouseTime?: Date;
         /** 客服ID*/
         CustomerServiceID?: number;
         /** 客服名称*/
-        CustomerServiceName?:string;
+        CustomerServiceName?: string;
         /** 会员编号*/
         MemeberCode?: string;
         /** 状态编号*/
-        currentStatus?:string;
+        currentStatus?: string;
         /** 状态名称*/
-        currentStep?:string;
+        currentStep?: string;
         /** 备注*/
-        WarehouseAdminRemark?:string;
+        WarehouseAdminRemark?: string;
     }
+
     /** 客户订单状态*/
     export interface MemberOrderStatusModel extends BaseModel {
         DeliveryDoneCount?: number;
@@ -302,11 +299,12 @@ export namespace ModelNameSpace {
     //endregion
 
     //region 泛型定义区
-    export  enum  FormOpertationEnum{
+    export  enum FormOpertationEnum {
         view = 0,
         edit = 1,
         add = 2
     }
+
     export enum orderMergeStepEnum {
         /*待打包*/
         WaitForPackage = 0,

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {withRouter,hashHistory} from 'react-router';
-import {Row, Table, Button, message,Popconfirm} from "antd";
+import {withRouter, hashHistory} from 'react-router';
+import {Row, Table, Button, message, Popconfirm} from "antd";
 import {APINameSpace} from '../model/api';
 import {ModelNameSpace} from '../model/model';
 import {requestNameSpace} from '../model/request';
@@ -13,47 +13,47 @@ import {ClickParam} from "antd/lib/menu";
 import {ColumnProps, RowSelectionType, TableRowSelection} from "antd/lib/table";
 
 
-
 // import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
 
 interface MemberAddressPageStates {
-    dataSource?: any;
-    selectRow?:any;
-    loading?:boolean;
+    dataSource?: ModelNameSpace.AddressModel[];
+    selectRow?: ModelNameSpace.AddressModel;
+    loading?: boolean;
 }
 
 interface MemberAddressPageProps {
-    selectValue?:()=>any
+    selectValue?: () => any
+    onOk?: (user: ModelNameSpace.AddressModel) => void;
 }
 
 @withRouter
 export class MemberAddressPage extends React.Component<MemberAddressPageProps, MemberAddressPageStates> {
     constructor(props) {
         super(props);
-        this.state = {dataSource: [],selectRow:[],loading:false};
+        this.state = {dataSource: [], selectRow: {}, loading: false};
     }
 
 
     loadData() {
-        this.setState({loading:true});
+        this.setState({loading: true});
         APINameSpace.MemberAPI.GetRecipientsAddressAll().then((result) => {
             if (result.Data !== null) {
-                this.setState({dataSource: result.Data,loading:false});
+                this.setState({dataSource: result.Data, loading: false});
             }
         });
     }
 
-    deleteDataByID(ID:string){
-        let request:requestNameSpace.DeleteRecipientsAddressRequest ={id: ID};
-        APINameSpace.MemberAPI.DeleteRecipientsAddress(request).then((result)=>{
-            if (result.Data === "True"){
+    deleteDataByID(ID: string) {
+        let request: requestNameSpace.DeleteRecipientsAddressRequest = {id: ID};
+        APINameSpace.MemberAPI.DeleteRecipientsAddress(request).then((result) => {
+            if (result.Data === "True") {
                 message.success('删除成功');
                 this.loadData();
             }
         });
     }
 
-    columns:ColumnProps<ModelNameSpace.AddressModel>[]= [{
+    columns: ColumnProps<ModelNameSpace.AddressModel>[] = [{
         title: '收件人',
         dataIndex: 'recipient',
         key: 'recipient',
@@ -73,7 +73,7 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
         title: '操作',
         fixed: 'right',
         render: (val, record, index) => {
-            const menu:FormTableOperationModel[]=[
+            const menu: FormTableOperationModel[] = [
                 {
                     key: PathConfig.MemberAddressPageView,
                     type: "search",
@@ -91,12 +91,12 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
                 }
             ]
 
-            return <FormTableOperation onClick={(param:ClickParam)=>{
-                if (param.key === "delete"){
+            return <FormTableOperation onClick={(param: ClickParam) => {
+                if (param.key === "delete") {
                     this.deleteDataByID(record.ID);
                 }
                 else {
-                    hashHistory.push({pathname:param.key,state:record});
+                    hashHistory.push({pathname: param.key, state: record});
                 }
 
             }} value={menu}></FormTableOperation>;
@@ -104,11 +104,11 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
     }];
 
 
-    rowSelection:TableRowSelection<any> = {
-        type:"radio",
+    rowSelection: TableRowSelection<any> = {
+        type: "radio",
         onChange: (selectedRowKeys, selectedRows) => {
-           // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-            this.setState({selectRow:selectedRows});
+            // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            this.setState({selectRow: selectedRows[0]});
 
             console.log(this.state.selectRow);
         },
@@ -118,24 +118,29 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
     };
 
 
-
     componentDidMount() {
         this.loadData();
     }
 
-    returnUrl(){
+    returnUrl() {
         hashHistory.push(PathConfig.MemberAddressPageAdd);
     }
-    
+
+    onOk(user: ModelNameSpace.AddressModel) {
+        this.props.onOk && this.props.onOk(user);
+    }
+
     render() {
         return (<Row className="member-address-page">
             <ContentHeaderControl title="收件人地址"></ContentHeaderControl>
             {/*<FormControl.FormButtonControl title="确认" type={ModelNameSpace.ButtonTypeEnum.confirm} handleClick={this.handleClick.bind(this)} loading={this.state.savingLoading}/>*/}
             {/*<FormControl.FormButtonControl title="新增收件人" type={ModelNameSpace.ButtonTypeEnum.add} url={PathConfig.MemberAddressPageAdd}/>*/}
+            <Button type="primary" onClick={this.onOk.bind(this)}>确认</Button>
             <Button type="primary" onClick={this.returnUrl.bind(this)}>
                 新增联系人
             </Button>
-            <Table  loading={this.state.loading}  rowKey={"ID"} rowSelection={this.rowSelection} dataSource={this.state.dataSource} columns={this.columns} pagination={false}/>
+            <Table loading={this.state.loading} rowKey={"ID"} rowSelection={this.rowSelection}
+                   dataSource={this.state.dataSource} columns={this.columns} pagination={false}/>
         </Row>)
     }
 
