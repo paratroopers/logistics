@@ -184,6 +184,12 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().put(url, data);
         }
 
+        /** 入库删除*/
+        static async WarehouseInDelete(data: requestNameSpace.WarehouseInDeleteRequest) {
+            let url: string = CommonAPI.baseURL + "CustomerOrder/Item/delete";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().del(url, data);
+        }
+
         static async GetWareHouseAll() {
             let url: string = CommonAPI.baseURL + "Warehouse/all";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url);

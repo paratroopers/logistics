@@ -8,7 +8,7 @@ import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {ResponseNameSpace} from '../model/response';
 import {PathConfig}from "../config/pathconfig";
-import {isNullOrUndefined} from "util";
+        import {isNullOrUndefined} from "util";
 
 interface WarehouseInEditPageProps extends RouteComponentProps<any, any> {
 

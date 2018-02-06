@@ -55,8 +55,13 @@ export class FormAdvancedItemModel {
     }
 
     /** 点击重置*/
-    onReset = () => {
+    onReset = (e) => {
+        e.preventDefault();
+        const topThis=this;
+        const {props: {onClickSearch}} = topThis;
         this.props.form.resetFields();
+        if (onClickSearch)
+            onClickSearch(null);
     }
 
     /** 高级搜索点击事件*/

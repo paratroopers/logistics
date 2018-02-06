@@ -120,10 +120,16 @@ export namespace requestNameSpace {
     //endregion
 
     //region 仓库入库，打包，出库定义区
-    export interface GetWarehouseInListRequest {
+    export interface GetWarehouseInListRequest extends BaseListRequest{
         type: ModelNameSpace.OrderTypeEnum;
-        pageIndex: number;
-        pageSize: number;
+        customerOrderNo?:string;
+        expressNo?:string;
+        expressTypeID?:number;
+        transferNo?:string;
+        warehouseID?:number;
+        inWarehouseIimeBegin?:Date;
+        inWarehouseIimeEnd?:Date;
+        customerServiceID?:number;
     }
 
     export interface WarehouseInAddRequest {
@@ -192,6 +198,10 @@ export namespace requestNameSpace {
         InWareHouseStatus: string,
         /** 备注*/
         WarehouseAdminRemark: string
+    }
+
+    export interface WarehouseInDeleteRequest {
+        ID?: number;
     }
 
     export interface CustomerOrdersRequest extends BaseListRequest {

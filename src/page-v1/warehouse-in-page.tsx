@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter,hashHistory} from 'react-router';
-import {Row, Col, Button, Icon, Table, Alert} from 'antd';
+import {Row, Col, Button, Icon, Table, Alert,Modal,message,Input} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
 const { RangePicker } = DatePicker;
@@ -20,6 +20,8 @@ import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import {APINameSpace} from "../model/api";
 import {ClickParam} from "antd/lib/menu";
 import {FormTableOperation,FormTableOperationModel} from "../components-v1/form-table-operation";
+const confirm = Modal.confirm;
+import {isNullOrUndefined} from "util";
 
 interface WarehouseInPageProps {
 
@@ -38,6 +40,8 @@ interface WarehouseInPageStates {
     totalCount:number
     /** 列表是否正在查询*/
     loading?: boolean;
+    /** 筛选字段*/
+    formAdvancedData?:any;
 }
 
 @withRouter
@@ -59,11 +63,13 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
     }
 
     /** 高级搜索*/
-    onClickSearch = () => {
+    onClickSearch = (values:any) => {
         const topThis = this;
         const {state: {pageSize}} = topThis;
-        /** 查询第一页*/
-        topThis.loadData(1, pageSize);
+        topThis.setState({formAdvancedData:values},()=>{
+            /** 查询第一页*/
+            topThis.loadData(1, pageSize);
+        })
     }
 
     /** 选中事件*/
@@ -75,9 +81,19 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
     /** 获取数据源*/
     loadData = (index?:number,size?:number) => {
         const topThis = this;
-        const {state: {pageIndex, pageSize}} = topThis;
+        const {state: {pageIndex, pageSize,formAdvancedData}} = topThis;
         const request: requestNameSpace.GetWarehouseInListRequest = {
             type: ModelNameSpace.OrderTypeEnum.WarehouseIn,
+            customerOrderNo: !isNullOrUndefined(formAdvancedData.H)?formAdvancedData.H[0].key:"",
+            expressNo: !isNullOrUndefined(formAdvancedData.I)?formAdvancedData.I.key:"",
+            expressTypeID: !isNullOrUndefined(formAdvancedData.B)?formAdvancedData.B.key:"",
+
+            transferNo: !isNullOrUndefined(formAdvancedData.J)?formAdvancedData.J:"",
+
+            warehouseID: !isNullOrUndefined(formAdvancedData.C)?formAdvancedData.C.key:"",
+            inWarehouseIimeBegin: !isNullOrUndefined(formAdvancedData.D)?formAdvancedData.D[0].format("YYYY-MM-DD hh:mm:ss"):"",
+            inWarehouseIimeEnd: !isNullOrUndefined(formAdvancedData.D)?formAdvancedData.D[1].format("YYYY-MM-DD hh:mm:ss"):"",
+            customerServiceID: !isNullOrUndefined(formAdvancedData.F)?formAdvancedData.F[0].key:"",
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize
         }
@@ -91,6 +107,22 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                     totalCount: result.TotalCount,
                     loading: false
                 });
+            }
+        })
+    }
+
+    onClickDelete(ID:number){
+        const topThis = this;
+        const {state: {pageIndex, pageSize}} = topThis;
+        const request: requestNameSpace.WarehouseInDeleteRequest = {
+            ID:ID
+        }
+
+        topThis.setState({loading: true});
+        APINameSpace.WarehouseAPI.WarehouseInDelete(request).then((result: ResponseNameSpace.BaseResponse) => {
+            if (result.Status === 0) {
+                message.success("删除成功!");
+                topThis.loadData(pageIndex, pageSize);
             }
         })
     }
@@ -153,11 +185,32 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                         key: PathConfig.WarehouseInEditPage,
                         type: "edit",
                         label: "编辑"
+                    },
+                    {
+                        key: "delete",
+                        type: "delete",
+                        label: "删除"
                     }
                 ]
 
                 return <FormTableOperation onClick={(param:ClickParam)=>{
-                    hashHistory.push({pathname:param.key,state:record});
+                    if(param.key==="delete"){
+                        confirm({
+                            title: 'Are you sure delete this task?',
+                            content: 'Some descriptions',
+                            okText: 'Yes',
+                            okType: 'danger',
+                            cancelText: 'No',
+                            onOk() {
+                                topThis.onClickDelete(record.ID);
+                            },
+                            onCancel() {
+
+                            }
+                        });
+                    }else{
+                        hashHistory.push({pathname:param.key,state:record});
+                    }
                 }} value={menu}></FormTableOperation>;
             }
         }];
@@ -237,32 +290,38 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 control: <RangePicker></RangePicker>
             }, {
                 defaultDisplay: false,
-                fieldName: "H",
+                fieldName: "E",
                 displayName: "会员",
                 control: <FormControl.FormSelectIndex type={SelectType.Member} placeholder="搜索会员"/>
             }, {
                 defaultDisplay: false,
-                fieldName: "I",
+                fieldName: "F",
                 displayName: "客服",
                 control: <FormControl.FormSelectIndex type={SelectType.CustomerService} placeholder="搜索客服"/>
             },
             {
                 defaultDisplay: false,
-                fieldName: "I",
+                fieldName: "G",
                 displayName: "仓库管理员",
                 control: <FormControl.FormSelectIndex type={SelectType.WarehouseAdmin} placeholder="搜索仓库管理员"/>
             },
             {
                 defaultDisplay: false,
-                fieldName: "J",
+                fieldName: "H",
                 displayName: "客服订单号",
                 control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客服订单号"/>
             },
             {
                 defaultDisplay: false,
-                fieldName: "K",
+                fieldName: "I",
                 displayName: "快递单号",
                 control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="搜索快递单号"/>
+            },
+            {
+                defaultDisplay: false,
+                fieldName: "J",
+                displayName: "交接单号",
+                control: <Input placeholder="交接单号"/>
             }
         ];
         return items;
