@@ -10,6 +10,8 @@ import {ContentHeaderControl} from "../components-v1/common-content-header";
 import {FormOrderRelation} from "../components-v1/form-order-relation";
 import FormOrderAddressee from "../components-v1/form-order-addressee";
 import {FormOrderDeclare} from "../components-v1/form-order-declare";
+import {FormPackageRequirement} from "../components-v1/form-package-requirement";
+import {FormPackageDetail} from "../components-v1/form-package-detail";
 import {FormOrderChannel} from "../components-v1/form-order-channel";
 
 export interface MemberMergePackageProps extends RouteComponentProps<any, any> {
@@ -84,6 +86,8 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
                 <FormOrderAddressee></FormOrderAddressee>
                 <FormOrderDeclare></FormOrderDeclare>
                 <FormOrderChannel></FormOrderChannel>
+                <FormPackageRequirement></FormPackageRequirement>
+                <FormPackageDetail></FormPackageDetail>
             </Layout.Content>
         </Layout>;
     }

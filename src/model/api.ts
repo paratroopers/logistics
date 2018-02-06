@@ -7,8 +7,8 @@ export namespace APINameSpace {
     //region 基类定义区
     export class CommonAPI {
         // static  uatURL = "http://localhost:8090/_api/ver(1.0)/";
-         //static baseURL = "http://www.famliytree.cn/_api/ver(1.0)/";
-       static  baseURL = "http://localhost:8090/_api/ver(1.0)/";
+        static baseURL = "http://www.famliytree.cn/_api/ver(1.0)/";
+       //static  baseURL = "http://localhost:8090/_api/ver(1.0)/";
     }
 
     //endregion
@@ -175,9 +175,14 @@ export namespace APINameSpace {
         /** 仓库入库*/
         static async WarehouseInAdd(data: requestNameSpace.WarehouseInAddRequest) {
             let url: string = CommonAPI.baseURL + "CustomerOrder/Item/Insert";
-            return new Request<BaseRequest, ResponseNameSpace.GetWarehouseInListResponse>().post(url, data);
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().post(url, data);
         }
 
+        /** 入库编辑*/
+        static async WarehouseInEdit(data: requestNameSpace.WarehouseInEditRequest) {
+            let url: string = CommonAPI.baseURL + "CustomerOrder/Item/update";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().put(url, data);
+        }
 
         static async GetWareHouseAll() {
             let url: string = CommonAPI.baseURL + "Warehouse/all";

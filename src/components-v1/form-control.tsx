@@ -24,7 +24,6 @@ export namespace FormControl {
     export interface FormSelectIndexProps extends SelectProps {
         placeholder: string;
         type: SelectType;
-        readonly?: boolean;
         value?: LabeledValue;
     }
 
@@ -136,9 +135,9 @@ export namespace FormControl {
 
         render() {
             const topThis = this;
-            const {props: {value}, state: {fetching, data}} = topThis;
-            return !this.props.readonly ?
-                <Select
+            const {props: {value,disabled}, state: {fetching, data}} = topThis;
+            return <Select
+                    disabled={disabled}
                     mode="multiple"
                     labelInValue
                     value={value}
@@ -150,9 +149,7 @@ export namespace FormControl {
                     style={{width: '100%'}}
                 >
                     {data.map(d => <Option key={d.value}>{d.text}</Option>)}
-                </Select>
-                :
-                <label>{isArray(value) ? value.map(item => item.label + ";") : (!isNullOrUndefined(value) ? value.label : "")}</label>;
+                </Select>;
         }
 
     }

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {withRouter,hashHistory,RouteComponentProps} from 'react-router';
-import {Row,message} from 'antd';
+import {withRouter, hashHistory, RouteComponentProps} from 'react-router';
+import {Row, message} from 'antd';
 import {ContentHeaderControl}from "../components-v1/common-content-header";
 import WarehouseInForm from "../components-v1/warehouse-in-form";
 import {requestNameSpace} from '../model/request';
@@ -10,23 +10,27 @@ import {ResponseNameSpace} from '../model/response';
 import {PathConfig}from "../config/pathconfig";
 import {isNullOrUndefined} from "util";
 
-interface WarehouseInEditPageProps extends RouteComponentProps<any, any>{
+interface WarehouseInEditPageProps extends RouteComponentProps<any, any> {
 
 }
 
 interface WarehouseInEditPageStates {
-
+    loading?: boolean;
 }
 
 @withRouter
 export class WarehouseInEditPage extends React.Component<WarehouseInEditPageProps, WarehouseInEditPageStates> {
     constructor(props) {
         super(props);
+        this.state = {
+            loading: false
+        }
     }
 
-    onSubmit=(values)=>{
+    onSubmit = (values) => {
         const topThis = this;
-        const request: requestNameSpace.WarehouseInAddRequest = {
+        const request: requestNameSpace.WarehouseInEditRequest = {
+            ID: topThis.props.location.state.ID,
             /** 会员ID*/
             userid: values.user[0].key,
             /** 快递单号*/
@@ -42,7 +46,7 @@ export class WarehouseInEditPage extends React.Component<WarehouseInEditPageProp
             /** 入库重量*/
             InWeight: values.inWeight,
             /** 入库体积*/
-            InVolume: values.inLength*values.inWidth*values.inHeight,
+            InVolume: values.inLength * values.inWidth * values.inHeight,
             /** 入库长度*/
             InLength: values.inLength,
             /** 入库宽度*/
@@ -58,28 +62,23 @@ export class WarehouseInEditPage extends React.Component<WarehouseInEditPageProp
             /** 备注*/
             WarehouseAdminRemark: values.warehouseAdminRemark
         }
-        message.success("暂无编辑的接口!");
-        // topThis.setState({loading: true});
-        // APINameSpace.WarehouseAPI.WarehouseInAdd(request).then((result: ResponseNameSpace.BaseResponse) => {
-        //     if (result.Status === 0) {
-        //         message.success("新增成功!");
-        //         topThis.setState({loading: false},()=>{
-        //             hashHistory.push(PathConfig.WarehouseInPage);
-        //         });
-        //     }
-        // })
+        topThis.setState({loading: true});
+        APINameSpace.WarehouseAPI.WarehouseInEdit(request).then((result: ResponseNameSpace.BaseResponse) => {
+            if (result.Status === 0) {
+                message.success("编辑成功!");
+                topThis.setState({loading: false}, () => {
+                    hashHistory.push(PathConfig.WarehouseInPage);
+                });
+            }
+        })
     }
 
     render() {
         const topThis = this;
-        const {props: {location}} = topThis;
-        /** 获取页面传值*/
-        const viewData: ModelNameSpace.WarehouseListModel = location.state;
-        /** 未传值则返回*/
-        if (isNullOrUndefined(viewData)) hashHistory.goBack();
         return <Row className="warehouse-in-edit-page">
             <ContentHeaderControl title="编辑"></ContentHeaderControl>
-            {!isNullOrUndefined(viewData) ? <WarehouseInForm type={"edit"} Data={viewData} readOnly={true}></WarehouseInForm> :
+            {!isNullOrUndefined(this.props.location) ?
+                <WarehouseInForm type={"edit"} Data={this.props.location.state} readOnly={true} onSubmit={topThis.onSubmit.bind(this)}></WarehouseInForm> :
                 <div>暂无数据</div>}
         </Row>;
     }

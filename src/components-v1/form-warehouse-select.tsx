@@ -10,7 +10,6 @@ const Option = Select.Option;
 import {APINameSpace} from '../model/api';
 
 interface FormWarehouseSelectProps extends SelectProps{
-    readonly?: boolean;
     value?: LabeledValue
 }
 
@@ -61,9 +60,9 @@ export class FormWarehouseSelect extends React.Component<FormWarehouseSelectProp
 
     render() {
         const topThis = this;
-        const {props:{readonly,value,...otherProps}} = topThis;
-        return !readonly ?<Select labelInValue value={value} {...otherProps} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+        const {props:{value,...otherProps}} = topThis;
+        return <Select labelInValue value={value} {...otherProps} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0}>
             {topThis.renderOption()}
-        </Select>:<label>{!isNullOrUndefined(value)?value.label:""}</label>;
+        </Select>;
     }
 }
