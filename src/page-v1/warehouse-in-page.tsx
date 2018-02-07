@@ -82,20 +82,26 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
     loadData = (index?:number,size?:number) => {
         const topThis = this;
         const {state: {pageIndex, pageSize,formAdvancedData}} = topThis;
-        const request: requestNameSpace.GetWarehouseInListRequest = {
+        let request: requestNameSpace.GetWarehouseInListRequest = {
             type: ModelNameSpace.OrderTypeEnum.WarehouseIn,
-            customerOrderNo: !isNullOrUndefined(formAdvancedData.H)?formAdvancedData.H[0].key:"",
-            expressNo: !isNullOrUndefined(formAdvancedData.I)?formAdvancedData.I.key:"",
-            expressTypeID: !isNullOrUndefined(formAdvancedData.B)?formAdvancedData.B.key:"",
-
-            transferNo: !isNullOrUndefined(formAdvancedData.J)?formAdvancedData.J:"",
-
-            warehouseID: !isNullOrUndefined(formAdvancedData.C)?formAdvancedData.C.key:"",
-            inWarehouseIimeBegin: !isNullOrUndefined(formAdvancedData.D)?formAdvancedData.D[0].format("YYYY-MM-DD hh:mm:ss"):"",
-            inWarehouseIimeEnd: !isNullOrUndefined(formAdvancedData.D)?formAdvancedData.D[1].format("YYYY-MM-DD hh:mm:ss"):"",
-            customerServiceID: !isNullOrUndefined(formAdvancedData.F)?formAdvancedData.F[0].key:"",
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize
+        }
+
+        if(!isNullOrUndefined(formAdvancedData)){
+            request={
+                customerOrderNo: !isNullOrUndefined(formAdvancedData.H) ? formAdvancedData.H[0].key : "",
+                expressNo: !isNullOrUndefined(formAdvancedData.I) ? formAdvancedData.I.key : "",
+                expressTypeID: !isNullOrUndefined(formAdvancedData.B) ? formAdvancedData.B.key : "",
+
+                transferNo: !isNullOrUndefined(formAdvancedData.J) ? formAdvancedData.J : "",
+
+                warehouseID: !isNullOrUndefined(formAdvancedData.C) ? formAdvancedData.C.key : "",
+                inWarehouseIimeBegin: !isNullOrUndefined(formAdvancedData.D) ? formAdvancedData.D[0].format("YYYY-MM-DD hh:mm:ss") : "",
+                inWarehouseIimeEnd: !isNullOrUndefined(formAdvancedData.D) ? formAdvancedData.D[1].format("YYYY-MM-DD hh:mm:ss") : "",
+                customerServiceID: !isNullOrUndefined(formAdvancedData.F) ? formAdvancedData.F[0].key : "",
+                ...request
+            }
         }
 
         topThis.setState({loading: true});
