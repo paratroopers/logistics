@@ -60,7 +60,7 @@ export class FormChannelInfo extends React.Component<FormChannelInfoProps, FormC
                 dataIndex: 'WeightLimit',
                 width: '20%',
                 render: (txt) => {
-                    return <div style={{width: '150px'}} className="txtislong" title={txt}>{txt}</div>
+                    return <div style={{width: '120px'}} className="txtislong" title={txt}>{txt}</div>
                 }
             },
             {
@@ -68,13 +68,16 @@ export class FormChannelInfo extends React.Component<FormChannelInfoProps, FormC
                 dataIndex: 'SizeLimit',
                 width: '20%',
                 render: (txt) => {
-                    return <div style={{width: '150px'}} className="txtislong" title={txt}>{txt}</div>
+                    return <div style={{width: '120px'}} className="txtislong" title={txt}>{txt}</div>
                 }
             },
             {
                 title: '备注',
                 dataIndex: 'Remark',
-                width: '30%'
+                width: '30%',
+                render: (txt) => {
+                    return <div style={{width: '150px'}} className="txtislong" title={txt}>{txt}</div>
+                }
             }
         ];
         return <FormChannelInfoTable columns={columns}

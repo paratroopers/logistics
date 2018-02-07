@@ -90,7 +90,8 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
                     </Dropdown>
                 }
             }];
-        return <FormOrderChannelTable columns={columns} dataSource={this.state.data}></FormOrderChannelTable>
+        return <FormOrderChannelTable pagination={false} columns={columns}
+                                      dataSource={this.state.data}></FormOrderChannelTable>
     }
 
     renderHeader() {
