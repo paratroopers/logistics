@@ -51,7 +51,7 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
             {
                 title: '渠道名称',
                 dataIndex: 'Name',
-                width: '15%'
+                width: '20%'
             },
             {
                 title: '时间',
@@ -61,7 +61,7 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
             {
                 title: '重量限制',
                 dataIndex: 'WeightLimit',
-                width: '20%',
+                width: '25%',
                 render: (txt) => {
                     return <div style={{width: '150px'}} className="txtislong" title={txt}>{txt}</div>
                 }
@@ -69,7 +69,7 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
             {
                 title: '体积限制',
                 dataIndex: 'SizeLimit',
-                width: '20%',
+                width: '25%',
                 render: (txt) => {
                     return <div style={{width: '150px'}} className="txtislong" title={txt}>{txt}</div>
                 }
