@@ -1,14 +1,8 @@
 import * as React from 'react';
-import {Input, Row, Col, Form, message, Table, Menu, Dropdown, Icon} from 'antd';
+import {Table, Menu, Dropdown, Icon} from 'antd';
 import {ColumnProps} from 'antd/lib/table';
-import {FormComponentProps} from 'antd/lib/form';
-import {RowProps} from 'antd/lib/row';
-import {APINameSpace} from '../model/api';
-import {requestNameSpace} from '../model/request';
 import {FormSettingGroup} from './form-setting-group';
-import {FormContactInfo} from './form-contact-info';
-import {ModelNameSpace} from '../model/model';
-import {Context} from '../util/common';
+import {FormChannelInfo} from './form-channel-info';
 
 export interface FormOrderChannelProps {
     readOnly?: boolean;
@@ -16,6 +10,7 @@ export interface FormOrderChannelProps {
 
 export interface FormOrderChannelStates {
     data?: any[];
+    channelsShow?: boolean;
 }
 
 class FormOrderChannelTable extends Table<any> {
@@ -25,8 +20,21 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
     constructor(props, context) {
         super(props, context);
         this.state = {
-            data: []
+            data: [],
+            channelsShow: false
         }
+    }
+
+    onAddClick() {
+        this.setState({channelsShow: true});
+    }
+
+    onOk() {
+        this.setState({channelsShow: false});
+    }
+
+    onChanel() {
+        this.setState({channelsShow: false});
     }
 
     renderTable() {
@@ -58,7 +66,7 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
     renderHeader() {
         return this.props.readOnly ? null : <div>
             <Icon type="plus-circle-o"/>
-            <a>
+            <a onClick={this.onAddClick.bind(this)}>
                 <span>添加渠道</span>
             </a>
         </div>
@@ -67,6 +75,8 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
     render() {
         return <FormSettingGroup title={"渠道选择"} topBar={this.renderHeader()}>
             {this.renderTable()}
+            {<FormChannelInfo visible={this.state.channelsShow} onOk={this.onOk.bind(this)}
+                              onChanel={this.onChanel.bind(this)}></FormChannelInfo>}
         </FormSettingGroup>
     }
 }
