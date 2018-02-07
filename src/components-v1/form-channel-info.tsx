@@ -1,16 +1,20 @@
 import * as React from 'react';
-import {Table, Modal} from 'antd';
+import {Table, Modal, message} from 'antd';
 import {ColumnProps, TableRowSelection} from 'antd/lib/table';
+import {ModelNameSpace} from '../model/model';
+import {APINameSpace} from '../model/api';
 
 
 export interface FormChannelInfoProps {
-    onOk?: (id?: string) => void;
+    onOk?: (selected?: ModelNameSpace.ChannelModal) => void;
     onChanel?: () => void;
     visible?: boolean;
+    width?: number;
 }
 
 export interface FormChannelInfoStates {
-    selectRow?: any;
+    selectRow?: ModelNameSpace.ChannelModal;
+    data?: ModelNameSpace.ChannelModal[];
 }
 
 class FormChannelInfoTable extends Table<any> {
@@ -20,36 +24,65 @@ export class FormChannelInfo extends React.Component<FormChannelInfoProps, FormC
     constructor(props, context) {
         super(props, context);
         this.state = {
-            selectRow: null
+            selectRow: null,
+            data: [],
         }
+    }
+
+    componentDidMount() {
+        this.getData(1);
+    }
+
+    getData(pageIndex?: number) {
+        APINameSpace.CustomerOrderAPI.GetChannels().then(r => {
+            if (r.Status === 0) {
+                this.setState({
+                    data: r.Data
+                });
+            }
+        });
     }
 
     renderTable() {
         const columns: ColumnProps<any>[] = [
             {
                 title: '渠道名称',
-                dataIndex: 'channelName'
+                dataIndex: 'Name',
+                width: '15%'
             },
             {
-                title: '价格',
-                dataIndex: '2'
+                title: '时间',
+                dataIndex: 'Prescription',
+                width: '15%'
             },
             {
-                title: '服务费',
-                dataIndex: '3'
+                title: '重量限制',
+                dataIndex: 'WeightLimit',
+                width: '20%',
+                render: (txt) => {
+                    return <div style={{width: '150px'}} className="txtislong" title={txt}>{txt}</div>
+                }
+            },
+            {
+                title: '体积限制',
+                dataIndex: 'SizeLimit',
+                width: '20%',
+                render: (txt) => {
+                    return <div style={{width: '150px'}} className="txtislong" title={txt}>{txt}</div>
+                }
+            },
+            {
+                title: '备注',
+                dataIndex: 'Remark',
+                width: '30%'
             }
         ];
         return <FormChannelInfoTable columns={columns}
-                                     rowKey={"id"}
+                                     rowKey={"ID"}
                                      rowSelection={this.onRowSelection()}
                                      bordered={false}
                                      pagination={false}
-                                     dataSource={[{
-                                         channelName: '顺丰',
-                                         2: '188',
-                                         3: '36',
-                                         id: 1
-                                     }]}></FormChannelInfoTable>
+                                     dataSource={this.state.data}></FormChannelInfoTable>
     }
 
     onRowSelection(): TableRowSelection<any> {
@@ -61,11 +94,19 @@ export class FormChannelInfo extends React.Component<FormChannelInfoProps, FormC
         }
     };
 
+    onOk() {
+        if (this.state.selectRow)
+            this.props.onOk && this.props.onOk(this.state.selectRow)
+        else
+            message.warning('请选择渠道');
+    }
+
     render() {
-        const {props: {visible, onOk, onChanel}} = this;
+        const {props: {visible, onChanel, width}} = this;
         return <Modal visible={visible}
+                      width={width ? width : 800}
                       title="渠道选择"
-                      onOk={() => onOk && onOk()}
+                      onOk={this.onOk.bind(this)}
                       onCancel={() => onChanel && onChanel()}>
             {this.renderTable()}
         </Modal>

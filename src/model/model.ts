@@ -67,7 +67,7 @@ export namespace ModelNameSpace {
         userInfo?: UserInfoModel;
     }
 
-    export interface AddressModel extends BaseModel{
+    export interface AddressModel extends BaseModel {
         taxno?: string;
         companyName?: string;
         recipient?: string;
@@ -294,6 +294,18 @@ export namespace ModelNameSpace {
         expressTypeID?: string;
         expressTypeName?: string;
         userid?: string;
+    }
+
+    export interface ChannelModal extends BaseModel {
+        TenantID?: string;
+        ID?: string;
+        Name?: string;
+        code?: string;
+        Prescription?: string;
+        Remark?: string;
+        Clause?: string;
+        WeightLimit?: string;
+        SizeLimit?: string;
     }
 
     //endregion

@@ -8,7 +8,7 @@ export namespace APINameSpace {
     export class CommonAPI {
         // static  uatURL = "http://localhost:8090/_api/ver(1.0)/";
         static baseURL = "http://www.famliytree.cn/_api/ver(1.0)/";
-       //static  baseURL = "http://localhost:8090/_api/ver(1.0)/";
+        //static  baseURL = "http://localhost:8090/_api/ver(1.0)/";
     }
 
     //endregion
@@ -109,9 +109,9 @@ export namespace APINameSpace {
         }
 
 
-        static async GetRecipientsAddress(data:requestNameSpace.GetRecipientsAddressRequest) {
+        static async GetRecipientsAddress(data: requestNameSpace.GetRecipientsAddressRequest) {
             let url: string = CommonAPI.baseURL + "RecipientsAddress/Item";
-            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url,data);
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
 
         static async GetMesaageLatest() {
@@ -211,6 +211,11 @@ export namespace APINameSpace {
         static async GetOrderItemsByID(data: string) {
             let url: string = CommonAPI.baseURL + "CustomerOrder/order/items";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, {request: data});
+        }
+
+        static async GetChannels() {
+            let url: string = CommonAPI.baseURL + "Channel/Items";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url);
         }
 
     }
