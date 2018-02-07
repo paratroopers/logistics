@@ -4,11 +4,14 @@ import {FormSettingGroup} from './form-setting-group';
 import {ColumnProps} from 'antd/lib/table';
 import {requestNameSpace} from '../model/request';
 import {Util} from '../util/util';
+import {isNullOrUndefined} from "util";
 
 const PackageDetailListModel = requestNameSpace.PackageDetailListModel;
 
 export interface FormPackageDetailProps {
     readOnly?: boolean;
+    onChange?: (data?: requestNameSpace.PackageDetailListModel[]) => void;
+    value?: requestNameSpace.PackageDetailListModel[];
 }
 
 export interface FormPackageDetailStates {
@@ -22,7 +25,7 @@ export class FormPackageDetail extends React.Component<FormPackageDetailProps, F
     constructor(props, context) {
         super(props, context);
         this.state = {
-            data: []
+            data: !isNullOrUndefined(props.value) ? props.value : []
         }
     }
 
@@ -40,12 +43,17 @@ export class FormPackageDetail extends React.Component<FormPackageDetailProps, F
     }
 
     onChange(value, record: requestNameSpace.PackageDetailListModel, fieldName: string) {
+        const topThis = this;
+        const {props: {onChange}} = topThis;
         let data = this.state.data;
         Util.each(data, d => {
             if (d.ID === record.ID)
                 d[fieldName] = value;
         });
-        this.setState({data: data});
+        this.setState({data: data}, () => {
+            if (onChange)
+                onChange(data);
+        });
     }
 
     renderTable() {
