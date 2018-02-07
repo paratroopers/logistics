@@ -78,16 +78,9 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
                 title: '操作',
                 dataIndex: '',
                 render: (txt, record) => {
-                    const menu = <Menu>
-                        <Menu.Item>
-                            <span onClick={() => this.onDelete(record)}><Icon type="delete"></Icon>删除</span>
-                        </Menu.Item>
-                    </Menu>;
-                    return <Dropdown overlay={menu}>
-                        <a className="ant-dropdown-link">
-                            操作 <Icon type="down"/>
-                        </a>
-                    </Dropdown>
+                    return <a onClick={() => this.onDelete(record)}>删除</a>
+
+
                 }
             }];
         return <FormOrderChannelTable pagination={false} columns={columns}
