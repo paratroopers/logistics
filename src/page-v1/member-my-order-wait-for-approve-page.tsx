@@ -20,9 +20,12 @@ import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import {APINameSpace} from "../model/api";
 import {ClickParam} from "antd/lib/menu";
 import {FormTableOperation,FormTableOperationModel} from "../components-v1/form-table-operation";
+import {FormComponentProps} from "antd/lib/form";
+import FormItem from "antd/lib/form/FormItem";
+
 
 /// 待审核列表
-interface MemberMyOrderWaitForApprovePageProps {
+interface MemberMyOrderWaitForApprovePageProps extends FormComponentProps {
 
 }
 
@@ -42,7 +45,7 @@ interface MemberMyOrderWaitForApprovePageStates {
 }
 
 @withRouter
-export class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitForApprovePageProps, MemberMyOrderWaitForApprovePageStates> {
+ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitForApprovePageProps, MemberMyOrderWaitForApprovePageStates> {
     constructor(props) {
         super(props);
         this.state = {
@@ -56,16 +59,9 @@ export class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrd
     }
 
     componentDidMount() {
-        this.loadData();
+       // this.loadData();
     }
 
-    /** 高级搜索*/
-    onClickSearch = () => {
-        const topThis = this;
-        const {state: {pageSize}} = topThis;
-        /** 查询第一页*/
-        topThis.loadData(1, pageSize);
-    }
 
     /** 选中事件*/
     onSelectChange = (selectedRowKeys) => {
@@ -110,10 +106,13 @@ export class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrd
             title: "客户订单号",
             dataIndex: 'CustomerOrderNo',
             fixed: 'left'
+        }, {
+            title: "渠道",
+            dataIndex: 'expressNo'
         },{
             title: "发往国家",
             dataIndex: 'expressNo'
-        }, {
+        },{
             title: "入库总体积",
             dataIndex: 'MemeberCode'
         }, {
@@ -167,8 +166,14 @@ export class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrd
                       locale={{emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>}}/>;
     }
 
-    onSearch(){
-
+    onSearch = (e) =>{
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log('Received values of form: ', values);
+            }
+        });
+     //   this.loadData();
     }
     onReset(){
 
@@ -177,20 +182,31 @@ export class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrd
     render() {
         const topThis = this;
         return <Row className="warehouse-in-page">
-
             <Form className="na-advanced-search-form"
-                  layout={"vertical"}
-                  onSubmit={topThis.onSearch.bind(this)}>
-                <Row>
-                    <Col>
-                        <Input  placeholder="客户快递单号" size ="default" style={{width: 300, marginLeft:200,marginRight:40}}/>
-                        <Button type="primary" htmlType="submit">搜索</Button>
-                        <Button style={{marginLeft: 8}} onClick={topThis.onReset.bind(this)}>重置</Button>
-                    </Col>
-                </Row>
+                  layout={"inline"}
+                  onSubmit={topThis.onSearch}>
+                <FormItem>
+                    客户订单号: <Input  placeholder="客户订单号" size ="default" />
+                </FormItem>
+                <FormItem>
+                    快递单号:
+                    <Input  placeholder="快递单号" size ="default" />
+                </FormItem>
+                <FormItem>
+                    渠道:
+                    <Input  placeholder="渠道" size ="default" />
+                </FormItem>
+                <FormItem>
+                    <Button type="primary" htmlType="submit" style={{marginTop:40}}>搜索</Button>
+                </FormItem>
+                <FormItem>
+                    <Button style={{marginTop: 40}} onClick={topThis.onReset.bind(this)}>重置</Button>
+                </FormItem>
             </Form>
-
             {topThis.renderTable()}
         </Row>;
     }
 }
+
+
+export default Form.create<any>()(MemberMyOrderWaitForApprovePage);

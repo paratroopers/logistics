@@ -11,7 +11,7 @@ import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import * as moment from 'moment';
-import  {MemberMyOrderWaitForApprovePage} from './member-my-order-wait-for-approve-page';
+import  MemberMyOrderWaitForApprovePage from './member-my-order-wait-for-approve-page';
 
 
 interface MemberMyOrderPageStates {
