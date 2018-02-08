@@ -109,16 +109,16 @@ export class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrd
             title: "客户订单号",
             dataIndex: 'CustomerOrderNo',
             fixed: 'left'
+        },{
+            title: "发往国家",
+            dataIndex: 'expressNo'
         }, {
             title: "入库总体积",
             dataIndex: 'MemeberCode'
         }, {
             title: "入库总重量",
             dataIndex: 'expressTypeName'
-        }, {
-            title: "发往国家",
-            dataIndex: 'expressNo'
-        }, {
+        },  {
             title: "申报总额",
             dataIndex: 'CustomerServiceName'
         }, {
