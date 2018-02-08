@@ -21,6 +21,7 @@ import {APINameSpace} from "../model/api";
 import {ClickParam} from "antd/lib/menu";
 import {FormTableOperation,FormTableOperationModel} from "../components-v1/form-table-operation";
 
+/// 待审核列表
 interface MemberMyOrderWaitForApprovePageProps {
 
 }

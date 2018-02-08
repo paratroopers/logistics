@@ -119,7 +119,7 @@ export namespace requestNameSpace {
 
     //endregion
 
-    //region 仓库入库，打包，出库定义区
+    //region 订单和合并订单（仓库入库，待打包，待审核，客服确认，仓库打包，客户付款，仓库打包 所有的接口区域；
     export interface GetWarehouseInListRequest extends BaseListRequest{
         type: ModelNameSpace.OrderTypeEnum;
         customerOrderNo?:string;
