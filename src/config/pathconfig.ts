@@ -51,7 +51,7 @@ export class PathConfig {
 
     /** 财务*/
     /*客服*/
-    static CustomerServerPage = "/cusertomerservice/orderconfirm";
+    static CustomerServicePage = "/cusertomerservice/orderconfirm";
 
 
     /** 报表*/

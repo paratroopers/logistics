@@ -31,6 +31,8 @@ import MobileMemberDetailPage from "../page-v1/mobile-member-detail-page";
 import {MobileMemberWelcomePage} from "../page-v1/mobile-member-welcome-page";
 import {MobileCustomerServicePage} from "../page-v1/mobile-customer-service-page";
 
+import  CustomerServiceConfirmListPage from "../page-v1/customer-service-confirm-list-page";
+
 
 const routerConfig = (
     <Router history={hashHistory}>
@@ -64,6 +66,7 @@ const routerConfig = (
                 <Route path={PathConfig.WarehouseInViewPage} component={WarehouseInViewPage}/>
                 <Route path={PathConfig.WarehouseInEditPage} component={WarehouseInEditPage}/>
                 <Route path={PathConfig.MemberMergePackage} component={MemberMergePackage}/>
+                <Route path={PathConfig.CustomerServicePage} component={CustomerServiceConfirmListPage} />
 
             </Route>
         </Route>
