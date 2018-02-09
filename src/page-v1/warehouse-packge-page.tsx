@@ -26,11 +26,11 @@ import {isUndefined} from "util";
 
 
 /// 待审核列表
-interface MemberWaitPayPageProps extends FormComponentProps {
+interface WarehousePackgePageProps extends FormComponentProps {
 
 }
 
-interface MemberWaitPayPageStates {
+interface WarehousePackgePageStates {
     /** 数据源*/
     listData: ModelNameSpace.WarehouseListModel[],
     /** 选中行*/
@@ -46,7 +46,7 @@ interface MemberWaitPayPageStates {
 }
 
 @withRouter
-class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, MemberWaitPayPageStates> {
+class WarehousePackgePage extends React.Component<WarehousePackgePageProps, WarehousePackgePageStates> {
     constructor(props,context) {
         super(props,context);
         this.state = {
@@ -60,7 +60,7 @@ class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, MemberWa
     }
 
     componentDidMount() {
-        this.loadData(1,10,0);
+         this.loadData(1,10,0);
     }
 
 
@@ -148,9 +148,13 @@ class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, MemberWa
                         key: PathConfig.MemberAddressPageEdit,
                         type: "edit",
                         label: "查看"
+                    },
+
+                    {
+                        key: "delete",
+                        type: "delete",
+                        label: "撤回"
                     }
-
-
                 ]
 
                 return <FormTableOperation onClick={(param: ClickParam) => {
@@ -158,7 +162,7 @@ class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, MemberWa
                         //this.deleteDataByID(record.ID);
                     }
                     else {
-                        //  hashHistory.push({pathname: param.key, state: record});
+                      //  hashHistory.push({pathname: param.key, state: record});
                     }
 
                 }} value={menu}></FormTableOperation>;
@@ -200,7 +204,7 @@ class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, MemberWa
     }
 
     onClickSearch = (values:any) =>{
-        //  e.preventDefault();
+      //  e.preventDefault();
         this.loadData(1,10,values);
         // this.props.form.validateFields((err, values) => {
         //     if (!err) {
@@ -266,4 +270,4 @@ class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, MemberWa
 }
 
 
-export default Form.create<any>()(MemberWaitPayPage);
+export default Form.create<any>()(WarehousePackgePage);

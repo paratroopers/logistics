@@ -8,17 +8,18 @@ import {MemberAddressPage} from "../page-v1/member-address-page";
 import {MemberAddressPageAdd} from "../page-v1/member-address-page-add";
 import {MemberAddressPageEdit} from "../page-v1/member-address-page-edit";
 import {MemberAddressPageView} from "../page-v1/member-address-page-view";
-import {MemberDeliveredPage} from "../page-v1/member-delivered-page";
+import MemberDeliveredPage from "../page-v1/member-delivered-page";
 import {MemberMessageListPage} from "../page-v1/member-message-list-page";
 import {MemberMyOrderPage} from "../page-v1/member-my-order-page";
 import {MemberUserInformationPage} from "../page-v1/member-user-information";
-import {MemberWaitPayPage} from "../page-v1/member-wait-pay-page";
+import MemberWaitPayPage from "../page-v1/member-wait-pay-page";
 import {MemberWarehouseInQueryPage} from "../page-v1/member-warehouse-in-query-page";
 import {WarehouseInPage} from "../page-v1/warehouse-in-page";
 import {WarehouseInAddPage} from "../page-v1/warehouse-in-add-page";
 import {WarehouseInViewPage} from "../page-v1/warehouse-in-view-page";
 import {WarehouseInEditPage} from "../page-v1/warehouse-in-edit-page";
 import {MemberMergePackage} from "../page-v1/member-merge-package";
+
 import  UserLoginPage from '../page-v1/user-login-page';
 import  UserRegisterPage from '../page-v1/user-register-page';
 import {IndexCompanyPage} from "../page-v1/index-company-page";
@@ -32,6 +33,8 @@ import {MobileMemberWelcomePage} from "../page-v1/mobile-member-welcome-page";
 import {MobileCustomerServicePage} from "../page-v1/mobile-customer-service-page";
 
 import  CustomerServiceConfirmListPage from "../page-v1/customer-service-confirm-list-page";
+import WarehouseOutPage from '../page-v1/warehouse-out-page';
+import WarehousePackgePage from '../page-v1/warehouse-packge-page';
 
 
 const routerConfig = (
@@ -62,6 +65,8 @@ const routerConfig = (
                 <Route path={PathConfig.MemberWaitPayPage} component={MemberWaitPayPage}/>
                 <Route path={PathConfig.MemberWarehouseInQueryPage} component={MemberWarehouseInQueryPage}/>
                 <Route path={PathConfig.WarehouseInPage} component={WarehouseInPage}/>
+                <Route path={PathConfig.WarehouseOutPage} component={WarehouseOutPage}/>
+                <Route path={PathConfig.WarehousePackage} component={WarehousePackgePage}/>
                 <Route path={PathConfig.WarehouseInAddPage} component={WarehouseInAddPage}/>
                 <Route path={PathConfig.WarehouseInViewPage} component={WarehouseInViewPage}/>
                 <Route path={PathConfig.WarehouseInEditPage} component={WarehouseInEditPage}/>

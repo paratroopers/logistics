@@ -60,7 +60,7 @@ class CustomerServiceConfirmListPage extends React.Component<CustomerServiceConf
     }
 
     componentDidMount() {
-        // this.loadData();
+         this.loadData(1,10,0);
     }
 
     /** 选中事件*/
@@ -133,6 +133,39 @@ class CustomerServiceConfirmListPage extends React.Component<CustomerServiceConf
         }, {
             title: "创建时间",
             dataIndex: 'InWareHouseTime'
+        }, {
+            title: '操作',
+            fixed: 'right',
+            render: (val, record, index) => {
+                const menu: FormTableOperationModel[] = [
+                    {
+                        key: PathConfig.MemberAddressPageView,
+                        type: "search",
+                        label: "审核"
+                    },
+                    {
+                        key: PathConfig.MemberAddressPageEdit,
+                        type: "edit",
+                        label: "查看"
+                    },
+
+                    {
+                        key: "delete",
+                        type: "delete",
+                        label: "撤回"
+                    }
+                ]
+
+                return <FormTableOperation onClick={(param: ClickParam) => {
+                    if (param.key === "delete") {
+                        //this.deleteDataByID(record.ID);
+                    }
+                    else {
+                      //  hashHistory.push({pathname: param.key, state: record});
+                    }
+
+                }} value={menu}></FormTableOperation>;
+            }
         }];
 
         const pagination: PaginationProps = {
@@ -159,8 +192,8 @@ class CustomerServiceConfirmListPage extends React.Component<CustomerServiceConf
                       style={{padding: '12px'}}
                       pagination={pagination}
                       title={(currentPageData: Object[]) => {
-                          // 总计已入库的数量
-                          return <Alert message={"总计有 " + totalCount + "项 已入库"} type="info" showIcon></Alert>;
+                          //
+                          return <Alert message={"总计有 " + totalCount + "项待审批"} type="info" showIcon></Alert>;
                       }}
                       scroll={{x: 1800}}
                       rowSelection={rowSelection}
@@ -169,14 +202,15 @@ class CustomerServiceConfirmListPage extends React.Component<CustomerServiceConf
                       locale={{emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>}}/>;
     }
 
-    onSearch = (e) =>{
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                console.log('Received values of form: ', values);
-                this.loadData(1,10,values);
-            }
-        });
+    onClickSearch = (values:any) =>{
+      //  e.preventDefault();
+        this.loadData(1,10,values);
+        // this.props.form.validateFields((err, values) => {
+        //     if (!err) {
+        //         console.log('Received values of form: ', values);
+        //
+        //     }
+        // });
 
     }
 
@@ -184,35 +218,51 @@ class CustomerServiceConfirmListPage extends React.Component<CustomerServiceConf
 
     }
 
-    render() {
-        const { getFieldDecorator } = this.props.form;
-        return <Row>
-            <Form
-                  layout={"inline"}
-                  onSubmit={this.onSearch}>
-                    <FormItem label="客户订单号">
-                        {getFieldDecorator('customerOrderMergeNo')(
-                            <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder={"客户订单号"} > </FormControl.FormSelectIndex>
-                        )}
-                    </FormItem>
-                    <FormItem label="快递单号">
+    renderFormAdvancedItems() {
+        const items: FormAdvancedItemModel[] = [
+            {
+                defaultDisplay: true,
+                fieldName: "customerOrderMerge",
+                displayName: "客户合并订单号",
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客户合并订单号"/>
+            },
+            {
+                defaultDisplay: true,
+                fieldName: "MemberNo",
+                displayName: "会员号",
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索会员号"/>
+            },
+            {
+                defaultDisplay: true,
+                fieldName: "channel",
+                displayName: "渠道",
+                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="搜索渠道"/>
+            },
+            {
+                defaultDisplay: false,
+                fieldName: "CustomerSericeStatus",
+                displayName: "状态",
+                control:  <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder={"快递状态"}  />
+            },{
+                defaultDisplay: false,
+                fieldName: "Created",
+                displayName: "创建时间",
+                control: <RangePicker></RangePicker>
+            }
 
-                        {getFieldDecorator('expressNo')(
-                            <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder={"快递单号"}  > </FormControl.FormSelectIndex>
-                        )}
-                    </FormItem>
-                    <FormItem label="渠道">
-                        {getFieldDecorator('ChannelID' )(
-                            <FormControl.FormSelect type={SelectType.channel} placeholder="渠道"  > </FormControl.FormSelect>
-                        )}
-                    </FormItem>
-                    <FormItem>
-                        <Button type="primary" htmlType="submit">搜索</Button>
-                    </FormItem>
-                    <FormItem>
-                        <Button type="primary"  onClick={this.onReset.bind(this)}>重置</Button>
-                    </FormItem>
-            </Form>
+        ];
+        return items;
+    }
+
+    render() {
+        const topThis = this;
+        // const { getFieldDecorator } = this.props.form;
+        return <Row>
+            <ContentHeaderControl title="订单确认"></ContentHeaderControl>
+
+            <FormAdvancedSearch
+                formAdvancedItems={topThis.renderFormAdvancedItems()}
+                onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch>
             {this.renderTable()}
         </Row>;
     }
