@@ -10,6 +10,8 @@ import {FormCollapse} from "../components-v1/form-collapse";
 import {FormStatusSelect} from "../components-v1/form-status-select";
 import {FormExpressSelect} from "../components-v1/form-express-select";
 import {FormWarehouseSelect} from "../components-v1/form-warehouse-select";
+import {FormPackageRequirement} from "../components-v1/form-package-requirement";
+import {FormPackageDetail} from "../components-v1/form-package-detail";
 
 interface DemoStates {
 
@@ -60,6 +62,8 @@ export class DemoPage extends React.Component<DemoProps, DemoStates> {
                     {/*console.log(values);*/}
                 {/*}}></FormAdvancedSearch>*/}
             </FormCollapse>
+            <FormPackageRequirement></FormPackageRequirement>
+            <FormPackageDetail></FormPackageDetail>
         </Row>
     }
 }

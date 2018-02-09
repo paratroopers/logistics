@@ -233,9 +233,10 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 topThis.setState({pageIndex: a, pageSize: b});
                 topThis.loadData(a, b);
             },
-            showQuickJumper: true,//是否可以快速跳转至某页
+            showQuickJumper: false,//是否可以快速跳转至某页
             showTotal: (total, range) => {
-                return `${range[0]}-${range[1]} of ${total} items`;
+                // return `${range[0]}-${range[1]} of ${total} items`;
+                return "";
             }
         };
 
@@ -248,7 +249,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                           // 总计已入库的数量
                           return <Alert message={"总计有 " + totalCount + "项 已入库"} type="info" showIcon></Alert>;
                       }}
-                      scroll={{x: 1800}}
+                      scroll={{x: 1700}}
                       rowSelection={rowSelection}
                       bordered={false}
                       dataSource={listData}
