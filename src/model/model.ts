@@ -188,7 +188,7 @@ export namespace ModelNameSpace {
 
     //endregion
 
-    //region 仓库入库,打包，出库定义区
+    //region 仓库入库
     /** 附件*/
     export interface Attachment extends BaseModel {
         /** 主键*/
@@ -270,7 +270,7 @@ export namespace ModelNameSpace {
         WarehouseAdminRemark?: string;
     }
 
-    /** 客户订单状态*/
+    /** 客户订单 客户合并订单*/
     export interface MemberOrderStatusModel extends BaseModel {
         DeliveryDoneCount?: number;
         waitForCustomerPackgeCount?: number;
@@ -308,6 +308,49 @@ export namespace ModelNameSpace {
         SizeLimit?: string;
     }
 
+    export interface  CustomerOrderMergeModel extends  BaseModel{
+        currentStatus?:string;
+        currentStep?:string;
+        ID?:number;
+        UserID?:number;
+        MergeOrderNo?:number;
+        CustomerMark?:string;
+        CustomerChooseChannelID?:number;
+        CustomerChooseChannelName?:string;
+        InWeightTotal?:number;
+        InVolumeTotal?:number;
+        InPackageCountTotal?:number;
+        recipient?:string;
+        country?:string;
+        address?:string;
+        city?:string;
+        code?:string;
+        tel?:string;
+        company?:string;
+        taxNo?:string;
+        declareTotal?:number;
+        customerServiceMark?:string;
+        packageMark?:string;
+        packageWeight?:number;
+        packageVolume?:number;
+        packageLength?:number;
+        packageHeight?:number;
+        packageWidth?:number;
+        settlementWeight?:number;
+        freightFee?:number;
+        tax?:number;
+        serviceFee?:number;
+        remoteFee?:number;
+        magneticinspectionFee?:number;
+        totalFee?:number;
+        ChannelID?:number;
+        ChannelName?:string;
+        channelNo?:string;
+        deliverTime?:Date,
+        AgentID?:number;
+        Created?:Date;
+        Modified?:Date;
+    }
     //endregion
 
     //region 泛型定义区

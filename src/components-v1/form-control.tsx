@@ -49,7 +49,7 @@ export namespace FormControl {
     //endregion
 
 
-    //region select 控件, Button控件
+    //region select索引控件, Button控件 Select 控件
     export class FormSelectIndex extends React.Component<FormSelectIndexProps, FormSelectIndexStates> {
         lastFetchId: number;
 
@@ -146,7 +146,7 @@ export namespace FormControl {
                     filterOption={false}
                     onSearch={this.fetchData}
                     onChange={this.handleChange}
-                    style={{width: '100%'}}
+                    style={{width: 160}}
                 >
                     {data.map(d => <Option key={d.value}>{d.text}</Option>)}
                 </Select>;
@@ -237,5 +237,65 @@ export namespace FormControl {
         }
     }
 
+    interface FormSelectProps extends SelectProps {
+        value?: LabeledValue,
+        type: SelectType
+    }
+
+    interface FormSelectStates {
+        selectData?:LabeledValue[]
+    }
+
+    export class FormSelect extends React.Component<FormSelectProps, FormSelectStates> {
+        constructor(props, content) {
+            super(props, content);
+            this.state = {
+                selectData: []
+            }
+        }
+
+        componentDidMount() {
+            this.onLoadData();
+        }
+
+        /** 获取数据源*/
+        onLoadData() {
+            const topThis = this;
+            let data:LabeledValue[];
+            const type = this.props.type;
+            if (type === SelectType.channel){
+                APINameSpace.SystemAPI.GetChannelAll().then((result) =>{
+                    if (result.Data !== null && result.Status === 0){
+                        data = result.Data.map(o =>({
+                            key:o.ID,
+                            label:o.Name
+                        }));
+                        topThis.setState({selectData: data});
+                    }
+                })
+            }
+        }
+
+
+        renderOption() {
+            const topThis = this;
+            const {state: {selectData}} = topThis;
+            const options = [];
+            if (!isNullOrUndefined(selectData)) {
+                selectData.map(function (item, index) {
+                    options.push(<Option value={item.key} key={index}>{item.label}</Option>);
+                })
+            }
+            return options;
+        }
+
+        render() {
+            const topThis = this;
+            const {props:{value,...otherProps}} = topThis;
+            return <Select style={{width:160}} labelInValue value={value} {...otherProps} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+                {topThis.renderOption()}
+            </Select>;
+        }
+    }
     //endregion
 }

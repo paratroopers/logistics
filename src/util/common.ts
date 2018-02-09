@@ -8,7 +8,7 @@ import {ModelNameSpace} from '../model/model';
 import {Notification} from "../components-v1/notification";
 
 
-export enum SelectType {CustomerOrder = 1, Member= 2, WarehouseAdmin = 3, CustomerService =4, ExpressNo =5}
+export enum SelectType {CustomerOrder = 1, Member= 2, WarehouseAdmin = 3, CustomerService =4, ExpressNo =5,channel = 6}
 
 export interface Base {
 }

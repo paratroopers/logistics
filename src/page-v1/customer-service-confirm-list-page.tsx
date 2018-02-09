@@ -22,6 +22,7 @@ import {ClickParam} from "antd/lib/menu";
 import {FormTableOperation,FormTableOperationModel} from "../components-v1/form-table-operation";
 import {FormComponentProps} from "antd/lib/form";
 import FormItem from "antd/lib/form/FormItem";
+import {isUndefined} from "util";
 
 
 /// 待审核列表
@@ -46,8 +47,8 @@ interface CustomerServiceConfirmListPageStates {
 
 @withRouter
 class CustomerServiceConfirmListPage extends React.Component<CustomerServiceConfirmListPageProps, CustomerServiceConfirmListPageStates> {
-    constructor(props) {
-        super(props);
+    constructor(props,context) {
+        super(props,context);
         this.state = {
             listData: [],
             selectedRowKeys: [],
@@ -62,7 +63,6 @@ class CustomerServiceConfirmListPage extends React.Component<CustomerServiceConf
         // this.loadData();
     }
 
-
     /** 选中事件*/
     onSelectChange = (selectedRowKeys) => {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -70,17 +70,20 @@ class CustomerServiceConfirmListPage extends React.Component<CustomerServiceConf
     }
 
     /** 获取数据源*/
-    loadData = (index?:number,size?:number) => {
+    loadData = (index?:number,size?:number,searchaValues?:any) => {
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
-        const request: requestNameSpace.GetWarehouseInListRequest = {
-            type: ModelNameSpace.OrderTypeEnum.WarehouseIn,
+        const request: requestNameSpace.GetCustomerOrderMergeRequest = {
+            type: 0,
+            channelID: !isUndefined(searchaValues.ChannelID)?searchaValues.ChannelID.key:0,
+            expressNo:!isUndefined(searchaValues.expressNo)?searchaValues.expressNo:"",
+            customerChooseChannelID:!isUndefined(searchaValues.ChannelID)?searchaValues.ChannelID:0,
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize
         }
 
         topThis.setState({loading: true});
-        APINameSpace.WarehouseAPI.GetWarehouseInItems(request).then((result: ResponseNameSpace.GetWarehouseInListResponse) => {
+        APINameSpace.MemberAPI.GetCustomerOrdersMerge(request).then((result: ResponseNameSpace.GetCustomerOrderMergeListResponse) => {
             if (result.Status === 0) {
                 topThis.setState({
                     listData: result.Data,
@@ -104,7 +107,7 @@ class CustomerServiceConfirmListPage extends React.Component<CustomerServiceConf
 
         const columns: ColumnProps<ModelNameSpace.WarehouseListModel>[] = [{
             title: "客户订单号",
-            dataIndex: 'CustomerOrderNo',
+            dataIndex: 'MergeOrderNo',
             fixed: 'left'
         }, {
             title: "渠道",
@@ -171,39 +174,46 @@ class CustomerServiceConfirmListPage extends React.Component<CustomerServiceConf
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                this.loadData(1,10,values);
             }
         });
-        //   this.loadData();
+
     }
+
     onReset(){
 
     }
 
     render() {
-        const topThis = this;
-        return <Row className="warehouse-in-page">
-            <Form className="na-advanced-search-form"
+        const { getFieldDecorator } = this.props.form;
+        return <Row>
+            <Form
                   layout={"inline"}
-                  onSubmit={topThis.onSearch}>
-                <FormItem>
-                    客户订单号: <Input  placeholder="客户订单号" size ="default" />
-                </FormItem>
-                <FormItem>
-                    快递单号:
-                    <Input  placeholder="快递单号" size ="default" />
-                </FormItem>
-                <FormItem>
-                    渠道:
-                    <Input  placeholder="渠道" size ="default" />
-                </FormItem>
-                <FormItem>
-                    <Button type="primary" htmlType="submit" style={{marginTop:40}}>搜索</Button>
-                </FormItem>
-                <FormItem>
-                    <Button style={{marginTop: 40}} onClick={topThis.onReset.bind(this)}>重置</Button>
-                </FormItem>
+                  onSubmit={this.onSearch}>
+                    <FormItem label="客户订单号">
+                        {getFieldDecorator('customerOrderMergeNo')(
+                            <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder={"客户订单号"} > </FormControl.FormSelectIndex>
+                        )}
+                    </FormItem>
+                    <FormItem label="快递单号">
+
+                        {getFieldDecorator('expressNo')(
+                            <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder={"快递单号"}  > </FormControl.FormSelectIndex>
+                        )}
+                    </FormItem>
+                    <FormItem label="渠道">
+                        {getFieldDecorator('ChannelID' )(
+                            <FormControl.FormSelect type={SelectType.channel} placeholder="渠道"  > </FormControl.FormSelect>
+                        )}
+                    </FormItem>
+                    <FormItem>
+                        <Button type="primary" htmlType="submit">搜索</Button>
+                    </FormItem>
+                    <FormItem>
+                        <Button type="primary"  onClick={this.onReset.bind(this)}>重置</Button>
+                    </FormItem>
             </Form>
-            {topThis.renderTable()}
+            {this.renderTable()}
         </Row>;
     }
 }

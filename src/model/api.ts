@@ -7,8 +7,8 @@ export namespace APINameSpace {
     //region 基类定义区
     export class CommonAPI {
         // static  uatURL = "http://localhost:8090/_api/ver(1.0)/";
-        static baseURL = "http://www.famliytree.cn/_api/ver(1.0)/";
-        //static  baseURL = "http://localhost:8090/_api/ver(1.0)/";
+       // static baseURL = "http://www.famliytree.cn/_api/ver(1.0)/";
+        static  baseURL = "http://localhost:8090/_api/ver(1.0)/";
     }
 
     //endregion
@@ -21,6 +21,12 @@ export namespace APINameSpace {
             let url: string = CommonAPI.baseURL + "ExpressType/all";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url);
         }
+
+        static async GetChannelAll() {
+            let url: string = CommonAPI.baseURL + "Channel/Items";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url);
+        }
+
     }
 
     //endregion
@@ -158,6 +164,11 @@ export namespace APINameSpace {
             let url: string = CommonAPI.baseURL + "CustomerOrder/items/page";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
+        static async GetCustomerOrdersMerge(data: requestNameSpace.GetCustomerOrderMergeRequest) {
+            let url: string = CommonAPI.baseURL + "CustomerOrderMerge/items/page";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
+        }
+
     }
 
 
