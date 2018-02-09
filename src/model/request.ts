@@ -69,8 +69,6 @@ export namespace requestNameSpace {
         name: string;
         type: number;
     }
-
-
     //endregion
 
     //region 系统模块定义区

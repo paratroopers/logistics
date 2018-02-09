@@ -351,6 +351,11 @@ export namespace ModelNameSpace {
         Created?:Date;
         Modified?:Date;
     }
+    export interface FormDeliveredModel{
+        agentID?:number;
+        agentName?:string;
+        channelNo?:string;
+    }
     //endregion
 
     //region 泛型定义区

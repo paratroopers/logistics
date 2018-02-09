@@ -13,8 +13,10 @@ import {FormOrderDeclare} from "../components-v1/form-order-declare";
 import {FormPackageRequirement} from "../components-v1/form-package-requirement";
 import {FormPackageDetail} from "../components-v1/form-package-detail";
 import {FormOrderChannel} from "../components-v1/form-order-channel";
+import {FormDeliveredDetail} from "../components-v1/form-delivered-detail";
+import {FormComponentProps} from 'antd/lib/form/Form';
 
-export interface MemberMergePackageProps extends RouteComponentProps<any, any> {
+export interface MemberMergePackageProps extends RouteComponentProps<any, any>,FormComponentProps{
 }
 
 export interface MemberMergePackageStates {
@@ -57,12 +59,14 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
 
     getMergeOrderInfo() {
         const request = util.isArray(this.state.selectedKeys) ? (this.state.selectedKeys as string[]).join(",") : this.state.selectedKeys.toString();
-        APINameSpace.MemberAPI.GetOrderItemsByID(request).then(r => {
+        APINameSpace.MemberAPI.GetOrderItemsByID(request).then( r=> {
             r.Status === 0 && this.initOrderInfo(r.Data);
         });
     }
 
     render() {
+        const topThis=this;
+        const {props:{form}}=topThis;
         const {state: {orderInfo, data}} = this;
         return <Layout className="merge-package">
             <Layout.Header className="merge-package-header">
@@ -88,7 +92,9 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
                 <FormOrderChannel></FormOrderChannel>
                 <FormPackageRequirement></FormPackageRequirement>
                 <FormPackageDetail></FormPackageDetail>
+                <FormDeliveredDetail form={form}></FormDeliveredDetail>
             </Layout.Content>
         </Layout>;
+
     }
 }
