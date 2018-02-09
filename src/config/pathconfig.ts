@@ -46,10 +46,11 @@ export class PathConfig {
     static WarehouseInViewPage = "/warehouse/in/view";
     static WarehouseInEditPage = "/warehouse/in/edit";
     static WarehousePackage = "/warehouse/package";
-    static WarehouseDeliver = "/warehouse/deliver";
+    static WarehouseOutPage ="/warehouse/out";
     /** 客服*/
 
     /** 财务*/
+
     /*客服*/
     static CustomerServicePage = "/cusertomerservice/orderconfirm";
 

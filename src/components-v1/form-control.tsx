@@ -162,7 +162,7 @@ export namespace FormControl {
                     filterOption={false}
                     onSearch={this.fetchData}
                     onChange={this.handleChange}
-                    style={{width: 160}}
+                    style={{width: '100%'}}
                 >
                     {data.map(d => <Option key={d.value}>{d.text}</Option>)}
                 </Select>;
@@ -308,7 +308,7 @@ export namespace FormControl {
         render() {
             const topThis = this;
             const {props:{value,...otherProps}} = topThis;
-            return <Select style={{width:160}} labelInValue value={value} {...otherProps} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+            return <Select style={{width:'160%'}} labelInValue value={value} {...otherProps} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                 {topThis.renderOption()}
             </Select>;
         }

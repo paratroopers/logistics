@@ -22,6 +22,7 @@ import {ClickParam} from "antd/lib/menu";
 import {FormTableOperation,FormTableOperationModel} from "../components-v1/form-table-operation";
 import {FormComponentProps} from "antd/lib/form";
 import FormItem from "antd/lib/form/FormItem";
+import {isUndefined} from "util";
 
 
 /// 待审核列表
@@ -45,9 +46,9 @@ interface MemberMyOrderWaitForApprovePageStates {
 }
 
 @withRouter
- class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitForApprovePageProps, MemberMyOrderWaitForApprovePageStates> {
-    constructor(props) {
-        super(props);
+class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitForApprovePageProps, MemberMyOrderWaitForApprovePageStates> {
+    constructor(props,context) {
+        super(props,context);
         this.state = {
             listData: [],
             selectedRowKeys: [],
@@ -59,7 +60,7 @@ interface MemberMyOrderWaitForApprovePageStates {
     }
 
     componentDidMount() {
-       // this.loadData();
+        this.loadData(1,10,0);
     }
 
 
@@ -70,17 +71,20 @@ interface MemberMyOrderWaitForApprovePageStates {
     }
 
     /** 获取数据源*/
-    loadData = (index?:number,size?:number) => {
+    loadData = (index?:number,size?:number,searchaValues?:any) => {
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
-        const request: requestNameSpace.GetWarehouseInListRequest = {
-            type: ModelNameSpace.OrderTypeEnum.WarehouseIn,
+        const request: requestNameSpace.GetCustomerOrderMergeRequest = {
+            type: 0,
+            channelID: !isUndefined(searchaValues.ChannelID)?searchaValues.ChannelID.key:0,
+            expressNo:!isUndefined(searchaValues.expressNo)?searchaValues.expressNo:"",
+            customerChooseChannelID:!isUndefined(searchaValues.ChannelID)?searchaValues.ChannelID:0,
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize
         }
 
         topThis.setState({loading: true});
-        APINameSpace.WarehouseAPI.GetWarehouseInItems(request).then((result: ResponseNameSpace.GetWarehouseInListResponse) => {
+        APINameSpace.MemberAPI.GetCustomerOrdersMerge(request).then((result: ResponseNameSpace.GetCustomerOrderMergeListResponse) => {
             if (result.Status === 0) {
                 topThis.setState({
                     listData: result.Data,
@@ -104,7 +108,7 @@ interface MemberMyOrderWaitForApprovePageStates {
 
         const columns: ColumnProps<ModelNameSpace.WarehouseListModel>[] = [{
             title: "客户订单号",
-            dataIndex: 'CustomerOrderNo',
+            dataIndex: 'MergeOrderNo',
             fixed: 'left'
         }, {
             title: "渠道",
@@ -130,6 +134,35 @@ interface MemberMyOrderWaitForApprovePageStates {
         }, {
             title: "创建时间",
             dataIndex: 'InWareHouseTime'
+        }, {
+            title: '操作',
+            fixed: 'right',
+            render: (val, record, index) => {
+                const menu: FormTableOperationModel[] = [
+                    {
+                        key: PathConfig.MemberAddressPageView,
+                        type: "search",
+                        label: "审核"
+                    },
+                    {
+                        key: PathConfig.MemberAddressPageEdit,
+                        type: "edit",
+                        label: "查看"
+                    }
+
+
+                ]
+
+                return <FormTableOperation onClick={(param: ClickParam) => {
+                    if (param.key === "delete") {
+                        //this.deleteDataByID(record.ID);
+                    }
+                    else {
+                        //  hashHistory.push({pathname: param.key, state: record});
+                    }
+
+                }} value={menu}></FormTableOperation>;
+            }
         }];
 
         const pagination: PaginationProps = {
@@ -156,8 +189,8 @@ interface MemberMyOrderWaitForApprovePageStates {
                       style={{padding: '12px'}}
                       pagination={pagination}
                       title={(currentPageData: Object[]) => {
-                          // 总计已入库的数量
-                          return <Alert message={"总计有 " + totalCount + "项 已入库"} type="info" showIcon></Alert>;
+                          //
+                          return <Alert message={"总计有 " + totalCount + "项待审批"} type="info" showIcon></Alert>;
                       }}
                       scroll={{x: 1800}}
                       rowSelection={rowSelection}
@@ -166,44 +199,68 @@ interface MemberMyOrderWaitForApprovePageStates {
                       locale={{emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>}}/>;
     }
 
-    onSearch = (e) =>{
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                console.log('Received values of form: ', values);
-            }
-        });
-     //   this.loadData();
+    onClickSearch = (values:any) =>{
+        //  e.preventDefault();
+        this.loadData(1,10,values);
+        // this.props.form.validateFields((err, values) => {
+        //     if (!err) {
+        //         console.log('Received values of form: ', values);
+        //
+        //     }
+        // });
+
     }
+
     onReset(){
 
     }
 
+    renderFormAdvancedItems() {
+        const items: FormAdvancedItemModel[] = [
+            {
+                defaultDisplay: true,
+                fieldName: "customerOrderMerge",
+                displayName: "客户合并订单号",
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客户合并订单号"/>
+            },
+            {
+                defaultDisplay: true,
+                fieldName: "MemberNo",
+                displayName: "会员号",
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索会员号"/>
+            },
+            {
+                defaultDisplay: true,
+                fieldName: "channel",
+                displayName: "渠道",
+                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="搜索渠道"/>
+            },
+            {
+                defaultDisplay: false,
+                fieldName: "CustomerSericeStatus",
+                displayName: "状态",
+                control:  <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder={"快递状态"}  />
+            },{
+                defaultDisplay: false,
+                fieldName: "Created",
+                displayName: "创建时间",
+                control: <RangePicker></RangePicker>
+            }
+
+        ];
+        return items;
+    }
+
     render() {
         const topThis = this;
-        return <Row className="warehouse-in-page">
-            <Form className="na-advanced-search-form"
-                  layout={"inline"}
-                  onSubmit={topThis.onSearch}>
-                <FormItem>
-                    客户订单号: <Input  placeholder="客户订单号" size ="default" />
-                </FormItem>
-                <FormItem>
-                    快递单号:
-                    <Input  placeholder="快递单号" size ="default" />
-                </FormItem>
-                <FormItem>
-                    渠道:
-                    <Input  placeholder="渠道" size ="default" />
-                </FormItem>
-                <FormItem>
-                    <Button type="primary" htmlType="submit" style={{marginTop:40}}>搜索</Button>
-                </FormItem>
-                <FormItem>
-                    <Button style={{marginTop: 40}} onClick={topThis.onReset.bind(this)}>重置</Button>
-                </FormItem>
-            </Form>
-            {topThis.renderTable()}
+        // const { getFieldDecorator } = this.props.form;
+        return <Row>
+            <ContentHeaderControl title="订单确认"></ContentHeaderControl>
+
+            <FormAdvancedSearch
+                formAdvancedItems={topThis.renderFormAdvancedItems()}
+                onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch>
+            {this.renderTable()}
         </Row>;
     }
 }
