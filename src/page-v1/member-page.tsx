@@ -77,7 +77,7 @@ class MemberPage extends Component<MemberPageProps, NMemberPageStates> {
         const siderHidden = showNav ? {disaplay: 'block'} : {disaplay: 'none'};
         const isMobile = window.innerWidth <= 768;
         // collapsedWidth={Util.getScrrenMode(window.innerWidth) !== ScreenModeEnum.sm ? '' : 0}
-        return <div className="member-page" style={{maxWidth: '1200px', margin: '0 auto'}}>
+        return <div className="member-page" style={{maxWidth: '1500px', margin: '0 auto'}}>
             <Layout style={{minHeight: '100%', backgroundColor: '#fafafa'}}>
                 <Sider style={{
                     display: isMobile ? 'none' : '',
