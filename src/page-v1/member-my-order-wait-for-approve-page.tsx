@@ -74,6 +74,7 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
     loadData = (index?:number,size?:number,searchaValues?:any) => {
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
+
         const request: requestNameSpace.GetCustomerOrderMergeRequest = {
             type: 0,
             expressNo:!isUndefined(searchaValues.expressNo)?searchaValues.expressNo:"",
@@ -159,15 +160,6 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
             total: totalCount,//数据总数
             onChange: (a) => {
                 topThis.loadData(a, pageSize);
-            },
-            showSizeChanger: true,//是否可以改变 pageSize
-            onShowSizeChange: (a, b) => {
-                topThis.setState({pageIndex: a, pageSize: b});
-                topThis.loadData(a, b);
-            },
-            showQuickJumper: true,//是否可以快速跳转至某页
-            showTotal: (total, range) => {
-                return `${range[0]}-${range[1]} of ${total} items`;
             }
         };
 
@@ -197,6 +189,12 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
 
     renderFormAdvancedItems() {
         const items: FormAdvancedItemModel[] = [
+            {
+                defaultDisplay: true,
+                fieldName: "expressNo",
+                displayName: "快递单号",
+                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} isadmin={false} placeholder="搜索快递单号"/>
+            },
             {
                 defaultDisplay: true,
                 fieldName: "customerOrderMerge",

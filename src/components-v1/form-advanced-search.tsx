@@ -13,11 +13,14 @@ interface FormAdvancedSearchProps extends FormComponentProps {
     formAdvancedItems?: FormAdvancedItemModel[];
     /** 点击搜索*/
     onClickSearch?: (values:any) => void;
+    /*控件选择值*/
+    selectValues?:()=> any;
 }
 
 interface FormAdvancedSearchStates {
     /** 是否展示高级搜索的控件*/
     expand:boolean;
+    selectValues?:any;
 }
 
 export class FormAdvancedItemModel {
@@ -38,6 +41,15 @@ export class FormAdvancedItemModel {
         this.state = {
             expand: false
         };
+    }
+
+    SelectAllVaules(){
+        this.props.form.validateFields((err, values) => {
+            console.log('Received values of form: ', values);
+            if (!err) {
+                return values;
+            }
+        });
     }
 
     /** 点击搜索*/
