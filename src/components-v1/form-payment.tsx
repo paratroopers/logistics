@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {withRouter, hashHistory} from 'react-router';
+import {hashHistory} from 'react-router';
 import {Row, Col, Button} from "antd";
 import {FormSettingGroup} from './form-setting-group';
-import {ColumnProps} from 'antd/lib/table';
 
 import {PathConfig} from '../config/pathconfig';
 
@@ -10,18 +9,26 @@ export interface FormPaymentProps {
 }
 
 export interface FormPaymentStates {
+    money?: number;
 }
 
 export class FormPayment extends React.Component<FormPaymentProps, FormPaymentStates> {
 
-    /*<Col span={10}>
-    <h1 className="payment-title">支付:</h1>
-    <h1>135 元</h1>
-    </Col>
-    <Col offset={6} span={8}>
-            <Button className="payment-wx" icon="wechat">微信付款</Button>
-    <Button className="payment-zfb" icon="alipay">支付宝付款</Button>
-    </Col>*/
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            money: 407
+        }
+    }
+
+    onPayClick() {
+        hashHistory.push({
+            pathname: PathConfig.MemberPaymentPage,
+            query: {
+                money:this.state.money
+            }
+        })
+    }
 
     render() {
         return <FormSettingGroup title={"支付信息"}>
@@ -38,7 +45,7 @@ export class FormPayment extends React.Component<FormPaymentProps, FormPaymentSt
                 <Col offset={18} span={6} className="payment-total">
                     <div className="payment-total-cost">
                         <span className="title">应付总额:</span>
-                        <span className="count">¥407.00</span></div>
+                        <span className="count">¥{this.state.money.toFixed(2)}</span></div>
                 </Col>
                 <Col span={24} className="payment-address">
                     <span className="address">寄送至： 上海 闵行区 浦江镇 江汉路200弄26号302</span>
@@ -46,7 +53,7 @@ export class FormPayment extends React.Component<FormPaymentProps, FormPaymentSt
                     <span className="tel">183****5640</span>
                 </Col>
                 <Col offset={19} span={5} className="payment-go">
-                    <Button type="primary">去支付</Button>
+                    <Button type="primary" onClick={this.onPayClick.bind(this)}>去支付</Button>
                 </Col>
             </Row>
         </FormSettingGroup>

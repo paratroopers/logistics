@@ -6,6 +6,7 @@ export interface FormSettingGroupProps {
     title?: string;
     topBar?: JSX.Element;
     loading?: boolean;
+    telescopic?: boolean;
 }
 
 export interface FormSettingGroupStates {
@@ -29,7 +30,7 @@ export class FormSettingGroup extends React.Component<FormSettingGroupProps, For
     }
 
     render() {
-        const {props: {loading, title, topBar}, state: {isHidden}} = this;
+        const {props: {loading, title, topBar, telescopic}, state: {isHidden}} = this;
         let className = classNames({
             "hidden": isHidden
         }, "header-section-content");
@@ -44,8 +45,9 @@ export class FormSettingGroup extends React.Component<FormSettingGroupProps, For
                     </Col>
                     <Col className="fold">
                         {
-                            isHidden ? <Icon type="down" onClick={this.onShow.bind(this)}></Icon>
-                                : <Icon type="up" onClick={this.onHide.bind(this)}></Icon>
+                            telescopic ? (
+                                isHidden ? <Icon type="down" onClick={this.onShow.bind(this)}></Icon>
+                                    : <Icon type="up" onClick={this.onHide.bind(this)}></Icon>) : null
                         }
                     </Col>
                 </Row>

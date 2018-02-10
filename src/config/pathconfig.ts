@@ -36,7 +36,7 @@ export class PathConfig {
     static MemberAddressPageEdit = "/member/address/edit";
     static MemberAddressPageView = "/member/address/view";
 
-    static  MemberAddressCombinationPage = "/member/address/combination";
+    static MemberAddressCombinationPage = "/member/address/combination";
     /** 入库查询*/
     static MemberWarehouseInQueryPage = "/member/warehouse/in/query";
     /** 订单入库*/
@@ -46,7 +46,7 @@ export class PathConfig {
     static WarehouseInViewPage = "/warehouse/in/view";
     static WarehouseInEditPage = "/warehouse/in/edit";
     static WarehousePackage = "/warehouse/package";
-    static WarehouseOutPage ="/warehouse/out";
+    static WarehouseOutPage = "/warehouse/out";
     /** 客服*/
 
     /** 财务*/
@@ -61,6 +61,8 @@ export class PathConfig {
 
     /** 合并打包*/
     static MemberMergePackage = "/member/merge/package";
+    /** 客户支付*/
+    static MemberPaymentPage = "/member/payment";
 
 }
 

@@ -19,9 +19,10 @@ import {WarehouseInAddPage} from "../page-v1/warehouse-in-add-page";
 import {WarehouseInViewPage} from "../page-v1/warehouse-in-view-page";
 import {WarehouseInEditPage} from "../page-v1/warehouse-in-edit-page";
 import {MemberMergePackage} from "../page-v1/member-merge-package";
+import {MemberPaymentPage} from '../page-v1/member-payment-page';
 
-import  UserLoginPage from '../page-v1/user-login-page';
-import  UserRegisterPage from '../page-v1/user-register-page';
+import UserLoginPage from '../page-v1/user-login-page';
+import UserRegisterPage from '../page-v1/user-register-page';
 import {IndexCompanyPage} from "../page-v1/index-company-page";
 import {IndexCostPage} from "../page-v1/index-cost-page";
 import {IndexHomePage} from "../page-v1/index-home-page";
@@ -32,7 +33,7 @@ import MobileMemberDetailPage from "../page-v1/mobile-member-detail-page";
 import {MobileMemberWelcomePage} from "../page-v1/mobile-member-welcome-page";
 import {MobileCustomerServicePage} from "../page-v1/mobile-customer-service-page";
 
-import  CustomerServiceConfirmListPage from "../page-v1/customer-service-confirm-list-page";
+import CustomerServiceConfirmListPage from "../page-v1/customer-service-confirm-list-page";
 import WarehouseOutPage from '../page-v1/warehouse-out-page';
 import WarehousePackgePage from '../page-v1/warehouse-packge-page';
 
@@ -71,8 +72,8 @@ const routerConfig = (
                 <Route path={PathConfig.WarehouseInViewPage} component={WarehouseInViewPage}/>
                 <Route path={PathConfig.WarehouseInEditPage} component={WarehouseInEditPage}/>
                 <Route path={PathConfig.MemberMergePackage} component={MemberMergePackage}/>
-                <Route path={PathConfig.CustomerServicePage} component={CustomerServiceConfirmListPage} />
-
+                <Route path={PathConfig.MemberPaymentPage} component={MemberPaymentPage}/>
+                <Route path={PathConfig.CustomerServicePage} component={CustomerServiceConfirmListPage}/>
             </Route>
         </Route>
         <Route path={PathConfig.LoginPage} component={UserLoginPage}/>

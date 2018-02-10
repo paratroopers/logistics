@@ -305,6 +305,8 @@
 }
 
 .payment {
+  @pay-color: #e4393c;
+  @pay-font: Verdana;
   padding: 0 20px;
   text-align: right;
   .title, .count {
@@ -329,8 +331,8 @@
     margin-top: 15px;
     padding-bottom: 15px;
     .count {
-      color: #e4393c;
-      font-family: Verdana;
+      color: @pay-color;
+      font-family: @pay-font;
       font-weight: 700;
     }
   }
@@ -346,6 +348,14 @@
     }
   }
   &-go {
+    .time {
+      margin-top: 15px;
+      font-size: 14px;
+      .count-down {
+        color: @pay-color;
+        float: right;
+      }
+    }
     button {
       width: 100%;
       border-radius: 0;
@@ -353,25 +363,22 @@
       font-size: 20px;
     }
   }
-
-  &-wx {
-    border: 1px solid #00A000;
-    .anticon {
-      color: #00A000;
+  &-paypage {
+    font-size: 16px;
+    padding: 0 15px;
+    &-code {
+      color: #999;
     }
-  }
-  &-wx:hover, &-wx:active, &-wx:focus {
-    color: #00A000 !important;
-    border-color: #00A000 !important;
-  }
-  &-zfb {
-    border: 1px solid #56abe4;
-    .anticon {
-      color: #56abe4;
+    &-money {
+      text-align: right;
+      .money {
+        color: @pay-color;
+        font-family: @pay-font;
+        font-weight: 700;
+      }
     }
-  }
-  &-zfb:hover, &-zfb:active, &-zfb:focus {
-    color: #56abe4 !important;
-    border-color: #56abe4 !important;
+    &-mode {
+      margin-bottom: 30px;
+    }
   }
 }
