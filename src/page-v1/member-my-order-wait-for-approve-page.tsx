@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {withRouter,hashHistory} from 'react-router';
-import {Row, Col, Button, Icon, Table, Alert,Form,Input} from 'antd';
+import {withRouter, hashHistory} from 'react-router';
+import {Row, Col, Button, Icon, Table, Alert, Form, Input} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
-const { RangePicker } = DatePicker;
+
+const {RangePicker} = DatePicker;
 import {ColumnProps} from 'antd/lib/table';
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
@@ -19,7 +20,7 @@ import {FormStatusSelect} from "../components-v1/form-status-select";
 import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import {APINameSpace} from "../model/api";
 import {ClickParam} from "antd/lib/menu";
-import {FormTableOperation,FormTableOperationModel} from "../components-v1/form-table-operation";
+import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
 import {FormComponentProps} from "antd/lib/form";
 import FormItem from "antd/lib/form/FormItem";
 import {isUndefined} from "util";
@@ -27,7 +28,7 @@ import {isUndefined} from "util";
 
 /// 待审核列表
 interface MemberMyOrderWaitForApprovePageProps extends FormComponentProps {
-
+    onSearch?: (search?: requestNameSpace.GetCustomerOrderMergeRequest) => void;
 }
 
 interface MemberMyOrderWaitForApprovePageStates {
@@ -36,19 +37,19 @@ interface MemberMyOrderWaitForApprovePageStates {
     /** 选中行*/
     selectedRowKeys: any[],
     /** 当前页数*/
-    pageIndex:number,
+    pageIndex: number,
     /** 每页条数*/
-    pageSize:number,
+    pageSize: number,
     /** 总数*/
-    totalCount:number
+    totalCount: number
     /** 列表是否正在查询*/
     loading?: boolean;
 }
 
 @withRouter
 class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitForApprovePageProps, MemberMyOrderWaitForApprovePageStates> {
-    constructor(props,context) {
-        super(props,context);
+    constructor(props, context) {
+        super(props, context);
         this.state = {
             listData: [],
             selectedRowKeys: [],
@@ -60,7 +61,7 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
     }
 
     componentDidMount() {
-        this.loadData(1,10,0);
+        this.loadData(1, 10, 0);
     }
 
 
@@ -71,20 +72,24 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
     }
 
     /** 获取数据源*/
-    loadData = (index?:number,size?:number,searchaValues?:any) => {
+    loadData = (index?: number, size?: number, searchaValues?: any) => {
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
 
+
+
         const request: requestNameSpace.GetCustomerOrderMergeRequest = {
             type: 0,
-            expressNo:!isUndefined(searchaValues.expressNo)?searchaValues.expressNo:"",
-            customerChooseChannelID:!isUndefined(searchaValues.channel)?searchaValues.channel.key:0,
-            currentStep:!isUndefined(searchaValues.currentStatus)?searchaValues.currentStatus.key:"",
-            orderMergeTimeBegin:!isUndefined(searchaValues.Created)?searchaValues.Created[0].format():"",
-            orderMergeTimeEnd:!isUndefined(searchaValues.Created)?searchaValues.Created[1].format():"",
+            expressNo: !isUndefined(searchaValues.expressNo) ? searchaValues.expressNo : "",
+            customerChooseChannelID: !isUndefined(searchaValues.channel) ? searchaValues.channel.key : 0,
+            currentStep: !isUndefined(searchaValues.currentStatus) ? searchaValues.currentStatus.key : "",
+            orderMergeTimeBegin: !isUndefined(searchaValues.Created) ? searchaValues.Created[0].format() : "",
+            orderMergeTimeEnd: !isUndefined(searchaValues.Created) ? searchaValues.Created[1].format() : "",
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize
         }
+
+        this.props.onSearch&&this.props.onSearch(request);
 
         topThis.setState({loading: true});
         APINameSpace.MemberAPI.GetCustomerOrdersMerge(request).then((result: ResponseNameSpace.GetCustomerOrderMergeListResponse) => {
@@ -116,41 +121,25 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
             title: "渠道",
             dataIndex: 'CustomerChooseChannelName',
             width: 200
-        },{
+        }, {
             title: "发往国家",
             dataIndex: 'country',
             width: 100
-        },{
+        }, {
             title: "客服备注",
             dataIndex: 'customerServiceMark',
-            width:200
-        },  {
+            width: 200
+        }, {
             title: "状态",
             dataIndex: 'currentStatus',
-            width:100
+            width: 100
         }, {
             title: "创建时间",
             dataIndex: 'Modified'
         }, {
             title: '操作',
-            render: (val, record, index) => {
-                const menu: FormTableOperationModel[] = [
-                    {
-                        key: PathConfig.MemberAddressPageView,
-                        type: "search",
-                        label: "查看"
-                    }
-                ]
-
-                return <FormTableOperation onClick={(param: ClickParam) => {
-                    if (param.key === "delete") {
-                        //this.deleteDataByID(record.ID);
-                    }
-                    else {
-                        //  hashHistory.push({pathname: param.key, state: record});
-                    }
-
-                }} value={menu}></FormTableOperation>;
+            render: (val, record) => {
+                return <a>查看</a>
             }
         }];
 
@@ -170,7 +159,8 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
                       pagination={pagination}
                       title={(currentPageData: Object[]) => {
                           //
-                          return <Alert message={"总计有 " + totalCount + "  项客服确认  "+ totalCount+"  项仓库打包  "} type="info" showIcon></Alert>;
+                          return <Alert message={"总计有 " + totalCount + "  项客服确认  " + totalCount + "  项仓库打包  "}
+                                        type="info" showIcon></Alert>;
                       }}
                       scroll={{x: 1200}}
                       rowSelection={rowSelection}
@@ -179,11 +169,11 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
                       locale={{emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>}}/>;
     }
 
-    onClickSearch = (values:any) =>{
-        this.loadData(1,10,values);
+    onClickSearch = (values: any) => {
+        this.loadData(1, 10, values);
     }
 
-    onReset(){
+    onReset() {
 
     }
 
@@ -199,7 +189,8 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
                 defaultDisplay: true,
                 fieldName: "customerOrderMerge",
                 displayName: "客户订单号",
-                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrderMerge} isadmin={false} placeholder="搜索客户合并订单号"/>
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrderMerge} isadmin={false}
+                                                      placeholder="搜索客户合并订单号"/>
             },
 
             {
@@ -212,8 +203,9 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
                 defaultDisplay: true,
                 fieldName: "currentStatus",
                 displayName: "状态",
-                control:  <FormControl.FormSelect type={SelectType.CustomerOrderMergeWaitForApproveStep} placeholder={"订单状态"}  />
-            },{
+                control: <FormControl.FormSelect type={SelectType.CustomerOrderMergeWaitForApproveStep}
+                                                 placeholder={"订单状态"}/>
+            }, {
                 defaultDisplay: false,
                 fieldName: "Created",
                 displayName: "创建时间",
