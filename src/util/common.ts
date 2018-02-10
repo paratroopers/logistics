@@ -16,6 +16,7 @@ export enum SelectType {
     ExpressNo = 5,
     channel = 6,
     Agent = 7,
+    CustomerOrderMerge =8
 }
 
 export interface Base {

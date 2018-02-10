@@ -107,50 +107,36 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
         };
 
         const columns: ColumnProps<ModelNameSpace.WarehouseListModel>[] = [{
-            title: "客户订单号",
-            dataIndex: 'MergeOrderNo',
-            fixed: 'left'
+            title: "客户合并单号",
+            dataIndex: 'MergeOrderNo', width: 200
         }, {
             title: "渠道",
-            dataIndex: 'expressNo'
+            dataIndex: 'CustomerChooseChannelName',
+            width: 200
         },{
             title: "发往国家",
-            dataIndex: 'expressNo'
+            dataIndex: 'country',
+            width: 100
         },{
-            title: "入库总体积",
-            dataIndex: 'MemeberCode'
-        }, {
-            title: "入库总重量",
-            dataIndex: 'expressTypeName'
-        },  {
-            title: "申报总额",
-            dataIndex: 'CustomerServiceName'
-        }, {
             title: "客服备注",
-            dataIndex: 'WareHouseName'
+            dataIndex: 'customerServiceMark',
+            width:200
         },  {
             title: "状态",
-            dataIndex: 'currentStep'
+            dataIndex: 'currentStatus',
+            width:100
         }, {
             title: "创建时间",
-            dataIndex: 'InWareHouseTime'
+            dataIndex: 'Modified'
         }, {
             title: '操作',
-            fixed: 'right',
             render: (val, record, index) => {
                 const menu: FormTableOperationModel[] = [
                     {
                         key: PathConfig.MemberAddressPageView,
                         type: "search",
-                        label: "审核"
-                    },
-                    {
-                        key: PathConfig.MemberAddressPageEdit,
-                        type: "edit",
                         label: "查看"
                     }
-
-
                 ]
 
                 return <FormTableOperation onClick={(param: ClickParam) => {
@@ -190,9 +176,9 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
                       pagination={pagination}
                       title={(currentPageData: Object[]) => {
                           //
-                          return <Alert message={"总计有 " + totalCount + "项待审批"} type="info" showIcon></Alert>;
+                          return <Alert message={"总计有 " + totalCount + "  项客服确认  "+ totalCount+"  项仓库打包  "} type="info" showIcon></Alert>;
                       }}
-                      scroll={{x: 1800}}
+                      scroll={{x: 1200}}
                       rowSelection={rowSelection}
                       bordered={false}
                       dataSource={listData}
@@ -200,15 +186,7 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
     }
 
     onClickSearch = (values:any) =>{
-        //  e.preventDefault();
         this.loadData(1,10,values);
-        // this.props.form.validateFields((err, values) => {
-        //     if (!err) {
-        //         console.log('Received values of form: ', values);
-        //
-        //     }
-        // });
-
     }
 
     onReset(){
@@ -223,12 +201,7 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
                 displayName: "客户合并订单号",
                 control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客户合并订单号"/>
             },
-            {
-                defaultDisplay: true,
-                fieldName: "MemberNo",
-                displayName: "会员号",
-                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索会员号"/>
-            },
+
             {
                 defaultDisplay: true,
                 fieldName: "channel",
@@ -236,7 +209,7 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
                 control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="搜索渠道"/>
             },
             {
-                defaultDisplay: false,
+                defaultDisplay: true,
                 fieldName: "CustomerSericeStatus",
                 displayName: "状态",
                 control:  <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder={"快递状态"}  />
@@ -255,8 +228,6 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
         const topThis = this;
         // const { getFieldDecorator } = this.props.form;
         return <Row>
-            <ContentHeaderControl title="订单确认"></ContentHeaderControl>
-
             <FormAdvancedSearch
                 formAdvancedItems={topThis.renderFormAdvancedItems()}
                 onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch>
