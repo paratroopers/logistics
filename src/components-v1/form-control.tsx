@@ -11,6 +11,7 @@ import {ModelNameSpace} from '../model/model';
 import {isArray, isNullOrUndefined} from "util";
 import {LabeledValue} from "antd/lib/select";
 import {ButtonProps} from "antd/lib/button";
+import  {ResponseNameSpace} from "../model/response";
 
 const FormItem = Form.Item;
 const {TextArea} = Input;
@@ -115,14 +116,14 @@ export namespace FormControl {
                     isAdmin:this.props.isadmin
                 };
 
-                APINameSpace.MemberAPI.GetCustomerOrdersMerge(req).then(result => {
+                APINameSpace.MemberAPI.GetCustomerOrdersMerge(req).then((result : ResponseNameSpace.GetCustomerOrderMergeListResponse) => {
                     if (fetchId !== this.lastFetchId) { // for fetch callback order
                         return;
                     }
                     if (result.Status === 0 && result.Data !== null) {
                         const data = result.Data.map(o => ({
-                            text: `${o.CustomerOrderNo}`,
-                            value: o.CustomerOrderNo
+                            text: `${o.MergeOrderNo}`,
+                            value: o.ID
                         }));
                         this.setState({
                             data: data, fetching: false
