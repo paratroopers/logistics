@@ -59,7 +59,7 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
 
     getMergeOrderInfo() {
         const request = util.isArray(this.state.selectedKeys) ? (this.state.selectedKeys as string[]).join(",") : this.state.selectedKeys.toString();
-        APINameSpace.MemberAPI.GetOrderItemsByID(request).then( r=> {
+        APINameSpace.MemberAPI.GetOrderItemsByID(request).then(r => {
             r.Status === 0 && this.initOrderInfo(r.Data);
         });
     }
@@ -93,6 +93,7 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
                 <FormPackageRequirement></FormPackageRequirement>
                 <FormPackageDetail></FormPackageDetail>
                 <FormDeliveredDetail form={form}></FormDeliveredDetail>
+                <FormPayment></FormPayment>
             </Layout.Content>
         </Layout>;
 

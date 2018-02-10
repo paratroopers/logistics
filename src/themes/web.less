@@ -303,3 +303,40 @@
   text-overflow: ellipsis;
   white-space: nowrap
 }
+
+.payment {
+  @height: 100px;
+  height: @height;
+  padding-left: 50px;
+  h1 {
+    display: inline-block;
+    font-size: 40px;
+    margin: 0;
+  }
+  button {
+    margin-right: 20px;
+  }
+  &-title {
+    color: #0f94f3;
+  }
+  &-wx {
+    border: 1px solid #00A000;
+    .anticon {
+      color: #00A000;
+    }
+  }
+  &-wx:hover, &-wx:active, &-wx:focus {
+    color: #00A000 !important;
+    border-color: #00A000 !important;
+  }
+  &-zfb {
+    border: 1px solid #56abe4;
+    .anticon {
+      color: #56abe4;
+    }
+  }
+  &-zfb:hover, &-zfb:active, &-zfb:focus {
+    color: #56abe4 !important;
+    border-color: #56abe4 !important;
+  }
+}
