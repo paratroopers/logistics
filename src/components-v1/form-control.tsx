@@ -316,6 +316,17 @@ export namespace FormControl {
                     }
                 })
             }
+            else if(type === SelectType.CustomerOrderMergeWaitForApproveStep){
+                APINameSpace.SystemAPI.GetCustomerOrderMergeStep().then((result) =>{
+                    if (result.Data !== null && result.Status === 0){
+                        data = result.Data.map(o =>({
+                            key:o.ID,
+                            label:o.value
+                        }));
+                        topThis.setState({selectData: data});
+                    }
+                })
+            }
         }
 
 
@@ -334,7 +345,7 @@ export namespace FormControl {
         render() {
             const topThis = this;
             const {props:{value,...otherProps}} = topThis;
-            return <Select style={{width:'160%'}} labelInValue value={value} {...otherProps} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+            return <Select allowClear={true}  labelInValue value={value} {...otherProps} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                 {topThis.renderOption()}
             </Select>;
         }

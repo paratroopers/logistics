@@ -16,7 +16,8 @@ export enum SelectType {
     ExpressNo = 5,
     channel = 6,
     Agent = 7,
-    CustomerOrderMerge =8
+    CustomerOrderMerge =8,
+    CustomerOrderMergeWaitForApproveStep =9
 }
 
 export interface Base {
