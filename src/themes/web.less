@@ -305,20 +305,55 @@
 }
 
 .payment {
-  @height: 100px;
-  height: @height;
-  padding-left: 50px;
-  h1 {
+  padding: 0 20px;
+  text-align: right;
+  .title, .count {
     display: inline-block;
-    font-size: 40px;
-    margin: 0;
+    text-align: right;
   }
-  button {
-    margin-right: 20px;
+  .title {
+    width: 120px;
   }
-  &-title {
-    color: #0f94f3;
+  .count {
+    width: 100px;
   }
+  &-info {
+    font-size: 15px;
+    border-bottom: 1px solid #e9e9e9;
+    padding-bottom: 20px;
+    &-cost {
+      margin-bottom: 15px;
+    }
+  }
+  &-total {
+    margin-top: 15px;
+    padding-bottom: 15px;
+    .count {
+      color: #e4393c;
+      font-family: Verdana;
+      font-weight: 700;
+    }
+  }
+  &-address {
+    margin-bottom: 20px;
+    .address {
+      margin-right: 15px;
+    }
+    .consignee {
+      margin-right: 15px;
+    }
+    .tel {
+    }
+  }
+  &-go {
+    button {
+      width: 100%;
+      border-radius: 0;
+      height: 50px;
+      font-size: 20px;
+    }
+  }
+
   &-wx {
     border: 1px solid #00A000;
     .anticon {
