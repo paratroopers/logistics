@@ -95,8 +95,8 @@ export class FormAdvancedItemModel {
                     xs: 24,
                     sm: 12,
                     md: 12,
-                    lg: 8,
-                    xl: 8
+                    lg: 6,
+                    xl: 6
                 }
 
                 const display = expand ? 'block' : item.defaultDisplay ? 'block' : 'none';

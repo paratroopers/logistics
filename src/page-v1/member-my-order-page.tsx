@@ -160,7 +160,9 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                         {this.renderTable()}
                     </Row>
                 </Tabs.TabPane>
-                <Tabs.TabPane tab="待审核" key="2"><MemberMyOrderWaitForApprovePage></MemberMyOrderWaitForApprovePage></Tabs.TabPane>
+                <Tabs.TabPane tab="待审核" key="2">
+                    <MemberMyOrderWaitForApprovePage></MemberMyOrderWaitForApprovePage>
+                </Tabs.TabPane>
             </Tabs>
         </Row>
     }
