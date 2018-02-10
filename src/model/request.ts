@@ -9,6 +9,7 @@ export namespace requestNameSpace {
     export interface BaseListRequest {
         pageIndex: number;
         pageSize: number;
+        isAdmin?:boolean;
     }
 
 
@@ -120,7 +121,7 @@ export namespace requestNameSpace {
     //region 订单和合并订单（仓库入库，待打包，待审核，客服确认，仓库打包，客户付款，仓库打包 所有的接口区域；
 
     export  interface  GetCustomerOrderMergeRequest extends  BaseListRequest{
-        type: ModelNameSpace.OrderTypeEnum;
+        type?: ModelNameSpace.OrderTypeEnum;
         country?:string;
         currentStep?:string;
         currentStatus?:string;

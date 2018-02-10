@@ -25,6 +25,7 @@ export namespace FormControl {
         placeholder: string;
         type: SelectType;
         value?: LabeledValue;
+        isadmin?:boolean;
     }
 
     export interface FormSelectIndexStates {
@@ -91,6 +92,30 @@ export namespace FormControl {
             }
             else if (type === SelectType.CustomerOrder) {
                 APINameSpace.CustomerOrderAPI.OrderSearchIndex(request).then(result => {
+                    if (fetchId !== this.lastFetchId) { // for fetch callback order
+                        return;
+                    }
+                    if (result.Status === 0 && result.Data !== null) {
+                        const data = result.Data.map(o => ({
+                            text: `${o.CustomerOrderNo}`,
+                            value: o.CustomerOrderNo
+                        }));
+                        this.setState({
+                            data: data, fetching: false
+                        });
+
+                    }
+                });
+            }
+            else if (type === SelectType.CustomerOrderMerge){
+
+                let req:requestNameSpace.GetCustomerOrderMergeRequest ={
+                    pageIndex: 1,
+                    pageSize: 1000,
+                    isAdmin:this.props.isadmin
+                };
+
+                APINameSpace.MemberAPI.GetCustomerOrdersMerge(req).then(result => {
                     if (fetchId !== this.lastFetchId) { // for fetch callback order
                         return;
                     }
