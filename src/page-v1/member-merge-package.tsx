@@ -15,8 +15,9 @@ import {FormPackageDetail} from "../components-v1/form-package-detail";
 import {FormOrderChannel} from "../components-v1/form-order-channel";
 import {FormDeliveredDetail} from "../components-v1/form-delivered-detail";
 import {FormComponentProps} from 'antd/lib/form/Form';
+import {FormPayment} from '../components-v1/form-payment';
 
-export interface MemberMergePackageProps extends RouteComponentProps<any, any>,FormComponentProps{
+export interface MemberMergePackageProps extends RouteComponentProps<any, any>, FormComponentProps {
 }
 
 export interface MemberMergePackageStates {
@@ -65,8 +66,8 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
     }
 
     render() {
-        const topThis=this;
-        const {props:{form}}=topThis;
+        const topThis = this;
+        const {props: {form}} = topThis;
         const {state: {orderInfo, data}} = this;
         return <Layout className="merge-package">
             <Layout.Header className="merge-package-header">
