@@ -184,14 +184,14 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
                 defaultDisplay: true,
                 fieldName: "expressNo",
                 displayName: "快递单号",
-                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} isadmin={false} placeholder="搜索快递单号"/>
+                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} isadmin={false} placeholder="快递单号"/>
             },
             {
                 defaultDisplay: true,
                 fieldName: "customerOrderMerge",
                 displayName: "客户订单号",
                 control: <FormControl.FormSelectIndex type={SelectType.CustomerOrderMerge} isadmin={false}
-                                                      placeholder="搜索客户合并订单号"/>
+                                                      placeholder="客户合并订单号"/>
             },
 
             {
@@ -202,7 +202,7 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
                     lg: 3,
                     xl: 3
                 },
-                control: <FormControl.FormSelect type={SelectType.channel} placeholder="搜索渠道"/>
+                control: <FormControl.FormSelect type={SelectType.channel} placeholder="渠道"/>
             },
             {
                 defaultDisplay: true,

@@ -108,7 +108,7 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
                 }
                 const display = expand ? 'block' : item.defaultDisplay ? 'block' : 'none';
                 children.push(<Col {...spanLayout} key={index} style={{display: display}}>
-                    <FormItem label={item.displayName + ":"}>
+                    <FormItem>
                         {getFieldDecorator(item.fieldName)(item.control)}
                     </FormItem>
                 </Col>)
@@ -123,9 +123,9 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
         return <Form className="na-advanced-search-form"
                      layout={"vertical"}
                      onSubmit={topThis.onSearch.bind(this)}>
-            <Row gutter={16}>
+            <Row gutter={16} justify="start">
                 {topThis.renderFormAdvancedItems()}
-                <Col span={4} style={{textAlign: 'right'}}>
+                <Col span={4} className="search-button">
                     <FormItem>
                         <Button type="primary" htmlType="submit">搜索</Button>
                         <Button style={{marginLeft: 8}} onClick={topThis.onReset.bind(this)}>重置</Button>
@@ -138,15 +138,6 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
                     </FormItem>
                 </Col>
             </Row>
-            {/*            <Row>
-             <Col span={4} style={{textAlign: 'right'}}>
-             <Button type="primary" htmlType="submit">搜索</Button>
-             <Button style={{marginLeft: 8}} onClick={topThis.onReset.bind(this)}>重置</Button>
-             <a style={{marginLeft: 8, fontSize: 12}} onClick={topThis.toggle.bind(this)}>
-             高级搜索 <Icon type={expand ? 'up' : 'down'}/>
-             </a>
-             </Col>
-             </Row>*/}
         </Form>;
     }
 }
