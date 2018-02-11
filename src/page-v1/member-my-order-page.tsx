@@ -12,7 +12,8 @@ import {APINameSpace} from '../model/api';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import * as moment from 'moment';
 import  MemberMyOrderWaitForApprovePage from './member-my-order-wait-for-approve-page';
-
+import {ClickParam} from "antd/lib/menu";
+import {FormTableOperation,FormTableOperationModel} from "../components-v1/form-table-operation";
 
 interface MemberMyOrderPageStates {
     pageIndex: number;
@@ -102,19 +103,61 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                 }
             },
             {
-                title: '',
-                dataIndex: 'handle',
-                render: (txt, record) => {
-                    const menu = <Menu>
-                        <Menu.Item>
-                            <span><Icon type="search"></Icon>查看</span>
-                        </Menu.Item>
-                    </Menu>;
-                    return <Dropdown overlay={menu}>
-                        <a className="ant-dropdown-link">
-                            操作 <Icon type="down"/>
-                        </a>
-                    </Dropdown>
+                title: '操作',
+                render: (val, record, index) => {
+                    const menu:FormTableOperationModel[]=[
+                        {
+                            key: PathConfig.MemberMyWaitPackageViewPage,
+                            type: "search",
+                            label: "待打包查看"
+                        },{
+                            key: PathConfig.MemberMyWaitReviewViewPage,
+                            type: "search",
+                            label: "待审核查看"
+                        },
+                        {
+                            key: PathConfig.WarehouseInViewPage,
+                            type: "search",
+                            label: "入库查看"
+                        },
+                        {
+                            key: PathConfig.WarehouseInEditPage,
+                            type: "edit",
+                            label: "入库编辑"
+                        },{
+                            key: "3",
+                            type: "search",
+                            label: "客服查看"
+                        },{
+                            key: "4",
+                            type: "edit",
+                            label: "客服审批"
+                        },
+                        {
+                            key: "5",
+                            type: "search",
+                            label: "仓库合并查看"
+                        },
+                        {
+                            key: "6",
+                            type: "edit",
+                            label: "仓库合并打包"
+                        },
+                        {
+                            key: "7",
+                            type: "search",
+                            label: "仓库出库查看"
+                        },
+                        {
+                            key: "delete",
+                            type: "delete",
+                            label: "删除"
+                        }
+                    ]
+
+                    return <FormTableOperation onClick={(param:ClickParam)=>{
+                            hashHistory.push({pathname:param.key,state:record});
+                    }} value={menu}></FormTableOperation>;
                 }
             }
         ];

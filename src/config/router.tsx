@@ -11,6 +11,8 @@ import {MemberAddressPageView} from "../page-v1/member-address-page-view";
 import MemberDeliveredPage from "../page-v1/member-delivered-page";
 import {MemberMessageListPage} from "../page-v1/member-message-list-page";
 import {MemberMyOrderPage} from "../page-v1/member-my-order-page";
+import {MemberMyWaitPackageViewPage} from "../page-v1/member-my-wait-package-view-page";
+import {MemberMyWaitReviewViewPage} from "../page-v1/member-my-wait-review-view-page";
 import {MemberUserInformationPage} from "../page-v1/member-user-information";
 import MemberWaitPayPage from "../page-v1/member-wait-pay-page";
 import {MemberWarehouseInQueryPage} from "../page-v1/member-warehouse-in-query-page";
@@ -62,12 +64,14 @@ const routerConfig = (
                 <Route path={PathConfig.MemberDeliveredPage} component={MemberDeliveredPage}/>
                 <Route path={PathConfig.MemberMessageListPage} component={MemberMessageListPage}/>
                 <Route path={PathConfig.MemberMyOrderPage} component={MemberMyOrderPage}/>
+                <Route path={PathConfig.MemberMyWaitPackageViewPage} component={MemberMyWaitPackageViewPage}/>
+                <Route path={PathConfig.MemberMyWaitReviewViewPage} component={MemberMyWaitReviewViewPage}/>
                 <Route path={PathConfig.MemberUserInformationPage} component={MemberUserInformationPage}/>
                 <Route path={PathConfig.MemberWaitPayPage} component={MemberWaitPayPage}/>
                 <Route path={PathConfig.MemberWarehouseInQueryPage} component={MemberWarehouseInQueryPage}/>
                 <Route path={PathConfig.WarehouseInPage} component={WarehouseInPage}/>
                 <Route path={PathConfig.WarehouseOutPage} component={WarehouseOutPage}/>
-                <Route path={PathConfig.WarehousePackage} component={WarehousePackgePage}/>
+                <Route path={PathConfig.WarehousePackagePage} component={WarehousePackgePage}/>
                 <Route path={PathConfig.WarehouseInAddPage} component={WarehouseInAddPage}/>
                 <Route path={PathConfig.WarehouseInViewPage} component={WarehouseInViewPage}/>
                 <Route path={PathConfig.WarehouseInEditPage} component={WarehouseInEditPage}/>
