@@ -1,13 +1,27 @@
 @import "../common";
 
 /** 高级搜索*/
-.na-advanced-search-form{
+.na-advanced-search-form {
   margin: 0px auto;
-  padding: 12px;
+  padding: 12px 12px 0px 12px;
+  .ant-form-item {
+    display: flex;
+    margin-bottom: 0px !important;
+    padding-bottom: 0px !important;
+    .ant-form-item-label, .ant-form-item-control-wrapper {
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 32px;
+    }
+    .ant-form-item-control-wrapper {
+      flex: 1 1 0%;
+      margin-left: 10px;
+    }
+  }
 }
 
 /** 订单入库Form*/
-.warehouse-in-add-form{
+.warehouse-in-add-form {
   padding: 12px;
 }
 

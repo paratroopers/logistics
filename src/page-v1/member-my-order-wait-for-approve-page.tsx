@@ -45,7 +45,7 @@ interface MemberMyOrderWaitForApprovePageStates {
     /** 列表是否正在查询*/
     loading?: boolean;
     /* 查询条件选择值*/
-    selectVaules?:any;
+    selectVaules?: any;
 }
 
 @withRouter
@@ -59,7 +59,7 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
             pageSize: 10,
             totalCount: 0,
             loading: false,
-            selectVaules:[]
+            selectVaules: []
         }
     }
 
@@ -78,7 +78,6 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
     loadData = (index?: number, size?: number, searchaValues?: any) => {
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
-
 
 
         const request: requestNameSpace.GetCustomerOrderMergeRequest = {
@@ -150,14 +149,13 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
             pageSize: pageSize,
             total: totalCount,//数据总数
             onChange: (a) => {
-                topThis.loadData(a, pageSize,this.state.selectVaules);
+                topThis.loadData(a, pageSize, this.state.selectVaules);
             }
         };
 
         return <Table columns={columns}
                       rowKey={"ID"}
                       loading={loading}
-                      style={{padding: '12px'}}
                       pagination={pagination}
                       title={(currentPageData: Object[]) => {
                           //
@@ -175,7 +173,6 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
         this.loadData(1, 10, values);
         this.setState({selectVaules: values});
     }
-
 
 
     renderFormAdvancedItems() {
@@ -198,18 +195,39 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
                 defaultDisplay: true,
                 fieldName: "channel",
                 displayName: "渠道",
+                layout: {
+                    xs: 24,
+                    sm: 12,
+                    md: 12,
+                    lg: 3,
+                    xl: 3
+                },
                 control: <FormControl.FormSelect type={SelectType.channel} placeholder="搜索渠道"/>
             },
             {
                 defaultDisplay: true,
                 fieldName: "currentStatus",
                 displayName: "状态",
+                layout: {
+                    xs: 24,
+                    sm: 12,
+                    md: 12,
+                    lg: 3,
+                    xl: 3
+                },
                 control: <FormControl.FormSelect type={SelectType.CustomerOrderMergeWaitForApproveStep}
                                                  placeholder={"订单状态"}/>
             }, {
                 defaultDisplay: true,
                 fieldName: "Created",
                 displayName: "创建时间",
+                layout: {
+                    xs: 24,
+                    sm: 12,
+                    md: 12,
+                    lg: 6,
+                    xl: 6
+                },
                 control: <RangePicker></RangePicker>
             }
 
