@@ -138,15 +138,6 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
                     </FormItem>
                 </Col>
             </Row>
-            {/*            <Row>
-             <Col span={4} style={{textAlign: 'right'}}>
-             <Button type="primary" htmlType="submit">搜索</Button>
-             <Button style={{marginLeft: 8}} onClick={topThis.onReset.bind(this)}>重置</Button>
-             <a style={{marginLeft: 8, fontSize: 12}} onClick={topThis.toggle.bind(this)}>
-             高级搜索 <Icon type={expand ? 'up' : 'down'}/>
-             </a>
-             </Col>
-             </Row>*/}
         </Form>;
     }
 }
