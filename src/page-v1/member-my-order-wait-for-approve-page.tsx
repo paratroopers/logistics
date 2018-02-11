@@ -24,6 +24,8 @@ import {FormTableOperation, FormTableOperationModel} from "../components-v1/form
 import {FormComponentProps} from "antd/lib/form";
 import FormItem from "antd/lib/form/FormItem";
 import {isUndefined} from "util";
+import {format} from "url";
+import * as moment from 'moment';
 
 
 /// 待审核列表
@@ -117,7 +119,7 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
 
         const columns: ColumnProps<ModelNameSpace.CustomerOrderMergeModel>[] = [{
             title: "客户合并单号",
-            dataIndex: 'MergeOrderNo', width: 200
+            dataIndex: 'MergeOrderNo', width: 210
         }, {
             title: "渠道",
             dataIndex: 'CustomerChooseChannelName',
@@ -133,10 +135,11 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
         }, {
             title: "状态",
             dataIndex: 'currentStep',
-            width: 100
+            width: 120
         }, {
             title: "创建时间",
-            dataIndex: 'Modified'
+            dataIndex: 'Modified',
+            render:text => moment(text).format('YYYY-MM-DD HH:mm')
         }, {
             title: '操作',
             render: (val, record) => {
