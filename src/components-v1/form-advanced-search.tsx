@@ -15,6 +15,8 @@ interface FormAdvancedSearchProps extends FormComponentProps {
     onClickSearch?: (values:any) => void;
     /*控件选择值*/
     selectValues?:()=> any;
+    /*点击分页选择值*/
+    pagingSelectValues?:(values:any)=>void;
 }
 
 interface FormAdvancedSearchStates {
@@ -43,14 +45,6 @@ export class FormAdvancedItemModel {
         };
     }
 
-    SelectAllVaules(){
-        this.props.form.validateFields((err, values) => {
-            console.log('Received values of form: ', values);
-            if (!err) {
-                return values;
-            }
-        });
-    }
 
     /** 点击搜索*/
     onSearch = (e) => {

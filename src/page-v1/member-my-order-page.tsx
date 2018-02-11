@@ -161,9 +161,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                     </Row>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="待审核" key="2">
-                    <MemberMyOrderWaitForApprovePage onSearch={(search)=>{
-                        console.log(search);
-                    }}></MemberMyOrderWaitForApprovePage>
+                    <MemberMyOrderWaitForApprovePage></MemberMyOrderWaitForApprovePage>
                 </Tabs.TabPane>
             </Tabs>
         </Row>

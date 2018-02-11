@@ -28,7 +28,7 @@ import {isUndefined} from "util";
 
 /// 待审核列表
 interface MemberMyOrderWaitForApprovePageProps extends FormComponentProps {
-    onSearch?: (search?: requestNameSpace.GetCustomerOrderMergeRequest) => void;
+
 }
 
 interface MemberMyOrderWaitForApprovePageStates {
@@ -44,6 +44,8 @@ interface MemberMyOrderWaitForApprovePageStates {
     totalCount: number
     /** 列表是否正在查询*/
     loading?: boolean;
+    /* 查询条件选择值*/
+    selectVaules?:any;
 }
 
 @withRouter
@@ -56,7 +58,8 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
             pageIndex: 1,
             pageSize: 10,
             totalCount: 0,
-            loading: false
+            loading: false,
+            selectVaules:[]
         }
     }
 
@@ -89,7 +92,6 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
             pageSize: size ? size : pageSize
         }
 
-        this.props.onSearch&&this.props.onSearch(request);
 
         topThis.setState({loading: true});
         APINameSpace.MemberAPI.GetCustomerOrdersMerge(request).then((result: ResponseNameSpace.GetCustomerOrderMergeListResponse) => {
@@ -148,7 +150,7 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
             pageSize: pageSize,
             total: totalCount,//数据总数
             onChange: (a) => {
-                topThis.loadData(a, pageSize);
+                topThis.loadData(a, pageSize,this.state.selectVaules);
             }
         };
 
@@ -171,7 +173,9 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
 
     onClickSearch = (values: any) => {
         this.loadData(1, 10, values);
+        this.setState({selectVaules: values});
     }
+
 
     onReset() {
 
