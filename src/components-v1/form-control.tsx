@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Select, Spin, Input, Button, Form} from 'antd';
+import {Select, Spin, Input, Button, Form, Icon} from 'antd';
 
 const Option = Select.Option;
 import {Context, SelectType} from '../util/common';
@@ -11,7 +11,7 @@ import {ModelNameSpace} from '../model/model';
 import {isArray, isNullOrUndefined} from "util";
 import {LabeledValue} from "antd/lib/select";
 import {ButtonProps} from "antd/lib/button";
-import  {ResponseNameSpace} from "../model/response";
+import {ResponseNameSpace} from "../model/response";
 
 const FormItem = Form.Item;
 const {TextArea} = Input;
@@ -26,7 +26,7 @@ export namespace FormControl {
         placeholder: string;
         type: SelectType;
         value?: LabeledValue;
-        isadmin?:boolean;
+        isadmin?: boolean;
     }
 
     export interface FormSelectIndexStates {
@@ -40,7 +40,7 @@ export namespace FormControl {
         type: ModelNameSpace.ButtonTypeEnum;
         size?: any;
         url?: any;
-        handleClick?:()=>{};
+        handleClick?: () => {};
     }
 
 
@@ -108,15 +108,15 @@ export namespace FormControl {
                     }
                 });
             }
-            else if (type === SelectType.CustomerOrderMerge){
+            else if (type === SelectType.CustomerOrderMerge) {
 
-                let req:requestNameSpace.GetCustomerOrderMergeRequest ={
+                let req: requestNameSpace.GetCustomerOrderMergeRequest = {
                     pageIndex: 1,
                     pageSize: 1000,
-                    isAdmin:this.props.isadmin
+                    isAdmin: this.props.isadmin
                 };
 
-                APINameSpace.MemberAPI.GetCustomerOrdersMerge(req).then((result : ResponseNameSpace.GetCustomerOrderMergeListResponse) => {
+                APINameSpace.MemberAPI.GetCustomerOrdersMerge(req).then((result: ResponseNameSpace.GetCustomerOrderMergeListResponse) => {
                     if (fetchId !== this.lastFetchId) { // for fetch callback order
                         return;
                     }
@@ -148,7 +148,7 @@ export namespace FormControl {
 
                     }
                 });
-            }else if (type === SelectType.Agent) {
+            } else if (type === SelectType.Agent) {
                 APINameSpace.CustomerOrderAPI.OrderSearchIndex(request).then(result => {
                     if (fetchId !== this.lastFetchId) { // for fetch callback order
                         return;
@@ -177,21 +177,20 @@ export namespace FormControl {
 
         render() {
             const topThis = this;
-            const {props: {value,disabled}, state: {fetching, data}} = topThis;
+            const {props: {value, disabled}, state: {fetching, data}} = topThis;
             return <Select
-                    disabled={disabled}
-                    mode="multiple"
-                    labelInValue
-                    value={value}
-                    placeholder={this.props.placeholder}
-                    notFoundContent={fetching ? <Spin size="small"/> : null}
-                    filterOption={false}
-                    onSearch={this.fetchData}
-                    onChange={this.handleChange}
-                    style={{width: '100%'}}
-                >
-                    {data.map(d => <Option key={d.value}>{d.text}</Option>)}
-                </Select>;
+                disabled={disabled}
+                mode="multiple"
+                labelInValue
+                value={value}
+                placeholder={this.props.placeholder}
+                notFoundContent={fetching ? <Spin size="small"/> : null}
+                filterOption={false}
+                onSearch={this.fetchData}
+                onChange={this.handleChange}
+                style={{width: '100%'}}>
+                {data.map(d => <Option key={d.value}>{d.text}</Option>)}
+            </Select>;
         }
 
     }
@@ -247,8 +246,7 @@ export namespace FormControl {
 
         }
         enterLoading = () => {
-            if (isNullOrUndefined(this.props.url))
-            {
+            if (isNullOrUndefined(this.props.url)) {
                 this.props.handleClick();
             }
 
@@ -260,7 +258,7 @@ export namespace FormControl {
 
         componentWillReceiveProps(nextProps) {
             if ('loading' in nextProps) {
-               this.setState({loading: false});
+                this.setState({loading: false});
 
             }
         }
@@ -285,7 +283,7 @@ export namespace FormControl {
     }
 
     interface FormSelectStates {
-        selectData?:LabeledValue[]
+        selectData?: LabeledValue[]
     }
 
     export class FormSelect extends React.Component<FormSelectProps, FormSelectStates> {
@@ -303,25 +301,25 @@ export namespace FormControl {
         /** 获取数据源*/
         onLoadData() {
             const topThis = this;
-            let data:LabeledValue[];
+            let data: LabeledValue[];
             const type = this.props.type;
-            if (type === SelectType.channel){
-                APINameSpace.SystemAPI.GetChannelAll().then((result) =>{
-                    if (result.Data !== null && result.Status === 0){
-                        data = result.Data.map(o =>({
-                            key:o.ID,
-                            label:o.Name
+            if (type === SelectType.channel) {
+                APINameSpace.SystemAPI.GetChannelAll().then((result) => {
+                    if (result.Data !== null && result.Status === 0) {
+                        data = result.Data.map(o => ({
+                            key: o.ID,
+                            label: o.Name
                         }));
                         topThis.setState({selectData: data});
                     }
                 })
             }
-            else if(type === SelectType.CustomerOrderMergeWaitForApproveStep){
-                APINameSpace.SystemAPI.GetCustomerOrderMergeStep().then((result) =>{
-                    if (result.Data !== null && result.Status === 0){
-                        data = result.Data.map(o =>({
-                            key:o.ID,
-                            label:o.value
+            else if (type === SelectType.CustomerOrderMergeWaitForApproveStep) {
+                APINameSpace.SystemAPI.GetCustomerOrderMergeStep().then((result) => {
+                    if (result.Data !== null && result.Status === 0) {
+                        data = result.Data.map(o => ({
+                            key: o.ID,
+                            label: o.value
                         }));
                         topThis.setState({selectData: data});
                     }
@@ -344,11 +342,14 @@ export namespace FormControl {
 
         render() {
             const topThis = this;
-            const {props:{value,...otherProps}} = topThis;
-            return <Select allowClear={true}  labelInValue value={value} {...otherProps} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+            const {props: {value, ...otherProps}} = topThis;
+            return <Select allowClear={true} labelInValue value={value} {...otherProps} showSearch
+                           optionFilterProp="children"
+                           filterOption={(input, option) => option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                 {topThis.renderOption()}
             </Select>;
         }
     }
+
     //endregion
 }
