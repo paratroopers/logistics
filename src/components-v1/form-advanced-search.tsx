@@ -108,7 +108,7 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
                 }
                 const display = expand ? 'block' : item.defaultDisplay ? 'block' : 'none';
                 children.push(<Col {...spanLayout} key={index} style={{display: display}}>
-                    <FormItem label={item.displayName + ":"}>
+                    <FormItem>
                         {getFieldDecorator(item.fieldName)(item.control)}
                     </FormItem>
                 </Col>)
