@@ -199,9 +199,6 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
                 fieldName: "channel",
                 displayName: "渠道",
                 layout: {
-                    xs: 24,
-                    sm: 12,
-                    md: 12,
                     lg: 3,
                     xl: 3
                 },
@@ -212,9 +209,6 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
                 fieldName: "currentStatus",
                 displayName: "状态",
                 layout: {
-                    xs: 24,
-                    sm: 12,
-                    md: 12,
                     lg: 3,
                     xl: 3
                 },
@@ -225,9 +219,6 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
                 fieldName: "Created",
                 displayName: "创建时间",
                 layout: {
-                    xs: 24,
-                    sm: 12,
-                    md: 12,
                     lg: 6,
                     xl: 6
                 },
