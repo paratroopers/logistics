@@ -210,7 +210,7 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
                 control: <FormControl.FormSelect type={SelectType.CustomerOrderMergeWaitForApproveStep}
                                                  placeholder={"订单状态"}/>
             }, {
-                defaultDisplay: false,
+                defaultDisplay: true,
                 fieldName: "Created",
                 displayName: "创建时间",
                 control: <RangePicker></RangePicker>
