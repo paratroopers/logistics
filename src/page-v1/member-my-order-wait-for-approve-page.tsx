@@ -133,7 +133,7 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
             width: 200
         }, {
             title: "状态",
-            dataIndex: 'currentStatus',
+            dataIndex: 'currentStep',
             width: 100
         }, {
             title: "创建时间",
@@ -177,9 +177,6 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
     }
 
 
-    onReset() {
-
-    }
 
     renderFormAdvancedItems() {
         const items: FormAdvancedItemModel[] = [
