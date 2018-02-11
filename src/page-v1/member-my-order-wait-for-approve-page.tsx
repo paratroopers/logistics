@@ -116,7 +116,7 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
             onChange: topThis.onSelectChange,
         };
 
-        const columns: ColumnProps<ModelNameSpace.WarehouseListModel>[] = [{
+        const columns: ColumnProps<ModelNameSpace.CustomerOrderMergeModel>[] = [{
             title: "客户合并单号",
             dataIndex: 'MergeOrderNo', width: 200
         }, {
