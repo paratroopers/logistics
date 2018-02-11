@@ -123,9 +123,9 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
         return <Form className="na-advanced-search-form"
                      layout={"vertical"}
                      onSubmit={topThis.onSearch.bind(this)}>
-            <Row gutter={16}>
+            <Row gutter={16} justify="start">
                 {topThis.renderFormAdvancedItems()}
-                <Col span={4} style={{textAlign: 'right'}}>
+                <Col span={4} className="search-button">
                     <FormItem>
                         <Button type="primary" htmlType="submit">搜索</Button>
                         <Button style={{marginLeft: 8}} onClick={topThis.onReset.bind(this)}>重置</Button>
