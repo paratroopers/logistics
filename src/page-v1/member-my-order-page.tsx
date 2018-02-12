@@ -4,6 +4,7 @@ import {Row, Table, Menu, Dropdown, Icon, Alert, Button, Tabs, Badge} from "antd
 import {ColumnProps} from 'antd/lib/table';
 
 import {PathConfig} from '../config/pathconfig';
+import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 
 import {requestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
@@ -12,7 +13,7 @@ import {ContentHeaderControl} from "../components-v1/common-content-header";
 import * as moment from 'moment';
 import  MemberMyOrderWaitForApprovePage from './member-my-order-wait-for-approve-page';
 import {ClickParam} from "antd/lib/menu";
-import {FormTableOperation,FormTableOperationModel} from "../components-v1/form-table-operation";
+import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
 
 interface MemberMyOrderPageStates {
     pageIndex: number;
@@ -27,7 +28,7 @@ interface MemberMyOrderPageProps {
 
 }
 
-class MemberMyOrderPageTable extends Table<any> {
+class MemberMyOrderPageTable extends CommonTable<any> {
 }
 
 @withRouter
@@ -36,7 +37,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
         super(props);
         this.state = {
             pageIndex: 1,
-            pageSize: 3,
+            pageSize: 10,
             data: [],
             totalCount: 0,
             loading: false,
@@ -74,14 +75,19 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
 
     renderTable() {
         const {state: {pageSize, pageIndex, totalCount, data, loading, selected}} = this;
-        const columns: ColumnProps<ModelNameSpace.CustomerOrderModel>[] = [
+        const columns: CommonColumnProps<ModelNameSpace.CustomerOrderModel>[] = [
             {
                 title: '客户订单',
-                dataIndex: 'CustomerOrderNo'
+                dataIndex: 'CustomerOrderNo',
+                layout: ColumnLayout.LeftTop,
+                render: (txt) => {
+                    return <a>{txt}</a>
+                }
             },
             {
                 title: '物流单号',
-                dataIndex: 'expressNo'
+                dataIndex: 'expressNo',
+                layout: ColumnLayout.RightTop
             },
             {
                 title: '物流方式',
@@ -90,6 +96,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             {
                 title: '状态',
                 dataIndex: 'status',
+                layout: ColumnLayout.RightBottom,
                 render: () => {
                     return <span>待打包</span>
                 }
@@ -97,19 +104,21 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             {
                 title: '入库时间',
                 dataIndex: 'InWareHouseTime',
+                layout: ColumnLayout.LeftBottom,
                 render: (txt) => {
                     return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
                 }
             },
             {
                 title: '操作',
+                layout: ColumnLayout.Option,
                 render: (val, record, index) => {
-                    const menu:FormTableOperationModel[]=[
+                    const menu: FormTableOperationModel[] = [
                         {
                             key: PathConfig.MemberMyWaitPackageViewPage,
                             type: "search",
                             label: "待打包查看"
-                        },{
+                        }, {
                             key: PathConfig.MemberMyWaitReviewViewPage,
                             type: "search",
                             label: "待审核查看"
@@ -123,11 +132,11 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                             key: PathConfig.WarehouseInEditPage,
                             type: "edit",
                             label: "入库编辑"
-                        },{
+                        }, {
                             key: "3",
                             type: "search",
                             label: "客服查看"
-                        },{
+                        }, {
                             key: "4",
                             type: "edit",
                             label: "客服审批"
@@ -154,8 +163,8 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                         }
                     ]
 
-                    return <FormTableOperation onClick={(param:ClickParam)=>{
-                            hashHistory.push({pathname:param.key,state:record});
+                    return <FormTableOperation onClick={(param: ClickParam) => {
+                        hashHistory.push({pathname: param.key, state: record});
                     }} value={menu}></FormTableOperation>;
                 }
             }
