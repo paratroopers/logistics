@@ -141,3 +141,56 @@
 .code-box-wrapper .code-box-demo {
   padding: 0;
 }
+
+@media (max-width: 768px) {
+
+  .antd-pagination {
+    &-item {
+      margin-right: 3px;
+    }
+    &-prev {
+      margin-right: 3px;
+    }
+    &-jump-prev {
+      margin-right: 3px;
+    }
+    &-jump-next {
+      margin-right: 3px;
+    }
+  }
+
+  .ant-table-content {
+    .ant-table-row {
+      td {
+        padding: 12px 8px;
+      }
+      td.ant-table-selection-column {
+        min-width: 32px;
+        width: 32px;
+      }
+      .antd-row-flex {
+        padding: 1px 0px;
+      }
+      .table-title {
+        font-size: 14px;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+        a {
+          color: #63A8EB; //@black-color;
+        }
+      }
+      .table-title2 {
+        color: #999;
+      }
+      .table-col-option {
+        text-align: right;
+        padding: 3px;
+        .antd-icon {
+          margin-left: 0px;
+        }
+      }
+    }
+  }
+}

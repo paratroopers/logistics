@@ -1,10 +1,8 @@
 import * as React from 'react';
 import {withRouter, hashHistory} from 'react-router';
-import {Row, Table, Menu, Dropdown, Icon, Alert, Button, Tabs, Badge} from "antd";
-import {ColumnProps} from 'antd/lib/table';
-
+import {Row, Col, Icon, Button, Tabs, Badge} from "antd";
 import {PathConfig} from '../config/pathconfig';
-
+import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 
 import {requestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
@@ -13,7 +11,7 @@ import {ContentHeaderControl} from "../components-v1/common-content-header";
 import * as moment from 'moment';
 import  MemberMyOrderWaitForApprovePage from './member-my-order-wait-for-approve-page';
 import {ClickParam} from "antd/lib/menu";
-import {FormTableOperation,FormTableOperationModel} from "../components-v1/form-table-operation";
+import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
 
 interface MemberMyOrderPageStates {
     pageIndex: number;
@@ -28,7 +26,7 @@ interface MemberMyOrderPageProps {
 
 }
 
-class MemberMyOrderPageTable extends Table<any> {
+class MemberMyOrderPageTable extends CommonTable<any> {
 }
 
 @withRouter
@@ -37,7 +35,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
         super(props);
         this.state = {
             pageIndex: 1,
-            pageSize: 3,
+            pageSize: 10,
             data: [],
             totalCount: 0,
             loading: false,
@@ -75,14 +73,19 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
 
     renderTable() {
         const {state: {pageSize, pageIndex, totalCount, data, loading, selected}} = this;
-        const columns: ColumnProps<ModelNameSpace.CustomerOrderModel>[] = [
+        const columns: CommonColumnProps<ModelNameSpace.CustomerOrderModel>[] = [
             {
                 title: '客户订单',
-                dataIndex: 'CustomerOrderNo'
+                dataIndex: 'CustomerOrderNo',
+                layout: ColumnLayout.LeftTop,
+                render: (txt) => {
+                    return <a>{txt}</a>
+                }
             },
             {
                 title: '物流单号',
-                dataIndex: 'expressNo'
+                dataIndex: 'expressNo',
+                layout: ColumnLayout.RightTop
             },
             {
                 title: '物流方式',
@@ -91,6 +94,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             {
                 title: '状态',
                 dataIndex: 'status',
+                layout: ColumnLayout.RightBottom,
                 render: () => {
                     return <span>待打包</span>
                 }
@@ -98,14 +102,16 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             {
                 title: '入库时间',
                 dataIndex: 'InWareHouseTime',
+                layout: ColumnLayout.LeftBottom,
                 render: (txt) => {
                     return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
                 }
             },
             {
                 title: '操作',
+                layout: ColumnLayout.Option,
                 render: (val, record, index) => {
-                    const menu:FormTableOperationModel[]=[
+                    const menu: FormTableOperationModel[] = [
                         {
                             key: PathConfig.MemberMyOrderPackageViewPage,
                             type: "search",
@@ -160,8 +166,8 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                         }
                     ]
 
-                    return <FormTableOperation onClick={(param:ClickParam)=>{
-                            hashHistory.push({pathname:param.key,state:record});
+                    return <FormTableOperation onClick={(param: ClickParam) => {
+                        hashHistory.push({pathname: param.key, state: record});
                     }} value={menu}></FormTableOperation>;
                 }
             }
@@ -190,19 +196,25 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
     render() {
         const {state: {totalCount, selected}} = this;
         const selects = selected.selectedRowKeys ? selected.selectedRowKeys.length : 0;
-        return <Row className="member-warehouse-in-query-page">
+        return <Row className="member-page-warehouse-in-page">
             <ContentHeaderControl title="我的订单"></ContentHeaderControl>
             <Tabs defaultActiveKey="1">
                 <Tabs.TabPane tab="待打包" key="1">
-                    <Row style={{marginBottom: '15px'}}>
-                        <Badge count={selects} style={{backgroundColor: '#52c41a'}}>
-                            <Button disabled={!selects}
-                                    type="primary"
-                                    onClick={this.onPackageClick.bind(this)}>合并打包</Button>
-                        </Badge>
-                    </Row>
                     <Row>
-                        <Alert message={`总计有${totalCount}项 待打包订单`} type="info" showIcon/>
+                        <Col span={24} className="order-title">
+                            <Badge count={selects} style={{backgroundColor: '#52c41a'}}>
+                                <a onClick={this.onPackageClick.bind(this)}><Icon type="appstore"></Icon>合并打包</a>
+{/*                                <Button disabled={!selects}
+                                        size="large"
+                                        type="primary"
+                                        icon=""
+                                       ></Button>*/}
+                            </Badge>
+                            <span className="order-count">
+                                <Icon type="info-circle"></Icon>
+                                {`总计有${totalCount}项 待打包订单`}
+                            </span>
+                        </Col>
                     </Row>
                     <Row>
                         {this.renderTable()}

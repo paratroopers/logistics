@@ -3,8 +3,9 @@
  * Created by Handy
  * */
 import * as React from 'react';
-import {Dropdown,Menu,Icon} from 'antd';
+import {Dropdown, Menu, Icon} from 'antd';
 import {ClickParam} from "antd/lib/menu";
+import {Context} from '../util/common';
 
 export class FormTableOperationModel {
     key: string;
@@ -34,12 +35,13 @@ export class FormTableOperation extends React.Component<FormTableOperationProps,
         const menu = <Menu onClick={onClick}>
             {value.map(item => <Menu.Item key={item.key}>
                 <span>{item.type ?
-                    <Icon style={{fontSize: 14, margin: "4px 8px 4px 0px"}} type={item.type}></Icon> : null}{item.label}</span>
+                    <Icon style={{fontSize: 14, margin: "4px 8px 4px 0px"}}
+                          type={item.type}></Icon> : null}{item.label}</span>
             </Menu.Item>)}
         </Menu>;
 
         return <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
-            <a>操作 <Icon type="down"/></a>
+            <i className={Context.getIconClassName("icon-ellipsisv")}/>
         </Dropdown>;
     }
 }
