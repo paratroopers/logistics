@@ -27,8 +27,8 @@ export class PathConfig {
 
     /** 我的仓库-我的订单*/
     static MemberMyOrderPage = "/member/my/order";
-    static MemberMyWaitPackageViewPage = "/member/my/wait/package/view";/** 待打包查看*/
-    static MemberMyWaitReviewViewPage = "/member/my/wait/review/view";/** 待审核查看*/
+    static MemberMyOrderPackageViewPage = "/member/my/wait/package/view";/** 待打包查看*/
+    static MemberMyOrderApprovalViewPage = "/member/my/wait/approval/view";/** 待审核查看*/
     /** 我的仓库-待付款*/
     static MemberWaitPayPage = "/member/wait/pay";
     static MemberWaitPayViewPage = "/member/wait/pay/view";/** 待付款查看*/
@@ -53,14 +53,16 @@ export class PathConfig {
     /** 仓库管理-合并打包*/
     static WarehousePackagePage = "/warehouse/package";
     static WarehousePackageViewPage = "/warehouse/package/view";
+    static WarehousePackageApprovePage = "/warehouse/package/approve";
     /** 仓库管理-订单出库*/
     static WarehouseOutPage = "/warehouse/out";
     static WarehouseOutViewPage = "/warehouse/out/view";/** 订单出库查看*/
+    static WarehouseOutApprovePage = "/warehouse/out/approve";/** 订单出库审批*/
 
     /** 客服管理-订单确认*/
-    static CustomerServicePage = "/cusertomerservice/orderconfirm";
-    static CustomerServiceViewPage = "/cusertomerservice/orderconfirm/view";/** 订单确认查看*/
-    static CustomerServiceReviewPage = "/cusertomerservice/orderconfirm/review";/** 订单确认审核*/
+    static CustomerServiceConfirmPage = "/cusertomerservice/orderconfirm";
+    static CustomerServiceConfirmViewPage = "/customer/service/order/confirm/view";/** 订单确认查看*/
+    static CustomerServiceConfirmApprovePage = "/customer/service/order/confirm/approve";/** 订单确认审核*/
 
 
     /** 财务*/

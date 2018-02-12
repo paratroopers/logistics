@@ -5,16 +5,16 @@ import {ModelNameSpace} from '../model/model';
 import {isNullOrUndefined} from "util";
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 
-interface MemberMyWaitPackageViewPageProps extends RouteComponentProps<any, any>{
+interface WarehousePackageApprovePageProps extends RouteComponentProps<any, any>{
 
 }
 
-interface MemberMyWaitPackageViewPageStates {
+interface WarehousePackageApprovePageStates {
 
 }
 
 @withRouter
-export class MemberMyWaitPackageViewPage extends React.Component<MemberMyWaitPackageViewPageProps, MemberMyWaitPackageViewPageStates> {
+export class WarehousePackageApprovePage extends React.Component<WarehousePackageApprovePageProps, WarehousePackageApprovePageStates> {
     constructor(props) {
         super(props);
     }
@@ -28,7 +28,7 @@ export class MemberMyWaitPackageViewPage extends React.Component<MemberMyWaitPac
         if (isNullOrUndefined(viewData)) hashHistory.goBack();
         return <Row className="member-my-wait-package-view-page">
             <ContentHeaderControl title="查看"></ContentHeaderControl>
-            {!isNullOrUndefined(viewData) ? <div>待合并查看界面</div> :
+            {!isNullOrUndefined(viewData) ? <div>仓库待合并-查看</div> :
                 <div>暂无数据</div>}
         </Row>;
     }

@@ -11,8 +11,8 @@ import {MemberAddressPageView} from "../page-v1/member-address-page-view";
 import MemberDeliveredPage from "../page-v1/member-delivered-page";
 import {MemberMessageListPage} from "../page-v1/member-message-list-page";
 import {MemberMyOrderPage} from "../page-v1/member-my-order-page";
-import {MemberMyWaitPackageViewPage} from "../page-v1/member-my-wait-package-view-page";
-import {MemberMyWaitReviewViewPage} from "../page-v1/member-my-wait-review-view-page";
+import {MemberMyOrderPackageViewPage} from "../page-v1/member-my-order-package-view-page";
+import {MemberMyOrderApprovalViewPage} from "../page-v1/member-my-order-approval-view-page";
 import {MemberUserInformationPage} from "../page-v1/member-user-information";
 import MemberWaitPayPage from "../page-v1/member-wait-pay-page";
 import {MemberWarehouseInQueryPage} from "../page-v1/member-warehouse-in-query-page";
@@ -35,10 +35,17 @@ import MobileMemberDetailPage from "../page-v1/mobile-member-detail-page";
 import {MobileMemberWelcomePage} from "../page-v1/mobile-member-welcome-page";
 import {MobileCustomerServicePage} from "../page-v1/mobile-customer-service-page";
 
-import CustomerServiceConfirmListPage from "../page-v1/customer-service-confirm-list-page";
-import WarehouseOutPage from '../page-v1/warehouse-out-page';
-import WarehousePackgePage from '../page-v1/warehouse-packge-page';
+import CustomerServiceConfirmPage from "../page-v1/customer-service-confirm-page";
+import {CustomerServiceConfirmViewPage} from "../page-v1/customer-service-confirm-view-page";
+import {CustomerServiceConfirmApprovePage} from "../page-v1/customer-service-confirm-approve-page";
 
+import WarehouseOutPage from '../page-v1/warehouse-out-page';
+import {WarehouseOutViewPage} from '../page-v1/warehouse-out-view-page';
+import {WarehouseOutApprovePage} from '../page-v1/warehouse-out-approve-page';
+
+import WarehousePackgePage from '../page-v1/warehouse-package-page';
+import {WarehousePackageViewPage} from '../page-v1/warehouse-package-view-page';
+import {WarehousePackageApprovePage} from '../page-v1/warehouse-package-approve-page';
 
 const routerConfig = (
     <Router history={hashHistory}>
@@ -64,20 +71,26 @@ const routerConfig = (
                 <Route path={PathConfig.MemberDeliveredPage} component={MemberDeliveredPage}/>
                 <Route path={PathConfig.MemberMessageListPage} component={MemberMessageListPage}/>
                 <Route path={PathConfig.MemberMyOrderPage} component={MemberMyOrderPage}/>
-                <Route path={PathConfig.MemberMyWaitPackageViewPage} component={MemberMyWaitPackageViewPage}/>
-                <Route path={PathConfig.MemberMyWaitReviewViewPage} component={MemberMyWaitReviewViewPage}/>
+                <Route path={PathConfig.MemberMyOrderPackageViewPage} component={MemberMyOrderPackageViewPage}/>
+                <Route path={PathConfig.MemberMyOrderApprovalViewPage} component={MemberMyOrderApprovalViewPage}/>
                 <Route path={PathConfig.MemberUserInformationPage} component={MemberUserInformationPage}/>
                 <Route path={PathConfig.MemberWaitPayPage} component={MemberWaitPayPage}/>
                 <Route path={PathConfig.MemberWarehouseInQueryPage} component={MemberWarehouseInQueryPage}/>
                 <Route path={PathConfig.WarehouseInPage} component={WarehouseInPage}/>
                 <Route path={PathConfig.WarehouseOutPage} component={WarehouseOutPage}/>
+                <Route path={PathConfig.WarehouseOutViewPage} component={WarehouseOutViewPage}/>
+                <Route path={PathConfig.WarehouseOutApprovePage} component={WarehouseOutApprovePage}/>
                 <Route path={PathConfig.WarehousePackagePage} component={WarehousePackgePage}/>
+                <Route path={PathConfig.WarehousePackageViewPage} component={WarehousePackageViewPage}/>
+                <Route path={PathConfig.WarehousePackageApprovePage} component={WarehousePackageApprovePage}/>
                 <Route path={PathConfig.WarehouseInAddPage} component={WarehouseInAddPage}/>
                 <Route path={PathConfig.WarehouseInViewPage} component={WarehouseInViewPage}/>
                 <Route path={PathConfig.WarehouseInEditPage} component={WarehouseInEditPage}/>
                 <Route path={PathConfig.MemberMergePackage} component={MemberMergePackage}/>
                 <Route path={PathConfig.MemberPaymentPage} component={MemberPaymentPage}/>
-                <Route path={PathConfig.CustomerServicePage} component={CustomerServiceConfirmListPage}/>
+                <Route path={PathConfig.CustomerServiceConfirmPage} component={CustomerServiceConfirmPage}/>
+                <Route path={PathConfig.CustomerServiceConfirmViewPage} component={CustomerServiceConfirmViewPage}/>
+                <Route path={PathConfig.CustomerServiceConfirmApprovePage} component={CustomerServiceConfirmApprovePage}/>
             </Route>
         </Route>
         <Route path={PathConfig.LoginPage} component={UserLoginPage}/>

@@ -107,11 +107,11 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                 render: (val, record, index) => {
                     const menu:FormTableOperationModel[]=[
                         {
-                            key: PathConfig.MemberMyWaitPackageViewPage,
+                            key: PathConfig.MemberMyOrderPackageViewPage,
                             type: "search",
                             label: "待打包查看"
                         },{
-                            key: PathConfig.MemberMyWaitReviewViewPage,
+                            key: PathConfig.MemberMyOrderApprovalViewPage,
                             type: "search",
                             label: "待审核查看"
                         },
@@ -125,28 +125,33 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                             type: "edit",
                             label: "入库编辑"
                         },{
-                            key: "3",
+                            key: PathConfig.CustomerServiceConfirmViewPage,
                             type: "search",
                             label: "客服查看"
                         },{
-                            key: "4",
+                            key: PathConfig.CustomerServiceConfirmApprovePage,
                             type: "edit",
                             label: "客服审批"
                         },
                         {
-                            key: "5",
+                            key: PathConfig.WarehousePackageViewPage,
                             type: "search",
                             label: "仓库合并查看"
                         },
                         {
-                            key: "6",
+                            key: PathConfig.WarehousePackageApprovePage,
                             type: "edit",
-                            label: "仓库合并打包"
+                            label: "仓库合并打包审批"
                         },
                         {
-                            key: "7",
+                            key: PathConfig.WarehouseOutViewPage,
                             type: "search",
                             label: "仓库出库查看"
+                        },
+                        {
+                            key: PathConfig.WarehouseOutApprovePage,
+                            type: "search",
+                            label: "仓库出库审批"
                         },
                         {
                             key: "delete",
