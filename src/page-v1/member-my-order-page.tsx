@@ -5,7 +5,6 @@ import {ColumnProps} from 'antd/lib/table';
 
 import {PathConfig} from '../config/pathconfig';
 
-
 import {requestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
