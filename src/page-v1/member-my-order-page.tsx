@@ -1,8 +1,6 @@
 import * as React from 'react';
 import {withRouter, hashHistory} from 'react-router';
-import {Row, Table, Menu, Dropdown, Icon, Alert, Button, Tabs, Badge} from "antd";
-import {ColumnProps} from 'antd/lib/table';
-
+import {Row, Col, Icon, Button, Tabs, Badge} from "antd";
 import {PathConfig} from '../config/pathconfig';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 
@@ -193,19 +191,25 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
     render() {
         const {state: {totalCount, selected}} = this;
         const selects = selected.selectedRowKeys ? selected.selectedRowKeys.length : 0;
-        return <Row className="member-warehouse-in-query-page">
+        return <Row className="member-page-warehouse-in-page">
             <ContentHeaderControl title="我的订单"></ContentHeaderControl>
             <Tabs defaultActiveKey="1">
                 <Tabs.TabPane tab="待打包" key="1">
-                    <Row style={{marginBottom: '15px'}}>
-                        <Badge count={selects} style={{backgroundColor: '#52c41a'}}>
-                            <Button disabled={!selects}
-                                    type="primary"
-                                    onClick={this.onPackageClick.bind(this)}>合并打包</Button>
-                        </Badge>
-                    </Row>
                     <Row>
-                        <Alert message={`总计有${totalCount}项 待打包订单`} type="info" showIcon/>
+                        <Col span={24} className="order-title">
+                            <Badge count={selects} style={{backgroundColor: '#52c41a'}}>
+                                <a onClick={this.onPackageClick.bind(this)}><Icon type="appstore"></Icon>合并打包</a>
+{/*                                <Button disabled={!selects}
+                                        size="large"
+                                        type="primary"
+                                        icon=""
+                                       ></Button>*/}
+                            </Badge>
+                            <span className="order-count">
+                                <Icon type="info-circle"></Icon>
+                                {`总计有${totalCount}项 待打包订单`}
+                            </span>
+                        </Col>
                     </Row>
                     <Row>
                         {this.renderTable()}
