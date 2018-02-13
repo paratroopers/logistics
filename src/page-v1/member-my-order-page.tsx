@@ -8,6 +8,7 @@ import {requestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
+import {FormTableHeader} from '../components-v1/form-table-header';
 import * as moment from 'moment';
 import  MemberMyOrderWaitForApprovePage from './member-my-order-wait-for-approve-page';
 import {ClickParam} from "antd/lib/menu";
@@ -193,25 +194,22 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                                        dataSource={data}/>
     }
 
-    render() {
-        const {state: {totalCount, selected}} = this;
+    renderHeader() {
+        const {state: {selected}} = this;
         const selects = selected.selectedRowKeys ? selected.selectedRowKeys.length : 0;
-        return <Row className="member-page-warehouse-in-page">
+        return <a onClick={this.onPackageClick.bind(this)}>
+            <Icon type="appstore"></Icon>
+            <span>合并打包 ({selects})</span>
+        </a>
+    }
+
+    render() {
+        const {state: {totalCount}} = this;
+        return <Row className="member-page-warehouse-in-page mainland-content-page">
             <ContentHeaderControl title="我的订单"></ContentHeaderControl>
             <Tabs defaultActiveKey="1">
                 <Tabs.TabPane tab="待打包" key="1">
-                    <Row>
-                        <Col span={24} className="order-title">
-                            <a onClick={this.onPackageClick.bind(this)}>
-                                <Icon type="appstore"></Icon>
-                                <span>合并打包 ({selects})</span>
-                            </a>
-                            <span className="order-count">
-                                <Icon type="info-circle" style={{color: '#0193e4'}}></Icon>
-                                {`总计有${totalCount}项 待打包订单`}
-                            </span>
-                        </Col>
-                    </Row>
+                    <FormTableHeader totalCount={totalCount} buttonGroup={this.renderHeader()}></FormTableHeader>
                     <Row>
                         {this.renderTable()}
                     </Row>

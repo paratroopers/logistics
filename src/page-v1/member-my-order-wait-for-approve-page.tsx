@@ -181,6 +181,7 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
                 defaultDisplay: true,
                 fieldName: "expressNo",
                 displayName: "快递单号",
+                mobileShow: true,
                 control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} isadmin={false} placeholder="快递单号"/>
             },
             {

@@ -40,6 +40,8 @@ export class FormAdvancedItemModel {
     control: React.ReactNode;
     /** 布局*/
     layout?: any;
+    /** 手机端显示*/
+    mobileShow?: boolean;
 }
 
 
@@ -100,14 +102,17 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
         if (isArray(formAdvancedItems)) {
             formAdvancedItems.map(function (item, index) {
                 const spanLayout = item.layout ? item.layout : {
-                    xs: 24,
+                    xs: 15,
                     sm: 12,
                     md: 12,
                     lg: 4,
                     xl: 4
                 }
-                const display = expand ? 'block' : item.defaultDisplay ? 'block' : 'none';
-                children.push(<Col {...spanLayout} key={index} style={{display: display}}>
+                let display = expand ? 'block' : item.defaultDisplay ? 'block' : 'none';
+                const isMobile = window.innerWidth <= 768;
+                if (isMobile && !item.mobileShow)
+                    display = 'none';
+                children.push(<Col  {...spanLayout} key={index} style={{display: display}}>
                     <FormItem>
                         {getFieldDecorator(item.fieldName)(item.control)}
                     </FormItem>
@@ -125,7 +130,7 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
                      onSubmit={topThis.onSearch.bind(this)}>
             <Row gutter={16} justify="start">
                 {topThis.renderFormAdvancedItems()}
-                <Col span={4} className="search-button">
+                <Col span={4} xs={9} className="search-button">
                     <FormItem>
                         <Button type="primary" htmlType="submit">搜索</Button>
                         <Button style={{marginLeft: 8}} onClick={topThis.onReset.bind(this)}>重置</Button>
