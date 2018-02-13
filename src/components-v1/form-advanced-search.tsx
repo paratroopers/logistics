@@ -138,7 +138,7 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
             </FormItem> :
             <FormItem className="web-search-button">
                 <Button type="primary" htmlType="submit">搜索</Button>
-                <Button style={{marginLeft: 8}} onClick={this.onReset.bind(this)}>重置</Button>
+                <Button onClick={this.onReset.bind(this)}>重置</Button>
                 {hasAdvanced ?
                     <a className="advanced-search-button" onClick={this.toggle.bind(this)}>
                         高级搜索 <Icon type={expand ? 'up' : 'down'}/>
@@ -154,7 +154,7 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
                      onSubmit={topThis.onSearch.bind(this)}>
             <Row gutter={16} justify="start">
                 {topThis.renderFormAdvancedItems()}
-                <Col span={4} xs={9} className="search-button">
+                <Col lg={4} xs={9} className="search-button">
                     {this.renderSearchButton()}
                 </Col>
             </Row>
