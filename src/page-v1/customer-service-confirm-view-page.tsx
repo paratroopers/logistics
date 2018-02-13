@@ -5,16 +5,16 @@ import {ModelNameSpace} from '../model/model';
 import {isNullOrUndefined} from "util";
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 
-interface WarehouseOutApprovePageProps extends RouteComponentProps<any, any>{
+interface CustomerServiceConfirmViewPageProps extends RouteComponentProps<any, any>{
 
 }
 
-interface WarehouseOutApprovePageStates {
+interface CustomerServiceConfirmViewPageStates {
 
 }
 
 @withRouter
-export class WarehouseOutApprovePage extends React.Component<WarehouseOutApprovePageProps, WarehouseOutApprovePageStates> {
+export class CustomerServiceConfirmViewPage extends React.Component<CustomerServiceConfirmViewPageProps, CustomerServiceConfirmViewPageStates> {
     constructor(props) {
         super(props);
     }
@@ -28,7 +28,7 @@ export class WarehouseOutApprovePage extends React.Component<WarehouseOutApprove
         if (isNullOrUndefined(viewData)) hashHistory.goBack();
         return <Row className="member-my-wait-package-view-page">
             <ContentHeaderControl title="查看"></ContentHeaderControl>
-            {!isNullOrUndefined(viewData) ? <div>仓库出库-审批</div> :
+            {!isNullOrUndefined(viewData) ? <div>客服管理-查看</div> :
                 <div>暂无数据</div>}
         </Row>;
     }

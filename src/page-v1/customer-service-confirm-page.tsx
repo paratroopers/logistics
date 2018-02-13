@@ -26,11 +26,11 @@ import {isUndefined} from "util";
 
 
 /// 待审核列表
-interface CustomerServiceConfirmListPageProps extends FormComponentProps {
+interface CustomerServiceConfirmPageProps extends FormComponentProps {
 
 }
 
-interface CustomerServiceConfirmListPageStates {
+interface CustomerServiceConfirmPageStates {
     /** 数据源*/
     listData: ModelNameSpace.WarehouseListModel[],
     /** 选中行*/
@@ -46,7 +46,7 @@ interface CustomerServiceConfirmListPageStates {
 }
 
 @withRouter
-class CustomerServiceConfirmListPage extends React.Component<CustomerServiceConfirmListPageProps, CustomerServiceConfirmListPageStates> {
+class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmPageProps, CustomerServiceConfirmPageStates> {
     constructor(props,context) {
         super(props,context);
         this.state = {
@@ -269,4 +269,4 @@ class CustomerServiceConfirmListPage extends React.Component<CustomerServiceConf
 }
 
 
-export default Form.create<any>()(CustomerServiceConfirmListPage);
+export default Form.create<any>()(CustomerServiceConfirmPage);

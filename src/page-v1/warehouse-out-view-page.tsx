@@ -1,22 +1,20 @@
 import * as React from 'react';
 import {withRouter,RouteComponentProps,hashHistory} from 'react-router';
 import {Row} from 'antd';
-// import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
-import WarehouseInForm from "../components-v1/warehouse-in-form";
 import {ModelNameSpace} from '../model/model';
 import {isNullOrUndefined} from "util";
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 
-interface MemberWaitPayViewPageProps extends RouteComponentProps<any, any>{
+interface WarehouseOutViewPageProps extends RouteComponentProps<any, any>{
 
 }
 
-interface MemberWaitPayViewPageStates {
+interface WarehouseOutViewPageStates {
 
 }
 
 @withRouter
-export class MemberWaitPayViewPage extends React.Component<MemberWaitPayViewPageProps, MemberWaitPayViewPageStates> {
+export class WarehouseOutViewPage extends React.Component<WarehouseOutViewPageProps, WarehouseOutViewPageStates> {
     constructor(props) {
         super(props);
     }
@@ -25,12 +23,12 @@ export class MemberWaitPayViewPage extends React.Component<MemberWaitPayViewPage
         const topThis = this;
         const {props: {location}} = topThis;
         /** 获取页面传值*/
-        const viewData: ModelNameSpace.WarehouseListModel = location.state;
+        const viewData: ModelNameSpace.CustomerOrderModel = location.state;
         /** 未传值则返回*/
         if (isNullOrUndefined(viewData)) hashHistory.goBack();
-        return <Row className="warehouse-in-view-page">
+        return <Row className="member-my-wait-package-view-page">
             <ContentHeaderControl title="查看"></ContentHeaderControl>
-            {!isNullOrUndefined(viewData) ? <WarehouseInForm type={"view"} Data={viewData} ></WarehouseInForm> :
+            {!isNullOrUndefined(viewData) ? <div>仓库出库-查看</div> :
                 <div>暂无数据</div>}
         </Row>;
     }

@@ -151,9 +151,52 @@
     }
   }
   /** 入库操作*/
-  .warehouse-in {
-    &-page {
-
+  .mainland-content-page {
+    .order-title {
+      margin-bottom: 16px;
+      a {
+        i {
+          color: #e65922
+        }
+        margin-left: 23px;
+      }
+      @media (max-width: 768px) {
+        a {
+          margin-left: 8px !important;
+        }
+      }
+      i {
+        margin-right: 5px;
+      }
+      .order-count {
+        margin-left: 15px;
+      }
+    }
+    .na-advanced-search-form {
+      padding-top: 0 !important;
+      margin-bottom: 15px;
+      .ant-row > div {
+        padding: 0 !important;
+      }
+      .mobile-search-button {
+        i {
+          color: #e65922;
+          padding: 0 5px 0 0;
+        }
+        a {
+          margin-left: 8px;
+          line-height: 32px;
+        }
+        .advanced-search-button {
+          margin-left: 8px;
+          font-size: 12px;
+        }
+      }
+      .web-search-button {
+        button {
+          margin-left: 8px
+        }
+      }
     }
   }
 }

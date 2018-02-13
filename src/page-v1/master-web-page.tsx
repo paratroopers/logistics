@@ -49,9 +49,10 @@ class MasterWebPage extends React.Component<MasterWebPageProps, MasterWebPageSta
                 height: 80,
                 zIndex: 1001,
                 background: "#FFF",
-                borderBottom: "1px solid #c2c2c2"
+                borderBottom: "1px solid #c2c2c2",
+                padding:0
             }}>
-                <div className="content-template" style={{maxWidth: '1200px', margin: '0 auto'}}>
+                <div className="content-template" style={{maxWidth: '1500px', margin: '0 auto'}}>
                     <Header
                         menuTheme={"light"}
                         logo={logo}

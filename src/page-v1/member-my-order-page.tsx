@@ -1,18 +1,18 @@
 import * as React from 'react';
 import {withRouter, hashHistory} from 'react-router';
-import {Row, Table, Menu, Dropdown, Icon, Alert, Button, Tabs, Badge} from "antd";
-import {ColumnProps} from 'antd/lib/table';
-
+import {Row, Col, Icon, Button, Tabs, Badge} from "antd";
 import {PathConfig} from '../config/pathconfig';
-
+import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 
 import {requestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
+import {FormTableHeader} from '../components-v1/form-table-header';
 import * as moment from 'moment';
 import  MemberMyOrderWaitForApprovePage from './member-my-order-wait-for-approve-page';
-
+import {ClickParam} from "antd/lib/menu";
+import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
 
 interface MemberMyOrderPageStates {
     pageIndex: number;
@@ -27,7 +27,7 @@ interface MemberMyOrderPageProps {
 
 }
 
-class MemberMyOrderPageTable extends Table<any> {
+class MemberMyOrderPageTable extends CommonTable<any> {
 }
 
 @withRouter
@@ -36,7 +36,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
         super(props);
         this.state = {
             pageIndex: 1,
-            pageSize: 3,
+            pageSize: 10,
             data: [],
             totalCount: 0,
             loading: false,
@@ -74,14 +74,19 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
 
     renderTable() {
         const {state: {pageSize, pageIndex, totalCount, data, loading, selected}} = this;
-        const columns: ColumnProps<ModelNameSpace.CustomerOrderModel>[] = [
+        const columns: CommonColumnProps<ModelNameSpace.CustomerOrderModel>[] = [
             {
                 title: '客户订单',
-                dataIndex: 'CustomerOrderNo'
+                dataIndex: 'CustomerOrderNo',
+                layout: ColumnLayout.LeftTop,
+                render: (txt) => {
+                    return <a>{txt}</a>
+                }
             },
             {
                 title: '物流单号',
-                dataIndex: 'expressNo'
+                dataIndex: 'expressNo',
+                layout: ColumnLayout.RightTop
             },
             {
                 title: '物流方式',
@@ -90,6 +95,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             {
                 title: '状态',
                 dataIndex: 'status',
+                layout: ColumnLayout.RightBottom,
                 render: () => {
                     return <span>待打包</span>
                 }
@@ -97,24 +103,73 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             {
                 title: '入库时间',
                 dataIndex: 'InWareHouseTime',
+                layout: ColumnLayout.LeftBottom,
                 render: (txt) => {
                     return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
                 }
             },
             {
-                title: '',
-                dataIndex: 'handle',
-                render: (txt, record) => {
-                    const menu = <Menu>
-                        <Menu.Item>
-                            <span><Icon type="search"></Icon>查看</span>
-                        </Menu.Item>
-                    </Menu>;
-                    return <Dropdown overlay={menu}>
-                        <a className="ant-dropdown-link">
-                            操作 <Icon type="down"/>
-                        </a>
-                    </Dropdown>
+                title: '操作',
+                layout: ColumnLayout.Option,
+                render: (val, record, index) => {
+                    const menu: FormTableOperationModel[] = [
+                        {
+                            key: PathConfig.MemberMyOrderPackageViewPage,
+                            type: "search",
+                            label: "待打包查看"
+                        }, {
+                            key: PathConfig.MemberMyOrderApprovalViewPage,
+                            type: "search",
+                            label: "待审核查看"
+                        },
+                        {
+                            key: PathConfig.WarehouseInViewPage,
+                            type: "search",
+                            label: "入库查看"
+                        },
+                        {
+                            key: PathConfig.WarehouseInEditPage,
+                            type: "edit",
+                            label: "入库编辑"
+                        }, {
+                            key: PathConfig.CustomerServiceConfirmViewPage,
+                            type: "search",
+                            label: "客服查看"
+                        }, {
+                            key: PathConfig.CustomerServiceConfirmApprovePage,
+                            type: "edit",
+                            label: "客服审批"
+                        },
+                        {
+                            key: PathConfig.WarehousePackageViewPage,
+                            type: "search",
+                            label: "仓库合并查看"
+                        },
+                        {
+                            key: PathConfig.WarehousePackageApprovePage,
+                            type: "edit",
+                            label: "仓库合并打包审批"
+                        },
+                        {
+                            key: PathConfig.WarehouseOutViewPage,
+                            type: "search",
+                            label: "仓库出库查看"
+                        },
+                        {
+                            key: PathConfig.WarehouseOutApprovePage,
+                            type: "search",
+                            label: "仓库出库审批"
+                        },
+                        {
+                            key: "delete",
+                            type: "delete",
+                            label: "删除"
+                        }
+                    ]
+
+                    return <FormTableOperation onClick={(param: ClickParam) => {
+                        hashHistory.push({pathname: param.key, state: record});
+                    }} value={menu}></FormTableOperation>;
                 }
             }
         ];
@@ -139,23 +194,23 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                                        dataSource={data}/>
     }
 
-    render() {
-        const {state: {totalCount, selected}} = this;
+    renderHeader() {
+        const {state: {selected}} = this;
         const selects = selected.selectedRowKeys ? selected.selectedRowKeys.length : 0;
-        return <Row className="member-warehouse-in-query-page">
+        return <a onClick={this.onPackageClick.bind(this)}>
+            <Icon type="appstore"></Icon>
+            <span>合并打包 ({selects})</span>
+        </a>
+    }
+
+    render() {
+        const {state: {totalCount}} = this;
+        return <Row className="member-page-warehouse-in-page mainland-content-page">
             <ContentHeaderControl title="我的订单"></ContentHeaderControl>
             <Tabs defaultActiveKey="1">
                 <Tabs.TabPane tab="待打包" key="1">
-                    <Row style={{marginBottom: '15px'}}>
-                        <Badge count={selects} style={{backgroundColor: '#52c41a'}}>
-                            <Button disabled={!selects}
-                                    type="primary"
-                                    onClick={this.onPackageClick.bind(this)}>合并打包</Button>
-                        </Badge>
-                    </Row>
-                    <Row>
-                        <Alert message={`总计有${totalCount}项 待打包订单`} type="info" showIcon/>
-                    </Row>
+                    <FormTableHeader title={`总计有${totalCount}项 待打包订单`}
+                                     buttonGroup={this.renderHeader()}></FormTableHeader>
                     <Row>
                         {this.renderTable()}
                     </Row>

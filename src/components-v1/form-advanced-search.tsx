@@ -40,6 +40,8 @@ export class FormAdvancedItemModel {
     control: React.ReactNode;
     /** 布局*/
     layout?: any;
+    /** 手机端显示*/
+    mobileShow?: boolean;
 }
 
 
@@ -100,13 +102,16 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
         if (isArray(formAdvancedItems)) {
             formAdvancedItems.map(function (item, index) {
                 const spanLayout = item.layout ? item.layout : {
-                    xs: 24,
+                    xs: 15,
                     sm: 12,
                     md: 12,
                     lg: 4,
                     xl: 4
                 }
-                const display = expand ? 'block' : item.defaultDisplay ? 'block' : 'none';
+                let display = expand ? 'block' : item.defaultDisplay ? 'block' : 'none';
+                const isMobile = window.innerWidth <= 768;
+                if (isMobile && !item.mobileShow)
+                    display = 'none';
                 children.push(<Col {...spanLayout} key={index} style={{display: display}}>
                     <FormItem>
                         {getFieldDecorator(item.fieldName)(item.control)}
@@ -117,6 +122,30 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
         return children;
     }
 
+    renderSearchButton() {
+        const isMobile = window.innerWidth <= 768;
+        const {state: {expand, hasAdvanced}} = this;
+        return isMobile ?
+            <FormItem className="mobile-search-button">
+                <a>
+                    <Icon type="search"></Icon>搜索</a>
+                <a onClick={this.onReset.bind(this)}>
+                    <Icon type="reload"></Icon>重置</a>
+                {hasAdvanced ?
+                    <a className="advanced-search-button" onClick={this.toggle.bind(this)}>
+                        高级搜索 <Icon type={expand ? 'up' : 'down'}/>
+                    </a> : null}
+            </FormItem> :
+            <FormItem className="web-search-button">
+                <Button type="primary" htmlType="submit">搜索</Button>
+                <Button onClick={this.onReset.bind(this)}>重置</Button>
+                {hasAdvanced ?
+                    <a className="advanced-search-button" onClick={this.toggle.bind(this)}>
+                        高级搜索 <Icon type={expand ? 'up' : 'down'}/>
+                    </a> : null}
+            </FormItem>
+    }
+
     render() {
         const topThis = this;
         const {state: {expand, hasAdvanced}} = topThis;
@@ -125,17 +154,8 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
                      onSubmit={topThis.onSearch.bind(this)}>
             <Row gutter={16} justify="start">
                 {topThis.renderFormAdvancedItems()}
-                <Col span={4} className="search-button">
-                    <FormItem>
-                        <Button type="primary" htmlType="submit">搜索</Button>
-                        <Button style={{marginLeft: 8}} onClick={topThis.onReset.bind(this)}>重置</Button>
-                        {
-                            hasAdvanced ?
-                                <a style={{marginLeft: 8, fontSize: 12}} onClick={topThis.toggle.bind(this)}>
-                                    高级搜索 <Icon type={expand ? 'up' : 'down'}/>
-                                </a> : null
-                        }
-                    </FormItem>
+                <Col lg={4} xs={9} className="search-button">
+                    {this.renderSearchButton()}
                 </Col>
             </Row>
         </Form>;
