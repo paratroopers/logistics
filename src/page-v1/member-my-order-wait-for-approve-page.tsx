@@ -9,21 +9,16 @@ import {ColumnProps} from 'antd/lib/table';
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
-import {PathConfig} from "../config/pathconfig";
-import {FormWarehouseSelect} from "../components-v1/form-warehouse-select";
-import {FormExpressSelect} from "../components-v1/form-express-select";
-import {SelectType} from "../util/common";
+import {SelectType, Constants} from "../util/common";
 import {FormControl} from "../components-v1/form-control";
-import {ContentHeaderControl} from "../components-v1/common-content-header";
 import {ResponseNameSpace} from "../model/response";
-import {FormStatusSelect} from "../components-v1/form-status-select";
 import {FormAdvancedSearch} from "../components-v1/all-components-export";
+import {FormTableHeader} from '../components-v1/form-table-header';
+import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {APINameSpace} from "../model/api";
-import {ClickParam} from "antd/lib/menu";
-import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
 import {FormComponentProps} from "antd/lib/form";
-import FormItem from "antd/lib/form/FormItem";
 import {isUndefined} from "util";
+import * as moment from 'moment';
 
 
 /// 待审核列表
@@ -46,6 +41,9 @@ interface MemberMyOrderWaitForApprovePageStates {
     loading?: boolean;
     /* 查询条件选择值*/
     selectVaules?: any;
+}
+
+class MemberMyOrderWaitForApprovePageTable extends CommonTable<any> {
 }
 
 @withRouter
@@ -115,34 +113,47 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
             onChange: topThis.onSelectChange,
         };
 
-        const columns: ColumnProps<ModelNameSpace.CustomerOrderMergeModel>[] = [{
+        const columns: CommonColumnProps<ModelNameSpace.CustomerOrderMergeModel>[] = [{
             title: "客户合并单号",
-            dataIndex: 'MergeOrderNo', width: 200
+            dataIndex: 'MergeOrderNo',
+            width: 200,
+            layout: ColumnLayout.LeftTop,
+            render: (txt) => {
+                return <a>{txt}</a>
+            }
         }, {
             title: "渠道",
             dataIndex: 'CustomerChooseChannelName',
-            width: 200
+            layout: ColumnLayout.RightTop
         }, {
             title: "发往国家",
             dataIndex: 'country',
-            width: 100
+            width: 100,
+            hidden: Constants.minSM
         }, {
             title: "客服备注",
             dataIndex: 'customerServiceMark',
-            width: 200
+            width: 200,
+            hidden: Constants.minSM
         }, {
             title: "状态",
             dataIndex: 'currentStep',
+            layout: ColumnLayout.RightBottom,
             width: 100
         }, {
             title: "创建时间",
-            dataIndex: 'Modified'
-        }, {
+            dataIndex: 'Modified',
+            layout: ColumnLayout.LeftBottom,
+            render: (txt) => {
+                return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
+            }
+        }/*, {
             title: '操作',
+            layout: ColumnLayout.Option,
             render: (val, record) => {
                 return <a>查看</a>
             }
-        }];
+        }*/];
 
         const pagination: PaginationProps = {
             current: pageIndex,
@@ -153,20 +164,12 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
             }
         };
 
-        return <Table columns={columns}
-                      rowKey={"ID"}
-                      loading={loading}
-                      pagination={pagination}
-                      title={(currentPageData: Object[]) => {
-                          //
-                          return <Alert message={"总计有 " + totalCount + "  项客服确认  " + totalCount + "  项仓库打包  "}
-                                        type="info" showIcon></Alert>;
-                      }}
-                      scroll={{x: 1200}}
-                      rowSelection={rowSelection}
-                      bordered={false}
-                      dataSource={listData}
-                      locale={{emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>}}/>;
+        return <MemberMyOrderWaitForApprovePageTable columns={columns}
+                                                     rowKey={"ID"}
+                                                     loading={loading}
+                                                     pagination={pagination}
+                                                     rowSelection={rowSelection}
+                                                     dataSource={listData}></MemberMyOrderWaitForApprovePageTable>;
     }
 
     onClickSearch = (values: any) => {
@@ -229,11 +232,13 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
 
     render() {
         const topThis = this;
+        const {state: {totalCount}} = topThis;
         // const { getFieldDecorator } = this.props.form;
         return <Row>
             <FormAdvancedSearch
                 formAdvancedItems={topThis.renderFormAdvancedItems()}
                 onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch>
+            <FormTableHeader title={`总计有 ${totalCount} 项客服确认 ${totalCount} 项仓库打包`}></FormTableHeader>
             {this.renderTable()}
         </Row>;
     }

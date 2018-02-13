@@ -209,7 +209,8 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             <ContentHeaderControl title="我的订单"></ContentHeaderControl>
             <Tabs defaultActiveKey="1">
                 <Tabs.TabPane tab="待打包" key="1">
-                    <FormTableHeader totalCount={totalCount} buttonGroup={this.renderHeader()}></FormTableHeader>
+                    <FormTableHeader title={`总计有${totalCount}项 待打包订单`}
+                                     buttonGroup={this.renderHeader()}></FormTableHeader>
                     <Row>
                         {this.renderTable()}
                     </Row>
