@@ -116,7 +116,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                             key: PathConfig.MemberMyOrderPackageViewPage,
                             type: "search",
                             label: "待打包查看"
-                        },{
+                        }, {
                             key: PathConfig.MemberMyOrderApprovalViewPage,
                             type: "search",
                             label: "待审核查看"
@@ -130,11 +130,11 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                             key: PathConfig.WarehouseInEditPage,
                             type: "edit",
                             label: "入库编辑"
-                        },{
+                        }, {
                             key: PathConfig.CustomerServiceConfirmViewPage,
                             type: "search",
                             label: "客服查看"
-                        },{
+                        }, {
                             key: PathConfig.CustomerServiceConfirmApprovePage,
                             type: "edit",
                             label: "客服审批"
@@ -202,16 +202,12 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                 <Tabs.TabPane tab="待打包" key="1">
                     <Row>
                         <Col span={24} className="order-title">
-                            <Badge count={selects} style={{backgroundColor: '#52c41a'}}>
-                                <a onClick={this.onPackageClick.bind(this)}><Icon type="appstore"></Icon>合并打包</a>
-{/*                                <Button disabled={!selects}
-                                        size="large"
-                                        type="primary"
-                                        icon=""
-                                       ></Button>*/}
-                            </Badge>
+                            <a onClick={this.onPackageClick.bind(this)}>
+                                <Icon type="appstore"></Icon>
+                                <span>合并打包 ({selects})</span>
+                            </a>
                             <span className="order-count">
-                                <Icon type="info-circle"></Icon>
+                                <Icon type="info-circle" style={{color: '#0193e4'}}></Icon>
                                 {`总计有${totalCount}项 待打包订单`}
                             </span>
                         </Col>
