@@ -8,19 +8,21 @@ import {MemberAddressPage} from "../page-v1/member-address-page";
 import {MemberAddressPageAdd} from "../page-v1/member-address-page-add";
 import {MemberAddressPageEdit} from "../page-v1/member-address-page-edit";
 import {MemberAddressPageView} from "../page-v1/member-address-page-view";
-import MemberDeliveredPage from "../page-v1/member-delivered-page";
+import {MemberDeliveredPage} from "../page-v1/member-delivered-page";
 import {MemberMessageListPage} from "../page-v1/member-message-list-page";
 import {MemberMyOrderPage} from "../page-v1/member-my-order-page";
 import {MemberMyOrderPackageViewPage} from "../page-v1/member-my-order-package-view-page";
 import {MemberMyOrderApprovalViewPage} from "../page-v1/member-my-order-approval-view-page";
 import {MemberUserInformationPage} from "../page-v1/member-user-information";
-import MemberWaitPayPage from "../page-v1/member-wait-pay-page";
+import {MemberWaitPayPage} from "../page-v1/member-wait-pay-page";
+import {MemberWaitPayViewPage} from "../page-v1/member-wait-pay-view-page";
+import {MemberWaitPayApprovePage} from "../page-v1/member-wait-pay-approve-page";
 import {MemberWarehouseInQueryPage} from "../page-v1/member-warehouse-in-query-page";
 import {WarehouseInPage} from "../page-v1/warehouse-in-page";
 import {WarehouseInAddPage} from "../page-v1/warehouse-in-add-page";
 import {WarehouseInViewPage} from "../page-v1/warehouse-in-view-page";
 import {WarehouseInEditPage} from "../page-v1/warehouse-in-edit-page";
-import {MemberMergePackage} from "../page-v1/member-merge-package";
+import {MemberMergePackagePage} from "../page-v1/member-merge-package-page";
 import {MemberPaymentPage} from '../page-v1/member-payment-page';
 
 import UserLoginPage from '../page-v1/user-login-page';
@@ -75,6 +77,8 @@ const routerConfig = (
                 <Route path={PathConfig.MemberMyOrderApprovalViewPage} component={MemberMyOrderApprovalViewPage}/>
                 <Route path={PathConfig.MemberUserInformationPage} component={MemberUserInformationPage}/>
                 <Route path={PathConfig.MemberWaitPayPage} component={MemberWaitPayPage}/>
+                <Route path={PathConfig.MemberWaitPayViewPage} component={MemberWaitPayViewPage}/>
+                <Route path={PathConfig.MemberWaitPayApprovePage} component={MemberWaitPayApprovePage}/>
                 <Route path={PathConfig.MemberWarehouseInQueryPage} component={MemberWarehouseInQueryPage}/>
                 <Route path={PathConfig.WarehouseInPage} component={WarehouseInPage}/>
                 <Route path={PathConfig.WarehouseOutPage} component={WarehouseOutPage}/>
@@ -86,7 +90,7 @@ const routerConfig = (
                 <Route path={PathConfig.WarehouseInAddPage} component={WarehouseInAddPage}/>
                 <Route path={PathConfig.WarehouseInViewPage} component={WarehouseInViewPage}/>
                 <Route path={PathConfig.WarehouseInEditPage} component={WarehouseInEditPage}/>
-                <Route path={PathConfig.MemberMergePackage} component={MemberMergePackage}/>
+                <Route path={PathConfig.MemberMergePackagePage} component={MemberMergePackagePage}/>
                 <Route path={PathConfig.MemberPaymentPage} component={MemberPaymentPage}/>
                 <Route path={PathConfig.CustomerServiceConfirmPage} component={CustomerServiceConfirmPage}/>
                 <Route path={PathConfig.CustomerServiceConfirmViewPage} component={CustomerServiceConfirmViewPage}/>

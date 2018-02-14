@@ -67,7 +67,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
 
     onPackageClick() {
         hashHistory.push({
-            pathname: PathConfig.MemberMergePackage,
+            pathname: PathConfig.MemberMergePackagePage,
             query: {ids: this.state.selected.selectedRowKeys},
         })
     }
@@ -159,6 +159,17 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                             key: PathConfig.WarehouseOutApprovePage,
                             type: "search",
                             label: "仓库出库审批"
+                        },
+                        ,
+                        {
+                            key: PathConfig.MemberWaitPayApprovePage,
+                            type: "search",
+                            label: "待付款-付款"
+                        },
+                        {
+                            key: PathConfig.MemberWaitPayViewPage,
+                            type: "search",
+                            label: "待付款-查看"
                         },
                         {
                             key: "delete",

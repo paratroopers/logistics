@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {withRouter,RouteComponentProps,hashHistory} from 'react-router';
 import {isNullOrUndefined} from "util";
-import {Layout} from 'antd';
+import {Layout, Row, Col, Button, Icon} from 'antd';
 import {ModelNameSpace} from '../model/model';
 import {
     FormOrderInfo,
@@ -17,14 +17,14 @@ import {
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
 
-interface WarehouseOutViewPageProps extends RouteComponentProps<any, any>, FormComponentProps {}
+interface MemberWaitPayApprovePageProps extends RouteComponentProps<any, any>, FormComponentProps {}
 
-interface WarehouseOutViewPageStates {
+interface MemberWaitPayApprovePageStates {
     viewData?: ModelNameSpace.CustomerOrderModel
 }
 
 @withRouter
-export class WarehouseOutViewPage extends React.Component<WarehouseOutViewPageProps, WarehouseOutViewPageStates> {
+export class MemberWaitPayApprovePage extends React.Component<MemberWaitPayApprovePageProps, MemberWaitPayApprovePageStates> {
     constructor(props) {
         super(props);
         this.state = {
@@ -48,19 +48,22 @@ export class WarehouseOutViewPage extends React.Component<WarehouseOutViewPagePr
         return <Layout.Content>
             <FormOrderInfo></FormOrderInfo>
             <FormOrderRelation></FormOrderRelation>
-            <FormOrderAddressee readOnly={true}></FormOrderAddressee>
-            <FormOrderDeclare readOnly={true}></FormOrderDeclare>
-            <FormOrderChannel readOnly={true}></FormOrderChannel>
-            <FormPackageRequirement readOnly={true}></FormPackageRequirement>
+            <FormOrderAddressee></FormOrderAddressee>
+            <FormOrderDeclare></FormOrderDeclare>
+            <FormOrderChannel></FormOrderChannel>
+            <FormPackageRequirement></FormPackageRequirement>
+            <FormPackageDetail></FormPackageDetail>
+            <FormDeliveredDetail form={form}></FormDeliveredDetail>
+            <FormPayment></FormPayment>
         </Layout.Content>
     }
 
     render() {
         const topThis = this;
         const {state: {viewData}} = topThis;
-        return <Layout className="warehouse-out-view-page view-content-page">
-            <Layout.Header className="warehouse-out-view-page-header view-content-page-header">
-                <ContentHeaderControl title="查看"></ContentHeaderControl>
+        return <Layout className="member-wait-pay-approve-page view-content-page">
+            <Layout.Header className="member-wait-pay-approve-page-header view-content-page-header">
+                <ContentHeaderControl title="审批"></ContentHeaderControl>
             </Layout.Header>
             {!isNullOrUndefined(viewData) ? topThis.renderForm() :
                 <Layout.Content>暂无数据</Layout.Content>}

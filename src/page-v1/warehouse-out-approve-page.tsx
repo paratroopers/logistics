@@ -1,35 +1,85 @@
 import * as React from 'react';
 import {withRouter,RouteComponentProps,hashHistory} from 'react-router';
-import {Row} from 'antd';
-import {ModelNameSpace} from '../model/model';
 import {isNullOrUndefined} from "util";
-import {ContentHeaderControl} from "../components-v1/common-content-header";
+import {Layout, Row, Col, Button, Icon} from 'antd';
+import {ModelNameSpace} from '../model/model';
+import {
+    FormOrderInfo,
+    ContentHeaderControl,
+    FormOrderRelation,
+    FormOrderAddressee,
+    FormOrderDeclare,
+    FormPackageRequirement,
+    FormPackageDetail,
+    FormOrderChannel,
+    FormDeliveredDetail,
+    FormPayment
+} from "../components-v1/all-components-export";
+import {FormComponentProps} from 'antd/lib/form/Form';
 
-interface WarehouseOutApprovePageProps extends RouteComponentProps<any, any>{
-
-}
+interface WarehouseOutApprovePageProps extends RouteComponentProps<any, any>, FormComponentProps {}
 
 interface WarehouseOutApprovePageStates {
-
+    viewData?: ModelNameSpace.CustomerOrderModel
 }
 
 @withRouter
 export class WarehouseOutApprovePage extends React.Component<WarehouseOutApprovePageProps, WarehouseOutApprovePageStates> {
     constructor(props) {
         super(props);
+        this.state = {
+            viewData: {}
+        }
     }
 
-    render() {
+    componentDidMount() {
         const topThis = this;
         const {props: {location}} = topThis;
         /** 获取页面传值*/
         const viewData: ModelNameSpace.CustomerOrderModel = location.state;
         /** 未传值则返回*/
         if (isNullOrUndefined(viewData)) hashHistory.goBack();
-        return <Row className="member-my-wait-package-view-page">
-            <ContentHeaderControl title="查看"></ContentHeaderControl>
-            {!isNullOrUndefined(viewData) ? <div>仓库出库-审批</div> :
-                <div>暂无数据</div>}
-        </Row>;
+        topThis.setState({viewData: viewData});
+    }
+
+    renderForm() {
+        const topThis = this;
+        const {props: {form}} = topThis;
+        return <Layout.Content>
+            <Row justify="start" type="flex" style={{margin: '10px 0px 10px 0px'}}>
+                <Col span={24}>
+                    <div className="view-content-page-header-title">
+                        <Icon type="tag" style={{color: '#f2804b', marginRight: '15px'}}/>
+                        <span>单号：201801270052</span>
+                    </div>
+                    <div className="view-content-page-header-button">
+                        <Button type="primary" style={{marginRight: "10px"}}>通过</Button>
+                        <Button type="primary" style={{marginRight: "10px"}}>拒绝</Button>
+                        <Button type="primary">取消</Button>
+                    </div>
+                </Col>
+            </Row>
+            <FormOrderInfo></FormOrderInfo>
+            <FormOrderRelation></FormOrderRelation>
+            <FormOrderAddressee></FormOrderAddressee>
+            <FormOrderDeclare></FormOrderDeclare>
+            <FormOrderChannel></FormOrderChannel>
+            <FormPackageRequirement></FormPackageRequirement>
+            <FormPackageDetail></FormPackageDetail>
+            <FormDeliveredDetail form={form}></FormDeliveredDetail>
+            <FormPayment></FormPayment>
+        </Layout.Content>
+    }
+
+    render() {
+        const topThis = this;
+        const {state: {viewData}} = topThis;
+        return <Layout className="warehouse-out-approve-page view-content-page">
+            <Layout.Header className="warehouse-out-approve-page-header view-content-page-header">
+                <ContentHeaderControl title="审批"></ContentHeaderControl>
+            </Layout.Header>
+            {!isNullOrUndefined(viewData) ? topThis.renderForm() :
+                <Layout.Content>暂无数据</Layout.Content>}
+        </Layout>
     }
 }

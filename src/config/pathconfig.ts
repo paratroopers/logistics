@@ -31,7 +31,8 @@ export class PathConfig {
     static MemberMyOrderApprovalViewPage = "/member/my/wait/approval/view";/** 待审核查看*/
     /** 我的仓库-待付款*/
     static MemberWaitPayPage = "/member/wait/pay";
-    static MemberWaitPayViewPage = "/member/wait/pay/view";/** 待付款查看*/
+    static MemberWaitPayViewPage = "/member/wait/pay/view";/** 待付款-付款*/
+    static MemberWaitPayApprovePage = "/member/wait/pay/approve";/** 待付款-付款*/
     /** 我的仓库-已发货*/
     static MemberDeliveredPage = "/member/delivered";
     /** 我的仓库-入库查询*/
@@ -72,7 +73,7 @@ export class PathConfig {
     /** 系统设置*/
 
     /** 合并打包*/
-    static MemberMergePackage = "/member/merge/package";
+    static MemberMergePackagePage = "/member/merge/package";
     /** 客户支付*/
     static MemberPaymentPage = "/member/payment";
 }

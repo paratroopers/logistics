@@ -46,7 +46,7 @@ interface MemberWaitPayPageStates {
 }
 
 @withRouter
-class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, MemberWaitPayPageStates> {
+export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, MemberWaitPayPageStates> {
     constructor(props,context) {
         super(props,context);
         this.state = {
@@ -264,6 +264,3 @@ class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, MemberWa
         </Row>;
     }
 }
-
-
-export default Form.create<any>()(MemberWaitPayPage);

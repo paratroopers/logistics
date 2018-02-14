@@ -46,7 +46,7 @@ interface MemberMyOrderWaitForApprovePageStates {
 }
 
 @withRouter
-class MemberDeliveredPage extends React.Component<MemberDeliveredPageProps, MemberMyOrderWaitForApprovePageStates> {
+export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProps, MemberMyOrderWaitForApprovePageStates> {
     constructor(props,context) {
         super(props,context);
         this.state = {
@@ -264,6 +264,3 @@ class MemberDeliveredPage extends React.Component<MemberDeliveredPageProps, Memb
         </Row>;
     }
 }
-
-
-export default Form.create<any>()(MemberDeliveredPage);

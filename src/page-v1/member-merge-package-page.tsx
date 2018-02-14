@@ -5,22 +5,25 @@ import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import * as moment from 'moment';
 import * as util from "util";
-import {FormOrderInfo, FormOrderInfoModel} from "../components-v1/form-order-info";
-import {ContentHeaderControl} from "../components-v1/common-content-header";
-import {FormOrderRelation} from "../components-v1/form-order-relation";
-import FormOrderAddressee from "../components-v1/form-order-addressee";
-import {FormOrderDeclare} from "../components-v1/form-order-declare";
-import {FormPackageRequirement} from "../components-v1/form-package-requirement";
-import {FormPackageDetail} from "../components-v1/form-package-detail";
-import {FormOrderChannel} from "../components-v1/form-order-channel";
-import {FormDeliveredDetail} from "../components-v1/form-delivered-detail";
+import {
+    FormOrderInfo,
+    FormOrderInfoModel,
+    ContentHeaderControl,
+    FormOrderRelation,
+    FormOrderAddressee,
+    FormOrderDeclare,
+    FormPackageRequirement,
+    FormPackageDetail,
+    FormOrderChannel,
+    FormDeliveredDetail,
+    FormPayment
+} from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
-import {FormPayment} from '../components-v1/form-payment';
 
-export interface MemberMergePackageProps extends RouteComponentProps<any, any>, FormComponentProps {
+export interface MemberMergePackagePageProps extends RouteComponentProps<any, any>, FormComponentProps {
 }
 
-export interface MemberMergePackageStates {
+export interface MemberMergePackagePageStates {
     selectedKeys?: string[] | string;
     data?: ModelNameSpace.CustomerOrderModel[];
     orderInfo?: FormOrderInfoModel;
@@ -32,7 +35,7 @@ export interface QueryData {
 }
 
 @withRouter
-export class MemberMergePackage extends React.Component<MemberMergePackageProps, MemberMergePackageStates> {
+export class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps, MemberMergePackagePageStates> {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -69,18 +72,18 @@ export class MemberMergePackage extends React.Component<MemberMergePackageProps,
         const topThis = this;
         const {props: {form}} = topThis;
         const {state: {orderInfo, data}} = this;
-        return <Layout className="merge-package">
-            <Layout.Header className="merge-package-header">
+        return <Layout className="merge-package-page view-content-page">
+            <Layout.Header className="merge-package-page-header view-content-page-header">
                 <ContentHeaderControl title="待打包"></ContentHeaderControl>
             </Layout.Header>
             <Layout.Content>
                 <Row justify="start" type="flex" style={{margin: '10px 0px 10px 0px'}}>
                     <Col span={24}>
-                        <div className="merge-package-header-title">
+                        <div className="view-content-page-header-title">
                             <Icon type="tag" style={{color: '#f2804b', marginRight: '15px'}}/>
                             <span>单号：201801270052</span>
                         </div>
-                        <div className="merge-package-header-button">
+                        <div className="view-content-page-header-button">
                             <Button type="primary" style={{marginRight: "10px"}}>确认合并打包</Button>
                             <Button type="primary">取消</Button>
                         </div>
