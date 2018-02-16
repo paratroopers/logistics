@@ -40,17 +40,17 @@ export class FormOrderInfo extends React.Component<FormOrderInfoProps, FormOrder
         const {state: {data, loading}} = this;
         return <FormSettingGroup loading={loading} title={"订单基本信息"}>
             <div className="orderinfo">
-                <Row type="flex">
-                    <Col span={6}>
+                <Row>
+                    <Col xl={6} md={24}>
                         <span>创建时间: {data.created}</span>
                     </Col>
-                    <Col span={6}>
+                    <Col xl={6} md={24}>
                         <span> 净重量 : <a>{data.weight}</a>kg</span>
                     </Col>
-                    <Col span={6}>
+                    <Col xl={6} md={24}>
                         <span>净重体积: {data.volume}cm²</span>
                     </Col>
-                    <Col span={6}>
+                    <Col xl={6} md={24}>
                         <span>总件数: <a>{data.count}</a></span>
                     </Col>
                 </Row>

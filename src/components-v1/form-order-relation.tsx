@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {Row, Col, Table} from 'antd';
-import {ColumnProps} from 'antd/lib/table';
+import {Constants} from '../util/common';
 import {ModelNameSpace} from '../model/model';
 import {FormSettingGroup} from './form-setting-group';
+import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import * as moment from 'moment';
 
 export interface FormOrderRelationProps {
@@ -14,7 +14,7 @@ export interface FormOrderRelationStates {
     loading?: boolean;
 }
 
-class FormOrderRelationTable extends Table<any> {
+class FormOrderRelationTable extends CommonTable<any> {
 }
 
 export class FormOrderRelation extends React.Component<FormOrderRelationProps, FormOrderRelationStates> {
@@ -33,32 +33,42 @@ export class FormOrderRelation extends React.Component<FormOrderRelationProps, F
     }
 
     renderTable() {
-        const colums: ColumnProps<any>[] = [
+        const colums: CommonColumnProps<any>[] = [
             {
                 title: '客服订单号',
-                dataIndex: 'CustomerOrderNo'
+                dataIndex: 'CustomerOrderNo',
+                layout: ColumnLayout.LeftTop,
+                render: (txt) => {
+                    return <a>{txt}</a>
+                }
             },
             {
                 title: '物流订单号',
-                dataIndex: 'expressNo'
+                dataIndex: 'expressNo',
+                layout: ColumnLayout.RightTop,
             }, {
                 title: '物流方式',
-                dataIndex: 'expressTypeName'
+                dataIndex: 'expressTypeName',
+                layout: ColumnLayout.RightBottom,
             }, {
                 title: '入库时间',
                 dataIndex: 'InWareHouseTime',
+                layout: ColumnLayout.LeftBottom,
                 render: (txt) => {
                     return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
                 }
             }, {
                 title: '初始重量(KG)',
-                dataIndex: 'InWeight'
+                dataIndex: 'InWeight',
+                hidden: Constants.minSM
             }, {
                 title: '初始体积(cm³)',
-                dataIndex: 'InVolume'
+                dataIndex: 'InVolume',
+                hidden: Constants.minSM
             }, {
                 title: '客服备注',
-                dataIndex: '6'
+                dataIndex: '6',
+                hidden: Constants.minSM
             }
         ]
         return <FormOrderRelationTable columns={colums}
