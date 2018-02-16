@@ -6,6 +6,7 @@ export interface FormTableHeaderProps {
     buttonGroup?: any;
 }
 export interface FormTableHeaderStates {
+
 }
 
 export class FormTableHeader extends React.Component<FormTableHeaderProps, FormTableHeaderStates> {
