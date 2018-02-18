@@ -9,7 +9,7 @@ import {FormCustomerOrder} from "./form-customer-order";
 import {FormSettingGroup} from './form-setting-group';
 import {FormOrderRelation} from './form-order-relation';
 import FormOrderAddressee from './form-order-addressee';
-import {FormOrderDeclare} from './form-order-declare';
+import FormOrderDeclare from './form-order-declare';
 import {FormCollapse} from "./form-collapse";
 import {FormOrderInfo, FormOrderInfoModel} from "./form-order-info";
 import {ContentHeaderControl} from "./common-content-header";

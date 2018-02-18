@@ -1,18 +1,17 @@
 import * as React from 'react';
 import {withRouter, hashHistory} from 'react-router';
-import {Row, Col, Icon, Button, Tabs, Badge} from "antd";
+import {Row, Icon, Tabs} from "antd";
 import {PathConfig} from '../config/pathconfig';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
-
 import {requestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import {FormTableHeader} from '../components-v1/form-table-header';
-import * as moment from 'moment';
 import  MemberMyOrderWaitForApprovePage from './member-my-order-wait-for-approve-page';
 import {ClickParam} from "antd/lib/menu";
 import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
+import * as moment from 'moment';
 
 interface MemberMyOrderPageStates {
     pageIndex: number;
@@ -160,7 +159,6 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                             type: "search",
                             label: "仓库出库审批"
                         },
-                        ,
                         {
                             key: PathConfig.MemberWaitPayApprovePage,
                             type: "search",
@@ -177,7 +175,6 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                             label: "删除"
                         }
                     ]
-
                     return <FormTableOperation onClick={(param: ClickParam) => {
                         hashHistory.push({pathname: param.key, state: record});
                     }} value={menu}></FormTableOperation>;
