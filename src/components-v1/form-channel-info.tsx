@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Table, Modal, message} from 'antd';
-import {ColumnProps, TableRowSelection} from 'antd/lib/table';
+import {TableRowSelection} from 'antd/lib/table';
+import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 
@@ -17,7 +18,7 @@ export interface FormChannelInfoStates {
     data?: ModelNameSpace.ChannelModal[];
 }
 
-class FormChannelInfoTable extends Table<any> {
+class FormChannelInfoTable extends CommonTable<any> {
 }
 
 export class FormChannelInfo extends React.Component<FormChannelInfoProps, FormChannelInfoStates> {
@@ -44,16 +45,18 @@ export class FormChannelInfo extends React.Component<FormChannelInfoProps, FormC
     }
 
     renderTable() {
-        const columns: ColumnProps<any>[] = [
+        const columns: CommonColumnProps<any>[] = [
             {
                 title: '渠道名称',
                 dataIndex: 'Name',
-                width: '15%'
+                width: '15%',
+                layout: ColumnLayout.LeftTop
             },
             {
                 title: '时间',
                 dataIndex: 'Prescription',
-                width: '15%'
+                width: '15%',
+                layout: ColumnLayout.LeftBottom
             },
             {
                 title: '重量限制',
@@ -61,7 +64,8 @@ export class FormChannelInfo extends React.Component<FormChannelInfoProps, FormC
                 width: '20%',
                 render: (txt) => {
                     return <div style={{width: '120px'}} className="txtislong" title={txt}>{txt}</div>
-                }
+                },
+                layout: ColumnLayout.RightTop
             },
             {
                 title: '体积限制',
@@ -69,7 +73,8 @@ export class FormChannelInfo extends React.Component<FormChannelInfoProps, FormC
                 width: '20%',
                 render: (txt) => {
                     return <div style={{width: '120px'}} className="txtislong" title={txt}>{txt}</div>
-                }
+                },
+                layout: ColumnLayout.RightBottom
             },
             {
                 title: '备注',

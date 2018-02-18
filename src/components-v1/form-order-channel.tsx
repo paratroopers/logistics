@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {Table, Menu, Dropdown, Icon} from 'antd';
-import {ColumnProps} from 'antd/lib/table';
+import { Icon} from 'antd';
 import {Util} from '../util/util';
 import {FormSettingGroup} from './form-setting-group';
 import {ModelNameSpace} from '../model/model';
+import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {FormChannelInfo} from './form-channel-info';
 
 export interface FormOrderChannelProps {
@@ -15,7 +15,7 @@ export interface FormOrderChannelStates {
     channelsShow?: boolean;
 }
 
-class FormOrderChannelTable extends Table<ModelNameSpace.ChannelModal> {
+class FormOrderChannelTable extends CommonTable<ModelNameSpace.ChannelModal> {
 }
 
 export class FormOrderChannel extends React.Component<FormOrderChannelProps, FormOrderChannelStates> {
@@ -47,16 +47,18 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
     }
 
     renderTable() {
-        const columns: ColumnProps<ModelNameSpace.ChannelModal>[] = [
+        const columns: CommonColumnProps<ModelNameSpace.ChannelModal>[] = [
             {
                 title: '渠道名称',
                 dataIndex: 'Name',
-                width: '20%'
+                width: '20%',
+                layout: ColumnLayout.LeftTop
             },
             {
                 title: '时间',
                 dataIndex: 'Prescription',
-                width: '15%'
+                width: '15%',
+                layout: ColumnLayout.LeftBottom
             },
             {
                 title: '重量限制',
@@ -64,7 +66,8 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
                 width: '25%',
                 render: (txt) => {
                     return <div style={{width: '150px'}} className="txtislong" title={txt}>{txt}</div>
-                }
+                },
+                layout: ColumnLayout.RightTop
             },
             {
                 title: '体积限制',
@@ -72,16 +75,16 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
                 width: '25%',
                 render: (txt) => {
                     return <div style={{width: '150px'}} className="txtislong" title={txt}>{txt}</div>
-                }
+                },
+                layout: ColumnLayout.RightBottom
             },
             {
                 title: '操作',
                 dataIndex: '',
                 render: (txt, record) => {
                     return <a onClick={() => this.onDelete(record)}>删除</a>
-
-
-                }
+                },
+                layout: ColumnLayout.Option
             }];
         return <FormOrderChannelTable pagination={false} columns={columns}
                                       dataSource={this.state.data}></FormOrderChannelTable>
