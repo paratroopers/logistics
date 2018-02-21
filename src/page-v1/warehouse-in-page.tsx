@@ -278,7 +278,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 defaultDisplay: true,
                 fieldName: "A",
                 displayName: "状态",
-                control: <FormStatusSelect placeholder="搜索订单状态"></FormStatusSelect>
+                control: <FormStatusSelect dataType={ModelNameSpace.OrderTypeEnum.WarehouseIn} placeholder="搜索订单状态"></FormStatusSelect>
             },
             {
                 defaultDisplay: true,
