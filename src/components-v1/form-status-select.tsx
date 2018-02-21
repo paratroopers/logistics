@@ -87,7 +87,7 @@ export class FormStatusSelect extends React.Component<FormStatusSelectProps, For
     render() {
         const topThis = this;
         const {props:{...otherProps}} = topThis;
-        return <Select {...otherProps}>
+        return <Select allowClear={true} {...otherProps}>
             {topThis.renderOption()}
         </Select>;
     }

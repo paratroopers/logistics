@@ -61,7 +61,7 @@ export class FormWarehouseSelect extends React.Component<FormWarehouseSelectProp
     render() {
         const topThis = this;
         const {props:{value,...otherProps}} = topThis;
-        return <Select labelInValue value={value} {...otherProps} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+        return <Select allowClear={true} labelInValue value={value} {...otherProps}  showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0}>
             {topThis.renderOption()}
         </Select>;
     }
