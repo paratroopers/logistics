@@ -12,11 +12,7 @@ import {
     FormOrderRelation,
     FormOrderAddressee,
     FormOrderDeclare,
-    FormPackageRequirement,
-    FormPackageDetail,
-    FormOrderChannel,
-    FormDeliveredDetail,
-    FormPayment
+    FormOrderChannel
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
 
@@ -94,12 +90,7 @@ export class MemberMergePackagePage extends React.Component<MemberMergePackagePa
                 <FormOrderAddressee></FormOrderAddressee>
                 <FormOrderDeclare></FormOrderDeclare>
                 <FormOrderChannel></FormOrderChannel>
-                <FormPackageRequirement></FormPackageRequirement>
-                <FormPackageDetail></FormPackageDetail>
-                <FormDeliveredDetail form={form}></FormDeliveredDetail>
-                <FormPayment></FormPayment>
             </Layout.Content>
         </Layout>;
-
     }
 }

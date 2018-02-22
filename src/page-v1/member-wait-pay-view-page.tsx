@@ -48,10 +48,12 @@ export class MemberWaitPayViewPage extends React.Component<MemberWaitPayViewPage
         return <Layout.Content>
             <FormOrderInfo></FormOrderInfo>
             <FormOrderRelation></FormOrderRelation>
-            <FormOrderAddressee readOnly={true}></FormOrderAddressee>
-            <FormOrderDeclare readOnly={true}></FormOrderDeclare>
-            <FormOrderChannel readOnly={true}></FormOrderChannel>
-            <FormPackageRequirement readOnly={true}></FormPackageRequirement>
+            <FormOrderAddressee></FormOrderAddressee>
+            <FormOrderDeclare></FormOrderDeclare>
+            <FormOrderChannel></FormOrderChannel>
+            <FormPackageRequirement></FormPackageRequirement>
+            <FormPackageDetail></FormPackageDetail>
+            <FormDeliveredDetail form={form}></FormDeliveredDetail>
         </Layout.Content>
     }
 

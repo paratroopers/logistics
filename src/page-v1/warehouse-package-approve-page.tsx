@@ -67,7 +67,6 @@ export class WarehousePackageApprovePage extends React.Component<WarehousePackag
             <FormPackageRequirement></FormPackageRequirement>
             <FormPackageDetail></FormPackageDetail>
             <FormDeliveredDetail form={form}></FormDeliveredDetail>
-            <FormPayment></FormPayment>
         </Layout.Content>
     }
 
