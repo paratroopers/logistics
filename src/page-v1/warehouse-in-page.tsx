@@ -276,59 +276,59 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         const items: FormAdvancedItemModel[] = [
             {
                 defaultDisplay: true,
-                fieldName: "A",
+                fieldName: "customerOrderStatus",
                 displayName: "状态",
                 control: <FormStatusSelect dataType={ModelNameSpace.OrderTypeEnum.WarehouseIn} placeholder="搜索订单状态"></FormStatusSelect>
             },
             {
                 defaultDisplay: true,
-                fieldName: "B",
+                fieldName: "expressTypeID",
                 displayName: "物流方式",
                 control: <FormExpressSelect placeholder="搜索物流方式"></FormExpressSelect>
             }, {
                 defaultDisplay: true,
-                fieldName: "C",
+                fieldName: "wareHouseID",
                 displayName: "仓库",
                 control: <FormWarehouseSelect placeholder="搜索仓库"></FormWarehouseSelect>
             }, {
                 defaultDisplay: false,
-                fieldName: "D",
+                fieldName: "warehouseInTime",
                 displayName: "入库时间",
                 control: <RangePicker></RangePicker>
             }, {
                 defaultDisplay: false,
-                fieldName: "E",
+                fieldName: "memberCode",
                 displayName: "会员",
-                control: <FormControl.FormSelectIndex type={SelectType.Member} placeholder="搜索会员"/>
+                control: <FormControl.FormSelectIndex type={SelectType.Member} placeholder="搜索 手机 邮箱"/>
             }, {
                 defaultDisplay: false,
-                fieldName: "F",
+                fieldName: "customerServiceID",
                 displayName: "客服",
                 control: <FormControl.FormSelectIndex type={SelectType.CustomerService} placeholder="搜索客服"/>
             },
             {
                 defaultDisplay: false,
-                fieldName: "G",
+                fieldName: "warehouseAdminID",
                 displayName: "仓库管理员",
                 control: <FormControl.FormSelectIndex type={SelectType.WarehouseAdmin} placeholder="搜索仓库管理员"/>
             },
             {
                 defaultDisplay: false,
-                fieldName: "H",
+                fieldName: "CustomerOrderID",
                 displayName: "客服订单号",
                 control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客服订单号"/>
             },
             {
                 defaultDisplay: false,
-                fieldName: "I",
+                fieldName: "expressNo",
                 displayName: "快递单号",
                 control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="搜索快递单号"/>
             },
             {
                 defaultDisplay: false,
-                fieldName: "J",
+                fieldName: "deliverNo",
                 displayName: "交接单号",
-                control: <Input placeholder="交接单号"/>
+                control: <Input placeholder="搜索交接单号"/>
             }
         ];
         return items;
