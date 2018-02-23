@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter, hashHistory} from 'react-router';
-import {Row, Icon, Tabs} from "antd";
+import {Row, Icon, Tabs, message} from "antd";
 import {PathConfig} from '../config/pathconfig';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {requestNameSpace} from '../model/request';
@@ -8,7 +8,7 @@ import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import {FormTableHeader} from '../components-v1/form-table-header';
-import  MemberMyOrderWaitForApprovePage from './member-my-order-wait-for-approve-page';
+import MemberMyOrderWaitForApprovePage from './member-my-order-wait-for-approve-page';
 import {ClickParam} from "antd/lib/menu";
 import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
 import * as moment from 'moment';
@@ -39,7 +39,9 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             data: [],
             totalCount: 0,
             loading: false,
-            selected: {}
+            selected: {
+                selectedRowKeys:[]
+            }
         }
     }
 
@@ -65,6 +67,10 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
     }
 
     onPackageClick() {
+        if (this.state.selected.selectedRowKeys.length === 0) {
+            message.warning('请选择至少一个订单!')
+            return;
+        }
         hashHistory.push({
             pathname: PathConfig.MemberMergePackagePage,
             query: {ids: this.state.selected.selectedRowKeys},
