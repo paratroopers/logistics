@@ -312,7 +312,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 defaultDisplay: false,
                 fieldName: "CustomerOrderID",
                 displayName: "客服订单号",
-                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客服订单号"/>
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客户订单号"/>
             },
             {
                 defaultDisplay: false,
