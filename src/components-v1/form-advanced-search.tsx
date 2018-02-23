@@ -148,18 +148,22 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
 
     render() {
         const topThis = this;
-        const {state: {expand, hasAdvanced}} = topThis;
+        const spanLayout = {
+            xs: 15,
+            sm: 12,
+            md: 12,
+            lg: 4,
+            xl: 4
+        }
         return <Form className="na-advanced-search-form"
-                     layout={"vertical"}
                      onSubmit={topThis.onSearch.bind(this)}>
             <Row gutter={16} justify="start">
                 {topThis.renderFormAdvancedItems()}
-                <Col span={4} xs={9} className="search-button">
+                <Col className="search-button">
                     {this.renderSearchButton()}
                 </Col>
             </Row>
         </Form>;
     }
 }
-
 export default Form.create<any>()(FormAdvancedSearch);
