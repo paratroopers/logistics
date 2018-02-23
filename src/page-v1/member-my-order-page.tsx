@@ -2,6 +2,8 @@ import * as React from 'react';
 import {withRouter, hashHistory} from 'react-router';
 import {Row, Icon, Tabs} from "antd";
 import {PathConfig} from '../config/pathconfig';
+//import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
+
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {requestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
