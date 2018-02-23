@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {withRouter,hashHistory} from 'react-router';
-import {Row, Col, Button, Icon, Table, Alert,Modal,message,Input} from 'antd';
+import {withRouter, hashHistory} from 'react-router';
+import {Row, Col, Button, Icon, Table, Alert, Modal, message, Input} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
-const { RangePicker } = DatePicker;
+const {RangePicker} = DatePicker;
 import {ColumnProps} from 'antd/lib/table';
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
@@ -19,7 +19,7 @@ import {FormStatusSelect} from "../components-v1/form-status-select";
 import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import {APINameSpace} from "../model/api";
 import {ClickParam} from "antd/lib/menu";
-import {FormTableOperation,FormTableOperationModel} from "../components-v1/form-table-operation";
+import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
 const confirm = Modal.confirm;
 import {isNullOrUndefined} from "util";
 
@@ -33,15 +33,15 @@ interface WarehouseInPageStates {
     /** 选中行*/
     selectedRowKeys: any[],
     /** 当前页数*/
-    pageIndex:number,
+    pageIndex: number,
     /** 每页条数*/
-    pageSize:number,
+    pageSize: number,
     /** 总数*/
-    totalCount:number
+    totalCount: number
     /** 列表是否正在查询*/
     loading?: boolean;
     /** 筛选字段*/
-    formAdvancedData?:any;
+    formAdvancedData?: any;
 }
 
 @withRouter
@@ -63,10 +63,10 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
     }
 
     /** 高级搜索*/
-    onClickSearch = (values:any) => {
+    onClickSearch = (values: any) => {
         const topThis = this;
         const {state: {pageSize}} = topThis;
-        topThis.setState({formAdvancedData:values},()=>{
+        topThis.setState({formAdvancedData: values}, () => {
             /** 查询第一页*/
             topThis.loadData(1, pageSize);
         })
@@ -79,17 +79,17 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
     }
 
     /** 获取数据源*/
-    loadData = (index?:number,size?:number) => {
+    loadData = (index?: number, size?: number) => {
         const topThis = this;
-        const {state: {pageIndex, pageSize,formAdvancedData}} = topThis;
+        const {state: {pageIndex, pageSize, formAdvancedData}} = topThis;
         let request: requestNameSpace.GetWarehouseInListRequest = {
             type: ModelNameSpace.OrderTypeEnum.WarehouseIn,
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize
         }
 
-        if(!isNullOrUndefined(formAdvancedData)){
-            request={
+        if (!isNullOrUndefined(formAdvancedData)) {
+            request = {
                 customerOrderNo: !isNullOrUndefined(formAdvancedData.H) ? formAdvancedData.H[0].key : "",
                 expressNo: !isNullOrUndefined(formAdvancedData.I) ? formAdvancedData.I.key : "",
                 expressTypeID: !isNullOrUndefined(formAdvancedData.B) ? formAdvancedData.B.key : "",
@@ -117,11 +117,11 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         })
     }
 
-    onClickDelete(ID:number){
+    onClickDelete(ID: number) {
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
         const request: requestNameSpace.WarehouseInDeleteRequest = {
-            ID:ID
+            ID: ID
         }
 
         topThis.setState({loading: true});
@@ -177,11 +177,11 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         }, {
             title: "入库时间",
             dataIndex: 'InWareHouseTime'
-        },{
+        }, {
             title: '操作',
             fixed: 'right',
             render: (val, record, index) => {
-                const menu:FormTableOperationModel[]=[
+                const menu: FormTableOperationModel[] = [
                     {
                         key: PathConfig.WarehouseInViewPage,
                         type: "search",
@@ -199,8 +199,8 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                     }
                 ]
 
-                return <FormTableOperation onClick={(param:ClickParam)=>{
-                    if(param.key==="delete"){
+                return <FormTableOperation onClick={(param: ClickParam) => {
+                    if (param.key === "delete") {
                         confirm({
                             title: 'Are you sure delete this task?',
                             content: 'Some descriptions',
@@ -214,8 +214,8 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
 
                             }
                         });
-                    }else{
-                        hashHistory.push({pathname:param.key,state:record});
+                    } else {
+                        hashHistory.push({pathname: param.key, state: record});
                     }
                 }} value={menu}></FormTableOperation>;
             }
@@ -262,7 +262,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         const hasSelected = selectedRowKeys.length > 0;
         return <Row type="flex" justify="end">
             <Col style={{marginRight: 16}}>
-                <Button type="primary" icon="plus" onClick={()=>{
+                <Button type="primary" icon="plus" onClick={() => {
                     hashHistory.push({pathname: PathConfig.WarehouseInAddPage});
                 }}>新增入库</Button>
             </Col>
@@ -278,7 +278,8 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 defaultDisplay: true,
                 fieldName: "customerOrderStatus",
                 displayName: "状态",
-                control: <FormStatusSelect dataType={ModelNameSpace.OrderTypeEnum.WarehouseIn} placeholder="搜索订单状态"></FormStatusSelect>
+                control: <FormStatusSelect dataType={ModelNameSpace.OrderTypeEnum.WarehouseIn}
+                                           placeholder="搜索订单状态"></FormStatusSelect>
             },
             {
                 defaultDisplay: true,
@@ -290,11 +291,6 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 fieldName: "wareHouseID",
                 displayName: "仓库",
                 control: <FormWarehouseSelect placeholder="搜索仓库"></FormWarehouseSelect>
-            }, {
-                defaultDisplay: false,
-                fieldName: "warehouseInTime",
-                displayName: "入库时间",
-                control: <RangePicker></RangePicker>
             }, {
                 defaultDisplay: false,
                 fieldName: "memberCode",
@@ -329,6 +325,15 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 fieldName: "deliverNo",
                 displayName: "交接单号",
                 control: <Input placeholder="搜索交接单号"/>
+            }, {
+                defaultDisplay: false,
+                fieldName: "warehouseInTime",
+                displayName: "入库时间",
+                layout: {
+                    lg: 6,
+                    xl: 6
+                },
+                control: <RangePicker></RangePicker>
             }
         ];
         return items;
