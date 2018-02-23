@@ -91,6 +91,9 @@ export namespace FormControl {
                 type: type
             };
             if (type === SelectType.Member || type === SelectType.CustomerService || type === SelectType.WarehouseAdmin) {
+                if (request.name ===''){
+                    return;
+                }
                 APINameSpace.MemberAPI.UserSearchIndex(request).then(result => {
                     if (fetchId !== this.lastFetchId) { // for fetch callback order
                         return;

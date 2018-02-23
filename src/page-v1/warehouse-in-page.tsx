@@ -299,7 +299,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 defaultDisplay: false,
                 fieldName: "memberCode",
                 displayName: "会员",
-                control: <FormControl.FormSelectIndex type={SelectType.Member} placeholder="搜索 手机 邮箱"/>
+                control: <FormControl.FormSelectIndex type={SelectType.Member} placeholder="会员 搜索 手机 邮箱"/>
             }, {
                 defaultDisplay: false,
                 fieldName: "customerServiceID",
