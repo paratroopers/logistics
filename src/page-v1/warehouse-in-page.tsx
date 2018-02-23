@@ -22,6 +22,7 @@ import {ClickParam} from "antd/lib/menu";
 import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
 const confirm = Modal.confirm;
 import {isNullOrUndefined} from "util";
+import * as moment from 'moment';
 
 interface WarehouseInPageProps {
 
@@ -163,20 +164,23 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             title: "仓库",
             dataIndex: 'WareHouseName'
         }, {
-            title: "初始体积(c㎡)",
+            title: "初始体积(cm³)",
             dataIndex: 'InVolume',
             render: (val, record, index) => {
                 return record.InLength + "*" + record.InWeight + "*" + record.InHeight;
             }
         }, {
-            title: "初始重量",
+            title: "初始重量(kg)",
             dataIndex: 'InWeight'
         }, {
             title: "状态",
             dataIndex: 'currentStep'
         }, {
             title: "入库时间",
-            dataIndex: 'InWareHouseTime'
+            dataIndex: 'InWareHouseTime',
+            render: (txt) => {
+                return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
+            }
         }, {
             title: '操作',
             fixed: 'right',
@@ -233,11 +237,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 topThis.setState({pageIndex: a, pageSize: b});
                 topThis.loadData(a, b);
             },
-            showQuickJumper: false,//是否可以快速跳转至某页
-            showTotal: (total, range) => {
-                // return `${range[0]}-${range[1]} of ${total} items`;
-                return "";
-            }
+            showQuickJumper: false//是否可以快速跳转至某页
         };
 
         return <Table columns={columns}
@@ -245,9 +245,9 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                       loading={loading}
                       style={{padding: '12px'}}
                       pagination={pagination}
-                      title={(currentPageData: Object[]) => {
-                          // 总计已入库的数量
-                          return <Alert message={"总计有 " + totalCount + "项 已入库"} type="info" showIcon></Alert>;
+                      title={() => {
+                          const message=<div>总计有 <span style={{fontWeight:"bold"}}>{totalCount}项</span>（已入库）<span style={{fontWeight:"bold"}}>{totalCount}项</span>（待确认）<span style={{fontWeight:"bold"}}>{totalCount}项</span>（仓库退货）</div>;
+                          return <Alert message={message} type="info" showIcon></Alert>;
                       }}
                       scroll={{x: 1700}}
                       rowSelection={rowSelection}
@@ -275,6 +275,31 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
     renderFormAdvancedItems() {
         const items: FormAdvancedItemModel[] = [
             {
+                defaultDisplay: false,
+                fieldName: "memberCode",
+                displayName: "会员",
+                control: <FormControl.FormSelectIndex type={SelectType.Member} placeholder="搜索会员"/>
+            },
+            {
+                defaultDisplay: false,
+                fieldName: "expressNo",
+                displayName: "快递单号",
+                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="搜索快递单号"/>
+            },
+            {
+                defaultDisplay: false,
+                fieldName: "CustomerOrderID",
+                displayName: "客服订单号",
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客服订单号"/>,
+                layout: {
+                    xs: 15,
+                    sm: 12,
+                    md: 12,
+                    lg: 6,
+                    xl: 6
+                }
+            },
+            {
                 defaultDisplay: true,
                 fieldName: "customerOrderStatus",
                 displayName: "状态",
@@ -282,20 +307,10 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                                            placeholder="搜索订单状态"></FormStatusSelect>
             },
             {
-                defaultDisplay: true,
-                fieldName: "expressTypeID",
-                displayName: "物流方式",
-                control: <FormExpressSelect placeholder="搜索物流方式"></FormExpressSelect>
-            }, {
-                defaultDisplay: true,
-                fieldName: "wareHouseID",
-                displayName: "仓库",
-                control: <FormWarehouseSelect placeholder="搜索仓库"></FormWarehouseSelect>
-            }, {
                 defaultDisplay: false,
-                fieldName: "memberCode",
-                displayName: "会员",
-                control: <FormControl.FormSelectIndex type={SelectType.Member} placeholder="搜索 手机 邮箱"/>
+                fieldName: "deliverNo",
+                displayName: "交接单号",
+                control: <Input placeholder="搜索交接单号"/>
             }, {
                 defaultDisplay: false,
                 fieldName: "customerServiceID",
@@ -307,29 +322,19 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 fieldName: "warehouseAdminID",
                 displayName: "仓库管理员",
                 control: <FormControl.FormSelectIndex type={SelectType.WarehouseAdmin} placeholder="搜索仓库管理员"/>
-            },
-            {
-                defaultDisplay: false,
-                fieldName: "CustomerOrderID",
-                displayName: "客服订单号",
-                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客服订单号"/>
-            },
-            {
-                defaultDisplay: false,
-                fieldName: "expressNo",
-                displayName: "快递单号",
-                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="搜索快递单号"/>
-            },
-            {
-                defaultDisplay: false,
-                fieldName: "deliverNo",
-                displayName: "交接单号",
-                control: <Input placeholder="搜索交接单号"/>
+            }, {
+                defaultDisplay: true,
+                fieldName: "wareHouseID",
+                displayName: "仓库",
+                control: <FormWarehouseSelect placeholder="搜索仓库"></FormWarehouseSelect>
             }, {
                 defaultDisplay: false,
                 fieldName: "warehouseInTime",
                 displayName: "入库时间",
                 layout: {
+                    xs: 15,
+                    sm: 12,
+                    md: 12,
                     lg: 6,
                     xl: 6
                 },

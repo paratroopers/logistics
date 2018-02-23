@@ -23,6 +23,7 @@ export namespace FormControl {
     //region    属性  状态定义区
 
     export interface FormSelectIndexProps extends SelectProps {
+        readonly?:boolean;
         placeholder: string;
         type: SelectType;
         value?: LabeledValue;
@@ -177,8 +178,8 @@ export namespace FormControl {
 
         render() {
             const topThis = this;
-            const {props: {value, disabled}, state: {fetching, data}} = topThis;
-            return <Select
+            const {props: {value, disabled, readonly}, state: {fetching, data}} = topThis;
+            return !readonly ? <Select
                 disabled={disabled}
                 mode="multiple"
                 labelInValue
@@ -190,7 +191,7 @@ export namespace FormControl {
                 onChange={this.handleChange}
                 style={{width: '100%'}}>
                 {data.map(d => <Option key={d.value}>{d.text}</Option>)}
-            </Select>;
+            </Select> : <label style={{width: '100%'}}>{value ? value.label : ""}</label>;
         }
 
     }

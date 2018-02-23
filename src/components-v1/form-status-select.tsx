@@ -11,6 +11,8 @@ import {ModelNameSpace} from '../model/model';
 
 interface FormStatusSelectProps extends SelectProps {
     dataType?: ModelNameSpace.OrderTypeEnum;
+    readonly?:boolean;
+    value?: LabeledValue;
 }
 
 interface FormStatusSelectStates {
@@ -86,9 +88,9 @@ export class FormStatusSelect extends React.Component<FormStatusSelectProps, For
 
     render() {
         const topThis = this;
-        const {props:{...otherProps}} = topThis;
-        return <Select allowClear={true} {...otherProps}>
+        const {props:{value,readonly,...otherProps}} = topThis;
+        return !readonly ?<Select allowClear={true} labelInValue {...otherProps}>
             {topThis.renderOption()}
-        </Select>;
+        </Select>: <label style={{width: '100%'}}>{value ? value.label : ""}</label>;
     }
 }

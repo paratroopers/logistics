@@ -148,13 +148,6 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
 
     render() {
         const topThis = this;
-        const spanLayout = {
-            xs: 15,
-            sm: 12,
-            md: 12,
-            lg: 4,
-            xl: 4
-        }
         return <Form className="na-advanced-search-form"
                      onSubmit={topThis.onSearch.bind(this)}>
             <Row gutter={16} justify="start">

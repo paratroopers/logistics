@@ -10,7 +10,8 @@ const Option = Select.Option;
 import {APINameSpace} from '../model/api';
 
 interface FormExpressSelectProps extends SelectProps {
-    value?: LabeledValue
+    value?: LabeledValue;
+    readonly?:boolean;
 }
 
 interface FormExpressSelectStates {
@@ -60,9 +61,9 @@ export class FormExpressSelect extends React.Component<FormExpressSelectProps, F
 
     render() {
         const topThis = this;
-        const {props:{value,...otherProps}} = topThis;
-        return <Select allowClear={true} labelInValue value={value} {...otherProps} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+        const {props:{value,readonly,...otherProps}} = topThis;
+        return !readonly ?<Select allowClear={true} labelInValue value={value} {...otherProps} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0}>
             {topThis.renderOption()}
-        </Select>;
+        </Select>: <label style={{width: '100%'}}>{value ? value.label : ""}</label>;
     }
 }
