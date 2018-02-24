@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {withRouter,hashHistory} from 'react-router';
-import {Row, Col, Button,message} from 'antd';
-import {ContentHeaderControl}from "../components-v1/common-content-header";
- import WarehouseInForm from "../components-v1/warehouse-in-form";
+import {withRouter, hashHistory} from 'react-router';
+import {Row, Col, Button, message} from 'antd';
+import {ContentHeaderControl} from "../components-v1/common-content-header";
+import WarehouseInForm from "../components-v1/warehouse-in-form";
+import {FormUpload} from '../components-v1/form-upload';
 // import {APINameSpace.WarehouseAPI}from "../../../api/admin";
 // import {requestNameSpace.WarehouseInAddRequest}from "../../../api/model/request/admin";
 // import {ResponseNameSpace.BaseResponse}from "../../../api/model/response/base";
@@ -11,7 +12,7 @@ import {requestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {ResponseNameSpace} from '../model/response';
-import {PathConfig}from "../config/pathconfig";
+import {PathConfig} from "../config/pathconfig";
 
 interface WarehouseInAddPageProps {
 
@@ -27,7 +28,7 @@ export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps,
         super(props);
     }
 
-    onSubmit=(values)=>{
+    onSubmit = (values) => {
         const topThis = this;
         const request: requestNameSpace.WarehouseInAddRequest = {
             /** 会员ID*/
@@ -45,7 +46,7 @@ export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps,
             /** 入库重量*/
             InWeight: values.inWeight,
             /** 入库体积*/
-            InVolume: values.inLength*values.inWidth*values.inHeight,
+            InVolume: values.inLength * values.inWidth * values.inHeight,
             /** 入库长度*/
             InLength: values.inLength,
             /** 入库宽度*/
@@ -75,6 +76,7 @@ export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps,
         return <Row className="warehouse-in-page">
             <ContentHeaderControl title="新增入库"></ContentHeaderControl>
             <WarehouseInForm onSubmit={topThis.onSubmit.bind(this)}></WarehouseInForm>
+            <FormUpload></FormUpload>
         </Row>;
     }
 }
