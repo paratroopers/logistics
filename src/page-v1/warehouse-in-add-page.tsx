@@ -75,7 +75,7 @@ export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps,
         const topThis = this;
         return <Row className="warehouse-in-page">
             <ContentHeaderControl title="新增入库"></ContentHeaderControl>
-            <WarehouseInForm onSubmit={topThis.onSubmit.bind(this)}></WarehouseInForm>
+            <WarehouseInForm onSubmit={topThis.onSubmit.bind(this)} type="add"></WarehouseInForm>
             <FormUpload></FormUpload>
         </Row>;
     }

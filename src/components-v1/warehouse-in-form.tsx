@@ -49,6 +49,8 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
         const topThis = this;
         const {props: {Data, type, form: {setFieldsValue}}} = topThis;
         switch (type) {
+            case"add":
+                break;
             default:
                 setFieldsValue({
                     /** 会员*/
