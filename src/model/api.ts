@@ -13,7 +13,6 @@ export namespace APINameSpace {
 
     //endregion
 
-
     //region 系统模块定义区
 
     export class SystemAPI {
@@ -187,6 +186,12 @@ export namespace APINameSpace {
         static async GetWarehouseInItems(data: requestNameSpace.GetWarehouseInListRequest) {
             let url: string = CommonAPI.baseURL + "CustomerOrder/items/page";
             return new Request<BaseRequest, ResponseNameSpace.GetWarehouseInListResponse>().get(url, data);
+        }
+
+        /** 获取入库状态统计*/
+        static async GetWarehouseInStatus() {
+            let url: string = CommonAPI.baseURL + "CustomerOrder/WarehouseInStatus";
+            return new Request<BaseRequest, ResponseNameSpace.GetWarehouseInStatusResponse>().post(url, null);
         }
 
         /** 仓库入库*/

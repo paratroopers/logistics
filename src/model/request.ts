@@ -141,6 +141,7 @@ export namespace requestNameSpace {
     export interface GetWarehouseInListRequest extends BaseListRequest{
         type: ModelNameSpace.OrderTypeEnum;
         customerOrderNo?:string;
+        customerOrderStatus?:number;
         expressNo?:string;
         expressTypeID?:number;
         transferNo?:string;
@@ -148,6 +149,7 @@ export namespace requestNameSpace {
         inWarehouseIimeBegin?:Date;
         inWarehouseIimeEnd?:Date;
         customerServiceID?:number;
+        isAdmin?:boolean;
     }
 
     export interface WarehouseInAddRequest {

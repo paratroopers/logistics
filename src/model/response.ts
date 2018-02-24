@@ -46,6 +46,7 @@ export namespace ResponseNameSpace {
     //region 仓库入库
     export  interface  GetWarehouseInListResponse extends  BaseModelListResonse<ModelNameSpace.WarehouseListModel>{}
     export interface GetMemberOrderStatusResponse extends BaseModelResponse<ModelNameSpace.MemberOrderStatusModel>{}
+    export interface GetWarehouseInStatusResponse extends BaseModelResponse<ModelNameSpace.WarehouseInStatusModel>{}
     //endregion
 
     //region 客户待打包定义区

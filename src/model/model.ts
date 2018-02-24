@@ -198,6 +198,13 @@ export namespace ModelNameSpace {
         customerOrderID?: string;
     }
 
+    /** 入库状态统计*/
+    export interface WarehouseInStatusModel {
+        unconfirmedCount?: number,
+        confirmedCount?: number,
+        retrunGoodsCount?: number
+    }
+
     /** 新建入库*/
     export interface WarehouseInModel extends BaseModel {
         /** 会员号*/
@@ -351,6 +358,7 @@ export namespace ModelNameSpace {
         Created?:Date;
         Modified?:Date;
     }
+
     export interface FormDeliveredModel{
         agentID?:number;
         agentName?:string;

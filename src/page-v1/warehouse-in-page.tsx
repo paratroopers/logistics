@@ -43,6 +43,8 @@ interface WarehouseInPageStates {
     loading?: boolean;
     /** 筛选字段*/
     formAdvancedData?: any;
+    /** 入库状态数量统计*/
+    warehouseInStatus?:ModelNameSpace.WarehouseInStatusModel
 }
 
 @withRouter
@@ -55,7 +57,12 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             pageIndex: 1,
             pageSize: 10,
             totalCount: 0,
-            loading: false
+            loading: false,
+            warehouseInStatus:{
+                unconfirmedCount: 0,
+                confirmedCount: 0,
+                retrunGoodsCount: 0
+            }
         }
     }
 
@@ -86,21 +93,21 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         let request: requestNameSpace.GetWarehouseInListRequest = {
             type: ModelNameSpace.OrderTypeEnum.WarehouseIn,
             pageIndex: index ? index : pageIndex,
-            pageSize: size ? size : pageSize
+            pageSize: size ? size : pageSize,
+            isAdmin:false
         }
 
         if (!isNullOrUndefined(formAdvancedData)) {
             request = {
-                customerOrderNo: !isNullOrUndefined(formAdvancedData.H) ? formAdvancedData.H[0].key : "",
-                expressNo: !isNullOrUndefined(formAdvancedData.I) ? formAdvancedData.I.key : "",
-                expressTypeID: !isNullOrUndefined(formAdvancedData.B) ? formAdvancedData.B.key : "",
-
-                transferNo: !isNullOrUndefined(formAdvancedData.J) ? formAdvancedData.J : "",
-
-                warehouseID: !isNullOrUndefined(formAdvancedData.C) ? formAdvancedData.C.key : "",
-                inWarehouseIimeBegin: !isNullOrUndefined(formAdvancedData.D) ? formAdvancedData.D[0].format("YYYY-MM-DD hh:mm:ss") : "",
-                inWarehouseIimeEnd: !isNullOrUndefined(formAdvancedData.D) ? formAdvancedData.D[1].format("YYYY-MM-DD hh:mm:ss") : "",
-                customerServiceID: !isNullOrUndefined(formAdvancedData.F) ? formAdvancedData.F[0].key : "",
+                customerOrderNo: !isNullOrUndefined(formAdvancedData.customerOrderNo) ? formAdvancedData.customerOrderNo[0].key : "",
+                customerOrderStatus: !isNullOrUndefined(formAdvancedData.customerOrderStatus) ? formAdvancedData.customerOrderStatus : "",
+                expressNo: !isNullOrUndefined(formAdvancedData.expressNo) ? formAdvancedData.expressNo.key : "",
+                expressTypeID: !isNullOrUndefined(formAdvancedData.expressTypeID) ? formAdvancedData.expressTypeID.key : "",
+                transferNo: !isNullOrUndefined(formAdvancedData.transferNo) ? formAdvancedData.transferNo : "",
+                warehouseID: !isNullOrUndefined(formAdvancedData.warehouseID) ? formAdvancedData.warehouseID.key : "",
+                inWarehouseIimeBegin: !isNullOrUndefined(formAdvancedData.inWarehouseIimeBegin) ? formAdvancedData.inWarehouseIimeBegin[0].format("YYYY-MM-DD hh:mm:ss") : "",
+                inWarehouseIimeEnd: !isNullOrUndefined(formAdvancedData.inWarehouseIimeEnd) ? formAdvancedData.inWarehouseIimeEnd[1].format("YYYY-MM-DD hh:mm:ss") : "",
+                customerServiceID: !isNullOrUndefined(formAdvancedData.customerServiceID) ? formAdvancedData.customerServiceID[0].key : "",
                 ...request
             }
         }
@@ -113,6 +120,18 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                     pageIndex: index ? index : pageIndex,
                     totalCount: result.TotalCount,
                     loading: false
+                });
+            }
+        })
+
+        APINameSpace.WarehouseAPI.GetWarehouseInStatus().then((result: ResponseNameSpace.GetWarehouseInStatusResponse) => {
+            if (result.Status === 0) {
+                topThis.setState({
+                    warehouseInStatus:{
+                        unconfirmedCount: result.Data.unconfirmedCount,
+                        confirmedCount: result.Data.confirmedCount,
+                        retrunGoodsCount: result.Data.retrunGoodsCount
+                    }
                 });
             }
         })
@@ -136,7 +155,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
 
     renderTable() {
         const topThis = this;
-        const {state: {listData, selectedRowKeys, pageIndex, pageSize, totalCount, loading}} = topThis;
+        const {state: {listData, selectedRowKeys, pageIndex, pageSize, totalCount, loading,warehouseInStatus}} = topThis;
 
         const rowSelection = {
             fixed: true,
@@ -174,7 +193,10 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             dataIndex: 'InWeight'
         }, {
             title: "状态",
-            dataIndex: 'currentStep'
+            dataIndex: 'currentStatus',
+            render: (txt) => {
+                return <span></span>
+            }
         }, {
             title: "入库时间",
             dataIndex: 'InWareHouseTime',
@@ -246,7 +268,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                       style={{padding: '12px'}}
                       pagination={pagination}
                       title={() => {
-                          const message=<div>总计有 <span style={{fontWeight:"bold"}}>{totalCount}项</span>（已入库）<span style={{fontWeight:"bold"}}>{totalCount}项</span>（待确认）<span style={{fontWeight:"bold"}}>{totalCount}项</span>（仓库退货）</div>;
+                          const message=<div>总计有 <span style={{fontWeight:"bold"}}>{warehouseInStatus.confirmedCount}项</span>（已入库）<span style={{fontWeight:"bold"}}>{warehouseInStatus.unconfirmedCount}项</span>（待确认）<span style={{fontWeight:"bold"}}>{warehouseInStatus.retrunGoodsCount}项</span>（仓库退货）</div>;
                           return <Alert message={message} type="info" showIcon></Alert>;
                       }}
                       scroll={{x: 1700}}
@@ -276,7 +298,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         const items: FormAdvancedItemModel[] = [
             {
                 defaultDisplay: false,
-                fieldName: "memberCode",
+                fieldName: "customerOrderNo",
                 displayName: "会员",
                 control: <FormControl.FormSelectIndex type={SelectType.Member} placeholder="搜索会员"/>
             },
@@ -308,7 +330,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             },
             {
                 defaultDisplay: false,
-                fieldName: "deliverNo",
+                fieldName: "transferNo",
                 displayName: "交接单号",
                 control: <Input placeholder="搜索交接单号"/>
             }, {
