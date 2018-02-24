@@ -23,6 +23,7 @@ import {FormTableOperation, FormTableOperationModel} from "../components-v1/form
 const confirm = Modal.confirm;
 import {isNullOrUndefined} from "util";
 import * as moment from 'moment';
+import {Global,Context} from "../util/common";
 
 interface WarehouseInPageProps {
 
@@ -195,7 +196,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             title: "状态",
             dataIndex: 'currentStatus',
             render: (txt) => {
-                return <span></span>
+                return <span>{Global.intl.formatMessage({id: Context.getCustomerOrderStatusID(ModelNameSpace.OrderTypeEnum.WarehouseIn.toString(), txt)})}</span>
             }
         }, {
             title: "入库时间",

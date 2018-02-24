@@ -222,6 +222,11 @@ export class Context {
         return "iconfont " + name;
     }
 
+    /** 获取订单状态多语言标识*/
+    static getCustomerOrderStatusID(type:string,key: string): string {
+        return "customer.order.status." + type + "." + key;
+    }
+
     /** 返回系统Status*/
     static OpenMessage(Status: number) {
         const messageId = Constants.CommonServerStatusLocale + Status;

@@ -1,4 +1,5 @@
 import * as React from "react";
+import {hashHistory} from 'react-router';
 import {Component} from "react";
 import {Form, Button, Row, Col,InputNumber,Input} from 'antd';
 const FormItem=Form.Item;
@@ -154,7 +155,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                     </Col>
                     <Col {...spanLayout}>
                         <FormItem {...formItemLayout} label={"初始体积"}>
-                            <Row gutter={8} type="flex" justify="center" align="top">
+                            <Row gutter={8} type="flex" justify="center" align="top" style={{width:"100%"}}>
                                 <Col span={8}>
                                     {getFieldDecorator('inLength', {
                                         rules: [{required: required, message: '请填写长度!'}],
@@ -200,7 +201,10 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                 {!readonly ? <Row>
                     <Col span={24}>
                         <Button type="primary" htmlType="submit">确定</Button>
-                        <Button style={{marginLeft: 8}}>取消</Button>
+                        <Button style={{marginLeft: 8}} onClick={()=>{
+                            /** 返回路由*/
+                            hashHistory.goBack();
+                        }}>取消</Button>
                     </Col>
                 </Row> : null}
             </Form>

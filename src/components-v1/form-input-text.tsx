@@ -24,6 +24,6 @@ export class FormInputText extends React.Component<FormInputTextProps, FormInput
         const topThis = this;
         const {props: {readonly, value, rows, ...otherProps}} = topThis;
         return !readonly ? <TextArea value={value} rows={rows ? rows : 4} {...otherProps}></TextArea> :
-            <p>{value}</p>;
+            <label>{value}</label>;
     }
 }

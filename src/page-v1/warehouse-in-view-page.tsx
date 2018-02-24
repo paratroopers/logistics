@@ -28,7 +28,7 @@ export class WarehouseInViewPage extends React.Component<WarehouseInViewPageProp
         const viewData: ModelNameSpace.WarehouseListModel = location.state;
         /** 未传值则返回*/
         if (isNullOrUndefined(viewData)) hashHistory.goBack();
-        return <Row className="warehouse-in-view-page">
+        return <Row className="warehouse-in-view-page view-page-form">
             <ContentHeaderControl title="查看"></ContentHeaderControl>
             {!isNullOrUndefined(viewData) ? <WarehouseInForm type={"view"} Data={viewData} ></WarehouseInForm> :
                 <div>暂无数据</div>}
