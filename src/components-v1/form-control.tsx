@@ -191,7 +191,9 @@ export namespace FormControl {
                 onChange={this.handleChange}
                 style={{width: '100%'}}>
                 {data.map(d => <Option key={d.value}>{d.text}</Option>)}
-            </Select> : <label style={{width: '100%'}}>{value ? value.label : ""}</label>;
+            </Select> : <label style={{width: '100%'}}>{isArray(value) ? value.map((item) => {
+                return item.label + ";"
+            }) : ""}</label>;
         }
 
     }

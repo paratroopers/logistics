@@ -97,13 +97,10 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
         const readonly = type === "view" ? true : false;
 
         /** vertical布局样式BUG --- 请勿移动控件顺序*/
-        const formItemLayout = type === "view" ? {
-            labelCol: { span: 4 },
-            wrapperCol: { span: 14 },
-        } : null;
+        const formItemLayout = type === "view" ? null : null;
 
         return (
-            <Form className="warehouse-in-add-form" layout={type === "view"?"horizontal":"vertical"}
+            <Form className="warehouse-in-add-form" layout={type === "view"?"inline":"vertical"}
                   onSubmit={topThis.onSubmit.bind(this)}>
                 <Row gutter={16}>
                     <Col {...spanLayout}>
