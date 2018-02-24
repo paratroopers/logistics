@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Upload, Icon, Modal, Button} from 'antd';
 
 export interface FormUploadProps {
+    imgCount: number;
 }
 
 export interface FormUploadStates {
@@ -49,12 +50,12 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
             </div>
         );
         return <div className="clearfix">
-            <Upload action=""
+            <Upload action="//jsonplaceholder.typicode.com/posts/"
                     listType="picture-card"
                     fileList={fileList}
                     onPreview={this.onPreview.bind(this)}
                     onChange={this.onChange.bind(this)}>
-                {fileList.length >= 3 ? null : uploadButton}
+                {fileList.length >= this.props.imgCount ? null : uploadButton}
             </Upload>
             <Modal visible={previewVisible} footer={null} onCancel={this.onCancel.bind(this)}>
                 <img alt="example" style={{width: '100%'}} src={previewImage}/>
