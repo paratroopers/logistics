@@ -10,7 +10,7 @@ export interface FileViewerProps extends IAkOneUpProps{
 export interface FileViewerState {
     mediaPlayerProps: IAkOneUpProps;
 }
-export default class FileViewer extends React.Component<FileViewerProps, FileViewerState>{
+export class FileViewer extends React.Component<FileViewerProps, FileViewerState>{
     constructor(props, context) {
         super(props, context);
         this.state = {
