@@ -49,7 +49,7 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
     }
 
     render() {
-        const {previewVisible, previewImage, fileList} = this.state;
+        const {state: {previewVisible, previewImage, fileList}, props: {disabled, imgCount}} = this;
         const uploadButton = (
             <div>
                 <Icon type="plus"/>
@@ -61,10 +61,10 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
                     listType="picture-card"
                     multiple={false}
                     fileList={fileList}
-                    disabled={this.props.disabled}
+                    disabled={disabled}
                     onPreview={this.onPreview.bind(this)}
                     onChange={this.onChange.bind(this)}>
-                {fileList.length >= this.props.imgCount ? null : uploadButton}
+                {fileList.length >= imgCount || disabled ? null : uploadButton}
             </Upload>
             <Modal visible={previewVisible} footer={null} onCancel={this.onCancel.bind(this)}>
                 <img alt="example" style={{width: '100%'}} src={previewImage}/>
