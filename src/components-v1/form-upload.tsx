@@ -8,6 +8,8 @@ import {Util} from '../util/util';
 export interface FormUploadProps {
     imgCount: number;
     onChange?: (files?: ModelNameSpace.UploadModel[]) => void;
+    disabled?: boolean;
+    fileList?: any[];
 }
 
 export interface FormUploadStates {
@@ -23,6 +25,12 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
             previewImage: '',
             fileList: [],
             previewVisible: false
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if ('fileList' in nextProps && nextProps.fileList !== this.props.fileList) {
+            this.setState({fileList: nextProps.fileList});
         }
     }
 
@@ -68,6 +76,7 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
                     listType="picture-card"
                     multiple={false}
                     fileList={fileList}
+                    disabled={this.props.disabled}
                     onPreview={this.onPreview.bind(this)}
                     onChange={this.onChange.bind(this)}>
                 {fileList.length >= this.props.imgCount ? null : uploadButton}
