@@ -387,16 +387,18 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
     render() {
         const topThis = this;
         const {state:{visibleFormFileViewer}}=topThis;
-        const item:ModelNameSpace.Attachment={
+        const items:ModelNameSpace.Attachment[]=[{
             path:"http://img.mp.itc.cn/upload/20170213/c6a8f0bd5ea94457a2e7ff63bc0a07fe_th.JPG"
-        };
+        },{
+            path:"http://pic1.win4000.com/wallpaper/2017-11-15/5a0bac901bce4.jpg"
+        }];
         return <Row className="warehouse-in-page">
             <ContentHeaderControl title="入库操作" extra={topThis.renderButton()}></ContentHeaderControl>
             <FormAdvancedSearch
                 formAdvancedItems={topThis.renderFormAdvancedItems()}
                 onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch>
             {topThis.renderTable()}
-            <FormFileViewer item={item} visible={visibleFormFileViewer} changeVisible={topThis.changeFormFileViewerVisible.bind(this)} />
+            <FormFileViewer items={items} visible={visibleFormFileViewer} changeVisible={topThis.changeFormFileViewerVisible.bind(this)} />
         </Row>;
     }
 }
