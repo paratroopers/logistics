@@ -42,7 +42,7 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
             let files: ModelNameSpace.UploadModel[] = [];
             Util.each(fileList.fileList, (item: UploadFile) => {
                 let newFile: ModelNameSpace.UploadModel = {
-                    uid: item.response ? (JSON.parse(item.response) as ResponseNameSpace.BaseResponse).Data : Util.guid(),
+                    uid: item.response ? (item.response as ResponseNameSpace.BaseResponse).Data : Util.guid(),
                     size: item.size,
                     status: item.status,
                     name: item.name,
