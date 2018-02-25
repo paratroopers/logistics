@@ -1,8 +1,15 @@
 import * as React from 'react';
-import {Upload, Icon, Modal, Button} from 'antd';
+import {Upload, Icon, Modal} from 'antd';
+import {UploadFile} from 'antd/lib/upload/interface';
+import {ModelNameSpace} from '../model/model';
+import {ResponseNameSpace} from '../model/response'
+import {Util} from '../util/util';
 
 export interface FormUploadProps {
     imgCount: number;
+    onChange?: (files?: ModelNameSpace.UploadModel[]) => void;
+    disabled?: boolean;
+    fileList?: any[];
 }
 
 export interface FormUploadStates {
@@ -16,13 +23,14 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
         super(props, context);
         this.state = {
             previewImage: '',
-            fileList: [{
-                uid: -1,
-                name: 'xxx.png',
-                status: 'done',
-                url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-            }],
+            fileList: [],
             previewVisible: false
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if ('fileList' in nextProps && nextProps.fileList !== this.props.fileList) {
+            this.setState({fileList: nextProps.fileList});
         }
     }
 
@@ -38,7 +46,21 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
     }
 
     onChange(fileList) {
-        this.setState({fileList});
+        if (this.props.onChange) {
+            let files: ModelNameSpace.UploadModel[] = [];
+            Util.each(fileList.fileList, (item: UploadFile) => {
+                let newFile: ModelNameSpace.UploadModel = {
+                    uid: item.response ? (item.response as ResponseNameSpace.BaseResponse).Data : Util.guid(),
+                    size: item.size,
+                    status: item.status,
+                    name: item.name,
+                    url: '/upload/' + item.name
+                };
+                files.push(newFile);
+            })
+            this.props.onChange(files);
+        }
+        this.setState({fileList: fileList.fileList});
     }
 
     render() {
@@ -50,9 +72,11 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
             </div>
         );
         return <div className="clearfix">
-            <Upload action="//jsonplaceholder.typicode.com/posts/"
+            <Upload action="http://www.famliytree.cn/_api/ver(1.0)/File/upload"
                     listType="picture-card"
+                    multiple={false}
                     fileList={fileList}
+                    disabled={this.props.disabled}
                     onPreview={this.onPreview.bind(this)}
                     onChange={this.onChange.bind(this)}>
                 {fileList.length >= this.props.imgCount ? null : uploadButton}

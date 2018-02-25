@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {withRouter, hashHistory} from 'react-router';
-import {Row, Col, Button, message} from 'antd';
+import {Row, Col, Button, message, Form} from 'antd';
+
+const FormItem = Form.Item;
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import WarehouseInForm from "../components-v1/warehouse-in-form";
 import {FormUpload} from '../components-v1/form-upload';
@@ -76,7 +78,15 @@ export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps,
         return <Row className="warehouse-in-page">
             <ContentHeaderControl title="新增入库"></ContentHeaderControl>
             <WarehouseInForm onSubmit={topThis.onSubmit.bind(this)} type="add"></WarehouseInForm>
-            <FormUpload imgCount={9}></FormUpload>
+            <Col span={24} style={{paddingLeft: '8px', paddingRight: '8px'}}>
+                <Form>
+                    <FormItem label={"附件"}>
+                        <FormUpload imgCount={9} onChange={(files) => {
+                            console.log(files);
+                        }}></FormUpload>
+                    </FormItem>
+                </Form>
+            </Col>
         </Row>;
     }
 }
