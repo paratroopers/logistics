@@ -323,5 +323,10 @@ export namespace requestNameSpace {
     //region 财务定义区
     //endregion
 
-
+    //region 附件定义区
+    export interface GetAttachmentItemsRequest {
+        customerOrderID: number;
+        isAdmin: boolean;
+    }
+    //endregion
 }

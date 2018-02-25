@@ -7,8 +7,8 @@ export namespace APINameSpace {
     //region 基类定义区
     export class CommonAPI {
         // static  uatURL = "http://localhost:8090/_api/ver(1.0)/";
-           static baseURL = "http://www.famliytree.cn/_api/ver(1.0)/";
-         //static  baseURL = "http://localhost:8090/_api/ver(1.0)/";
+        static baseURL = "http://www.famliytree.cn/_api/ver(1.0)/";
+        //static  baseURL = "http://localhost:8090/_api/ver(1.0)/";
     }
 
     //endregion
@@ -169,6 +169,7 @@ export namespace APINameSpace {
             let url: string = CommonAPI.baseURL + "CustomerOrder/items/page";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
+
         static async GetCustomerOrdersMerge(data: requestNameSpace.GetCustomerOrderMergeRequest) {
             let url: string = CommonAPI.baseURL + "CustomerOrderMerge/items/page";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
@@ -242,7 +243,7 @@ export namespace APINameSpace {
 
     }
 
-    export class CustomerOrderStatusAPI{
+    export class CustomerOrderStatusAPI {
         /*入库下拉状态列表*/
         static async GetWarehouseInStatus() {
             let url: string = CommonAPI.baseURL + "CustomerOrderStatus/items";
@@ -251,7 +252,7 @@ export namespace APINameSpace {
 
     }
 
-    export class CustomerOrderMergeStatusAPI{
+    export class CustomerOrderMergeStatusAPI {
         /*客服确认，仓库打包，仓库发货 状态 用此接口*/
         static async GetMergeStatus() {
             let url: string = CommonAPI.baseURL + "CustomerOrderMergeStatus/items";
@@ -275,5 +276,12 @@ export namespace APINameSpace {
     //region 财务定义区
     //endregion
 
-
+    //region 附件定义区
+    export class AttachmentsAPI {
+        static async GetAttachmentItems(data: requestNameSpace.GetAttachmentItemsRequest) {
+            let url: string = CommonAPI.baseURL + "File/Attachments/items";
+            return new Request<BaseRequest, ResponseNameSpace.GetAttachmentItemsResponse>().get(url, data);
+        }
+    }
+    //endregion
 }

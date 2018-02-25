@@ -62,4 +62,8 @@ export namespace ResponseNameSpace {
 
     //region 财务定义区
     //endregion
+
+    //region 附件定义区
+    export  interface  GetAttachmentItemsResponse extends  BaseModelListResonse<ModelNameSpace.Attachment>{}
+    //endregion
 }

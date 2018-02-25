@@ -401,6 +401,8 @@ export class Util {
 }
 
 export class DocumentCommon {
+    public static pathPrefix = "http://www.famliytree.cn/";
+
     public static KbSize: number = 1024;
     public static MbSize: number = DocumentCommon.KbSize * 1024;
     public static GbSize: number = DocumentCommon.MbSize * 1024;
@@ -408,11 +410,12 @@ export class DocumentCommon {
 
     static isMediaFile(extension: string) {
         let canViewInBrowserFiles = ["png", "jpg", "gif", "jpeg", "icon", "bmp", "mp3", "mp4", "WebM", "Ogg"];
-        return canViewInBrowserFiles.indexOf(extension.toLowerCase().replace(".","")) >= 0;
+        return canViewInBrowserFiles.indexOf(extension.toLowerCase().replace(".", "")) >= 0;
     }
+
     static isImageFile(extension: string) {
         let canViewInBrowserFiles = ["png", "jpg", "gif", "jpeg", "icon", "bmp"];
-        return canViewInBrowserFiles.indexOf(extension.toLowerCase().replace(".","")) >= 0;
+        return canViewInBrowserFiles.indexOf(extension.toLowerCase().replace(".", "")) >= 0;
     }
 
     static getFileSize(size: any): string {
@@ -437,5 +440,13 @@ export class DocumentCommon {
     static getFileNameWithOutExtension(fileName: string): string {
         let extension = this.getFileExtension(fileName);
         return fileName.replace(extension, "");
+    }
+
+    static getPath(path: string) {
+        if (path.indexOf("http") === -1) {
+            return this.pathPrefix + path;
+        }else {
+            return path;
+        }
     }
 }

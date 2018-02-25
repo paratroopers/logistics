@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter, hashHistory} from 'react-router';
-import {Row, Col, Button, Icon, Table, Alert, Modal, message, Input,Tooltip} from 'antd';
+import {Row, Col, Button, Icon, Table, Alert, Modal, message, Input, Tooltip} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
 const {RangePicker} = DatePicker;
@@ -22,7 +22,7 @@ import {FormTableOperation, FormTableOperationModel} from "../components-v1/form
 const confirm = Modal.confirm;
 import {isArray, isNullOrUndefined} from "util";
 import * as moment from 'moment';
-import {Global,Context} from "../util/common";
+import {Global, Context} from "../util/common";
 import {FormFileViewer} from "../components-v1/form-file-viewer";
 
 interface WarehouseInPageProps {
@@ -45,9 +45,11 @@ interface WarehouseInPageStates {
     /** 筛选字段*/
     formAdvancedData?: any;
     /** 入库状态数量统计*/
-    warehouseInStatus?:ModelNameSpace.WarehouseInStatusModel
+    warehouseInStatus?: ModelNameSpace.WarehouseInStatusModel
     /** 图片预览*/
-    visibleFormFileViewer:boolean;
+    visibleFormFileViewer: boolean;
+    /** 图片资源*/
+    items: ModelNameSpace.Attachment[];
 }
 
 @withRouter
@@ -61,12 +63,13 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             pageSize: 10,
             totalCount: 0,
             loading: false,
-            warehouseInStatus:{
+            warehouseInStatus: {
                 unconfirmedCount: 0,
                 confirmedCount: 0,
                 retrunGoodsCount: 0
             },
-            visibleFormFileViewer:false
+            visibleFormFileViewer: false,
+            items: []
         }
     }
 
@@ -98,22 +101,22 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             type: ModelNameSpace.OrderTypeEnum.WarehouseIn,
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize,
-            isAdmin:false
+            isAdmin: false
         }
 
         if (!isNullOrUndefined(formAdvancedData)) {
             request = {
-                memberID: isArray(formAdvancedData.memberID)&&!isNullOrUndefined(formAdvancedData.memberID[0]) ? formAdvancedData.memberID[0].key : "",
-                customerOrderNo: isArray(formAdvancedData.customerOrderNo)&&!isNullOrUndefined(formAdvancedData.customerOrderNo[0]) ? formAdvancedData.customerOrderNo[0].key : "",
+                memberID: isArray(formAdvancedData.memberID) && !isNullOrUndefined(formAdvancedData.memberID[0]) ? formAdvancedData.memberID[0].key : "",
+                customerOrderNo: isArray(formAdvancedData.customerOrderNo) && !isNullOrUndefined(formAdvancedData.customerOrderNo[0]) ? formAdvancedData.customerOrderNo[0].key : "",
                 customerOrderStatus: !isNullOrUndefined(formAdvancedData.customerOrderStatus) ? formAdvancedData.customerOrderStatus : "",
-                expressNo: isArray(formAdvancedData.expressNo)&&!isNullOrUndefined(formAdvancedData.expressNo[0]) ? formAdvancedData.expressNo[0].key : "",
+                expressNo: isArray(formAdvancedData.expressNo) && !isNullOrUndefined(formAdvancedData.expressNo[0]) ? formAdvancedData.expressNo[0].key : "",
                 transferNo: !isNullOrUndefined(formAdvancedData.transferNo) ? formAdvancedData.transferNo : "",
                 warehouseID: !isNullOrUndefined(formAdvancedData.wareHouseID) ? formAdvancedData.wareHouseID.key : "",
-                inWarehouseIimeBegin: isArray(formAdvancedData.warehouseInTime)&&!isNullOrUndefined(formAdvancedData.warehouseInTime[0]) ? formAdvancedData.warehouseInTime[0].format("YYYY-MM-DD hh:mm:ss") : "",
-                inWarehouseIimeEnd: isArray(formAdvancedData.warehouseInTime)&&!isNullOrUndefined(formAdvancedData.warehouseInTime[1]) ? formAdvancedData.warehouseInTime[1].format("YYYY-MM-DD hh:mm:ss") : "",
-                customerServiceID: isArray(formAdvancedData.customerServiceID)&&!isNullOrUndefined(formAdvancedData.customerServiceID[0]) ? formAdvancedData.customerServiceID[0].key : "",
-                warehouseAdmin: isArray(formAdvancedData.warehouseAdmin)&&!isNullOrUndefined(formAdvancedData.warehouseAdmin[0]) ? formAdvancedData.warehouseAdmin[0].key : "",
-                CustomerOrderID: isArray(formAdvancedData.CustomerOrderID)&&!isNullOrUndefined(formAdvancedData.CustomerOrderID[0]) ? formAdvancedData.CustomerOrderID[0].key : "",
+                inWarehouseIimeBegin: isArray(formAdvancedData.warehouseInTime) && !isNullOrUndefined(formAdvancedData.warehouseInTime[0]) ? formAdvancedData.warehouseInTime[0].format("YYYY-MM-DD hh:mm:ss") : "",
+                inWarehouseIimeEnd: isArray(formAdvancedData.warehouseInTime) && !isNullOrUndefined(formAdvancedData.warehouseInTime[1]) ? formAdvancedData.warehouseInTime[1].format("YYYY-MM-DD hh:mm:ss") : "",
+                customerServiceID: isArray(formAdvancedData.customerServiceID) && !isNullOrUndefined(formAdvancedData.customerServiceID[0]) ? formAdvancedData.customerServiceID[0].key : "",
+                warehouseAdmin: isArray(formAdvancedData.warehouseAdmin) && !isNullOrUndefined(formAdvancedData.warehouseAdmin[0]) ? formAdvancedData.warehouseAdmin[0].key : "",
+                CustomerOrderID: isArray(formAdvancedData.CustomerOrderID) && !isNullOrUndefined(formAdvancedData.CustomerOrderID[0]) ? formAdvancedData.CustomerOrderID[0].key : "",
                 ...request
             }
         }
@@ -133,7 +136,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         APINameSpace.WarehouseAPI.GetWarehouseInStatus().then((result: ResponseNameSpace.GetWarehouseInStatusResponse) => {
             if (result.Status === 0) {
                 topThis.setState({
-                    warehouseInStatus:{
+                    warehouseInStatus: {
                         unconfirmedCount: result.Data.unconfirmedCount,
                         confirmedCount: result.Data.confirmedCount,
                         retrunGoodsCount: result.Data.retrunGoodsCount
@@ -159,9 +162,25 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         })
     }
 
+    onClickPicturePreview(item:ModelNameSpace.WarehouseListModel){
+        const topThis=this;
+        const request: requestNameSpace.GetAttachmentItemsRequest = {
+            customerOrderID:item.ID,
+            isAdmin:false
+        }
+
+        APINameSpace.AttachmentsAPI.GetAttachmentItems(request).then((result: ResponseNameSpace.GetAttachmentItemsResponse) => {
+            if (result.Status === 0) {
+                topThis.setState({items:result.Data,},()=>{
+                    topThis.changeFormFileViewerVisible(true);
+                });
+            }
+        });
+    }
+
     renderTable() {
         const topThis = this;
-        const {state: {listData, selectedRowKeys, pageIndex, pageSize, totalCount, loading,warehouseInStatus}} = topThis;
+        const {state: {listData, selectedRowKeys, pageIndex, pageSize, totalCount, loading, warehouseInStatus}} = topThis;
 
         const rowSelection = {
             fixed: true,
@@ -173,9 +192,11 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             title: "附件",
             fixed: 'left',
             render: (val, record) => {
-                return <Tooltip title="预览附件"><Icon type="picture" onClick={()=>{topThis.changeFormFileViewerVisible(true);}} style={{fontSize:20,color:"#e65922",cursor:"pointer"}}/></Tooltip>
+                return <Tooltip title="预览附件"><Icon type="picture" onClick={()=>{
+                    topThis.onClickPicturePreview(record);
+                }} style={{fontSize: 20, color: "#e65922", cursor: "pointer"}}/></Tooltip>
             }
-        },{
+        }, {
             title: "客户订单号",
             dataIndex: 'CustomerOrderNo',
             fixed: 'left'
@@ -280,7 +301,9 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                       style={{padding: '12px'}}
                       pagination={pagination}
                       title={() => {
-                          const message=<div>总计有 <span style={{fontWeight:"bold"}}>{warehouseInStatus.confirmedCount}项</span>（已入库）<span style={{fontWeight:"bold"}}>{warehouseInStatus.unconfirmedCount}项</span>（待确认）<span style={{fontWeight:"bold"}}>{warehouseInStatus.retrunGoodsCount}项</span>（仓库退货）</div>;
+                          const message = <div>总计有 <span style={{fontWeight: "bold"}}>{warehouseInStatus.confirmedCount}项</span>（已入库）<span
+                              style={{fontWeight: "bold"}}>{warehouseInStatus.unconfirmedCount}项</span>（待确认）<span
+                              style={{fontWeight: "bold"}}>{warehouseInStatus.retrunGoodsCount}项</span>（仓库退货）</div>;
                           return <Alert message={message} type="info" showIcon></Alert>;
                       }}
                       scroll={{x: 1500}}
@@ -386,19 +409,15 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
 
     render() {
         const topThis = this;
-        const {state:{visibleFormFileViewer}}=topThis;
-        const items:ModelNameSpace.Attachment[]=[{
-            path:"http://img.mp.itc.cn/upload/20170213/c6a8f0bd5ea94457a2e7ff63bc0a07fe_th.JPG"
-        },{
-            path:"http://pic1.win4000.com/wallpaper/2017-11-15/5a0bac901bce4.jpg"
-        }];
+        const {state: {visibleFormFileViewer, items}} = topThis;
         return <Row className="warehouse-in-page">
             <ContentHeaderControl title="入库操作" extra={topThis.renderButton()}></ContentHeaderControl>
             <FormAdvancedSearch
                 formAdvancedItems={topThis.renderFormAdvancedItems()}
                 onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch>
             {topThis.renderTable()}
-            <FormFileViewer items={items} visible={visibleFormFileViewer} changeVisible={topThis.changeFormFileViewerVisible.bind(this)} />
+            {items.length > 0 ? <FormFileViewer items={items} visible={visibleFormFileViewer}
+                                                changeVisible={topThis.changeFormFileViewerVisible.bind(this)}/> : null}
         </Row>;
     }
 }
