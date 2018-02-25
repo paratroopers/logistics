@@ -47,7 +47,7 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
                     Util.each((rs.Data as any[]), (item: any) => {
                         let data: ModelNameSpace.UploadModel = {
                             uid: item.ID,
-                            url: "http://www.famliytree.cn" + item.path
+                            url: APINameSpace.CommonAPI.baseFileURL + item.path
                         };
                         files.push(data);
                     });
@@ -81,7 +81,7 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
             </div>
         );
         return <div className="clearfix">
-            <Upload action="http://www.famliytree.cn/_api/ver(1.0)/File/upload"
+            <Upload action={APINameSpace.CommonAPI.baseUploadURL}
                     listType="picture-card"
                     multiple={false}
                     fileList={fileList}
