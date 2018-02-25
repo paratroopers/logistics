@@ -2,12 +2,15 @@ import * as React from 'react';
 import {Upload, Icon, Modal} from 'antd';
 import {UploadFile} from 'antd/lib/upload/interface';
 import {ModelNameSpace} from '../model/model';
+import {APINameSpace} from '../model/api';
+import {Util} from '../util/util';
 
 export interface FormUploadProps {
     imgCount: number;
-    onChange?: (files?: UploadFile[]) => void;
+    onChange?: (files?: string[]) => void;
     disabled?: boolean;
     fileList?: ModelNameSpace.UploadModel[];
+    customerOrderID?: number;
 }
 
 export interface FormUploadStates {
@@ -26,10 +29,31 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
         }
     }
 
+    componentDidMount() {
+        this.getData();
+    }
+
     componentWillReceiveProps(nextProps) {
         if ('fileList' in nextProps && nextProps.fileList !== this.props.fileList) {
             this.setState({fileList: nextProps.fileList});
         }
+    }
+
+    getData() {
+        if (this.props.customerOrderID)
+            APINameSpace.CustomerOrderAPI.GetAttachments({customerOrderID: this.props.customerOrderID}).then(rs => {
+                if (rs.Status === 0) {
+                    let files: ModelNameSpace.UploadModel[] = [];
+                    Util.each((rs.Data as any[]), (item: any) => {
+                        let data: ModelNameSpace.UploadModel = {
+                            uid: item.ID,
+                            url: APINameSpace.CommonAPI.baseFileURL + item.path
+                        };
+                        files.push(data);
+                    });
+                    this.setState({fileList: files});
+                }
+            });
     }
 
     onPreview(file) {
@@ -44,7 +68,14 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
     }
 
     onChange(fileList) {
-        this.props.onChange && this.props.onChange(fileList.fileList as UploadFile[]);
+        let fileIds: string[] = [];
+        Util.each(fileList.fileList , (item: any) => {
+            if (item.response)
+                fileIds.push(item.response.Data);
+            else
+                fileIds.push(item.uid);
+        });
+        this.props.onChange && this.props.onChange(fileIds);
         this.setState({fileList: fileList.fileList});
     }
 
@@ -57,7 +88,7 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
             </div>
         );
         return <div className="clearfix">
-            <Upload action="http://www.famliytree.cn/_api/ver(1.0)/File/upload"
+            <Upload action={APINameSpace.CommonAPI.baseUploadURL}
                     listType="picture-card"
                     multiple={false}
                     fileList={fileList}
