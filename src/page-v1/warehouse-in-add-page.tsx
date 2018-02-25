@@ -76,7 +76,9 @@ export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps,
         return <Row className="warehouse-in-page">
             <ContentHeaderControl title="新增入库"></ContentHeaderControl>
             <WarehouseInForm onSubmit={topThis.onSubmit.bind(this)} type="add"></WarehouseInForm>
-            <FormUpload imgCount={9}></FormUpload>
+            <FormUpload imgCount={9} onChange={(files) => {
+                console.log(files);
+            }}></FormUpload>
         </Row>;
     }
 }

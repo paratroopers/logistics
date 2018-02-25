@@ -315,55 +315,64 @@ export namespace ModelNameSpace {
         SizeLimit?: string;
     }
 
-    export interface  CustomerOrderMergeModel extends  BaseModel{
-        currentStatus?:string;
-        currentStep?:string;
-        ID?:number;
-        UserID?:number;
-        MergeOrderNo?:number;
-        CustomerMark?:string;
-        CustomerChooseChannelID?:number;
-        CustomerChooseChannelName?:string;
-        InWeightTotal?:number;
-        InVolumeTotal?:number;
-        InPackageCountTotal?:number;
-        recipient?:string;
-        country?:string;
-        address?:string;
-        city?:string;
-        code?:string;
-        tel?:string;
-        company?:string;
-        taxNo?:string;
-        declareTotal?:number;
-        customerServiceMark?:string;
-        packageMark?:string;
-        packageWeight?:number;
-        packageVolume?:number;
-        packageLength?:number;
-        packageHeight?:number;
-        packageWidth?:number;
-        settlementWeight?:number;
-        freightFee?:number;
-        tax?:number;
-        serviceFee?:number;
-        remoteFee?:number;
-        magneticinspectionFee?:number;
-        totalFee?:number;
-        ChannelID?:number;
-        ChannelName?:string;
-        channelNo?:string;
-        deliverTime?:Date,
-        AgentID?:number;
-        Created?:Date;
-        Modified?:Date;
+    export interface CustomerOrderMergeModel extends BaseModel {
+        currentStatus?: string;
+        currentStep?: string;
+        ID?: number;
+        UserID?: number;
+        MergeOrderNo?: number;
+        CustomerMark?: string;
+        CustomerChooseChannelID?: number;
+        CustomerChooseChannelName?: string;
+        InWeightTotal?: number;
+        InVolumeTotal?: number;
+        InPackageCountTotal?: number;
+        recipient?: string;
+        country?: string;
+        address?: string;
+        city?: string;
+        code?: string;
+        tel?: string;
+        company?: string;
+        taxNo?: string;
+        declareTotal?: number;
+        customerServiceMark?: string;
+        packageMark?: string;
+        packageWeight?: number;
+        packageVolume?: number;
+        packageLength?: number;
+        packageHeight?: number;
+        packageWidth?: number;
+        settlementWeight?: number;
+        freightFee?: number;
+        tax?: number;
+        serviceFee?: number;
+        remoteFee?: number;
+        magneticinspectionFee?: number;
+        totalFee?: number;
+        ChannelID?: number;
+        ChannelName?: string;
+        channelNo?: string;
+        deliverTime?: Date,
+        AgentID?: number;
+        Created?: Date;
+        Modified?: Date;
     }
 
-    export interface FormDeliveredModel{
-        agentID?:number;
-        agentName?:string;
-        channelNo?:string;
+    export interface FormDeliveredModel {
+        agentID?: number;
+        agentName?: string;
+        channelNo?: string;
     }
+
+    export interface UploadModel {
+        uid?: string;
+        url?: string;
+        name?: string;
+        size?: number;
+        status?: string;
+    }
+
     //endregion
 
     //region 泛型定义区
