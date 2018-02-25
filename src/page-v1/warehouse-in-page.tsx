@@ -311,7 +311,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                           </div>;
                           return <Alert message={message} type="info" showIcon></Alert>;
                       }}
-                      scroll={{x: 1500}}
+                      scroll={{x: 1550}}
                       rowSelection={rowSelection}
                       bordered={false}
                       dataSource={listData}
