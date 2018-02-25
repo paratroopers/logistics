@@ -233,7 +233,8 @@ export namespace requestNameSpace {
         /** 入库状态*/
         InWareHouseStatus: string,
         /** 备注*/
-        WarehouseAdminRemark: string
+        WarehouseAdminRemark: string,
+        AttachmentIDList?: string[]
     }
 
     export interface WarehouseInDeleteRequest {
