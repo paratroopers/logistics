@@ -398,3 +398,43 @@ export class Util {
         return Object.keys(fieldsError).some(field => fieldsError[field]);
     }
 }
+
+export class DocumentCommon {
+    public static KbSize: number = 1024;
+    public static MbSize: number = DocumentCommon.KbSize * 1024;
+    public static GbSize: number = DocumentCommon.MbSize * 1024;
+    public static _defaultChunkFileSize: number = 2 * 1024 * 1024;
+
+    static isMediaFile(extension: string) {
+        let canViewInBrowserFiles = ["png", "jpg", "gif", "jpeg", "icon", "bmp", "mp3", "mp4", "WebM", "Ogg"];
+        return canViewInBrowserFiles.indexOf(extension.toLowerCase()) >= 0;
+    }
+    static isImageFile(extension: string) {
+        let canViewInBrowserFiles = ["png", "jpg", "gif", "jpeg", "icon", "bmp"];
+        return canViewInBrowserFiles.indexOf(extension.toLowerCase()) >= 0;
+    }
+
+    static getFileSize(size: any): string {
+        if (size === null || size === "") return "";
+
+        let sizeNumber = parseInt(size);
+        if (sizeNumber >= DocumentCommon.GbSize) {
+            return (Number(sizeNumber / DocumentCommon.GbSize)).toFixed(2) + 'GB';
+        } else if (sizeNumber >= DocumentCommon.MbSize) {
+            return (Number(sizeNumber / DocumentCommon.MbSize)).toFixed(2) + 'MB';
+        } else if (sizeNumber >= DocumentCommon.KbSize) {
+            return (Number(sizeNumber / DocumentCommon.KbSize)).toFixed(2) + 'KB';
+        } else {
+            return (Number(sizeNumber)).toFixed(2) + 'B';
+        }
+    }
+
+    static getFileExtension(fileName: string): string {
+        return '.' + fileName.split('.').pop();
+    }
+
+    static getFileNameWithOutExtension(fileName: string): string {
+        let extension = this.getFileExtension(fileName);
+        return fileName.replace(extension, "");
+    }
+}

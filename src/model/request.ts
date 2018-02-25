@@ -140,16 +140,28 @@ export namespace requestNameSpace {
 
     export interface GetWarehouseInListRequest extends BaseListRequest{
         type: ModelNameSpace.OrderTypeEnum;
+        /** 会员*/
+        memberID?:string;
+        /** 客户订单号*/
         customerOrderNo?:string;
+        /** 订单状态*/
         customerOrderStatus?:number;
+        /** 快递单号*/
         expressNo?:string;
-        expressTypeID?:number;
+        /** 交接单*/
         transferNo?:string;
+        /** 仓库*/
         warehouseID?:number;
+        /** 开始时间*/
         inWarehouseIimeBegin?:Date;
+        /** 结束时间*/
         inWarehouseIimeEnd?:Date;
+        /** 客服*/
         customerServiceID?:number;
+        /** 仓库管理员*/
         warehouseAdmin?:string;
+        /** 客户订单号*/
+        CustomerOrderID?:string;
         isAdmin?:boolean;
     }
 

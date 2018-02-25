@@ -195,6 +195,7 @@ export namespace ModelNameSpace {
         ID?: string;
         /** 路径*/
         path?: string;
+        customerOrderNo?:string;
         customerOrderID?: string;
     }
 

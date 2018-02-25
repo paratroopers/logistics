@@ -99,6 +99,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
 
         if (!isNullOrUndefined(formAdvancedData)) {
             request = {
+                memberID: isArray(formAdvancedData.memberID)&&!isNullOrUndefined(formAdvancedData.memberID[0]) ? formAdvancedData.memberID[0].key : "",
                 customerOrderNo: isArray(formAdvancedData.customerOrderNo)&&!isNullOrUndefined(formAdvancedData.customerOrderNo[0]) ? formAdvancedData.customerOrderNo[0].key : "",
                 customerOrderStatus: !isNullOrUndefined(formAdvancedData.customerOrderStatus) ? formAdvancedData.customerOrderStatus : "",
                 expressNo: isArray(formAdvancedData.expressNo)&&!isNullOrUndefined(formAdvancedData.expressNo[0]) ? formAdvancedData.expressNo[0].key : "",
@@ -108,6 +109,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 inWarehouseIimeEnd: isArray(formAdvancedData.warehouseInTime)&&!isNullOrUndefined(formAdvancedData.warehouseInTime[1]) ? formAdvancedData.warehouseInTime[1].format("YYYY-MM-DD hh:mm:ss") : "",
                 customerServiceID: isArray(formAdvancedData.customerServiceID)&&!isNullOrUndefined(formAdvancedData.customerServiceID[0]) ? formAdvancedData.customerServiceID[0].key : "",
                 warehouseAdmin: isArray(formAdvancedData.warehouseAdmin)&&!isNullOrUndefined(formAdvancedData.warehouseAdmin[0]) ? formAdvancedData.warehouseAdmin[0].key : "",
+                CustomerOrderID: isArray(formAdvancedData.CustomerOrderID)&&!isNullOrUndefined(formAdvancedData.CustomerOrderID[0]) ? formAdvancedData.CustomerOrderID[0].key : "",
                 ...request
             }
         }
@@ -304,7 +306,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         const items: FormAdvancedItemModel[] = [
             {
                 defaultDisplay: true,
-                fieldName: "customerOrderNo",
+                fieldName: "memberID",
                 displayName: "会员",
                 control: <FormControl.FormSelectIndex type={SelectType.Member} placeholder="搜索会员"/>
             },
