@@ -7,6 +7,13 @@ export enum FormMediaPlayerType {
 }
 
 export interface IFormMediaPlayerProps {
+    /**
+     * detailButton
+     *
+     * @type {boolean}
+     * @memberOf IFormMediaPlayerProps
+     */
+    detailButton?: boolean;
 
     /**
      * downloadable
@@ -157,33 +164,33 @@ export class FormMediaPlayer extends React.Component<IFormMediaPlayerProps,
 
     public componentWillReceiveProps(nextProps: IFormMediaPlayerProps) {
         if ("src" in nextProps && nextProps.src !== this.props.src) {
-            this.setState({ src: nextProps.src, xy: "" });
+            this.setState({src: nextProps.src, xy: ""});
         }
-        this.setState({ visible: nextProps.visible });
+        this.setState({visible: nextProps.visible});
         if ("mediatype" in nextProps && nextProps.mediatype !== this.props.mediatype) {
-            this.setState({ mediatype: nextProps.mediatype });
+            this.setState({mediatype: nextProps.mediatype});
         }
         if ("downloadable" in nextProps && nextProps.downloadable !== this.props.downloadable) {
-            this.setState({ downloadable: nextProps.downloadable });
+            this.setState({downloadable: nextProps.downloadable});
         }
         if ("size" in nextProps && nextProps.size !== this.props.size) {
-            this.setState({ size: nextProps.size });
+            this.setState({size: nextProps.size});
         }
         if ("createDate" in nextProps && nextProps.createDate !== this.props.createDate) {
-            this.setState({ createDate: nextProps.createDate });
+            this.setState({createDate: nextProps.createDate});
         }
         if ("filename" in nextProps && nextProps.filename !== this.props.filename) {
-            this.setState({ filename: nextProps.filename });
+            this.setState({filename: nextProps.filename});
         }
         if ("extension" in nextProps && nextProps.extension !== this.props.extension) {
-            this.setState({ extension: nextProps.extension });
+            this.setState({extension: nextProps.extension});
         }
     }
 
     public render() {
         return <div
             className="form-media-player"
-            style={{ display: this.state.visible ? "block" : "none" }}>
+            style={{display: this.state.visible ? "block" : "none"}}>
             {this.renderCmdBar()}
             {this.renderContent()}
             {this.renderRightPanel()}
@@ -194,13 +201,14 @@ export class FormMediaPlayer extends React.Component<IFormMediaPlayerProps,
     private renderCmdBar() {
         return <div className="form-media-player-cmdbar">
             <div className="form-media-player-cmdbar-leftbar">
-                <Button icon="close" size="large" className="form-media-player-cmdbar-leftbar-close" onClick={this.handleOnClose}></Button>
+                <Button icon="close" size="large" className="form-media-player-cmdbar-leftbar-close"
+                        onClick={this.handleOnClose}></Button>
             </div>
             <div className="form-media-player-cmdbar-rightbar">
                 {this.state.mediatype === FormMediaPlayerType.Image
                     ? <Button icon="reload"
-                                size="large" className="form-media-player-cmdbar-leftbar-transform"
-                                onClick={this.handleOnTransform}></Button>
+                              size="large" className="form-media-player-cmdbar-leftbar-transform"
+                              onClick={this.handleOnTransform}></Button>
                     : null}
                 {this.state.mediatype === FormMediaPlayerType.Image
                     ? <Button
@@ -237,11 +245,13 @@ export class FormMediaPlayer extends React.Component<IFormMediaPlayerProps,
                         className="form-media-player-cmdbar-leftbar-download"
                         onClick={this.handleOnDownload}></Button>
                     : null}
-                <Button
-                    icon="exclamation-circle-o"
-                    size="large"
-                    className="form-media-player-cmdbar-leftbar-info"
-                    onClick={this.handleOnShowPanel}></Button>
+                {this.props.detailButton
+                    ? <Button
+                        icon="exclamation-circle-o"
+                        size="large"
+                        className="form-media-player-cmdbar-leftbar-info"
+                        onClick={this.handleOnShowPanel}></Button>
+                    : null}
             </div>
         </div>;
     }
@@ -291,7 +301,7 @@ export class FormMediaPlayer extends React.Component<IFormMediaPlayerProps,
     private renderRightPanel() {
         return <div
             className="form-media-player-rightpanel"
-            style={{ display: this.state.showPanal ? "block" : "none" }}>
+            style={{display: this.state.showPanal ? "block" : "none"}}>
             <div className="form-media-player-rightpanel-content">
                 <h4
                     className="subject"
@@ -308,7 +318,8 @@ export class FormMediaPlayer extends React.Component<IFormMediaPlayerProps,
                 </p>
                 <p className="item">
                     <span className="title">类型</span>
-                    <span className="value">{this.props.extension ? this.state.extension : this.getFileExtension(this.state.src)}</span>
+                    <span
+                        className="value">{this.props.extension ? this.state.extension : this.getFileExtension(this.state.src)}</span>
                 </p>
                 <p className="item">
                     <span className="title">时间</span>
@@ -358,7 +369,7 @@ export class FormMediaPlayer extends React.Component<IFormMediaPlayerProps,
         if (this.props.onClose) {
             this.props.onClose()
         }
-        this.setState({ visible: false });
+        this.setState({visible: false});
     }
 
     private handleOnDownload = (event) => {
@@ -484,13 +495,13 @@ export class FormMediaPlayer extends React.Component<IFormMediaPlayerProps,
     private handleImageOnLoad = (event: any) => {
         let _self = this;
         if (event.target.naturalWidth) {
-            _self.setState({ xy: `${event.target.naturalWidth}X${event.target.naturalHeight}` });
+            _self.setState({xy: `${event.target.naturalWidth}X${event.target.naturalHeight}`});
         } else { //兼容低版本IE浏览器
             let image = new Image();
             image.src = _self.state.src;
             image.onload = function () {
                 if (image.width && image.height) {
-                    _self.setState({ xy: `${image.width}X${image.height}` });
+                    _self.setState({xy: `${image.width}X${image.height}`});
                 }
             }
         }

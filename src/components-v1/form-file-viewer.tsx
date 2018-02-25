@@ -86,12 +86,8 @@ export class FormFileViewer extends React.Component<FormFileViewerProps, FormFil
         this.setState({
             mediaPlayerProps: {
                 visible: true,
-                filename: DocumentCommon.getFileNameWithOutExtension(item.path),
                 src: item.path,
                 mediatype: DocumentCommon.isImageFile(DocumentCommon.getFileExtension(item.path)) ? FormMediaPlayerType.Image : FormMediaPlayerType.Video,
-                createDate: "",
-                size: "0",
-                extension: DocumentCommon.getFileExtension(item.path),
                 onClose: () => {
                     this.setState({
                         mediaPlayerProps: {
