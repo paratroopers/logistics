@@ -17,6 +17,7 @@ import * as scrollIntoView from "dom-scroll-into-view";
 import {Constants}from "./common";
 // import {ScreenModeEnum}from "../api/model/common";
 import {ModelNameSpace} from '../model/model';
+import {isNullOrUndefined} from "util";
 
 
 export class Util {
@@ -407,11 +408,11 @@ export class DocumentCommon {
 
     static isMediaFile(extension: string) {
         let canViewInBrowserFiles = ["png", "jpg", "gif", "jpeg", "icon", "bmp", "mp3", "mp4", "WebM", "Ogg"];
-        return canViewInBrowserFiles.indexOf(extension.toLowerCase()) >= 0;
+        return canViewInBrowserFiles.indexOf(extension.toLowerCase().replace(".","")) >= 0;
     }
     static isImageFile(extension: string) {
         let canViewInBrowserFiles = ["png", "jpg", "gif", "jpeg", "icon", "bmp"];
-        return canViewInBrowserFiles.indexOf(extension.toLowerCase()) >= 0;
+        return canViewInBrowserFiles.indexOf(extension.toLowerCase().replace(".","")) >= 0;
     }
 
     static getFileSize(size: any): string {

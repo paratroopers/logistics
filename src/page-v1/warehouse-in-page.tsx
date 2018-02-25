@@ -23,6 +23,7 @@ const confirm = Modal.confirm;
 import {isArray, isNullOrUndefined} from "util";
 import * as moment from 'moment';
 import {Global,Context} from "../util/common";
+import {FormFileViewer} from "../components-v1/form-file-viewer";
 
 interface WarehouseInPageProps {
 
@@ -45,6 +46,8 @@ interface WarehouseInPageStates {
     formAdvancedData?: any;
     /** 入库状态数量统计*/
     warehouseInStatus?:ModelNameSpace.WarehouseInStatusModel
+    /** 图片预览*/
+    visibleFormFileViewer:boolean;
 }
 
 @withRouter
@@ -62,7 +65,8 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 unconfirmedCount: 0,
                 confirmedCount: 0,
                 retrunGoodsCount: 0
-            }
+            },
+            visibleFormFileViewer:false
         }
     }
 
@@ -169,7 +173,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             title: "附件",
             fixed: 'left',
             render: (val, record) => {
-                return <Tooltip title="预览附件"><Icon type="picture" style={{fontSize:20,color:"#e65922",cursor:"pointer"}}/></Tooltip>
+                return <Tooltip title="预览附件"><Icon type="picture" onClick={()=>{topThis.changeFormFileViewerVisible(true);}} style={{fontSize:20,color:"#e65922",cursor:"pointer"}}/></Tooltip>
             }
         },{
             title: "客户订单号",
@@ -374,14 +378,27 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         return items;
     }
 
+    changeFormFileViewerVisible(bool: boolean) {
+        this.setState({
+            visibleFormFileViewer: bool
+        });
+    }
+
     render() {
         const topThis = this;
+        const {state:{visibleFormFileViewer}}=topThis;
+        const items:ModelNameSpace.Attachment[]=[{
+            path:"http://img.mp.itc.cn/upload/20170213/c6a8f0bd5ea94457a2e7ff63bc0a07fe_th.JPG"
+        },{
+            path:"http://pic1.win4000.com/wallpaper/2017-11-15/5a0bac901bce4.jpg"
+        }];
         return <Row className="warehouse-in-page">
             <ContentHeaderControl title="入库操作" extra={topThis.renderButton()}></ContentHeaderControl>
             <FormAdvancedSearch
                 formAdvancedItems={topThis.renderFormAdvancedItems()}
                 onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch>
             {topThis.renderTable()}
+            <FormFileViewer items={items} visible={visibleFormFileViewer} changeVisible={topThis.changeFormFileViewerVisible.bind(this)} />
         </Row>;
     }
 }

@@ -1,18 +1,25 @@
 import * as React from 'react';
 import {Button} from 'antd';
 
-export enum AkOneUpMediaType {
+export enum FormMediaPlayerType {
     Image,
     Video
 }
 
-export interface IAkOneUpProps {
+export interface IFormMediaPlayerProps {
+    /**
+     * detailButton
+     *
+     * @type {boolean}
+     * @memberOf IFormMediaPlayerProps
+     */
+    detailButton?: boolean;
 
     /**
      * downloadable
      *
      * @type {boolean}
-     * @memberOf IAkOneUpProps
+     * @memberOf IFormMediaPlayerProps
      */
     downloadable?: boolean;
 
@@ -20,7 +27,7 @@ export interface IAkOneUpProps {
      * visible
      *
      * @type {boolean}
-     * @memberOf IAkOneUpProps
+     * @memberOf IFormMediaPlayerProps
      */
     visible?: boolean;
 
@@ -28,7 +35,7 @@ export interface IAkOneUpProps {
      * filename
      *
      * @type {string}
-     * @memberOf IAkOneUpProps
+     * @memberOf IFormMediaPlayerProps
      */
     filename?: string;
 
@@ -43,16 +50,16 @@ export interface IAkOneUpProps {
     /**
      * Media Type
      * [ Image||Video]
-     * @type {AkOneUpMediaType}
-     * @memberOf IAkOneUpProps
+     * @type {FormMediaPlayerType}
+     * @memberOf IFormMediaPlayerProps
      */
-    mediatype?: AkOneUpMediaType;
+    mediatype?: FormMediaPlayerType;
 
     /**
      * create date
      *
      * @type {string}
-     * @memberOf IAkOneUpProps
+     * @memberOf IFormMediaPlayerProps
      */
     createDate?: string;
 
@@ -60,7 +67,7 @@ export interface IAkOneUpProps {
      * file size
      *
      * @type {string}
-     * @memberOf IAkOneUpProps
+     * @memberOf IFormMediaPlayerProps
      */
     size?: string;
 
@@ -84,7 +91,7 @@ export interface IAkOneUpProps {
      * On Close Event Handle.
      *
      *
-     * @memberOf IAkOneUpProps
+     * @memberOf IFormMediaPlayerProps
      */
     onClose?: () => void;
 
@@ -93,13 +100,13 @@ export interface IAkOneUpProps {
      * file type
      *
      * @type {string}
-     * @memberOf IAkOneUpProps
+     * @memberOf IFormMediaPlayerProps
      */
     extension?: string;
 
 }
 
-export interface IAkOneUpStates {
+export interface IFormMediaPlayerStates {
     downloadable?: boolean;
     visible?: boolean;
     src?: string;
@@ -109,12 +116,12 @@ export interface IAkOneUpStates {
     xy?: string;
     showPanal?: boolean;
     createDate?: string;
-    mediatype?: AkOneUpMediaType;
+    mediatype?: FormMediaPlayerType;
     filename?: string;
 }
 
-export class AkOneUp extends React.Component<IAkOneUpProps,
-    IAkOneUpStates> {
+export class FormMediaPlayer extends React.Component<IFormMediaPlayerProps,
+    IFormMediaPlayerStates> {
     private img: any;
     private video: any;
     private container: any;
@@ -146,7 +153,7 @@ export class AkOneUp extends React.Component<IAkOneUpProps,
             visible: props.visible,
             src: props.src,
             currentTransfrom: 0,
-            mediatype: AkOneUpMediaType.Image,
+            mediatype: FormMediaPlayerType.Image,
             showPanal: false,
             createDate: props.createDate,
             extension: props.extension,
@@ -155,35 +162,35 @@ export class AkOneUp extends React.Component<IAkOneUpProps,
         };
     }
 
-    public componentWillReceiveProps(nextProps: IAkOneUpProps) {
+    public componentWillReceiveProps(nextProps: IFormMediaPlayerProps) {
         if ("src" in nextProps && nextProps.src !== this.props.src) {
-            this.setState({ src: nextProps.src, xy: "" });
+            this.setState({src: nextProps.src, xy: ""});
         }
-        this.setState({ visible: nextProps.visible });
+        this.setState({visible: nextProps.visible});
         if ("mediatype" in nextProps && nextProps.mediatype !== this.props.mediatype) {
-            this.setState({ mediatype: nextProps.mediatype });
+            this.setState({mediatype: nextProps.mediatype});
         }
         if ("downloadable" in nextProps && nextProps.downloadable !== this.props.downloadable) {
-            this.setState({ downloadable: nextProps.downloadable });
+            this.setState({downloadable: nextProps.downloadable});
         }
         if ("size" in nextProps && nextProps.size !== this.props.size) {
-            this.setState({ size: nextProps.size });
+            this.setState({size: nextProps.size});
         }
         if ("createDate" in nextProps && nextProps.createDate !== this.props.createDate) {
-            this.setState({ createDate: nextProps.createDate });
+            this.setState({createDate: nextProps.createDate});
         }
         if ("filename" in nextProps && nextProps.filename !== this.props.filename) {
-            this.setState({ filename: nextProps.filename });
+            this.setState({filename: nextProps.filename});
         }
         if ("extension" in nextProps && nextProps.extension !== this.props.extension) {
-            this.setState({ extension: nextProps.extension });
+            this.setState({extension: nextProps.extension});
         }
     }
 
     public render() {
         return <div
-            className="ak-oneup"
-            style={{ display: this.state.visible ? "block" : "none" }}>
+            className="form-media-player"
+            style={{display: this.state.visible ? "block" : "none"}}>
             {this.renderCmdBar()}
             {this.renderContent()}
             {this.renderRightPanel()}
@@ -192,68 +199,71 @@ export class AkOneUp extends React.Component<IAkOneUpProps,
     }
 
     private renderCmdBar() {
-        return <div className="ak-oneup-cmdbar">
-            <div className="ak-oneup-cmdbar-leftbar">
-                <Button icon="close" size="large" className="ak-oneup-cmdbar-leftbar-close" onClick={this.handleOnClose}></Button>
+        return <div className="form-media-player-cmdbar">
+            <div className="form-media-player-cmdbar-leftbar">
+                <Button icon="close" size="large" className="form-media-player-cmdbar-leftbar-close"
+                        onClick={this.handleOnClose}></Button>
             </div>
-            <div className="ak-oneup-cmdbar-rightbar">
-                {this.state.mediatype === AkOneUpMediaType.Image
+            <div className="form-media-player-cmdbar-rightbar">
+                {this.state.mediatype === FormMediaPlayerType.Image
                     ? <Button icon="reload"
-                                size="large" className="ak-oneup-cmdbar-leftbar-transform"
-                                onClick={this.handleOnTransform}></Button>
+                              size="large" className="form-media-player-cmdbar-leftbar-transform"
+                              onClick={this.handleOnTransform}></Button>
                     : null}
-                {this.state.mediatype === AkOneUpMediaType.Image
+                {this.state.mediatype === FormMediaPlayerType.Image
                     ? <Button
                         icon="plus"
                         size="large"
-                        className="ak-oneup-cmdbar-leftbar-zoomin"
+                        className="form-media-player-cmdbar-leftbar-zoomin"
                         onClick={this.handleZoomIn}></Button>
                     : null}
-                {this.state.mediatype === AkOneUpMediaType.Image
+                {this.state.mediatype === FormMediaPlayerType.Image
                     ? <Button
                         icon="minus"
                         size="large"
-                        className="ak-oneup-cmdbar-leftbar-zoomout"
+                        className="form-media-player-cmdbar-leftbar-zoomout"
                         onClick={this.handleZoomOut}></Button>
                     : null}
                 {this.props.onPrevious
                     ? <Button
                         icon="left"
                         size="large"
-                        className="ak-oneup-cmdbar-leftbar-previous"
+                        className="form-media-player-cmdbar-leftbar-previous"
                         onClick={this.handleOnPrevious}></Button>
                     : null}
                 {this.props.onNext
                     ? <Button
                         icon="right"
                         size="large"
-                        className="ak-oneup-cmdbar-leftbar-next"
+                        className="form-media-player-cmdbar-leftbar-next"
                         onClick={this.handleOnNext}></Button>
                     : null}
                 {this.state.downloadable
                     ? <Button
                         icon="download"
                         size="large"
-                        className="ak-oneup-cmdbar-leftbar-download"
+                        className="form-media-player-cmdbar-leftbar-download"
                         onClick={this.handleOnDownload}></Button>
                     : null}
-                <Button
-                    icon="exclamation-circle-o"
-                    size="large"
-                    className="ak-oneup-cmdbar-leftbar-info"
-                    onClick={this.handleOnShowPanel}></Button>
+                {this.props.detailButton
+                    ? <Button
+                        icon="exclamation-circle-o"
+                        size="large"
+                        className="form-media-player-cmdbar-leftbar-info"
+                        onClick={this.handleOnShowPanel}></Button>
+                    : null}
             </div>
         </div>;
     }
 
     private renderContent() {
         let wraper: React.ReactNode = "";
-        let type = this.state.mediatype || AkOneUpMediaType.Image;
+        let type = this.state.mediatype || FormMediaPlayerType.Image;
         let imgStyle = {
             transform: `rotate(${this.state.currentTransfrom}deg)`
         };
-        if (type === AkOneUpMediaType.Image) {
-            wraper = <div className="ak-oneup-image">
+        if (type === FormMediaPlayerType.Image) {
+            wraper = <div className="form-media-player-image">
                 <img
                     id="myImage"
                     draggable={true}
@@ -271,8 +281,8 @@ export class AkOneUp extends React.Component<IAkOneUpProps,
                     onClick={this.handleImageClick}
                     style={imgStyle}></img>
             </div>;
-        } else if (type === AkOneUpMediaType.Video) {
-            wraper = <div className="ak-oneup-video">
+        } else if (type === FormMediaPlayerType.Video) {
+            wraper = <div className="form-media-player-video">
                 <video
                     ref={n => this.video = n}
                     autoPlay
@@ -284,15 +294,15 @@ export class AkOneUp extends React.Component<IAkOneUpProps,
                 </video>
             </div>;
         }
-        return <div className="ak-oneup-content" ref={n => this.container = n}>{wraper}
+        return <div className="form-media-player-content" ref={n => this.container = n}>{wraper}
         </div>;
     }
 
     private renderRightPanel() {
         return <div
-            className="ak-oneup-rightpanel"
-            style={{ display: this.state.showPanal ? "block" : "none" }}>
-            <div className="ak-oneup-rightpanel-content">
+            className="form-media-player-rightpanel"
+            style={{display: this.state.showPanal ? "block" : "none"}}>
+            <div className="form-media-player-rightpanel-content">
                 <h4
                     className="subject"
                     style={{
@@ -308,7 +318,8 @@ export class AkOneUp extends React.Component<IAkOneUpProps,
                 </p>
                 <p className="item">
                     <span className="title">类型</span>
-                    <span className="value">{this.props.extension ? this.state.extension : this.getFileExtension(this.state.src)}</span>
+                    <span
+                        className="value">{this.props.extension ? this.state.extension : this.getFileExtension(this.state.src)}</span>
                 </p>
                 <p className="item">
                     <span className="title">时间</span>
@@ -323,12 +334,12 @@ export class AkOneUp extends React.Component<IAkOneUpProps,
                     <span className="value">{this.state.size}</span>
                 </p>
             </div>
-            <div className="ak-oneup-rightpanel-splitline"></div>
+            <div className="form-media-player-rightpanel-splitline"></div>
         </div >;
     }
 
     private renderOverlay() {
-        return <div className="ak-oneup-overlay"></div>;
+        return <div className="form-media-player-overlay"></div>;
     }
 
     private handleOnPrevious = (event) => {
@@ -358,7 +369,7 @@ export class AkOneUp extends React.Component<IAkOneUpProps,
         if (this.props.onClose) {
             this.props.onClose()
         }
-        this.setState({ visible: false });
+        this.setState({visible: false});
     }
 
     private handleOnDownload = (event) => {
@@ -484,13 +495,13 @@ export class AkOneUp extends React.Component<IAkOneUpProps,
     private handleImageOnLoad = (event: any) => {
         let _self = this;
         if (event.target.naturalWidth) {
-            _self.setState({ xy: `${event.target.naturalWidth}X${event.target.naturalHeight}` });
+            _self.setState({xy: `${event.target.naturalWidth}X${event.target.naturalHeight}`});
         } else { //兼容低版本IE浏览器
             let image = new Image();
             image.src = _self.state.src;
             image.onload = function () {
                 if (image.width && image.height) {
-                    _self.setState({ xy: `${image.width}X${image.height}` });
+                    _self.setState({xy: `${image.width}X${image.height}`});
                 }
             }
         }
