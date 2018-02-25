@@ -87,6 +87,11 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
         }
     }
 
+    onFileUpload(files: any[]) {
+        if (files && JSON.stringify(this.state.files) !== JSON.stringify(files))
+            this.setState({files: files});
+    }
+
     render() {
         const topThis = this;
         const {props: {form: {getFieldDecorator}, type}} = topThis;
@@ -210,14 +215,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                         <FormItem {...formItemLayout} label={"附件"}>
                             <FormUpload disabled={readonly} imgCount={9}
                                         customerOrderID={this.props.Data.ID}
-                                        onChange={(files: UploadFile[]) => {
-                                            let fileIds: string[] = [];
-                                            Util.each(files, (item: UploadFile) => {
-                                                item.response && fileIds.push(item.response.Data);
-                                            });
-                                            if (fileIds && JSON.stringify(this.state.files) !== JSON.stringify(fileIds))
-                                                this.setState({files: fileIds});
-                                        }}></FormUpload>
+                                        onChange={files => this.onFileUpload(files)}></FormUpload>
                         </FormItem>
                     </Col>
                 </Row>

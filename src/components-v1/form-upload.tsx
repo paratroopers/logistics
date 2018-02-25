@@ -7,7 +7,7 @@ import {Util} from '../util/util';
 
 export interface FormUploadProps {
     imgCount: number;
-    onChange?: (files?: UploadFile[]) => void;
+    onChange?: (files?: string[]) => void;
     disabled?: boolean;
     fileList?: ModelNameSpace.UploadModel[];
     customerOrderID?: number;
@@ -68,7 +68,14 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
     }
 
     onChange(fileList) {
-        this.props.onChange && this.props.onChange(fileList.fileList as UploadFile[]);
+        let fileIds: string[] = [];
+        Util.each(fileList.fileList , (item: any) => {
+            if (item.response)
+                fileIds.push(item.response.Data);
+            else
+                fileIds.push(item.uid);
+        });
+        this.props.onChange && this.props.onChange(fileIds);
         this.setState({fileList: fileList.fileList});
     }
 
