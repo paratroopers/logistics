@@ -2,12 +2,15 @@ import * as React from 'react';
 import {Upload, Icon, Modal} from 'antd';
 import {UploadFile} from 'antd/lib/upload/interface';
 import {ModelNameSpace} from '../model/model';
+import {APINameSpace} from '../model/api';
+import {Util} from '../util/util';
 
 export interface FormUploadProps {
     imgCount: number;
     onChange?: (files?: UploadFile[]) => void;
     disabled?: boolean;
     fileList?: ModelNameSpace.UploadModel[];
+    customerOrderID?: number;
 }
 
 export interface FormUploadStates {
@@ -26,10 +29,31 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
         }
     }
 
+    componentDidMount() {
+        this.getData();
+    }
+
     componentWillReceiveProps(nextProps) {
         if ('fileList' in nextProps && nextProps.fileList !== this.props.fileList) {
             this.setState({fileList: nextProps.fileList});
         }
+    }
+
+    getData() {
+        if (this.props.customerOrderID)
+            APINameSpace.CustomerOrderAPI.GetAttachments({customerOrderID: this.props.customerOrderID}).then(rs => {
+                if (rs.Status === 0) {
+                    let files: ModelNameSpace.UploadModel[] = [];
+                    Util.each((rs.Data as any[]), (item: any) => {
+                        let data: ModelNameSpace.UploadModel = {
+                            uid: item.ID,
+                            url: "http://www.famliytree.cn" + item.path
+                        };
+                        files.push(data);
+                    });
+                    this.setState({fileList: files});
+                }
+            });
     }
 
     onPreview(file) {

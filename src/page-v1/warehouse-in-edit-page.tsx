@@ -79,7 +79,8 @@ export class WarehouseInEditPage extends React.Component<WarehouseInEditPageProp
         return <Row className="warehouse-in-edit-page">
             <ContentHeaderControl title="编辑"></ContentHeaderControl>
             {!isNullOrUndefined(this.props.location) ?
-                <WarehouseInForm type={"edit"} Data={this.props.location.state} readOnly={true}
+                <WarehouseInForm type={"edit"}
+                                 Data={this.props.location.state} readOnly={true}
                                  onSubmit={topThis.onSubmit.bind(this)}></WarehouseInForm> :
                 <div>暂无数据</div>}
         </Row>;

@@ -209,6 +209,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                     <Col span={24}>
                         <FormItem {...formItemLayout} label={"附件"}>
                             <FormUpload disabled={readonly} imgCount={9}
+                                        customerOrderID={this.props.Data.ID}
                                         onChange={(files: UploadFile[]) => {
                                             let fileIds: string[] = [];
                                             Util.each(files, (item: UploadFile) => {
