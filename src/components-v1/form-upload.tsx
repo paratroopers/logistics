@@ -2,14 +2,12 @@ import * as React from 'react';
 import {Upload, Icon, Modal} from 'antd';
 import {UploadFile} from 'antd/lib/upload/interface';
 import {ModelNameSpace} from '../model/model';
-import {ResponseNameSpace} from '../model/response'
-import {Util} from '../util/util';
 
 export interface FormUploadProps {
     imgCount: number;
-    onChange?: (files?: ModelNameSpace.UploadModel[]) => void;
+    onChange?: (files?: UploadFile[]) => void;
     disabled?: boolean;
-    fileList?: any[];
+    fileList?: ModelNameSpace.UploadModel[];
 }
 
 export interface FormUploadStates {
@@ -46,20 +44,7 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
     }
 
     onChange(fileList) {
-        if (this.props.onChange) {
-            let files: ModelNameSpace.UploadModel[] = [];
-            Util.each(fileList.fileList, (item: UploadFile) => {
-                let newFile: ModelNameSpace.UploadModel = {
-                    uid: item.response ? (item.response as ResponseNameSpace.BaseResponse).Data : Util.guid(),
-                    size: item.size,
-                    status: item.status,
-                    name: item.name,
-                    url: '/upload/' + item.name
-                };
-                files.push(newFile);
-            })
-            this.props.onChange(files);
-        }
+        this.props.onChange && this.props.onChange(fileList.fileList as UploadFile[]);
         this.setState({fileList: fileList.fileList});
     }
 

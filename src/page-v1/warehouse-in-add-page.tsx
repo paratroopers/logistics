@@ -1,33 +1,35 @@
 import * as React from 'react';
 import {withRouter, hashHistory} from 'react-router';
 import {Row, Col, Button, message, Form} from 'antd';
+import {UploadFile} from 'antd/lib/upload/interface';
 
 const FormItem = Form.Item;
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import WarehouseInForm from "../components-v1/warehouse-in-form";
 import {FormUpload} from '../components-v1/form-upload';
-// import {APINameSpace.WarehouseAPI}from "../../../api/admin";
-// import {requestNameSpace.WarehouseInAddRequest}from "../../../api/model/request/admin";
-// import {ResponseNameSpace.BaseResponse}from "../../../api/model/response/base";
 
 import {requestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {ResponseNameSpace} from '../model/response';
 import {PathConfig} from "../config/pathconfig";
+import {Util} from '../util/util';
 
 interface WarehouseInAddPageProps {
 
 }
 
 interface WarehouseInAddPageStates {
-
+    files?: string[];
 }
 
 @withRouter
 export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps, WarehouseInAddPageStates> {
     constructor(props) {
         super(props);
+        this.state = {
+            files: []
+        }
     }
 
     onSubmit = (values) => {
@@ -62,9 +64,10 @@ export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps,
             /** 入库状态*/
             InWareHouseStatus: values.inWareHouseStatus,
             /** 备注*/
-            WarehouseAdminRemark: values.warehouseAdminRemark
+            WarehouseAdminRemark: values.warehouseAdminRemark,
+            AttachmentIDList: this.state.files
         }
-        topThis.setState({loading: true});
+        //topThis.setState({loading: true});
         APINameSpace.WarehouseAPI.WarehouseInAdd(request).then((result: ResponseNameSpace.BaseResponse) => {
             if (result.Status === 0) {
                 message.success("新增成功!");
@@ -81,8 +84,13 @@ export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps,
             <Col span={24} style={{paddingLeft: '8px', paddingRight: '8px'}}>
                 <Form>
                     <FormItem label={"附件"}>
-                        <FormUpload imgCount={9} onChange={(files) => {
-                            console.log(files);
+                        <FormUpload imgCount={9} onChange={(files: UploadFile[]) => {
+                            let fileIds: string[] = [];
+                            Util.each(files, (item: UploadFile) => {
+                                item.response && fileIds.push(item.response.Data);
+                            });
+                            if (fileIds && JSON.stringify(this.state.files) !== JSON.stringify(fileIds))
+                                this.setState({files: fileIds});
                         }}></FormUpload>
                     </FormItem>
                 </Form>
