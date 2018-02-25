@@ -22,6 +22,7 @@
   "common.server.status.18": "This verifying code has expired, please reobtain",
   "common.server.status.100": "Merchants do not exist",
   "common.server.status.401": "Access Denied",
+  "common.server.status.42001":"OrderStatusNotFound",
   "common.response.error": "Server error, please try again later or contact administrator",
   "common.response.unauthorized": "You are not authorized to access this function",
   "common.response.badrequest": "Wrong request sent to server",

@@ -147,15 +147,15 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>
-                        <FormItem {...formItemLayout} label={"初始重量"}>
+                        <FormItem {...formItemLayout} label={"初始重量(kg)"}>
                             {getFieldDecorator("inWeight", {
                                 rules: [{required: required, message: '请填写重量!'}],
-                            })(<FormInputNumber readonly={readonly} style={{width: '100%'}} placeholder="初始重量"/>)}
+                            })(<FormInputNumber readonly={readonly} step={0.01} style={{width: '100%'}} placeholder="初始重量"/>)}
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>
-                        <FormItem {...formItemLayout} label={"初始体积"}>
-                            <Row gutter={8} type="flex" justify="center" align="top" style={{width:"100%"}}>
+                        <FormItem {...formItemLayout} label={"初始体积(cm)"}>
+                            <Row gutter={16} type="flex" justify="center" align="top" style={{minWidth:"200px"}}>
                                 <Col span={8}>
                                     {getFieldDecorator('inLength', {
                                         rules: [{required: required, message: '请填写长度!'}],

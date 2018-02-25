@@ -149,6 +149,7 @@ export namespace requestNameSpace {
         inWarehouseIimeBegin?:Date;
         inWarehouseIimeEnd?:Date;
         customerServiceID?:number;
+        warehouseAdmin?:string;
         isAdmin?:boolean;
     }
 

@@ -22,6 +22,7 @@
   "common.server.status.18": "此验证码已过期，请重新获取",
   "common.server.status.100": "商户不存在",
   "common.server.status.401": "Access Denied",
+  "common.server.status.42001":"OrderStatusNotFound",
   "common.response.error": "服务器错误，请稍后再试或联系管理员",
   "common.response.unauthorized": "您没有权限访问该功能",
   "common.response.badrequest": "无效请求",

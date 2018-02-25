@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter, hashHistory} from 'react-router';
-import {Row, Col, Button, Icon, Table, Alert, Modal, message, Input} from 'antd';
+import {Row, Col, Button, Icon, Table, Alert, Modal, message, Input,Tooltip} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
 const {RangePicker} = DatePicker;
@@ -10,7 +10,6 @@ import {requestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
 import {PathConfig} from "../config/pathconfig";
 import {FormWarehouseSelect} from "../components-v1/form-warehouse-select";
-import {FormExpressSelect} from "../components-v1/form-express-select";
 import {SelectType} from "../util/common";
 import {FormControl} from "../components-v1/form-control";
 import {ContentHeaderControl} from "../components-v1/common-content-header";
@@ -21,7 +20,7 @@ import {APINameSpace} from "../model/api";
 import {ClickParam} from "antd/lib/menu";
 import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
 const confirm = Modal.confirm;
-import {isNullOrUndefined} from "util";
+import {isArray, isNullOrUndefined} from "util";
 import * as moment from 'moment';
 import {Global,Context} from "../util/common";
 
@@ -100,15 +99,15 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
 
         if (!isNullOrUndefined(formAdvancedData)) {
             request = {
-                customerOrderNo: !isNullOrUndefined(formAdvancedData.customerOrderNo) ? formAdvancedData.customerOrderNo[0].key : "",
+                customerOrderNo: isArray(formAdvancedData.customerOrderNo)&&!isNullOrUndefined(formAdvancedData.customerOrderNo[0]) ? formAdvancedData.customerOrderNo[0].key : "",
                 customerOrderStatus: !isNullOrUndefined(formAdvancedData.customerOrderStatus) ? formAdvancedData.customerOrderStatus : "",
-                expressNo: !isNullOrUndefined(formAdvancedData.expressNo) ? formAdvancedData.expressNo.key : "",
-                expressTypeID: !isNullOrUndefined(formAdvancedData.expressTypeID) ? formAdvancedData.expressTypeID.key : "",
+                expressNo: isArray(formAdvancedData.expressNo)&&!isNullOrUndefined(formAdvancedData.expressNo[0]) ? formAdvancedData.expressNo[0].key : "",
                 transferNo: !isNullOrUndefined(formAdvancedData.transferNo) ? formAdvancedData.transferNo : "",
-                warehouseID: !isNullOrUndefined(formAdvancedData.warehouseID) ? formAdvancedData.warehouseID.key : "",
-                inWarehouseIimeBegin: !isNullOrUndefined(formAdvancedData.inWarehouseIimeBegin) ? formAdvancedData.inWarehouseIimeBegin[0].format("YYYY-MM-DD hh:mm:ss") : "",
-                inWarehouseIimeEnd: !isNullOrUndefined(formAdvancedData.inWarehouseIimeEnd) ? formAdvancedData.inWarehouseIimeEnd[1].format("YYYY-MM-DD hh:mm:ss") : "",
-                customerServiceID: !isNullOrUndefined(formAdvancedData.customerServiceID) ? formAdvancedData.customerServiceID[0].key : "",
+                warehouseID: !isNullOrUndefined(formAdvancedData.wareHouseID) ? formAdvancedData.wareHouseID.key : "",
+                inWarehouseIimeBegin: isArray(formAdvancedData.warehouseInTime)&&!isNullOrUndefined(formAdvancedData.warehouseInTime[0]) ? formAdvancedData.warehouseInTime[0].format("YYYY-MM-DD hh:mm:ss") : "",
+                inWarehouseIimeEnd: isArray(formAdvancedData.warehouseInTime)&&!isNullOrUndefined(formAdvancedData.warehouseInTime[1]) ? formAdvancedData.warehouseInTime[1].format("YYYY-MM-DD hh:mm:ss") : "",
+                customerServiceID: isArray(formAdvancedData.customerServiceID)&&!isNullOrUndefined(formAdvancedData.customerServiceID[0]) ? formAdvancedData.customerServiceID[0].key : "",
+                warehouseAdmin: isArray(formAdvancedData.warehouseAdmin)&&!isNullOrUndefined(formAdvancedData.warehouseAdmin[0]) ? formAdvancedData.warehouseAdmin[0].key : "",
                 ...request
             }
         }
@@ -165,6 +164,12 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         };
 
         const columns: ColumnProps<ModelNameSpace.WarehouseListModel>[] = [{
+            title: "附件",
+            fixed: 'left',
+            render: (val, record) => {
+                return <Tooltip title="预览附件"><Icon type="picture" style={{fontSize:20,color:"#e65922",cursor:"pointer"}}/></Tooltip>
+            }
+        },{
             title: "客户订单号",
             dataIndex: 'CustomerOrderNo',
             fixed: 'left'
@@ -207,7 +212,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         }, {
             title: '操作',
             fixed: 'right',
-            render: (val, record, index) => {
+            render: (val, record) => {
                 const menu: FormTableOperationModel[] = [
                     {
                         key: PathConfig.WarehouseInViewPage,
@@ -229,11 +234,11 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 return <FormTableOperation onClick={(param: ClickParam) => {
                     if (param.key === "delete") {
                         confirm({
-                            title: 'Are you sure delete this task?',
-                            content: 'Some descriptions',
-                            okText: 'Yes',
+                            title: '你确定要删除此订单?',
+                            content: '订单删除后将不可恢复，请注意！',
+                            okText: '确认',
                             okType: 'danger',
-                            cancelText: 'No',
+                            cancelText: '取消',
                             onOk() {
                                 topThis.onClickDelete(record.ID);
                             },
@@ -272,7 +277,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                           const message=<div>总计有 <span style={{fontWeight:"bold"}}>{warehouseInStatus.confirmedCount}项</span>（已入库）<span style={{fontWeight:"bold"}}>{warehouseInStatus.unconfirmedCount}项</span>（待确认）<span style={{fontWeight:"bold"}}>{warehouseInStatus.retrunGoodsCount}项</span>（仓库退货）</div>;
                           return <Alert message={message} type="info" showIcon></Alert>;
                       }}
-                      scroll={{x: 1700}}
+                      scroll={{x: 1500}}
                       rowSelection={rowSelection}
                       bordered={false}
                       dataSource={listData}
@@ -298,22 +303,22 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
     renderFormAdvancedItems() {
         const items: FormAdvancedItemModel[] = [
             {
-                defaultDisplay: false,
+                defaultDisplay: true,
                 fieldName: "customerOrderNo",
                 displayName: "会员",
                 control: <FormControl.FormSelectIndex type={SelectType.Member} placeholder="搜索会员"/>
             },
             {
-                defaultDisplay: false,
+                defaultDisplay: true,
                 fieldName: "expressNo",
                 displayName: "快递单号",
                 control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="搜索快递单号"/>
             },
             {
-                defaultDisplay: false,
+                defaultDisplay: true,
                 fieldName: "CustomerOrderID",
-                displayName: "客服订单号",
-                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客服订单号"/>,
+                displayName: "客户订单号",
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客户订单号"/>,
                 layout: {
                     xs: 15,
                     sm: 12,
@@ -342,11 +347,11 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             },
             {
                 defaultDisplay: false,
-                fieldName: "warehouseAdminID",
+                fieldName: "warehouseAdmin",
                 displayName: "仓库管理员",
                 control: <FormControl.FormSelectIndex type={SelectType.WarehouseAdmin} placeholder="搜索仓库管理员"/>
             }, {
-                defaultDisplay: true,
+                defaultDisplay: false,
                 fieldName: "wareHouseID",
                 displayName: "仓库",
                 control: <FormWarehouseSelect placeholder="搜索仓库"></FormWarehouseSelect>
