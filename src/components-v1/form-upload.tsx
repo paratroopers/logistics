@@ -50,9 +50,10 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
             </div>
         );
         return <div className="clearfix">
-            <Upload action="//jsonplaceholder.typicode.com/posts/"
+            <Upload action="http://www.famliytree.cn/_api/ver(1.0)/File/upload"
                     listType="picture-card"
                     fileList={fileList}
+                    multiple={true}
                     onPreview={this.onPreview.bind(this)}
                     onChange={this.onChange.bind(this)}>
                 {fileList.length >= this.props.imgCount ? null : uploadButton}
