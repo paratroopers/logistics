@@ -1,11 +1,14 @@
 import * as React from "react";
 import {hashHistory} from 'react-router';
 import {Component} from "react";
-import {Form, Button, Row, Col,InputNumber,Input} from 'antd';
-const FormItem=Form.Item;
+import {Form, Button, Row, Col, InputNumber, Input} from 'antd';
+import {UploadFile} from 'antd/lib/upload/interface';
+
+const FormItem = Form.Item;
 import {ColProps} from "antd/lib/col";
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {FormControl} from '../components-v1/form-control';
+import {FormUpload} from '../components-v1/form-upload';
 import {SelectType} from "../util/common";
 import {ModelNameSpace} from '../model/model';
 import {FormExpressSelect} from "./form-express-select";
@@ -14,6 +17,7 @@ import {FormStatusSelect} from "./form-status-select";
 import {FormInput} from "./form-input";
 import {FormInputNumber} from "./form-input-number";
 import {FormInputText} from "./form-input-text";
+import {Util} from '../util/util';
 
 export interface WarehouseInFormProps extends FormComponentProps {
     /** 点击提交*/
@@ -21,16 +25,19 @@ export interface WarehouseInFormProps extends FormComponentProps {
     /** Data*/
     Data?: ModelNameSpace.WarehouseListModel;
     /** 类型*/
-    type?: 'add' | 'edit' | 'view'
+    type?: 'add' | 'edit' | 'view';
 }
 
 export interface WarehouseInFormStates {
-
+    files?: string[];
 }
 
 class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormStates> {
     constructor(props, context) {
         super(props, context);
+        this.state = {
+            files: []
+        }
     }
 
     /** 点击确认*/
@@ -41,7 +48,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 if (onSubmit)
-                    onSubmit(values);
+                    onSubmit(Object.assign({}, values, {AttachmentIDList: this.state.files}));
             }
         });
     }
@@ -85,7 +92,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
         const {props: {form: {getFieldDecorator}, type}} = topThis;
 
         /** 控件栅格*/
-        const spanLayout:ColProps = {
+        const spanLayout: ColProps = {
             xs: 24,
             sm: 12,
             md: 8
@@ -101,7 +108,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
         const formItemLayout = type === "view" ? null : null;
 
         return (
-            <Form className="warehouse-in-add-form" layout={type === "view"?"inline":"vertical"}
+            <Form className="warehouse-in-add-form" layout={type === "view" ? "inline" : "vertical"}
                   onSubmit={topThis.onSubmit.bind(this)}>
                 <Row gutter={16}>
                     <Col {...spanLayout}>
@@ -150,12 +157,13 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                         <FormItem {...formItemLayout} label={"初始重量(kg)"}>
                             {getFieldDecorator("inWeight", {
                                 rules: [{required: required, message: '请填写重量!'}],
-                            })(<FormInputNumber readonly={readonly} step={0.01} style={{width: '100%'}} placeholder="初始重量"/>)}
+                            })(<FormInputNumber readonly={readonly} step={0.01} style={{width: '100%'}}
+                                                placeholder="初始重量"/>)}
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>
                         <FormItem {...formItemLayout} label={"初始体积(cm)"}>
-                            <Row gutter={16} type="flex" justify="center" align="top" style={{minWidth:"200px"}}>
+                            <Row gutter={16} type="flex" justify="center" align="top" style={{minWidth: "200px"}}>
                                 <Col span={8}>
                                     {getFieldDecorator('inLength', {
                                         rules: [{required: required, message: '请填写长度!'}],
@@ -194,14 +202,28 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                     </Col>
                     <Col span={24}>
                         <FormItem {...formItemLayout} label={"备注"}>
-                            {getFieldDecorator("warehouseAdminRemark")(<FormInputText readonly={readonly} rows={4}></FormInputText>)}
+                            {getFieldDecorator("warehouseAdminRemark")(<FormInputText readonly={readonly}
+                                                                                      rows={4}></FormInputText>)}
+                        </FormItem>
+                    </Col>
+                    <Col span={24}>
+                        <FormItem {...formItemLayout} label={"附件"}>
+                            <FormUpload disabled={readonly} imgCount={9}
+                                        onChange={(files: UploadFile[]) => {
+                                            let fileIds: string[] = [];
+                                            Util.each(files, (item: UploadFile) => {
+                                                item.response && fileIds.push(item.response.Data);
+                                            });
+                                            if (fileIds && JSON.stringify(this.state.files) !== JSON.stringify(fileIds))
+                                                this.setState({files: fileIds});
+                                        }}></FormUpload>
                         </FormItem>
                     </Col>
                 </Row>
                 {!readonly ? <Row>
                     <Col span={24}>
                         <Button type="primary" htmlType="submit">确定</Button>
-                        <Button style={{marginLeft: 8}} onClick={()=>{
+                        <Button style={{marginLeft: 8}} onClick={() => {
                             /** 返回路由*/
                             hashHistory.goBack();
                         }}>取消</Button>

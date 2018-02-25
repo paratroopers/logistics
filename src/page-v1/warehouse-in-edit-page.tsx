@@ -1,14 +1,14 @@
 import * as React from 'react';
 import {withRouter, hashHistory, RouteComponentProps} from 'react-router';
 import {Row, message} from 'antd';
-import {ContentHeaderControl}from "../components-v1/common-content-header";
+import {ContentHeaderControl} from "../components-v1/common-content-header";
 import WarehouseInForm from "../components-v1/warehouse-in-form";
 import {requestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {ResponseNameSpace} from '../model/response';
-import {PathConfig}from "../config/pathconfig";
-        import {isNullOrUndefined} from "util";
+import {PathConfig} from "../config/pathconfig";
+import {isNullOrUndefined} from "util";
 
 interface WarehouseInEditPageProps extends RouteComponentProps<any, any> {
 
@@ -60,7 +60,8 @@ export class WarehouseInEditPage extends React.Component<WarehouseInEditPageProp
             /** 入库状态*/
             InWareHouseStatus: values.inWareHouseStatus,
             /** 备注*/
-            WarehouseAdminRemark: values.warehouseAdminRemark
+            WarehouseAdminRemark: values.warehouseAdminRemark,
+            AttachmentIDList: values.AttachmentIDList
         }
         topThis.setState({loading: true});
         APINameSpace.WarehouseAPI.WarehouseInEdit(request).then((result: ResponseNameSpace.BaseResponse) => {
@@ -78,7 +79,8 @@ export class WarehouseInEditPage extends React.Component<WarehouseInEditPageProp
         return <Row className="warehouse-in-edit-page">
             <ContentHeaderControl title="编辑"></ContentHeaderControl>
             {!isNullOrUndefined(this.props.location) ?
-                <WarehouseInForm type={"edit"} Data={this.props.location.state} readOnly={true} onSubmit={topThis.onSubmit.bind(this)}></WarehouseInForm> :
+                <WarehouseInForm type={"edit"} Data={this.props.location.state} readOnly={true}
+                                 onSubmit={topThis.onSubmit.bind(this)}></WarehouseInForm> :
                 <div>暂无数据</div>}
         </Row>;
     }

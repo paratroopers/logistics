@@ -9,7 +9,7 @@ export namespace requestNameSpace {
     export interface BaseListRequest {
         pageIndex: number;
         pageSize: number;
-        isAdmin?:boolean;
+        isAdmin?: boolean;
     }
 
 
@@ -70,6 +70,7 @@ export namespace requestNameSpace {
         name: string;
         type: number;
     }
+
     //endregion
 
     //region 系统模块定义区
@@ -120,49 +121,49 @@ export namespace requestNameSpace {
 
     //region 订单和合并订单（仓库入库，待打包，待审核，客服确认，仓库打包，客户付款，仓库打包 所有的接口区域；
 
-    export  interface  GetCustomerOrderMergeRequest extends  BaseListRequest{
+    export interface GetCustomerOrderMergeRequest extends BaseListRequest {
         type?: ModelNameSpace.OrderTypeEnum;
-        country?:string;
-        currentStep?:string;
-        currentStatus?:string;
-        expressNo?:string;
-        customerOrderMergeNo?:string;
-        customerChooseChannelID?:number;
-        recipient?:string;
-        channelID?:string;
-        deliverTimeBegin?:Date;
-        deliverTimeEnd?:Date;
-        agentID?:number;
-        orderMergeTimeBegin?:Date;
-        orderMergeTimeEnd?:Date,
-        customerServiceID?:number;
+        country?: string;
+        currentStep?: string;
+        currentStatus?: string;
+        expressNo?: string;
+        customerOrderMergeNo?: string;
+        customerChooseChannelID?: number;
+        recipient?: string;
+        channelID?: string;
+        deliverTimeBegin?: Date;
+        deliverTimeEnd?: Date;
+        agentID?: number;
+        orderMergeTimeBegin?: Date;
+        orderMergeTimeEnd?: Date,
+        customerServiceID?: number;
     }
 
-    export interface GetWarehouseInListRequest extends BaseListRequest{
+    export interface GetWarehouseInListRequest extends BaseListRequest {
         type: ModelNameSpace.OrderTypeEnum;
         /** 会员*/
-        memberID?:string;
+        memberID?: string;
         /** 客户订单号*/
-        customerOrderNo?:string;
+        customerOrderNo?: string;
         /** 订单状态*/
-        customerOrderStatus?:number;
+        customerOrderStatus?: number;
         /** 快递单号*/
-        expressNo?:string;
+        expressNo?: string;
         /** 交接单*/
-        transferNo?:string;
+        transferNo?: string;
         /** 仓库*/
-        warehouseID?:number;
+        warehouseID?: number;
         /** 开始时间*/
-        inWarehouseIimeBegin?:Date;
+        inWarehouseIimeBegin?: Date;
         /** 结束时间*/
-        inWarehouseIimeEnd?:Date;
+        inWarehouseIimeEnd?: Date;
         /** 客服*/
-        customerServiceID?:number;
+        customerServiceID?: number;
         /** 仓库管理员*/
-        warehouseAdmin?:string;
+        warehouseAdmin?: string;
         /** 客户订单号*/
-        CustomerOrderID?:string;
-        isAdmin?:boolean;
+        CustomerOrderID?: string;
+        isAdmin?: boolean;
     }
 
     export interface WarehouseInAddRequest {
@@ -196,11 +197,13 @@ export namespace requestNameSpace {
         InWareHouseStatus: string,
         /** 备注*/
         WarehouseAdminRemark: string
+        /** 附件*/
+        AttachmentIDList?: string[];
     }
 
     export interface WarehouseInEditRequest {
         /** 主键*/
-        ID:number,
+        ID: number,
         /** 会员ID*/
         userid: number,
         /** 快递单号*/
@@ -230,7 +233,8 @@ export namespace requestNameSpace {
         /** 入库状态*/
         InWareHouseStatus: string,
         /** 备注*/
-        WarehouseAdminRemark: string
+        WarehouseAdminRemark: string,
+        AttachmentIDList?: string[]
     }
 
     export interface WarehouseInDeleteRequest {
@@ -310,6 +314,7 @@ export namespace requestNameSpace {
         PackageHeight?: number;
         PackageWeight?: number;
     }
+
     //endregion
 
     //region 报表定义区
