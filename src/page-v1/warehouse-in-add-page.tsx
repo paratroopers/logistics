@@ -6,7 +6,7 @@ import {UploadFile} from 'antd/lib/upload/interface';
 const FormItem = Form.Item;
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import WarehouseInForm from "../components-v1/warehouse-in-form";
-import {FormUpload} from '../components-v1/form-upload';
+
 
 import {requestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
@@ -20,16 +20,13 @@ interface WarehouseInAddPageProps {
 }
 
 interface WarehouseInAddPageStates {
-    files?: string[];
+
 }
 
 @withRouter
 export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps, WarehouseInAddPageStates> {
     constructor(props) {
         super(props);
-        this.state = {
-            files: []
-        }
     }
 
     onSubmit = (values) => {
@@ -65,7 +62,7 @@ export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps,
             InWareHouseStatus: values.inWareHouseStatus,
             /** 备注*/
             WarehouseAdminRemark: values.warehouseAdminRemark,
-            AttachmentIDList: this.state.files
+            AttachmentIDList: values.AttachmentIDList
         }
         //topThis.setState({loading: true});
         APINameSpace.WarehouseAPI.WarehouseInAdd(request).then((result: ResponseNameSpace.BaseResponse) => {
@@ -81,20 +78,7 @@ export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps,
         return <Row className="warehouse-in-page">
             <ContentHeaderControl title="新增入库"></ContentHeaderControl>
             <WarehouseInForm onSubmit={topThis.onSubmit.bind(this)} type="add"></WarehouseInForm>
-            <Col span={24} style={{paddingLeft: '8px', paddingRight: '8px'}}>
-                <Form>
-                    <FormItem label={"附件"}>
-                        <FormUpload imgCount={9} onChange={(files: UploadFile[]) => {
-                            let fileIds: string[] = [];
-                            Util.each(files, (item: UploadFile) => {
-                                item.response && fileIds.push(item.response.Data);
-                            });
-                            if (fileIds && JSON.stringify(this.state.files) !== JSON.stringify(fileIds))
-                                this.setState({files: fileIds});
-                        }}></FormUpload>
-                    </FormItem>
-                </Form>
-            </Col>
+
         </Row>;
     }
 }
