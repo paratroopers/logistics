@@ -1,16 +1,16 @@
 import * as React from "react";
-import {AkOneUp,AkOneUpMediaType,IAkOneUpProps}from "./form-media-player";
+import {FormMediaPlayer,FormMediaPlayerType,IFormMediaPlayerProps}from "./form-media-player";
 import {ModelNameSpace} from '../model/model';
 import {DocumentCommon} from '../util/util';
 
-export interface FileViewerProps extends IAkOneUpProps{
+export interface FormFileViewerProps extends IFormMediaPlayerProps{
     item: ModelNameSpace.Attachment;
     changeVisible?: (visible: boolean) => void;
 }
-export interface FileViewerState {
-    mediaPlayerProps: IAkOneUpProps;
+export interface FormFileViewerState {
+    mediaPlayerProps: IFormMediaPlayerProps;
 }
-export class FileViewer extends React.Component<FileViewerProps, FileViewerState>{
+export class FormFileViewer extends React.Component<FormFileViewerProps, FormFileViewerState>{
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -43,7 +43,7 @@ export class FileViewer extends React.Component<FileViewerProps, FileViewerState
                 visible: true,
                 filename: DocumentCommon.getFileNameWithOutExtension(item.path),
                 src: item.path,
-                mediatype: DocumentCommon.isImageFile(DocumentCommon.getFileExtension(item.path)) ? AkOneUpMediaType.Image : AkOneUpMediaType.Video,
+                mediatype: DocumentCommon.isImageFile(DocumentCommon.getFileExtension(item.path)) ? FormMediaPlayerType.Image : FormMediaPlayerType.Video,
                 createDate: "",
                 size: "0",
                 extension: DocumentCommon.getFileExtension(item.path),
@@ -60,7 +60,7 @@ export class FileViewer extends React.Component<FileViewerProps, FileViewerState
     }
     render() {
         return <div>
-            <AkOneUp {...this.state.mediaPlayerProps} />
+            <FormMediaPlayer {...this.state.mediaPlayerProps} />
         </div>;
     }
 }

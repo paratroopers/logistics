@@ -51,8 +51,8 @@
   }
 }
 
-/** Ak-OneUp */
-.ak-oneup {
+/** form-media-player */
+.form-media-player {
   @titleheight: 50px;
   @buttonwidth: @titleheight;
   @hovercolor: #333;
@@ -67,15 +67,15 @@
   background-color: rgba(0, 0, 0, 0.85);
   transition: all, .5s;
   overflow: hidden;
-  .ak-oneup-cmdbar {
+  .form-media-player-cmdbar {
     background: black;
     height: @titleheight;
     z-index: 1100;
     position: relative;
-    .ak-oneup-cmdbar-leftbar {
+    .form-media-player-cmdbar-leftbar {
       float: left !important;
     }
-    .ak-oneup-cmdbar-rightbar {
+    .form-media-player-cmdbar-rightbar {
       float: right !important;
     }
     button {
@@ -89,7 +89,7 @@
       background-color: @hovercolor;
     }
   }
-  .ak-oneup-content {
+  .form-media-player-content {
     text-align: center;
     height: 100%;
     width: 100%;
@@ -98,7 +98,7 @@
     z-index: 1000;
     display: table;
     vertical-align: middle;
-    .ak-oneup-image {
+    .form-media-player-image {
       display: table-cell;
       vertical-align: middle;
       img {
@@ -112,7 +112,7 @@
         width: auto;
       }
     }
-    .ak-oneup-video {
+    .form-media-player-video {
       display: table-cell;
       vertical-align: middle;
       video {
@@ -131,7 +131,7 @@
       }
     }
   }
-  .ak-oneup-rightpanel {
+  .form-media-player-rightpanel {
     position: absolute;
     width: 320px;
     top: 50px;
@@ -142,7 +142,7 @@
     background-color: #161616;
     right: 0px;
     padding-left: 10px;
-    .ak-oneup-rightpanel-title {
+    .form-media-player-rightpanel-title {
       .img {
         width: 60px;
         height: 60px;
@@ -175,7 +175,7 @@
         }
       }
     }
-    .ak-oneup-rightpanel-content {
+    .form-media-player-rightpanel-content {
       float: left;
       width: 100%;
       .subject {
@@ -208,7 +208,7 @@
         }
       }
     }
-    .ak-oneup-rightpanel-splitline {
+    .form-media-player-rightpanel-splitline {
       width: 100%;
       height: 1px;
       line-height: 1px;
@@ -218,14 +218,14 @@
     }
   }
   @media (max-width: 415px) {
-    .ak-oneup-cmdbar {
+    .form-media-player-cmdbar {
       height: 40px;
     }
-    .ak-oneup-cmdbar button {
+    .form-media-player-cmdbar button {
       width: 40px;
       height: 40px;
     }
-    .ak-oneup-rightpanel {
+    .form-media-player-rightpanel {
       top: 40px;
     }
   }

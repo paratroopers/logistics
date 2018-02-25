@@ -23,7 +23,7 @@ const confirm = Modal.confirm;
 import {isArray, isNullOrUndefined} from "util";
 import * as moment from 'moment';
 import {Global,Context} from "../util/common";
-import {FileViewer} from "../components-v1/form-file-viewer";
+import {FormFileViewer} from "../components-v1/form-file-viewer";
 
 interface WarehouseInPageProps {
 
@@ -47,7 +47,7 @@ interface WarehouseInPageStates {
     /** 入库状态数量统计*/
     warehouseInStatus?:ModelNameSpace.WarehouseInStatusModel
     /** 图片预览*/
-    visibleFileViewer:boolean;
+    visibleFormFileViewer:boolean;
 }
 
 @withRouter
@@ -66,7 +66,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 confirmedCount: 0,
                 retrunGoodsCount: 0
             },
-            visibleFileViewer:false
+            visibleFormFileViewer:false
         }
     }
 
@@ -173,7 +173,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             title: "附件",
             fixed: 'left',
             render: (val, record) => {
-                return <Tooltip title="预览附件"><Icon type="picture" onClick={()=>{topThis.changeFileViewerVisible(true);}} style={{fontSize:20,color:"#e65922",cursor:"pointer"}}/></Tooltip>
+                return <Tooltip title="预览附件"><Icon type="picture" onClick={()=>{topThis.changeFormFileViewerVisible(true);}} style={{fontSize:20,color:"#e65922",cursor:"pointer"}}/></Tooltip>
             }
         },{
             title: "客户订单号",
@@ -378,15 +378,15 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         return items;
     }
 
-    changeFileViewerVisible(bool: boolean) {
+    changeFormFileViewerVisible(bool: boolean) {
         this.setState({
-            visibleFileViewer: bool
+            visibleFormFileViewer: bool
         });
     }
 
     render() {
         const topThis = this;
-        const {state:{visibleFileViewer}}=topThis;
+        const {state:{visibleFormFileViewer}}=topThis;
         const item:ModelNameSpace.Attachment={
             path:"http://img.mp.itc.cn/upload/20170213/c6a8f0bd5ea94457a2e7ff63bc0a07fe_th.JPG"
         };
@@ -396,7 +396,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 formAdvancedItems={topThis.renderFormAdvancedItems()}
                 onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch>
             {topThis.renderTable()}
-            <FileViewer item={item} visible={visibleFileViewer} changeVisible={topThis.changeFileViewerVisible.bind(this)} />
+            <FormFileViewer item={item} visible={visibleFormFileViewer} changeVisible={topThis.changeFormFileViewerVisible.bind(this)} />
         </Row>;
     }
 }
