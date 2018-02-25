@@ -116,7 +116,6 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 inWarehouseIimeEnd: isArray(formAdvancedData.warehouseInTime) && !isNullOrUndefined(formAdvancedData.warehouseInTime[1]) ? formAdvancedData.warehouseInTime[1].format("YYYY-MM-DD hh:mm:ss") : "",
                 customerServiceID: isArray(formAdvancedData.customerServiceID) && !isNullOrUndefined(formAdvancedData.customerServiceID[0]) ? formAdvancedData.customerServiceID[0].key : "",
                 warehouseAdmin: isArray(formAdvancedData.warehouseAdmin) && !isNullOrUndefined(formAdvancedData.warehouseAdmin[0]) ? formAdvancedData.warehouseAdmin[0].key : "",
-                CustomerOrderID: isArray(formAdvancedData.CustomerOrderID) && !isNullOrUndefined(formAdvancedData.CustomerOrderID[0]) ? formAdvancedData.CustomerOrderID[0].key : "",
                 ...request
             }
         }
@@ -350,7 +349,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             },
             {
                 defaultDisplay: true,
-                fieldName: "CustomerOrderID",
+                fieldName: "customerOrderNo",
                 displayName: "客户订单号",
                 control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客户订单号"/>,
                 layout: {

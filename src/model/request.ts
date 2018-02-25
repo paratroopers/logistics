@@ -161,8 +161,6 @@ export namespace requestNameSpace {
         customerServiceID?: number;
         /** 仓库管理员*/
         warehouseAdmin?: string;
-        /** 客户订单号*/
-        CustomerOrderID?: string;
         isAdmin?: boolean;
     }
 
