@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {withRouter, hashHistory} from 'react-router';
+import {withRouter, hashHistory,Link} from 'react-router';
 import {Row, Col, Button, Icon, Table, Alert, Modal, message, Input, Tooltip} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
@@ -199,7 +199,10 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         }, {
             title: "客户订单号",
             dataIndex: 'CustomerOrderNo',
-            fixed: 'left'
+            fixed: 'left',
+            render: (txt, record) => {
+                return <Link to={{pathname: PathConfig.WarehouseInViewPage, state: record}}>{txt}</Link>
+            }
         }, {
             title: "会员编号",
             dataIndex: 'MemeberCode'
@@ -301,9 +304,11 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                       style={{padding: '12px'}}
                       pagination={pagination}
                       title={() => {
-                          const message = <div>总计有 <span style={{fontWeight: "bold"}}>{warehouseInStatus.confirmedCount}项</span>（已入库）<span
-                              style={{fontWeight: "bold"}}>{warehouseInStatus.unconfirmedCount}项</span>（待确认）<span
-                              style={{fontWeight: "bold"}}>{warehouseInStatus.retrunGoodsCount}项</span>（仓库退货）</div>;
+                          const message = <div>
+                              已入库: <span style={{fontWeight: "bold"}}>{warehouseInStatus.confirmedCount}项 </span>
+                              待确认: <span style={{fontWeight: "bold"}}>{warehouseInStatus.unconfirmedCount}项 </span>
+                              仓库退货: <span style={{fontWeight: "bold"}}>{warehouseInStatus.retrunGoodsCount}项 </span>
+                          </div>;
                           return <Alert message={message} type="info" showIcon></Alert>;
                       }}
                       scroll={{x: 1500}}
