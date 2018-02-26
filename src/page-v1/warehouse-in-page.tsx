@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {withRouter, hashHistory,Link} from 'react-router';
+import {withRouter, hashHistory, Link} from 'react-router';
 import {Row, Col, Button, Icon, Table, Alert, Modal, message, Input, Tooltip} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
+
 const {RangePicker} = DatePicker;
 import {ColumnProps} from 'antd/lib/table';
 import {ModelNameSpace} from "../model/model";
@@ -19,11 +20,13 @@ import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import {APINameSpace} from "../model/api";
 import {ClickParam} from "antd/lib/menu";
 import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
+
 const confirm = Modal.confirm;
 import {isArray, isNullOrUndefined} from "util";
 import * as moment from 'moment';
 import {Global, Context} from "../util/common";
 import {FormFileViewer} from "../components-v1/form-file-viewer";
+import {FormExport} from '../components-v1/form-export';
 
 interface WarehouseInPageProps {
 
@@ -161,16 +164,16 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         })
     }
 
-    onClickPicturePreview(item:ModelNameSpace.WarehouseListModel){
-        const topThis=this;
+    onClickPicturePreview(item: ModelNameSpace.WarehouseListModel) {
+        const topThis = this;
         const request: requestNameSpace.GetAttachmentItemsRequest = {
-            customerOrderID:item.ID,
-            isAdmin:false
+            customerOrderID: item.ID,
+            isAdmin: false
         }
 
         APINameSpace.AttachmentsAPI.GetAttachmentItems(request).then((result: ResponseNameSpace.GetAttachmentItemsResponse) => {
             if (result.Status === 0) {
-                topThis.setState({items:result.Data,},()=>{
+                topThis.setState({items: result.Data,}, () => {
                     topThis.changeFormFileViewerVisible(true);
                 });
             }
@@ -191,7 +194,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             title: "附件",
             fixed: 'left',
             render: (val, record) => {
-                return <Tooltip title="预览附件"><Icon type="picture" onClick={()=>{
+                return <Tooltip title="预览附件"><Icon type="picture" onClick={() => {
                     topThis.onClickPicturePreview(record);
                 }} style={{fontSize: 20, color: "#e65922", cursor: "pointer"}}/></Tooltip>
             }
@@ -328,7 +331,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 }}>新增入库</Button>
             </Col>
             <Col>
-                <Button type="primary" icon="download" disabled={!hasSelected}>导出</Button>
+                <FormExport disabled={!hasSelected}></FormExport>
             </Col>
         </Row>
     }

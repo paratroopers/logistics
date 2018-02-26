@@ -10,7 +10,7 @@ export namespace APINameSpace {
         static baseURL = "http://www.famliytree.cn/_api/ver(1.0)/";
         //static  baseURL = "http://localhost:8090/_api/ver(1.0)/";
         static baseUploadURL = "http://www.famliytree.cn/_api/ver(1.0)/File/upload";
-       // static baseUploadURL = "http://localhost:8090/_api/ver(1.0)/File/upload";
+        // static baseUploadURL = "http://localhost:8090/_api/ver(1.0)/File/upload";
         static baseFileURL = "http://www.famliytree.cn";
         //static baseFileURL = "http://localhost:8090";
     }
@@ -250,6 +250,11 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, Object.assign({}, data, {isAdmin: false}));
         }
 
+        static async ExportData() {
+            let url: string = CommonAPI.baseURL + "CustomerOrder/Export";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().post(url);
+        }
+
     }
 
     export class CustomerOrderStatusAPI {
@@ -291,5 +296,6 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.GetAttachmentItemsResponse>().get(url, data);
         }
     }
+
     //endregion
 }
