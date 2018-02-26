@@ -434,7 +434,11 @@ export class DocumentCommon {
     }
 
     static getFileExtension(fileName: string): string {
-        return '.' + fileName.split('.').pop();
+        const data = fileName.toLowerCase();
+        if (data.indexOf("data:image") === 0)
+            return '.' + data.split(";base64,")[0].split("/")[1]
+        else
+            return '.' + fileName.split('.').pop();
     }
 
     static getFileNameWithOutExtension(fileName: string): string {
@@ -443,9 +447,9 @@ export class DocumentCommon {
     }
 
     static getPath(path: string) {
-        if (path.indexOf("http") === -1) {
+        if (path.indexOf("http") === -1 && path.indexOf("data:image") !== 0) {
             return this.pathPrefix + path;
-        }else {
+        } else {
             return path;
         }
     }
