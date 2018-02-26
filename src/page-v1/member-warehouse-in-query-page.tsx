@@ -78,7 +78,7 @@ export class MemberWarehouseInQueryPage extends React.Component<MemberWarehouseI
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
         const request: requestNameSpace.GetWarehouseInListRequest = {
-            type: ModelNameSpace.OrderTypeEnum.WarehouseIn,
+            step: ModelNameSpace.OrderTypeEnum.WarehouseIn,
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize
         }
