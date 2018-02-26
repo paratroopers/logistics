@@ -24,14 +24,14 @@ export class FormFileViewer extends React.Component<FormFileViewerProps, FormFil
     }
 
     componentWillReceiveProps(nextProps) {
-        if ("visible" in nextProps && nextProps.visible !== this.props.visible) {
+        // if ("visible" in nextProps && nextProps.visible !== this.props.visible) {
             if (nextProps.items && nextProps.visible) {
                 let {items} = nextProps;
                 this.setState({fileIndex: 0}, () => {
                     this.onDisplay(items[0]);
                 });
             }
-        }
+        // }
     }
 
 

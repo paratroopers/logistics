@@ -98,7 +98,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         const topThis = this;
         const {state: {pageIndex, pageSize, formAdvancedData}} = topThis;
         let request: requestNameSpace.GetWarehouseInListRequest = {
-            type: ModelNameSpace.OrderTypeEnum.WarehouseIn,
+            step: ModelNameSpace.OrderTypeEnum.WarehouseIn,
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize,
             isAdmin: false

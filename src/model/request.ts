@@ -140,7 +140,7 @@ export namespace requestNameSpace {
     }
 
     export interface GetWarehouseInListRequest extends BaseListRequest {
-        type: ModelNameSpace.OrderTypeEnum;
+        step: ModelNameSpace.OrderTypeEnum;
         /** 会员*/
         memberID?: string;
         /** 客户订单号*/

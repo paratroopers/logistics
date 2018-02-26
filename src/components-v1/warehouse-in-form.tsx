@@ -227,7 +227,15 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                             hashHistory.goBack();
                         }}>取消</Button>
                     </Col>
-                </Row> : null}
+                </Row>: null}
+                {!readonly ? null: <Row>
+                    <Col span={24}>
+                        <Button type="primary" onClick={() => {
+                            /** 返回路由*/
+                            hashHistory.goBack();
+                        }}>取消</Button>
+                    </Col>
+                </Row>}
             </Form>
         );
     }
