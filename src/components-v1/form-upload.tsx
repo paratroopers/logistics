@@ -4,6 +4,7 @@ import {UploadFile} from 'antd/lib/upload/interface';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {Util} from '../util/util';
+import {FormFileViewer} from "./form-file-viewer";
 
 export interface FormUploadProps {
     imgCount: number;
@@ -63,8 +64,8 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
         });
     }
 
-    onCancel() {
-        this.setState({previewVisible: false})
+    onCancel(bool:boolean) {
+        this.setState({previewVisible: bool})
     }
 
     onChange(fileList) {
@@ -81,6 +82,8 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
 
     render() {
         const {state: {previewVisible, previewImage, fileList}, props: {disabled, imgCount}} = this;
+        const items: ModelNameSpace.Attachment[]=[{path:previewImage}];
+
         const uploadButton = (
             <div>
                 <Icon type="plus"/>
@@ -97,9 +100,11 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
                     onChange={this.onChange.bind(this)}>
                 {fileList.length >= imgCount || disabled ? null : uploadButton}
             </Upload>
-            <Modal visible={previewVisible} footer={null} onCancel={this.onCancel.bind(this)}>
-                <img alt="example" style={{width: '100%'}} src={previewImage}/>
-            </Modal>
+            {/*<Modal visible={previewVisible} footer={null} onCancel={this.onCancel.bind(this)}>*/}
+                {/*<img alt="example" style={{width: '100%'}} src={previewImage}/>*/}
+            {/*</Modal>*/}
+            <FormFileViewer items={items} visible={previewVisible}
+                            changeVisible={this.onCancel.bind(this)}/>
         </div>;
     }
 }

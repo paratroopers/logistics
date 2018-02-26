@@ -38,6 +38,7 @@ export class FormFileViewer extends React.Component<FormFileViewerProps, FormFil
     onDisplay(item: ModelNameSpace.Attachment) {
         let obj: ModelNameSpace.Attachment = item;
 
+
         if (DocumentCommon.isMediaFile(DocumentCommon.getFileExtension(obj.path))) {
             this.onDisplayMedia(obj);
         } else {
