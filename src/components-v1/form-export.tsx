@@ -22,7 +22,7 @@ export class FormExport extends React.Component<FormExportProps, FormExportState
             <Button type="primary" disabled={false} icon="download"
                     onClick={this.onClick.bind(this)}>{"导出"}</Button>
             <form style={{display: 'none'}} id="fileExportForm" method="post"
-                  action="http://www.famliytree.cn/_api/ver(1.0)/CustomerOrder/Export"
+                  action={APINameSpace.CommonAPI.baseURL + "CustomerOrder/Export"}
                   target="fileExport">
             </form>
             <iframe name="fileExport" style={{display: 'none'}}></iframe>
