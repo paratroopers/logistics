@@ -277,7 +277,7 @@ export class CommonTable<T> extends Component<CommonTableProps<T>,
         }
 
         if (imgColumn) {
-            tempColumns.push({...imgColumn, width: 45});
+            tempColumns.push({...imgColumn, width: 30});
         }
         tempColumns.push({
             dataIndex: this.props.rowKey as string,
