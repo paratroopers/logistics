@@ -178,7 +178,7 @@ export namespace FormControl {
 
         render() {
             const topThis = this;
-            const {props: {value, disabled, readonly}, state: {fetching, data}} = topThis;
+            const {props: {value, disabled, readonly, style}, state: {fetching, data}} = topThis;
             return !readonly ? <Select
                 disabled={disabled}
                 mode="multiple"
@@ -189,7 +189,7 @@ export namespace FormControl {
                 filterOption={false}
                 onSearch={this.fetchData}
                 onChange={this.handleChange}
-                style={{width: '100%'}}>
+                style={style ? style : {width: '100%'}}>
                 {data.map(d => <Option key={d.value}>{d.text}</Option>)}
             </Select> : <label style={{width: '100%'}}>{isArray(value) ? value.map((item) => {
                 return item.label + ";"

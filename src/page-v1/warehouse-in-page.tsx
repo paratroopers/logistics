@@ -6,7 +6,6 @@ import {DatePicker} from "antd";
 import FormTableHeader from '../components-v1/form-table-header';
 
 const {RangePicker} = DatePicker;
-import {ColumnProps} from 'antd/lib/table';
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";

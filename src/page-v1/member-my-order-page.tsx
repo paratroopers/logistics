@@ -1,15 +1,19 @@
 import * as React from 'react';
 import {withRouter, hashHistory, Link} from 'react-router';
-import {Row, Icon, Tabs, message} from "antd";
+import {Row, Tabs, message,DatePicker} from "antd";
+const {RangePicker} = DatePicker;
 import {PathConfig} from '../config/pathconfig';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {requestNameSpace} from '../model/request';
+import {ResponseNameSpace} from '../model/response'
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import FormTableHeader,{FormTableHeaderButton,SearchFormModel} from '../components-v1/form-table-header';
 import MemberMyOrderWaitForApprovePage from './member-my-order-wait-for-approve-page';
 import * as moment from 'moment';
+import {FormControl} from "../components-v1/form-control";
+import {SelectType} from "../util/common";
 
 interface MemberMyOrderPageStates {
     pageIndex: number;
@@ -54,16 +58,19 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             pageIndex: pageIndex ? pageIndex : this.state.pageIndex,
         };
         this.setState({loading: true});
-        APINameSpace.MemberAPI.GetCustomerOrders(request).then(r => {
-            r.Status === 0 && this.setState({
-                data: r.Data,
-                pageIndex: pageIndex,
-                totalCount: r.TotalCount,
-                loading: false
-            });
+        APINameSpace.MemberAPI.GetCustomerOrders(request).then((result: ResponseNameSpace.BaseResponse) => {
+            if (result.Status === 0) {
+                this.setState({
+                    data: result.Data,
+                    pageIndex: pageIndex,
+                    totalCount: result.TotalCount,
+                    loading: false
+                });
+            }
         });
     }
 
+    /** 合并打包*/
     onPackageClick() {
         if (this.state.selected.selectedRowKeys.length === 0) {
             message.warning('请选择至少一个订单!');
@@ -73,6 +80,11 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             pathname: PathConfig.MemberMergePackagePage,
             query: {ids: this.state.selected.selectedRowKeys},
         })
+    }
+
+    /** 搜索*/
+    onClickSearch(values: any){
+
     }
 
     renderTable() {
@@ -145,6 +157,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
         const {state: {totalCount}} = topThis;
         const {state: {selected}} = this;
         const selects = selected.selectedRowKeys ? selected.selectedRowKeys.length : 0;
+        /** 批量操作*/
         const buttons: FormTableHeaderButton[] = [{
             displayName: "合并打包",
             icon: "appstore",
@@ -152,7 +165,19 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             count: selects,
             isShowCount: true
         }]
-        return <FormTableHeader title={`总计有${totalCount}项 待打包订单`} buttonGroup={buttons}></FormTableHeader>
+        /** 搜索*/
+        const formItems:SearchFormModel[]=[{
+            fieldName: "expressNo",
+            displayName: "快递单号",
+            control: <FormControl.FormSelectIndex style={{width:200}} type={SelectType.ExpressNo} placeholder="搜索快递单号"/>
+        },{
+            fieldName: "warehouseInTime",
+            displayName: "入库时间",
+            control: <RangePicker style={{width:230}}></RangePicker>
+        }];
+        return <FormTableHeader title={`总计有${totalCount}项 待打包订单`}
+                                searchControl={{onClickSearch:topThis.onClickSearch.bind(this),items:formItems}}
+                                buttonGroup={buttons}></FormTableHeader>
     }
 
     render() {

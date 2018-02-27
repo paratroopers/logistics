@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Row, Col, Icon,Form} from "antd";
+import {Row, Col, Icon,Form,Button} from "antd";
 import {isArray} from "util";
 import {FormComponentProps} from 'antd/lib/form/Form';
 const FormItem = Form.Item;
@@ -30,8 +30,6 @@ export class SearchFormModel {
     fieldName: string;
     /** 控件*/
     control: React.ReactNode;
-    /** 布局*/
-    layout?: any;
 }
 
 class FormTableHeader extends React.Component<FormTableHeaderProps, FormTableHeaderStates> {
@@ -44,12 +42,17 @@ class FormTableHeader extends React.Component<FormTableHeaderProps, FormTableHea
         const {props: {searchControl, form: {getFieldDecorator}}} = topThis;
         const children = [];
         if (searchControl && isArray(searchControl.items)) {
-            searchControl.items.map(function (item) {
-                children.push(<FormItem>
+            searchControl.items.map(function (item,index) {
+                children.push(<FormItem key={index}>
                     {getFieldDecorator(item.fieldName)(item.control)}
                 </FormItem>)
             })
+            if (searchControl.items.length > 0) {
+                children.push(<FormItem className="web-search-button">
+                    <Button type="primary" htmlType="submit">搜索</Button></FormItem>)
+            }
         }
+
         return children;
     }
 
@@ -81,7 +84,7 @@ class FormTableHeader extends React.Component<FormTableHeaderProps, FormTableHea
                 </Col>
             </Row>
             <Row>
-                <Form>{topThis.renderSearchForm()}</Form>
+                <Form layout="inline">{topThis.renderSearchForm()}</Form>
             </Row>
         </Row>
     }
