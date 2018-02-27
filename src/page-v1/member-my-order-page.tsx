@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {withRouter, hashHistory} from 'react-router';
+import {withRouter, hashHistory, Link} from 'react-router';
 import {Row, Icon, Tabs, message} from "antd";
 import {PathConfig} from '../config/pathconfig';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
@@ -40,7 +40,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             totalCount: 0,
             loading: false,
             selected: {
-                selectedRowKeys:[]
+                selectedRowKeys: []
             }
         }
     }
@@ -68,7 +68,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
 
     onPackageClick() {
         if (this.state.selected.selectedRowKeys.length === 0) {
-            message.warning('请选择至少一个订单!')
+            message.warning('请选择至少一个订单!');
             return;
         }
         hashHistory.push({
@@ -117,73 +117,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                 title: '操作',
                 layout: ColumnLayout.Option,
                 render: (val, record, index) => {
-                    const menu: FormTableOperationModel[] = [
-                        {
-                            key: PathConfig.MemberMyOrderPackageViewPage,
-                            type: "search",
-                            label: "待打包查看"
-                        }, {
-                            key: PathConfig.MemberMyOrderApprovalViewPage,
-                            type: "search",
-                            label: "待审核查看"
-                        },
-                        {
-                            key: PathConfig.WarehouseInViewPage,
-                            type: "search",
-                            label: "入库查看"
-                        },
-                        {
-                            key: PathConfig.WarehouseInEditPage,
-                            type: "edit",
-                            label: "入库编辑"
-                        }, {
-                            key: PathConfig.CustomerServiceConfirmViewPage,
-                            type: "search",
-                            label: "客服查看"
-                        }, {
-                            key: PathConfig.CustomerServiceConfirmApprovePage,
-                            type: "edit",
-                            label: "客服审批"
-                        },
-                        {
-                            key: PathConfig.WarehousePackageViewPage,
-                            type: "search",
-                            label: "仓库合并查看"
-                        },
-                        {
-                            key: PathConfig.WarehousePackageApprovePage,
-                            type: "edit",
-                            label: "仓库合并打包审批"
-                        },
-                        {
-                            key: PathConfig.WarehouseOutViewPage,
-                            type: "search",
-                            label: "仓库出库查看"
-                        },
-                        {
-                            key: PathConfig.WarehouseOutApprovePage,
-                            type: "search",
-                            label: "仓库出库审批"
-                        },
-                        {
-                            key: PathConfig.MemberWaitPayApprovePage,
-                            type: "search",
-                            label: "待付款-付款"
-                        },
-                        {
-                            key: PathConfig.MemberWaitPayViewPage,
-                            type: "search",
-                            label: "待付款-查看"
-                        },
-                        {
-                            key: "delete",
-                            type: "delete",
-                            label: "删除"
-                        }
-                    ]
-                    return <FormTableOperation onClick={(param: ClickParam) => {
-                        hashHistory.push({pathname: param.key, state: record});
-                    }} value={menu}></FormTableOperation>;
+                    return <Link to={{pathname: PathConfig.MemberMyOrderPackageViewPage, state: record}}>查看</Link>;
                 }
             }
         ];
