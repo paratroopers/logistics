@@ -44,12 +44,6 @@
   }
 }
 
-.warehouse-in-view-page {
-  .anticon-delete {
-    display: none;
-  }
-}
-
 /** 折叠面板*/
 .form-collapse {
   .ant-collapse-header {
@@ -233,6 +227,30 @@
     }
     .form-media-player-rightpanel {
       top: 40px;
+    }
+  }
+}
+
+/** 表格头部操作区域*/
+.form-table-header{
+  .order-title {
+    margin: 8px 0px;
+    a {
+      i {
+        color: @app-theme-color
+      }
+      margin-left: 23px;
+    }
+    @media (max-width: 768px) {
+      a {
+        margin-left: 8px !important;
+      }
+    }
+    i {
+      margin-right: 5px;
+    }
+    .order-count {
+      margin-left: 15px;
     }
   }
 }

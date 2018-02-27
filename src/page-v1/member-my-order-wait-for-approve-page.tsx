@@ -13,7 +13,7 @@ import {SelectType, Constants} from "../util/common";
 import {FormControl} from "../components-v1/form-control";
 import {ResponseNameSpace} from "../model/response";
 import {FormAdvancedSearch} from "../components-v1/all-components-export";
-import {FormTableHeader} from '../components-v1/form-table-header';
+import FormTableHeader from '../components-v1/form-table-header';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {APINameSpace} from "../model/api";
 import {FormComponentProps} from "antd/lib/form";
@@ -116,7 +116,6 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
         const columns: CommonColumnProps<ModelNameSpace.CustomerOrderMergeModel>[] = [{
             title: "客户合并单号",
             dataIndex: 'MergeOrderNo',
-            width: 200,
             layout: ColumnLayout.LeftTop,
             render: (txt) => {
                 return <a>{txt}</a>
@@ -128,18 +127,15 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
         }, {
             title: "发往国家",
             dataIndex: 'country',
-            width: 100,
             hidden: Constants.minSM
         }, {
             title: "客服备注",
             dataIndex: 'customerServiceMark',
-            width: 200,
             hidden: Constants.minSM
         }, {
             title: "状态",
             dataIndex: 'currentStep',
             layout: ColumnLayout.RightBottom,
-            width: 100
         }, {
             title: "创建时间",
             dataIndex: 'Modified',
@@ -147,13 +143,13 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
             render: (txt) => {
                 return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
             }
-        }/*, {
-         title: '操作',
-         layout: ColumnLayout.Option,
-         render: (val, record) => {
-         return <a>查看</a>
-         }
-         }*/];
+        }, {
+             title: '操作',
+             layout: ColumnLayout.Option,
+             render: (val, record) => {
+                return <a>查看</a>
+             }
+         }];
 
         const pagination: PaginationProps = {
             current: pageIndex,
