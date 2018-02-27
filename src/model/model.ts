@@ -5,7 +5,9 @@ export namespace ModelNameSpace {
     export interface BaseModel {
         TenantID?: string;
         CreatedBy?: string;
+        CreatedByName?:string;
         ModifiedBy?: string;
+        ModifiedByName?: string;
         Created?: Date;
         Modified?: Date;
     }

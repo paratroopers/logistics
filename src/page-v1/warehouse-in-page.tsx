@@ -78,6 +78,24 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
 
     componentDidMount() {
         this.loadData();
+        this.loadStatusData();
+    }
+
+    /** 获取统计数量*/
+    loadStatusData(){
+        const topThis = this;
+        /** 初始化統計*/
+        APINameSpace.WarehouseAPI.GetWarehouseInStatus().then((result: ResponseNameSpace.GetWarehouseInStatusResponse) => {
+            if (result.Status === 0) {
+                topThis.setState({
+                    warehouseInStatus: {
+                        unconfirmedCount: result.Data.unconfirmedCount,
+                        confirmedCount: result.Data.confirmedCount,
+                        retrunGoodsCount: result.Data.retrunGoodsCount
+                    }
+                });
+            }
+        })
     }
 
     /** 高级搜索*/
@@ -134,18 +152,6 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 });
             }
         })
-
-        APINameSpace.WarehouseAPI.GetWarehouseInStatus().then((result: ResponseNameSpace.GetWarehouseInStatusResponse) => {
-            if (result.Status === 0) {
-                topThis.setState({
-                    warehouseInStatus: {
-                        unconfirmedCount: result.Data.unconfirmedCount,
-                        confirmedCount: result.Data.confirmedCount,
-                        retrunGoodsCount: result.Data.retrunGoodsCount
-                    }
-                });
-            }
-        })
     }
 
     onClickDelete(ID: number) {
@@ -160,6 +166,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             if (result.Status === 0) {
                 message.success("删除成功!");
                 topThis.loadData(pageIndex, pageSize);
+                topThis.loadStatusData();
             }
         })
     }
@@ -215,6 +222,9 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             title: "快递单号",
             dataIndex: 'expressNo'
         }, {
+            title: "交接单",
+            dataIndex: 'TransferNo'
+        }, {
             title: "客服",
             dataIndex: 'CustomerServiceName'
         }, {
@@ -235,6 +245,9 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             render: (txt) => {
                 return <span>{Global.intl.formatMessage({id: Context.getCustomerOrderStatusID(ModelNameSpace.OrderTypeEnum.WarehouseIn.toString(), txt)})}</span>
             }
+        }, {
+            title: "创建人",
+            dataIndex: 'CreatedByName'
         }, {
             title: "入库时间",
             dataIndex: 'InWareHouseTime',
