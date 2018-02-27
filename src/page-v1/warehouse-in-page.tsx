@@ -10,6 +10,8 @@ import {ColumnProps} from 'antd/lib/table';
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
+import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
+import {Constants} from '../util/common';
 import {PathConfig} from "../config/pathconfig";
 import {FormWarehouseSelect} from "../components-v1/form-warehouse-select";
 import {SelectType} from "../util/common";
@@ -56,6 +58,9 @@ interface WarehouseInPageStates {
     items: ModelNameSpace.Attachment[];
 }
 
+class WarehouseInPageTable extends CommonTable<any> {
+}
+
 @withRouter
 export class WarehouseInPage extends React.Component<WarehouseInPageProps, WarehouseInPageStates> {
     constructor(props) {
@@ -83,7 +88,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
     }
 
     /** 获取统计数量*/
-    loadStatusData(){
+    loadStatusData() {
         const topThis = this;
         /** 初始化統計*/
         APINameSpace.WarehouseAPI.GetWarehouseInStatus().then((result: ResponseNameSpace.GetWarehouseInStatusResponse) => {
@@ -198,9 +203,10 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             onChange: topThis.onSelectChange,
         };
 
-        const columns: ColumnProps<ModelNameSpace.WarehouseListModel>[] = [{
+        const columns: CommonColumnProps<ModelNameSpace.WarehouseListModel>[] = [{
             title: "附件",
             fixed: 'left',
+            layout: ColumnLayout.Img,
             render: (val, record) => {
                 return <Tooltip title="预览附件"><Icon type="picture" onClick={() => {
                     topThis.onClickPicturePreview(record);
@@ -209,55 +215,72 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         }, {
             title: "客户订单号",
             dataIndex: 'CustomerOrderNo',
-            fixed: 'left',
+            layout: ColumnLayout.LeftTop,
             render: (txt, record) => {
                 return <Link to={{pathname: PathConfig.WarehouseInViewPage, state: record}}>{txt}</Link>
             }
         }, {
             title: "会员编号",
-            dataIndex: 'MemeberCode'
+            layout: ColumnLayout.LeftBottom,
+            dataIndex: 'MemeberCode',
+            render: (txt) => {
+                return Constants.minSM ? <span>会员编号:{txt}</span> : <span>{txt}</span>
+            }
         }, {
-            title: "快递方式",
-            dataIndex: 'expressTypeName'
+            title: "物流方式",
+            dataIndex: 'expressTypeName',
+            hidden: Constants.minSM
         }, {
-            title: "快递单号",
-            dataIndex: 'expressNo'
+            title: "物流单号",
+            dataIndex: 'expressNo',
+            layout: ColumnLayout.OptionRow,
+            render: (txt) => {
+                return Constants.minSM ? <span>快递单号:{txt}</span> : <span>{txt}</span>
+            },
         }, {
             title: "交接单",
-            dataIndex: 'TransferNo'
+            dataIndex: 'TransferNo',
+            hidden: Constants.minSM
         }, {
             title: "客服",
-            dataIndex: 'CustomerServiceName'
+            dataIndex: 'CustomerServiceName',
+            hidden: Constants.minSM
         }, {
             title: "仓库",
-            dataIndex: 'WareHouseName'
+            dataIndex: 'WareHouseName',
+            hidden: Constants.minSM,
         }, {
             title: "初始体积(cm³)",
             dataIndex: 'InVolume',
             render: (val, record, index) => {
                 return record.InLength + "*" + record.InWeight + "*" + record.InHeight;
-            }
+            },
+            hidden: Constants.minSM
         }, {
             title: "初始重量(kg)",
-            dataIndex: 'InWeight'
+            dataIndex: 'InWeight',
+            hidden: Constants.minSM
         }, {
             title: "状态",
             dataIndex: 'currentStatus',
+            layout: ColumnLayout.RightTop,
             render: (txt) => {
                 return <span>{Global.intl.formatMessage({id: Context.getCustomerOrderStatusID(ModelNameSpace.OrderTypeEnum.WarehouseIn.toString(), txt)})}</span>
             }
         }, {
             title: "创建人",
-            dataIndex: 'CreatedByName'
+            dataIndex: 'CreatedByName',
+            hidden: Constants.minSM
         }, {
             title: "入库时间",
             dataIndex: 'InWareHouseTime',
             render: (txt) => {
                 return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
-            }
+            },
+            hidden: Constants.minSM
         }, {
             title: '操作',
-            fixed: 'right',
+            layout: ColumnLayout.Option,
             render: (val, record) => {
                 const menu: FormTableOperationModel[] = [
                     {
@@ -314,24 +337,23 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             showQuickJumper: false//是否可以快速跳转至某页
         };
 
-        return <Table columns={columns}
-                      rowKey={"ID"}
-                      loading={loading}
-                      style={{padding: '12px'}}
-                      pagination={pagination}
-                      title={() => {
-                          const message = <span>
+        return <WarehouseInPageTable columns={columns}
+                                     rowKey={"ID"}
+                                     loading={loading}
+                                     style={{padding: '12px'}}
+                                     pagination={pagination}
+                                     title={() => {
+                                         const message = <span>
                               已入库: <span style={{fontWeight: "bold"}}>{warehouseInStatus.confirmedCount}项 </span>
                               待确认: <span style={{fontWeight: "bold"}}>{warehouseInStatus.unconfirmedCount}项 </span>
                               仓库退货: <span style={{fontWeight: "bold"}}>{warehouseInStatus.retrunGoodsCount}项 </span>
                           </span>;
-                          return <FormTableHeader title={message}></FormTableHeader>;
-                      }}
-                      scroll={{x: 1800}}
-                      rowSelection={rowSelection}
-                      bordered={false}
-                      dataSource={listData}
-                      locale={{emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>}}/>;
+                                         return <FormTableHeader title={message}></FormTableHeader>;
+                                     }}
+                                     rowSelection={rowSelection}
+                                     bordered={false}
+                                     dataSource={listData}
+                                     locale={{emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>}}/>;
     }
 
     renderButton() {
