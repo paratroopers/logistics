@@ -241,6 +241,12 @@ export namespace requestNameSpace {
 
     export interface CustomerOrdersRequest extends BaseListRequest {
         type: number;
+        /** 快递单号*/
+        expressNo?: string,
+        /** 开始时间*/
+        inWarehouseIimeBegin?: Date;
+        /** 结束时间*/
+        inWarehouseIimeEnd?: Date;
     }
 
     export interface OrderSearchIndexRequest {
