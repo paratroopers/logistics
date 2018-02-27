@@ -1,10 +1,12 @@
 import * as React from 'react';
 import {withRouter, hashHistory, Link} from 'react-router';
-import {Row, Col, Button, Icon, Table, Alert, Modal, message, Input, Tooltip} from 'antd';
+import {Row, Col, Button, Icon, Table, Modal, message, Input, Tooltip} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
+import {FormTableHeader} from '../components-v1/form-table-header';
 
 const {RangePicker} = DatePicker;
+import {ColumnProps} from 'antd/lib/table';
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
@@ -341,15 +343,12 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                                      style={{padding: '12px'}}
                                      pagination={pagination}
                                      title={() => {
-                                         const message = <div>
-                                             已入库: <span
-                                             style={{fontWeight: "bold"}}>{warehouseInStatus.confirmedCount}项 </span>
-                                             待确认: <span
-                                             style={{fontWeight: "bold"}}>{warehouseInStatus.unconfirmedCount}项 </span>
-                                             仓库退货: <span
-                                             style={{fontWeight: "bold"}}>{warehouseInStatus.retrunGoodsCount}项 </span>
-                                         </div>;
-                                         return <Alert message={message} type="info" showIcon></Alert>;
+                                         const message = <span>
+                              已入库: <span style={{fontWeight: "bold"}}>{warehouseInStatus.confirmedCount}项 </span>
+                              待确认: <span style={{fontWeight: "bold"}}>{warehouseInStatus.unconfirmedCount}项 </span>
+                              仓库退货: <span style={{fontWeight: "bold"}}>{warehouseInStatus.retrunGoodsCount}项 </span>
+                          </span>;
+                                         return <FormTableHeader title={message}></FormTableHeader>;
                                      }}
                                      rowSelection={rowSelection}
                                      bordered={false}

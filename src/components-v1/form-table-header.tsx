@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Row, Col, Icon} from "antd";
 
 export interface FormTableHeaderProps {
-    title?: string;
+    title?: React.ReactNode;
     buttonGroup?: any;
 }
 export interface FormTableHeaderStates {
@@ -20,9 +20,9 @@ export class FormTableHeader extends React.Component<FormTableHeaderProps, FormT
             <Col span={24} className="order-title">
                 {buttonGroup}
                 <span className="order-count">
-                    <Icon type="info-circle" style={{color: '#0193e4'}}></Icon>
-                    {title}
+                    <Icon type="info-circle" style={{color: '#0193e4', marginRight: 8}}></Icon>
                 </span>
+                {title}
             </Col>
         </Row>
     }
