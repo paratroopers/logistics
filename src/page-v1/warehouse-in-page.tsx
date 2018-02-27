@@ -262,7 +262,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         }, {
             title: "状态",
             dataIndex: 'currentStatus',
-            layout: ColumnLayout.RightTop,
+            layout: ColumnLayout.RightBottom,
             render: (txt) => {
                 return <span>{Global.intl.formatMessage({id: Context.getCustomerOrderStatusID(ModelNameSpace.OrderTypeEnum.WarehouseIn.toString(), txt)})}</span>
             }
