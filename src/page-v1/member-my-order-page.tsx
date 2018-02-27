@@ -7,10 +7,8 @@ import {requestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
-import {FormTableHeader} from '../components-v1/form-table-header';
+import FormTableHeader,{FormTableHeaderButton,SearchFormModel} from '../components-v1/form-table-header';
 import MemberMyOrderWaitForApprovePage from './member-my-order-wait-for-approve-page';
-import {ClickParam} from "antd/lib/menu";
-import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
 import * as moment from 'moment';
 
 interface MemberMyOrderPageStates {
@@ -143,22 +141,27 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
     }
 
     renderHeader() {
+        const topThis = this;
+        const {state: {totalCount}} = topThis;
         const {state: {selected}} = this;
         const selects = selected.selectedRowKeys ? selected.selectedRowKeys.length : 0;
-        return <a onClick={this.onPackageClick.bind(this)}>
-            <Icon type="appstore"></Icon>
-            <span>合并打包 ({selects})</span>
-        </a>
+        const buttons: FormTableHeaderButton[] = [{
+            displayName: "合并打包",
+            icon: "appstore",
+            onClick: topThis.onPackageClick.bind(this),
+            count: selects,
+            isShowCount: true
+        }]
+        return <FormTableHeader title={`总计有${totalCount}项 待打包订单`} buttonGroup={buttons}></FormTableHeader>
     }
 
     render() {
-        const {state: {totalCount}} = this;
+        const topThis=this;
         return <Row className="member-page-warehouse-in-page mainland-content-page">
             <ContentHeaderControl title="我的订单"></ContentHeaderControl>
             <Tabs defaultActiveKey="1">
                 <Tabs.TabPane tab="待打包" key="1">
-                    <FormTableHeader title={`总计有${totalCount}项 待打包订单`}
-                                     buttonGroup={this.renderHeader()}></FormTableHeader>
+                    {topThis.renderHeader()}
                     <Row>
                         {this.renderTable()}
                     </Row>

@@ -3,7 +3,7 @@ import {withRouter, hashHistory, Link} from 'react-router';
 import {Row, Col, Button, Icon, Table, Modal, message, Input, Tooltip} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
-import {FormTableHeader} from '../components-v1/form-table-header';
+import FormTableHeader from '../components-v1/form-table-header';
 
 const {RangePicker} = DatePicker;
 import {ColumnProps} from 'antd/lib/table';
