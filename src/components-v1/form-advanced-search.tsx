@@ -127,10 +127,10 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
         const {state: {expand, hasAdvanced}} = this;
         return isMobile ?
             <FormItem className="mobile-search-button">
-                <a>
-                    <Icon type="search"></Icon>搜索</a>
+                <a style={{marginRight: '5px'}}>
+                    <Icon type="search" style={{color: '#e65922'}}></Icon>搜索</a>
                 <a onClick={this.onReset.bind(this)}>
-                    <Icon type="reload"></Icon>重置</a>
+                    <Icon type="reload" style={{color: '#e65922'}}></Icon>重置</a>
                 {hasAdvanced ?
                     <a className="advanced-search-button" onClick={this.toggle.bind(this)}>
                         高级搜索 <Icon type={expand ? 'up' : 'down'}/>
@@ -159,4 +159,5 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
         </Form>;
     }
 }
+
 export default Form.create<any>()(FormAdvancedSearch);
