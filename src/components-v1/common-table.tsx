@@ -4,14 +4,18 @@ import {Table, Row, Col} from "antd";
 import {PaginationProps} from "antd/lib/pagination";
 import {Util} from "../util/util";
 import {Constants} from '../util/common';
+
 export declare type RowSelectionType = 'checkbox' | 'radio';
 export declare type SelectionSelectFn<T> = (record: T, selected: boolean, selectedRows: Object[]) => any;
+
 export interface SelectionItem {
     key: string;
     text: React.ReactNode;
     onSelect: SelectionItemSelectFn;
 }
+
 export declare type SelectionItemSelectFn = (key: string[]) => any;
+
 export interface TableRowSelection<T> {
     type?: RowSelectionType;
     selectedRowKeys?: string[] | number[];
@@ -24,41 +28,48 @@ export interface TableRowSelection<T> {
     hideDefaultSelections?: boolean;
     fixed?: boolean;
 }
+
 export enum ColumnLayout {
     /**
      * 左侧图片
      */
     Img = 1,
-        /**
-         * 左顶部
-         */
+    /**
+     * 左顶部
+     */
     LeftTop = 2,
-        /**
-         * 右顶部
-         */
+    /**
+     * 右顶部
+     */
     RightTop = 3,
-        /**
-         * 左底部
-         */
+    /**
+     * 左底部
+     */
     LeftBottom = 4,
-        /**
-         * 右底部
-         */
+    /**
+     * 右底部
+     */
     RightBottom = 5,
-        /**
-         * 操作列
-         */
+    /**
+     * 操作列
+     */
     Option = 6,
-        /**
-         * 底部
-         */
-    AllBottom = 7
+    /**
+     * 底部
+     */
+    AllBottom = 7,
+    /**
+     * 其他行
+     * */
+    OptionRow = 8
 }
+
 export declare type ColumnFilterItem = {
     text: string;
     value: string;
     children?: ColumnFilterItem[];
 };
+
 export interface CommonColumnProps<T> {
     title?: React.ReactNode;
     key?: string;
@@ -90,6 +101,7 @@ export interface CommonColumnProps<T> {
     layout?: number | ColumnLayout;
     hidden?: boolean;
 }
+
 export interface TableComponents {
     table?: any;
     header?: {
@@ -103,6 +115,7 @@ export interface TableComponents {
         cell?: any;
     };
 }
+
 export interface SpinProps {
     prefixCls?: string;
     className?: string;
@@ -114,6 +127,7 @@ export interface SpinProps {
     wrapperClassName?: string;
     indicator?: React.ReactNode;
 }
+
 export interface CommonTableProps<T> {
     prefixCls?: string;
     dropdownPrefixCls?: string;
@@ -156,6 +170,7 @@ export interface CommonTableProps<T> {
     autoWrapColumn?: boolean; //是否在手机模式下自动隐藏表头和合并列显示
     children?: React.ReactNode;
 }
+
 export interface TableStates {
 }
 
@@ -239,7 +254,7 @@ export class CommonTable<T> extends Component<CommonTableProps<T>,
         }
 
         let leftTopColumn, imgColumn, optionColumn, leftBottomColumn, rightTopColumn, rightBottomColumn,
-            allBottomColumn;
+            allBottomColumn, optionRowColumn;
 
         Util.each(columns, a => {
             switch (a.layout) {
@@ -264,6 +279,10 @@ export class CommonTable<T> extends Component<CommonTableProps<T>,
                 case ColumnLayout.AllBottom:
                     allBottomColumn = a;
                     break;
+                case ColumnLayout.OptionRow:
+                    optionRowColumn = a;
+                    break;
+
             }
 
             if (!a.dataIndex) {
@@ -304,6 +323,14 @@ export class CommonTable<T> extends Component<CommonTableProps<T>,
                             {rightBottomColumn ? (rightBottomColumn.render ? rightBottomColumn.render(record[rightBottomColumn.dataIndex], record, index) : record[rightBottomColumn.dataIndex]) : ""}
                         </Col>
                     </Row>
+                    {
+                        optionRowColumn ?
+                            <Row type="flex" justify="space-between" align="middle">
+                                <Col  className="table-title2" style={{maxWidth: maxWidth}}>
+                                    {optionRowColumn ? (optionRowColumn.render ? optionRowColumn.render(record[optionRowColumn.dataIndex], record, index) : record[optionRowColumn.dataIndex]) : ""}
+                                </Col>
+                            </Row> : null
+                    }
                     {bottom}
                 </Row>
             }
@@ -314,5 +341,6 @@ export class CommonTable<T> extends Component<CommonTableProps<T>,
         return tempColumns;
     }
 }
+
 class AkTableStyle {
 }

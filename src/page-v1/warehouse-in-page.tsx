@@ -227,13 +227,16 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 return Constants.minSM ? <span>会员编号:{txt}</span> : <span>{txt}</span>
             }
         }, {
-            title: "快递方式",
+            title: "物流方式",
             dataIndex: 'expressTypeName',
             hidden: Constants.minSM
         }, {
-            title: "快递单号",
+            title: "物流单号",
             dataIndex: 'expressNo',
-            hidden: Constants.minSM
+            layout: ColumnLayout.OptionRow,
+            render: (txt) => {
+                return Constants.minSM ? <span>快递单号:{txt}</span> : <span>{txt}</span>
+            },
         }, {
             title: "交接单",
             dataIndex: 'TransferNo',
@@ -245,10 +248,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         }, {
             title: "仓库",
             dataIndex: 'WareHouseName',
-            render: (txt) => {
-                return Constants.minSM ? <span>仓库:{txt}</span> : <span>{txt}</span>
-            },
-            layout: ColumnLayout.RightBottom,
+            hidden: Constants.minSM,
         }, {
             title: "初始体积(cm³)",
             dataIndex: 'InVolume',
