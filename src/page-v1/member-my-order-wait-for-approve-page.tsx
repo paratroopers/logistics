@@ -14,7 +14,7 @@ import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import FormTableHeader from '../components-v1/form-table-header';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {APINameSpace} from "../model/api";
-import {isUndefined} from "util";
+import {isArray, isNullOrUndefined, isUndefined} from "util";
 import * as moment from 'moment';
 import {FormFileViewer} from "../components-v1/form-file-viewer";
 
@@ -81,6 +81,7 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
         const request: requestNameSpace.GetCustomerOrderMergeRequest = {
             type: 0,
             expressNo: !isUndefined(searchaValues.expressNo) ? searchaValues.expressNo : "",
+            customerOrderMergeNo: isArray(searchaValues.customerOrderMergeNo) && !isNullOrUndefined(searchaValues.customerOrderMergeNo[0]) ? searchaValues.customerOrderMergeNo[0].key : "",
             customerChooseChannelID: !isUndefined(searchaValues.channel) ? searchaValues.channel.key : 0,
             currentStep: !isUndefined(searchaValues.currentStatus) ? searchaValues.currentStatus.key : "",
             orderMergeTimeBegin: !isUndefined(searchaValues.Created) ? searchaValues.Created[0].format() : "",
@@ -209,14 +210,7 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
         const items: FormAdvancedItemModel[] = [
             {
                 defaultDisplay: true,
-                fieldName: "expressNo",
-                displayName: "快递单号",
-                mobileShow:true,
-                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} isadmin={false} placeholder="快递单号"/>
-            },
-            {
-                defaultDisplay: true,
-                fieldName: "customerOrderMerge",
+                fieldName: "customerOrderMergeNo",
                 displayName: "客户订单号",
                 control: <FormControl.FormSelectIndex type={SelectType.CustomerOrderMerge} isadmin={false} placeholder="客户合并订单号"/>,
                 layout: {
@@ -227,7 +221,13 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
                     xl: 6
                 }
             },
-
+            {
+                defaultDisplay: true,
+                fieldName: "expressNo",
+                displayName: "快递单号",
+                mobileShow:true,
+                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} isadmin={false} placeholder="快递单号"/>
+            },
             {
                 defaultDisplay: true,
                 fieldName: "channel",

@@ -240,7 +240,7 @@ export namespace requestNameSpace {
     }
 
     export interface CustomerOrdersRequest extends BaseListRequest {
-        type: ModelNameSpace.OrderTypeEnum;
+        step: ModelNameSpace.OrderTypeEnum;
         /** 快递单号*/
         expressNo?: string,
         /** 开始时间*/

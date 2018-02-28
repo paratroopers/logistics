@@ -66,7 +66,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
         const {state:{formAdvancedData}}=topThis;
 
         let request: requestNameSpace.CustomerOrdersRequest = {
-            type: ModelNameSpace.OrderTypeEnum.CustomerConfirm,
+            step: ModelNameSpace.OrderTypeEnum.CustomerConfirm,
             pageSize: this.state.pageSize,
             pageIndex: pageIndex ? pageIndex : this.state.pageIndex,
         };
