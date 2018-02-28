@@ -11,7 +11,7 @@ export interface FormUploadProps {
     onChange?: (files?: string[]) => void;
     disabled?: boolean;
     fileList?: ModelNameSpace.UploadModel[];
-    customerOrderID?: number;
+    customerOrderID?: string;
 }
 
 export interface FormUploadStates {

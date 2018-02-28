@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter, hashHistory, Link} from 'react-router';
-import {Row, Col, Button, Icon, Table, Modal, message, Input, Tooltip} from 'antd';
+import {Row, Col, Button, Icon,Modal, message, Input, Tooltip} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
 import FormTableHeader from '../components-v1/form-table-header';
@@ -159,7 +159,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         })
     }
 
-    onClickDelete(ID: number) {
+    onClickDelete(ID: string) {
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
         const request: requestNameSpace.WarehouseInDeleteRequest = {

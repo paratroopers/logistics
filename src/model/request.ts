@@ -236,7 +236,7 @@ export namespace requestNameSpace {
     }
 
     export interface WarehouseInDeleteRequest {
-        ID?: number;
+        ID?: string;
     }
 
     export interface CustomerOrdersRequest extends BaseListRequest {
@@ -329,7 +329,7 @@ export namespace requestNameSpace {
 
     //region 附件定义区
     export interface GetAttachmentItemsRequest {
-        customerOrderID: number;
+        customerOrderID: string;
         isAdmin: boolean;
     }
     //endregion

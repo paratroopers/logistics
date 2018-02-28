@@ -61,7 +61,7 @@ class FormTableHeader extends React.Component<FormTableHeaderProps, FormTableHea
                 </FormItem>)
             })
             if (searchControl.items.length > 0) {
-                children.push(<FormItem className="web-search-button">
+                children.push(<FormItem className="web-search-button" key="-1">
                     <Button type="primary" htmlType="submit">搜索</Button></FormItem>)
             }
         }

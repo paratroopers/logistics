@@ -235,7 +235,7 @@ export namespace ModelNameSpace {
     /** 入库列表*/
     export interface WarehouseListModel extends BaseModel {
         /** 主键*/
-        ID?: number;
+        ID?: string;
         /** 会员ID*/
         userid?: string;
         /** 客户订单号*/
@@ -321,7 +321,7 @@ export namespace ModelNameSpace {
     export interface CustomerOrderMergeModel extends BaseModel {
         currentStatus?: string;
         currentStep?: string;
-        ID?: number;
+        ID?: string;
         UserID?: number;
         MergeOrderNo?: number;
         CustomerMark?: string;
