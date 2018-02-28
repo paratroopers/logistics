@@ -1,6 +1,7 @@
 import * as React from 'react';
-import {withRouter} from 'react-router';
+import {withRouter,Link} from 'react-router';
 import {Row,Tooltip,Icon} from 'antd';
+import {PathConfig} from '../config/pathconfig';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
 const {RangePicker} = DatePicker;
@@ -176,11 +177,11 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
                 return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
             }
         }, {
-             title: '操作',
-             layout: ColumnLayout.Option,
-             render: (val, record) => {
-                return <a>查看</a>
-             }
+            title: '操作',
+            layout: ColumnLayout.Option,
+            render: (val, record, index) => {
+                return <Link to={{pathname: PathConfig.MemberMyOrderPackageViewPage, state: record}}>查看</Link>;
+            }
          }];
 
         const pagination: PaginationProps = {

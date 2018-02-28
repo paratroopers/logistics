@@ -23,7 +23,6 @@ export interface MemberMergePackagePageStates {
     selectedKeys?: string[] | string;
     data?: ModelNameSpace.CustomerOrderModel[];
     orderInfo?: FormOrderInfoModel;
-
 }
 
 export interface QueryData {
