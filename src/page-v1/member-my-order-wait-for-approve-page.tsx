@@ -5,7 +5,6 @@ import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
 
 const {RangePicker} = DatePicker;
-import {ColumnProps} from 'antd/lib/table';
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
@@ -16,15 +15,12 @@ import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import FormTableHeader from '../components-v1/form-table-header';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {APINameSpace} from "../model/api";
-import {FormComponentProps} from "antd/lib/form";
 import {isUndefined} from "util";
 import * as moment from 'moment';
 
 
 /// 待审核列表
-interface MemberMyOrderWaitForApprovePageProps extends FormComponentProps {
-
-}
+interface MemberMyOrderWaitForApprovePageProps {}
 
 interface MemberMyOrderWaitForApprovePageStates {
     /** 数据源*/
@@ -43,11 +39,10 @@ interface MemberMyOrderWaitForApprovePageStates {
     selectVaules?: any;
 }
 
-class MemberMyOrderWaitForApprovePageTable extends CommonTable<any> {
-}
+class MemberMyOrderWaitForApprovePageTable extends CommonTable<any> {}
 
 @withRouter
-class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitForApprovePageProps, MemberMyOrderWaitForApprovePageStates> {
+export default class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitForApprovePageProps, MemberMyOrderWaitForApprovePageStates> {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -187,28 +182,26 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
                 defaultDisplay: true,
                 fieldName: "customerOrderMerge",
                 displayName: "客户订单号",
-                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrderMerge} isadmin={false}
-                                                      placeholder="客户合并订单号"/>
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrderMerge} isadmin={false} placeholder="客户合并订单号"/>,
+                layout: {
+                    xs: 15,
+                    sm: 12,
+                    md: 12,
+                    lg: 6,
+                    xl: 6
+                }
             },
 
             {
                 defaultDisplay: true,
                 fieldName: "channel",
                 displayName: "渠道",
-                layout: {
-                    lg: 3,
-                    xl: 3
-                },
                 control: <FormControl.FormSelect type={SelectType.channel} placeholder="渠道"/>
             },
             {
                 defaultDisplay: true,
                 fieldName: "currentStatus",
                 displayName: "状态",
-                layout: {
-                    lg: 3,
-                    xl: 3
-                },
                 control: <FormControl.FormSelect type={SelectType.CustomerOrderMergeWaitForApproveStep}
                                                  placeholder={"订单状态"}/>
             }, {
@@ -216,6 +209,9 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
                 fieldName: "Created",
                 displayName: "创建时间",
                 layout: {
+                    xs: 15,
+                    sm: 12,
+                    md: 12,
                     lg: 6,
                     xl: 6
                 },
@@ -239,6 +235,3 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
         </Row>;
     }
 }
-
-
-export default Form.create<any>()(MemberMyOrderWaitForApprovePage);
