@@ -291,7 +291,7 @@ export class CommonTable<T> extends Component<CommonTableProps<T>,
         });
 
         //如果没有设置定制的layout，则直接走默认的column渲染
-        if (!leftTopColumn) {
+        if (!leftTopColumn && !optionRowColumn) {
             return this.renderColumns(columns);
         }
 
@@ -326,7 +326,7 @@ export class CommonTable<T> extends Component<CommonTableProps<T>,
                     {
                         optionRowColumn ?
                             <Row type="flex" justify="space-between" align="middle">
-                                <Col  className="table-title2" style={{maxWidth: maxWidth}}>
+                                <Col className="table-title2" style={{maxWidth: maxWidth * 2}}>
                                     {optionRowColumn ? (optionRowColumn.render ? optionRowColumn.render(record[optionRowColumn.dataIndex], record, index) : record[optionRowColumn.dataIndex]) : ""}
                                 </Col>
                             </Row> : null

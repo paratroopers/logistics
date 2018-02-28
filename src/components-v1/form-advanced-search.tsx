@@ -19,6 +19,10 @@ interface FormAdvancedSearchProps extends FormComponentProps {
     selectValues?: () => any;
     /*点击分页选择值*/
     pagingSelectValues?: (values: any) => void;
+    /*是否显示*/
+    hidden?: boolean;
+    /*简单模式*/
+    easyMode?: boolean;
 }
 
 interface FormAdvancedSearchStates {
@@ -123,14 +127,14 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
 
     renderSearchButton() {
         const isMobile = window.innerWidth <= 768;
-        const {state: {expand, hasAdvanced}} = this;
+        const {state: {expand, hasAdvanced}, props: {easyMode}} = this;
         return isMobile ?
             <FormItem className="mobile-search-button">
                 <a style={{marginRight: '5px'}}>
                     <Icon type="search" style={{color: '#e65922'}}></Icon>搜索</a>
-                <a onClick={this.onReset.bind(this)}>
-                    <Icon type="reload" style={{color: '#e65922'}}></Icon>重置</a>
-                {hasAdvanced ?
+                {!easyMode ? <a onClick={this.onReset.bind(this)}>
+                    <Icon type="reload" style={{color: '#e65922'}}></Icon>重置</a> : null}
+                {hasAdvanced && !easyMode ?
                     <a className="advanced-search-button" onClick={this.toggle.bind(this)}>
                         高级搜索 <Icon type={expand ? 'up' : 'down'}/>
                     </a> : null}
@@ -138,7 +142,7 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
             <FormItem className="web-search-button">
                 <Button type="primary" htmlType="submit">搜索</Button>
                 <Button style={{marginLeft: 8}} onClick={this.onReset.bind(this)}>重置</Button>
-                {hasAdvanced ?
+                {hasAdvanced && !easyMode ?
                     <a className="advanced-search-button" onClick={this.toggle.bind(this)}>
                         高级搜索 <Icon type={expand ? 'up' : 'down'}/>
                     </a> : null}
@@ -147,15 +151,19 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
 
     render() {
         const topThis = this;
-        return <Form className="na-advanced-search-form"
-                     onSubmit={topThis.onSearch.bind(this)}>
-            <Row gutter={16} justify="start">
-                {topThis.renderFormAdvancedItems()}
-                <Col className="search-button">
-                    {this.renderSearchButton()}
-                </Col>
-            </Row>
-        </Form>;
+        if (this.props.hidden)
+            return null;
+        else
+            return <Form className="na-advanced-search-form"
+                         onSubmit={topThis.onSearch.bind(this)}>
+                <Row gutter={16} justify="start">
+                    {topThis.renderFormAdvancedItems()}
+                    <Col className="search-button">
+                        {this.renderSearchButton()}
+                    </Col>
+                </Row>
+            </Form>
+
     }
 }
 

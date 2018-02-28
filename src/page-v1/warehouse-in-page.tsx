@@ -3,13 +3,13 @@ import {withRouter, hashHistory, Link} from 'react-router';
 import {Row, Col, Button, Icon, Table, Modal, message, Input, Tooltip} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
-import FormTableHeader from '../components-v1/form-table-header';
 
 const {RangePicker} = DatePicker;
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
+import FormTableHeader, {FormTableHeaderButton, SearchFormModel} from '../components-v1/form-table-header';
 import {Constants} from '../util/common';
 import {PathConfig} from "../config/pathconfig";
 import {FormWarehouseSelect} from "../components-v1/form-warehouse-select";
@@ -194,7 +194,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
 
     renderTable() {
         const topThis = this;
-        const {state: {listData, selectedRowKeys, pageIndex, pageSize, totalCount, loading, warehouseInStatus}} = topThis;
+        const {state: {listData, selectedRowKeys, pageIndex, pageSize, totalCount, loading}} = topThis;
 
         const rowSelection = {
             fixed: true,
@@ -226,10 +226,6 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 return Constants.minSM ? <span>会员编号:{txt}</span> : <span>{txt}</span>
             }
         }, {
-            title: "物流方式",
-            dataIndex: 'expressTypeName',
-            hidden: Constants.minSM
-        }, {
             title: "物流单号",
             dataIndex: 'expressNo',
             layout: ColumnLayout.OptionRow,
@@ -239,25 +235,6 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         }, {
             title: "交接单",
             dataIndex: 'TransferNo',
-            hidden: Constants.minSM
-        }, {
-            title: "客服",
-            dataIndex: 'CustomerServiceName',
-            hidden: Constants.minSM
-        }, {
-            title: "仓库",
-            dataIndex: 'WareHouseName',
-            hidden: Constants.minSM,
-        }, {
-            title: "初始体积(cm³)",
-            dataIndex: 'InVolume',
-            render: (val, record, index) => {
-                return record.InLength + "*" + record.InWeight + "*" + record.InHeight;
-            },
-            hidden: Constants.minSM
-        }, {
-            title: "初始重量(kg)",
-            dataIndex: 'InWeight',
             hidden: Constants.minSM
         }, {
             title: "状态",
@@ -341,14 +318,6 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                                      loading={loading}
                                      style={{padding: '12px'}}
                                      pagination={pagination}
-                                     title={() => {
-                                         const message = <span>
-                              已入库: <span style={{fontWeight: "bold"}}>{warehouseInStatus.confirmedCount}项 </span>
-                              待确认: <span style={{fontWeight: "bold"}}>{warehouseInStatus.unconfirmedCount}项 </span>
-                              仓库退货: <span style={{fontWeight: "bold"}}>{warehouseInStatus.retrunGoodsCount}项 </span>
-                          </span>;
-                                         return <FormTableHeader title={message}></FormTableHeader>;
-                                     }}
                                      rowSelection={rowSelection}
                                      bordered={false}
                                      dataSource={listData}
@@ -371,6 +340,16 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         </Row>
     }
 
+    renderHeader() {
+        const {state: {warehouseInStatus}} = this;
+        const message = <span>
+                              已入库: <span style={{fontWeight: "bold"}}>{warehouseInStatus.confirmedCount}项 </span>
+                              待确认: <span style={{fontWeight: "bold"}}>{warehouseInStatus.unconfirmedCount}项 </span>
+                              仓库退货: <span style={{fontWeight: "bold"}}>{warehouseInStatus.retrunGoodsCount}项 </span>
+                          </span>;
+        return <FormTableHeader title={message}></FormTableHeader>;
+    }
+
     renderFormAdvancedItems() {
         const items: FormAdvancedItemModel[] = [
             {
@@ -382,7 +361,8 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             {
                 defaultDisplay: true,
                 fieldName: "expressNo",
-                displayName: "快递单号",
+                displayName: "物流单号",
+                mobileShow: true,
                 control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="搜索物流单号"/>
             },
             {
@@ -450,16 +430,17 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
     }
 
     render() {
-        const topThis = this;
-        const {state: {visibleFormFileViewer, items}} = topThis;
-        return <Row className="warehouse-in-page">
-            <ContentHeaderControl title="入库操作" extra={topThis.renderButton()}></ContentHeaderControl>
+        const {state: {visibleFormFileViewer, items}} = this;
+        return <Row className="warehouse-in-page mainland-content-page">
+            <ContentHeaderControl title="入库操作" extra={this.renderButton()}></ContentHeaderControl>
             <FormAdvancedSearch
-                formAdvancedItems={topThis.renderFormAdvancedItems()}
-                onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch>
-            {topThis.renderTable()}
+                easyMode={true}
+                formAdvancedItems={this.renderFormAdvancedItems()}
+                onClickSearch={this.onClickSearch.bind(this)}></FormAdvancedSearch>
+            {this.renderHeader()}
+            {this.renderTable()}
             {items.length > 0 ? <FormFileViewer items={items} visible={visibleFormFileViewer}
-                                                changeVisible={topThis.changeFormFileViewerVisible.bind(this)}/> : null}
+                                                changeVisible={this.changeFormFileViewerVisible.bind(this)}/> : null}
         </Row>;
     }
 }

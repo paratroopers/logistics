@@ -1,7 +1,9 @@
 import * as React from 'react';
-import {Row, Col, Icon,Form,Button} from "antd";
+import {Row, Col, Icon, Form, Button} from "antd";
 import {isArray} from "util";
 import {FormComponentProps} from 'antd/lib/form/Form';
+import {Constants} from '../util/common';
+
 const FormItem = Form.Item;
 
 export interface FormTableHeaderProps extends FormComponentProps {
@@ -13,14 +15,15 @@ export interface FormTableHeaderProps extends FormComponentProps {
     }
 }
 
-export interface FormTableHeaderStates {}
+export interface FormTableHeaderStates {
+}
 
 export class FormTableHeaderButton {
     displayName?: string;
     icon?: React.ReactNode;
     onClick?: () => void;
     count?: number;
-    isShowCount?:boolean;
+    isShowCount?: boolean;
 }
 
 export class SearchFormModel {
@@ -42,14 +45,20 @@ class FormTableHeader extends React.Component<FormTableHeaderProps, FormTableHea
         const {props: {searchControl, form: {getFieldDecorator}}} = topThis;
         const children = [];
         if (searchControl && isArray(searchControl.items)) {
-            searchControl.items.map(function (item,index) {
+            searchControl.items.map(function (item, index) {
                 children.push(<FormItem key={index}>
                     {getFieldDecorator(item.fieldName)(item.control)}
                 </FormItem>)
             })
             if (searchControl.items.length > 0) {
-                children.push(<FormItem className="web-search-button">
-                    <Button type="primary" htmlType="submit">搜索</Button></FormItem>)
+                children.push(
+                    <FormItem className="web-search-button">
+                        {
+                            Constants.minSM ?
+                                <a><Icon type="search" style={{color: '#e65922', marginRight: '5px'}}></Icon>搜索</a> :
+                                <Button type="primary" htmlType="submit">搜索</Button>
+                        }
+                    </FormItem>)
             }
         }
 
@@ -68,10 +77,23 @@ class FormTableHeader extends React.Component<FormTableHeaderProps, FormTableHea
         return <Row>{buttons}</Row>
     }
 
+    renderSearch() {
+        const style = Constants.minSM ? {marginLeft: '8px', width: '100%', textAlign: 'center'} : {};
+        return <Row style={style}>
+            <Form layout="inline">
+                {this.renderSearchForm()}
+            </Form>
+        </Row>
+    }
+
     render() {
         const topThis = this;
         const {props: {title}} = topThis;
+
         return <Row className="form-table-header" type="flex" justify="space-between">
+            {
+                Constants.minSM ? this.renderSearch() : null
+            }
             <Row style={{display: "inline-flex"}}>
                 <Col className="order-title">
                     {topThis.renderButtonGroup()}
@@ -83,9 +105,9 @@ class FormTableHeader extends React.Component<FormTableHeaderProps, FormTableHea
                     {title}
                 </Col>
             </Row>
-            <Row>
-                <Form layout="inline">{topThis.renderSearchForm()}</Form>
-            </Row>
+            {
+                !Constants.minSM ? this.renderSearch() : null
+            }
         </Row>
     }
 }

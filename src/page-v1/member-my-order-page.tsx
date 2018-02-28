@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {withRouter, hashHistory, Link} from 'react-router';
-import {Row, Tabs, message,DatePicker} from "antd";
+import {Row, Tabs, message, DatePicker} from "antd";
+
 const {RangePicker} = DatePicker;
 import {PathConfig} from '../config/pathconfig';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
@@ -9,11 +10,13 @@ import {ResponseNameSpace} from '../model/response'
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
-import FormTableHeader,{FormTableHeaderButton,SearchFormModel} from '../components-v1/form-table-header';
+import FormTableHeader, {FormTableHeaderButton, SearchFormModel} from '../components-v1/form-table-header';
+import {FormAdvancedSearch} from "../components-v1/all-components-export";
+import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
 import MemberMyOrderWaitForApprovePage from './member-my-order-wait-for-approve-page';
 import * as moment from 'moment';
 import {FormControl} from "../components-v1/form-control";
-import {SelectType} from "../util/common";
+import {SelectType, Constants} from "../util/common";
 import {isArray, isNullOrUndefined} from "util";
 
 interface MemberMyOrderPageStates {
@@ -55,8 +58,8 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
     }
 
     getData(pageIndex?: number) {
-        const topThis=this;
-        const {state:{formAdvancedData}}=topThis;
+        const topThis = this;
+        const {state: {formAdvancedData}} = topThis;
 
         let request: requestNameSpace.CustomerOrdersRequest = {
             type: ModelNameSpace.OrderTypeEnum.CustomerConfirm,
@@ -99,7 +102,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
     }
 
     /** 搜索*/
-    onClickSearch(values: any){
+    onClickSearch(values: any) {
         const topThis = this;
         topThis.setState({formAdvancedData: values}, () => {
             /** 查询第一页*/
@@ -113,24 +116,41 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             {
                 title: '客户订单',
                 dataIndex: 'CustomerOrderNo',
-                layout: ColumnLayout.LeftTop,
-                render: (txt) => {
-                    return <a>{txt}</a>
+                layout: ColumnLayout.OptionRow,
+                render: (txt, record) => {
+                    return <span>
+                        {
+                            Constants.minSM ? <div>
+                                    <div>客户订单号:{txt}</div>
+                                    <div>物流单号:{record.expressNo}</div>
+                                </div>
+                                : <span>{txt}</span>
+                        }
+                    </span>
                 }
             },
             {
                 title: '物流单号',
                 dataIndex: 'expressNo',
-                layout: ColumnLayout.RightTop
+                hidden: Constants.minSM,
+                render: (txt) => {
+                    return <span>
+                        {
+                            Constants.minSM ? <span>物流单号:<a>{txt}</a></span>
+                                : <span>{txt}</span>
+                        }
+                    </span>
+                }
             },
             {
                 title: '物流方式',
+                hidden: Constants.minSM,
                 dataIndex: 'expressTypeName'
             },
             {
                 title: '状态',
                 dataIndex: 'status',
-                layout: ColumnLayout.RightBottom,
+                hidden: Constants.minSM,
                 render: () => {
                     return <span>待打包</span>
                 }
@@ -138,7 +158,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             {
                 title: '入库时间',
                 dataIndex: 'InWareHouseTime',
-                layout: ColumnLayout.LeftBottom,
+                hidden: Constants.minSM,
                 render: (txt) => {
                     return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
                 }
@@ -172,6 +192,19 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                                        dataSource={data}/>
     }
 
+    renderFormAdvancedItems() {
+        const items: FormAdvancedItemModel[] = [
+            {
+                defaultDisplay: true,
+                fieldName: "expressNo",
+                displayName: "物流单号",
+                mobileShow: true,
+                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="搜索物流单号"/>
+            }
+        ];
+        return items;
+    }
+
     renderHeader() {
         const topThis = this;
         const {state: {totalCount}} = topThis;
@@ -185,27 +218,20 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             count: selects,
             isShowCount: true
         }]
-        /** 搜索*/
-        const formItems:SearchFormModel[]=[{
-            fieldName: "expressNo",
-            displayName: "快递单号",
-            control: <FormControl.FormSelectIndex style={{width:200}} type={SelectType.ExpressNo} placeholder="搜索物流单号"/>
-        },{
-            fieldName: "warehouseInTime",
-            displayName: "入库时间",
-            control: <RangePicker style={{width:230}}></RangePicker>
-        }];
         return <FormTableHeader title={`总计有${totalCount}项 待打包订单`}
-                                searchControl={{onClickSearch:topThis.onClickSearch.bind(this),items:formItems}}
                                 buttonGroup={buttons}></FormTableHeader>
     }
 
     render() {
-        const topThis=this;
-        return <Row className="member-page-warehouse-in-page mainland-content-page">
+        const topThis = this;
+        return <Row className="mainland-content-page">
             <ContentHeaderControl title="我的订单"></ContentHeaderControl>
             <Tabs defaultActiveKey="1">
                 <Tabs.TabPane tab="待打包" key="1">
+                    <FormAdvancedSearch
+                        easyMode={true}
+                        formAdvancedItems={this.renderFormAdvancedItems()}
+                        onClickSearch={this.onClickSearch.bind(this)}></FormAdvancedSearch>
                     {topThis.renderHeader()}
                     <Row>
                         {this.renderTable()}
