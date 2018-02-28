@@ -1,9 +1,8 @@
 import * as React from 'react';
-import {withRouter, hashHistory} from 'react-router';
-import {Row, Col, Button, Icon, Table, Alert, Form, Input} from 'antd';
+import {withRouter} from 'react-router';
+import {Row,Tooltip,Icon} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
-
 const {RangePicker} = DatePicker;
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
@@ -17,7 +16,7 @@ import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/com
 import {APINameSpace} from "../model/api";
 import {isUndefined} from "util";
 import * as moment from 'moment';
-
+import {FormFileViewer} from "../components-v1/form-file-viewer";
 
 /// 待审核列表
 interface MemberMyOrderWaitForApprovePageProps {}
@@ -37,6 +36,10 @@ interface MemberMyOrderWaitForApprovePageStates {
     loading?: boolean;
     /* 查询条件选择值*/
     selectVaules?: any;
+    /** 图片预览*/
+    visibleFormFileViewer: boolean;
+    /** 图片资源*/
+    items: ModelNameSpace.Attachment[];
 }
 
 class MemberMyOrderWaitForApprovePageTable extends CommonTable<any> {}
@@ -52,7 +55,9 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
             pageSize: 10,
             totalCount: 0,
             loading: false,
-            selectVaules: []
+            selectVaules: [],
+            visibleFormFileViewer: false,
+            items: []
         }
     }
 
@@ -98,6 +103,28 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
         })
     }
 
+    onClickPicturePreview(item: ModelNameSpace.CustomerOrderMergeModel) {
+        const topThis = this;
+        const request: requestNameSpace.GetAttachmentItemsRequest = {
+            customerOrderID: item.ID,
+            isAdmin: false
+        }
+
+        APINameSpace.AttachmentsAPI.GetAttachmentItems(request).then((result: ResponseNameSpace.GetAttachmentItemsResponse) => {
+            if (result.Status === 0) {
+                topThis.setState({items: result.Data,}, () => {
+                    topThis.changeFormFileViewerVisible(true);
+                });
+            }
+        });
+    }
+
+    changeFormFileViewerVisible(bool: boolean) {
+        this.setState({
+            visibleFormFileViewer: bool
+        });
+    }
+
     renderTable() {
         const topThis = this;
         const {state: {listData, selectedRowKeys, pageIndex, pageSize, totalCount, loading}} = topThis;
@@ -109,6 +136,15 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
         };
 
         const columns: CommonColumnProps<ModelNameSpace.CustomerOrderMergeModel>[] = [{
+            title: "附件",
+            fixed: 'left',
+            layout: ColumnLayout.Img,
+            render: (val, record) => {
+                return <Tooltip title="预览附件"><Icon type="picture" onClick={() => {
+                    topThis.onClickPicturePreview(record);
+                }} style={{fontSize: 20, color: "#e65922", cursor: "pointer"}}/></Tooltip>
+            }
+        },{
             title: "客户合并单号",
             dataIndex: 'MergeOrderNo',
             layout: ColumnLayout.LeftTop,
@@ -224,14 +260,15 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
 
     render() {
         const topThis = this;
-        const {state: {totalCount}} = topThis;
-        // const { getFieldDecorator } = this.props.form;
+        const {state: {totalCount,visibleFormFileViewer, items}} = topThis;
         return <Row>
             <FormAdvancedSearch
                 formAdvancedItems={topThis.renderFormAdvancedItems()}
                 onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch>
             <FormTableHeader title={`总计有 ${totalCount} 项客服确认 ${totalCount} 项仓库打包`}></FormTableHeader>
             {this.renderTable()}
+            {items.length > 0 ? <FormFileViewer items={items} visible={visibleFormFileViewer}
+                                                changeVisible={topThis.changeFormFileViewerVisible.bind(this)}/> : null}
         </Row>;
     }
 }

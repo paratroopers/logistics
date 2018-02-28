@@ -50,7 +50,7 @@ interface WarehouseInPageStates {
     /** 筛选字段*/
     formAdvancedData?: any;
     /** 入库状态数量统计*/
-    warehouseInStatus?: ModelNameSpace.WarehouseInStatusModel
+    warehouseInStatus?: ModelNameSpace.WarehouseInStatusModel;
     /** 图片预览*/
     visibleFormFileViewer: boolean;
     /** 图片资源*/
@@ -189,6 +189,12 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                     topThis.changeFormFileViewerVisible(true);
                 });
             }
+        });
+    }
+
+    changeFormFileViewerVisible(bool: boolean) {
+        this.setState({
+            visibleFormFileViewer: bool
         });
     }
 
@@ -441,12 +447,6 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             }
         ];
         return items;
-    }
-
-    changeFormFileViewerVisible(bool: boolean) {
-        this.setState({
-            visibleFormFileViewer: bool
-        });
     }
 
     render() {
