@@ -37,6 +37,19 @@ class FormTableHeader extends React.Component<FormTableHeaderProps, FormTableHea
         super(props, context);
     }
 
+    /** 点击搜索*/
+    onSearch = (e) => {
+        e.preventDefault();
+        const topThis = this;
+        const {props: {searchControl: {onClickSearch}}} = topThis;
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                if (onClickSearch)
+                    onClickSearch(values);
+            }
+        });
+    }
+
     renderSearchForm() {
         const topThis = this;
         const {props: {searchControl, form: {getFieldDecorator}}} = topThis;
@@ -84,7 +97,7 @@ class FormTableHeader extends React.Component<FormTableHeaderProps, FormTableHea
                 </Col>
             </Row>
             <Row>
-                <Form layout="inline">{topThis.renderSearchForm()}</Form>
+                <Form onSubmit={topThis.onSearch.bind(this)} layout="inline">{topThis.renderSearchForm()}</Form>
             </Row>
         </Row>
     }
