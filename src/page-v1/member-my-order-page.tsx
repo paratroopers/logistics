@@ -1,8 +1,6 @@
 import * as React from 'react';
 import {withRouter, hashHistory, Link} from 'react-router';
-import {Row, Tabs, message, DatePicker} from "antd";
-
-const {RangePicker} = DatePicker;
+import {Row, Tabs, message,Tooltip,Icon} from "antd";
 import {PathConfig} from '../config/pathconfig';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {requestNameSpace} from '../model/request';
@@ -18,6 +16,7 @@ import * as moment from 'moment';
 import {FormControl} from "../components-v1/form-control";
 import {SelectType, Constants} from "../util/common";
 import {isArray, isNullOrUndefined} from "util";
+import {FormFileViewer} from "../components-v1/form-file-viewer";
 
 interface MemberMyOrderPageStates {
     pageIndex: number;
@@ -28,6 +27,10 @@ interface MemberMyOrderPageStates {
     selected?: { selectedRowKeys?: string[], selectedRows?: ModelNameSpace.CustomerOrderModel[] };
     /** 筛选字段*/
     formAdvancedData?: any;
+    /** 图片预览*/
+    visibleFormFileViewer: boolean;
+    /** 图片资源*/
+    items: ModelNameSpace.Attachment[];
 }
 
 interface MemberMyOrderPageProps {
@@ -49,7 +52,9 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             loading: false,
             selected: {
                 selectedRowKeys: []
-            }
+            },
+            visibleFormFileViewer: false,
+            items: []
         }
     }
 
@@ -62,7 +67,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
         const {state: {formAdvancedData}} = topThis;
 
         let request: requestNameSpace.CustomerOrdersRequest = {
-            type: ModelNameSpace.OrderTypeEnum.CustomerConfirm,
+            step: ModelNameSpace.OrderTypeEnum.CustomerConfirm,
             pageSize: this.state.pageSize,
             pageIndex: pageIndex ? pageIndex : this.state.pageIndex,
         };
@@ -70,8 +75,6 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
         if (!isNullOrUndefined(formAdvancedData)) {
             request = {
                 expressNo: isArray(formAdvancedData.expressNo) && !isNullOrUndefined(formAdvancedData.expressNo[0]) ? formAdvancedData.expressNo[0].key : "",
-                inWarehouseIimeBegin: isArray(formAdvancedData.warehouseInTime) && !isNullOrUndefined(formAdvancedData.warehouseInTime[0]) ? formAdvancedData.warehouseInTime[0].format("YYYY-MM-DD hh:mm:ss") : "",
-                inWarehouseIimeEnd: isArray(formAdvancedData.warehouseInTime) && !isNullOrUndefined(formAdvancedData.warehouseInTime[1]) ? formAdvancedData.warehouseInTime[1].format("YYYY-MM-DD hh:mm:ss") : "",
                 ...request
             }
         }
@@ -110,9 +113,41 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
         })
     }
 
+    onClickPicturePreview(item: ModelNameSpace.CustomerOrderModel) {
+        const topThis = this;
+        const request: requestNameSpace.GetAttachmentItemsRequest = {
+            customerOrderID: item.ID,
+            isAdmin: false
+        }
+
+        APINameSpace.AttachmentsAPI.GetAttachmentItems(request).then((result: ResponseNameSpace.GetAttachmentItemsResponse) => {
+            if (result.Status === 0) {
+                topThis.setState({items: result.Data,}, () => {
+                    topThis.changeFormFileViewerVisible(true);
+                });
+            }
+        });
+    }
+
+    changeFormFileViewerVisible(bool: boolean) {
+        this.setState({
+            visibleFormFileViewer: bool
+        });
+    }
+
     renderTable() {
-        const {state: {pageSize, pageIndex, totalCount, data, loading, selected}} = this;
-        const columns: CommonColumnProps<ModelNameSpace.CustomerOrderModel>[] = [
+        const topThis=this;
+        const {state: {pageSize, pageIndex, totalCount, data, loading, selected}} = topThis;
+        const columns: CommonColumnProps<ModelNameSpace.CustomerOrderModel>[] = [{
+            title: "附件",
+            fixed: 'left',
+            layout: ColumnLayout.Img,
+            render: (val, record) => {
+                return <Tooltip title="预览附件"><Icon type="picture" onClick={() => {
+                    topThis.onClickPicturePreview(record);
+                }} style={{fontSize: 20, color: "#e65922", cursor: "pointer"}}/></Tooltip>
+            }
+        },
             {
                 title: '客户订单',
                 dataIndex: 'CustomerOrderNo',
@@ -224,6 +259,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
 
     render() {
         const topThis = this;
+        const {state: {visibleFormFileViewer, items}} = topThis;
         return <Row className="mainland-content-page">
             <ContentHeaderControl title="我的订单"></ContentHeaderControl>
             <Tabs defaultActiveKey="1">
@@ -241,6 +277,8 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                     <MemberMyOrderWaitForApprovePage></MemberMyOrderWaitForApprovePage>
                 </Tabs.TabPane>
             </Tabs>
+            {items.length > 0 ? <FormFileViewer items={items} visible={visibleFormFileViewer}
+                                                changeVisible={topThis.changeFormFileViewerVisible.bind(this)}/> : null}
         </Row>
     }
 }

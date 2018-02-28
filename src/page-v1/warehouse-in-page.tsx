@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter, hashHistory, Link} from 'react-router';
-import {Row, Col, Button, Icon, Table, Modal, message, Input, Tooltip} from 'antd';
+import {Row, Col, Button, Icon,Modal, message, Input, Tooltip} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
 
@@ -50,7 +50,7 @@ interface WarehouseInPageStates {
     /** 筛选字段*/
     formAdvancedData?: any;
     /** 入库状态数量统计*/
-    warehouseInStatus?: ModelNameSpace.WarehouseInStatusModel
+    warehouseInStatus?: ModelNameSpace.WarehouseInStatusModel;
     /** 图片预览*/
     visibleFormFileViewer: boolean;
     /** 图片资源*/
@@ -159,7 +159,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         })
     }
 
-    onClickDelete(ID: number) {
+    onClickDelete(ID: string) {
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
         const request: requestNameSpace.WarehouseInDeleteRequest = {
@@ -189,6 +189,12 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                     topThis.changeFormFileViewerVisible(true);
                 });
             }
+        });
+    }
+
+    changeFormFileViewerVisible(bool: boolean) {
+        this.setState({
+            visibleFormFileViewer: bool
         });
     }
 
@@ -421,12 +427,6 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             }
         ];
         return items;
-    }
-
-    changeFormFileViewerVisible(bool: boolean) {
-        this.setState({
-            visibleFormFileViewer: bool
-        });
     }
 
     render() {

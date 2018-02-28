@@ -1,11 +1,10 @@
 import * as React from 'react';
-import {withRouter, hashHistory} from 'react-router';
-import {Row, Col, Button, Icon, Table, Alert, Form, Input} from 'antd';
+import {withRouter,Link} from 'react-router';
+import {Row,Tooltip,Icon} from 'antd';
+import {PathConfig} from '../config/pathconfig';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
-
 const {RangePicker} = DatePicker;
-import {ColumnProps} from 'antd/lib/table';
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
@@ -16,15 +15,12 @@ import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import FormTableHeader from '../components-v1/form-table-header';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {APINameSpace} from "../model/api";
-import {FormComponentProps} from "antd/lib/form";
-import {isUndefined} from "util";
+import {isArray, isNullOrUndefined, isUndefined} from "util";
 import * as moment from 'moment';
-
+import {FormFileViewer} from "../components-v1/form-file-viewer";
 
 /// 待审核列表
-interface MemberMyOrderWaitForApprovePageProps extends FormComponentProps {
-
-}
+interface MemberMyOrderWaitForApprovePageProps {}
 
 interface MemberMyOrderWaitForApprovePageStates {
     /** 数据源*/
@@ -41,13 +37,16 @@ interface MemberMyOrderWaitForApprovePageStates {
     loading?: boolean;
     /* 查询条件选择值*/
     selectVaules?: any;
+    /** 图片预览*/
+    visibleFormFileViewer: boolean;
+    /** 图片资源*/
+    items: ModelNameSpace.Attachment[];
 }
 
-class MemberMyOrderWaitForApprovePageTable extends CommonTable<any> {
-}
+class MemberMyOrderWaitForApprovePageTable extends CommonTable<any> {}
 
 @withRouter
-class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitForApprovePageProps, MemberMyOrderWaitForApprovePageStates> {
+export default class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitForApprovePageProps, MemberMyOrderWaitForApprovePageStates> {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -57,7 +56,9 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
             pageSize: 10,
             totalCount: 0,
             loading: false,
-            selectVaules: []
+            selectVaules: [],
+            visibleFormFileViewer: false,
+            items: []
         }
     }
 
@@ -81,6 +82,7 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
         const request: requestNameSpace.GetCustomerOrderMergeRequest = {
             type: 0,
             expressNo: !isUndefined(searchaValues.expressNo) ? searchaValues.expressNo : "",
+            customerOrderMergeNo: isArray(searchaValues.customerOrderMergeNo) && !isNullOrUndefined(searchaValues.customerOrderMergeNo[0]) ? searchaValues.customerOrderMergeNo[0].key : "",
             customerChooseChannelID: !isUndefined(searchaValues.channel) ? searchaValues.channel.key : 0,
             currentStep: !isUndefined(searchaValues.currentStatus) ? searchaValues.currentStatus.key : "",
             orderMergeTimeBegin: !isUndefined(searchaValues.Created) ? searchaValues.Created[0].format() : "",
@@ -103,6 +105,28 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
         })
     }
 
+    onClickPicturePreview(item: ModelNameSpace.CustomerOrderMergeModel) {
+        const topThis = this;
+        const request: requestNameSpace.GetAttachmentItemsRequest = {
+            customerOrderID: item.ID,
+            isAdmin: false
+        }
+
+        APINameSpace.AttachmentsAPI.GetAttachmentItems(request).then((result: ResponseNameSpace.GetAttachmentItemsResponse) => {
+            if (result.Status === 0) {
+                topThis.setState({items: result.Data,}, () => {
+                    topThis.changeFormFileViewerVisible(true);
+                });
+            }
+        });
+    }
+
+    changeFormFileViewerVisible(bool: boolean) {
+        this.setState({
+            visibleFormFileViewer: bool
+        });
+    }
+
     renderTable() {
         const topThis = this;
         const {state: {listData, selectedRowKeys, pageIndex, pageSize, totalCount, loading}} = topThis;
@@ -114,6 +138,15 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
         };
 
         const columns: CommonColumnProps<ModelNameSpace.CustomerOrderMergeModel>[] = [{
+            title: "附件",
+            fixed: 'left',
+            layout: ColumnLayout.Img,
+            render: (val, record) => {
+                return <Tooltip title="预览附件"><Icon type="picture" onClick={() => {
+                    topThis.onClickPicturePreview(record);
+                }} style={{fontSize: 20, color: "#e65922", cursor: "pointer"}}/></Tooltip>
+            }
+        },{
             title: "客户合并单号",
             dataIndex: 'MergeOrderNo',
             layout: ColumnLayout.LeftTop,
@@ -144,11 +177,11 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
                 return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
             }
         }, {
-             title: '操作',
-             layout: ColumnLayout.Option,
-             render: (val, record) => {
-                return <a>查看</a>
-             }
+            title: '操作',
+            layout: ColumnLayout.Option,
+            render: (val, record, index) => {
+                return <Link to={{pathname: PathConfig.MemberMyOrderPackageViewPage, state: record}}>查看</Link>;
+            }
          }];
 
         const pagination: PaginationProps = {
@@ -178,6 +211,19 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
         const items: FormAdvancedItemModel[] = [
             {
                 defaultDisplay: true,
+                fieldName: "customerOrderMergeNo",
+                displayName: "客户订单号",
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrderMerge} isadmin={false} placeholder="客户合并订单号"/>,
+                layout: {
+                    xs: 15,
+                    sm: 12,
+                    md: 12,
+                    lg: 6,
+                    xl: 6
+                }
+            },
+            {
+                defaultDisplay: true,
                 fieldName: "expressNo",
                 displayName: "快递单号",
                 mobileShow:true,
@@ -185,30 +231,14 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
             },
             {
                 defaultDisplay: true,
-                fieldName: "customerOrderMerge",
-                displayName: "客户订单号",
-                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrderMerge} isadmin={false}
-                                                      placeholder="客户合并订单号"/>
-            },
-
-            {
-                defaultDisplay: true,
                 fieldName: "channel",
                 displayName: "渠道",
-                layout: {
-                    lg: 3,
-                    xl: 3
-                },
                 control: <FormControl.FormSelect type={SelectType.channel} placeholder="渠道"/>
             },
             {
                 defaultDisplay: true,
                 fieldName: "currentStatus",
                 displayName: "状态",
-                layout: {
-                    lg: 3,
-                    xl: 3
-                },
                 control: <FormControl.FormSelect type={SelectType.CustomerOrderMergeWaitForApproveStep}
                                                  placeholder={"订单状态"}/>
             }, {
@@ -216,6 +246,9 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
                 fieldName: "Created",
                 displayName: "创建时间",
                 layout: {
+                    xs: 15,
+                    sm: 12,
+                    md: 12,
                     lg: 6,
                     xl: 6
                 },
@@ -228,17 +261,15 @@ class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitF
 
     render() {
         const topThis = this;
-        const {state: {totalCount}} = topThis;
-        // const { getFieldDecorator } = this.props.form;
+        const {state: {totalCount,visibleFormFileViewer, items}} = topThis;
         return <Row>
             <FormAdvancedSearch
                 formAdvancedItems={topThis.renderFormAdvancedItems()}
                 onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch>
             <FormTableHeader title={`总计有 ${totalCount} 项客服确认 ${totalCount} 项仓库打包`}></FormTableHeader>
             {this.renderTable()}
+            {items.length > 0 ? <FormFileViewer items={items} visible={visibleFormFileViewer}
+                                                changeVisible={topThis.changeFormFileViewerVisible.bind(this)}/> : null}
         </Row>;
     }
 }
-
-
-export default Form.create<any>()(MemberMyOrderWaitForApprovePage);

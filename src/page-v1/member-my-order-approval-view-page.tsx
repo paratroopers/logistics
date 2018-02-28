@@ -23,7 +23,7 @@ export class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrder
         const topThis = this;
         const {props: {location}} = topThis;
         /** 获取页面传值*/
-        const viewData: ModelNameSpace.CustomerOrderModel = location.state;
+        const viewData: ModelNameSpace.CustomerOrderMergeModel = location.state;
         /** 未传值则返回*/
         if (isNullOrUndefined(viewData)) hashHistory.goBack();
         return <Row className="member-my-order-package-view-page">

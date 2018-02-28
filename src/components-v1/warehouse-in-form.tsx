@@ -1,9 +1,7 @@
 import * as React from "react";
 import {hashHistory} from 'react-router';
 import {Component} from "react";
-import {Form, Button, Row, Col, InputNumber, Input} from 'antd';
-import {UploadFile} from 'antd/lib/upload/interface';
-
+import {Form, Button, Row, Col} from 'antd';
 const FormItem = Form.Item;
 import {ColProps} from "antd/lib/col";
 import {FormComponentProps} from 'antd/lib/form/Form';
@@ -17,7 +15,6 @@ import {FormStatusSelect} from "./form-status-select";
 import {FormInput} from "./form-input";
 import {FormInputNumber} from "./form-input-number";
 import {FormInputText} from "./form-input-text";
-import {Util} from '../util/util';
 
 export interface WarehouseInFormProps extends FormComponentProps {
     /** 点击提交*/

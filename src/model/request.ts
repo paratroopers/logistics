@@ -236,11 +236,11 @@ export namespace requestNameSpace {
     }
 
     export interface WarehouseInDeleteRequest {
-        ID?: number;
+        ID?: string;
     }
 
     export interface CustomerOrdersRequest extends BaseListRequest {
-        type: ModelNameSpace.OrderTypeEnum;
+        step: ModelNameSpace.OrderTypeEnum;
         /** 快递单号*/
         expressNo?: string,
         /** 开始时间*/
@@ -329,7 +329,7 @@ export namespace requestNameSpace {
 
     //region 附件定义区
     export interface GetAttachmentItemsRequest {
-        customerOrderID: number;
+        customerOrderID: string;
         isAdmin: boolean;
     }
     //endregion
