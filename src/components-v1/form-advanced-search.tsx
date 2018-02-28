@@ -69,7 +69,6 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
         const topThis = this;
         const {props: {onClickSearch}} = topThis;
         this.props.form.validateFields((err, values) => {
-            console.log('Received values of form: ', values);
             if (!err) {
                 if (onClickSearch)
                     onClickSearch(values);

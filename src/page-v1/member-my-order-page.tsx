@@ -189,7 +189,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
         const formItems:SearchFormModel[]=[{
             fieldName: "expressNo",
             displayName: "快递单号",
-            control: <FormControl.FormSelectIndex style={{width:200}} type={SelectType.ExpressNo} placeholder="搜索快递单号"/>
+            control: <FormControl.FormSelectIndex style={{width:200}} type={SelectType.ExpressNo} placeholder="搜索物流单号"/>
         },{
             fieldName: "warehouseInTime",
             displayName: "入库时间",

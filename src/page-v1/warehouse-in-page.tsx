@@ -383,7 +383,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 defaultDisplay: true,
                 fieldName: "expressNo",
                 displayName: "快递单号",
-                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="搜索快递单号"/>
+                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="搜索物流单号"/>
             },
             {
                 defaultDisplay: true,

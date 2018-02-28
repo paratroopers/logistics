@@ -263,7 +263,7 @@ export class MemberWarehouseInQueryPage extends React.Component<MemberWarehouseI
                 defaultDisplay: false,
                 fieldName: "K",
                 displayName: "快递单号",
-                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="搜索快递单号"/>
+                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="搜索物流单号"/>
             }
         ];
         return items;
