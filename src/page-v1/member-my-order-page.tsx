@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {withRouter, hashHistory, Link} from 'react-router';
-import {Row, Tabs, message,DatePicker,Tooltip,Icon} from "antd";
-const {RangePicker} = DatePicker;
+import {Row, Tabs, message,Tooltip,Icon} from "antd";
 import {PathConfig} from '../config/pathconfig';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {requestNameSpace} from '../model/request';
@@ -74,8 +73,6 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
         if (!isNullOrUndefined(formAdvancedData)) {
             request = {
                 expressNo: isArray(formAdvancedData.expressNo) && !isNullOrUndefined(formAdvancedData.expressNo[0]) ? formAdvancedData.expressNo[0].key : "",
-                inWarehouseIimeBegin: isArray(formAdvancedData.warehouseInTime) && !isNullOrUndefined(formAdvancedData.warehouseInTime[0]) ? formAdvancedData.warehouseInTime[0].format("YYYY-MM-DD hh:mm:ss") : "",
-                inWarehouseIimeEnd: isArray(formAdvancedData.warehouseInTime) && !isNullOrUndefined(formAdvancedData.warehouseInTime[1]) ? formAdvancedData.warehouseInTime[1].format("YYYY-MM-DD hh:mm:ss") : "",
                 ...request
             }
         }
@@ -229,10 +226,6 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             fieldName: "expressNo",
             displayName: "快递单号",
             control: <FormControl.FormSelectIndex style={{width:200}} type={SelectType.ExpressNo} placeholder="搜索物流单号"/>
-        },{
-            fieldName: "warehouseInTime",
-            displayName: "入库时间",
-            control: <RangePicker style={{width:230}}></RangePicker>
         }];
         return <FormTableHeader title={`总计有${totalCount}项 待打包订单`}
                                 searchControl={{onClickSearch:topThis.onClickSearch.bind(this),items:formItems}}
