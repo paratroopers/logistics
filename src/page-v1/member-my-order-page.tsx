@@ -14,6 +14,7 @@ import MemberMyOrderWaitForApprovePage from './member-my-order-wait-for-approve-
 import * as moment from 'moment';
 import {FormControl} from "../components-v1/form-control";
 import {SelectType} from "../util/common";
+import {isArray, isNullOrUndefined} from "util";
 
 interface MemberMyOrderPageStates {
     pageIndex: number;
@@ -22,6 +23,8 @@ interface MemberMyOrderPageStates {
     totalCount?: number;
     loading?: boolean;
     selected?: { selectedRowKeys?: string[], selectedRows?: ModelNameSpace.CustomerOrderModel[] };
+    /** 筛选字段*/
+    formAdvancedData?: any;
 }
 
 interface MemberMyOrderPageProps {
@@ -52,11 +55,24 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
     }
 
     getData(pageIndex?: number) {
-        const request: requestNameSpace.CustomerOrdersRequest = {
+        const topThis=this;
+        const {state:{formAdvancedData}}=topThis;
+
+        let request: requestNameSpace.CustomerOrdersRequest = {
             type: 0,
             pageSize: this.state.pageSize,
             pageIndex: pageIndex ? pageIndex : this.state.pageIndex,
         };
+
+        if (!isNullOrUndefined(formAdvancedData)) {
+            request = {
+                expressNo: isArray(formAdvancedData.expressNo) && !isNullOrUndefined(formAdvancedData.expressNo[0]) ? formAdvancedData.expressNo[0].key : "",
+                inWarehouseIimeBegin: isArray(formAdvancedData.warehouseInTime) && !isNullOrUndefined(formAdvancedData.warehouseInTime[0]) ? formAdvancedData.warehouseInTime[0].format("YYYY-MM-DD hh:mm:ss") : "",
+                inWarehouseIimeEnd: isArray(formAdvancedData.warehouseInTime) && !isNullOrUndefined(formAdvancedData.warehouseInTime[1]) ? formAdvancedData.warehouseInTime[1].format("YYYY-MM-DD hh:mm:ss") : "",
+                ...request
+            }
+        }
+
         this.setState({loading: true});
         APINameSpace.MemberAPI.GetCustomerOrders(request).then((result: ResponseNameSpace.BaseResponse) => {
             if (result.Status === 0) {
@@ -84,7 +100,11 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
 
     /** 搜索*/
     onClickSearch(values: any){
-
+        const topThis = this;
+        topThis.setState({formAdvancedData: values}, () => {
+            /** 查询第一页*/
+            topThis.getData(1);
+        })
     }
 
     renderTable() {
