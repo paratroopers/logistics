@@ -22,7 +22,7 @@ import {WarehouseInPage} from "../page-v1/warehouse-in-page";
 import {WarehouseInAddPage} from "../page-v1/warehouse-in-add-page";
 import {WarehouseInViewPage} from "../page-v1/warehouse-in-view-page";
 import {WarehouseInEditPage} from "../page-v1/warehouse-in-edit-page";
-import {MemberMergePackagePage} from "../page-v1/member-merge-package-page";
+import MemberMergePackagePage from "../page-v1/member-merge-package-page";
 import {MemberPaymentPage} from '../page-v1/member-payment-page';
 
 import UserLoginPage from '../page-v1/user-login-page';

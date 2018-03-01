@@ -268,7 +268,6 @@ export namespace requestNameSpace {
             this.ID = Util.guid();
             this.total = '00.00';
         }
-
         ID?: string;
         total?: string;
         productName?: string;
@@ -277,27 +276,40 @@ export namespace requestNameSpace {
         declareUnitPrice?: number;
         count?: number;
     }
-
-    export interface OrderMergeRequest {
-        userid?: string;
-        CustomerMark?: string;
-        CustomerChooseChannelID?: string;
-        recipient?: string;
-        country?: string;
-        address?: string;
-        city?: string;
-        code?: string;
-        tel?: string;
-        company?: string;
-        taxNo?: string;
-        customerOrderList?: OrderMergeCustomerOrderListModel[];
-        productList?: OrderMergeProductListModel[];
-        TenantID?: string;
-    }
-
     //endregion
 
     //region 客户待打包定义区
+    export interface CustomerOrderMergeAddRequest {
+        /** 用户ID*/
+        userid?: string;
+        /** 客户备注*/
+        CustomerMark?: string;
+        /** 选择渠道*/
+        CustomerChooseChannelID?: string;
+        /** 收件人姓名*/
+        recipient?: string;
+        /** 国家*/
+        country?: string;
+        /** 地址*/
+        address?: string;
+        /** 城市*/
+        city?: string;
+        /** 税号*/
+        code?: string;
+        /** 电话*/
+        tel?: string;
+        /** 公司*/
+        company?: string;
+        /** 邮编*/
+        taxNo?: string;
+        /** 客户关联订单列表*/
+        customerOrderList?: OrderMergeCustomerOrderListModel[];
+        /** 产品申报列表*/
+        productList?: OrderMergeProductListModel[];
+        currentStep?: string,
+        currentStatus?: string,
+        isAdmin?:boolean;
+    }
     //endregion
 
     //region 客服阶段定义区

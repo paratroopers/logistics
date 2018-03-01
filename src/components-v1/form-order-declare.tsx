@@ -12,6 +12,7 @@ const OrderMergeProductListModel = requestNameSpace.OrderMergeProductListModel;
 export interface FormOrderDeclareProps extends FormComponentProps {
     readOnly?: boolean;
     data?: requestNameSpace.OrderMergeProductListModel[];
+    onChange?: (data: requestNameSpace.OrderMergeProductListModel[]) => void;
 }
 
 export interface FormOrderDeclareStates {
@@ -61,6 +62,8 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
     }
 
     onChange(value, record: requestNameSpace.OrderMergeProductListModel, fieldName: string) {
+        const topThis=this;
+        const {props:{onChange}}=topThis;
         let total: number = 0, data = this.state.data;
         Util.each(data, d => {
             if (d.ID === record.ID)
@@ -68,7 +71,10 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
             d.total = (d.declareUnitPrice * d.count).toFixed(2);
             total += Number(d.total);
         });
-        this.setState({total: total.toFixed(2), data: data});
+        this.setState({total: total.toFixed(2), data: data},()=>{
+            if(onChange)
+                onChange(data);
+        });
     }
 
     onModalOk() {

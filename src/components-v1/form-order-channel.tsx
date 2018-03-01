@@ -8,6 +8,8 @@ import {FormChannelInfo} from './form-channel-info';
 
 export interface FormOrderChannelProps {
     readOnly?: boolean;
+    data?: ModelNameSpace.ChannelModal[];
+    onChange?:(data:ModelNameSpace.ChannelModal[])=>void;
 }
 
 export interface FormOrderChannelStates {
@@ -32,7 +34,12 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
     }
 
     onOk(selected: ModelNameSpace.ChannelModal) {
-        this.setState({data: [{...selected}]});
+        const topThis=this;
+        const {props:{onChange}}=topThis;
+        this.setState({data: [{...selected}]},()=>{
+            if(onChange)
+                onChange([{...selected}]);
+        });
         this.setState({channelsShow: false});
     }
 

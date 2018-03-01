@@ -1,5 +1,5 @@
 import {requestNameSpace} from './request';
-import {ResponseNameSpace} from './response'
+import {ResponseNameSpace} from './response';
 import {BaseRequest} from "../util/common";
 import {Request} from '../util/request';
 
@@ -107,7 +107,6 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url);
         }
 
-
         static async DeleteRecipientsAddress(data: requestNameSpace.DeleteRecipientsAddressRequest) {
             let url: string = CommonAPI.baseURL + "RecipientsAddress/Item";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().del(url, data);
@@ -122,7 +121,6 @@ export namespace APINameSpace {
             let url: string = CommonAPI.baseURL + "RecipientsAddress/Item";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().post(url, data);
         }
-
 
         static async GetRecipientsAddress(data: requestNameSpace.GetRecipientsAddressRequest) {
             let url: string = CommonAPI.baseURL + "RecipientsAddress/Item";
@@ -168,7 +166,6 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, {request: data});
         }
 
-
         static async GetCustomerOrders(data: requestNameSpace.CustomerOrdersRequest) {
             let url: string = CommonAPI.baseURL + "CustomerOrder/items/page";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
@@ -178,7 +175,6 @@ export namespace APINameSpace {
             let url: string = CommonAPI.baseURL + "CustomerOrderMerge/items/page";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
-
     }
 
 
@@ -222,6 +218,7 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url);
         }
     }
+    //endregion
 
     export class CustomerOrderAPI {
         /*客户订单 入库的快递单号*/
@@ -255,6 +252,11 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().post(url);
         }
 
+        /** 客户合并订单新增*/
+        static CustomerOrderMergeAdd(data: requestNameSpace.CustomerOrderMergeAddRequest){
+            let url: string = CommonAPI.baseURL + "CustomerOrderMergeAddRequest";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().post(url);
+        }
     }
 
     export class CustomerOrderStatusAPI {
@@ -273,12 +275,6 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url);
         }
     }
-
-
-    //endregion
-
-    //region 客户待打包定义区
-    //endregion
 
     //region 客服阶段定义区
     //endregion
