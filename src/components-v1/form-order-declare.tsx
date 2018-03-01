@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Row, Col, Form, Input, InputNumber, Modal, Icon} from 'antd';
+import {Form, Input, InputNumber, Modal, Icon} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {FormSettingGroup} from './form-setting-group';
 import {Constants} from '../util/common';
@@ -42,23 +42,34 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
 
     onAddClick(e) {
         e.stopPropagation();
+        const topThis=this;
+        const {props:{onChange}}=topThis;
+
         if (Constants.minSM) {
             this.renderModal();
             return;
         }
         let data = this.state.data;
         data.push(new OrderMergeProductListModel());
-        this.setState({data: data});
+        this.setState({data: data},()=>{
+            if(onChange)
+                onChange(data);
+        });
     }
 
     onDeleteClick(record: requestNameSpace.OrderMergeProductListModel) {
+        const topThis=this;
+        const {props:{onChange}}=topThis;
         let data = this.state.data;
         Util.remove(data, i => i.ID === record.ID);
         let total: number = 0;
         Util.each(data, d => {
             total += Number(d.total);
         });
-        this.setState({data: data, total: total.toFixed(2)});
+        this.setState({data: data, total: total.toFixed(2)},()=>{
+            if(onChange)
+                onChange(data);
+        });
     }
 
     onChange(value, record: requestNameSpace.OrderMergeProductListModel, fieldName: string) {
