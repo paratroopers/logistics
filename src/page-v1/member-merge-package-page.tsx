@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps} from 'react-router';
-import {Layout, Row, Col, Button, Icon,message,Form} from 'antd';
+import {Layout, Row, Col, Button, Icon, message, Form} from 'antd';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import * as moment from 'moment';
@@ -63,8 +63,8 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
 
     getMergeOrderInfo() {
         const request = util.isArray(this.state.selectedKeys) ? (this.state.selectedKeys as string[]).join(",") : this.state.selectedKeys.toString();
-        APINameSpace.MemberAPI.GetOrderItemsByID(request).then((r:ResponseNameSpace.BaseResponse) => {
-            if(r.Status === 0)
+        APINameSpace.MemberAPI.GetOrderItemsByID(request).then((r: ResponseNameSpace.BaseResponse) => {
+            if (r.Status === 0)
                 this.initOrderInfo(r.Data);
         });
     }
@@ -72,34 +72,34 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
     /** 表单提交*/
     onSubmit() {
         const topThis = this;
-        const {props: {form},state:{productList,channelList}} = topThis;
-
+        const {props: {form}, state: {productList, channelList}} = topThis;
+        form.validateFields((err, values) => {
+            if (err) {
+                return;
+            }
+        });
         /** 验证产品信息是否存在*/
-        if(!isArray(productList)||productList.length===0)
-        {
+        if (!isArray(productList) || productList.length === 0) {
             message.warning("请填写货品申报信息!");
             return;
         }
         /** 验证渠道信息是否存在*/
-        if(!isArray(channelList)||channelList.length===0)
-        {
+        if (!isArray(channelList) || channelList.length === 0) {
             message.warning("请选择渠道!");
             return;
         }
 
-        form.validateFieldsAndScroll((errors, values) => {
-            console.log(values);
-            console.log(productList);
-            console.log(channelList)
-            if (!errors) {
-                const request:requestNameSpace.CustomerOrderMergeAddRequest = {
+        /*        form.validateFieldsAndScroll((errors, values) => {
+                    console.log(values);
+                    console.log(productList);
+                    console.log(channelList)
+                    if (!errors) {
+                        const request: requestNameSpace.CustomerOrderMergeAddRequest = {}
+                        APINameSpace.CustomerOrderAPI.CustomerOrderMergeAdd(request).then((result: ResponseNameSpace.BaseResponse) => {
 
-                }
-                APINameSpace.CustomerOrderAPI.CustomerOrderMergeAdd(request).then((result:ResponseNameSpace.BaseResponse) => {
-
-                });
-            }
-        });
+                        });
+                    }
+                });*/
     }
 
     render() {
@@ -126,7 +126,7 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
                 <FormOrderInfo data={orderInfo}></FormOrderInfo>
                 <FormOrderRelation data={data}></FormOrderRelation>
                 <FormOrderAddressee form={form}></FormOrderAddressee>
-                <FormOrderDeclare onChange={(declareData) => {
+                <FormOrderDeclare parentForm={form} onChange={(declareData) => {
                     topThis.setState({productList: declareData});
                 }}></FormOrderDeclare>
                 <FormOrderChannel onChange={(channelData) => {
@@ -136,4 +136,5 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
         </Layout>;
     }
 }
+
 export default Form.create<any>()(MemberMergePackagePage);
