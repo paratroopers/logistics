@@ -50,8 +50,10 @@ export namespace ResponseNameSpace {
     //endregion
 
     //region 客户待打包定义区
-    //审核列表，客服确认，客户付款，客服确认，仓库打包，仓库出货；都用此返回对象
+    /** 审核列表，客服确认，客户付款，客服确认，仓库打包，仓库出货；都用此返回对象*/
     export  interface  GetCustomerOrderMergeListResponse extends  BaseModelListResonse<ModelNameSpace.CustomerOrderMergeModel>{}
+    /** 合并订单详情*/
+    export interface GetCustomerOrderMergeDetailResponse extends BaseModelResponse<ModelNameSpace.CustomerOrderMergeDetailModel>{}
     //endregion
 
     //region 客服阶段定义区

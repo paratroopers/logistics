@@ -1,7 +1,10 @@
 import * as React from 'react';
 import {withRouter,RouteComponentProps,hashHistory} from 'react-router';
 import {Row} from 'antd';
+import {requestNameSpace} from '../model/request';
+import {ResponseNameSpace} from '../model/response'
 import {ModelNameSpace} from '../model/model';
+import {APINameSpace} from '../model/api';
 import {
     ContentHeaderControl,
     FormOrderInfo,
@@ -20,6 +23,8 @@ interface MemberMyOrderApprovalViewPageProps extends RouteComponentProps<any, an
 interface MemberMyOrderApprovalViewPageStates {
     /** 原始订单ID*/
     selectedKey?: string;
+    /** 源数据*/
+    data?:ModelNameSpace.CustomerOrderMergeDetailModel;
 }
 export interface QueryData {
     ids?: string
@@ -40,11 +45,26 @@ export class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrder
         const {state:{selectedKey}}=topThis;
         /** 未传值则返回*/
         if (isNullOrUndefined(selectedKey)) hashHistory.goBack();
+
+        /** 通过ID获取表单数据*/
+        const request: requestNameSpace.GetCustomerOrderMergeItemRequest = {
+            customerOrderMergeID: selectedKey,
+            isAdmin: false
+        }
+
+        APINameSpace.CustomerOrderAPI.GetCustomerOrderMergeItem(request).then((result: ResponseNameSpace.GetCustomerOrderMergeDetailResponse) => {
+            if (result.Status === 0) {
+                console.log(result);
+                topThis.setState({data:result.Data});
+            }
+        });
     }
 
     render() {
         const topThis = this;
-        return <Row className="member-my-order-package-view-page">
+        const {state: {data}} = topThis;
+
+        return data ? <Row className="member-my-order-package-view-page">
             <ContentHeaderControl title="查看"></ContentHeaderControl>
             <FormOrderInfo></FormOrderInfo>
             <FormOrderRelation></FormOrderRelation>
@@ -52,6 +72,6 @@ export class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrder
             <FormOrderDeclare></FormOrderDeclare>
             <FormOrderChannel></FormOrderChannel>
             <FormPackageRequirement></FormPackageRequirement>
-        </Row>;
+        </Row> : null;
     }
 }

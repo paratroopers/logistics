@@ -182,7 +182,7 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
             layout: ColumnLayout.Option,
             render: (val, record, index) => {
                 return <Link to={{
-                    pathname: PathConfig.MemberMergePackagePage,
+                    pathname: PathConfig.MemberMyOrderApprovalViewPage,
                     query: {ids: record.ID},
                 }}>查看</Link>;
             }

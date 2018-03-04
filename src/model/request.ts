@@ -286,7 +286,7 @@ export namespace requestNameSpace {
 
     /** 查询已合并订单详情*/
     export interface GetCustomerOrderMergeItemRequest{
-        customerOrderMergeID:string;
+        customerOrderMergeID?:string;
         isAdmin?:boolean;
     }
 
