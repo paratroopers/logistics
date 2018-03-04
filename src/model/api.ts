@@ -260,7 +260,7 @@ export namespace APINameSpace {
     }
 
     export class CustomerOrderStatusAPI {
-        /*入库下拉状态列表*/
+        /** 入库下拉状态列表*/
         static async GetWarehouseInStatus() {
             let url: string = CommonAPI.baseURL + "CustomerOrderStatus/items";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url);
@@ -269,7 +269,7 @@ export namespace APINameSpace {
     }
 
     export class CustomerOrderMergeStatusAPI {
-        /*客服确认，仓库打包，仓库发货 状态 用此接口*/
+        /** 客服确认，仓库打包，仓库发货 状态 用此接口*/
         static async GetMergeStatus() {
             let url: string = CommonAPI.baseURL + "CustomerOrderMergeStatus/items";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url);

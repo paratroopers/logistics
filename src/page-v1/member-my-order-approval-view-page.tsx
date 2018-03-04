@@ -2,34 +2,58 @@ import * as React from 'react';
 import {withRouter,RouteComponentProps,hashHistory} from 'react-router';
 import {Row} from 'antd';
 import {ModelNameSpace} from '../model/model';
+import {
+    ContentHeaderControl,
+    FormOrderInfo,
+    FormOrderRelation,
+    FormOrderAddressee,
+    FormOrderDeclare,
+    FormOrderChannel,
+    FormPackageRequirement
+} from "../components-v1/all-components-export";
 import {isNullOrUndefined} from "util";
-import {ContentHeaderControl, WarehouseInForm} from "../components-v1/all-components-export";
 
 interface MemberMyOrderApprovalViewPageProps extends RouteComponentProps<any, any>{
 
 }
 
 interface MemberMyOrderApprovalViewPageStates {
-
+    /** 原始订单ID*/
+    selectedKey?: string;
 }
+export interface QueryData {
+    ids?: string
+}
+
 
 @withRouter
 export class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrderApprovalViewPageProps, MemberMyOrderApprovalViewPageStates> {
     constructor(props) {
         super(props);
+        this.state = {
+            selectedKey: (this.props.location.query as QueryData).ids
+        }
+    }
+
+    componentDidMount(){
+        const topThis=this;
+        const {state:{selectedKey}}=topThis;
+        /** 未传值则返回*/
+        if (isNullOrUndefined(selectedKey)) hashHistory.goBack();
+
+
     }
 
     render() {
         const topThis = this;
-        const {props: {location}} = topThis;
-        /** 获取页面传值*/
-        const viewData: ModelNameSpace.CustomerOrderMergeModel = location.state;
-        /** 未传值则返回*/
-        if (isNullOrUndefined(viewData)) hashHistory.goBack();
         return <Row className="member-my-order-package-view-page">
             <ContentHeaderControl title="查看"></ContentHeaderControl>
-            {!isNullOrUndefined(viewData) ? <WarehouseInForm type={"view"} Data={viewData}></WarehouseInForm> :
-                <div>暂无数据</div>}
+            <FormOrderInfo></FormOrderInfo>
+            <FormOrderRelation></FormOrderRelation>
+            <FormOrderAddressee></FormOrderAddressee>
+            <FormOrderDeclare></FormOrderDeclare>
+            <FormOrderChannel></FormOrderChannel>
+            <FormPackageRequirement></FormPackageRequirement>
         </Row>;
     }
 }
