@@ -170,7 +170,7 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
             title: "状态",
             layout: ColumnLayout.RightBottom,
             render: (txt) => {
-                return <span>待打包</span>
+                return <span>待审核</span>
             }
         }, {
             title: "创建时间",
@@ -268,11 +268,15 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
     render() {
         const topThis = this;
         const {state: {totalCount,visibleFormFileViewer, items}} = topThis;
+        const message = <span>
+                              客服确认: <span style={{fontWeight: "bold"}}>{totalCount}项 </span>
+                              仓库打包: <span style={{fontWeight: "bold"}}>{totalCount}项 </span>
+                          </span>;
         return <Row>
             <FormAdvancedSearch
                 formAdvancedItems={topThis.renderFormAdvancedItems()}
                 onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch>
-            <FormTableHeader title={`总计有 ${totalCount} 项客服确认 ${totalCount} 项仓库打包`}></FormTableHeader>
+            <FormTableHeader title={message}></FormTableHeader>
             {this.renderTable()}
             {items.length > 0 ? <FormFileViewer items={items} visible={visibleFormFileViewer}
                                                 changeVisible={topThis.changeFormFileViewerVisible.bind(this)}/> : null}
