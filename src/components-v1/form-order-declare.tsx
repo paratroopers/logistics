@@ -1,27 +1,27 @@
 import * as React from 'react';
 import {Form, Input, InputNumber, Modal, Icon} from 'antd';
-import {FormComponentProps, WrappedFormUtils} from 'antd/lib/form/Form';
+import {FormComponentProps} from 'antd/lib/form/Form';
 import {FormSettingGroup} from './form-setting-group';
 import {Constants} from '../util/common';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
-import {requestNameSpace} from '../model/request';
+import {ModelNameSpace} from '../model/model';
 import {Util} from '../util/util';
 
-const OrderMergeProductListModel = requestNameSpace.OrderMergeProductListModel;
+const CustomerOrderMergeProductModel = ModelNameSpace.CustomerOrderMergeProductModel;
 
 export interface FormOrderDeclareProps extends FormComponentProps {
     readOnly?: boolean;
-    data?: requestNameSpace.OrderMergeProductListModel[];
-    onChange?: (data: requestNameSpace.OrderMergeProductListModel[]) => void;
+    data?: ModelNameSpace.CustomerOrderMergeProductModel[];
+    onChange?: (data: ModelNameSpace.CustomerOrderMergeProductModel[]) => void;
 }
 
 export interface FormOrderDeclareStates {
-    data?: requestNameSpace.OrderMergeProductListModel[];
+    data?: ModelNameSpace.CustomerOrderMergeProductModel[];
     total?: string;
     visible?: boolean;
 }
 
-class FormOrderDeclareTable extends CommonTable<requestNameSpace.OrderMergeProductListModel> {
+class FormOrderDeclareTable extends CommonTable<ModelNameSpace.CustomerOrderMergeProductModel> {
 }
 
 class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderDeclareStates> {
@@ -50,14 +50,14 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
             return;
         }
         let data = this.state.data;
-        data.push(new OrderMergeProductListModel());
+        data.push(new CustomerOrderMergeProductModel());
         this.setState({data: data}, () => {
             if (onChange)
                 onChange(data);
         });
     }
 
-    onDeleteClick(record: requestNameSpace.OrderMergeProductListModel) {
+    onDeleteClick(record: ModelNameSpace.CustomerOrderMergeProductModel) {
         const topThis = this;
         const {props: {onChange}} = topThis;
         let data = this.state.data;
@@ -72,7 +72,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
         });
     }
 
-    onChange(value, record: requestNameSpace.OrderMergeProductListModel, fieldName: string) {
+    onChange(value, record: ModelNameSpace.CustomerOrderMergeProductModel, fieldName: string) {
         const topThis = this;
         const {props: {onChange}} = topThis;
         let total: number = 0, data = this.state.data;
@@ -107,7 +107,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
     }
 
     renderModal() {
-        const item = new OrderMergeProductListModel();
+        const item = new CustomerOrderMergeProductModel();
         this.props.form.setFieldsValue({...item})
         this.setState({visible: true});
     }
@@ -120,7 +120,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
 
     renderTable() {
         const {props: {form: {getFieldDecorator}}} = this;
-        const colums: CommonColumnProps<requestNameSpace.OrderMergeProductListModel>[] = [
+        const colums: CommonColumnProps<ModelNameSpace.CustomerOrderMergeProductModel>[] = [
             {
                 title: '产品名称',
                 dataIndex: 'productName',
