@@ -7,7 +7,7 @@ import * as moment from 'moment';
 
 export interface FormOrderRelationProps {
     data?: ModelNameSpace.CustomerOrderModel[];
-    loading?:boolean;
+    loading?: boolean;
 }
 
 export interface FormOrderRelationStates {
@@ -45,10 +45,16 @@ export class FormOrderRelation extends React.Component<FormOrderRelationProps, F
                 title: '物流订单号',
                 dataIndex: 'expressNo',
                 layout: ColumnLayout.RightTop,
+                render: (txt) => {
+                    return <span>{Constants.minSM ? new String().concat("物流订单号：", txt) : txt}</span>;
+                }
             }, {
                 title: '物流方式',
                 dataIndex: 'expressTypeName',
                 layout: ColumnLayout.RightBottom,
+                render: (txt) => {
+                    return <span>{Constants.minSM ? new String().concat("物流方式：", txt) : txt}</span>;
+                }
             }, {
                 title: '入库时间',
                 dataIndex: 'InWareHouseTime',

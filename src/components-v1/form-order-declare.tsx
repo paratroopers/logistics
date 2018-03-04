@@ -13,7 +13,7 @@ export interface FormOrderDeclareProps extends FormComponentProps {
     readOnly?: boolean;
     data?: ModelNameSpace.CustomerOrderMergeProductModel[];
     onChange?: (data: ModelNameSpace.CustomerOrderMergeProductModel[]) => void;
-    loading?:boolean;
+    loading?: boolean;
 }
 
 export interface FormOrderDeclareStates {
@@ -35,9 +35,9 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
         }
     }
 
-    componentDidMount(){
-        const topThis=this;
-        const {state:{data}}=topThis;
+    componentDidMount() {
+        const topThis = this;
+        const {state: {data}} = topThis;
 
         let total: number = 0;
         Util.each(data, d => {
@@ -145,10 +145,10 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                         })
                         (<Input
                             onChange={e => this.onChange(e.target.value, record, 'productName')}></Input>)}</Form.Item>
-                        : <span>{txt}</span>;
+                        : <span>{new String().concat(Constants.minSM ? "产品名称：" : "", txt)}</span>;
                 },
                 layout: ColumnLayout.LeftTop
-            },{
+            }, {
                 title: '产品名称(英文)',
                 dataIndex: 'productNameEN',
                 render: (txt, record, index) => {
@@ -161,7 +161,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                             onChange={e => this.onChange(e.target.value, record, 'productNameEN')}></Input>)}</Form.Item>
                         : <span>{txt}</span>;
                 },
-                layout: ColumnLayout.LeftTop
+                hidden: Constants.minSM
             },
             {
                 title: '产品数量',
@@ -178,18 +178,18 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                                            min={0}
                                            onChange={v => this.onChange(v, record, 'count')}></InputNumber>)}
                         </Form.Item> :
-                        <span>{txt}</span>;
+                        <span>{new String().concat(Constants.minSM ? "产品数量：" : "", txt)}</span>;
                 },
-                hidden: Constants.minSM
+                layout: ColumnLayout.RightTop
             }, {
                 title: '货币单位',
                 dataIndex: 'HSCode',
                 render: (txt, record) => {
                     return !this.props.readOnly && !Constants.minSM ?
-                        <Input disabled defaultValue={txt?txt:"美元"}></Input> :
-                        <span>{txt?txt:"美元"}</span>;
+                        <Input disabled defaultValue={txt ? txt : "美元"}></Input> :
+                        <span>{txt ? txt : "美元"}</span>;
                 },
-                layout: ColumnLayout.LeftBottom
+                hidden: Constants.minSM
             }, {
                 title: '申报单价',
                 dataIndex: 'declareUnitPrice',
@@ -205,23 +205,23 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                                           precision={2}
                                           onChange={v => this.onChange(v, record, 'declareUnitPrice')}></InputNumber>)}
                         </Form.Item> :
-                        <span>{txt}</span>;
+                        <span>{new String().concat(Constants.minSM ? "申报单价：" : "", txt)}</span>;
                 },
-                hidden: Constants.minSM
+                layout: ColumnLayout.LeftBottom
             }, {
                 title: '申报总值',
                 dataIndex: 'declareTotal',
                 render: (txt, record) => {
                     return !this.props.readOnly && !Constants.minSM ? <Input disabled value={txt}></Input> :
-                        Constants.minSM ? <span>申报总值:{txt}</span> : <span>{txt}</span>;
+                        <span>{new String().concat(Constants.minSM ? "申报总值：" : "", txt)}</span>;
                 },
-                layout: ColumnLayout.RightTop
+                layout: ColumnLayout.RightBottom
             }, {
                 title: '操作',
                 dataIndex: '6',
                 render: (txt, record) => {
                     return <div>
-                        {!this.props.readOnly?<a onClick={() => this.onDeleteClick(record)}>删除</a>:null}
+                        {!this.props.readOnly ? <a onClick={() => this.onDeleteClick(record)}>删除</a> : null}
                     </div>
                 },
                 layout: ColumnLayout.Option
@@ -254,7 +254,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
     }
 
     render() {
-        const {state: {visible}, props: {loading,form: {getFieldDecorator, getFieldValue, setFieldsValue}}} = this;
+        const {state: {visible}, props: {loading, form: {getFieldDecorator, getFieldValue, setFieldsValue}}} = this;
         return <FormSettingGroup title={"货品申报信息"} topBar={this.renderAddButton()} loading={loading}>
             {this.renderTable()}
             {visible ? <Modal title="货品信息"
