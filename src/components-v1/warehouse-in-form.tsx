@@ -2,6 +2,7 @@ import * as React from "react";
 import {hashHistory} from 'react-router';
 import {Component} from "react";
 import {Form, Button, Row, Col} from 'antd';
+
 const FormItem = Form.Item;
 import {ColProps} from "antd/lib/col";
 import {FormComponentProps} from 'antd/lib/form/Form';
@@ -15,6 +16,7 @@ import {FormStatusSelect} from "./form-status-select";
 import {FormInput} from "./form-input";
 import {FormInputNumber} from "./form-input-number";
 import {FormInputText} from "./form-input-text";
+import {Constants} from '../util/common';
 
 export interface WarehouseInFormProps extends FormComponentProps {
     /** 点击提交*/
@@ -107,8 +109,14 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
         const readonly = type === "view" ? true : false;
 
         /** vertical布局样式BUG --- 请勿移动控件顺序*/
-        const formItemLayout = type === "view" ? null : null;
-
+        const formItemLayout = type === "view" ? {
+            labelCol: {
+                xs: {span: 7}
+            },
+            wrapperCol: {
+                xs: {span: 17}
+            }
+        } : null;
         return (
             <Form className="warehouse-in-add-form" layout={type === "view" ? "inline" : "vertical"}
                   onSubmit={topThis.onSubmit.bind(this)}>
@@ -167,22 +175,28 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                         <FormItem {...formItemLayout} label={"初始体积(cm)"}>
                             <Row gutter={16} type="flex" justify="center" align="top" style={{minWidth: "200px"}}>
                                 <Col span={8}>
+                                    {Constants.minSM ? <span>长度：</span> : null}
                                     {getFieldDecorator('inLength', {
                                         rules: [{required: required, message: '请填写长度!'}],
                                     })(<FormInputNumber readonly={readonly} style={{width: '100%'}} min={0}
                                                         placeholder="长（cm）"/>)}
+                                    {Constants.minSM ? <span>cm</span> : null}
                                 </Col>
                                 <Col span={8}>
+                                    {Constants.minSM ? <span>宽度：</span> : null}
                                     {getFieldDecorator('inWidth', {
                                         rules: [{required: required, message: '请填写宽度!'}],
                                     })(<FormInputNumber readonly={readonly} style={{width: '100%'}} min={0}
                                                         placeholder="宽（cm）"/>)}
+                                    {Constants.minSM ? <span>cm</span> : null}
                                 </Col>
                                 <Col span={8}>
+                                    {Constants.minSM ? <span>高度：</span> : null}
                                     {getFieldDecorator('inHeight', {
                                         rules: [{required: required, message: '请填写高度!'}],
                                     })(<FormInputNumber readonly={readonly} style={{width: '100%'}} min={0}
                                                         placeholder="高（cm）"/>)}
+                                    {Constants.minSM ? <span>cm</span> : null}
                                 </Col>
                             </Row>
                         </FormItem>
@@ -191,14 +205,16 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                         <FormItem {...formItemLayout} label={"件数"}>
                             {getFieldDecorator("inPackageCount", {
                                 rules: [{required: required, message: '请填写件数!'}],
-                            })(<FormInputNumber readonly={readonly} style={{width: '100%'}} placeholder="件数"/>)}
+                            })(<FormInputNumber readonly={readonly} style={{width: '100%'}}
+                                                placeholder="件数"/>)}
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>
                         <FormItem {...formItemLayout} label={"入库状态"}>
                             {getFieldDecorator("inWareHouseStatus", {
                                 rules: [{required: required, message: '请选择状态!'}],
-                            })(<FormStatusSelect readonly={readonly} dataType={ModelNameSpace.OrderTypeEnum.WarehouseIn}
+                            })(<FormStatusSelect readonly={readonly}
+                                                 dataType={ModelNameSpace.OrderTypeEnum.WarehouseIn}
                                                  placeholder="入库状态"></FormStatusSelect>)}
                         </FormItem>
                     </Col>
@@ -224,8 +240,8 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                             hashHistory.goBack();
                         }}>取消</Button>
                     </Col>
-                </Row>: null}
-                {!readonly ? null: <Row>
+                </Row> : null}
+                {!readonly ? null : <Row>
                     <Col span={24}>
                         <Button type="primary" onClick={() => {
                             /** 返回路由*/
@@ -238,4 +254,5 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
     }
 }
 
-export default Form.create<any>()(WarehouseInForm);
+export default Form.create
+< any > ()(WarehouseInForm);

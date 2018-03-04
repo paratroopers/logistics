@@ -39,9 +39,17 @@
 /** 订单入库Form*/
 .warehouse-in-add-form {
   padding: 12px;
-  .ant-form-item-label {
-    /*    float: left;*/
+  @media (max-width: 768px) {
+    .ant-form-item-label {
+      /*    float: left;*/
+      line-height: 40px;
+    }
+
+    .ant-form-item {
+      display: block;
+    }
   }
+
 }
 
 /** 折叠面板*/
