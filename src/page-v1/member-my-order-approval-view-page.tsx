@@ -89,12 +89,15 @@ export class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrder
 
         return <Row className="member-my-order-package-view-page">
             <ContentHeaderControl title="查看"></ContentHeaderControl>
-            <FormOrderInfo {...(data ? {data: orederInfo} : {loading:true})}></FormOrderInfo>
-            <FormOrderRelation {...(data ? {data: data.customerOrderList} : {loading:true})}></FormOrderRelation>
+            <FormOrderInfo {...(data ? {data: orederInfo} : {loading: true})}></FormOrderInfo>
+            <FormOrderRelation {...(data ? {data: data.customerOrderList} : {loading: true})}></FormOrderRelation>
             <FormOrderAddressee selectContact={address} readOnly={true}></FormOrderAddressee>
-            <FormOrderDeclare {...(data ? {data: data.mergeDetailList} : {loading:true})} readOnly={true}></FormOrderDeclare>
-            <FormOrderChannel {...(data ? {ids: [data.mergeOrder.CustomerChooseChannelID]} : {loading:true})} readOnly={true}></FormOrderChannel>
-            <FormPackageRequirement {...(data ? {value: data.mergeOrder.CustomerMark}:{})} readOnly={true}></FormPackageRequirement>
+            <FormOrderDeclare {...(data ? {data: data.mergeDetailList} : {loading: true})}
+                              readOnly={true}></FormOrderDeclare>
+            {data ? <FormOrderChannel ids={[data.mergeOrder.CustomerChooseChannelID]}
+                                      readOnly={true}></FormOrderChannel> : null}
+            {data ? <FormPackageRequirement value={data.mergeOrder.CustomerMark}
+                                            readOnly={true}></FormPackageRequirement> : null}
         </Row>;
     }
 }
