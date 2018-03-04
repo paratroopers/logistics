@@ -124,8 +124,8 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
                     }),
                     /** 产品申报列表*/
                     productList: values.productList,
-                    currentStep: "0",
-                    currentStatus: "1",
+                    currentStep: "1",
+                    currentStatus: "0",
                     isAdmin: false
                 }
                 APINameSpace.CustomerOrderAPI.CustomerOrderMergeAdd(request).then((result: ResponseNameSpace.BaseResponse) => {
