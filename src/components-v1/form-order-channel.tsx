@@ -7,13 +7,14 @@ import {APINameSpace} from '../model/api';
 import {ResponseNameSpace} from '../model/response';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {FormChannelInfo} from './form-channel-info';
-import {isArray} from "util";
+import {isArray, isNullOrUndefined} from "util";
 
 export interface FormOrderChannelProps {
     readOnly?: boolean;
     data?: ModelNameSpace.ChannelModal[];
     ids?:string[];
     onChange?:(data:ModelNameSpace.ChannelModal[])=>void;
+    loading?:boolean;
 }
 
 export interface FormOrderChannelStates {
@@ -37,15 +38,16 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
         const topThis = this;
         const {props: {ids}} = topThis;
 
-        APINameSpace.CustomerOrderAPI.GetChannels().then((result: ResponseNameSpace.GetCustomerOrderChannelListResponse) => {
-            if (result.Status === 0) {
-                this.setState({
-                    data: isArray(result.Data) ? result.Data.filter((item) => {
-                        return ids.indexOf(item.ID)!==-1;
-                    }) : []
-                });
-            }
-        });
+        if(!isNullOrUndefined(ids))
+            APINameSpace.CustomerOrderAPI.GetChannels().then((result: ResponseNameSpace.GetCustomerOrderChannelListResponse) => {
+                if (result.Status === 0) {
+                    this.setState({
+                        data: isArray(result.Data) ? result.Data.filter((item) => {
+                            return ids.indexOf(item.ID)!==-1;
+                        }) : []
+                    });
+                }
+            });
     }
 
     onAddClick() {
@@ -129,7 +131,7 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
     }
 
     render() {
-        return <FormSettingGroup title={"渠道选择"} topBar={this.renderHeader()}>
+        return <FormSettingGroup title={"渠道选择"} topBar={this.renderHeader()} loading={this.props.loading}>
             {this.renderTable()}
             {<FormChannelInfo visible={this.state.channelsShow} onOk={this.onOk.bind(this)}
                               onChanel={this.onChanel.bind(this)}></FormChannelInfo>}

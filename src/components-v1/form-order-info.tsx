@@ -6,6 +6,7 @@ export interface FormOrderInfoProps {
     title?: string;
     size?: number;
     data?: FormOrderInfoModel;
+    loading?:boolean;
 }
 
 export interface FormOrderInfoStates {
@@ -34,8 +35,8 @@ export class FormOrderInfo extends React.Component<FormOrderInfoProps, FormOrder
     }
 
     render() {
-        const {state: {data}} = this;
-        return <FormSettingGroup title={"订单基本信息"}>
+        const {state: {data},props:{loading}} = this;
+        return <FormSettingGroup title={"订单基本信息"} loading={loading}>
             <div className="orderinfo">
                 <Row>
                     <Col xl={6} md={24}>

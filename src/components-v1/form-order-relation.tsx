@@ -7,6 +7,7 @@ import * as moment from 'moment';
 
 export interface FormOrderRelationProps {
     data?: ModelNameSpace.CustomerOrderModel[];
+    loading?:boolean;
 }
 
 export interface FormOrderRelationStates {
@@ -76,7 +77,7 @@ export class FormOrderRelation extends React.Component<FormOrderRelationProps, F
     }
 
     render() {
-        return <FormSettingGroup title={"关联订单信息"}>
+        return <FormSettingGroup title={"关联订单信息"} loading={this.props.loading}>
             {this.renderTable()}
         </FormSettingGroup>
     }

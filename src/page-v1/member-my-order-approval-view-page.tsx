@@ -42,9 +42,9 @@ export class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrder
         }
     }
 
-    componentDidMount(){
-        const topThis=this;
-        const {state:{selectedKey}}=topThis;
+    componentDidMount() {
+        const topThis = this;
+        const {state: {selectedKey}} = topThis;
         /** 未传值则返回*/
         if (isNullOrUndefined(selectedKey)) hashHistory.goBack();
 
@@ -57,7 +57,7 @@ export class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrder
         APINameSpace.CustomerOrderAPI.GetCustomerOrderMergeItem(request).then((result: ResponseNameSpace.GetCustomerOrderMergeDetailResponse) => {
             if (result.Status === 0) {
                 console.log(result);
-                topThis.setState({data:result.Data});
+                topThis.setState({data: result.Data});
             }
         });
     }
@@ -66,38 +66,35 @@ export class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrder
         const topThis = this;
         const {state: {data}} = topThis;
 
-        if(!data)
-            return null;
-
         /** 订单基本信息*/
-        const orederInfo:FormOrderInfoModel={
+        const orederInfo: FormOrderInfoModel = data ? {
             created: data.mergeOrder.Created.toString(),
             weight: data.mergeOrder.InWeightTotal,
             volume: data.mergeOrder.InVolumeTotal,
             count: data.mergeOrder.InPackageCountTotal
-        };
+        } : {};
 
         /** 收件人基本信息*/
-        const address:ModelNameSpace.AddressModel={
-            Tel:data.mergeOrder.tel,
-            taxno:data.mergeOrder.taxNo,
-            country:data.mergeOrder.country,
-            City:data.mergeOrder.city,
-            companyName:data.mergeOrder.company,
-            recipient:data.mergeOrder.recipient,
-            Address:data.mergeOrder.address,
-            postalcode:data.mergeOrder.code,
-        }
-        
+        const address: ModelNameSpace.AddressModel = data ? {
+            Tel: data.mergeOrder.tel,
+            taxno: data.mergeOrder.taxNo,
+            country: data.mergeOrder.country,
+            City: data.mergeOrder.city,
+            companyName: data.mergeOrder.company,
+            recipient: data.mergeOrder.recipient,
+            Address: data.mergeOrder.address,
+            postalcode: data.mergeOrder.code,
+        } : {};
+
 
         return <Row className="member-my-order-package-view-page">
-            <ContentHeaderControl title="查看" ></ContentHeaderControl>
-            <FormOrderInfo data={orederInfo}></FormOrderInfo>
-            <FormOrderRelation data={data.customerOrderList}></FormOrderRelation>
+            <ContentHeaderControl title="查看"></ContentHeaderControl>
+            <FormOrderInfo {...(data ? {data: orederInfo} : {loading:true})}></FormOrderInfo>
+            <FormOrderRelation {...(data ? {data: data.customerOrderList} : {loading:true})}></FormOrderRelation>
             <FormOrderAddressee selectContact={address} readOnly={true}></FormOrderAddressee>
-            <FormOrderDeclare data={data.mergeDetailList} readOnly={true}></FormOrderDeclare>
-            <FormOrderChannel ids={[data.mergeOrder.CustomerChooseChannelID]} readOnly={true}></FormOrderChannel>
-            <FormPackageRequirement value={data.mergeOrder.CustomerMark} readOnly={true}></FormPackageRequirement>
+            <FormOrderDeclare {...(data ? {data: data.mergeDetailList} : {loading:true})} readOnly={true}></FormOrderDeclare>
+            <FormOrderChannel {...(data ? {ids: [data.mergeOrder.CustomerChooseChannelID]} : {loading:true})} readOnly={true}></FormOrderChannel>
+            <FormPackageRequirement {...(data ? {value: data.mergeOrder.CustomerMark}:{})} readOnly={true}></FormPackageRequirement>
         </Row>;
     }
 }

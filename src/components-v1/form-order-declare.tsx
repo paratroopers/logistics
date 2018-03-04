@@ -13,6 +13,7 @@ export interface FormOrderDeclareProps extends FormComponentProps {
     readOnly?: boolean;
     data?: ModelNameSpace.CustomerOrderMergeProductModel[];
     onChange?: (data: ModelNameSpace.CustomerOrderMergeProductModel[]) => void;
+    loading?:boolean;
 }
 
 export interface FormOrderDeclareStates {
@@ -253,8 +254,8 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
     }
 
     render() {
-        const {state: {visible}, props: {form: {getFieldDecorator, getFieldValue, setFieldsValue}}} = this;
-        return <FormSettingGroup title={"货品申报信息"} topBar={this.renderAddButton()}>
+        const {state: {visible}, props: {loading,form: {getFieldDecorator, getFieldValue, setFieldsValue}}} = this;
+        return <FormSettingGroup title={"货品申报信息"} topBar={this.renderAddButton()} loading={loading}>
             {this.renderTable()}
             {visible ? <Modal title="货品信息"
                               visible
