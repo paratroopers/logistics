@@ -13,7 +13,6 @@ export interface FormOrderDeclareProps extends FormComponentProps {
     readOnly?: boolean;
     data?: requestNameSpace.OrderMergeProductListModel[];
     onChange?: (data: requestNameSpace.OrderMergeProductListModel[]) => void;
-    parentForm?: WrappedFormUtils;
 }
 
 export interface FormOrderDeclareStates {
@@ -114,13 +113,13 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
     }
 
     onOk() {
-        this.props.parentForm.validateFields((err, values) => {
+        this.props.form.validateFields((err, values) => {
             console.log(1);
         })
     }
 
     renderTable() {
-        const {props: {parentForm: {getFieldDecorator}}} = this;
+        const {props: {form: {getFieldDecorator}}} = this;
         const colums: CommonColumnProps<requestNameSpace.OrderMergeProductListModel>[] = [
             {
                 title: '产品名称',

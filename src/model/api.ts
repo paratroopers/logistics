@@ -254,8 +254,8 @@ export namespace APINameSpace {
 
         /** 客户合并订单新增*/
         static CustomerOrderMergeAdd(data: requestNameSpace.CustomerOrderMergeAddRequest){
-            let url: string = CommonAPI.baseURL + "CustomerOrderMergeAddRequest";
-            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().post(url);
+            let url: string = CommonAPI.baseURL + "CustomerOrderMerge/Item/Insert";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().post(url,data);
         }
     }
 
