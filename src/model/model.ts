@@ -1,3 +1,5 @@
+import {Util} from '../util/util';
+
 export namespace ModelNameSpace {
 
     //region 基类定义区
@@ -155,7 +157,6 @@ export namespace ModelNameSpace {
         SizeLimit?: string
     }
 
-
     export interface QuotationModel {
         Amount?: number;
         Clause?: string;
@@ -181,8 +182,6 @@ export namespace ModelNameSpace {
         WeightLimit?: string,
         SizeLimit?: string
     }
-
-
     //endregion
 
     //region 用户或者会员模块定义区
@@ -287,25 +286,6 @@ export namespace ModelNameSpace {
         waitForPayCount?: number;
     }
 
-    export interface CustomerOrderModel extends BaseModel {
-        CustomerOrderNo?: string;
-        CustomerServiceID?: string;
-        ID?: string;
-        InHeight?: number;
-        InLength?: number;
-        InPackageCount?: number;
-        InVolume?: number;
-        InWareHouseTime?: string;
-        InWeight?: number;
-        InWidth?: number;
-        TransferNo?: string;
-        WareHouseID?: string;
-        expressNo?: string;
-        expressTypeID?: string;
-        expressTypeName?: string;
-        userid?: string;
-    }
-
     export interface ChannelModal extends BaseModel {
         TenantID?: string;
         ID?: string;
@@ -316,50 +296,6 @@ export namespace ModelNameSpace {
         Clause?: string;
         WeightLimit?: string;
         SizeLimit?: string;
-    }
-
-    export interface CustomerOrderMergeModel extends BaseModel {
-        currentStatus?: string;
-        currentStep?: string;
-        ID?: string;
-        UserID?: number;
-        MergeOrderNo?: number;
-        CustomerMark?: string;
-        CustomerChooseChannelID?: number;
-        CustomerChooseChannelName?: string;
-        InWeightTotal?: number;
-        InVolumeTotal?: number;
-        InPackageCountTotal?: number;
-        recipient?: string;
-        country?: string;
-        address?: string;
-        city?: string;
-        code?: string;
-        tel?: string;
-        company?: string;
-        taxNo?: string;
-        declareTotal?: number;
-        customerServiceMark?: string;
-        packageMark?: string;
-        packageWeight?: number;
-        packageVolume?: number;
-        packageLength?: number;
-        packageHeight?: number;
-        packageWidth?: number;
-        settlementWeight?: number;
-        freightFee?: number;
-        tax?: number;
-        serviceFee?: number;
-        remoteFee?: number;
-        magneticinspectionFee?: number;
-        totalFee?: number;
-        ChannelID?: number;
-        ChannelName?: string;
-        channelNo?: string;
-        deliverTime?: Date,
-        AgentID?: number;
-        Created?: Date;
-        Modified?: Date;
     }
 
     export interface FormDeliveredModel {
@@ -454,14 +390,134 @@ export namespace ModelNameSpace {
         pay = 15
 
     }
-
-
     //endregion
 
-    //region 客户待打包定义区
+    //region 客户定义区
+
+    /** 客户订单Model*/
+    export interface CustomerOrderModel extends BaseModel {
+        CustomerOrderNo?: string;
+        CustomerServiceID?: string;
+        ID?: string;
+        InHeight?: number;
+        InLength?: number;
+        InPackageCount?: number;
+        InVolume?: number;
+        InWareHouseTime?: string;
+        InWeight?: number;
+        InWidth?: number;
+        TransferNo?: string;
+        WareHouseID?: string;
+        expressNo?: string;
+        expressTypeID?: string;
+        expressTypeName?: string;
+        userid?: string;
+    }
+
+    /** 合并订单Model*/
+    export interface CustomerOrderMergeModel extends BaseModel {
+        currentStatus:string,
+        currentStep:string,
+        ID:string,
+        UserID:string,
+        MergeOrderNo:string,
+        CustomerMark:string,
+        CustomerChooseChannelID:string,
+        CustomerChooseChannelName:string,
+        ChannelName:string,
+        InWeightTotal:number,
+        InVolumeTotal:number,
+        InPackageCountTotal:number,
+        recipient:string,
+        country:string,
+        address:string,
+        city:string,
+        code:string,
+        tel:string,
+        company:string,
+        taxNo:string,
+        declareTotal:number,
+        customerServiceMark:string,
+        packageMark:string,
+        packageWeight:number,
+        packageVolume:number,
+        packageLength:number,
+        packageHeight:number,
+        packageWidth:number,
+        settlementWeight:number,
+        freightFee:number,
+        tax:number,
+        serviceFee:number,
+        remoteFee:number,
+        magneticinspectionFee:number,
+        totalFee:number,
+        ChannelID:string,
+        channelNo:string,
+        deliverTime:Date,
+        AgentID:string,
+    }
+
+    /** 合并订单状态Model*/
+    export interface CustomerOrderMergeStatusModel extends BaseModel{
+        ID:string,
+        mergeOrderID:string,
+        mergeOrderNo:string,
+        currentStep:string,
+        currentStatus:string
+    }
+
+    /** 合并订单货品申报Model*/
+    export class CustomerOrderMergeProductModel {
+        constructor() {
+            this.productName = "";
+            this.productNameEN = "";
+            this.HSCode = "美元";
+            this.declareUnitPrice = 0;
+            this.count = 0;
+            this.ID = Util.guid();
+            this.total = '00.00';
+        }
+        ID?: string;
+        total?: string;
+        productName?: string;
+        productNameEN?: string;
+        HSCode?: string;
+        declareUnitPrice?: number;
+        count?: number;
+        mergeOrderID?:string;
+        declareTotal?:string;
+    }
+
+    /** 合并订单详情Model*/
+    export interface CustomerOrderMergeDetailModel{
+        mergeOrder?:CustomerOrderMergeModel,
+        mergeStatus?:CustomerOrderMergeStatusModel,
+        customerOrderList?:CustomerOrderModel[],
+        mergeDetailList:CustomerOrderMergeProductModel[]
+    }
     //endregion
 
     //region 客服阶段定义区
+
+    /** 合并详情*/
+    export class PackageDetailListModel {
+        constructor() {
+            this.ID = Util.guid();
+            this.PackageName = "";
+            this.PackageLength = 0;
+            this.PackageWidth = 0;
+            this.PackageHeight = 0;
+            this.PackageWeight = 0;
+        }
+
+        ID?: string;
+        PackageName?: string;
+        PackageLength?: number;
+        PackageWidth?: number;
+        PackageHeight?: number;
+        PackageWeight?: number;
+    }
+
     //endregion
 
     //region 报表定义区

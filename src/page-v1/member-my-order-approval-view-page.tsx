@@ -40,8 +40,6 @@ export class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrder
         const {state:{selectedKey}}=topThis;
         /** 未传值则返回*/
         if (isNullOrUndefined(selectedKey)) hashHistory.goBack();
-
-
     }
 
     render() {

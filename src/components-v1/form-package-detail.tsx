@@ -2,23 +2,23 @@ import * as React from 'react';
 import {Input, Table, InputNumber, Icon} from 'antd';
 import {FormSettingGroup} from './form-setting-group';
 import {ColumnProps} from 'antd/lib/table';
-import {requestNameSpace} from '../model/request';
+import {ModelNameSpace} from '../model/model';
 import {Util} from '../util/util';
 import {isNullOrUndefined} from "util";
 
-const PackageDetailListModel = requestNameSpace.PackageDetailListModel;
+const PackageDetailListModel = ModelNameSpace.PackageDetailListModel;
 
 export interface FormPackageDetailProps {
     readOnly?: boolean;
-    onChange?: (data?: requestNameSpace.PackageDetailListModel[]) => void;
-    value?: requestNameSpace.PackageDetailListModel[];
+    onChange?: (data?: ModelNameSpace.PackageDetailListModel[]) => void;
+    value?: ModelNameSpace.PackageDetailListModel[];
 }
 
 export interface FormPackageDetailStates {
-    data?: requestNameSpace.PackageDetailListModel[];
+    data?: ModelNameSpace.PackageDetailListModel[];
 }
 
-class FormPackageDetailTable extends Table<requestNameSpace.PackageDetailListModel> {
+class FormPackageDetailTable extends Table<ModelNameSpace.PackageDetailListModel> {
 }
 
 export class FormPackageDetail extends React.Component<FormPackageDetailProps, FormPackageDetailStates> {
@@ -36,13 +36,13 @@ export class FormPackageDetail extends React.Component<FormPackageDetailProps, F
         this.setState({data: data});
     }
 
-    onDeleteClick(record: requestNameSpace.PackageDetailListModel) {
+    onDeleteClick(record: ModelNameSpace.PackageDetailListModel) {
         let data = this.state.data;
         Util.remove(data, i => i.ID === record.ID);
         this.setState({data: data});
     }
 
-    onChange(value, record: requestNameSpace.PackageDetailListModel, fieldName: string) {
+    onChange(value, record: ModelNameSpace.PackageDetailListModel, fieldName: string) {
         const topThis = this;
         const {props: {onChange}} = topThis;
         let data = this.state.data;
@@ -57,7 +57,7 @@ export class FormPackageDetail extends React.Component<FormPackageDetailProps, F
     }
 
     renderTable() {
-        const columns: ColumnProps<requestNameSpace.PackageDetailListModel>[] = [
+        const columns: ColumnProps<ModelNameSpace.PackageDetailListModel>[] = [
             {
                 title: '包裹名称',
                 dataIndex: 'PackageName',

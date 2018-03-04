@@ -14,11 +14,9 @@ export namespace APINameSpace {
         static baseFileURL = "http://www.famliytree.cn";
         //static baseFileURL = "http://localhost:8090";
     }
-
     //endregion
 
     //region 系统模块定义区
-
     export class SystemAPI {
         static async GetExpressTypeAll() {
             let url: string = CommonAPI.baseURL + "ExpressType/all";
@@ -37,11 +35,9 @@ export namespace APINameSpace {
 
 
     }
-
     //endregion
 
     //region 报价定义区
-
     export class QuotationApi {
         static async GetCountry(data: requestNameSpace.CountryRequest) {
             let url: string = CommonAPI.baseURL + "Quotation/Country/Items";
@@ -59,12 +55,9 @@ export namespace APINameSpace {
             return new Request<requestNameSpace.QuotationRequest, ResponseNameSpace.BaseResponse>().get(url, reqeust);
         }
     }
-
-
     //endregion
 
     //region 用户或者会员模块定义区
-
     export class RegisterAPI {
         /** 获取验证码*/
         static async GetCode(data?: requestNameSpace.GetCodeRequest) {
@@ -84,7 +77,6 @@ export namespace APINameSpace {
             return new Request<requestNameSpace.AccountValidateRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
     }
-
 
     export class LoginApi {
         /** 登录*/
@@ -155,7 +147,7 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.GetMemberOrderStatusResponse>().post(url, null);
         }
 
-        /*会员,客服，仓库管理员 模糊查询*/
+        /** 会员,客服，仓库管理员 模糊查询*/
         static async UserSearchIndex(data: requestNameSpace.UserSearchIndexRequest) {
             let url: string = CommonAPI.baseURL + "Memeber/users/Index";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
@@ -176,12 +168,9 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
     }
-
-
     //endregion
 
     //region 仓库入库,打包，出库定义区
-    /** 仓库*/
     export class WarehouseAPI {
         /** 获取仓库入库列表*/
         static async GetWarehouseInItems(data: requestNameSpace.GetWarehouseInListRequest) {
@@ -221,7 +210,7 @@ export namespace APINameSpace {
     //endregion
 
     export class CustomerOrderAPI {
-        /*客户订单 入库的快递单号*/
+        /** 客户订单 入库的快递单号*/
         static async OrderSearchIndex(data: requestNameSpace.OrderSearchIndexRequest) {
             let url: string = CommonAPI.baseURL + "CustomerOrder/order/Index";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
@@ -256,6 +245,12 @@ export namespace APINameSpace {
         static CustomerOrderMergeAdd(data: requestNameSpace.CustomerOrderMergeAddRequest){
             let url: string = CommonAPI.baseURL + "CustomerOrderMerge/Item/Insert";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().post(url,data);
+        }
+
+        /** 客户合并订单新增*/
+        static GetCustomerOrderMergeItem(data: requestNameSpace.GetCustomerOrderMergeItemRequest){
+            let url: string = CommonAPI.baseURL + "CustomerOrderMerge/Item";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url,data);
         }
     }
 
