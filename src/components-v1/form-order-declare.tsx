@@ -34,6 +34,18 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
         }
     }
 
+    componentDidMount(){
+        const topThis=this;
+        const {state:{data}}=topThis;
+
+        let total: number = 0;
+        Util.each(data, d => {
+            d.total = (d.declareUnitPrice * d.count).toFixed(2);
+            total += Number(d.total);
+        });
+        this.setState({total: total.toFixed(2), data: data});
+    }
+
     componentWillReceiveProps(nextProps) {
         if ('data' in nextProps && nextProps.data !== this.props.data) {
             this.setState({data: nextProps.data});
@@ -122,7 +134,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
         const {props: {form: {getFieldDecorator}}} = this;
         const colums: CommonColumnProps<ModelNameSpace.CustomerOrderMergeProductModel>[] = [
             {
-                title: '产品名称',
+                title: '产品名称(中文)',
                 dataIndex: 'productName',
                 render: (txt, record, index) => {
                     return !this.props.readOnly && !Constants.minSM ?
@@ -132,6 +144,20 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                         })
                         (<Input
                             onChange={e => this.onChange(e.target.value, record, 'productName')}></Input>)}</Form.Item>
+                        : <span>{txt}</span>;
+                },
+                layout: ColumnLayout.LeftTop
+            },{
+                title: '产品名称(英文)',
+                dataIndex: 'productNameEN',
+                render: (txt, record, index) => {
+                    return !this.props.readOnly && !Constants.minSM ?
+                        <Form.Item>{getFieldDecorator(`productList[${index}].productNameEN`, {
+                            initialValue: txt,
+                            rules: [{required: true, message: '产品名称必须填写'}]
+                        })
+                        (<Input
+                            onChange={e => this.onChange(e.target.value, record, 'productNameEN')}></Input>)}</Form.Item>
                         : <span>{txt}</span>;
                 },
                 layout: ColumnLayout.LeftTop
@@ -159,8 +185,8 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                 dataIndex: 'HSCode',
                 render: (txt, record) => {
                     return !this.props.readOnly && !Constants.minSM ?
-                        <Input disabled defaultValue={txt}></Input> :
-                        <span>{txt}</span>;
+                        <Input disabled defaultValue={txt?txt:"美元"}></Input> :
+                        <span>{txt?txt:"美元"}</span>;
                 },
                 layout: ColumnLayout.LeftBottom
             }, {
@@ -183,7 +209,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                 hidden: Constants.minSM
             }, {
                 title: '申报总值',
-                dataIndex: 'total',
+                dataIndex: 'declareTotal',
                 render: (txt, record) => {
                     return !this.props.readOnly && !Constants.minSM ? <Input disabled value={txt}></Input> :
                         Constants.minSM ? <span>申报总值:{txt}</span> : <span>{txt}</span>;
@@ -194,7 +220,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                 dataIndex: '6',
                 render: (txt, record) => {
                     return <div>
-                        <a onClick={() => this.onDeleteClick(record)}>删除</a>
+                        {!this.props.readOnly?<a onClick={() => this.onDeleteClick(record)}>删除</a>:null}
                     </div>
                 },
                 layout: ColumnLayout.Option

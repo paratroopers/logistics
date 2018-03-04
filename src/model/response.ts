@@ -54,6 +54,8 @@ export namespace ResponseNameSpace {
     export  interface  GetCustomerOrderMergeListResponse extends  BaseModelListResonse<ModelNameSpace.CustomerOrderMergeModel>{}
     /** 合并订单详情*/
     export interface GetCustomerOrderMergeDetailResponse extends BaseModelResponse<ModelNameSpace.CustomerOrderMergeDetailModel>{}
+    /** 渠道信息*/
+    export interface GetCustomerOrderChannelListResponse extends BaseModelListResonse<ModelNameSpace.ChannelModal>{}
     //endregion
 
     //region 客服阶段定义区

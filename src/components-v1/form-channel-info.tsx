@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {Table, Modal, message} from 'antd';
+import { Modal, message} from 'antd';
 import {TableRowSelection} from 'antd/lib/table';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
+import {ResponseNameSpace} from '../model/response';
 
 
 export interface FormChannelInfoProps {
@@ -35,10 +36,10 @@ export class FormChannelInfo extends React.Component<FormChannelInfoProps, FormC
     }
 
     getData(pageIndex?: number) {
-        APINameSpace.CustomerOrderAPI.GetChannels().then(r => {
-            if (r.Status === 0) {
+        APINameSpace.CustomerOrderAPI.GetChannels().then((result:ResponseNameSpace.GetCustomerOrderChannelListResponse) => {
+            if (result.Status === 0) {
                 this.setState({
-                    data: r.Data
+                    data: result.Data
                 });
             }
         });
@@ -103,8 +104,11 @@ export class FormChannelInfo extends React.Component<FormChannelInfoProps, FormC
     };
 
     onOk() {
-        if (this.state.selectRow)
-            this.props.onOk && this.props.onOk(this.state.selectRow)
+        const topThis=this;
+        const {props:{onOk},state:{selectRow}}=topThis;
+        if (selectRow)
+            if(onOk)
+                onOk(this.state.selectRow);
         else
             message.warning('请选择渠道');
     }

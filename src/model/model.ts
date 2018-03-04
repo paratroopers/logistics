@@ -72,16 +72,25 @@ export namespace ModelNameSpace {
     }
 
     export interface AddressModel extends BaseModel {
-        taxno?: string;
-        companyName?: string;
-        recipient?: string;
-        country?: string;
         ID?: string;
         Userid?: string;
         ProvinceID?: string;
+
+        /** 邮编*/
+        taxno?: string;
+        /** 公司*/
+        companyName?: string;
+        /** 收件人姓名*/
+        recipient?: string;
+        /** 国家*/
+        country?: string;
+        /** 城市*/
         City?: string;
+        /** 税号*/
         postalcode?: string;
+        /** 电话*/
         Tel?: string;
+        /** 地址*/
         Address?: string;
     }
 
@@ -420,29 +429,52 @@ export namespace ModelNameSpace {
         currentStep:string,
         ID:string,
         UserID:string,
+        /** 合并订单编号*/
         MergeOrderNo:string,
+        /** 备注*/
         CustomerMark:string,
+        /** 渠道ID*/
         CustomerChooseChannelID:string,
+        /** 客户选择渠道Name*/
         CustomerChooseChannelName:string,
+        /** 渠道Name*/
         ChannelName:string,
+        /** 总重量*/
         InWeightTotal:number,
+        /** 总体积*/
         InVolumeTotal:number,
+        /** 总打包数量*/
         InPackageCountTotal:number,
+        /** 收件人姓名*/
         recipient:string,
+        /** 国家*/
         country:string,
+        /** 地址*/
         address:string,
+        /** 城市*/
         city:string,
         code:string,
+        /** 电话*/
         tel:string,
+        /** 公司*/
         company:string,
+        /** 邮编*/
         taxNo:string,
+        /** 申报总数*/
         declareTotal:number,
+        /** 客服备注*/
         customerServiceMark:string,
+        /** 打包备注*/
         packageMark:string,
+        /** 打包重量*/
         packageWeight:number,
+        /** 打包体积*/
         packageVolume:number,
+        /** 打包长度*/
         packageLength:number,
+        /** 打包高度*/
         packageHeight:number,
+        /** 打包宽度*/
         packageWidth:number,
         settlementWeight:number,
         freightFee:number,
@@ -451,7 +483,9 @@ export namespace ModelNameSpace {
         remoteFee:number,
         magneticinspectionFee:number,
         totalFee:number,
+        /** 渠道ID*/
         ChannelID:string,
+        /** 渠道编号*/
         channelNo:string,
         deliverTime:Date,
         AgentID:string,
@@ -475,7 +509,7 @@ export namespace ModelNameSpace {
             this.declareUnitPrice = 0;
             this.count = 0;
             this.ID = Util.guid();
-            this.total = '00.00';
+            this.declareTotal = '00.00';
         }
         ID?: string;
         total?: string;

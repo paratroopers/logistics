@@ -226,11 +226,13 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, {request: data});
         }
 
+        /** 获取渠道信息List*/
         static async GetChannels() {
             let url: string = CommonAPI.baseURL + "Channel/Items";
-            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url);
+            return new Request<BaseRequest, ResponseNameSpace.GetCustomerOrderChannelListResponse>().get(url);
         }
 
+        /** 获取附件List*/
         static GetAttachments(data) {
             let url: string = CommonAPI.baseURL + "File/Attachments/items";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, Object.assign({}, data, {isAdmin: false}));

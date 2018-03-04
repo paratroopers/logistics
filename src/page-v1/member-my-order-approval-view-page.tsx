@@ -8,6 +8,7 @@ import {APINameSpace} from '../model/api';
 import {
     ContentHeaderControl,
     FormOrderInfo,
+    FormOrderInfoModel,
     FormOrderRelation,
     FormOrderAddressee,
     FormOrderDeclare,
@@ -26,6 +27,7 @@ interface MemberMyOrderApprovalViewPageStates {
     /** 源数据*/
     data?:ModelNameSpace.CustomerOrderMergeDetailModel;
 }
+
 export interface QueryData {
     ids?: string
 }
@@ -64,14 +66,38 @@ export class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrder
         const topThis = this;
         const {state: {data}} = topThis;
 
-        return data ? <Row className="member-my-order-package-view-page">
-            <ContentHeaderControl title="查看"></ContentHeaderControl>
-            <FormOrderInfo></FormOrderInfo>
-            <FormOrderRelation></FormOrderRelation>
-            <FormOrderAddressee></FormOrderAddressee>
-            <FormOrderDeclare></FormOrderDeclare>
-            <FormOrderChannel></FormOrderChannel>
-            <FormPackageRequirement></FormPackageRequirement>
-        </Row> : null;
+        if(!data)
+            return null;
+
+        /** 订单基本信息*/
+        const orederInfo:FormOrderInfoModel={
+            created: data.mergeOrder.Created.toString(),
+            weight: data.mergeOrder.InWeightTotal,
+            volume: data.mergeOrder.InVolumeTotal,
+            count: data.mergeOrder.InPackageCountTotal
+        };
+
+        /** 收件人基本信息*/
+        const address:ModelNameSpace.AddressModel={
+            Tel:data.mergeOrder.tel,
+            taxno:data.mergeOrder.taxNo,
+            country:data.mergeOrder.country,
+            City:data.mergeOrder.city,
+            companyName:data.mergeOrder.company,
+            recipient:data.mergeOrder.recipient,
+            Address:data.mergeOrder.address,
+            postalcode:data.mergeOrder.code,
+        }
+        
+
+        return <Row className="member-my-order-package-view-page">
+            <ContentHeaderControl title="查看" ></ContentHeaderControl>
+            <FormOrderInfo data={orederInfo}></FormOrderInfo>
+            <FormOrderRelation data={data.customerOrderList}></FormOrderRelation>
+            <FormOrderAddressee selectContact={address} readOnly={true}></FormOrderAddressee>
+            <FormOrderDeclare data={data.mergeDetailList} readOnly={true}></FormOrderDeclare>
+            <FormOrderChannel ids={[data.mergeOrder.CustomerChooseChannelID]} readOnly={true}></FormOrderChannel>
+            <FormPackageRequirement value={data.mergeOrder.CustomerMark} readOnly={true}></FormPackageRequirement>
+        </Row>;
     }
 }

@@ -168,8 +168,10 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
             hidden: Constants.minSM
         }, {
             title: "状态",
-            dataIndex: 'currentStep',
             layout: ColumnLayout.RightBottom,
+            render: (txt) => {
+                return <span>待打包</span>
+            }
         }, {
             title: "创建时间",
             dataIndex: 'Modified',

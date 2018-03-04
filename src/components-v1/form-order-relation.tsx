@@ -11,7 +11,6 @@ export interface FormOrderRelationProps {
 
 export interface FormOrderRelationStates {
     data?: ModelNameSpace.CustomerOrderModel[];
-    loading?: boolean;
 }
 
 class FormOrderRelationTable extends CommonTable<any> {
@@ -21,14 +20,13 @@ export class FormOrderRelation extends React.Component<FormOrderRelationProps, F
     constructor(props, context) {
         super(props, context);
         this.state = {
-            data: props.data ? props.data : [],
-            loading: true
+            data: props.data ? props.data : []
         }
     }
 
     componentWillReceiveProps(nextProps) {
         if ('data' in nextProps && nextProps.data !== this.props.data) {
-            this.setState({data: nextProps.data, loading: false});
+            this.setState({data: nextProps.data});
         }
     }
 
@@ -72,7 +70,7 @@ export class FormOrderRelation extends React.Component<FormOrderRelationProps, F
             }
         ]
         return <FormOrderRelationTable columns={colums}
-                                       loading={this.state.loading}
+                                       rowKey={"ID"}
                                        pagination={false}
                                        dataSource={this.state.data}></FormOrderRelationTable>
     }

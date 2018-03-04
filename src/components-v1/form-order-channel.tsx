@@ -3,12 +3,16 @@ import { Icon} from 'antd';
 import {Util} from '../util/util';
 import {FormSettingGroup} from './form-setting-group';
 import {ModelNameSpace} from '../model/model';
+import {APINameSpace} from '../model/api';
+import {ResponseNameSpace} from '../model/response';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {FormChannelInfo} from './form-channel-info';
+import {isArray} from "util";
 
 export interface FormOrderChannelProps {
     readOnly?: boolean;
     data?: ModelNameSpace.ChannelModal[];
+    ids?:string[];
     onChange?:(data:ModelNameSpace.ChannelModal[])=>void;
 }
 
@@ -24,9 +28,24 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
     constructor(props, context) {
         super(props, context);
         this.state = {
-            data: [],
+            data: props.data ? props.data : [],
             channelsShow: false
         }
+    }
+
+    componentDidMount() {
+        const topThis = this;
+        const {props: {ids}} = topThis;
+
+        APINameSpace.CustomerOrderAPI.GetChannels().then((result: ResponseNameSpace.GetCustomerOrderChannelListResponse) => {
+            if (result.Status === 0) {
+                this.setState({
+                    data: isArray(result.Data) ? result.Data.filter((item) => {
+                        return ids.indexOf(item.ID)!==-1;
+                    }) : []
+                });
+            }
+        });
     }
 
     onAddClick() {
@@ -54,6 +73,9 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
     }
 
     renderTable() {
+        const topThis = this;
+        const {props: {readOnly}} = topThis;
+
         const columns: CommonColumnProps<ModelNameSpace.ChannelModal>[] = [
             {
                 title: '渠道名称',
@@ -89,7 +111,7 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
                 title: '操作',
                 dataIndex: '',
                 render: (txt, record) => {
-                    return <a onClick={() => this.onDelete(record)}>删除</a>
+                    return !readOnly ? <a onClick={() => this.onDelete(record)}>删除</a> : null
                 },
                 layout: ColumnLayout.Option
             }];

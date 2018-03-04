@@ -6,12 +6,10 @@ export interface FormOrderInfoProps {
     title?: string;
     size?: number;
     data?: FormOrderInfoModel;
-    loading?: boolean;
 }
 
 export interface FormOrderInfoStates {
     data?: FormOrderInfoModel;
-    loading?: boolean;
 }
 
 export interface FormOrderInfoModel {
@@ -25,20 +23,19 @@ export class FormOrderInfo extends React.Component<FormOrderInfoProps, FormOrder
     constructor(props, context) {
         super(props, context);
         this.state = {
-            data: props.data ? props.data : {},
-            loading: props.loading ? props.loading : true,
+            data: props.data ? props.data : {}
         }
     }
 
     componentWillReceiveProps(nextProps) {
         if ('data' in nextProps && nextProps.data !== this.props.data) {
-            this.setState({data: nextProps.data, loading: false});
+            this.setState({data: nextProps.data});
         }
     }
 
     render() {
-        const {state: {data, loading}} = this;
-        return <FormSettingGroup loading={loading} title={"订单基本信息"}>
+        const {state: {data}} = this;
+        return <FormSettingGroup title={"订单基本信息"}>
             <div className="orderinfo">
                 <Row>
                     <Col xl={6} md={24}>
