@@ -1,8 +1,6 @@
 import * as React from 'react';
-import {withRouter,RouteComponentProps,hashHistory} from 'react-router';
-import {isNullOrUndefined} from "util";
-import {Layout, Row, Col, Button, Icon} from 'antd';
-import {ModelNameSpace} from '../model/model';
+import {withRouter, RouteComponentProps, hashHistory} from 'react-router';
+import {Layout, Row, Col, Button, Icon, Spin} from 'antd';
 import {
     FormOrderInfo,
     ContentHeaderControl,
@@ -13,11 +11,23 @@ import {
     FormOrderChannel
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
+import {requestNameSpace} from '../model/request';
+import {ModelNameSpace} from '../model/model';
+import {APINameSpace} from '../model/api';
 
-interface CustomerServiceConfirmApprovePageProps extends RouteComponentProps<any, any>, FormComponentProps {}
+interface CustomerServiceConfirmApprovePageProps extends RouteComponentProps<any, any>, FormComponentProps {
+}
 
 interface CustomerServiceConfirmApprovePageStates {
-    viewData?: ModelNameSpace.CustomerOrderModel
+    viewData?: ModelNameSpace.CustomerOrderModel;
+    /** 原始订单ID*/
+    selectedKey?: string;
+    /** 源数据*/
+    data?: ModelNameSpace.CustomerOrderMergeDetailModel;
+}
+
+export interface QueryData {
+    id?: string;
 }
 
 @withRouter
@@ -25,23 +35,31 @@ export class CustomerServiceConfirmApprovePage extends React.Component<CustomerS
     constructor(props) {
         super(props);
         this.state = {
-            viewData: {}
+            selectedKey: (this.props.location.query as QueryData).id,
+            data: {}
         }
     }
 
     componentDidMount() {
-        const topThis = this;
-        const {props: {location}} = topThis;
-        /** 获取页面传值*/
-        const viewData: ModelNameSpace.CustomerOrderModel = location.state;
+        const {state: {selectedKey}} = this;
         /** 未传值则返回*/
-        if (isNullOrUndefined(viewData)) hashHistory.goBack();
-        topThis.setState({viewData: viewData});
+        !selectedKey && hashHistory.goBack();
+        this.getOrderInfo();
+    }
+
+    async getOrderInfo() {
+        /** 通过ID获取表单数据*/
+        const request: requestNameSpace.GetCustomerOrderMergeItemRequest = {
+            customerOrderMergeID: this.state.selectedKey,
+            isAdmin: false
+        }
+        const response = await APINameSpace.CustomerOrderAPI.GetCustomerOrderMergeItem(request);
+        response.Status === 0 && this.setState({data: response.Data || {}});
     }
 
     renderForm() {
-        const topThis = this;
-        const {props: {form}} = topThis;
+        const {state: {data, data: {customerOrderList, mergeDetailList, mergeOrder}}} = this;
+        const _mergeOrder = mergeOrder ? mergeOrder : {};
         return <Layout.Content>
             <Row justify="start" type="flex" style={{margin: '10px 0px 10px 0px'}}>
                 <Col span={24}>
@@ -56,24 +74,24 @@ export class CustomerServiceConfirmApprovePage extends React.Component<CustomerS
                     </div>
                 </Col>
             </Row>
-            <FormOrderInfo></FormOrderInfo>
-            <FormOrderRelation></FormOrderRelation>
-            <FormOrderAddressee></FormOrderAddressee>
-            <FormOrderDeclare></FormOrderDeclare>
-            <FormOrderChannel></FormOrderChannel>
-            <FormPackageRequirement></FormPackageRequirement>
+            <FormOrderInfo data={new ModelNameSpace.FormOrderInfoModel(data)}></FormOrderInfo>
+            <FormOrderRelation data={customerOrderList}></FormOrderRelation>
+            <FormOrderAddressee selectContact={new ModelNameSpace.AddressModel(data)} readOnly></FormOrderAddressee>
+            <FormOrderDeclare data={mergeDetailList}></FormOrderDeclare>
+            <FormOrderChannel ids={[_mergeOrder['CustomerChooseChannelID']]}></FormOrderChannel>
+            <FormPackageRequirement value={_mergeOrder['CustomerMark']} readOnly></FormPackageRequirement>
         </Layout.Content>
     }
 
     render() {
-        const topThis = this;
-        const {state: {viewData}} = topThis;
+        const {state: {data}} = this;
         return <Layout className="customer-service-confirm-approve-page view-content-page">
             <Layout.Header className="customer-service-confirm-approve-page-header view-content-page-header">
                 <ContentHeaderControl title="审批"></ContentHeaderControl>
             </Layout.Header>
-            {!isNullOrUndefined(viewData) ? topThis.renderForm() :
-                <Layout.Content>暂无数据</Layout.Content>}
+            <Spin spinning={!Object.keys(data).length}>
+                {this.renderForm()}
+            </Spin>
         </Layout>
     }
 }

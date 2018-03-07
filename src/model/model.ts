@@ -1,4 +1,5 @@
 import {Util} from '../util/util';
+import {isUndefined} from "util";
 
 export namespace ModelNameSpace {
 
@@ -7,7 +8,7 @@ export namespace ModelNameSpace {
     export interface BaseModel {
         TenantID?: string;
         CreatedBy?: string;
-        CreatedByName?:string;
+        CreatedByName?: string;
         ModifiedBy?: string;
         ModifiedByName?: string;
         Created?: Date;
@@ -71,28 +72,6 @@ export namespace ModelNameSpace {
         userInfo?: UserInfoModel;
     }
 
-    export interface AddressModel extends BaseModel {
-        ID?: string;
-        Userid?: string;
-        ProvinceID?: string;
-
-        /** 邮编*/
-        taxno?: string;
-        /** 公司*/
-        companyName?: string;
-        /** 收件人姓名*/
-        recipient?: string;
-        /** 国家*/
-        country?: string;
-        /** 城市*/
-        City?: string;
-        /** 税号*/
-        postalcode?: string;
-        /** 电话*/
-        Tel?: string;
-        /** 地址*/
-        Address?: string;
-    }
 
     export interface UserSearchModel {
         name: string;
@@ -191,6 +170,7 @@ export namespace ModelNameSpace {
         WeightLimit?: string,
         SizeLimit?: string
     }
+
     //endregion
 
     //region 用户或者会员模块定义区
@@ -205,7 +185,7 @@ export namespace ModelNameSpace {
         ID?: string;
         /** 路径*/
         path?: string;
-        customerOrderNo?:string;
+        customerOrderNo?: string;
         customerOrderID?: string;
     }
 
@@ -399,6 +379,7 @@ export namespace ModelNameSpace {
         pay = 15
 
     }
+
     //endregion
 
     //region 客户定义区
@@ -425,79 +406,79 @@ export namespace ModelNameSpace {
 
     /** 合并订单Model*/
     export interface CustomerOrderMergeModel extends BaseModel {
-        currentStatus:string,
-        currentStep:string,
-        ID:string,
-        UserID:string,
+        currentStatus: string,
+        currentStep: string,
+        ID: string,
+        UserID: string,
         /** 合并订单编号*/
-        MergeOrderNo:string,
+        MergeOrderNo: string,
         /** 备注*/
-        CustomerMark:string,
+        CustomerMark: string,
         /** 渠道ID*/
-        CustomerChooseChannelID:string,
+        CustomerChooseChannelID: string,
         /** 客户选择渠道Name*/
-        CustomerChooseChannelName:string,
+        CustomerChooseChannelName: string,
         /** 渠道Name*/
-        ChannelName:string,
+        ChannelName: string,
         /** 总重量*/
-        InWeightTotal:number,
+        InWeightTotal: number,
         /** 总体积*/
-        InVolumeTotal:number,
+        InVolumeTotal: number,
         /** 总打包数量*/
-        InPackageCountTotal:number,
+        InPackageCountTotal: number,
         /** 收件人姓名*/
-        recipient:string,
+        recipient: string,
         /** 国家*/
-        country:string,
+        country: string,
         /** 地址*/
-        address:string,
+        address: string,
         /** 城市*/
-        city:string,
-        code:string,
+        city: string,
+        code: string,
         /** 电话*/
-        tel:string,
+        tel: string,
         /** 公司*/
-        company:string,
+        company: string,
         /** 邮编*/
-        taxNo:string,
+        taxNo: string,
         /** 申报总数*/
-        declareTotal:number,
+        declareTotal: number,
         /** 客服备注*/
-        customerServiceMark:string,
+        customerServiceMark: string,
         /** 打包备注*/
-        packageMark:string,
+        packageMark: string,
         /** 打包重量*/
-        packageWeight:number,
+        packageWeight: number,
         /** 打包体积*/
-        packageVolume:number,
+        packageVolume: number,
         /** 打包长度*/
-        packageLength:number,
+        packageLength: number,
         /** 打包高度*/
-        packageHeight:number,
+        packageHeight: number,
         /** 打包宽度*/
-        packageWidth:number,
-        settlementWeight:number,
-        freightFee:number,
-        tax:number,
-        serviceFee:number,
-        remoteFee:number,
-        magneticinspectionFee:number,
-        totalFee:number,
+        packageWidth: number,
+        settlementWeight: number,
+        freightFee: number,
+        tax: number,
+        serviceFee: number,
+        remoteFee: number,
+        magneticinspectionFee: number,
+        totalFee: number,
         /** 渠道ID*/
-        ChannelID:string,
+        ChannelID: string,
         /** 渠道编号*/
-        channelNo:string,
-        deliverTime:Date,
-        AgentID:string,
+        channelNo: string,
+        deliverTime: Date,
+        AgentID: string,
     }
 
     /** 合并订单状态Model*/
-    export interface CustomerOrderMergeStatusModel extends BaseModel{
-        ID:string,
-        mergeOrderID:string,
-        mergeOrderNo:string,
-        currentStep:string,
-        currentStatus:string
+    export interface CustomerOrderMergeStatusModel extends BaseModel {
+        ID: string,
+        mergeOrderID: string,
+        mergeOrderNo: string,
+        currentStep: string,
+        currentStatus: string
     }
 
     /** 合并订单货品申报Model*/
@@ -511,6 +492,7 @@ export namespace ModelNameSpace {
             this.ID = Util.guid();
             this.declareTotal = '00.00';
         }
+
         ID?: string;
         total?: string;
         productName?: string;
@@ -518,17 +500,18 @@ export namespace ModelNameSpace {
         HSCode?: string;
         declareUnitPrice?: number;
         count?: number;
-        mergeOrderID?:string;
-        declareTotal?:string;
+        mergeOrderID?: string;
+        declareTotal?: string;
     }
 
     /** 合并订单详情Model*/
-    export interface CustomerOrderMergeDetailModel{
-        mergeOrder?:CustomerOrderMergeModel,
-        mergeStatus?:CustomerOrderMergeStatusModel,
-        customerOrderList?:CustomerOrderModel[],
-        mergeDetailList:CustomerOrderMergeProductModel[]
+    export interface CustomerOrderMergeDetailModel {
+        mergeOrder?: CustomerOrderMergeModel,
+        mergeStatus?: CustomerOrderMergeStatusModel,
+        customerOrderList?: CustomerOrderModel[],
+        mergeDetailList?: CustomerOrderMergeProductModel[]
     }
+
     //endregion
 
     //region 客服阶段定义区
@@ -559,5 +542,71 @@ export namespace ModelNameSpace {
 
     //region 财务定义区
     //endregion
+
+    /*订单详情*/
+    export class FormOrderInfoModel {
+        constructor(defaultValue = undefined) {
+            try {
+                if (defaultValue) {
+                    const orderInfo = defaultValue['mergeOrder'] ? defaultValue.mergeOrder : defaultValue;
+                    this.created = orderInfo.Created.toString();
+                    this.weight = orderInfo.InWeightTotal;
+                    this.volume = orderInfo.InVolumeTotal;
+                    this.count = orderInfo.InPackageCountTotal;
+                }
+            } catch (err) {
+                return new Error('必须传入正确参数');
+            }
+        }
+
+        created ?: string;
+        weight ?: number;
+        volume ?: number;
+        count ?: number;
+    }
+
+    /*收货人信息*/
+    export class AddressModel {
+        constructor(defaultValue = undefined) {
+            if (defaultValue) {
+                const mergeOrder = defaultValue['mergeOrder'] ? defaultValue.mergeOrder : defaultValue;
+                this.Tel = mergeOrder.tel;
+                this.taxno = mergeOrder.taxNo;
+                this.country = mergeOrder.country;
+                this.City = mergeOrder.city;
+                this.companyName = mergeOrder.company;
+                this.recipient = mergeOrder.recipient;
+                this.Address = mergeOrder.address;
+                this.postalcode = mergeOrder.code;
+            }
+        }
+
+        ID?: string;
+        Userid?: string;
+        ProvinceID?: string;
+        /** 邮编*/
+        taxno?: string;
+        /** 公司*/
+        companyName?: string;
+        /** 收件人姓名*/
+        recipient?: string;
+        /** 国家*/
+        country?: string;
+        /** 城市*/
+        City?: string;
+        /** 税号*/
+        postalcode?: string;
+        /** 电话*/
+        Tel?: string;
+        /** 地址*/
+        Address?: string;
+        TenantID?: string;
+        CreatedBy?: string;
+        CreatedByName?: string;
+        ModifiedBy?: string;
+        ModifiedByName?: string;
+        Created?: Date;
+        Modified?: Date;
+    }
 
 }

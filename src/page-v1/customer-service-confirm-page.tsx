@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {withRouter,hashHistory} from 'react-router';
-import {Row, Col, Button, Icon, Table, Alert,Form,Input} from 'antd';
+import {withRouter, hashHistory} from 'react-router';
+import {Row, Col, Button, Icon, Table, Alert, Form, Input} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
-const { RangePicker } = DatePicker;
+
+const {RangePicker} = DatePicker;
 import {ColumnProps} from 'antd/lib/table';
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
@@ -19,7 +20,7 @@ import {FormStatusSelect} from "../components-v1/form-status-select";
 import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import {APINameSpace} from "../model/api";
 import {ClickParam} from "antd/lib/menu";
-import {FormTableOperation,FormTableOperationModel} from "../components-v1/form-table-operation";
+import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
 import {FormComponentProps} from "antd/lib/form";
 import FormItem from "antd/lib/form/FormItem";
 import {isUndefined} from "util";
@@ -36,19 +37,19 @@ interface CustomerServiceConfirmPageStates {
     /** 选中行*/
     selectedRowKeys: any[],
     /** 当前页数*/
-    pageIndex:number,
+    pageIndex: number,
     /** 每页条数*/
-    pageSize:number,
+    pageSize: number,
     /** 总数*/
-    totalCount:number
+    totalCount: number
     /** 列表是否正在查询*/
     loading?: boolean;
 }
 
 @withRouter
 class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmPageProps, CustomerServiceConfirmPageStates> {
-    constructor(props,context) {
-        super(props,context);
+    constructor(props, context) {
+        super(props, context);
         this.state = {
             listData: [],
             selectedRowKeys: [],
@@ -60,7 +61,7 @@ class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmP
     }
 
     componentDidMount() {
-         this.loadData(1,10,0);
+        this.loadData(1, 10, 0);
     }
 
     /** 选中事件*/
@@ -70,14 +71,14 @@ class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmP
     }
 
     /** 获取数据源*/
-    loadData = (index?:number,size?:number,searchaValues?:any) => {
+    loadData = (index?: number, size?: number, searchaValues?: any) => {
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
         const request: requestNameSpace.GetCustomerOrderMergeRequest = {
             type: 0,
-            channelID: !isUndefined(searchaValues.ChannelID)?searchaValues.ChannelID.key:0,
-            expressNo:!isUndefined(searchaValues.expressNo)?searchaValues.expressNo:"",
-            customerChooseChannelID:!isUndefined(searchaValues.ChannelID)?searchaValues.ChannelID:0,
+            channelID: !isUndefined(searchaValues.ChannelID) ? searchaValues.ChannelID.key : 0,
+            expressNo: !isUndefined(searchaValues.expressNo) ? searchaValues.expressNo : "",
+            customerChooseChannelID: !isUndefined(searchaValues.ChannelID) ? searchaValues.ChannelID : 0,
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize
         }
@@ -112,22 +113,22 @@ class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmP
         }, {
             title: "渠道",
             dataIndex: 'expressNo'
-        },{
+        }, {
             title: "发往国家",
             dataIndex: 'expressNo'
-        },{
+        }, {
             title: "入库总体积",
             dataIndex: 'MemeberCode'
         }, {
             title: "入库总重量",
             dataIndex: 'expressTypeName'
-        },  {
+        }, {
             title: "申报总额",
             dataIndex: 'CustomerServiceName'
         }, {
             title: "客服备注",
             dataIndex: 'WareHouseName'
-        },  {
+        }, {
             title: "状态",
             dataIndex: 'currentStep'
         }, {
@@ -161,7 +162,10 @@ class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmP
                         //this.deleteDataByID(record.ID);
                     }
                     else {
-                      //  hashHistory.push({pathname: param.key, state: record});
+                        hashHistory.push({
+                            pathname: PathConfig.CustomerServiceConfirmApprovePage,
+                            query: {id: record.ID}
+                        });
                     }
 
                 }} value={menu}></FormTableOperation>;
@@ -202,9 +206,9 @@ class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmP
                       locale={{emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>}}/>;
     }
 
-    onClickSearch = (values:any) =>{
-      //  e.preventDefault();
-        this.loadData(1,10,values);
+    onClickSearch = (values: any) => {
+        //  e.preventDefault();
+        this.loadData(1, 10, values);
         // this.props.form.validateFields((err, values) => {
         //     if (!err) {
         //         console.log('Received values of form: ', values);
@@ -214,7 +218,7 @@ class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmP
 
     }
 
-    onReset(){
+    onReset() {
 
     }
 
@@ -242,8 +246,8 @@ class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmP
                 defaultDisplay: false,
                 fieldName: "CustomerSericeStatus",
                 displayName: "状态",
-                control:  <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder={"快递状态"}  />
-            },{
+                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder={"快递状态"}/>
+            }, {
                 defaultDisplay: false,
                 fieldName: "Created",
                 displayName: "创建时间",
@@ -269,4 +273,5 @@ class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmP
 }
 
 
-export default Form.create<any>()(CustomerServiceConfirmPage);
+export default Form.create
+< any > ()(CustomerServiceConfirmPage);

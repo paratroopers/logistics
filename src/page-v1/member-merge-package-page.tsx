@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {withRouter, RouteComponentProps,hashHistory} from 'react-router';
+import {withRouter, RouteComponentProps, hashHistory} from 'react-router';
 import {Layout, Row, Col, Button, Icon, message, Form} from 'antd';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
@@ -34,7 +34,7 @@ export interface MemberMergePackagePageStates {
     /** 渠道选择*/
     channelList?: ModelNameSpace.ChannelModal[];
     /** 客户备注*/
-    CustomerMark?:string;
+    CustomerMark?: string;
 }
 
 export interface QueryData {
@@ -47,7 +47,7 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
         super(props, context);
         this.state = {
             selectedKeys: (this.props.location.query as QueryData).ids,
-            CustomerMark:""
+            CustomerMark: ""
         }
     }
 
@@ -80,7 +80,7 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
     /** 表单提交*/
     onSubmit() {
         const topThis = this;
-        const {props: {form}, state: {channelList, data,CustomerMark}} = topThis;
+        const {props: {form}, state: {channelList, data, CustomerMark}} = topThis;
 
         /** 验证产品信息是否存在*/
         if (!isArray(form.getFieldValue("productList")) || form.getFieldValue("productList").length === 0) {
@@ -131,12 +131,11 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
                 APINameSpace.CustomerOrderAPI.CustomerOrderMergeAdd(request).then((result: ResponseNameSpace.BaseResponse) => {
                     if (result.Status === 0) {
                         message.success("合并成功!");
-                        setTimeout(()=>{
+                        setTimeout(() => {
                             hashHistory.goBack();
-                        },1000);
+                        }, 1000);
                     }
-                    else
-                    {
+                    else {
                         message.warning("合并失败!");
                     }
                 });
@@ -144,10 +143,8 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
         });
     }
 
-    render() {
-        const topThis = this;
-        const {props: {form}} = topThis;
-        const {state: {orderInfo, data}} = this;
+    renderContent() {
+        const {state: {orderInfo, data}, props: {form}} = this;
         return <Layout className="merge-package-page view-content-page">
             <Layout.Header className="merge-package-page-header view-content-page-header">
                 <ContentHeaderControl title="待打包"></ContentHeaderControl>
@@ -160,7 +157,7 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
                             <span>单号：201801270052</span>
                         </div>
                         <div className="view-content-page-header-button">
-                            <Button type="primary" style={{marginRight: "10px"}} onClick={topThis.onSubmit.bind(this)}>确认合并打包</Button>
+                            <Button type="primary" style={{marginRight: "10px"}} onClick={this.onSubmit.bind(this)}>确认合并打包</Button>
                             <Button type="primary">取消</Button>
                         </div>
                     </Col>
@@ -170,13 +167,19 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
                 <FormOrderAddressee form={form}></FormOrderAddressee>
                 <FormOrderDeclare form={form}></FormOrderDeclare>
                 <FormOrderChannel onChange={(channelData) => {
-                    topThis.setState({channelList: channelData});
+                    this.setState({channelList: channelData});
                 }}></FormOrderChannel>
-                <FormPackageRequirement onChange={(mark)=>{
-                    topThis.setState({CustomerMark:mark})
+                <FormPackageRequirement onChange={(mark) => {
+                    this.setState({CustomerMark: mark})
                 }}></FormPackageRequirement>
             </Layout.Content>
-        </Layout>;
+        </Layout>
+    }
+
+    render() {
+        return <div>
+            {this.renderContent()}
+        </div>
     }
 }
 
