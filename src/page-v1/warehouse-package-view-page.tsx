@@ -13,7 +13,8 @@ import {
     FormOrderAddressee,
     FormOrderDeclare,
     FormOrderChannel,
-    FormPackageRequirement
+    FormPackageRequirement,
+    FormPackageDetail
 } from "../components-v1/all-components-export";
 import {isNullOrUndefined} from "util";
 
@@ -98,6 +99,7 @@ export class WarehousePackageViewPage extends React.Component<WarehousePackageVi
                                       readOnly={true}></FormOrderChannel> : null}
             {data ? <FormPackageRequirement value={data.mergeOrder.CustomerMark}
                                             readOnly={true}></FormPackageRequirement> : null}
+            {data ?<FormPackageDetail readOnly={true}></FormPackageDetail>: null}
         </Row>;
     }
 }
