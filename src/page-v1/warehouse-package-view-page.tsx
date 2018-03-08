@@ -1,69 +1,103 @@
 import * as React from 'react';
 import {withRouter,RouteComponentProps,hashHistory} from 'react-router';
-import {isNullOrUndefined} from "util";
-import {Layout} from 'antd';
+import {Row} from 'antd';
+import {requestNameSpace} from '../model/request';
+import {ResponseNameSpace} from '../model/response'
 import {ModelNameSpace} from '../model/model';
+import {APINameSpace} from '../model/api';
 import {
-    FormOrderInfo,
     ContentHeaderControl,
+    FormOrderInfo,
+    FormOrderInfoModel,
     FormOrderRelation,
     FormOrderAddressee,
     FormOrderDeclare,
-    FormPackageRequirement,
-    FormPackageDetail,
     FormOrderChannel,
-    FormDeliveredDetail,
-    FormPayment
+    FormPackageRequirement
 } from "../components-v1/all-components-export";
-import {FormComponentProps} from 'antd/lib/form/Form';
+import {isNullOrUndefined} from "util";
 
-interface WarehousePackageViewPageProps extends RouteComponentProps<any, any>, FormComponentProps {}
+interface WarehousePackageViewPageProps extends RouteComponentProps<any, any>{
+
+}
 
 interface WarehousePackageViewPageStates {
-    viewData?: ModelNameSpace.CustomerOrderModel
+    /** 原始订单ID*/
+    selectedKey?: string;
+    /** 源数据*/
+    data?:ModelNameSpace.CustomerOrderMergeDetailModel;
 }
+
+export interface QueryData {
+    ids?: string
+}
+
 
 @withRouter
 export class WarehousePackageViewPage extends React.Component<WarehousePackageViewPageProps, WarehousePackageViewPageStates> {
     constructor(props) {
         super(props);
         this.state = {
-            viewData: {}
+            selectedKey: (this.props.location.query as QueryData).ids
         }
     }
 
     componentDidMount() {
         const topThis = this;
-        const {props: {location}} = topThis;
-        /** 获取页面传值*/
-        const viewData: ModelNameSpace.CustomerOrderModel = location.state;
+        const {state: {selectedKey}} = topThis;
         /** 未传值则返回*/
-        if (isNullOrUndefined(viewData)) hashHistory.goBack();
-        topThis.setState({viewData: viewData});
-    }
+        if (isNullOrUndefined(selectedKey)) hashHistory.goBack();
 
-    renderForm() {
-        const topThis = this;
-        const {props: {form}} = topThis;
-        return <Layout.Content>
-            <FormOrderInfo></FormOrderInfo>
-            <FormOrderRelation></FormOrderRelation>
-            <FormOrderAddressee readOnly={true}></FormOrderAddressee>
-            <FormOrderDeclare readOnly={true}></FormOrderDeclare>
-            <FormOrderChannel readOnly={true}></FormOrderChannel>
-            <FormPackageRequirement readOnly={true}></FormPackageRequirement>
-        </Layout.Content>
+        /** 通过ID获取表单数据*/
+        const request: requestNameSpace.GetCustomerOrderMergeItemRequest = {
+            customerOrderMergeID: selectedKey,
+            isAdmin: false
+        }
+
+        APINameSpace.CustomerOrderAPI.GetCustomerOrderMergeItem(request).then((result: ResponseNameSpace.GetCustomerOrderMergeDetailResponse) => {
+            if (result.Status === 0) {
+                console.log(result);
+                topThis.setState({data: result.Data});
+            }
+        });
     }
 
     render() {
         const topThis = this;
-        const {state: {viewData}} = topThis;
-        return <Layout className="warehouse-package-view-page view-content-page">
-            <Layout.Header className="warehouse-package-view-page-header view-content-page-header">
-                <ContentHeaderControl title="查看"></ContentHeaderControl>
-            </Layout.Header>
-            {!isNullOrUndefined(viewData) ? topThis.renderForm() :
-                <Layout.Content>暂无数据</Layout.Content>}
-        </Layout>
+        const {state: {data}} = topThis;
+
+        /** 订单基本信息*/
+        const orederInfo: FormOrderInfoModel = data ? {
+            created: data.mergeOrder.Created.toString(),
+            weight: data.mergeOrder.InWeightTotal,
+            volume: data.mergeOrder.InVolumeTotal,
+            count: data.mergeOrder.InPackageCountTotal
+        } : {};
+
+        /** 收件人基本信息*/
+        const address: ModelNameSpace.AddressModel = data ? {
+            Tel: data.mergeOrder.tel,
+            taxno: data.mergeOrder.taxNo,
+            country: data.mergeOrder.country,
+            City: data.mergeOrder.city,
+            companyName: data.mergeOrder.company,
+            recipient: data.mergeOrder.recipient,
+            Address: data.mergeOrder.address,
+            postalcode: data.mergeOrder.code,
+        } : {};
+
+
+        return <Row className="member-my-order-package-view-page">
+            <ContentHeaderControl title="查看"></ContentHeaderControl>
+            <FormOrderInfo {...(data ? {data: orederInfo} : {loading: true})}></FormOrderInfo>
+            <FormOrderRelation {...(data ? {data: data.customerOrderList} : {loading: true})}></FormOrderRelation>
+            <FormOrderAddressee selectContact={address} readOnly={true}></FormOrderAddressee>
+            <FormOrderDeclare {...(data ? {data: data.mergeDetailList} : {loading: true})}
+                              readOnly={true}></FormOrderDeclare>
+            {data ? <FormOrderChannel ids={[data.mergeOrder.CustomerChooseChannelID]}
+                                      readOnly={true}></FormOrderChannel> : null}
+            {data ? <FormPackageRequirement value={data.mergeOrder.CustomerMark}
+                                            readOnly={true}></FormPackageRequirement> : null}
+        </Row>;
     }
 }

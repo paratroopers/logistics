@@ -151,8 +151,8 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
             title: "客户合并单号",
             dataIndex: 'MergeOrderNo',
             layout: ColumnLayout.LeftTop,
-            render: (txt) => {
-                return <a>{txt}</a>
+            render: (txt,record) => {
+                return <Link to={{pathname: PathConfig.WarehousePackageViewPage, query: {ids: record.ID}}}>{txt}</Link>
             }
         }, {
             title: "渠道",

@@ -185,30 +185,30 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
             layout: ColumnLayout.LeftTop,
             fixed: 'left',
             render: (txt,record) => {
-                return <Link to={{pathname: PathConfig.WarehousePackageViewPage, state: record}}>{txt}</Link>
+                return <Link to={{pathname: PathConfig.WarehousePackageViewPage, query: {ids: record.ID}}}>{txt}</Link>
             }
         }, {
             title: "入库总重量",
             dataIndex: 'InWeightTotal',
-            render:(txt,record) => {
+            render:(txt) => {
                 return <span>{`${txt}kg`}</span>
             }
         }, {
             title: "入库总体积",
             dataIndex: 'InVolumeTotal',
-            render:(txt,record) => {
+            render:(txt) => {
                 return <span>{`${txt}cm³`}</span>
             }
         }, {
             title: "入库总数",
             dataIndex: 'InPackageCountTotal',
-            render:(txt,record) => {
+            render:(txt) => {
                 return <span>{`${txt}件`}</span>
             }
         }, {
             title: "状态",
             dataIndex: 'currentStatus',
-            render:(txt,record) => {
+            render:() => {
                 return <span>***</span>
             }
         }, {
@@ -222,7 +222,7 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
             title: '操作',
             layout: ColumnLayout.Option,
             fixed: 'right',
-            render: (val, record, index) => {
+            render: (val, record) => {
                 const menu: FormTableOperationModel[] = [
                     {
                         key: PathConfig.WarehousePackageApprovePage,
@@ -256,7 +256,7 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
                             }
                         });
                     } else {
-                        hashHistory.push({pathname: param.key, state: record});
+                        hashHistory.push({pathname: param.key, query: {ids: record.ID}});
                     }
                 }} value={menu}></FormTableOperation>;
             }
