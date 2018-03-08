@@ -88,9 +88,9 @@ export class WarehousePackageApprovePage extends React.Component<WarehousePackag
         } : {};
 
 
-        return <Row className="member-my-order-package-view-page view-content-page">
+        return <Row className="warehouse-package-view-page view-content-page">
             <ContentHeaderControl title="审批"></ContentHeaderControl>
-            <Row justify="start" type="flex" style={{margin: '10px 0px 10px 0px'}}>
+            <Row justify="start" type="flex">
                 <Col span={24}>
                     <div className="view-content-page-header-title">
                         <Icon type="tag" style={{color: '#f2804b', marginRight: '15px'}}/>
