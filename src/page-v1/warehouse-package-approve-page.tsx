@@ -105,13 +105,10 @@ export class WarehousePackageApprovePage extends React.Component<WarehousePackag
             </Row>
             <FormOrderInfo {...(data ? {data: orederInfo} : {loading: true})}></FormOrderInfo>
             <FormOrderRelation {...(data ? {data: data.customerOrderList} : {loading: true})}></FormOrderRelation>
-            <FormOrderAddressee selectContact={address} readOnly={true}></FormOrderAddressee>
-            <FormOrderDeclare {...(data ? {data: data.mergeDetailList} : {loading: true})}
-                              readOnly={true}></FormOrderDeclare>
-            {data ? <FormOrderChannel ids={[data.mergeOrder.CustomerChooseChannelID]}
-                                      readOnly={true}></FormOrderChannel> : null}
-            {data ? <FormPackageRequirement value={data.mergeOrder.CustomerMark}
-                                            readOnly={true}></FormPackageRequirement> : null}
+            <FormOrderAddressee selectContact={address}></FormOrderAddressee>
+            <FormOrderDeclare {...(data ? {data: data.mergeDetailList} : {loading: true})} ></FormOrderDeclare>
+            {data ? <FormOrderChannel ids={[data.mergeOrder.CustomerChooseChannelID]}></FormOrderChannel> : null}
+            {data ? <FormPackageRequirement value={data.mergeOrder.CustomerMark} ></FormPackageRequirement> : null}
             {data ?<FormPackageDetail></FormPackageDetail>: null}
         </Row>;
     }
