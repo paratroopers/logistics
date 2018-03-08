@@ -87,7 +87,7 @@ export class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrder
         } : {};
 
 
-        return <Row className="member-my-order-package-view-page">
+        return <Row className="member-my-order-package-view-page view-content-page">
             <ContentHeaderControl title="查看"></ContentHeaderControl>
             <FormOrderInfo {...(data ? {data: orederInfo} : {loading: true})}></FormOrderInfo>
             <FormOrderRelation {...(data ? {data: data.customerOrderList} : {loading: true})}></FormOrderRelation>

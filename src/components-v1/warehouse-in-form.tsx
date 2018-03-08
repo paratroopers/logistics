@@ -2,8 +2,6 @@ import * as React from "react";
 import {hashHistory} from 'react-router';
 import {Component} from "react";
 import {Form, Button, Row, Col} from 'antd';
-
-const FormItem = Form.Item;
 import {ColProps} from "antd/lib/col";
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {FormControl} from '../components-v1/form-control';
@@ -17,6 +15,7 @@ import {FormInput} from "./form-input";
 import {FormInputNumber} from "./form-input-number";
 import {FormInputText} from "./form-input-text";
 import {Constants} from '../util/common';
+const FormItem = Form.Item;
 
 export interface WarehouseInFormProps extends FormComponentProps {
     /** 点击提交*/
@@ -109,7 +108,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
         const readonly = type === "view" ? true : false;
 
         /** vertical布局样式BUG --- 请勿移动控件顺序*/
-        const formItemLayout = type === "view" ? {
+        const formItemLayout = type === "view" && Constants.minSM ? {
             labelCol: {
                 xs: {span: 7}
             },
