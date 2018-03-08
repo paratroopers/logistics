@@ -3,8 +3,6 @@ import {withRouter, hashHistory, Link} from 'react-router';
 import {Row, Col, Button, Icon,Modal, message, Input, Tooltip} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
-
-const {RangePicker} = DatePicker;
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
@@ -22,13 +20,13 @@ import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import {APINameSpace} from "../model/api";
 import {ClickParam} from "antd/lib/menu";
 import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
-
-const confirm = Modal.confirm;
 import {isArray, isNullOrUndefined} from "util";
 import * as moment from 'moment';
 import {Global, Context} from "../util/common";
 import {FormFileViewer} from "../components-v1/form-file-viewer";
 import {FormExport} from '../components-v1/form-export';
+const confirm = Modal.confirm;
+const {RangePicker} = DatePicker;
 
 interface WarehouseInPageProps {
 

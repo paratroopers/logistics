@@ -1,10 +1,8 @@
 import * as React from 'react';
 import {withRouter,Link} from 'react-router';
-import {Row,Tooltip,Icon} from 'antd';
+import {Row,Tooltip,Icon,DatePicker} from 'antd';
 import {PathConfig} from '../config/pathconfig';
 import {PaginationProps} from 'antd/lib/pagination';
-import {DatePicker} from "antd";
-const {RangePicker} = DatePicker;
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
@@ -18,6 +16,7 @@ import {APINameSpace} from "../model/api";
 import {isArray, isNullOrUndefined, isUndefined} from "util";
 import * as moment from 'moment';
 import {FormFileViewer} from "../components-v1/form-file-viewer";
+const {RangePicker} = DatePicker;
 
 /// 待审核列表
 interface MemberMyOrderWaitForApprovePageProps {}
@@ -40,7 +39,7 @@ interface MemberMyOrderWaitForApprovePageStates {
     /** 图片预览*/
     visibleFormFileViewer: boolean;
     /** 图片资源*/
-    items: ModelNameSpace.Attachment[];
+    fileItems: ModelNameSpace.Attachment[];
 }
 
 class MemberMyOrderWaitForApprovePageTable extends CommonTable<any> {}
@@ -58,7 +57,7 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
             loading: false,
             selectVaules: [],
             visibleFormFileViewer: false,
-            items: []
+            fileItems: []
         }
     }
 
@@ -114,7 +113,7 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
 
         APINameSpace.AttachmentsAPI.GetAttachmentItems(request).then((result: ResponseNameSpace.GetAttachmentItemsResponse) => {
             if (result.Status === 0) {
-                topThis.setState({items: result.Data,}, () => {
+                topThis.setState({fileItems: result.Data,}, () => {
                     topThis.changeFormFileViewerVisible(true);
                 });
             }
@@ -167,8 +166,11 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
             hidden: Constants.minSM
         }, {
             title: "状态",
-            dataIndex: 'currentStep',
+            dataIndex: 'currentStatus',
             layout: ColumnLayout.RightBottom,
+            render:(txt,record) => {
+                return <span>***</span>
+            }
         }, {
             title: "创建时间",
             dataIndex: 'Modified',
@@ -261,14 +263,14 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
 
     render() {
         const topThis = this;
-        const {state: {totalCount,visibleFormFileViewer, items}} = topThis;
+        const {state: {totalCount,visibleFormFileViewer, fileItems}} = topThis;
         return <Row>
             <FormAdvancedSearch
                 formAdvancedItems={topThis.renderFormAdvancedItems()}
                 onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch>
             <FormTableHeader title={`总计有 ${totalCount} 项客服确认 ${totalCount} 项仓库打包`}></FormTableHeader>
             {this.renderTable()}
-            {items.length > 0 ? <FormFileViewer items={items} visible={visibleFormFileViewer}
+            {fileItems.length > 0 ? <FormFileViewer items={fileItems} visible={visibleFormFileViewer}
                                                 changeVisible={topThis.changeFormFileViewerVisible.bind(this)}/> : null}
         </Row>;
     }

@@ -161,19 +161,22 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
 
+        /** 根据ID获取客户订单*/
         static async GetOrderItemsByID(data: string) {
             let url: string = CommonAPI.baseURL + "CustomerOrder/order/items";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, {request: data});
         }
 
+        /** 获取客户订单*/
         static async GetCustomerOrders(data: requestNameSpace.CustomerOrdersRequest) {
             let url: string = CommonAPI.baseURL + "CustomerOrder/items/page";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
 
+        /** 获取客户合并的订单*/
         static async GetCustomerOrdersMerge(data: requestNameSpace.GetCustomerOrderMergeRequest) {
             let url: string = CommonAPI.baseURL + "CustomerOrderMerge/items/page";
-            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
+            return new Request<BaseRequest, ResponseNameSpace.GetCustomerOrderMergeListResponse>().get(url, data);
         }
     }
 

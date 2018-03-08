@@ -12,7 +12,6 @@ export namespace requestNameSpace {
         isAdmin?: boolean;
     }
 
-
     //endregion
 
     //region 用户或者会员模块定义区
@@ -120,7 +119,6 @@ export namespace requestNameSpace {
     //endregion
 
     //region 订单和合并订单（仓库入库，待打包，待审核，客服确认，仓库打包，客户付款，仓库打包 所有的接口区域；
-
     export interface GetCustomerOrderMergeRequest extends BaseListRequest {
         type?: ModelNameSpace.OrderTypeEnum;
         country?: string;
@@ -139,6 +137,7 @@ export namespace requestNameSpace {
         customerServiceID?: number;
     }
 
+    /** 仓库入库*/
     export interface GetWarehouseInListRequest extends BaseListRequest {
         step: ModelNameSpace.OrderTypeEnum;
         /** 会员*/
@@ -163,7 +162,6 @@ export namespace requestNameSpace {
         warehouseAdmin?: string;
         isAdmin?: boolean;
     }
-
     export interface WarehouseInAddRequest {
         /** 会员ID*/
         userid: number,
@@ -198,7 +196,6 @@ export namespace requestNameSpace {
         /** 附件*/
         AttachmentIDList?: string[];
     }
-
     export interface WarehouseInEditRequest {
         /** 主键*/
         ID: number,
@@ -234,7 +231,6 @@ export namespace requestNameSpace {
         WarehouseAdminRemark: string,
         AttachmentIDList?: string[]
     }
-
     export interface WarehouseInDeleteRequest {
         ID?: string;
     }
