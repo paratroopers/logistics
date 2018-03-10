@@ -119,7 +119,7 @@ export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, M
             hidden: Constants.minSM
         }, {
             title: "发往国家",
-            dataIndex: 'expressNo',
+            dataIndex: 'country',
             hidden: Constants.minSM
         }, {
             title: "入库总体积",

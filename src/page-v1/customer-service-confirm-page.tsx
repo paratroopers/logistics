@@ -116,7 +116,7 @@ class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmP
             hidden: Constants.minSM
         }, {
             title: "发往国家",
-            dataIndex: '',
+            dataIndex: 'country',
             hidden: Constants.minSM
         }, {
             title: "入库总体积",
