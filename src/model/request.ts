@@ -4,11 +4,14 @@ import {Util} from '../util/util';
 export namespace requestNameSpace {
 
     //region 基类定义区
+    import Guid = SP.Guid;
+
     export interface BaseListRequest {
         pageIndex: number;
         pageSize: number;
         isAdmin?: boolean;
     }
+
     //endregion
 
     //region 用户或者会员模块定义区
@@ -100,19 +103,22 @@ export namespace requestNameSpace {
         request: CountryModal;
     }
 
-    export interface QuotationRequest {
-        request: {
-            country?: string,
-            weight?: string,
-            length?: string,
-            width?: string,
-            height?: string
-        };
+    export interface QuotationModel {
+        country?: string,
+        weight?: string,
+        length?: string,
+        width?: string,
+        height?: string
     }
+
+    export interface QuotationRequest {
+        request: QuotationModel;
+    }
+
+
     //endregion
 
     //region 订单和合并订单（仓库入库，待打包，待审核，客服确认，仓库打包，客户付款，仓库打包 所有的接口区域；
-
     export interface GetCustomerOrderMergeRequest extends BaseListRequest {
         type?: ModelNameSpace.OrderTypeEnum;
         country?: string;
@@ -131,6 +137,7 @@ export namespace requestNameSpace {
         customerServiceID?: number;
     }
 
+    /** 仓库入库*/
     export interface GetWarehouseInListRequest extends BaseListRequest {
         step: ModelNameSpace.OrderTypeEnum;
         /** 会员*/
@@ -155,7 +162,6 @@ export namespace requestNameSpace {
         warehouseAdmin?: string;
         isAdmin?: boolean;
     }
-
     export interface WarehouseInAddRequest {
         /** 会员ID*/
         userid: number,
@@ -190,7 +196,6 @@ export namespace requestNameSpace {
         /** 附件*/
         AttachmentIDList?: string[];
     }
-
     export interface WarehouseInEditRequest {
         /** 主键*/
         ID: number,
@@ -226,32 +231,50 @@ export namespace requestNameSpace {
         WarehouseAdminRemark: string,
         AttachmentIDList?: string[]
     }
-
     export interface WarehouseInDeleteRequest {
         ID?: string;
     }
 
     export interface CustomerOrdersRequest extends BaseListRequest {
-        step: string;
-        customerOrderStatus:string;
+        step: ModelNameSpace.OrderTypeEnum;
         /** 快递单号*/
         expressNo?: string,
         /** 开始时间*/
         inWarehouseIimeBegin?: Date;
         /** 结束时间*/
         inWarehouseIimeEnd?: Date;
-        isAdmin?:boolean;
     }
 
     export interface OrderSearchIndexRequest {
         name: string;
         type: number;
     }
+
+    export interface OrderMergeCustomerOrderListModel {
+        customerOrderID?: string;
+    }
+
+    export class OrderMergeProductListModel {
+        constructor() {
+            this.productName = "";
+            this.productNameEN = "";
+            this.HSCode = "美元";
+            this.declareUnitPrice = 0;
+            this.count = 0;
+            this.ID = Util.guid();
+            this.total = '00.00';
+        }
+        ID?: string;
+        total?: string;
+        productName?: string;
+        productNameEN?: string;
+        HSCode?: string;
+        declareUnitPrice?: number;
+        count?: number;
+    }
     //endregion
 
     //region 客户待打包定义区
-
-    /** 客户合并订单*/
     export interface CustomerOrderMergeAddRequest {
         /** 用户ID*/
         userid?: string;
@@ -276,23 +299,33 @@ export namespace requestNameSpace {
         /** 邮编*/
         taxNo?: string;
         /** 客户关联订单列表*/
-        customerOrderList?: { customerOrderID: string }[];
+        customerOrderList?: OrderMergeCustomerOrderListModel[];
         /** 产品申报列表*/
-        productList?: ModelNameSpace.CustomerOrderMergeProductModel[];
+        productList?: OrderMergeProductListModel[];
         currentStep?: string,
         currentStatus?: string,
-        isAdmin?: boolean;
-    }
-
-    /** 查询已合并订单详情*/
-    export interface GetCustomerOrderMergeItemRequest{
-        customerOrderMergeID?:string;
         isAdmin?:boolean;
     }
-
     //endregion
 
     //region 客服阶段定义区
+    export class PackageDetailListModel {
+        constructor() {
+            this.ID = Util.guid();
+            this.PackageName = "";
+            this.PackageLength = 0;
+            this.PackageWidth = 0;
+            this.PackageHeight = 0;
+            this.PackageWeight = 0;
+        }
+
+        ID?: string;
+        PackageName?: string;
+        PackageLength?: number;
+        PackageWidth?: number;
+        PackageHeight?: number;
+        PackageWeight?: number;
+    }
 
     //endregion
 
