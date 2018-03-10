@@ -6,7 +6,6 @@ import {PathConfig, MobilePathConfig} from '../config/pathconfig';
 import UserLoginForgetPage from './user-login-forget-page';
 import {Global} from '../util/common';
 import {WebAction} from "../actions/index";
-
 import {Cookies} from '../util/cookie';
 import {Constants, Context} from '../util/common';
 import {requestNameSpace} from '../model/request';

@@ -26,20 +26,17 @@ export class CommonLocale {
     static HeaderGoodEvening = "common.header.good.evening";
 
     /** 订单状态*/
-    static WarehouseInA = "customer.order.status.0.0";
-    static WarehouseInB = "customer.order.status.0.1";
-    static WarehouseInC = "customer.order.status.0.2";
-    static CustomerConfirmA = "customer.order.status.1.0";
-    static CustomerConfirmB = "customer.order.status.1.1";
-    static CustomerConfirmC = "customer.order.status.1.2";
-    static CustomerConfirmD = "customer.order.status.1.3";
-    static WarehousePackageA = "customer.order.status.2.0";
-    static WarehousePackageB = "customer.order.status.2.1";
-    static CustomerPaymentA = "customer.order.status.3.0";
-    static CustomerPaymentB = "customer.order.status.3.1";
-    static CustomerPaymentC = "customer.order.status.3.2";
-    static WaitForDeliveredA = "customer.order.status.4.0";
-    static WaitForDeliveredB = "customer.order.status.4.1";
+    static OrderInA = "customer.order.status.0.0";
+    static OrderInB = "customer.order.status.0.1";
+    static OrderInC = "customer.order.status.0.2";
+    static WaitPackageA = "customer.order.status.1.1";
+    static WaitApproveA = "customer.order.status.2.1";
+    static WaitApproveB = "customer.order.status.2.2";
+    static OrderConfirmA = "customer.order.status.3.0";
+    static OrderMergeA = "customer.order.status.4.0";
+    static WaitPayA = "customer.order.status.5.0";
+    static OrderOutA = "customer.order.status.6.0";
+    static OrderOutB = "customer.order.status.6.1";
 }
 
 export class MessageLocale {

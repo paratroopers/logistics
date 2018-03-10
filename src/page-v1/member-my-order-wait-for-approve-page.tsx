@@ -80,16 +80,15 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
 
 
         const request: requestNameSpace.GetCustomerOrderMergeRequest = {
-            type: 0,
-            currentStep:"1",
-            currentStatus:"0",
+            currentStep:Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.WaitApprove),
             expressNo: !isUndefined(searchaValues.expressNo) ? searchaValues.expressNo : "",
             customerOrderMergeNo: isArray(searchaValues.customerOrderMergeNo) && !isNullOrUndefined(searchaValues.customerOrderMergeNo[0]) ? searchaValues.customerOrderMergeNo[0].key : "",
-            customerChooseChannelID: !isUndefined(searchaValues.channel) ? searchaValues.channel.key : 0,
+            customerChooseChannelID: !isUndefined(searchaValues.channel) ? searchaValues.channel.key : "",
             orderMergeTimeBegin: !isUndefined(searchaValues.Created) ? searchaValues.Created[0].format() : "",
             orderMergeTimeEnd: !isUndefined(searchaValues.Created) ? searchaValues.Created[1].format() : "",
             pageIndex: index ? index : pageIndex,
-            pageSize: size ? size : pageSize
+            pageSize: size ? size : pageSize,
+            isAdmin:false
         }
 
 
@@ -170,7 +169,7 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
             title: "状态",
             layout: ColumnLayout.RightBottom,
             render: (txt) => {
-                return <span>待审核</span>
+                return <span>{Constants.getOrderStatusByString(ModelNameSpace.OrderTypeEnum.WaitApprove, txt)}</span>
             }
         }, {
             title: "创建时间",

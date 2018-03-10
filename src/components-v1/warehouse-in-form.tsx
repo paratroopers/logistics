@@ -213,7 +213,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                             {getFieldDecorator("inWareHouseStatus", {
                                 rules: [{required: required, message: '请选择状态!'}],
                             })(<FormStatusSelect readonly={readonly}
-                                                 dataType={ModelNameSpace.OrderTypeEnum.WarehouseIn}
+                                                 type={ModelNameSpace.OrderTypeEnum.OrderIn}
                                                  placeholder="入库状态"></FormStatusSelect>)}
                         </FormItem>
                     </Col>

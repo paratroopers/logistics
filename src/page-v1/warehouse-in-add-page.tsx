@@ -1,27 +1,17 @@
 import * as React from 'react';
 import {withRouter, hashHistory} from 'react-router';
-import {Row, Col, Button, message, Form} from 'antd';
-import {UploadFile} from 'antd/lib/upload/interface';
-
-const FormItem = Form.Item;
+import {Row,message, Form} from 'antd';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import WarehouseInForm from "../components-v1/warehouse-in-form";
-
-
 import {requestNameSpace} from '../model/request';
-import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {ResponseNameSpace} from '../model/response';
 import {PathConfig} from "../config/pathconfig";
-import {Util} from '../util/util';
+const FormItem = Form.Item;
 
-interface WarehouseInAddPageProps {
+interface WarehouseInAddPageProps {}
 
-}
-
-interface WarehouseInAddPageStates {
-
-}
+interface WarehouseInAddPageStates {}
 
 @withRouter
 export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps, WarehouseInAddPageStates> {

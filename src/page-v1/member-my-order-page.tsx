@@ -8,7 +8,7 @@ import {ResponseNameSpace} from '../model/response'
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
-import FormTableHeader, {FormTableHeaderButton, SearchFormModel} from '../components-v1/form-table-header';
+import FormTableHeader, {FormTableHeaderButton} from '../components-v1/form-table-header';
 import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
 import MemberMyOrderWaitForApprovePage from './member-my-order-wait-for-approve-page';
@@ -67,8 +67,8 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
         const {state: {formAdvancedData}} = topThis;
 
         let request: requestNameSpace.CustomerOrdersRequest = {
-            step:"1",
-            customerOrderStatus:"1",
+            step:Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.WaitPackage),
+            customerOrderStatus:ModelNameSpace.OrderStatusEnum.StatusB,
             pageSize: this.state.pageSize,
             pageIndex: pageIndex ? pageIndex : this.state.pageIndex,
             isAdmin:false
@@ -186,10 +186,10 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             },
             {
                 title: '状态',
-                dataIndex: 'status',
+                dataIndex: 'currentStatus',
                 hidden: Constants.minSM,
-                render: () => {
-                    return <span>待打包</span>
+                render: (txt) => {
+                    return <span>{Constants.getOrderStatusByString(ModelNameSpace.OrderTypeEnum.WaitPackage, txt)}</span>
                 }
             },
             {

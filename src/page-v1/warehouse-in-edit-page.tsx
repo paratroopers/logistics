@@ -4,7 +4,6 @@ import {Row, message} from 'antd';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import WarehouseInForm from "../components-v1/warehouse-in-form";
 import {requestNameSpace} from '../model/request';
-import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {ResponseNameSpace} from '../model/response';
 import {PathConfig} from "../config/pathconfig";

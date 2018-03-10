@@ -3,8 +3,6 @@ import {withRouter, hashHistory} from 'react-router';
 import {Row, Col, Button, Icon, Table, Alert, Form, Input} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
-
-const {RangePicker} = DatePicker;
 import {ColumnProps} from 'antd/lib/table';
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
@@ -23,7 +21,7 @@ import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/com
 import FormTableHeader from '../components-v1/form-table-header';
 import {isUndefined} from "util";
 import * as moment from 'moment';
-
+const {RangePicker} = DatePicker;
 
 /// 待审核列表
 interface MemberWaitPayPageProps extends FormComponentProps {
@@ -78,7 +76,7 @@ export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, M
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
         const request: requestNameSpace.GetCustomerOrderMergeRequest = {
-            type: 0,
+            currentStep:Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.WaitPay),
             channelID: !isUndefined(searchaValues.ChannelID) ? searchaValues.ChannelID.key : 0,
             expressNo: !isUndefined(searchaValues.expressNo) ? searchaValues.expressNo : "",
             customerChooseChannelID: !isUndefined(searchaValues.ChannelID) ? searchaValues.ChannelID : 0,
@@ -142,11 +140,14 @@ export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, M
             hidden: Constants.minSM
         }, {
             title: "状态",
-            dataIndex: 'currentStep',
-            layout: ColumnLayout.RightTop
+            dataIndex: 'currentStatus',
+            layout: ColumnLayout.RightTop,
+        render:(txt)=> {
+            return <span>{Constants.getOrderStatusByString(ModelNameSpace.OrderTypeEnum.WaitPay, txt)}</span>
+        }
         }, {
             title: "创建时间",
-            dataIndex: 'InWareHouseTime',
+            dataIndex: 'Created',
             render: (txt) => {
                 return moment(txt).format('YYYY-MM-DD HH:mm');
             },

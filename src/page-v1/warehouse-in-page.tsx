@@ -3,17 +3,13 @@ import {withRouter, hashHistory, Link} from 'react-router';
 import {Row, Col, Button, Icon,Modal, message, Input, Tooltip} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
-
-const {RangePicker} = DatePicker;
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
-import FormTableHeader, {FormTableHeaderButton, SearchFormModel} from '../components-v1/form-table-header';
-import {Constants} from '../util/common';
+import FormTableHeader from '../components-v1/form-table-header';
 import {PathConfig} from "../config/pathconfig";
 import {FormWarehouseSelect} from "../components-v1/form-warehouse-select";
-import {SelectType} from "../util/common";
 import {FormControl} from "../components-v1/form-control";
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import {ResponseNameSpace} from "../model/response";
@@ -22,13 +18,13 @@ import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import {APINameSpace} from "../model/api";
 import {ClickParam} from "antd/lib/menu";
 import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
-
-const confirm = Modal.confirm;
 import {isArray, isNullOrUndefined} from "util";
 import * as moment from 'moment';
-import {Global, Context} from "../util/common";
+import {Constants,SelectType} from "../util/common";
 import {FormFileViewer} from "../components-v1/form-file-viewer";
 import {FormExport} from '../components-v1/form-export';
+const {RangePicker} = DatePicker;
+const confirm = Modal.confirm;
 
 interface WarehouseInPageProps {
 
@@ -124,10 +120,10 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
         const topThis = this;
         const {state: {pageIndex, pageSize, formAdvancedData}} = topThis;
         let request: requestNameSpace.GetWarehouseInListRequest = {
-            step: ModelNameSpace.OrderTypeEnum.WarehouseIn,
+            step: Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderIn),
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize,
-            isAdmin: false
+            isAdmin: true
         }
 
         if (!isNullOrUndefined(formAdvancedData)) {
@@ -247,7 +243,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             dataIndex: 'currentStatus',
             layout: ColumnLayout.RightBottom,
             render: (txt) => {
-                return <span>{Global.intl.formatMessage({id: Context.getCustomerOrderStatusID(ModelNameSpace.OrderTypeEnum.WarehouseIn.toString(), txt)})}</span>
+                return <span>{Constants.getOrderStatusByString(ModelNameSpace.OrderTypeEnum.OrderIn, txt)}</span>
             }
         }, {
             title: "创建人",
@@ -388,7 +384,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 defaultDisplay: true,
                 fieldName: "customerOrderStatus",
                 displayName: "状态",
-                control: <FormStatusSelect dataType={ModelNameSpace.OrderTypeEnum.WarehouseIn}
+                control: <FormStatusSelect type={ModelNameSpace.OrderTypeEnum.OrderIn}
                                            placeholder="搜索订单状态"></FormStatusSelect>
             },
             {

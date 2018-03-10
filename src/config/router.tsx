@@ -9,7 +9,6 @@ import {MemberAddressPageAdd} from "../page-v1/member-address-page-add";
 import {MemberAddressPageEdit} from "../page-v1/member-address-page-edit";
 import {MemberAddressPageView} from "../page-v1/member-address-page-view";
 import {MemberDeliveredPage} from "../page-v1/member-delivered-page";
-import {MemberDeliveredApprovalPage} from '../page-v1/member-delivered-approval-page';
 import {MemberMessageListPage} from "../page-v1/member-message-list-page";
 import {MemberMyOrderPage} from "../page-v1/member-my-order-page";
 import {MemberMyOrderPackageViewPage} from "../page-v1/member-my-order-package-view-page";
@@ -72,7 +71,6 @@ const routerConfig = (
                 <Route path={PathConfig.MemberAddressPageEdit} component={MemberAddressPageEdit}/>
                 <Route path={PathConfig.MemberAddressPageView} component={MemberAddressPageView}/>
                 <Route path={PathConfig.MemberDeliveredPage} component={MemberDeliveredPage}/>
-                <Route path={PathConfig.MemberDeliveredApprovalPage} component={MemberDeliveredApprovalPage}/>
                 <Route path={PathConfig.MemberMessageListPage} component={MemberMessageListPage}/>
                 <Route path={PathConfig.MemberMyOrderPage} component={MemberMyOrderPage}/>
                 <Route path={PathConfig.MemberMyOrderPackageViewPage} component={MemberMyOrderPackageViewPage}/>

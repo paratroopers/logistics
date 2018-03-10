@@ -3,17 +3,17 @@ import {Component} from "react";
 import {withRouter, Link, hashHistory} from "react-router";
 import {PathConfig}from "../config/pathconfig";
 import {Layout, Row, Col, Tabs, Button, Checkbox, Select, Icon, Form, Modal} from "antd";
-const {Header, Content, Footer} = Layout;
 import {Global, BaseResponse, Context} from '../util/common';
 import {connect} from "react-redux";
 import {WebAction} from "../actions/index";
-const {TabPane} = Tabs;
 import UserRegisterEmail from "../components-v1/user-register-email";
 import UserRegisterPhone from "../components-v1/user-register-phone";
 import {Notification} from "../components-v1/notification";
 import {requestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
+const {Header, Content, Footer} = Layout;
+const {TabPane} = Tabs;
 
 const FormItem = Form.Item;
 
@@ -59,7 +59,6 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
     }
 
     onChangeLanguage(key: any) {
-        console.log(key);
         Global.store.dispatch(WebAction.onChangeLanguage(key));
     }
 
@@ -316,14 +315,6 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                             <Tabs size="large" activeKey={tabKey} tabBarStyle={{textAlign: 'center'}}
                                   onChange={(key) => {
                                       topThis.setState({tabKey: key});
-                                      {/*switch (key) {*/}
-                                      {/*case RegisterEnum.phone.toString():*/}
-                                      {/*topThis.mailFromComponent.props.form.resetFields();*/}
-                                      {/*break;*/}
-                                      {/*case RegisterEnum.mail.toString():*/}
-                                      {/*topThis.phoneFromComponent.props.form.resetFields();*/}
-                                      {/*break;*/}
-                                      {/*}*/}
                                   }}>
                                 <TabPane tab="手机注册" key={ModelNameSpace.RegisterEnum.phone.toString()}>
                                     <UserRegisterPhone

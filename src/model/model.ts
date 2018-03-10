@@ -1,10 +1,8 @@
 import {Util} from '../util/util';
-import {isUndefined} from "util";
 
 export namespace ModelNameSpace {
 
     //region 基类定义区
-    /** 基础类*/
     export interface BaseModel {
         TenantID?: string;
         CreatedBy?: string;
@@ -14,7 +12,6 @@ export namespace ModelNameSpace {
         Created?: Date;
         Modified?: Date;
     }
-
     //endregion
 
     //region 用户登录，注册，找回密码，用户相关信息 定义区，
@@ -29,7 +26,6 @@ export namespace ModelNameSpace {
         SortID?: number;
         color?: string;
     }
-
 
     export interface UserNavigationsModel {
         parentItem?: UserNavigationsChildrenModel;
@@ -72,18 +68,15 @@ export namespace ModelNameSpace {
         userInfo?: UserInfoModel;
     }
 
-
     export interface UserSearchModel {
         name: string;
         type: number;
     }
 
-
     export interface UserSearchIndexRequest {
         name: string;
         type: number;
     }
-
     //endregion
 
     //region 系统模块定义区
@@ -110,11 +103,10 @@ export namespace ModelNameSpace {
         defaultFormats?: Object;
     }
 
-
     //endregion
 
     //region 报价定义区
-    /*定义类对象*/
+    /** 定义类对象*/
     export interface CountryModel {
         ID?: string;
         chineseName?: string;
@@ -174,7 +166,6 @@ export namespace ModelNameSpace {
     //endregion
 
     //region 用户或者会员模块定义区
-
 
     //endregion
 
@@ -275,6 +266,7 @@ export namespace ModelNameSpace {
         waitForPayCount?: number;
     }
 
+    /** 渠道选择基本类*/
     export interface ChannelModal extends BaseModel {
         TenantID?: string;
         ID?: string;
@@ -304,32 +296,45 @@ export namespace ModelNameSpace {
     //endregion
 
     //region 泛型定义区
+
+    /** 表单类型枚举*/
     export  enum FormOpertationEnum {
         view = 0,
         edit = 1,
         add = 2
     }
 
-    export enum orderMergeStepEnum {
-        /*待打包*/
-        WaitForPackage = 0,
-        /*客户确认*/
-        CustomerConfirm = 1,
-        /*仓库打包*/
-        WarehousePackege = 2,
-        /*代付款*/
-        WaitForPay = 3,
-        /*代发货*/
-        WaitForDelivery = 4
+    // OrderIn	    0	仓库管理-订单入库	step=0、isAdmin=true	                        0待确认、1已确认、2仓库退货
+    // WaitPackage	1	我的订单-待打包	    step=1、customerOrderStatus=1、isAdmin=false	1待打包
+    // WaitApprove	2	我的订单-待审核	    step=12、isAdmin=false	                        1客户确认、2仓库打包
+    // OrderConfirm	3	客服管理-订单确认	step=1、isAdmin=true	                        0待确认
+    // OrderMerge	4	仓库管理-合并打包	step=2、isAdmin=true	                        0待确认
+    // WaitPay	    5	我的订单-待付款	    step=3、isAdmin=false	                        0待确认
+    // OrderOut 	6	仓库管理-订单出库	step=4、isAdmin=true	                        0待确认、1已确认
+
+    /** 自定义模块类型*/
+    export enum OrderTypeEnum {
+        /** 仓库管理-订单入库*/
+        OrderIn = 0,
+            /** 我的订单-待打包*/
+        WaitPackage = 1,
+            /** 我的订单-待审核*/
+        WaitApprove = 2,
+            /** 我的订单-待付款*/
+        WaitPay = 3,
+            /** 客服管理-订单确认*/
+        OrderConfirm = 4,
+            /** 仓库管理-合并打包*/
+        OrderMerge = 5,
+            /** 仓库管理-订单出库*/
+        OrderOut = 6
     }
 
-    export enum waitForPackageStatusEnum {
-        /*待确认*/
-        WaitConfirm = 0,
-        /*已确认*/
-        Confirmed = 1,
-        /*仓库退货*/
-        WarehouseRefuse = 2
+    /** 自定义模块状态*/
+    export enum OrderStatusEnum{
+        StatusA=0,
+        StatusB=1,
+        StatusC=2
     }
 
     /** 注册类型*/
@@ -338,21 +343,7 @@ export namespace ModelNameSpace {
         mail = 1
     }
 
-    /** 订单类型*/
-    export enum OrderTypeEnum {
-        /** 仓库入库*/
-        WarehouseIn = 0,
-        /** 客服确认阶段*/
-        CustomerConfirm = 1,
-        /** 仓库打包阶段*/
-        WarehousePackage = 2,
-        /** 客服付款阶段*/
-        CustomerPayment = 3,
-        /** 发货阶段*/
-        WaitForDelivered = 4
-    }
-
-    /** 屏幕尺寸*/
+    /** 屏幕尺寸枚举*/
     export enum ScreenModeEnum {
         xs = 0,
         sm = 1,
@@ -361,6 +352,7 @@ export namespace ModelNameSpace {
         xl = 4
     }
 
+    /** 按钮类型枚举*/
     export  enum ButtonTypeEnum {
         confirm = 1,
         cancel = 2,
@@ -608,5 +600,4 @@ export namespace ModelNameSpace {
         Created?: Date;
         Modified?: Date;
     }
-
 }

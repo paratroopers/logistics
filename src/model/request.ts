@@ -1,5 +1,4 @@
 import {ModelNameSpace} from './model';
-import {Util} from '../util/util';
 
 export namespace requestNameSpace {
 
@@ -114,10 +113,8 @@ export namespace requestNameSpace {
     //region 订单和合并订单（仓库入库，待打包，待审核，客服确认，仓库打包，客户付款，仓库打包 所有的接口区域；
 
     export interface GetCustomerOrderMergeRequest extends BaseListRequest {
-        type?: ModelNameSpace.OrderTypeEnum;
         country?: string;
-        currentStep?: string;
-        currentStatus?: string;
+        currentStep?: number;
         expressNo?: string;
         customerOrderMergeNo?: string;
         customerChooseChannelID?: number;
@@ -132,7 +129,7 @@ export namespace requestNameSpace {
     }
 
     export interface GetWarehouseInListRequest extends BaseListRequest {
-        step: ModelNameSpace.OrderTypeEnum;
+        step: number;
         /** 会员*/
         memberID?: string;
         /** 客户订单号*/
@@ -232,8 +229,8 @@ export namespace requestNameSpace {
     }
 
     export interface CustomerOrdersRequest extends BaseListRequest {
-        step: string;
-        customerOrderStatus:string;
+        step: number;
+        customerOrderStatus:number;
         /** 快递单号*/
         expressNo?: string,
         /** 开始时间*/

@@ -3,7 +3,6 @@ import {withRouter,hashHistory} from 'react-router';
 import {Row, Col, Button, Icon, Table, Alert,Form,Input} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
-const { RangePicker } = DatePicker;
 import {ColumnProps} from 'antd/lib/table';
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
@@ -11,7 +10,7 @@ import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
 import {PathConfig} from "../config/pathconfig";
 import {FormWarehouseSelect} from "../components-v1/form-warehouse-select";
 import {FormExpressSelect} from "../components-v1/form-express-select";
-import {SelectType} from "../util/common";
+import {SelectType,Constants} from "../util/common";
 import {FormControl} from "../components-v1/form-control";
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import {ResponseNameSpace} from "../model/response";
@@ -23,7 +22,7 @@ import {FormTableOperation,FormTableOperationModel} from "../components-v1/form-
 import {FormComponentProps} from "antd/lib/form";
 import FormItem from "antd/lib/form/FormItem";
 import {isUndefined} from "util";
-
+const { RangePicker } = DatePicker;
 
 /// 待审核列表
 interface WarehouseOutPageProps extends FormComponentProps {
@@ -75,7 +74,7 @@ class WarehouseOutPage extends React.Component<WarehouseOutPageProps, WarehouseO
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
         const request: requestNameSpace.GetCustomerOrderMergeRequest = {
-            type: 0,
+            currentStep:Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderOut),
             channelID: !isUndefined(searchaValues.ChannelID)?searchaValues.ChannelID.key:0,
             expressNo:!isUndefined(searchaValues.expressNo)?searchaValues.expressNo:"",
             customerChooseChannelID:!isUndefined(searchaValues.ChannelID)?searchaValues.ChannelID:0,
@@ -130,10 +129,13 @@ class WarehouseOutPage extends React.Component<WarehouseOutPageProps, WarehouseO
             dataIndex: 'WareHouseName'
         },  {
             title: "状态",
-            dataIndex: 'currentStep'
+            dataIndex: 'currentStatus',
+            render:(txt)=> {
+                return <span>{Constants.getOrderStatusByString(ModelNameSpace.OrderTypeEnum.OrderOut, txt)}</span>
+            }
         }, {
             title: "创建时间",
-            dataIndex: 'InWareHouseTime'
+            dataIndex: 'Created'
         }, {
             title: '操作',
             fixed: 'right',

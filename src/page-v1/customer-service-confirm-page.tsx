@@ -2,7 +2,6 @@ import * as React from 'react';
 import {withRouter, hashHistory} from 'react-router';
 import {Row, Icon, Form} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
-
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
@@ -22,10 +21,7 @@ import {isUndefined} from "util";
 import * as moment from 'moment';
 
 
-/// 待审核列表
-interface CustomerServiceConfirmPageProps extends FormComponentProps {
-
-}
+interface CustomerServiceConfirmPageProps extends FormComponentProps {}
 
 interface CustomerServiceConfirmPageStates {
     /** 数据源*/
@@ -74,12 +70,13 @@ class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmP
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
         const request: requestNameSpace.GetCustomerOrderMergeRequest = {
-            type: 0,
+            currentStep:Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderConfirm),
             channelID: !isUndefined(searchaValues.ChannelID) ? searchaValues.ChannelID.key : 0,
             expressNo: !isUndefined(searchaValues.expressNo) ? searchaValues.expressNo : "",
             customerChooseChannelID: !isUndefined(searchaValues.ChannelID) ? searchaValues.ChannelID : 0,
             pageIndex: index ? index : pageIndex,
-            pageSize: size ? size : pageSize
+            pageSize: size ? size : pageSize,
+            isAdmin:true
         }
 
         topThis.setState({loading: true});
@@ -139,8 +136,11 @@ class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmP
             hidden: Constants.minSM
         }, {
             title: "状态",
-            dataIndex: 'currentStep',
-            layout: ColumnLayout.RightTop
+            dataIndex: 'currentStatus',
+            layout: ColumnLayout.RightTop,
+            render:(txt)=>{
+                return <span>{Constants.getOrderStatusByString(ModelNameSpace.OrderTypeEnum.OrderConfirm, txt)}</span>
+            }
         }, {
             title: "创建时间",
             dataIndex: 'Created',

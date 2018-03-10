@@ -72,7 +72,6 @@ export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProp
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
         const request: requestNameSpace.GetCustomerOrderMergeRequest = {
-            type: 0,
             channelID: !isUndefined(searchaValues.ChannelID) ? searchaValues.ChannelID.key : 0,
             expressNo: !isUndefined(searchaValues.expressNo) ? searchaValues.expressNo : "",
             customerChooseChannelID: !isUndefined(searchaValues.ChannelID) ? searchaValues.ChannelID : 0,

@@ -2,7 +2,6 @@ import {SagaMiddleware} from "redux-saga";
 import {Cookies} from "./cookie";
 import {Store} from "redux";
 import {CommonLocale} from "../locales/localeid";
-// import {UserModel} from '../api/model/base';
 import {ModelNameSpace} from '../model/model';
 
 import {Notification} from "../components-v1/notification";
@@ -123,6 +122,59 @@ export class Constants {
     static minMD = window.innerWidth < Constants.md;
     static minLG = window.innerWidth < Constants.lg;
     static minXL = window.innerWidth < Constants.xl;
+
+    // OrderIn	    0	仓库管理-订单入库	step=0、isAdmin=true	                        0待确认、1已确认、2仓库退货
+    // WaitPackage	1	我的订单-待打包	    step=1、customerOrderStatus=1、isAdmin=false	1待打包
+    // WaitApprove	2	我的订单-待审核	    step=12、isAdmin=false	                        1客户确认、2仓库打包
+    // OrderConfirm	3	客服管理-订单确认	step=1、isAdmin=true	                        0待确认
+    // OrderMerge	4	仓库管理-合并打包	step=2、isAdmin=true	                        0待确认
+    // WaitPay	    5	我的订单-待付款	    step=3、isAdmin=false	                        0待确认
+    // OrderOut 	6	仓库管理-订单出库	step=4、isAdmin=true	                        0待确认、1已确认
+
+    /** 阶段订单Step*/
+    static getOrderStep(typeEnum:ModelNameSpace.OrderTypeEnum){
+        const {OrderTypeEnum} = ModelNameSpace;
+        let result = 0;
+        switch (typeEnum) {
+            case OrderTypeEnum.OrderIn:
+                result = 0;
+                break;
+            case OrderTypeEnum.WaitPackage:
+                result = 1;
+                break;
+            case OrderTypeEnum.WaitApprove:
+                result = 12;
+                break;
+            case OrderTypeEnum.OrderConfirm:
+                result = 1;
+                break;
+            case OrderTypeEnum.OrderMerge:
+                result = 2;
+                break;
+            case OrderTypeEnum.WaitPay:
+                result = 3;
+                break;
+            case OrderTypeEnum.OrderOut:
+                result = 4;
+                break;
+        }
+        return result;
+    }
+
+    /** 阶段订单状态解析*/
+    static getOrderStatusByEnum(typeEnum:ModelNameSpace.OrderTypeEnum,statusEnum:ModelNameSpace.OrderStatusEnum) {
+        return Global.intl.formatMessage({id: "customer.order.status." + typeEnum.toString() + "." + statusEnum.toString()});
+    }
+
+    /** 阶段订单状态解析*/
+    static getOrderStatusByString(typeEnum:ModelNameSpace.OrderTypeEnum,statusEnum:string){
+        return Global.intl.formatMessage({id: "customer.order.status." + typeEnum.toString() + "." + statusEnum.toString()});
+    }
+
+    /** 阶段订单状态解析*/
+    static getOrderStatusByNumber(typeEnum:ModelNameSpace.OrderTypeEnum,statusEnum:number){
+        return Global.intl.formatMessage({id: "customer.order.status." + typeEnum.toString() + "." + statusEnum.toString()});
+    }
 }
 
 export class Context {
@@ -131,6 +183,7 @@ export class Context {
      */
     static MerchantData: any;
 
+    /** 默认Key键值*/
     static Keys = {
         /**
          * LocalStorage的存储key
@@ -220,11 +273,6 @@ export class Context {
      * 获取Icon的ClassName*/
     static getIconClassName(name: string): string {
         return "iconfont " + name;
-    }
-
-    /** 获取订单状态多语言标识*/
-    static getCustomerOrderStatusID(type:string,key: string): string {
-        return "customer.order.status." + type + "." + key;
     }
 
     /** 返回系统Status*/

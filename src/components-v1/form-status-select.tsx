@@ -1,16 +1,17 @@
 /**
  * 状态下拉选择
- * Created by Handy
  * */
+
 import * as React from 'react';
 import {Select} from 'antd';
 import {SelectProps,LabeledValue} from "antd/lib/select";
 import {isNullOrUndefined} from "util";
 const Option = Select.Option;
 import {ModelNameSpace} from '../model/model';
+import {Constants} from "../util/common";
 
 interface FormStatusSelectProps extends SelectProps {
-    dataType?: ModelNameSpace.OrderTypeEnum;
+    type?: ModelNameSpace.OrderTypeEnum;
     readonly?:boolean;
     value?: string;
 }
@@ -34,45 +35,28 @@ export class FormStatusSelect extends React.Component<FormStatusSelectProps, For
     /** 获取数据源*/
     onLoadData() {
         const topThis = this;
-        const {props:{dataType}}=topThis;
+        const {props:{type}}=topThis;
+        const {OrderTypeEnum, OrderStatusEnum} = ModelNameSpace;
         const data: LabeledValue[] = [];
-        switch(dataType){
-            case ModelNameSpace.OrderTypeEnum.WarehouseIn:
-                data.push({key: "0",label: "未确认"});
-                data.push({key: "1",label: "已确认"});
-                data.push({key: "2",label: "仓库退货"});
+        switch(type){
+            case OrderTypeEnum.OrderIn:
+                data.push({key: OrderStatusEnum.StatusA.toString(),label: Constants.getOrderStatusByEnum(OrderTypeEnum.OrderIn,OrderStatusEnum.StatusA)});
+                data.push({key: OrderStatusEnum.StatusB.toString(),label: Constants.getOrderStatusByEnum(OrderTypeEnum.OrderIn,OrderStatusEnum.StatusB)});
+                data.push({key: OrderStatusEnum.StatusC.toString(),label: Constants.getOrderStatusByEnum(OrderTypeEnum.OrderIn,OrderStatusEnum.StatusC)});
                 break;
-            case ModelNameSpace.OrderTypeEnum.WarehousePackage:
-                data.push({key: "0",label: "未确认"});
-                data.push({key: "1",label: "已确认"});
-                data.push({key: "2",label: "客服退货"});
-                data.push({key: "3",label: "客服拒绝"});
+            case OrderTypeEnum.WaitApprove:
+                data.push({key: OrderStatusEnum.StatusB.toString(),label: Constants.getOrderStatusByEnum(OrderTypeEnum.WaitApprove,OrderStatusEnum.StatusB)});
+                data.push({key: OrderStatusEnum.StatusC.toString(),label: Constants.getOrderStatusByEnum(OrderTypeEnum.WaitApprove,OrderStatusEnum.StatusC)});
                 break;
-            case ModelNameSpace.OrderTypeEnum.CustomerConfirm:
-                data.push({key: "0",label: "未确认"});
-                data.push({key: "1",label: "已确认"});
-                break;
-            case ModelNameSpace.OrderTypeEnum.CustomerPayment:
-                data.push({key: "0",label: "未确认"});
-                data.push({key: "1",label: "已付款"});
-                data.push({key: "2",label: "付款失败"});
-                break;
-            case ModelNameSpace.OrderTypeEnum.WaitForDelivered:
-                data.push({key: "0",label: "未发货"});
-                data.push({key: "1",label: "已发货"});
+            case OrderTypeEnum.OrderOut:
+                data.push({key: OrderStatusEnum.StatusA.toString(),label: Constants.getOrderStatusByEnum(OrderTypeEnum.OrderOut,OrderStatusEnum.StatusA)});
+                data.push({key: OrderStatusEnum.StatusB.toString(),label: Constants.getOrderStatusByEnum(OrderTypeEnum.OrderOut,OrderStatusEnum.StatusB)});
                 break;
             default:
-                data.push({key: "0",label: "待打包"});
-                data.push({key: "1",label: "客服确认"});
-                data.push({key: "2",label: "仓库打包"});
-                data.push({key: "3",label: "待付款"});
-                data.push({key: "4",label: "待发货"});
                 break;
         }
         topThis.setState({selectData: data});
     }
-
-
 
     renderOption() {
         const topThis = this;

@@ -1,7 +1,6 @@
 /**
  * 仓库合并打包
  * */
-
 import * as React from 'react';
 import {withRouter,Link,hashHistory} from 'react-router';
 import {Row,Tooltip,Icon,DatePicker,message,Modal} from 'antd';
@@ -11,7 +10,7 @@ import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
 import {PathConfig} from "../config/pathconfig";
-import {SelectType} from "../util/common";
+import {SelectType,Constants} from "../util/common";
 import {FormControl} from "../components-v1/form-control";
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import {ResponseNameSpace} from "../model/response";
@@ -87,7 +86,7 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
         const topThis = this;
         const {state: {pageIndex, pageSize,searchaValues}} = topThis;
         let request: requestNameSpace.GetCustomerOrderMergeRequest = {
-            type: 0,
+            currentStep:Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderMerge),
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize,
             isAdmin:true
@@ -208,8 +207,8 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
         }, {
             title: "状态",
             dataIndex: 'currentStatus',
-            render:() => {
-                return <span>***</span>
+            render:(txt)=> {
+                return <span>{Constants.getOrderStatusByString(ModelNameSpace.OrderTypeEnum.OrderMerge, txt)}</span>
             }
         }, {
             title: "客户提交时间",
@@ -312,7 +311,7 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
                 defaultDisplay: true,
                 fieldName: "customerOrderStatus",
                 displayName: "状态",
-                control: <FormStatusSelect dataType={ModelNameSpace.OrderTypeEnum.WarehousePackage}
+                control: <FormStatusSelect type={ModelNameSpace.OrderTypeEnum.OrderMerge}
                                            placeholder="搜索订单状态"></FormStatusSelect>
             },{
                 defaultDisplay: true,

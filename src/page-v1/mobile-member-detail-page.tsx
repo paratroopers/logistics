@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import {Grid, Carousel} from 'antd-mobile';
 import {Global} from '../util/common';
 
-
 interface MemberDetailPageProps {
     data?: any;
 }

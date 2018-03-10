@@ -5,7 +5,6 @@ import {FormSteps} from '../components-v1/form-steps';
 import {MemberBaseInformation} from '../components-v1/member-base-information';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 
-
 interface MemberWelcomePageProps {
 }
 

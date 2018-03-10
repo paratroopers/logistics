@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
-import {List, Badge} from 'antd-mobile';
+import {List} from 'antd-mobile';
 import {UserAvatar} from '../components-v1/user-avatar';
 import {hashHistory} from 'react-router';
 import {Global, Context} from '../util/common';
@@ -52,7 +52,6 @@ export class MobileMemberPage extends React.Component<MemberPageProps, MemberPag
     renderList() {
         const topThis = this;
         const {state: {treeData}} = topThis;
-        {/*<Badge text={77} overflowCount={55}></Badge>*/}
         return treeData ? treeData.map(item => {
             return <List key={item.parentItem.Url} renderHeader={() => item.parentItem.Name_CN}>
                 {
