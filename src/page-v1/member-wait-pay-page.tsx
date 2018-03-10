@@ -1,28 +1,28 @@
 import * as React from 'react';
-import {withRouter,hashHistory} from 'react-router';
-import {Row, Col, Button, Icon, Table, Alert,Form,Input} from 'antd';
+import {withRouter, hashHistory} from 'react-router';
+import {Row, Col, Button, Icon, Table, Alert, Form, Input} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
-const { RangePicker } = DatePicker;
+
+const {RangePicker} = DatePicker;
 import {ColumnProps} from 'antd/lib/table';
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
 import {PathConfig} from "../config/pathconfig";
-import {FormWarehouseSelect} from "../components-v1/form-warehouse-select";
-import {FormExpressSelect} from "../components-v1/form-express-select";
-import {SelectType} from "../util/common";
+import {SelectType, Constants} from "../util/common";
 import {FormControl} from "../components-v1/form-control";
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import {ResponseNameSpace} from "../model/response";
-import {FormStatusSelect} from "../components-v1/form-status-select";
 import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import {APINameSpace} from "../model/api";
 import {ClickParam} from "antd/lib/menu";
-import {FormTableOperation,FormTableOperationModel} from "../components-v1/form-table-operation";
+import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
 import {FormComponentProps} from "antd/lib/form";
-import FormItem from "antd/lib/form/FormItem";
+import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
+import FormTableHeader from '../components-v1/form-table-header';
 import {isUndefined} from "util";
+import * as moment from 'moment';
 
 
 /// 待审核列表
@@ -36,19 +36,22 @@ interface MemberWaitPayPageStates {
     /** 选中行*/
     selectedRowKeys: any[],
     /** 当前页数*/
-    pageIndex:number,
+    pageIndex: number,
     /** 每页条数*/
-    pageSize:number,
+    pageSize: number,
     /** 总数*/
-    totalCount:number
+    totalCount: number
     /** 列表是否正在查询*/
     loading?: boolean;
 }
 
+export class MemberWaitPayPageTable extends CommonTable<ModelNameSpace.WarehouseListModel> {
+}
+
 @withRouter
 export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, MemberWaitPayPageStates> {
-    constructor(props,context) {
-        super(props,context);
+    constructor(props, context) {
+        super(props, context);
         this.state = {
             listData: [],
             selectedRowKeys: [],
@@ -60,7 +63,7 @@ export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, M
     }
 
     componentDidMount() {
-        this.loadData(1,10,0);
+        this.loadData(1, 10, 0);
     }
 
 
@@ -71,14 +74,14 @@ export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, M
     }
 
     /** 获取数据源*/
-    loadData = (index?:number,size?:number,searchaValues?:any) => {
+    loadData = (index?: number, size?: number, searchaValues?: any) => {
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
         const request: requestNameSpace.GetCustomerOrderMergeRequest = {
             type: 0,
-            channelID: !isUndefined(searchaValues.ChannelID)?searchaValues.ChannelID.key:0,
-            expressNo:!isUndefined(searchaValues.expressNo)?searchaValues.expressNo:"",
-            customerChooseChannelID:!isUndefined(searchaValues.ChannelID)?searchaValues.ChannelID:0,
+            channelID: !isUndefined(searchaValues.ChannelID) ? searchaValues.ChannelID.key : 0,
+            expressNo: !isUndefined(searchaValues.expressNo) ? searchaValues.expressNo : "",
+            customerChooseChannelID: !isUndefined(searchaValues.ChannelID) ? searchaValues.ChannelID : 0,
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize
         }
@@ -106,37 +109,51 @@ export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, M
             onChange: topThis.onSelectChange,
         };
 
-        const columns: ColumnProps<ModelNameSpace.WarehouseListModel>[] = [{
+        const columns: CommonColumnProps<ModelNameSpace.WarehouseListModel>[] = [{
             title: "客户订单号",
             dataIndex: 'MergeOrderNo',
-            fixed: 'left'
+            layout: ColumnLayout.LeftTop
         }, {
             title: "渠道",
-            dataIndex: 'expressNo'
-        },{
+            dataIndex: 'expressNo',
+            hidden: Constants.minSM
+        }, {
             title: "发往国家",
-            dataIndex: 'expressNo'
-        },{
+            dataIndex: 'expressNo',
+            hidden: Constants.minSM
+        }, {
             title: "入库总体积",
-            dataIndex: 'MemeberCode'
+            dataIndex: 'MemeberCode',
+            hidden: Constants.minSM
         }, {
             title: "入库总重量",
-            dataIndex: 'expressTypeName'
-        },  {
+            dataIndex: 'expressTypeName',
+            hidden: Constants.minSM
+        }, {
             title: "申报总额",
-            dataIndex: 'CustomerServiceName'
+            dataIndex: 'CustomerServiceName',
+            render: (txt, record) => {
+                return <span>{new String().concat((Constants.minSM ? '申报总额：' : ''), txt)}</span>;
+            },
+            layout: ColumnLayout.RightBottom
         }, {
             title: "客服备注",
-            dataIndex: 'WareHouseName'
-        },  {
+            dataIndex: 'WareHouseName',
+            hidden: Constants.minSM
+        }, {
             title: "状态",
-            dataIndex: 'currentStep'
+            dataIndex: 'currentStep',
+            layout: ColumnLayout.RightTop
         }, {
             title: "创建时间",
-            dataIndex: 'InWareHouseTime'
+            dataIndex: 'InWareHouseTime',
+            render: (txt) => {
+                return moment(txt).format('YYYY-MM-DD HH:mm');
+            },
+            layout: ColumnLayout.LeftBottom
         }, {
             title: '操作',
-            fixed: 'right',
+            layout: ColumnLayout.Option,
             render: (val, record, index) => {
                 const menu: FormTableOperationModel[] = [
                     {
@@ -183,36 +200,18 @@ export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, M
             }
         };
 
-        return <Table columns={columns}
-                      rowKey={"ID"}
-                      loading={loading}
-                      style={{padding: '12px'}}
-                      pagination={pagination}
-                      title={(currentPageData: Object[]) => {
-                          //
-                          return <Alert message={"总计有 " + totalCount + "项待审批"} type="info" showIcon></Alert>;
-                      }}
-                      scroll={{x: 1800}}
-                      rowSelection={rowSelection}
-                      bordered={false}
-                      dataSource={listData}
-                      locale={{emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>}}/>;
+        return <MemberWaitPayPageTable columns={columns}
+                                       rowKey={"ID"}
+                                       loading={loading}
+                                       style={{padding: '12px'}}
+                                       pagination={pagination}
+                                       rowSelection={rowSelection}
+                                       dataSource={listData}
+                                       locale={{emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>}}/>;
     }
 
-    onClickSearch = (values:any) =>{
-        //  e.preventDefault();
-        this.loadData(1,10,values);
-        // this.props.form.validateFields((err, values) => {
-        //     if (!err) {
-        //         console.log('Received values of form: ', values);
-        //
-        //     }
-        // });
-
-    }
-
-    onReset(){
-
+    onClickSearch = (values: any) => {
+        this.loadData(1, 10, values);
     }
 
     renderFormAdvancedItems() {
@@ -221,8 +220,9 @@ export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, M
                 defaultDisplay: true,
                 fieldName: "customerOrderMerge",
                 displayName: "客户合并订单号",
-                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客户合并订单号"/>
-            },
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客户合并订单号"/>,
+                mobileShow: true
+            }/*,
             {
                 defaultDisplay: true,
                 fieldName: "MemberNo",
@@ -245,7 +245,7 @@ export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, M
                 fieldName: "Created",
                 displayName: "创建时间",
                 control: <RangePicker></RangePicker>
-            }
+            }*/
 
         ];
         return items;
@@ -260,6 +260,7 @@ export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, M
             <FormAdvancedSearch
                 formAdvancedItems={topThis.renderFormAdvancedItems()}
                 onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch>
+            <FormTableHeader title={`总计有${this.state.totalCount}项待审批`}></FormTableHeader>
             {this.renderTable()}
         </Row>;
     }
