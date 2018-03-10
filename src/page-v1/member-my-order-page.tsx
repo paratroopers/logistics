@@ -161,7 +161,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                                     <div><Link to={{pathname: PathConfig.MemberMyOrderPackageViewPage, state: record}}>{`客户订单号:${txt}`}</Link></div>
                                     <div>物流单号:{record.expressNo}</div>
                                 </div>
-                                : <Link to={{pathname: PathConfig.WarehouseInViewPage, state: record}}>{`客户订单号:${txt}`}</Link>
+                                : <Link to={{pathname: PathConfig.WarehouseInViewPage, state: record}}>{txt}</Link>
                         }
                     </span>
                 }

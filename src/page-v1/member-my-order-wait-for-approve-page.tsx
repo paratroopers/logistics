@@ -69,7 +69,6 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
 
     /** 选中事件*/
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
         this.setState({selectedRowKeys});
     }
 
@@ -168,6 +167,7 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
         }, {
             title: "状态",
             layout: ColumnLayout.RightBottom,
+            dataIndex: 'currentStatus',
             render: (txt) => {
                 return <span>{Constants.getOrderStatusByString(ModelNameSpace.OrderTypeEnum.WaitApprove, txt)}</span>
             }
