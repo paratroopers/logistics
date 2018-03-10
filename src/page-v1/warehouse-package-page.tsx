@@ -5,6 +5,7 @@
 import * as React from 'react';
 import {withRouter,Link,hashHistory} from 'react-router';
 import {Row,Tooltip,Icon,DatePicker,message,Modal} from 'antd';
+import {FormStatusSelect} from "../components-v1/form-status-select";
 import {PaginationProps} from 'antd/lib/pagination';
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
@@ -72,7 +73,7 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
     }
 
     componentDidMount() {
-         this.loadData(1,10);
+        this.loadData(1,10);
     }
 
 
@@ -183,31 +184,31 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
             dataIndex: 'MergeOrderNo',
             layout: ColumnLayout.LeftTop,
             fixed: 'left',
-             render: (txt,record) => {
-                 return <Link to={{pathname: PathConfig.WarehousePackageViewPage, state: record}}>{txt}</Link>
-             }
+            render: (txt,record) => {
+                return <Link to={{pathname: PathConfig.WarehousePackageViewPage, query: {ids: record.ID}}}>{txt}</Link>
+            }
         }, {
             title: "入库总重量",
             dataIndex: 'InWeightTotal',
-            render:(txt,record) => {
+            render:(txt) => {
                 return <span>{`${txt}kg`}</span>
             }
         }, {
             title: "入库总体积",
             dataIndex: 'InVolumeTotal',
-            render:(txt,record) => {
+            render:(txt) => {
                 return <span>{`${txt}cm³`}</span>
             }
         }, {
             title: "入库总数",
             dataIndex: 'InPackageCountTotal',
-            render:(txt,record) => {
+            render:(txt) => {
                 return <span>{`${txt}件`}</span>
             }
         }, {
             title: "状态",
             dataIndex: 'currentStatus',
-            render:(txt,record) => {
+            render:() => {
                 return <span>***</span>
             }
         }, {
@@ -215,13 +216,13 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
             dataIndex: 'Created',
             layout: ColumnLayout.LeftBottom,
             render: (txt) => {
-            return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
-        }
+                return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
+            }
         }, {
             title: '操作',
             layout: ColumnLayout.Option,
             fixed: 'right',
-            render: (val, record, index) => {
+            render: (val, record) => {
                 const menu: FormTableOperationModel[] = [
                     {
                         key: PathConfig.WarehousePackageApprovePage,
@@ -255,7 +256,7 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
                             }
                         });
                     } else {
-                        hashHistory.push({pathname: param.key, state: record});
+                        hashHistory.push({pathname: param.key, query: {ids: record.ID}});
                     }
                 }} value={menu}></FormTableOperation>;
             }
@@ -309,9 +310,10 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
             },
             {
                 defaultDisplay: true,
-                fieldName: "currentStatus",
+                fieldName: "customerOrderStatus",
                 displayName: "状态",
-                control:  <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder={"状态"}  />
+                control: <FormStatusSelect dataType={ModelNameSpace.OrderTypeEnum.WarehousePackage}
+                                           placeholder="搜索订单状态"></FormStatusSelect>
             },{
                 defaultDisplay: true,
                 fieldName: "Created",
