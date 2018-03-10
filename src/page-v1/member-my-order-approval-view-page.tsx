@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {withRouter,RouteComponentProps,hashHistory} from 'react-router';
+import {withRouter, RouteComponentProps, hashHistory} from 'react-router';
 import {Row} from 'antd';
 import {requestNameSpace} from '../model/request';
 import {ResponseNameSpace} from '../model/response'
@@ -17,7 +17,7 @@ import {
 } from "../components-v1/all-components-export";
 import {isNullOrUndefined} from "util";
 
-interface MemberMyOrderApprovalViewPageProps extends RouteComponentProps<any, any>{
+interface MemberMyOrderApprovalViewPageProps extends RouteComponentProps<any, any> {
 
 }
 
@@ -25,7 +25,7 @@ interface MemberMyOrderApprovalViewPageStates {
     /** 原始订单ID*/
     selectedKey?: string;
     /** 源数据*/
-    data?:ModelNameSpace.CustomerOrderMergeDetailModel;
+    data?: ModelNameSpace.CustomerOrderMergeDetailModel;
 }
 
 export interface QueryData {

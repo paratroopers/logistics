@@ -10,20 +10,19 @@ import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
 import {PathConfig} from "../config/pathconfig";
-import {FormWarehouseSelect} from "../components-v1/form-warehouse-select";
-import {FormExpressSelect} from "../components-v1/form-express-select";
-import {SelectType} from "../util/common";
+import {SelectType, Constants} from "../util/common";
 import {FormControl} from "../components-v1/form-control";
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import {ResponseNameSpace} from "../model/response";
-import {FormStatusSelect} from "../components-v1/form-status-select";
 import {FormAdvancedSearch} from "../components-v1/all-components-export";
+import FormTableHeader from '../components-v1/form-table-header';
 import {APINameSpace} from "../model/api";
 import {ClickParam} from "antd/lib/menu";
 import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
+import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {FormComponentProps} from "antd/lib/form";
-import FormItem from "antd/lib/form/FormItem";
 import {isUndefined} from "util";
+import * as moment from 'moment';
 
 
 /// 待审核列表
@@ -44,6 +43,9 @@ interface CustomerServiceConfirmPageStates {
     totalCount: number
     /** 列表是否正在查询*/
     loading?: boolean;
+}
+
+export class CustomerServiceConfirmPageTable extends CommonTable<ModelNameSpace.WarehouseListModel> {
 }
 
 @withRouter
@@ -106,37 +108,53 @@ class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmP
             onChange: topThis.onSelectChange,
         };
 
-        const columns: ColumnProps<ModelNameSpace.WarehouseListModel>[] = [{
+        const columns: CommonColumnProps<ModelNameSpace.WarehouseListModel>[] = [{
             title: "客户订单号",
             dataIndex: 'MergeOrderNo',
-            fixed: 'left'
+            fixed: 'left',
+            layout: ColumnLayout.LeftTop
         }, {
             title: "渠道",
-            dataIndex: 'expressNo'
+            dataIndex: 'expressNo',
+            hidden: Constants.minSM
         }, {
             title: "发往国家",
-            dataIndex: 'expressNo'
+            dataIndex: '',
+            hidden: Constants.minSM
         }, {
             title: "入库总体积",
-            dataIndex: 'MemeberCode'
+            dataIndex: 'MemeberCode',
+            hidden: Constants.minSM
         }, {
             title: "入库总重量",
-            dataIndex: 'expressTypeName'
+            dataIndex: 'expressTypeName',
+            hidden: Constants.minSM
         }, {
             title: "申报总额",
-            dataIndex: 'CustomerServiceName'
+            dataIndex: 'CustomerServiceName',
+            render: (txt, record) => {
+                return <span>{new String().concat((Constants.minSM ? '申报总额：' : ''), txt)}</span>;
+            },
+            layout: ColumnLayout.RightBottom
         }, {
             title: "客服备注",
-            dataIndex: 'WareHouseName'
+            dataIndex: 'WareHouseName',
+            hidden: Constants.minSM
         }, {
             title: "状态",
-            dataIndex: 'currentStep'
+            dataIndex: 'currentStep',
+            layout: ColumnLayout.RightTop
         }, {
             title: "创建时间",
-            dataIndex: 'InWareHouseTime'
+            dataIndex: 'Created',
+            render: (txt) => {
+                return moment(txt).format('YYYY-MM-DD HH:mm');
+            },
+            layout: ColumnLayout.LeftBottom
         }, {
             title: '操作',
             fixed: 'right',
+            layout: ColumnLayout.Option,
             render: (val, record, index) => {
                 const menu: FormTableOperationModel[] = [
                     {
@@ -190,36 +208,18 @@ class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmP
             }
         };
 
-        return <Table columns={columns}
-                      rowKey={"ID"}
-                      loading={loading}
-                      style={{padding: '12px'}}
-                      pagination={pagination}
-                      title={(currentPageData: Object[]) => {
-                          //
-                          return <Alert message={"总计有 " + totalCount + "项待审批"} type="info" showIcon></Alert>;
-                      }}
-                      scroll={{x: 1800}}
-                      rowSelection={rowSelection}
-                      bordered={false}
-                      dataSource={listData}
-                      locale={{emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>}}/>;
+        return <CustomerServiceConfirmPageTable columns={columns}
+                                                loading={loading}
+                                                style={{padding: '12px'}}
+                                                pagination={pagination}
+                                                dataSource={listData}
+                                                locale={{
+                                                    emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>
+                                                }}/>;
     }
 
-    onClickSearch = (values: any) => {
-        //  e.preventDefault();
+    onClickSearch(values: any) {
         this.loadData(1, 10, values);
-        // this.props.form.validateFields((err, values) => {
-        //     if (!err) {
-        //         console.log('Received values of form: ', values);
-        //
-        //     }
-        // });
-
-    }
-
-    onReset() {
-
     }
 
     renderFormAdvancedItems() {
@@ -228,30 +228,8 @@ class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmP
                 defaultDisplay: true,
                 fieldName: "customerOrderMerge",
                 displayName: "客户合并订单号",
-                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客户合并订单号"/>
-            },
-            {
-                defaultDisplay: true,
-                fieldName: "MemberNo",
-                displayName: "会员号",
-                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索会员号"/>
-            },
-            {
-                defaultDisplay: true,
-                fieldName: "channel",
-                displayName: "渠道",
-                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder="搜索渠道"/>
-            },
-            {
-                defaultDisplay: false,
-                fieldName: "CustomerSericeStatus",
-                displayName: "状态",
-                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder={"快递状态"}/>
-            }, {
-                defaultDisplay: false,
-                fieldName: "Created",
-                displayName: "创建时间",
-                control: <RangePicker></RangePicker>
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客户合并订单号"/>,
+                mobileShow: true
             }
 
         ];
@@ -259,14 +237,14 @@ class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmP
     }
 
     render() {
-        const topThis = this;
         // const { getFieldDecorator } = this.props.form;
         return <Row>
             <ContentHeaderControl title="订单确认"></ContentHeaderControl>
 
             <FormAdvancedSearch
-                formAdvancedItems={topThis.renderFormAdvancedItems()}
-                onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch>
+                formAdvancedItems={this.renderFormAdvancedItems()}
+                onClickSearch={this.onClickSearch.bind(this)}></FormAdvancedSearch>
+            <FormTableHeader title={`总计有${this.state.totalCount}项待审批`}></FormTableHeader>
             {this.renderTable()}
         </Row>;
     }
