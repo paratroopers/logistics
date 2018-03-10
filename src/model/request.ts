@@ -115,6 +115,7 @@ export namespace requestNameSpace {
     export interface GetCustomerOrderMergeRequest extends BaseListRequest {
         country?: string;
         currentStep?: number;
+        currentStatus?:string;
         expressNo?: string;
         customerOrderMergeNo?: string;
         customerChooseChannelID?: number;

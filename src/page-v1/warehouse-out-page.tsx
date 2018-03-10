@@ -243,7 +243,7 @@ class WarehouseOutPage extends React.Component<WarehouseOutPageProps, WarehouseO
             },
             {
                 defaultDisplay: false,
-                fieldName: "CustomerSericeStatus",
+                fieldName: "currentStatus",
                 displayName: "状态",
                 control:  <FormControl.FormSelectIndex type={SelectType.ExpressNo} placeholder={"快递状态"}  />
             },{

@@ -80,6 +80,7 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
 
         const request: requestNameSpace.GetCustomerOrderMergeRequest = {
             currentStep:Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.WaitApprove),
+            currentStatus:!isUndefined(searchaValues.currentStatus) ? searchaValues.currentStatus.key : "",
             expressNo: !isUndefined(searchaValues.expressNo) ? searchaValues.expressNo : "",
             customerOrderMergeNo: isArray(searchaValues.customerOrderMergeNo) && !isNullOrUndefined(searchaValues.customerOrderMergeNo[0]) ? searchaValues.customerOrderMergeNo[0].key : "",
             customerChooseChannelID: !isUndefined(searchaValues.channel) ? searchaValues.channel.key : "",

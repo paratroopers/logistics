@@ -287,7 +287,11 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                             okType: 'danger',
                             cancelText: '取消',
                             onOk() {
-                                topThis.onClickDelete(record.ID);
+                                if(record.currentStatus!==ModelNameSpace.OrderStatusEnum.StatusB.toString()){
+                                    topThis.onClickDelete(record.ID);
+                                }else {
+                                    message.warning("Order Is Approved Can Not BeDeleted！");
+                                }
                             },
                             onCancel() {
 
