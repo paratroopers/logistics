@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {withRouter} from 'react-router';
+import {withRouter, hashHistory} from 'react-router';
 import {Row, Icon, Table, Alert} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
-const { RangePicker } = DatePicker;
+
+const {RangePicker} = DatePicker;
 import {ColumnProps} from 'antd/lib/table';
 import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
@@ -16,7 +17,7 @@ import {ResponseNameSpace} from "../model/response";
 import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import {APINameSpace} from "../model/api";
 import {ClickParam} from "antd/lib/menu";
-import {FormTableOperation,FormTableOperationModel} from "../components-v1/form-table-operation";
+import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
 import {FormComponentProps} from "antd/lib/form";
 import {isUndefined} from "util";
 
@@ -32,19 +33,19 @@ interface MemberMyOrderWaitForApprovePageStates {
     /** 选中行*/
     selectedRowKeys: any[],
     /** 当前页数*/
-    pageIndex:number,
+    pageIndex: number,
     /** 每页条数*/
-    pageSize:number,
+    pageSize: number,
     /** 总数*/
-    totalCount:number
+    totalCount: number
     /** 列表是否正在查询*/
     loading?: boolean;
 }
 
 @withRouter
 export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProps, MemberMyOrderWaitForApprovePageStates> {
-    constructor(props,context) {
-        super(props,context);
+    constructor(props, context) {
+        super(props, context);
         this.state = {
             listData: [],
             selectedRowKeys: [],
@@ -56,7 +57,7 @@ export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProp
     }
 
     componentDidMount() {
-        this.loadData(1,10,0);
+        this.loadData(1, 10, 0);
     }
 
 
@@ -67,14 +68,14 @@ export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProp
     }
 
     /** 获取数据源*/
-    loadData = (index?:number,size?:number,searchaValues?:any) => {
+    loadData = (index?: number, size?: number, searchaValues?: any) => {
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
         const request: requestNameSpace.GetCustomerOrderMergeRequest = {
             type: 0,
-            channelID: !isUndefined(searchaValues.ChannelID)?searchaValues.ChannelID.key:0,
-            expressNo:!isUndefined(searchaValues.expressNo)?searchaValues.expressNo:"",
-            customerChooseChannelID:!isUndefined(searchaValues.ChannelID)?searchaValues.ChannelID:0,
+            channelID: !isUndefined(searchaValues.ChannelID) ? searchaValues.ChannelID.key : 0,
+            expressNo: !isUndefined(searchaValues.expressNo) ? searchaValues.expressNo : "",
+            customerChooseChannelID: !isUndefined(searchaValues.ChannelID) ? searchaValues.ChannelID : 0,
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize
         }
@@ -109,22 +110,22 @@ export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProp
         }, {
             title: "渠道",
             dataIndex: 'expressNo'
-        },{
+        }, {
             title: "发往国家",
             dataIndex: 'expressNo'
-        },{
+        }, {
             title: "入库总体积",
             dataIndex: 'MemeberCode'
         }, {
             title: "入库总重量",
             dataIndex: 'expressTypeName'
-        },  {
+        }, {
             title: "申报总额",
             dataIndex: 'CustomerServiceName'
         }, {
             title: "客服备注",
             dataIndex: 'WareHouseName'
-        },  {
+        }, {
             title: "状态",
             dataIndex: 'currentStep'
         }, {
@@ -146,7 +147,6 @@ export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProp
                         label: "查看"
                     }
 
-
                 ]
 
                 return <FormTableOperation onClick={(param: ClickParam) => {
@@ -154,7 +154,10 @@ export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProp
                         //this.deleteDataByID(record.ID);
                     }
                     else {
-                        //  hashHistory.push({pathname: param.key, state: record});
+                        hashHistory.push({
+                            pathname: PathConfig.MemberDeliveredApprovalPage,
+                            query: {id: record.ID}
+                        });
                     }
 
                 }} value={menu}></FormTableOperation>;
@@ -180,7 +183,6 @@ export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProp
         };
 
         return <Table columns={columns}
-                      rowKey={"ID"}
                       loading={loading}
                       style={{padding: '12px'}}
                       pagination={pagination}
@@ -188,27 +190,13 @@ export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProp
                           //
                           return <Alert message={"总计有 " + totalCount + "项待审批"} type="info" showIcon></Alert>;
                       }}
-                      scroll={{x: 1800}}
                       rowSelection={rowSelection}
-                      bordered={false}
                       dataSource={listData}
                       locale={{emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>}}/>;
     }
 
-    onClickSearch = (values:any) =>{
-        //  e.preventDefault();
-        this.loadData(1,10,values);
-        // this.props.form.validateFields((err, values) => {
-        //     if (!err) {
-        //         console.log('Received values of form: ', values);
-        //
-        //     }
-        // });
-
-    }
-
-    onReset(){
-
+    onClickSearch = (values: any) => {
+        this.loadData(1, 10, values);
     }
 
     renderFormAdvancedItems() {
@@ -217,8 +205,9 @@ export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProp
                 defaultDisplay: true,
                 fieldName: "customerOrderMerge",
                 displayName: "客户合并订单号",
-                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客户合并订单号"/>
-            },
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客户合并订单号"/>,
+                mobileShow: true
+            }/*,
             {
                 defaultDisplay: true,
                 fieldName: "MemberNo",
@@ -241,7 +230,7 @@ export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProp
                 fieldName: "Created",
                 displayName: "创建时间",
                 control: <RangePicker></RangePicker>
-            }
+            }*/
 
         ];
         return items;

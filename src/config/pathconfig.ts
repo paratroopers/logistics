@@ -27,43 +27,58 @@ export class PathConfig {
 
     /** 我的仓库-我的订单*/
     static MemberMyOrderPage = "/member/my/order";
-    static MemberMyOrderPackageViewPage = "/member/my/wait/package/view";/** 待打包查看*/
-    static MemberMyOrderApprovalViewPage = "/member/my/wait/approval/view";/** 待审核查看*/
+    static MemberMyOrderPackageViewPage = "/member/my/wait/package/view";
+    /** 待打包查看*/
+    static MemberMyOrderApprovalViewPage = "/member/my/wait/approval/view";
+    /** 待审核查看*/
     /** 我的仓库-待付款*/
     static MemberWaitPayPage = "/member/wait/pay";
-    static MemberWaitPayViewPage = "/member/wait/pay/view";/** 待付款-付款*/
-    static MemberWaitPayApprovePage = "/member/wait/pay/approve";/** 待付款-付款*/
+    static MemberWaitPayViewPage = "/member/wait/pay/view";
+    /** 待付款-付款*/
+    static MemberWaitPayApprovePage = "/member/wait/pay/approve";
+    /** 待付款-付款*/
     /** 我的仓库-已发货*/
     static MemberDeliveredPage = "/member/delivered";
+    static MemberDeliveredApprovalPage = "member/delivered/approve";
     /** 我的仓库-入库查询*/
     static MemberWarehouseInQueryPage = "/member/warehouse/in/query";
 
     /** 用户设置-收件人地址维护*/
     static MemberAddressPage = "/member/address";
-    static MemberAddressPageAdd = "/member/address/add";/** 收件人地址维护新增*/
-    static MemberAddressPageEdit = "/member/address/edit";/** 收件人地址维护编辑*/
-    static MemberAddressPageView = "/member/address/view";/** 收件人地址维护查看*/
+    static MemberAddressPageAdd = "/member/address/add";
+    /** 收件人地址维护新增*/
+    static MemberAddressPageEdit = "/member/address/edit";
+    /** 收件人地址维护编辑*/
+    static MemberAddressPageView = "/member/address/view";
+    /** 收件人地址维护查看*/
     /** 用户设置-个人信息*/
     static MemberUserInformationPage = "/member/user/information";
 
     /** 仓库管理-订单入库*/
     static WarehouseInPage = "/warehouse/in";
-    static WarehouseInAddPage = "/warehouse/in/add";/** 订单入库新增*/
-    static WarehouseInViewPage = "/warehouse/in/view";/** 订单入库查看*/
-    static WarehouseInEditPage = "/warehouse/in/edit";/** 订单入库编辑*/
+    static WarehouseInAddPage = "/warehouse/in/add";
+    /** 订单入库新增*/
+    static WarehouseInViewPage = "/warehouse/in/view";
+    /** 订单入库查看*/
+    static WarehouseInEditPage = "/warehouse/in/edit";
+    /** 订单入库编辑*/
     /** 仓库管理-合并打包*/
     static WarehousePackagePage = "/warehouse/package";
     static WarehousePackageViewPage = "/warehouse/package/view";
     static WarehousePackageApprovePage = "/warehouse/package/approve";
     /** 仓库管理-订单出库*/
     static WarehouseOutPage = "/warehouse/out";
-    static WarehouseOutViewPage = "/warehouse/out/view";/** 订单出库查看*/
-    static WarehouseOutApprovePage = "/warehouse/out/approve";/** 订单出库审批*/
+    static WarehouseOutViewPage = "/warehouse/out/view";
+    /** 订单出库查看*/
+    static WarehouseOutApprovePage = "/warehouse/out/approve";
+    /** 订单出库审批*/
 
     /** 客服管理-订单确认*/
     static CustomerServiceConfirmPage = "/cusertomerservice/orderconfirm";
-    static CustomerServiceConfirmViewPage = "/customer/service/order/confirm/view";/** 订单确认查看*/
-    static CustomerServiceConfirmApprovePage = "/customer/service/order/confirm/approve";/** 订单确认审核*/
+    static CustomerServiceConfirmViewPage = "/customer/service/order/confirm/view";
+    /** 订单确认查看*/
+    static CustomerServiceConfirmApprovePage = "/customer/service/order/confirm/approve";
+    /** 订单确认审核*/
 
 
     /** 财务*/
