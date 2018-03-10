@@ -234,10 +234,8 @@ class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmP
     }
 
     render() {
-        // const { getFieldDecorator } = this.props.form;
         return <Row>
             <ContentHeaderControl title="订单确认"></ContentHeaderControl>
-
             <FormAdvancedSearch
                 formAdvancedItems={this.renderFormAdvancedItems()}
                 onClickSearch={this.onClickSearch.bind(this)}></FormAdvancedSearch>

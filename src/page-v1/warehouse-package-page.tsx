@@ -306,13 +306,6 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
                 fieldName: "memberID",
                 displayName: "会员",
                 control: <FormControl.FormSelectIndex type={SelectType.Member} placeholder="搜索会员"/>
-            },
-            {
-                defaultDisplay: true,
-                fieldName: "customerOrderStatus",
-                displayName: "状态",
-                control: <FormStatusSelect type={ModelNameSpace.OrderTypeEnum.OrderMerge}
-                                           placeholder="搜索订单状态"></FormStatusSelect>
             },{
                 defaultDisplay: true,
                 fieldName: "Created",
