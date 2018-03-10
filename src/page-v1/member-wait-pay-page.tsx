@@ -175,7 +175,10 @@ export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, M
                         //this.deleteDataByID(record.ID);
                     }
                     else {
-                        //  hashHistory.push({pathname: param.key, state: record});
+                        hashHistory.push({
+                            pathname: PathConfig.MemberWaitPayApprovePage,
+                            query: {id: record.ID}
+                        });
                     }
 
                 }} value={menu}></FormTableOperation>;
