@@ -3,7 +3,7 @@ import {Input, Row, Col, Form, message} from 'antd';
 import {FormComponentProps} from 'antd/lib/form';
 import {RowProps} from 'antd/lib/row';
 import {APINameSpace} from '../model/api';
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 import {ResponseNameSpace} from '../model/response';
 import {FormSettingGroup} from './form-setting-group';
 import {FormContactInfo} from './form-contact-info';
@@ -49,7 +49,7 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
             if (errors) {
                 return;
             }
-            APINameSpace.MemberAPI.InsertRecipientsAddress(this.state.selectContact as requestNameSpace.InsertRecipientsAddressRequest).then((r: ResponseNameSpace.BaseResponse) => {
+            APINameSpace.MemberAPI.InsertRecipientsAddress(this.state.selectContact as RequestNameSpace.InsertRecipientsAddressRequest).then((r: ResponseNameSpace.BaseResponse) => {
                 if (r.Status === 0)
                     message.success("保存成功");
             });

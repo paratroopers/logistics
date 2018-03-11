@@ -16,7 +16,7 @@ import {
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {APINameSpace} from '../model/api';
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 
 interface MemberDeliveredApprovalPageProps extends RouteComponentProps<any, any>, FormComponentProps {
 }
@@ -52,7 +52,7 @@ export class MemberDeliveredApprovalPage extends React.Component<MemberDelivered
 
     async getOrderInfo() {
         /** 通过ID获取表单数据*/
-        const request: requestNameSpace.GetCustomerOrderMergeItemRequest = {
+        const request: RequestNameSpace.GetCustomerOrderMergeItemRequest = {
             customerOrderMergeID: this.state.selectedKey,
             isAdmin: false
         }

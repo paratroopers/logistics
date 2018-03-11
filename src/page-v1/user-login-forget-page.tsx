@@ -3,7 +3,7 @@ import {Form, Input, Button, Modal, Row, Col} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {Steps} from 'antd-mobile';
 import {isNullOrUndefined} from "util";
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {BaseResponse, Context} from '../util/common';
@@ -103,7 +103,7 @@ class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetSta
             if (!err) {
                 const isMail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(values.account);
                 /** 发送验证码*/
-                const request: requestNameSpace.ForgetRequest = !isMail ? {
+                const request: RequestNameSpace.ForgetRequest = !isMail ? {
                     tel: values.account,
                     pwd: values.Password,
                     code: values.Code
@@ -137,7 +137,7 @@ class NaLoginForget extends React.Component<NaLoginForgetProps, NaLoginForgetSta
                 const isMail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(values.account);
                 const type = (isMail ? "1" : "0");
                 /** 发送验证码*/
-                const request: requestNameSpace.GetCodeRequest = !isMail ? {
+                const request: RequestNameSpace.GetCodeRequest = !isMail ? {
                     tel: values.account,
                     type: type
                 } : {

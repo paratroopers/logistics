@@ -4,7 +4,7 @@ import {Row, Col, Button, Icon,Modal, message, Input, Tooltip} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
 import {ModelNameSpace} from "../model/model";
-import {requestNameSpace} from "../model/request";
+import {RequestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import FormTableHeader from '../components-v1/form-table-header';
@@ -119,7 +119,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
     loadData = (index?: number, size?: number) => {
         const topThis = this;
         const {state: {pageIndex, pageSize, formAdvancedData}} = topThis;
-        let request: requestNameSpace.GetWarehouseInListRequest = {
+        let request: RequestNameSpace.GetWarehouseInListRequest = {
             step: Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderIn),
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize,
@@ -158,7 +158,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
     onClickDelete(ID: string) {
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
-        const request: requestNameSpace.WarehouseInDeleteRequest = {
+        const request: RequestNameSpace.WarehouseInDeleteRequest = {
             ID: ID
         }
 
@@ -174,7 +174,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
 
     onClickPicturePreview(item: ModelNameSpace.WarehouseListModel) {
         const topThis = this;
-        const request: requestNameSpace.GetAttachmentItemsRequest = {
+        const request: RequestNameSpace.GetAttachmentItemsRequest = {
             customerOrderID: item.ID,
             isAdmin: false
         }

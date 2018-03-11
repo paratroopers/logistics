@@ -7,7 +7,7 @@ import {Row,Tooltip,Icon,DatePicker,message,Modal} from 'antd';
 import {FormStatusSelect} from "../components-v1/form-status-select";
 import {PaginationProps} from 'antd/lib/pagination';
 import {ModelNameSpace} from "../model/model";
-import {requestNameSpace} from "../model/request";
+import {RequestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
 import {PathConfig} from "../config/pathconfig";
 import {SelectType,Constants} from "../util/common";
@@ -85,7 +85,7 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
     loadData = (index?:number,size?:number) => {
         const topThis = this;
         const {state: {pageIndex, pageSize,searchaValues}} = topThis;
-        let request: requestNameSpace.GetCustomerOrderMergeRequest = {
+        let request: RequestNameSpace.GetCustomerOrderMergeRequest = {
             currentStep:Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderMerge),
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize,
@@ -119,7 +119,7 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
     /** 附件预览*/
     onClickPicturePreview(item: ModelNameSpace.CustomerOrderMergeModel) {
         const topThis = this;
-        const request: requestNameSpace.GetAttachmentItemsRequest = {
+        const request: RequestNameSpace.GetAttachmentItemsRequest = {
             customerOrderID: item.ID,
             isAdmin: false
         }
@@ -144,7 +144,7 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
     onClickRecall(ID: string) {
         // const topThis = this;
         // const {state: {pageIndex, pageSize}} = topThis;
-        // const request: requestNameSpace.WarehouseInDeleteRequest = {
+        // const request: RequestNameSpace.WarehouseInDeleteRequest = {
         //     ID: ID
         // }
 

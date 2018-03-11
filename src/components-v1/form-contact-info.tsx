@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Table, message, Modal} from "antd";
 import {APINameSpace} from '../model/api';
 import {ModelNameSpace} from '../model/model';
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
 import {PathConfig} from "../config/pathconfig";
 import {ClickParam} from "antd/lib/menu";
@@ -68,7 +68,7 @@ export class FormContactInfo extends React.Component<FormContactInfoProps, FormC
     };
 
     onDeleteByID(ID: string) {
-        let request: requestNameSpace.DeleteRecipientsAddressRequest = {id: ID};
+        let request: RequestNameSpace.DeleteRecipientsAddressRequest = {id: ID};
         APINameSpace.MemberAPI.DeleteRecipientsAddress(request).then((result) => {
             if (result.Data === "True") {
                 message.success('删除成功');

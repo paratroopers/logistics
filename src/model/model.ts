@@ -478,9 +478,9 @@ export namespace ModelNameSpace {
         constructor() {
             this.productName = "";
             this.productNameEN = "";
-            this.HSCode = "美元";
+            this.HSCode = "";
             this.declareUnitPrice = 0;
-            this.count = 0;
+            this.productCount = 0;
             this.ID = Util.guid();
             this.declareTotal = '00.00';
         }
@@ -491,7 +491,7 @@ export namespace ModelNameSpace {
         productNameEN?: string;
         HSCode?: string;
         declareUnitPrice?: number;
-        count?: number;
+        productCount?: number;
         mergeOrderID?: string;
         declareTotal?: string;
     }

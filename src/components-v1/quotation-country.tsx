@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Select, Spin} from 'antd';
 import {InjectedIntlProps} from "react-intl";
 import {withRouter} from 'react-router';
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 
@@ -48,7 +48,7 @@ export class CostCountry extends React.Component<CostCountryProps, CostCountrySt
 
     getCountry(name?: string) {
         this.setState({data: [], fetching: true, searchName: name});
-        const data: requestNameSpace.CountryRequest = {
+        const data: RequestNameSpace.CountryRequest = {
             request: {
                 name: name
             }

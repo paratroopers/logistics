@@ -3,7 +3,7 @@ import {withRouter, hashHistory} from 'react-router';
 import {Row,message, Form} from 'antd';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import WarehouseInForm from "../components-v1/warehouse-in-form";
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 import {APINameSpace} from '../model/api';
 import {ResponseNameSpace} from '../model/response';
 import {PathConfig} from "../config/pathconfig";
@@ -21,7 +21,7 @@ export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps,
 
     onSubmit = (values) => {
         const topThis = this;
-        const request: requestNameSpace.WarehouseInAddRequest = {
+        const request: RequestNameSpace.WarehouseInAddRequest = {
             /** 会员ID*/
             userid: values.user[0].key,
             /** 快递单号*/

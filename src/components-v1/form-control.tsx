@@ -4,7 +4,7 @@ import {Select, Spin, Input, Button, Form, Icon} from 'antd';
 const Option = Select.Option;
 import {Context, SelectType} from '../util/common';
 import {APINameSpace} from '../model/api';
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 import {SelectProps} from "antd/lib/select";
 import {hashHistory} from 'react-router';
 import {ModelNameSpace} from '../model/model';
@@ -71,7 +71,7 @@ export namespace FormControl {
             let fetchId = this.lastFetchId;
             this.setState({data: [], fetching: true});
             const type = this.props.type;
-            var request: requestNameSpace.UserSearchIndexRequest = {
+            var request: RequestNameSpace.UserSearchIndexRequest = {
                 name: value,
                 type: type
             };
@@ -111,7 +111,7 @@ export namespace FormControl {
             }
             else if (type === SelectType.CustomerOrderMerge) {
 
-                let req: requestNameSpace.GetCustomerOrderMergeRequest = {
+                let req: RequestNameSpace.GetCustomerOrderMergeRequest = {
                     pageIndex: 1,
                     pageSize: 1000,
                     isAdmin: this.props.isadmin

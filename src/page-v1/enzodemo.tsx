@@ -5,7 +5,7 @@ import {Select, Spin, Input, Button, Form} from 'antd';
 const Option = Select.Option;
 import {Context, SelectType} from '../util/common';
 import {APINameSpace} from '../model/api';
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 import {SelectProps} from "antd/lib/select";
 import {hashHistory} from 'react-router';
 import {ModelNameSpace} from '../model/model';
@@ -86,7 +86,7 @@ export namespace FormControl {
             let fetchId = this.lastFetchId;
             this.setState({data: [], fetching: true});
             const type = this.props.type;
-            var request: requestNameSpace.UserSearchIndexRequest = {
+            var request: RequestNameSpace.UserSearchIndexRequest = {
                 name: value,
                 type: type
             };

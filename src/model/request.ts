@@ -1,6 +1,6 @@
-import {ModelNameSpace} from './model';
+ import {ModelNameSpace} from './model';
 
-export namespace requestNameSpace {
+export namespace RequestNameSpace {
 
     //region 基类定义区
     export interface BaseListRequest {
@@ -112,6 +112,13 @@ export namespace requestNameSpace {
 
     //region 订单和合并订单（仓库入库，待打包，待审核，客服确认，仓库打包，客户付款，仓库打包 所有的接口区域；
 
+    /** 获取各阶段订单数量*/
+    export interface GetOrderStatusCountRequest{
+        currentStep:number;
+        isAdmin:boolean;
+    }
+
+    /** 获取合并之后的订单列表*/
     export interface GetCustomerOrderMergeRequest extends BaseListRequest {
         country?: string;
         currentStep?: number;
@@ -129,6 +136,7 @@ export namespace requestNameSpace {
         customerServiceID?: number;
     }
 
+    /** 获取入库订单列表*/
     export interface GetWarehouseInListRequest extends BaseListRequest {
         step: number;
         /** 会员*/
@@ -154,6 +162,7 @@ export namespace requestNameSpace {
         isAdmin?: boolean;
     }
 
+    /** 新增入库订单*/
     export interface WarehouseInAddRequest {
         /** 会员ID*/
         userid: number,
@@ -189,6 +198,7 @@ export namespace requestNameSpace {
         AttachmentIDList?: string[];
     }
 
+    /** 编辑入库订单*/
     export interface WarehouseInEditRequest {
         /** 主键*/
         ID: number,
@@ -225,10 +235,12 @@ export namespace requestNameSpace {
         AttachmentIDList?: string[]
     }
 
+    /** 删除入库订单*/
     export interface WarehouseInDeleteRequest {
         ID?: string;
     }
 
+    /** 获取客服订单*/
     export interface CustomerOrdersRequest extends BaseListRequest {
         step: number;
         customerOrderStatus:number;
@@ -287,7 +299,6 @@ export namespace requestNameSpace {
         customerOrderMergeID?:string;
         isAdmin?:boolean;
     }
-
     //endregion
 
     //region 客服阶段定义区

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps, hashHistory} from 'react-router';
 import {Row} from 'antd';
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 import {ResponseNameSpace} from '../model/response'
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
@@ -49,14 +49,13 @@ export class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrder
         if (isNullOrUndefined(selectedKey)) hashHistory.goBack();
 
         /** 通过ID获取表单数据*/
-        const request: requestNameSpace.GetCustomerOrderMergeItemRequest = {
+        const request: RequestNameSpace.GetCustomerOrderMergeItemRequest = {
             customerOrderMergeID: selectedKey,
             isAdmin: false
         }
 
         APINameSpace.CustomerOrderAPI.GetCustomerOrderMergeItem(request).then((result: ResponseNameSpace.GetCustomerOrderMergeDetailResponse) => {
             if (result.Status === 0) {
-                console.log(result);
                 topThis.setState({data: result.Data});
             }
         });

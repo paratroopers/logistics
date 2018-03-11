@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {Input, Table, InputNumber, Icon} from 'antd';
+import {Input, InputNumber, Icon} from 'antd';
 import {FormSettingGroup} from './form-setting-group';
-import {ColumnProps} from 'antd/lib/table';
+import {CommonTable, CommonColumnProps} from '../components-v1/common-table';
 import {ModelNameSpace} from '../model/model';
 import {Util} from '../util/util';
 import {isNullOrUndefined} from "util";
@@ -18,8 +18,7 @@ export interface FormPackageDetailStates {
     data?: ModelNameSpace.PackageDetailListModel[];
 }
 
-class FormPackageDetailTable extends Table<ModelNameSpace.PackageDetailListModel> {
-}
+class FormPackageDetailTable extends CommonTable<ModelNameSpace.PackageDetailListModel> {}
 
 export class FormPackageDetail extends React.Component<FormPackageDetailProps, FormPackageDetailStates> {
     constructor(props, context) {
@@ -57,7 +56,7 @@ export class FormPackageDetail extends React.Component<FormPackageDetailProps, F
     }
 
     renderTable() {
-        const columns: ColumnProps<ModelNameSpace.PackageDetailListModel>[] = [
+        const columns: CommonColumnProps<ModelNameSpace.PackageDetailListModel>[] = [
             {
                 title: '包裹名称',
                 dataIndex: 'PackageName',
@@ -122,7 +121,8 @@ export class FormPackageDetail extends React.Component<FormPackageDetailProps, F
                     return <div>
                         <a onClick={() => this.onDeleteClick(record)}>删除</a>
                     </div>
-                }
+                },
+                hidden:this.props.readOnly
             }
         ]
         return <FormPackageDetailTable columns={columns}

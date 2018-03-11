@@ -8,7 +8,7 @@ import {Global} from '../util/common';
 import {WebAction} from "../actions/index";
 import {Cookies} from '../util/cookie';
 import {Constants, Context} from '../util/common';
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {ResponseNameSpace} from '../model/response';
@@ -59,7 +59,7 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
             if (err) {
                 return;
             } else {
-                const data: requestNameSpace.LoginRequest = {
+                const data: RequestNameSpace.LoginRequest = {
                     pwd: vas['pwd'],
                     user: vas['user']
                 };
