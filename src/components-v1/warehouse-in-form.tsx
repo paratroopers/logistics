@@ -15,7 +15,7 @@ import {FormInput} from "./form-input";
 import {FormInputNumber} from "./form-input-number";
 import {FormInputText} from "./form-input-text";
 import {Constants} from '../util/common';
-
+import * as moment from 'moment';
 const FormItem = Form.Item;
 
 export interface WarehouseInFormProps extends FormComponentProps {
@@ -97,7 +97,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
 
     render() {
         const topThis = this;
-        const {props: {form: {getFieldDecorator}, type, isHidenBtn,style}} = topThis;
+        const {props: {form: {getFieldDecorator}, type, isHidenBtn,style,Data}} = topThis;
 
         /** 控件栅格*/
         const spanLayout: ColProps = {
@@ -179,6 +179,28 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>
+                        <FormItem {...formItemLayout} label={"件数"}>
+                            {getFieldDecorator("inPackageCount", {
+                                rules: [{required: required, message: '请填写件数!'}],
+                            })(<FormInputNumber readonly={readonly} style={{width: '100%'}}
+                                                placeholder="件数"/>)}
+                        </FormItem>
+                    </Col>
+                    <Col {...spanLayout}>
+                        <FormItem {...formItemLayout} label={"入库状态"}>
+                            {getFieldDecorator("inWareHouseStatus", {
+                                rules: [{required: required, message: '请选择状态!'}],
+                            })(<FormStatusSelect readonly={readonly}
+                                                 type={ModelNameSpace.OrderTypeEnum.OrderIn}
+                                                 placeholder="入库状态"></FormStatusSelect>)}
+                        </FormItem>
+                    </Col>
+                    {readonly?<Col {...spanLayout}>
+                        <FormItem {...formItemLayout} label={"入库时间"}>
+                            <span>{moment(Data.InWareHouseTime).format('YYYY-MM-DD HH:mm')}</span>
+                        </FormItem>
+                        </Col>:null}
+                    <Col {...spanLayout}>
                         <FormItem {...formItemLayout} label={"初始体积(cm³)"}>
                             <Row gutter={16} type="flex" justify="center" align="top" style={{minWidth: "200px"}}>
                                 <Col lg={6} sm={12}>
@@ -214,23 +236,6 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                                     {Constants.minSM ? <span>cm</span> : null}
                                 </Col>
                             </Row>
-                        </FormItem>
-                    </Col>
-                    <Col {...spanLayout}>
-                        <FormItem {...formItemLayout} label={"件数"}>
-                            {getFieldDecorator("inPackageCount", {
-                                rules: [{required: required, message: '请填写件数!'}],
-                            })(<FormInputNumber readonly={readonly} style={{width: '100%'}}
-                                                placeholder="件数"/>)}
-                        </FormItem>
-                    </Col>
-                    <Col {...spanLayout}>
-                        <FormItem {...formItemLayout} label={"入库状态"}>
-                            {getFieldDecorator("inWareHouseStatus", {
-                                rules: [{required: required, message: '请选择状态!'}],
-                            })(<FormStatusSelect readonly={readonly}
-                                                 type={ModelNameSpace.OrderTypeEnum.OrderIn}
-                                                 placeholder="入库状态"></FormStatusSelect>)}
                         </FormItem>
                     </Col>
                     <Col span={24}>

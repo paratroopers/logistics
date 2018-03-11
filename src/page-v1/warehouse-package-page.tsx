@@ -179,40 +179,31 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
                 }} style={{fontSize: 20, color: "#e65922", cursor: "pointer"}}/></Tooltip>
             }
         }, {
-            title: "客户订单号",
+            title: "客户合并单号",
             dataIndex: 'MergeOrderNo',
             layout: ColumnLayout.LeftTop,
-            fixed: 'left',
-            render: (txt,record) => {
-                return <Link to={{pathname: PathConfig.WarehousePackageViewPage, query: {ids: record.ID}}}>{txt}</Link>
+            render: (txt, record) => {
+                return <Link
+                    to={{pathname: PathConfig.WarehousePackageViewPage, query: {ids: record.ID}}}>{txt}</Link>
             }
         }, {
-            title: "入库总重量",
-            dataIndex: 'InWeightTotal',
-            render:(txt) => {
-                return <span>{`${txt}kg`}</span>
-            }
+            title: "渠道",
+            dataIndex: 'CustomerChooseChannelName',
+            layout: ColumnLayout.RightTop
         }, {
-            title: "入库总体积",
-            dataIndex: 'InVolumeTotal',
-            render:(txt) => {
-                return <span>{`${txt}cm³`}</span>
-            }
-        }, {
-            title: "入库总数",
-            dataIndex: 'InPackageCountTotal',
-            render:(txt) => {
-                return <span>{`${txt}件`}</span>
-            }
+            title: "发往国家",
+            dataIndex: 'country',
+            hidden: Constants.minSM
         }, {
             title: "状态",
-            dataIndex: 'currentStatus',
-            render:(txt)=> {
-                return <span>{Constants.getOrderStatusByString(ModelNameSpace.OrderTypeEnum.OrderMerge, txt)}</span>
+            layout: ColumnLayout.RightBottom,
+            dataIndex: 'currentStep',
+            render: (txt) => {
+                return <span>{Constants.getOrderStatusByString(ModelNameSpace.OrderTypeEnum.WaitApprove, txt)}</span>
             }
         }, {
-            title: "客户提交时间",
-            dataIndex: 'Created',
+            title: "创建时间",
+            dataIndex: 'Modified',
             layout: ColumnLayout.LeftBottom,
             render: (txt) => {
                 return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
@@ -220,7 +211,6 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
         }, {
             title: '操作',
             layout: ColumnLayout.Option,
-            fixed: 'right',
             render: (val, record) => {
                 const menu: FormTableOperationModel[] = [
                     {

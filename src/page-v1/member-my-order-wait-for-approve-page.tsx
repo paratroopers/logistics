@@ -18,8 +18,9 @@ import {isArray, isNullOrUndefined, isUndefined} from "util";
 import * as moment from 'moment';
 import {FormFileViewer} from "../components-v1/form-file-viewer";
 const {RangePicker} = DatePicker;
+import {FormStatusSelect} from "../components-v1/form-status-select";
 
-/// 待审核列表
+
 interface MemberMyOrderWaitForApprovePageProps {
 }
 
@@ -113,9 +114,9 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
         const request: RequestNameSpace.GetCustomerOrderMergeRequest = {
             currentStep: Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.WaitApprove),
             currentStatus: !isUndefined(searchaValues.currentStatus) ? searchaValues.currentStatus.key : "",
-            expressNo: !isUndefined(searchaValues.expressNo) ? searchaValues.expressNo : "",
-            customerOrderMergeNo: isArray(searchaValues.customerOrderMergeNo) && !isNullOrUndefined(searchaValues.customerOrderMergeNo[0]) ? searchaValues.customerOrderMergeNo[0].key : "",
-            customerChooseChannelID: !isUndefined(searchaValues.channel) ? searchaValues.channel.key : "",
+            expressNo: isArray(searchaValues.expressNo) && !isNullOrUndefined(searchaValues.expressNo[0]) ? searchaValues.expressNo[0].key : "",
+            customerOrderMergeNo: isArray(searchaValues.customerOrderMergeNo) && !isNullOrUndefined(searchaValues.customerOrderMergeNo[0]) ? searchaValues.customerOrderMergeNo[0].label : "",
+            customerChooseChannelID: isArray(searchaValues.channel) && !isNullOrUndefined(searchaValues.channel[0]) ? searchaValues.channel[0].key : "",
             orderMergeTimeBegin: !isUndefined(searchaValues.Created) ? searchaValues.Created[0].format() : "",
             orderMergeTimeEnd: !isUndefined(searchaValues.Created) ? searchaValues.Created[1].format() : "",
             pageIndex: index ? index : pageIndex,
@@ -275,8 +276,8 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
                 defaultDisplay: true,
                 fieldName: "currentStatus",
                 displayName: "状态",
-                control: <FormControl.FormSelect type={SelectType.CustomerOrderMergeWaitForApproveStep}
-                                                 placeholder={"订单状态"}/>
+                control: <FormStatusSelect type={ModelNameSpace.OrderTypeEnum.WaitApprove}
+                                           placeholder="搜索订单状态"></FormStatusSelect>
             }, {
                 defaultDisplay: true,
                 fieldName: "Created",
