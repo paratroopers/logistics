@@ -1,17 +1,20 @@
 import * as React from 'react';
 import {withRouter, hashHistory} from 'react-router';
-import {Row,message, Form} from 'antd';
+import {Row, message, Form} from 'antd';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import WarehouseInForm from "../components-v1/warehouse-in-form";
 import {RequestNameSpace} from '../model/request';
 import {APINameSpace} from '../model/api';
 import {ResponseNameSpace} from '../model/response';
 import {PathConfig} from "../config/pathconfig";
+
 const FormItem = Form.Item;
 
-interface WarehouseInAddPageProps {}
+interface WarehouseInAddPageProps {
+}
 
-interface WarehouseInAddPageStates {}
+interface WarehouseInAddPageStates {
+}
 
 @withRouter
 export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps, WarehouseInAddPageStates> {
@@ -37,7 +40,7 @@ export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps,
             /** 入库重量*/
             InWeight: values.inWeight,
             /** 入库体积*/
-            InVolume: values.inLength * values.inWidth * values.inHeight,
+            InVolume: values.InVolume,
             /** 入库长度*/
             InLength: values.inLength,
             /** 入库宽度*/
@@ -68,7 +71,6 @@ export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps,
         return <Row className="warehouse-in-page">
             <ContentHeaderControl title="新增入库"></ContentHeaderControl>
             <WarehouseInForm onSubmit={topThis.onSubmit.bind(this)} type="add"></WarehouseInForm>
-
         </Row>;
     }
 }

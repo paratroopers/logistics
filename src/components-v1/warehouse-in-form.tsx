@@ -15,6 +15,7 @@ import {FormInput} from "./form-input";
 import {FormInputNumber} from "./form-input-number";
 import {FormInputText} from "./form-input-text";
 import {Constants} from '../util/common';
+
 const FormItem = Form.Item;
 
 export interface WarehouseInFormProps extends FormComponentProps {
@@ -107,6 +108,8 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
         /** 是否只读*/
         const readonly = type === "view" ? true : false;
 
+        const volumeStyle = Constants.minSM ? {marginBottom: '8px'} : {width: '100%'};
+
         /** vertical布局样式BUG --- 请勿移动控件顺序*/
         const formItemLayout = type === "view" && Constants.minSM ? {
             labelCol: {
@@ -173,27 +176,35 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                     <Col {...spanLayout}>
                         <FormItem {...formItemLayout} label={"初始体积(cm)"}>
                             <Row gutter={16} type="flex" justify="center" align="top" style={{minWidth: "200px"}}>
-                                <Col span={8}>
+                                <Col lg={6} sm={12}>
+                                    {Constants.minSM ? <span>体积：</span> : null}
+                                    {getFieldDecorator('InVolume', {
+                                        rules: [{required: required, message: '请填写体积!'}],
+                                    })(<FormInputNumber readonly={readonly} placeholder="体积"
+                                                        style={volumeStyle} min={0}/>)}
+                                    {Constants.minSM ? <span>cm³</span> : null}
+                                </Col>
+                                <Col lg={6} sm={12}>
                                     {Constants.minSM ? <span>长度：</span> : null}
                                     {getFieldDecorator('inLength', {
                                         rules: [{required: required, message: '请填写长度!'}],
-                                    })(<FormInputNumber readonly={readonly} style={{width: '100%'}} min={0}
+                                    })(<FormInputNumber readonly={readonly} style={volumeStyle} min={0}
                                                         placeholder="长（cm）"/>)}
                                     {Constants.minSM ? <span>cm</span> : null}
                                 </Col>
-                                <Col span={8}>
+                                <Col lg={6} sm={12}>
                                     {Constants.minSM ? <span>宽度：</span> : null}
                                     {getFieldDecorator('inWidth', {
                                         rules: [{required: required, message: '请填写宽度!'}],
-                                    })(<FormInputNumber readonly={readonly} style={{width: '100%'}} min={0}
+                                    })(<FormInputNumber readonly={readonly} style={volumeStyle} min={0}
                                                         placeholder="宽（cm）"/>)}
                                     {Constants.minSM ? <span>cm</span> : null}
                                 </Col>
-                                <Col span={8}>
+                                <Col lg={6} sm={12}>
                                     {Constants.minSM ? <span>高度：</span> : null}
                                     {getFieldDecorator('inHeight', {
                                         rules: [{required: required, message: '请填写高度!'}],
-                                    })(<FormInputNumber readonly={readonly} style={{width: '100%'}} min={0}
+                                    })(<FormInputNumber readonly={readonly} style={volumeStyle} min={0}
                                                         placeholder="高（cm）"/>)}
                                     {Constants.minSM ? <span>cm</span> : null}
                                 </Col>
