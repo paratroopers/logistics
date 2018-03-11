@@ -24,6 +24,8 @@ interface MemberAddressPageStates {
 interface MemberAddressPageProps {
     selectValue?: () => any
     onOk?: (user: ModelNameSpace.AddressModel) => void;
+    showOKButton?: boolean;
+    showTableSelect?: boolean;
 }
 
 @withRouter
@@ -71,7 +73,6 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
         key: 'Tel',
     }, {
         title: '操作',
-        fixed: 'right',
         render: (val, record, index) => {
             const menu: FormTableOperationModel[] = [
                 {
@@ -107,10 +108,7 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
     rowSelection: TableRowSelection<any> = {
         type: "radio",
         onChange: (selectedRowKeys, selectedRows) => {
-            // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             this.setState({selectRow: selectedRows[0]});
-
-            console.log(this.state.selectRow);
         },
         getCheckboxProps: record => ({
             disabled: record.name === 'Disabled User', // Column configuration not to be checked
@@ -135,11 +133,12 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
             <ContentHeaderControl title="收件人地址"></ContentHeaderControl>
             {/*<FormControl.FormButtonControl title="确认" type={ModelNameSpace.ButtonTypeEnum.confirm} handleClick={this.handleClick.bind(this)} loading={this.state.savingLoading}/>*/}
             {/*<FormControl.FormButtonControl title="新增收件人" type={ModelNameSpace.ButtonTypeEnum.add} url={PathConfig.MemberAddressPageAdd}/>*/}
-            <Button type="primary" onClick={this.onOk.bind(this)}>确认</Button>
+            {this.props.showOKButton ? <Button type="primary" onClick={this.onOk.bind(this)}>确认</Button> : null}
             <Button type="primary" onClick={this.returnUrl.bind(this)}>
                 新增联系人
             </Button>
-            <Table loading={this.state.loading} rowKey={"ID"} rowSelection={this.rowSelection}
+            <Table loading={this.state.loading} rowKey={"ID"}
+                   rowSelection={this.props.showOKButton ? this.rowSelection : false}
                    dataSource={this.state.dataSource} columns={this.columns} pagination={false}/>
         </Row>)
     }
