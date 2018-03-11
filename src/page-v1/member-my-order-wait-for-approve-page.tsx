@@ -208,7 +208,7 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
         }, {
             title: "状态",
             layout: ColumnLayout.RightBottom,
-            dataIndex: 'currentStatus',
+            dataIndex: 'currentStep',
             render: (txt) => {
                 return <span>{Constants.getOrderStatusByString(ModelNameSpace.OrderTypeEnum.WaitApprove, txt)}</span>
             }
