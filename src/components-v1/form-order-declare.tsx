@@ -142,6 +142,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
             {
                 title: '产品名称(中文)',
                 dataIndex: 'productName',
+                width: '15%',
                 render: (txt, record, index) => {
                     return !this.props.readOnly && !Constants.minSM ?
                         <Form.Item>{getFieldDecorator(`productList[${index}].productName`, {
@@ -156,6 +157,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
             }, {
                 title: '产品名称(英文)',
                 dataIndex: 'productNameEN',
+                width: '15%',
                 render: (txt, record, index) => {
                     return !this.props.readOnly && !Constants.minSM ?
                         <Form.Item>{getFieldDecorator(`productList[${index}].productNameEN`, {
@@ -170,6 +172,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
             },
             {
                 title: '产品数量',
+                width: '10%',
                 dataIndex: 'productCount',
                 render: (txt, record, index) => {
                     return !this.props.readOnly ?
@@ -188,12 +191,14 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                 layout: ColumnLayout.RightTop
             }, {
                 title: '货币单位',
+                width: '10%',
                 render: (txt, record) => {
                     return <span>美元</span>;
                 },
                 hidden: Constants.minSM
             }, {
                 title: 'HSCode',
+                width: '15%',
                 dataIndex: 'HSCode',
                 render: (txt, record, index) => {
                     return !this.props.readOnly && !Constants.minSM ?
@@ -208,6 +213,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                 hidden: Constants.minSM
             }, {
                 title: '申报单价',
+                width: '10%',
                 dataIndex: 'declareUnitPrice',
                 render: (txt, record, index) => {
                     return !this.props.readOnly ?
@@ -226,6 +232,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                 layout: ColumnLayout.LeftBottom
             }, {
                 title: '申报总值',
+                width: '10%',
                 dataIndex: 'declareTotal',
                 render: (txt, record) => {
                     return !this.props.readOnly && !Constants.minSM ? <Input disabled value={txt}></Input> :
@@ -234,7 +241,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                 layout: ColumnLayout.RightBottom
             }, {
                 title: '操作',
-                dataIndex: '6',
+                width: '10%',
                 render: (txt, record) => {
                     return <div>
                         {!this.props.readOnly ? <a onClick={() => this.onDeleteClick(record)}>删除</a> : null}
