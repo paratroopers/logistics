@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps, hashHistory} from 'react-router';
 import {Layout, Row, Col, Button, Icon, Spin} from 'antd';
-import {ModelNameSpace} from '../model/model';
 import {
     FormOrderInfo,
     ContentHeaderControl,
@@ -9,19 +8,17 @@ import {
     FormOrderAddressee,
     FormOrderDeclare,
     FormPackageRequirement,
-    FormPackageDetail,
-    FormOrderChannel,
-    FormDeliveredDetail,
-    FormPayment
+    FormOrderChannel
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
-import {APINameSpace} from '../model/api';
 import {requestNameSpace} from '../model/request';
+import {ModelNameSpace} from '../model/model';
+import {APINameSpace} from '../model/api';
 
-interface MemberDeliveredApprovalPageProps extends RouteComponentProps<any, any>, FormComponentProps {
+interface MemberDeliveredPageApprovalPageProps extends RouteComponentProps<any, any>, FormComponentProps {
 }
 
-interface MemberDeliveredApprovalPageStates {
+interface MemberDeliveredPageApprovalPageStates {
     viewData?: ModelNameSpace.CustomerOrderModel;
     /** 原始订单ID*/
     selectedKey?: string;
@@ -34,7 +31,7 @@ export interface QueryData {
 }
 
 @withRouter
-export class MemberDeliveredApprovalPage extends React.Component<MemberDeliveredApprovalPageProps, MemberDeliveredApprovalPageStates> {
+export class MemberDeliveredPageApprovalPage extends React.Component<MemberDeliveredPageApprovalPageProps, MemberDeliveredPageApprovalPageStates> {
     constructor(props) {
         super(props);
         this.state = {
@@ -61,7 +58,7 @@ export class MemberDeliveredApprovalPage extends React.Component<MemberDelivered
     }
 
     renderForm() {
-        const {state: {data, data: {customerOrderList, mergeDetailList, mergeOrder}}, props: {form}} = this;
+        const {state: {data, data: {customerOrderList, mergeDetailList, mergeOrder}}} = this;
         const _mergeOrder = mergeOrder ? mergeOrder : {};
         return <Layout.Content>
             <Row justify="start" type="flex" style={{margin: '10px 0px 10px 0px'}}>
@@ -80,19 +77,16 @@ export class MemberDeliveredApprovalPage extends React.Component<MemberDelivered
             <FormOrderInfo data={new ModelNameSpace.FormOrderInfoModel(data)}></FormOrderInfo>
             <FormOrderRelation data={customerOrderList}></FormOrderRelation>
             <FormOrderAddressee selectContact={new ModelNameSpace.AddressModel(data)} readOnly></FormOrderAddressee>
-            <FormOrderDeclare data={mergeDetailList} readOnly></FormOrderDeclare>
-            <FormOrderChannel ids={[_mergeOrder['CustomerChooseChannelID']]} readOnly></FormOrderChannel>
+            <FormOrderDeclare data={mergeDetailList}></FormOrderDeclare>
+            <FormOrderChannel ids={[_mergeOrder['CustomerChooseChannelID']]}></FormOrderChannel>
             <FormPackageRequirement value={_mergeOrder['CustomerMark']} readOnly></FormPackageRequirement>
-            <FormPackageDetail readOnly></FormPackageDetail>
-            <FormDeliveredDetail form={form} readOnly></FormDeliveredDetail>
-{/*            <FormPayment></FormPayment>*/}
         </Layout.Content>
     }
 
     render() {
         const {state: {data}} = this;
         return <Layout className="member-delivered-approve-page view-content-page">
-            <Layout.Header className="member-delivered-approve-page-header view-content-page-header">
+            <Layout.Header className="customer-service-confirm-approve-page-header view-content-page-header">
                 <ContentHeaderControl title="已发货"></ContentHeaderControl>
             </Layout.Header>
             <Spin spinning={!Object.keys(data).length}>
