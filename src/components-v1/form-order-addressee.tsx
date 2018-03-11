@@ -58,12 +58,12 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
 
     renderHeader() {
         return this.props.readOnly ? null : <div>
-            <i className={Context.getIconClassName("icon-tianjialianxiren")}/>
+            <i className={Context.getIconClassName("icon-xuanzelianxiren")}/>
             <a onClick={this.onAddClick.bind(this)}>
                 <span>选择联系人</span>
             </a>
             <span> | </span>
-            <i className={Context.getIconClassName("icon-xuanzelianxiren")}/>
+            <i className={Context.getIconClassName("icon-tianjialianxiren")}/>
             <a onClick={this.onSaveContact.bind(this)}>
                 <span>另存为联系人</span>
             </a>
