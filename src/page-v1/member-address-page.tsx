@@ -3,7 +3,7 @@ import {withRouter, hashHistory} from 'react-router';
 import {Row, Table, Button, message, Popconfirm} from "antd";
 import {APINameSpace} from '../model/api';
 import {ModelNameSpace} from '../model/model';
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 import {ResponseNameSpace} from '../model/response';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import {FormControl} from '../components-v1/form-control';
@@ -44,7 +44,7 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
     }
 
     deleteDataByID(ID: string) {
-        let request: requestNameSpace.DeleteRecipientsAddressRequest = {id: ID};
+        let request: RequestNameSpace.DeleteRecipientsAddressRequest = {id: ID};
         APINameSpace.MemberAPI.DeleteRecipientsAddress(request).then((result) => {
             if (result.Data === "True") {
                 message.success('删除成功');

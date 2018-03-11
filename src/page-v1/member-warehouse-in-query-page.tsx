@@ -6,7 +6,7 @@ import {DatePicker} from "antd";
 const { RangePicker } = DatePicker;
 import {ColumnProps} from 'antd/lib/table';
 import {ModelNameSpace} from "../model/model";
-import {requestNameSpace} from "../model/request";
+import {RequestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
 import {PathConfig} from "../config/pathconfig";
 import {FormWarehouseSelect} from "../components-v1/form-warehouse-select";
@@ -77,7 +77,7 @@ export class MemberWarehouseInQueryPage extends React.Component<MemberWarehouseI
     loadData = (index?:number,size?:number) => {
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
-        const request: requestNameSpace.GetWarehouseInListRequest = {
+        const request: RequestNameSpace.GetWarehouseInListRequest = {
             step: ModelNameSpace.OrderTypeEnum.OrderIn,
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize

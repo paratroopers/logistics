@@ -3,7 +3,7 @@ import {withRouter, hashHistory, Link} from 'react-router';
 import {Row, Tabs, message,Tooltip,Icon} from "antd";
 import {PathConfig} from '../config/pathconfig';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 import {ResponseNameSpace} from '../model/response'
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
@@ -66,7 +66,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
         const topThis = this;
         const {state: {formAdvancedData}} = topThis;
 
-        let request: requestNameSpace.CustomerOrdersRequest = {
+        let request: RequestNameSpace.CustomerOrdersRequest = {
             step:Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.WaitPackage),
             customerOrderStatus:ModelNameSpace.OrderStatusEnum.StatusB,
             pageSize: this.state.pageSize,
@@ -117,7 +117,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
 
     onClickPicturePreview(item: ModelNameSpace.CustomerOrderModel) {
         const topThis = this;
-        const request: requestNameSpace.GetAttachmentItemsRequest = {
+        const request: RequestNameSpace.GetAttachmentItemsRequest = {
             customerOrderID: item.ID,
             isAdmin: false
         }

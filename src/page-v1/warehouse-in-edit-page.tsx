@@ -3,7 +3,7 @@ import {withRouter, hashHistory, RouteComponentProps} from 'react-router';
 import {Row, message} from 'antd';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import WarehouseInForm from "../components-v1/warehouse-in-form";
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 import {APINameSpace} from '../model/api';
 import {ResponseNameSpace} from '../model/response';
 import {PathConfig} from "../config/pathconfig";
@@ -28,7 +28,7 @@ export class WarehouseInEditPage extends React.Component<WarehouseInEditPageProp
 
     onSubmit = (values) => {
         const topThis = this;
-        const request: requestNameSpace.WarehouseInEditRequest = {
+        const request: RequestNameSpace.WarehouseInEditRequest = {
             ID: topThis.props.location.state.ID,
             /** 会员ID*/
             userid: values.user[0].key,

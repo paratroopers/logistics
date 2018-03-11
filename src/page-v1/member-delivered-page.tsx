@@ -7,7 +7,7 @@ import {DatePicker} from "antd";
 const {RangePicker} = DatePicker;
 import {ColumnProps} from 'antd/lib/table';
 import {ModelNameSpace} from "../model/model";
-import {requestNameSpace} from "../model/request";
+import {RequestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
 import {PathConfig} from "../config/pathconfig";
 import {SelectType, Constants} from "../util/common";
@@ -77,7 +77,7 @@ export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProp
     loadData = (index?: number, size?: number, searchaValues?: any) => {
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
-        const request: requestNameSpace.GetCustomerOrderMergeRequest = {
+        const request: RequestNameSpace.GetCustomerOrderMergeRequest = {
             channelID: !isUndefined(searchaValues.ChannelID) ? searchaValues.ChannelID.key : 0,
             expressNo: !isUndefined(searchaValues.expressNo) ? searchaValues.expressNo : "",
             customerChooseChannelID: !isUndefined(searchaValues.ChannelID) ? searchaValues.ChannelID : 0,

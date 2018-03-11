@@ -9,7 +9,7 @@ import {WebAction} from "../actions/index";
 import UserRegisterEmail from "../components-v1/user-register-email";
 import UserRegisterPhone from "../components-v1/user-register-phone";
 import {Notification} from "../components-v1/notification";
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 const {Header, Content, Footer} = Layout;
@@ -73,7 +73,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
         topThis.currentValue = value;
 
         topThis.timeout = setTimeout(function () {
-            const request: requestNameSpace.AccountValidateRequest = {
+            const request: RequestNameSpace.AccountValidateRequest = {
                 user: value
             };
             APINameSpace.RegisterAPI.AccountValidate(request).then((result: BaseResponse) => {
@@ -95,7 +95,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
             case ModelNameSpace.RegisterEnum.phone.toString():
                 topThis.phoneFromComponent.props.form.validateFields(["PhoneNumber"], {force: true}, function (err, values) {
                     if (!err) {
-                        const request: requestNameSpace.GetCodeRequest = {
+                        const request: RequestNameSpace.GetCodeRequest = {
                             tel: values.PhoneNumber,
                             type: ModelNameSpace.RegisterEnum.phone.toString()
                         }
@@ -118,7 +118,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
             case ModelNameSpace.RegisterEnum.mail.toString():
                 topThis.mailFromComponent.props.form.validateFields(["Mail"], {force: true}, function (err, values) {
                     if (!err) {
-                        const request: requestNameSpace.GetCodeRequest = {
+                        const request: RequestNameSpace.GetCodeRequest = {
                             mail: values.Mail,
                             type: ModelNameSpace.RegisterEnum.mail.toString()
                         }
@@ -160,7 +160,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                         });
                         return;
                     } else if (!err) {
-                        const request: requestNameSpace.RegisterRequest = {
+                        const request: RequestNameSpace.RegisterRequest = {
                             tel: values.PhoneNumber,
                             pwd: values.Password,
                             rePwd: values.NextPassword,
@@ -190,7 +190,7 @@ class UserRegisterPage extends Component<UserRegisterPageProps, UserRegisterPage
                         });
                         return;
                     } else if (!err) {
-                        const request: requestNameSpace.RegisterRequest = {
+                        const request: RequestNameSpace.RegisterRequest = {
                             mail: values.Mail,
                             pwd: values.Password,
                             rePwd: values.NextPassword,

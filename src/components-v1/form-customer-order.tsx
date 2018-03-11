@@ -3,7 +3,7 @@ import {Select, Spin} from 'antd';
 const Option = Select.Option;
 import debounce from 'lodash.debounce';
 import {SelectType} from '../util/common';
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {type} from "os";

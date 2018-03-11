@@ -3,7 +3,7 @@ import {withRouter,RouteComponentProps} from 'react-router';
 import {Row, Table, Button, Divider} from "antd";
 import {APINameSpace} from '../model/api';
 import {ModelNameSpace} from '../model/model';
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 import {ResponseNameSpace} from '../model/response';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import  MemberAddressEidtView from '../components-v1/member-address';

@@ -3,7 +3,7 @@ import {List, Spin, Tag} from 'antd';
 import {Global} from '../util/common';
 import {MessageLocale} from '../locales/localeid';
 import {FormStepIcon, FormStepEnum} from './form-step-icon';
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 

@@ -1,4 +1,4 @@
-import {requestNameSpace} from './request';
+import {RequestNameSpace} from './request';
 import {ResponseNameSpace} from './response';
 import {BaseRequest} from "../util/common";
 import {Request} from '../util/request';
@@ -39,7 +39,7 @@ export namespace APINameSpace {
 
     //region 报价定义区
     export class QuotationApi {
-        static async GetCountry(data: requestNameSpace.CountryRequest) {
+        static async GetCountry(data: RequestNameSpace.CountryRequest) {
             let url: string = CommonAPI.baseURL + "Quotation/Country/Items";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, (data.request.name ? {"request.name": data.request.name} : {}));
         }
@@ -50,9 +50,9 @@ export namespace APINameSpace {
         }
 
         //enzo 写的demo;请求和相应都要定义对象；
-        static GetQuotationByEnzo(reqeust: requestNameSpace.QuotationRequest): Promise<ResponseNameSpace.BaseResponse> {
+        static GetQuotationByEnzo(reqeust: RequestNameSpace.QuotationRequest): Promise<ResponseNameSpace.BaseResponse> {
             let url: string = CommonAPI.baseURL + "Quotation/Country/Items";
-            return new Request<requestNameSpace.QuotationRequest, ResponseNameSpace.BaseResponse>().get(url, reqeust);
+            return new Request<RequestNameSpace.QuotationRequest, ResponseNameSpace.BaseResponse>().get(url, reqeust);
         }
     }
     //endregion
@@ -60,35 +60,35 @@ export namespace APINameSpace {
     //region 用户或者会员模块定义区
     export class RegisterAPI {
         /** 获取验证码*/
-        static async GetCode(data?: requestNameSpace.GetCodeRequest) {
+        static async GetCode(data?: RequestNameSpace.GetCodeRequest) {
             let url: string = CommonAPI.baseURL + "User/Send";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().post(url, data);
         }
 
         /** 注册账号*/
-        static async Register(data?: requestNameSpace.RegisterRequest) {
+        static async Register(data?: RequestNameSpace.RegisterRequest) {
             let url: string = CommonAPI.baseURL + "User/Register";
-            return new Request<requestNameSpace.RegisterRequest, ResponseNameSpace.BaseResponse>().post(url, data);
+            return new Request<RequestNameSpace.RegisterRequest, ResponseNameSpace.BaseResponse>().post(url, data);
         }
 
         /** 验证账号是否已经注册*/
-        static async AccountValidate(data?: requestNameSpace.AccountValidateRequest) {
+        static async AccountValidate(data?: RequestNameSpace.AccountValidateRequest) {
             let url: string = CommonAPI.baseURL + "User/userValidate";
-            return new Request<requestNameSpace.AccountValidateRequest, ResponseNameSpace.BaseResponse>().get(url, data);
+            return new Request<RequestNameSpace.AccountValidateRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
     }
 
     export class LoginApi {
         /** 登录*/
-        static async Login(data: requestNameSpace.LoginRequest) {
+        static async Login(data: RequestNameSpace.LoginRequest) {
             let url: string = CommonAPI.baseURL + "User/Login";
-            return new Request<requestNameSpace.LoginRequest, ResponseNameSpace.BaseResponse>().post(url, data);
+            return new Request<RequestNameSpace.LoginRequest, ResponseNameSpace.BaseResponse>().post(url, data);
         }
 
         /** 重置密码*/
-        static async Forget(data: requestNameSpace.ForgetRequest) {
+        static async Forget(data: RequestNameSpace.ForgetRequest) {
             let url: string = CommonAPI.baseURL + "User/Forget";
-            return new Request<requestNameSpace.ForgetRequest, ResponseNameSpace.BaseResponse>().post(url, data);
+            return new Request<RequestNameSpace.ForgetRequest, ResponseNameSpace.BaseResponse>().post(url, data);
         }
     }
 
@@ -99,22 +99,22 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url);
         }
 
-        static async DeleteRecipientsAddress(data: requestNameSpace.DeleteRecipientsAddressRequest) {
+        static async DeleteRecipientsAddress(data: RequestNameSpace.DeleteRecipientsAddressRequest) {
             let url: string = CommonAPI.baseURL + "RecipientsAddress/Item";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().del(url, data);
         }
 
-        static async UpdateRecipientsAddress(data: requestNameSpace.UpdateRecipientsAddressRequest) {
+        static async UpdateRecipientsAddress(data: RequestNameSpace.UpdateRecipientsAddressRequest) {
             let url: string = CommonAPI.baseURL + "RecipientsAddress/Item";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().put(url, data);
         }
 
-        static async InsertRecipientsAddress(data: requestNameSpace.InsertRecipientsAddressRequest) {
+        static async InsertRecipientsAddress(data: RequestNameSpace.InsertRecipientsAddressRequest) {
             let url: string = CommonAPI.baseURL + "RecipientsAddress/Item";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().post(url, data);
         }
 
-        static async GetRecipientsAddress(data: requestNameSpace.GetRecipientsAddressRequest) {
+        static async GetRecipientsAddress(data: RequestNameSpace.GetRecipientsAddressRequest) {
             let url: string = CommonAPI.baseURL + "RecipientsAddress/Item";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
@@ -148,7 +148,7 @@ export namespace APINameSpace {
         }
 
         /** 会员,客服，仓库管理员 模糊查询*/
-        static async UserSearchIndex(data: requestNameSpace.UserSearchIndexRequest) {
+        static async UserSearchIndex(data: RequestNameSpace.UserSearchIndexRequest) {
             let url: string = CommonAPI.baseURL + "Memeber/users/Index";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
@@ -158,12 +158,12 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, {request: data});
         }
 
-        static async GetCustomerOrders(data: requestNameSpace.CustomerOrdersRequest) {
+        static async GetCustomerOrders(data: RequestNameSpace.CustomerOrdersRequest) {
             let url: string = CommonAPI.baseURL + "CustomerOrder/items/page";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
 
-        static async GetCustomerOrdersMerge(data: requestNameSpace.GetCustomerOrderMergeRequest) {
+        static async GetCustomerOrdersMerge(data: RequestNameSpace.GetCustomerOrderMergeRequest) {
             let url: string = CommonAPI.baseURL + "CustomerOrderMerge/items/page";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
@@ -173,7 +173,7 @@ export namespace APINameSpace {
     //region 仓库入库,打包，出库定义区
     export class WarehouseAPI {
         /** 获取仓库入库列表*/
-        static async GetWarehouseInItems(data: requestNameSpace.GetWarehouseInListRequest) {
+        static async GetWarehouseInItems(data: RequestNameSpace.GetWarehouseInListRequest) {
             let url: string = CommonAPI.baseURL + "CustomerOrder/items/page";
             return new Request<BaseRequest, ResponseNameSpace.GetWarehouseInListResponse>().get(url, data);
         }
@@ -185,19 +185,19 @@ export namespace APINameSpace {
         }
 
         /** 仓库入库*/
-        static async WarehouseInAdd(data: requestNameSpace.WarehouseInAddRequest) {
+        static async WarehouseInAdd(data: RequestNameSpace.WarehouseInAddRequest) {
             let url: string = CommonAPI.baseURL + "CustomerOrder/Item/Insert";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().post(url, data);
         }
 
         /** 入库编辑*/
-        static async WarehouseInEdit(data: requestNameSpace.WarehouseInEditRequest) {
+        static async WarehouseInEdit(data: RequestNameSpace.WarehouseInEditRequest) {
             let url: string = CommonAPI.baseURL + "CustomerOrder/Item/update";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().put(url, data);
         }
 
         /** 入库删除*/
-        static async WarehouseInDelete(data: requestNameSpace.WarehouseInDeleteRequest) {
+        static async WarehouseInDelete(data: RequestNameSpace.WarehouseInDeleteRequest) {
             let url: string = CommonAPI.baseURL + "CustomerOrder/Item/delete";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().del(url, data);
         }
@@ -209,14 +209,23 @@ export namespace APINameSpace {
     }
     //endregion
 
+    /** 订单公共接口*/
+    export class OrderCommonAPI {
+        /** 获取各阶段订单数量*/
+        static async GetOrderStatusCount(data: RequestNameSpace.GetOrderStatusCountRequest) {
+            let url: string = CommonAPI.baseURL + "CustomerOrderMerge/status/summary";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url,data);
+        }
+    }
+
     export class CustomerOrderAPI {
         /** 客户订单 入库的快递单号*/
-        static async OrderSearchIndex(data: requestNameSpace.OrderSearchIndexRequest) {
+        static async OrderSearchIndex(data: RequestNameSpace.OrderSearchIndexRequest) {
             let url: string = CommonAPI.baseURL + "CustomerOrder/order/Index";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
 
-        static async GetCustomerOrders(data: requestNameSpace.CustomerOrdersRequest) {
+        static async GetCustomerOrders(data: RequestNameSpace.CustomerOrdersRequest) {
             let url: string = CommonAPI.baseURL + "CustomerOrder/items/page";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
@@ -244,13 +253,13 @@ export namespace APINameSpace {
         }
 
         /** 客户合并订单新增*/
-        static CustomerOrderMergeAdd(data: requestNameSpace.CustomerOrderMergeAddRequest){
+        static CustomerOrderMergeAdd(data: RequestNameSpace.CustomerOrderMergeAddRequest){
             let url: string = CommonAPI.baseURL + "CustomerOrderMerge/Item/Insert";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().post(url,data);
         }
 
         /** 客户合并订单新增*/
-        static GetCustomerOrderMergeItem(data: requestNameSpace.GetCustomerOrderMergeItemRequest){
+        static GetCustomerOrderMergeItem(data: RequestNameSpace.GetCustomerOrderMergeItemRequest){
             let url: string = CommonAPI.baseURL + "CustomerOrderMerge/Item";
             return new Request<BaseRequest, ResponseNameSpace.GetCustomerOrderMergeDetailResponse>().get(url,data);
         }
@@ -284,7 +293,7 @@ export namespace APINameSpace {
 
     //region 附件定义区
     export class AttachmentsAPI {
-        static async GetAttachmentItems(data: requestNameSpace.GetAttachmentItemsRequest) {
+        static async GetAttachmentItems(data: RequestNameSpace.GetAttachmentItemsRequest) {
             let url: string = CommonAPI.baseURL + "File/Attachments/items";
             return new Request<BaseRequest, ResponseNameSpace.GetAttachmentItemsResponse>().get(url, data);
         }

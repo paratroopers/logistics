@@ -16,7 +16,7 @@ import {
     FormPackageRequirement
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 import {Context} from "../util/common";
 import {isArray} from "util";
 import {ResponseNameSpace} from '../model/response';
@@ -95,7 +95,7 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
 
         form.validateFieldsAndScroll((errors, values) => {
             if (!errors) {
-                const request: requestNameSpace.CustomerOrderMergeAddRequest = {
+                const request: RequestNameSpace.CustomerOrderMergeAddRequest = {
                     /** 用户ID*/
                     userid: Context.getCurrentUser().userInfo.Userid.toString(),
                     /** 客户备注*/

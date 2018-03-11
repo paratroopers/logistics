@@ -11,7 +11,7 @@ import {
     FormOrderChannel
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 
@@ -49,7 +49,7 @@ export class CustomerServiceConfirmApprovePage extends React.Component<CustomerS
 
     async getOrderInfo() {
         /** 通过ID获取表单数据*/
-        const request: requestNameSpace.GetCustomerOrderMergeItemRequest = {
+        const request: RequestNameSpace.GetCustomerOrderMergeItemRequest = {
             customerOrderMergeID: this.state.selectedKey,
             isAdmin: false
         }

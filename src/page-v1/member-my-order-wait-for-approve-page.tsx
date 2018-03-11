@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {withRouter,Link} from 'react-router';
-import {Row,Tooltip,Icon} from 'antd';
+import {withRouter, Link} from 'react-router';
+import {Row, Tooltip, Icon} from 'antd';
 import {PathConfig} from '../config/pathconfig';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
 const {RangePicker} = DatePicker;
 import {ModelNameSpace} from "../model/model";
-import {requestNameSpace} from "../model/request";
+import {RequestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
 import {SelectType, Constants} from "../util/common";
 import {FormControl} from "../components-v1/form-control";
@@ -20,19 +20,22 @@ import * as moment from 'moment';
 import {FormFileViewer} from "../components-v1/form-file-viewer";
 
 /// 待审核列表
-interface MemberMyOrderWaitForApprovePageProps {}
+interface MemberMyOrderWaitForApprovePageProps {
+}
 
 interface MemberMyOrderWaitForApprovePageStates {
     /** 数据源*/
-    listData: ModelNameSpace.WarehouseListModel[],
+    listData: ModelNameSpace.WarehouseListModel[];
     /** 选中行*/
-    selectedRowKeys: any[],
+    selectedRowKeys: any[];
     /** 当前页数*/
-    pageIndex: number,
+    pageIndex: number;
     /** 每页条数*/
-    pageSize: number,
-    /** 总数*/
-    totalCount: number
+    pageSize: number;
+    /** 客服确认总数*/
+    OrderConfirmCount: number;
+    /** 仓库打包总数*/
+    OrderMergeCount: number;
     /** 列表是否正在查询*/
     loading?: boolean;
     /* 查询条件选择值*/
@@ -43,7 +46,8 @@ interface MemberMyOrderWaitForApprovePageStates {
     items: ModelNameSpace.Attachment[];
 }
 
-class MemberMyOrderWaitForApprovePageTable extends CommonTable<any> {}
+class MemberMyOrderWaitForApprovePageTable extends CommonTable<any> {
+}
 
 @withRouter
 export default class MemberMyOrderWaitForApprovePage extends React.Component<MemberMyOrderWaitForApprovePageProps, MemberMyOrderWaitForApprovePageStates> {
@@ -54,7 +58,8 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
             selectedRowKeys: [],
             pageIndex: 1,
             pageSize: 10,
-            totalCount: 0,
+            OrderConfirmCount: 0,
+            OrderMergeCount: 0,
             loading: false,
             selectVaules: [],
             visibleFormFileViewer: false,
@@ -63,24 +68,51 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
     }
 
     componentDidMount() {
+        /** 初始化列表数据*/
         this.loadData(1, 10, 0);
+        /** 初始化统计数量*/
+        this.loadStatus();
     }
 
-
     /** 选中事件*/
-    onSelectChange = (selectedRowKeys) => {
+    onSelectChange(selectedRowKeys) {
         this.setState({selectedRowKeys});
     }
 
+    /** 获取状态统计*/
+    loadStatus(){
+        const topThis=this;
+
+        const requestA:RequestNameSpace.GetOrderStatusCountRequest={
+            currentStep:Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderConfirm),
+            isAdmin:false
+        }
+        APINameSpace.OrderCommonAPI.GetOrderStatusCount(requestA).then((result: ResponseNameSpace.BaseResponse)=>{
+            if(result.Status===0){
+                topThis.setState({OrderConfirmCount:Number.parseInt(result.Data)});
+            }
+        });
+
+        const requestB:RequestNameSpace.GetOrderStatusCountRequest={
+            currentStep:Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderMerge),
+            isAdmin:false
+        }
+        APINameSpace.OrderCommonAPI.GetOrderStatusCount(requestB).then((result: ResponseNameSpace.BaseResponse)=>{
+            if(result.Status===0){
+                topThis.setState({OrderMergeCount:Number.parseInt(result.Data)});
+            }
+        });
+    }
+
     /** 获取数据源*/
-    loadData = (index?: number, size?: number, searchaValues?: any) => {
+    loadData(index?: number, size?: number, searchaValues?: any) {
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
 
 
-        const request: requestNameSpace.GetCustomerOrderMergeRequest = {
-            currentStep:Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.WaitApprove),
-            currentStatus:!isUndefined(searchaValues.currentStatus) ? searchaValues.currentStatus.key : "",
+        const request: RequestNameSpace.GetCustomerOrderMergeRequest = {
+            currentStep: Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.WaitApprove),
+            currentStatus: !isUndefined(searchaValues.currentStatus) ? searchaValues.currentStatus.key : "",
             expressNo: !isUndefined(searchaValues.expressNo) ? searchaValues.expressNo : "",
             customerOrderMergeNo: isArray(searchaValues.customerOrderMergeNo) && !isNullOrUndefined(searchaValues.customerOrderMergeNo[0]) ? searchaValues.customerOrderMergeNo[0].key : "",
             customerChooseChannelID: !isUndefined(searchaValues.channel) ? searchaValues.channel.key : "",
@@ -88,7 +120,7 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
             orderMergeTimeEnd: !isUndefined(searchaValues.Created) ? searchaValues.Created[1].format() : "",
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize,
-            isAdmin:false
+            isAdmin: false
         }
 
 
@@ -98,16 +130,16 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
                 topThis.setState({
                     listData: result.Data,
                     pageIndex: index ? index : pageIndex,
-                    totalCount: result.TotalCount,
                     loading: false
                 });
             }
         })
     }
 
+    /** 点击图片预览*/
     onClickPicturePreview(item: ModelNameSpace.CustomerOrderMergeModel) {
         const topThis = this;
-        const request: requestNameSpace.GetAttachmentItemsRequest = {
+        const request: RequestNameSpace.GetAttachmentItemsRequest = {
             customerOrderID: item.ID,
             isAdmin: false
         }
@@ -121,6 +153,13 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
         });
     }
 
+    /** 点击搜索*/
+    onClickSearch(values: any){
+        this.loadData(1, 10, values);
+        this.setState({selectVaules: values});
+    }
+
+    /** 附件视图状态更新*/
     changeFormFileViewerVisible(bool: boolean) {
         this.setState({
             visibleFormFileViewer: bool
@@ -129,7 +168,7 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
 
     renderTable() {
         const topThis = this;
-        const {state: {listData, selectedRowKeys, pageIndex, pageSize, totalCount, loading}} = topThis;
+        const {state: {listData, selectedRowKeys, pageIndex, pageSize, loading}} = topThis;
 
         const rowSelection = {
             fixed: true,
@@ -146,12 +185,13 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
                     topThis.onClickPicturePreview(record);
                 }} style={{fontSize: 20, color: "#e65922", cursor: "pointer"}}/></Tooltip>
             }
-        },{
+        }, {
             title: "客户合并单号",
             dataIndex: 'MergeOrderNo',
             layout: ColumnLayout.LeftTop,
-            render: (txt,record) => {
-                return <Link to={{pathname: PathConfig.MemberMyOrderApprovalViewPage, query: {ids: record.ID}}}>{txt}</Link>
+            render: (txt, record) => {
+                return <Link
+                    to={{pathname: PathConfig.MemberMyOrderApprovalViewPage, query: {ids: record.ID}}}>{txt}</Link>
             }
         }, {
             title: "渠道",
@@ -188,12 +228,11 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
                     query: {ids: record.ID},
                 }}>查看</Link>;
             }
-         }];
+        }];
 
         const pagination: PaginationProps = {
             current: pageIndex,
             pageSize: pageSize,
-            total: totalCount,//数据总数
             onChange: (a) => {
                 topThis.loadData(a, pageSize, this.state.selectVaules);
             }
@@ -207,19 +246,14 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
                                                      dataSource={listData}></MemberMyOrderWaitForApprovePageTable>;
     }
 
-    onClickSearch = (values: any) => {
-        this.loadData(1, 10, values);
-        this.setState({selectVaules: values});
-    }
-
-
     renderFormAdvancedItems() {
         const items: FormAdvancedItemModel[] = [
             {
                 defaultDisplay: true,
                 fieldName: "customerOrderMergeNo",
                 displayName: "客户订单号",
-                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrderMerge} isadmin={false} placeholder="客户合并订单号"/>,
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrderMerge} isadmin={false}
+                                                      placeholder="客户合并订单号"/>,
                 layout: {
                     xs: 15,
                     sm: 12,
@@ -232,7 +266,7 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
                 defaultDisplay: true,
                 fieldName: "expressNo",
                 displayName: "快递单号",
-                mobileShow:true,
+                mobileShow: true,
                 control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} isadmin={false} placeholder="快递单号"/>
             },
             {
@@ -267,10 +301,10 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
 
     render() {
         const topThis = this;
-        const {state: {totalCount,visibleFormFileViewer, items}} = topThis;
+        const {state: {OrderConfirmCount, OrderMergeCount, visibleFormFileViewer, items}} = topThis;
         const message = <span>
-                              客服确认: <span style={{fontWeight: "bold"}}>{totalCount}项 </span>
-                              仓库打包: <span style={{fontWeight: "bold"}}>{totalCount}项 </span>
+                              客服确认: <span style={{fontWeight: "bold"}}>{OrderConfirmCount}项 </span>
+                              仓库打包: <span style={{fontWeight: "bold"}}>{OrderMergeCount}项 </span>
                           </span>;
         return <Row>
             <FormAdvancedSearch

@@ -3,7 +3,7 @@ import {withRouter, hashHistory} from 'react-router';
 import {Row, Icon, Form} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {ModelNameSpace} from "../model/model";
-import {requestNameSpace} from "../model/request";
+import {RequestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
 import {PathConfig} from "../config/pathconfig";
 import {SelectType, Constants} from "../util/common";
@@ -69,7 +69,7 @@ class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmP
     loadData = (index?: number, size?: number, searchaValues?: any) => {
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
-        const request: requestNameSpace.GetCustomerOrderMergeRequest = {
+        const request: RequestNameSpace.GetCustomerOrderMergeRequest = {
             currentStep:Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderConfirm),
             channelID: !isUndefined(searchaValues.ChannelID) ? searchaValues.ChannelID.key : 0,
             expressNo: !isUndefined(searchaValues.expressNo) ? searchaValues.expressNo : "",

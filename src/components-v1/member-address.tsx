@@ -3,7 +3,7 @@ import {withRouter,hashHistory} from 'react-router';
 import {Row, Table, Button, Divider, Form,message} from "antd";
 import {APINameSpace} from '../model/api';
 import {ModelNameSpace} from '../model/model';
-import {requestNameSpace} from '../model/request';
+import {RequestNameSpace} from '../model/request';
 import {ResponseNameSpace} from '../model/response';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import {FormControl} from '../components-v1/form-control';
@@ -40,7 +40,7 @@ export class MemberAddressAdd extends React.Component<MemberAddressAddProps, Mem
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                let model: requestNameSpace.InsertRecipientsAddressRequest = {
+                let model: RequestNameSpace.InsertRecipientsAddressRequest = {
                     country: values.country,
                     recipient: values.recipient,
                     City: values.City,
@@ -225,7 +225,7 @@ class MemberAddressEidtView extends React.Component<MemberAddressEditViewProps, 
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                let model: requestNameSpace.UpdateRecipientsAddressRequest = {
+                let model: RequestNameSpace.UpdateRecipientsAddressRequest = {
                     id:this.props.model.ID,
                     country: values.country,
                     recipient: values.recipient,
