@@ -478,7 +478,7 @@ export namespace ModelNameSpace {
         constructor() {
             this.productName = "";
             this.productNameEN = "";
-            this.HSCode = "美元";
+            this.HSCode = "";
             this.declareUnitPrice = 0;
             this.count = 0;
             this.ID = Util.guid();

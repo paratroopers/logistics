@@ -115,7 +115,8 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
                 render: (txt, record) => {
                     return !readOnly ? <a onClick={() => this.onDelete(record)}>删除</a> : null
                 },
-                layout: ColumnLayout.Option
+                layout: ColumnLayout.Option,
+                hidden:readOnly
             }];
         return <FormOrderChannelTable pagination={false} columns={columns}
                                       dataSource={this.state.data}></FormOrderChannelTable>

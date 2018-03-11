@@ -183,11 +183,22 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                 layout: ColumnLayout.RightTop
             }, {
                 title: '货币单位',
-                dataIndex: 'HSCode',
                 render: (txt, record) => {
+                    return <span>美元</span>;
+                },
+                hidden: Constants.minSM
+            }, {
+                title: 'HSCode',
+                dataIndex: 'HSCode',
+                render: (txt, record,index) => {
                     return !this.props.readOnly && !Constants.minSM ?
-                        <Input disabled defaultValue={txt ? txt : "美元"}></Input> :
-                        <span>{txt ? txt : "美元"}</span>;
+                        <Form.Item>{getFieldDecorator(`productList[${index}].HSCode`, {
+                            initialValue: txt,
+                            rules: [{required: false}]
+                        })
+                        (<Input
+                            onChange={e => this.onChange(e.target.value, record, 'HSCode')}></Input>)}</Form.Item>
+                        : <span>{txt}</span>;
                 },
                 hidden: Constants.minSM
             }, {
@@ -224,7 +235,8 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                         {!this.props.readOnly ? <a onClick={() => this.onDeleteClick(record)}>删除</a> : null}
                     </div>
                 },
-                layout: ColumnLayout.Option
+                layout: ColumnLayout.Option,
+                hidden: this.props.readOnly
             }
         ]
         return <Form>
