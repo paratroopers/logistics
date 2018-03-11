@@ -188,76 +188,10 @@ export namespace ModelNameSpace {
     }
 
     /** 新建入库*/
-    export interface WarehouseInModel extends BaseModel {
-        /** 会员号*/
-        MemeberCode?: string;
-        /** 物流方式*/
-        LogisticsType?: string;
-        /** 物流单号*/
-        LogisticsOrder?: string;
-        /** 客服*/
-        UserID?: number;
-        /** 长*/
-        Length?: number;
-        /** 宽*/
-        Width?: number;
-        /** 高*/
-        Height?: number;
-        /** 入库重量*/
-        WarehouseInWeight?: number;
-        /** 状态*/
-        Status?: string;
-        /** 附件*/
-        Attachment?: Attachment[];
-    }
+    export interface WarehouseInModel extends CustomerOrderModel {}
 
     /** 入库列表*/
-    export interface WarehouseListModel extends BaseModel {
-        /** 主键*/
-        ID?: string;
-        /** 会员ID*/
-        userid?: string;
-        /** 客户订单号*/
-        CustomerOrderNo?: string;
-        /** 快递单号*/
-        expressNo?: string;
-        /** 快递类型ID*/
-        expressTypeID?: number;
-        /** 快递类型Name*/
-        expressTypeName?: string;
-        /** 交接单*/
-        TransferNo?: string;
-        /** 件数*/
-        InPackageCount?: number;
-        /** 入库重量*/
-        InWeight?: number;
-        /** 入库体积*/
-        InVolume?: number;
-        /** 入库长度*/
-        InLength?: number;
-        /** 入库宽度*/
-        InWidth?: number;
-        /** 入库高度*/
-        InHeight?: number;
-        /** 仓库ID*/
-        WareHouseID?: number;
-        /** 仓库名称*/
-        WareHouseName?: string;
-        /** 入库时间*/
-        InWareHouseTime?: Date;
-        /** 客服ID*/
-        CustomerServiceID?: number;
-        /** 客服名称*/
-        CustomerServiceName?: string;
-        /** 会员编号*/
-        MemeberCode?: string;
-        /** 状态编号*/
-        currentStatus?: string;
-        /** 状态名称*/
-        currentStep?: string;
-        /** 备注*/
-        WarehouseAdminRemark?: string;
-    }
+    export interface WarehouseListModel extends CustomerOrderModel {}
 
     /** 客户订单 客户合并订单*/
     export interface MemberOrderStatusModel extends BaseModel {
@@ -378,22 +312,52 @@ export namespace ModelNameSpace {
 
     /** 客户订单Model*/
     export interface CustomerOrderModel extends BaseModel {
-        CustomerOrderNo?: string;
-        CustomerServiceID?: string;
+        /** 主键*/
         ID?: string;
-        InHeight?: number;
-        InLength?: number;
-        InPackageCount?: number;
-        InVolume?: number;
-        InWareHouseTime?: string;
-        InWeight?: number;
-        InWidth?: number;
-        TransferNo?: string;
-        WareHouseID?: string;
-        expressNo?: string;
-        expressTypeID?: string;
-        expressTypeName?: string;
+        /** 会员ID*/
         userid?: string;
+        /** 客户订单号*/
+        CustomerOrderNo?: string;
+        /** 快递单号*/
+        expressNo?: string;
+        /** 快递类型ID*/
+        expressTypeID?: number;
+        /** 快递类型Name*/
+        expressTypeName?: string;
+        /** 交接单*/
+        TransferNo?: string;
+        /** 件数*/
+        InPackageCount?: number;
+        /** 入库重量*/
+        InWeight?: number;
+        /** 入库体积*/
+        InVolume?: number;
+        /** 入库长度*/
+        InLength?: number;
+        /** 入库宽度*/
+        InWidth?: number;
+        /** 入库高度*/
+        InHeight?: number;
+        /** 仓库ID*/
+        WareHouseID?: number;
+        /** 仓库名称*/
+        WareHouseName?: string;
+        /** 入库时间*/
+        InWareHouseTime?: Date;
+        /** 客服ID*/
+        CustomerServiceID?: number;
+        /** 客服名称*/
+        CustomerServiceName?: string;
+        /** 会员编号*/
+        MemeberCode?: string;
+        /** 状态编号*/
+        currentStatus?: string;
+        /** 状态名称*/
+        currentStep?: string;
+        /** 备注*/
+        WarehouseAdminRemark?: string;
+        /** 附件*/
+        AttachmentIDList?: string[];
     }
 
     /** 合并订单Model*/

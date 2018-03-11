@@ -202,10 +202,6 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
             dataIndex: 'country',
             hidden: Constants.minSM
         }, {
-            title: "客服备注",
-            dataIndex: 'customerServiceMark',
-            hidden: Constants.minSM
-        }, {
             title: "状态",
             layout: ColumnLayout.RightBottom,
             dataIndex: 'currentStep',
@@ -242,7 +238,7 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
                                                      rowKey={"ID"}
                                                      loading={loading}
                                                      pagination={pagination}
-                                                     rowSelection={rowSelection}
+                                                     expandedRowRender={record => <p style={{ margin: 0 }}>{record.customerServiceMark}</p>}
                                                      dataSource={listData}></MemberMyOrderWaitForApprovePageTable>;
     }
 

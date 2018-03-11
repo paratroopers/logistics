@@ -70,27 +70,35 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
         </div>
     }
 
-    renderRow(label?: string, isTextArea?: boolean, noRequired?: boolean, fieldName?: string, defaultValue?: any) {
+    renderRow(label?: string, isTextArea?: boolean, noRequired?: boolean, fieldName?: string, defaultValue?: any, layout?: any) {
         const {form: {getFieldDecorator}, readOnly} = this.props;
-        const formItemLayout = {labelCol: {span: 6}, wrapperCol: {span: 18}};
-        return <Col span={Constants.minSM ? 24 : 12}>
-            <Form.Item label={label} {...formItemLayout} required={readOnly ? false : !noRequired}>
+
+        const spanLayout = layout ? layout : {
+            xs: 24,
+            sm: 24,
+            md: 12,
+            lg: 8,
+            xl: 6
+        }
+
+        return <Col {...spanLayout}>
+            <Form.Item label={label} required={readOnly ? false : !noRequired}>
                 {
                     isTextArea ? getFieldDecorator(fieldName, {
-                            initialValue: defaultValue,
-                            rules: [{
-                                required: !noRequired,
-                                message: '请填写' + label
-                            }]
-                        })(<Input.TextArea disabled={this.props.readOnly}
-                                           placeholder={readOnly ? "" : '请输入'}></Input.TextArea>)
+                        initialValue: defaultValue,
+                        rules: [{
+                            required: !noRequired,
+                            message: '请填写' + label
+                        }]
+                    })(<Input.TextArea disabled={this.props.readOnly}
+                                       placeholder={readOnly ? "" : '请输入'}></Input.TextArea>)
                         : getFieldDecorator(fieldName, {
-                            initialValue: defaultValue,
-                            rules: [{
-                                required: !noRequired,
-                                message: '请填写' + label
-                            }]
-                        })(<Input disabled={this.props.readOnly} placeholder={readOnly ? "" : '请输入'}></Input>)
+                        initialValue: defaultValue,
+                        rules: [{
+                            required: !noRequired,
+                            message: '请填写' + label
+                        }]
+                    })(<Input disabled={this.props.readOnly} placeholder={readOnly ? "" : '请输入'}></Input>)
                 }
             </Form.Item>
         </Col>
@@ -99,32 +107,24 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
     render() {
         const topThis = this;
         const {state: {selectContact}} = topThis;
-        const defaultRowSetting: RowProps = {justify: "center", type: "flex"};
+        const defaultRowSetting: RowProps = {type:"flex",gutter: 16};
         return <FormSettingGroup title={"收件人基本信息"} topBar={this.renderHeader()}>
             <Form className="form-order-address">
                 <Row {...defaultRowSetting}>
-                    {this.renderRow('收件人姓名', false, false, 'recipient', selectContact.recipient)}
-                </Row>
-                <Row {...defaultRowSetting}>
+                    {this.renderRow('姓名', false, false, 'recipient', selectContact.recipient)}
                     {this.renderRow('电话', false, false, 'Tel', selectContact.Tel)}
-                </Row>
-                <Row {...defaultRowSetting}>
-                    {this.renderRow('邮编', false, false, 'taxno', selectContact.taxno)}
-                </Row>
-                <Row {...defaultRowSetting}>
                     {this.renderRow('国家', false, false, 'country', selectContact.country)}
-                </Row>
-                <Row {...defaultRowSetting}>
                     {this.renderRow('城市', false, false, 'City', selectContact.City)}
-                </Row>
-                <Row {...defaultRowSetting}>
-                    {this.renderRow('公司', false, true, 'companyName', selectContact.companyName)}
-                </Row>
-                <Row {...defaultRowSetting}>
+                    {this.renderRow('邮编', false, false, 'taxno', selectContact.taxno)}
                     {this.renderRow('税号', false, true, 'postalcode', selectContact.postalcode)}
-                </Row>
-                <Row {...defaultRowSetting}>
-                    {this.renderRow('地址', true, false, 'Address', selectContact.Address)}
+                    {this.renderRow('公司', false, true, 'companyName', selectContact.companyName,{
+                        xs: 24,
+                        sm: 24,
+                        md: 24,
+                        lg: 24,
+                        xl: 12
+                    })}
+                    {this.renderRow('地址', true, false, 'Address', selectContact.Address, {span: 24})}
                 </Row>
             </Form>
             <FormContactInfo readOnly width={800} onOk={this.onSelect.bind(this)} visible={this.state.visible}

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Row, Col} from 'antd';
 import {FormSettingGroup} from './form-setting-group'
+import * as moment from 'moment';
 
 export interface FormOrderInfoProps {
     title?: string;
@@ -37,22 +38,26 @@ export class FormOrderInfo extends React.Component<FormOrderInfoProps, FormOrder
     render() {
         const {state: {data},props:{loading}} = this;
         return <FormSettingGroup title={"订单基本信息"} loading={loading}>
-            <div className="orderinfo">
+            <Row className="form-order-info">
                 <Row>
                     <Col xl={6} md={24}>
-                        <span>创建时间: {data.created}</span>
+                        <span className="order-content-key">创建时间</span>
+                        <span className="order-content-value">{moment(data.created).format('YYYY-MM-DD')}</span>
                     </Col>
                     <Col xl={6} md={24}>
-                        <span> 净重量 : <a>{data.weight}</a>kg</span>
+                        <span className="order-content-key">净重量</span>
+                        <span className="order-content-value">{data.weight}kg</span>
                     </Col>
                     <Col xl={6} md={24}>
-                        <span>净重体积: {data.volume}cm²</span>
+                        <span className="order-content-key">净重体积</span>
+                        <span className="order-content-value">{data.volume}cm³</span>
                     </Col>
                     <Col xl={6} md={24}>
-                        <span>总件数: <a>{data.count}</a></span>
+                        <span className="order-content-key">总件数</span>
+                        <span className="order-content-value">{data.count}</span>
                     </Col>
                 </Row>
-            </div>
+            </Row>
         </FormSettingGroup>
     }
 }

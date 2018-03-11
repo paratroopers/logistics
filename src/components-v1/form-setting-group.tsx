@@ -33,12 +33,12 @@ export class FormSettingGroup extends React.Component<FormSettingGroupProps, For
         const {props: {loading, title, topBar, telescopic}, state: {isHidden}} = this;
         let className = classNames({
             "hidden": isHidden
-        }, "header-section-content");
+        }, "form-setting-group-content");
         return <Spin spinning={(loading === true)}>
-            <div className="header-section" style={{marginBottom: '20px'}}>
-                <Row type="flex" align="top" justify="space-between" className="header-section-title">
-                    <Col>
-                        <span className="titleSpan"></span>
+            <div className="form-setting-group">
+                <Row type="flex" align="top" justify="space-between" className="form-setting-group-title">
+                    <Col className="title">
+                        <span className="title-left-span"></span>
                         {title}
                     </Col>
                     <Col>
@@ -53,7 +53,7 @@ export class FormSettingGroup extends React.Component<FormSettingGroupProps, For
                 </Row>
                 <div className={className}>
                     {
-                        topBar ? <Row type="flex" justify="start" align="bottom" className="topbar">
+                        topBar ? <Row type="flex" justify="start" align="bottom" className="top-bar">
                             <Col span={24}>
                                 {topBar}
                             </Col>

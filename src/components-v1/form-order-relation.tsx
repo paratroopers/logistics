@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Row} from "antd";
 import {Constants} from '../util/common';
 import {ModelNameSpace} from '../model/model';
 import {FormSettingGroup} from './form-setting-group';
@@ -32,7 +33,7 @@ export class FormOrderRelation extends React.Component<FormOrderRelationProps, F
     }
 
     renderTable() {
-        const colums: CommonColumnProps<any>[] = [
+        const colums: CommonColumnProps<ModelNameSpace.CustomerOrderModel>[] = [
             {
                 title: '客服订单号',
                 dataIndex: 'CustomerOrderNo',
@@ -63,28 +64,33 @@ export class FormOrderRelation extends React.Component<FormOrderRelationProps, F
                     return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
                 }
             }, {
-                title: '初始重量(KG)',
+                title: '初始重量',
                 dataIndex: 'InWeight',
-                hidden: Constants.minSM
+                hidden: Constants.minSM,
+                render: (txt) => {
+                    return <span>{txt}kg</span>
+                }
             }, {
-                title: '初始体积(cm³)',
+                title: '初始体积',
                 dataIndex: 'InVolume',
-                hidden: Constants.minSM
-            }, {
-                title: '客服备注',
-                dataIndex: '6',
-                hidden: Constants.minSM
+                hidden: Constants.minSM,
+                render: (txt) => {
+                    return <span>{txt}cm³</span>
+                }
             }
         ]
         return <FormOrderRelationTable columns={colums}
                                        rowKey={"ID"}
                                        pagination={false}
+                                       expandedRowRender={record => <p style={{ margin: 0 }}>{record.WarehouseAdminRemark}</p>}
                                        dataSource={this.state.data}></FormOrderRelationTable>
     }
 
     render() {
         return <FormSettingGroup title={"关联订单信息"} loading={this.props.loading}>
-            {this.renderTable()}
+            <Row className="form-order-relation">
+                {this.renderTable()}
+            </Row>
         </FormSettingGroup>
     }
 }
