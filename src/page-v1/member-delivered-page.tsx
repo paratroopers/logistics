@@ -3,9 +3,6 @@ import {withRouter, hashHistory} from 'react-router';
 import {Row, Icon, Table, Alert} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
-
-const {RangePicker} = DatePicker;
-import {ColumnProps} from 'antd/lib/table';
 import {ModelNameSpace} from "../model/model";
 import {RequestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
