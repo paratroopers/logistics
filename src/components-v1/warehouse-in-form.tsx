@@ -71,6 +71,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                     inPackageCount: Data.InPackageCount,
                     inWeight: Data.InWeight,
                     inLength: Data.InLength,
+                    InVolume: Data.InVolume,
                     inWidth: Data.InWidth,
                     inHeight: Data.InHeight,
                     /** 交接单*/
