@@ -43,7 +43,7 @@ export class FormRemarks extends React.Component<FormRemarksProps, FormRemarksSt
                                     onChange(v);
                             })
                         }} placeholder={''}></Input.TextArea> :
-                        <Input.TextArea value={value} disabled={true}></Input.TextArea>}
+                        <span>{value}</span>}
                 </Col>
             </Row>
         </FormSettingGroup>
