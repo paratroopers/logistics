@@ -81,33 +81,42 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
             xl: 6
         }
 
-        return <Col {...spanLayout}>
-            <Form.Item label={label} required={readOnly ? false : !noRequired}>
-                {
-                    isTextArea ? getFieldDecorator(fieldName, {
-                        initialValue: defaultValue,
-                        rules: [{
-                            required: !noRequired,
-                            message: '请填写' + label
-                        }]
-                    })(<Input.TextArea disabled={this.props.readOnly}
-                                       placeholder={readOnly ? "" : '请输入'}></Input.TextArea>)
-                        : getFieldDecorator(fieldName, {
-                        initialValue: defaultValue,
-                        rules: [{
-                            required: !noRequired,
-                            message: '请填写' + label
-                        }]
-                    })(<Input disabled={this.props.readOnly} placeholder={readOnly ? "" : '请输入'}></Input>)
-                }
-            </Form.Item>
-        </Col>
+        if (readOnly)
+            return <Col {...spanLayout}>
+                <Form.Item label={label}>
+                    {
+                        <label>{defaultValue}</label>
+                    }
+                </Form.Item>
+            </Col>;
+        else
+            return <Col {...spanLayout}>
+                <Form.Item label={label} required={readOnly ? false : !noRequired}>
+                    {
+                        isTextArea ? getFieldDecorator(fieldName, {
+                                initialValue: defaultValue,
+                                rules: [{
+                                    required: !noRequired,
+                                    message: '请填写' + label
+                                }]
+                            })(<Input.TextArea disabled={this.props.readOnly}
+                                               placeholder={readOnly ? "" : '请输入'}></Input.TextArea>)
+                            : getFieldDecorator(fieldName, {
+                                initialValue: defaultValue,
+                                rules: [{
+                                    required: !noRequired,
+                                    message: '请填写' + label
+                                }]
+                            })(<Input disabled={this.props.readOnly} placeholder={readOnly ? "" : '请输入'}></Input>)
+                    }
+                </Form.Item>
+            </Col>
     }
 
     render() {
         const topThis = this;
         const {state: {selectContact}} = topThis;
-        const defaultRowSetting: RowProps = {type:"flex",gutter: 16};
+        const defaultRowSetting: RowProps = {type: "flex", gutter: 16};
         return <FormSettingGroup title={"收件人基本信息"} topBar={this.renderHeader()}>
             <Form className="form-order-address">
                 <Row {...defaultRowSetting}>
@@ -117,7 +126,7 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
                     {this.renderRow('城市', false, false, 'City', selectContact.City)}
                     {this.renderRow('邮编', false, false, 'taxno', selectContact.taxno)}
                     {this.renderRow('税号', false, true, 'postalcode', selectContact.postalcode)}
-                    {this.renderRow('公司', false, true, 'companyName', selectContact.companyName,{
+                    {this.renderRow('公司', false, true, 'companyName', selectContact.companyName, {
                         xs: 24,
                         sm: 24,
                         md: 24,
