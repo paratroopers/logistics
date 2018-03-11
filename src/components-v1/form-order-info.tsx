@@ -7,7 +7,7 @@ export interface FormOrderInfoProps {
     title?: string;
     size?: number;
     data?: FormOrderInfoModel;
-    loading?:boolean;
+    loading?: boolean;
 }
 
 export interface FormOrderInfoStates {
@@ -36,13 +36,13 @@ export class FormOrderInfo extends React.Component<FormOrderInfoProps, FormOrder
     }
 
     render() {
-        const {state: {data},props:{loading}} = this;
+        const {state: {data}, props: {loading}} = this;
         return <FormSettingGroup title={"订单基本信息"} loading={loading}>
             <Row className="form-order-info">
                 <Row>
                     <Col xl={6} md={24}>
                         <span className="order-content-key">创建时间</span>
-                        <span className="order-content-value">{moment(data.created).format('YYYY-MM-DD')}</span>
+                        <span className="order-content-value">{moment(data.created).format('YYYY-MM-DD HH:mm')}</span>
                     </Col>
                     <Col xl={6} md={24}>
                         <span className="order-content-key">净重量</span>
