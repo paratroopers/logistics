@@ -45,7 +45,7 @@ export class WarehouseInEditPage extends React.Component<WarehouseInEditPageProp
             /** 入库重量*/
             InWeight: values.inWeight,
             /** 入库体积*/
-            InVolume: values.inLength * values.inWidth * values.inHeight,
+            InVolume: values.InVolume,
             /** 入库长度*/
             InLength: values.inLength,
             /** 入库宽度*/
