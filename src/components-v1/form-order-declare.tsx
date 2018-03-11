@@ -41,15 +41,20 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
 
         let total: number = 0;
         Util.each(data, d => {
-            d.total = (d.declareUnitPrice * d.productCount).toFixed(2);
-            total += Number(d.total);
+            d.declareTotal = (d.declareUnitPrice * d.productCount).toFixed(2);
+            total += Number(d.declareTotal);
         });
         this.setState({total: total.toFixed(2), data: data});
     }
 
     componentWillReceiveProps(nextProps) {
         if ('data' in nextProps && nextProps.data !== this.props.data) {
-            this.setState({data: nextProps.data});
+            let total: number = 0;
+            Util.each(nextProps.data, d => {
+                d.declareTotal = (d.declareUnitPrice * d.productCount).toFixed(2);
+                total += Number(d.declareTotal);
+            });
+            this.setState({total: total.toFixed(2), data: nextProps.data});
         }
     }
 
