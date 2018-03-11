@@ -9,7 +9,7 @@ import {
     FormOrderRelation,
     FormOrderAddressee,
     FormOrderDeclare,
-    FormPackageRequirement,
+    FormRemarks,
     FormPackageDetail,
     FormOrderChannel,
     FormDeliveredDetail,
@@ -51,7 +51,7 @@ export class WarehouseOutViewPage extends React.Component<WarehouseOutViewPagePr
             <FormOrderAddressee readOnly={true}></FormOrderAddressee>
             <FormOrderDeclare readOnly={true}></FormOrderDeclare>
             <FormOrderChannel readOnly={true}></FormOrderChannel>
-            <FormPackageRequirement readOnly={true}></FormPackageRequirement>
+            <FormRemarks readOnly={true}></FormRemarks>
         </Layout.Content>
     }
 

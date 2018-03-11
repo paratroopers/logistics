@@ -13,7 +13,7 @@ import {
     FormOrderAddressee,
     FormOrderDeclare,
     FormOrderChannel,
-    FormPackageRequirement
+    FormRemarks
 } from "../components-v1/all-components-export";
 import {isNullOrUndefined} from "util";
 
@@ -95,8 +95,12 @@ export class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrder
                               readOnly={true}></FormOrderDeclare>
             {data ? <FormOrderChannel ids={[data.mergeOrder.CustomerChooseChannelID]}
                                       readOnly={true}></FormOrderChannel> : null}
-            {data ? <FormPackageRequirement value={data.mergeOrder.CustomerMark}
-                                            readOnly={true}></FormPackageRequirement> : null}
+            {data ? <FormRemarks value={data.mergeOrder.CustomerMark}
+                                 title={"打包要求"}
+                                 readOnly={true}></FormRemarks> : null}
+            {data ? <FormRemarks value={data.mergeOrder.customerServiceMark}
+                                 title={"客服备注"}
+                                 readOnly={true}></FormRemarks> : null}
         </Row>;
     }
 }

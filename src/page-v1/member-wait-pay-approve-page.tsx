@@ -8,7 +8,7 @@ import {
     FormOrderRelation,
     FormOrderAddressee,
     FormOrderDeclare,
-    FormPackageRequirement,
+    FormRemarks,
     FormPackageDetail,
     FormOrderChannel,
     FormDeliveredDetail,
@@ -69,7 +69,7 @@ export class MemberWaitPayApprovePage extends React.Component<MemberWaitPayAppro
             <FormOrderAddressee selectContact={new ModelNameSpace.AddressModel(data)} readOnly></FormOrderAddressee>
             <FormOrderDeclare data={mergeDetailList} readOnly></FormOrderDeclare>
             <FormOrderChannel ids={[_mergeOrder['CustomerChooseChannelID']]} readOnly></FormOrderChannel>
-            <FormPackageRequirement value={_mergeOrder['CustomerMark']} readOnly></FormPackageRequirement>
+            <FormRemarks value={_mergeOrder['CustomerMark']} readOnly></FormRemarks>
             <FormPackageDetail readOnly></FormPackageDetail>
             <FormDeliveredDetail form={form} readOnly></FormDeliveredDetail>
             <FormPayment></FormPayment>

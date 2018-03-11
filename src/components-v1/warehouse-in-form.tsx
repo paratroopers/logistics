@@ -166,15 +166,16 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>
-                        <FormItem {...formItemLayout} label={"初始重量(kg)"}>
+                        <FormItem {...formItemLayout} label={"初始重量"}>
                             {getFieldDecorator("inWeight", {
                                 rules: [{required: required, message: '请填写重量!'}],
                             })(<FormInputNumber readonly={readonly} step={0.01} style={{width: '100%'}}
+                                                suffixText="kg"
                                                 placeholder="初始重量"/>)}
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>
-                        <FormItem {...formItemLayout} label={"初始体积(cm)"}>
+                        <FormItem {...formItemLayout} label={"初始体积(cm³)"}>
                             <Row gutter={16} type="flex" justify="center" align="top" style={{minWidth: "200px"}}>
                                 <Col lg={6} sm={12}>
                                     {Constants.minSM ? <span>体积：</span> : null}

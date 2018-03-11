@@ -2,17 +2,19 @@ import * as React from 'react';
 import {Row,Col,Input} from 'antd';
 import {FormSettingGroup} from './form-setting-group';
 
-export interface FormPackageRequirementProps {
+export interface FormRemarksProps {
     readOnly?: boolean;
     value?: string;
     onChange?: (v: string) => void;
+    title?:string;
+    minRows?:number;
 }
 
-export interface FormPackageRequirementStates {
+export interface FormRemarksStates {
     value?:string;
 }
 
-export class FormPackageRequirement extends React.Component<FormPackageRequirementProps, FormPackageRequirementStates> {
+export class FormRemarks extends React.Component<FormRemarksProps, FormRemarksStates> {
     constructor(props, context) {
         super(props, context);
         this.state= {
@@ -28,15 +30,15 @@ export class FormPackageRequirement extends React.Component<FormPackageRequireme
 
     render() {
         const topThis = this;
-        const {props: { onChange, readOnly},state:{value}} = topThis;
-        return <FormSettingGroup title={"打包要求"}>
-            <Row>
+        const {props: {onChange, readOnly, title,minRows}, state: {value}} = topThis;
+        return <FormSettingGroup title={title ? title : "备注"}>
+            <Row className="form-remarks">
                 <Col span={24} style={{marginBottom: 12}}>备注：</Col>
                 <Col span={24} style={{marginBottom: 24}}>
-                    {!readOnly ? <Input.TextArea value={value} onChange={(e) => {
-                        const v=e.target.value;
-                        topThis.setState({value:v},()=>{
-                            if(onChange)
+                    {!readOnly ? <Input.TextArea autosize={{minRows:minRows?minRows:6}} value={value} onChange={(e) => {
+                        const v = e.target.value;
+                        topThis.setState({value: v}, () => {
+                            if (onChange)
                                 onChange(v);
                         })
                     }} placeholder={''}></Input.TextArea> : <span>{value}</span>}

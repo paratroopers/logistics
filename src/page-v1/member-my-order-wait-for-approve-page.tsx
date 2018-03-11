@@ -4,7 +4,6 @@ import {Row, Tooltip, Icon} from 'antd';
 import {PathConfig} from '../config/pathconfig';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
-const {RangePicker} = DatePicker;
 import {ModelNameSpace} from "../model/model";
 import {RequestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
@@ -18,6 +17,7 @@ import {APINameSpace} from "../model/api";
 import {isArray, isNullOrUndefined, isUndefined} from "util";
 import * as moment from 'moment';
 import {FormFileViewer} from "../components-v1/form-file-viewer";
+const {RangePicker} = DatePicker;
 
 /// 待审核列表
 interface MemberMyOrderWaitForApprovePageProps {
@@ -238,7 +238,7 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
                                                      rowKey={"ID"}
                                                      loading={loading}
                                                      pagination={pagination}
-                                                     expandedRowRender={record => <p style={{ margin: 0 }}>{record.customerServiceMark}</p>}
+                                                     rowSelection={rowSelection}
                                                      dataSource={listData}></MemberMyOrderWaitForApprovePageTable>;
     }
 
