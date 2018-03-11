@@ -56,7 +56,6 @@ export class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrder
 
         APINameSpace.CustomerOrderAPI.GetCustomerOrderMergeItem(request).then((result: ResponseNameSpace.GetCustomerOrderMergeDetailResponse) => {
             if (result.Status === 0) {
-                console.log(result);
                 topThis.setState({data: result.Data});
             }
         });

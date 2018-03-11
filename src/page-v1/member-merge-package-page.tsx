@@ -146,19 +146,15 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
     renderContent() {
         const {state: {orderInfo, data}, props: {form}} = this;
         return <Layout className="merge-package-page view-content-page">
-            <Layout.Header className="merge-package-page-header view-content-page-header">
-                <ContentHeaderControl title="待打包"></ContentHeaderControl>
-            </Layout.Header>
+            <ContentHeaderControl title="待打包"></ContentHeaderControl>
             <Layout.Content>
                 <Row justify="start" type="flex" style={{margin: '10px 0px 10px 0px'}}>
                     <Col span={24}>
-                        <div className="view-content-page-header-title">
-                            <Icon type="tag" style={{color: '#f2804b', marginRight: '15px'}}/>
-                            <span>单号：201801270052</span>
-                        </div>
                         <div className="view-content-page-header-button">
                             <Button type="primary" style={{marginRight: "10px"}} onClick={this.onSubmit.bind(this)}>确认合并打包</Button>
-                            <Button type="primary">取消</Button>
+                            <Button type="primary" onClick={()=>{
+                                hashHistory.goBack();
+                            }}>取消</Button>
                         </div>
                     </Col>
                 </Row>
