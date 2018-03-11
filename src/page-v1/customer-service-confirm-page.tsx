@@ -223,10 +223,17 @@ class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmP
         const items: FormAdvancedItemModel[] = [
             {
                 defaultDisplay: true,
-                fieldName: "customerOrderMerge",
+                fieldName: "customerOrderMergeNo",
                 displayName: "客户合并订单号",
                 control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客户合并订单号"/>,
-                mobileShow: true
+                mobileShow: true,
+                layout: {
+                    xs: 15,
+                    sm: 12,
+                    md: 12,
+                    lg: 6,
+                    xl: 6
+                }
             }
 
         ];
@@ -246,5 +253,4 @@ class CustomerServiceConfirmPage extends React.Component<CustomerServiceConfirmP
 }
 
 
-export default Form.create
-< any > ()(CustomerServiceConfirmPage);
+export default Form.create<any>()(CustomerServiceConfirmPage);
