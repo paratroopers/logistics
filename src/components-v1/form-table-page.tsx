@@ -3,7 +3,7 @@ import {hashHistory} from 'react-router';
 import {Icon, Row} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {ModelNameSpace} from "../model/model";
-import {requestNameSpace} from "../model/request";
+import {RequestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
 import {SelectType, Constants} from "../util/common";
 import {FormControl} from "../components-v1/form-control";
@@ -74,7 +74,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
     /** 获取数据源*/
     public async loadData<T>(values?: T) {
         const {state: {pageIndex, pageSize}} = this;
-        let request: requestNameSpace.GetCustomerOrderMergeRequest = {
+        let request: RequestNameSpace.GetCustomerOrderMergeRequest = {
             pageIndex: pageIndex,
             pageSize: pageSize
         }
