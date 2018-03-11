@@ -289,8 +289,8 @@ export namespace RequestNameSpace {
         customerOrderList?: { customerOrderID: string }[];
         /** 产品申报列表*/
         productList?: ModelNameSpace.CustomerOrderMergeProductModel[];
-        currentStep?: string,
-        currentStatus?: string,
+        currentStep?: number,
+        currentStatus?: number,
         isAdmin?: boolean;
     }
 

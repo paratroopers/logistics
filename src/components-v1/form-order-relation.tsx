@@ -35,7 +35,7 @@ export class FormOrderRelation extends React.Component<FormOrderRelationProps, F
     renderTable() {
         const colums: CommonColumnProps<ModelNameSpace.CustomerOrderModel>[] = [
             {
-                title: '客服订单号',
+                title: '客户订单号',
                 dataIndex: 'CustomerOrderNo',
                 layout: ColumnLayout.LeftTop,
                 render: (txt) => {
@@ -64,25 +64,18 @@ export class FormOrderRelation extends React.Component<FormOrderRelationProps, F
                     return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
                 }
             }, {
-                title: '初始重量',
+                title: '初始重量(kg)',
                 dataIndex: 'InWeight',
-                hidden: Constants.minSM,
-                render: (txt) => {
-                    return <span>{txt}kg</span>
-                }
+                hidden: Constants.minSM
             }, {
-                title: '初始体积',
+                title: '初始体积(cm³)',
                 dataIndex: 'InVolume',
-                hidden: Constants.minSM,
-                render: (txt) => {
-                    return <span>{txt}cm³</span>
-                }
+                hidden: Constants.minSM
             }
         ]
         return <FormOrderRelationTable columns={colums}
                                        rowKey={"ID"}
                                        pagination={false}
-                                       expandedRowRender={record => <p style={{ margin: 0 }}>{record.WarehouseAdminRemark}</p>}
                                        dataSource={this.state.data}></FormOrderRelationTable>
     }
 

@@ -13,7 +13,7 @@ import {
     FormOrderAddressee,
     FormOrderDeclare,
     FormOrderChannel,
-    FormPackageRequirement,
+    FormRemarks,
     FormPackageDetail
 } from "../components-v1/all-components-export";
 import {isNullOrUndefined} from "util";
@@ -108,7 +108,7 @@ export class WarehousePackageApprovePage extends React.Component<WarehousePackag
             <FormOrderAddressee selectContact={address}></FormOrderAddressee>
             <FormOrderDeclare {...(data ? {data: data.mergeDetailList} : {loading: true})} ></FormOrderDeclare>
             {data ? <FormOrderChannel ids={[data.mergeOrder.CustomerChooseChannelID]}></FormOrderChannel> : null}
-            {data ? <FormPackageRequirement value={data.mergeOrder.CustomerMark} ></FormPackageRequirement> : null}
+            {data ? <FormRemarks value={data.mergeOrder.CustomerMark} ></FormRemarks> : null}
             {data ?<FormPackageDetail></FormPackageDetail>: null}
         </Row>;
     }

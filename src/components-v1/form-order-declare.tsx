@@ -92,8 +92,8 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
         Util.each(data, d => {
             if (d.ID === record.ID)
                 d[fieldName] = value;
-            d.total = (d.declareUnitPrice * d.productCount).toFixed(2);
-            total += Number(d.total);
+            d.declareTotal = (d.declareUnitPrice * d.productCount).toFixed(2);
+            total += Number(d.declareTotal);
         });
         this.setState({total: total.toFixed(2), data: data}, () => {
             if (onChange)
@@ -190,7 +190,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
             }, {
                 title: 'HSCode',
                 dataIndex: 'HSCode',
-                render: (txt, record,index) => {
+                render: (txt, record, index) => {
                     return !this.props.readOnly && !Constants.minSM ?
                         <Form.Item>{getFieldDecorator(`productList[${index}].HSCode`, {
                             initialValue: txt,
@@ -282,10 +282,13 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                         }
                     </Form.Item>
                     <Form.Item label="货币单位">
+                        <span>美元</span>
+                    </Form.Item>
+                    <Form.Item label="HSCode">
 
                         {
                             getFieldDecorator('HSCode', {})
-                            (<Input disabled/>)
+                            (<Input/>)
                         }
                     </Form.Item>
                     <Form.Item label="数量">

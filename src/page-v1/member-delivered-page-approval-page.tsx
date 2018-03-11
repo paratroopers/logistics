@@ -7,7 +7,7 @@ import {
     FormOrderRelation,
     FormOrderAddressee,
     FormOrderDeclare,
-    FormPackageRequirement,
+    FormRemarks,
     FormOrderChannel
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
@@ -79,7 +79,7 @@ export class MemberDeliveredPageApprovalPage extends React.Component<MemberDeliv
             <FormOrderAddressee selectContact={new ModelNameSpace.AddressModel(data)} readOnly></FormOrderAddressee>
             <FormOrderDeclare data={mergeDetailList}></FormOrderDeclare>
             <FormOrderChannel ids={[_mergeOrder['CustomerChooseChannelID']]}></FormOrderChannel>
-            <FormPackageRequirement value={_mergeOrder['CustomerMark']} readOnly></FormPackageRequirement>
+            <FormRemarks value={_mergeOrder['CustomerMark']} readOnly></FormRemarks>
         </Layout.Content>
     }
 

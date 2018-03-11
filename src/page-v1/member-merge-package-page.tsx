@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps, hashHistory} from 'react-router';
-import {Layout, Row, Col, Button, Icon, message, Form} from 'antd';
+import {Layout, Row, Col, Button, message, Form} from 'antd';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import * as moment from 'moment';
@@ -13,12 +13,12 @@ import {
     FormOrderAddressee,
     FormOrderDeclare,
     FormOrderChannel,
-    FormPackageRequirement
+    FormRemarks
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {RequestNameSpace} from '../model/request';
-import {Context} from "../util/common";
-import {isArray} from "util";
+import {Context,Constants} from "../util/common";
+import {isArray, isNullOrUndefined} from "util";
 import {ResponseNameSpace} from '../model/response';
 
 export interface MemberMergePackagePageProps extends RouteComponentProps<any, any>, FormComponentProps {
@@ -87,9 +87,16 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
             message.warning("请填写货品申报信息!");
             return;
         }
+
         /** 验证渠道信息是否存在*/
         if (!isArray(channelList) || channelList.length === 0) {
             message.warning("请选择渠道!");
+            return;
+        }
+
+        /** 验证渠道信息是否存在*/
+        if (isNullOrUndefined(CustomerMark)||CustomerMark==="") {
+            message.warning("请填写打包要求!");
             return;
         }
 
@@ -124,8 +131,8 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
                     }),
                     /** 产品申报列表*/
                     productList: values.productList,
-                    currentStep: "1",
-                    currentStatus: "0",
+                    currentStep: Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.WaitPackage),
+                    currentStatus: ModelNameSpace.OrderStatusEnum.StatusA,
                     isAdmin: false
                 }
                 APINameSpace.CustomerOrderAPI.CustomerOrderMergeAdd(request).then((result: ResponseNameSpace.BaseResponse) => {
@@ -165,9 +172,9 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
                 <FormOrderChannel onChange={(channelData) => {
                     this.setState({channelList: channelData});
                 }}></FormOrderChannel>
-                <FormPackageRequirement onChange={(mark) => {
+                <FormRemarks title={"打包要求"} onChange={(mark) => {
                     this.setState({CustomerMark: mark})
-                }}></FormPackageRequirement>
+                }}></FormRemarks>
             </Layout.Content>
         </Layout>
     }

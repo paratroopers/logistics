@@ -9,7 +9,7 @@ import {
     FormOrderRelation,
     FormOrderAddressee,
     FormOrderDeclare,
-    FormPackageRequirement,
+    FormRemarks,
     FormPackageDetail,
     FormOrderChannel,
     FormDeliveredDetail,
@@ -51,7 +51,7 @@ export class MemberWaitPayViewPage extends React.Component<MemberWaitPayViewPage
             <FormOrderAddressee></FormOrderAddressee>
             <FormOrderDeclare></FormOrderDeclare>
             <FormOrderChannel></FormOrderChannel>
-            <FormPackageRequirement></FormPackageRequirement>
+            <FormRemarks></FormRemarks>
             <FormPackageDetail></FormPackageDetail>
             <FormDeliveredDetail form={form}></FormDeliveredDetail>
         </Layout.Content>

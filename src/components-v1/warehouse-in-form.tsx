@@ -163,21 +163,23 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>
-                        <FormItem {...formItemLayout} label={"初始重量(kg)"}>
+                        <FormItem {...formItemLayout} label={"初始重量"}>
                             {getFieldDecorator("inWeight", {
                                 rules: [{required: required, message: '请填写重量!'}],
                             })(<FormInputNumber readonly={readonly} step={0.01} style={{width: '100%'}}
+                                                suffixText="kg"
                                                 placeholder="初始重量"/>)}
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>
-                        <FormItem {...formItemLayout} label={"初始体积(cm)"}>
+                        <FormItem {...formItemLayout} label={"初始体积(cm³)"}>
                             <Row gutter={16} type="flex" justify="center" align="top" style={{minWidth: "200px"}}>
                                 <Col span={8}>
                                     {Constants.minSM ? <span>长度：</span> : null}
                                     {getFieldDecorator('inLength', {
                                         rules: [{required: required, message: '请填写长度!'}],
                                     })(<FormInputNumber readonly={readonly} style={{width: '100%'}} min={0}
+                                                        suffixText="cm"
                                                         placeholder="长（cm）"/>)}
                                     {Constants.minSM ? <span>cm</span> : null}
                                 </Col>
@@ -186,6 +188,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                                     {getFieldDecorator('inWidth', {
                                         rules: [{required: required, message: '请填写宽度!'}],
                                     })(<FormInputNumber readonly={readonly} style={{width: '100%'}} min={0}
+                                                        suffixText="cm"
                                                         placeholder="宽（cm）"/>)}
                                     {Constants.minSM ? <span>cm</span> : null}
                                 </Col>
@@ -194,6 +197,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                                     {getFieldDecorator('inHeight', {
                                         rules: [{required: required, message: '请填写高度!'}],
                                     })(<FormInputNumber readonly={readonly} style={{width: '100%'}} min={0}
+                                                        suffixText="cm"
                                                         placeholder="高（cm）"/>)}
                                     {Constants.minSM ? <span>cm</span> : null}
                                 </Col>

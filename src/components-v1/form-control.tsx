@@ -192,7 +192,7 @@ export namespace FormControl {
                 style={style ? style : {width: '100%'}}>
                 {data.map(d => <Option key={d.value}>{d.text}</Option>)}
             </Select> : <label style={{width: '100%'}}>{isArray(value) ? value.map((item) => {
-                return item.label + ";"
+                return item.label;
             }) : ""}</label>;
         }
 

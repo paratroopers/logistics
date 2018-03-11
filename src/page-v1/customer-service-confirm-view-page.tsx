@@ -9,7 +9,7 @@ import {
     FormOrderRelation,
     FormOrderAddressee,
     FormOrderDeclare,
-    FormPackageRequirement,
+    FormRemarks,
     FormOrderChannel
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
@@ -49,7 +49,7 @@ export class CustomerServiceConfirmViewPage extends React.Component<CustomerServ
             <FormOrderAddressee readOnly={true}></FormOrderAddressee>
             <FormOrderDeclare readOnly={true}></FormOrderDeclare>
             <FormOrderChannel readOnly={true}></FormOrderChannel>
-            <FormPackageRequirement readOnly={true}></FormPackageRequirement>
+            <FormRemarks readOnly={true}></FormRemarks>
         </Layout.Content>
     }
 
