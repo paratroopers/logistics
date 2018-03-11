@@ -73,7 +73,6 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
         key: 'Tel',
     }, {
         title: '操作',
-        fixed: 'right',
         render: (val, record, index) => {
             const menu: FormTableOperationModel[] = [
                 {
@@ -109,10 +108,7 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
     rowSelection: TableRowSelection<any> = {
         type: "radio",
         onChange: (selectedRowKeys, selectedRows) => {
-            // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             this.setState({selectRow: selectedRows[0]});
-
-            console.log(this.state.selectRow);
         },
         getCheckboxProps: record => ({
             disabled: record.name === 'Disabled User', // Column configuration not to be checked
