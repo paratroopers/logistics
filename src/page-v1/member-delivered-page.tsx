@@ -10,7 +10,7 @@ import {ModelNameSpace} from "../model/model";
 import {requestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
 import {PathConfig} from "../config/pathconfig";
-import {SelectType} from "../util/common";
+import {SelectType, Constants} from "../util/common";
 import {FormControl} from "../components-v1/form-control";
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import {ResponseNameSpace} from "../model/response";
@@ -19,8 +19,10 @@ import {APINameSpace} from "../model/api";
 import {ClickParam} from "antd/lib/menu";
 import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
 import {FormComponentProps} from "antd/lib/form";
+import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
+import FormTableHeader from '../components-v1/form-table-header';
 import {isUndefined} from "util";
-
+import * as moment from 'moment';
 
 /// 待审核列表
 interface MemberDeliveredPageProps extends FormComponentProps {
@@ -40,6 +42,10 @@ interface MemberMyOrderWaitForApprovePageStates {
     totalCount: number
     /** 列表是否正在查询*/
     loading?: boolean;
+}
+
+export class MemberDeliveredPageTable extends CommonTable<ModelNameSpace.WarehouseListModel> {
+
 }
 
 @withRouter
@@ -102,37 +108,55 @@ export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProp
             onChange: topThis.onSelectChange,
         };
 
-        const columns: ColumnProps<ModelNameSpace.WarehouseListModel>[] = [{
+        const columns: CommonColumnProps<ModelNameSpace.WarehouseListModel>[] = [{
             title: "客户订单号",
             dataIndex: 'MergeOrderNo',
-            fixed: 'left'
+            fixed: 'left',
+            layout: ColumnLayout.LeftTop
         }, {
             title: "渠道",
-            dataIndex: 'expressNo'
+            dataIndex: 'expressNo',
+            hidden: Constants.minSM
         }, {
             title: "发往国家",
-            dataIndex: 'expressNo'
+            dataIndex: 'country',
+            hidden: Constants.minSM
         }, {
             title: "入库总体积",
-            dataIndex: 'MemeberCode'
+            dataIndex: 'MemeberCode',
+            hidden: Constants.minSM
         }, {
             title: "入库总重量",
-            dataIndex: 'expressTypeName'
+            dataIndex: 'expressTypeName',
+            hidden: Constants.minSM
         }, {
             title: "申报总额",
-            dataIndex: 'CustomerServiceName'
+            dataIndex: 'CustomerServiceName',
+            render: (txt, record) => {
+                return <span>{new String().concat((Constants.minSM ? '申报总额：' : ''), txt)}</span>;
+            },
+            layout: ColumnLayout.RightBottom
         }, {
             title: "客服备注",
             dataIndex: 'WareHouseName'
         }, {
             title: "状态",
-            dataIndex: 'currentStep'
+            dataIndex: 'currentStatus',
+            layout: ColumnLayout.RightTop,
+            render: (txt) => {
+                return <span>{Constants.getOrderStatusByString(ModelNameSpace.OrderTypeEnum.WaitPay, txt)}</span>
+            }
         }, {
             title: "创建时间",
-            dataIndex: 'InWareHouseTime'
+            dataIndex: 'InWareHouseTime',
+            render: (txt) => {
+                return moment(txt).format('YYYY-MM-DD HH:mm');
+            },
+            layout: ColumnLayout.LeftBottom
         }, {
             title: '操作',
             fixed: 'right',
+            layout: ColumnLayout.Option,
             render: (val, record, index) => {
                 const menu: FormTableOperationModel[] = [
                     {
@@ -181,17 +205,16 @@ export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProp
             }
         };
 
-        return <Table columns={columns}
-                      loading={loading}
-                      style={{padding: '12px'}}
-                      pagination={pagination}
-                      title={(currentPageData: Object[]) => {
-                          //
-                          return <Alert message={"总计有 " + totalCount + "项待审批"} type="info" showIcon></Alert>;
-                      }}
-                      rowSelection={rowSelection}
-                      dataSource={listData}
-                      locale={{emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>}}/>;
+        return <MemberDeliveredPageTable columns={columns}
+                                         rowKey={'ID'}
+                                         loading={loading}
+                                         style={{padding: '12px'}}
+                                         pagination={pagination}
+                                         rowSelection={rowSelection}
+                                         dataSource={listData}
+                                         locale={{
+                                             emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>
+                                         }}/>;
     }
 
     onClickSearch = (values: any) => {
@@ -244,6 +267,7 @@ export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProp
             <FormAdvancedSearch
                 formAdvancedItems={topThis.renderFormAdvancedItems()}
                 onClickSearch={topThis.onClickSearch.bind(this)}></FormAdvancedSearch>
+            <FormTableHeader title={`总计有${this.state.totalCount}项待审批`}></FormTableHeader>
             {this.renderTable()}
         </Row>;
     }

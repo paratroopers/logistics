@@ -21,6 +21,7 @@ import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/com
 import FormTableHeader from '../components-v1/form-table-header';
 import {isUndefined} from "util";
 import * as moment from 'moment';
+
 const {RangePicker} = DatePicker;
 
 /// 待审核列表
@@ -76,7 +77,7 @@ export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, M
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
         const request: requestNameSpace.GetCustomerOrderMergeRequest = {
-            currentStep:Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.WaitPay),
+            currentStep: Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.WaitPay),
             channelID: !isUndefined(searchaValues.ChannelID) ? searchaValues.ChannelID.key : 0,
             expressNo: !isUndefined(searchaValues.expressNo) ? searchaValues.expressNo : "",
             customerChooseChannelID: !isUndefined(searchaValues.ChannelID) ? searchaValues.ChannelID : 0,
@@ -142,9 +143,9 @@ export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, M
             title: "状态",
             dataIndex: 'currentStatus',
             layout: ColumnLayout.RightTop,
-        render:(txt)=> {
-            return <span>{Constants.getOrderStatusByString(ModelNameSpace.OrderTypeEnum.WaitPay, txt)}</span>
-        }
+            render: (txt) => {
+                return <span>{Constants.getOrderStatusByString(ModelNameSpace.OrderTypeEnum.WaitPay, txt)}</span>
+            }
         }, {
             title: "创建时间",
             dataIndex: 'Created',
