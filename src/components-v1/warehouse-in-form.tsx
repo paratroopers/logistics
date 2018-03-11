@@ -25,6 +25,9 @@ export interface WarehouseInFormProps extends FormComponentProps {
     Data?: ModelNameSpace.WarehouseListModel;
     /** 类型*/
     type?: 'add' | 'edit' | 'view';
+    /** 是否显示操作按钮*/
+    isHidenBtn?:boolean;
+    style?: React.CSSProperties;
 }
 
 export interface WarehouseInFormStates {
@@ -94,7 +97,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
 
     render() {
         const topThis = this;
-        const {props: {form: {getFieldDecorator}, type}} = topThis;
+        const {props: {form: {getFieldDecorator}, type, isHidenBtn,style}} = topThis;
 
         /** 控件栅格*/
         const spanLayout: ColProps = {
@@ -121,7 +124,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
             }
         } : null;
         return (
-            <Form className="warehouse-in-add-form" layout={type === "view" ? "inline" : "vertical"}
+            <Form className="warehouse-in-add-form" style={style} layout={type === "view" ? "inline" : "vertical"}
                   onSubmit={topThis.onSubmit.bind(this)}>
                 <Row gutter={16}>
                     <Col {...spanLayout}>
@@ -252,14 +255,13 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                             hashHistory.goBack();
                         }}>取消</Button>
                     </Col>
-                </Row> : null}
-                {!readonly ? null : <Row>
-                    <Col span={24}>
+                </Row> : <Row>
+                    {!isHidenBtn ? <Col span={24}>
                         <Button type="primary" onClick={() => {
                             /** 返回路由*/
                             hashHistory.goBack();
                         }}>取消</Button>
-                    </Col>
+                    </Col> : null}
                 </Row>}
             </Form>
         );
