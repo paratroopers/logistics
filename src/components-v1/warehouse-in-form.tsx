@@ -257,5 +257,4 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
     }
 }
 
-export default Form.create
-< any > ()(WarehouseInForm);
+export default Form.create<any>()(WarehouseInForm);
