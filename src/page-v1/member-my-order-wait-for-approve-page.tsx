@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter, Link} from 'react-router';
-import {Row, Tooltip, Icon} from 'antd';
+import {Row, Tooltip, Icon, message} from 'antd';
 import {PathConfig} from '../config/pathconfig';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
@@ -17,7 +17,6 @@ import {APINameSpace} from "../model/api";
 import {isArray, isNullOrUndefined, isUndefined} from "util";
 import * as moment from 'moment';
 import {FormFileViewer} from "../components-v1/form-file-viewer";
-const {RangePicker} = DatePicker;
 import {FormStatusSelect} from "../components-v1/form-status-select";
 
 
@@ -81,26 +80,26 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
     }
 
     /** 获取状态统计*/
-    loadStatus(){
-        const topThis=this;
+    loadStatus() {
+        const topThis = this;
 
-        const requestA:RequestNameSpace.GetOrderStatusCountRequest={
-            currentStep:Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderConfirm),
-            isAdmin:false
+        const requestA: RequestNameSpace.GetOrderStatusCountRequest = {
+            currentStep: Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderConfirm),
+            isAdmin: false
         }
-        APINameSpace.OrderCommonAPI.GetOrderStatusCount(requestA).then((result: ResponseNameSpace.BaseResponse)=>{
-            if(result.Status===0){
-                topThis.setState({OrderConfirmCount:Number.parseInt(result.Data)});
+        APINameSpace.OrderCommonAPI.GetOrderStatusCount(requestA).then((result: ResponseNameSpace.BaseResponse) => {
+            if (result.Status === 0) {
+                topThis.setState({OrderConfirmCount: Number.parseInt(result.Data)});
             }
         });
 
-        const requestB:RequestNameSpace.GetOrderStatusCountRequest={
-            currentStep:Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderMerge),
-            isAdmin:false
+        const requestB: RequestNameSpace.GetOrderStatusCountRequest = {
+            currentStep: Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderMerge),
+            isAdmin: false
         }
-        APINameSpace.OrderCommonAPI.GetOrderStatusCount(requestB).then((result: ResponseNameSpace.BaseResponse)=>{
-            if(result.Status===0){
-                topThis.setState({OrderMergeCount:Number.parseInt(result.Data)});
+        APINameSpace.OrderCommonAPI.GetOrderStatusCount(requestB).then((result: ResponseNameSpace.BaseResponse) => {
+            if (result.Status === 0) {
+                topThis.setState({OrderMergeCount: Number.parseInt(result.Data)});
             }
         });
     }
@@ -112,13 +111,10 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
 
 
         const request: RequestNameSpace.GetCustomerOrderMergeRequest = {
-            currentStep: Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.WaitApprove),
-            currentStatus: !isUndefined(searchaValues.currentStatus) ? searchaValues.currentStatus.key : "",
+            currentStep: !isNullOrUndefined(searchaValues.currentStatus) ? searchaValues.currentStatus :Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.WaitApprove),
             expressNo: isArray(searchaValues.expressNo) && !isNullOrUndefined(searchaValues.expressNo[0]) ? searchaValues.expressNo[0].key : "",
             customerOrderMergeNo: isArray(searchaValues.customerOrderMergeNo) && !isNullOrUndefined(searchaValues.customerOrderMergeNo[0]) ? searchaValues.customerOrderMergeNo[0].label : "",
-            customerChooseChannelID: isArray(searchaValues.channel) && !isNullOrUndefined(searchaValues.channel[0]) ? searchaValues.channel[0].key : "",
-            orderMergeTimeBegin: !isUndefined(searchaValues.Created) ? searchaValues.Created[0].format() : "",
-            orderMergeTimeEnd: !isUndefined(searchaValues.Created) ? searchaValues.Created[1].format() : "",
+            customerChooseChannelID: !isNullOrUndefined(searchaValues.channel) ? searchaValues.channel.key : "",
             pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize,
             isAdmin: false
@@ -147,15 +143,19 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
 
         APINameSpace.AttachmentsAPI.GetAttachmentItems(request).then((result: ResponseNameSpace.GetAttachmentItemsResponse) => {
             if (result.Status === 0) {
-                topThis.setState({items: result.Data,}, () => {
-                    topThis.changeFormFileViewerVisible(true);
-                });
+                if (isArray(result.Data) && result.Data.length > 0) {
+                    topThis.setState({items: result.Data,}, () => {
+                        topThis.changeFormFileViewerVisible(true);
+                    });
+                } else {
+                    message.warning("提示：暂无附件");
+                }
             }
         });
     }
 
     /** 点击搜索*/
-    onClickSearch(values: any){
+    onClickSearch(values: any) {
         this.loadData(1, 10, values);
         this.setState({selectVaules: values});
     }
@@ -278,20 +278,7 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
                 displayName: "状态",
                 control: <FormStatusSelect type={ModelNameSpace.OrderTypeEnum.WaitApprove}
                                            placeholder="搜索订单状态"></FormStatusSelect>
-            }, {
-                defaultDisplay: true,
-                fieldName: "Created",
-                displayName: "创建时间",
-                layout: {
-                    xs: 15,
-                    sm: 12,
-                    md: 12,
-                    lg: 6,
-                    xl: 6
-                },
-                control: <RangePicker></RangePicker>
             }
-
         ];
         return items;
     }

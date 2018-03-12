@@ -60,7 +60,7 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
             weight: 0,
             volume: 0,
             count: data.length,
-            created: moment().format('YYYY-MM-DD')
+            created: moment().format('YYYY-MM-DD HH:mm')
         };
         data.forEach(d => {
             orderInfo.weight += d.InWeight;

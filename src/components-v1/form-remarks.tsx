@@ -33,7 +33,6 @@ export class FormRemarks extends React.Component<FormRemarksProps, FormRemarksSt
         const {props: {onChange, readOnly, title, minRows}, state: {value}} = topThis;
         return <FormSettingGroup title={title ? title : "备注"}>
             <Row className="form-remarks">
-                {!readOnly ? <Col span={24} style={{marginBottom: 12}}>备注：</Col> : null}
                 <Col span={24} style={{marginBottom: 24}}>
                     {!readOnly ?
                         <Input.TextArea autosize={{minRows: minRows ? minRows : 6}} value={value} onChange={(e) => {
