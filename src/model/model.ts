@@ -12,6 +12,7 @@ export namespace ModelNameSpace {
         Created?: Date;
         Modified?: Date;
     }
+
     //endregion
 
     //region 用户登录，注册，找回密码，用户相关信息 定义区，
@@ -77,6 +78,7 @@ export namespace ModelNameSpace {
         name: string;
         type: number;
     }
+
     //endregion
 
     //region 系统模块定义区
@@ -188,10 +190,12 @@ export namespace ModelNameSpace {
     }
 
     /** 新建入库*/
-    export interface WarehouseInModel extends CustomerOrderModel {}
+    export interface WarehouseInModel extends CustomerOrderModel {
+    }
 
     /** 入库列表*/
-    export interface WarehouseListModel extends CustomerOrderModel {}
+    export interface WarehouseListModel extends CustomerOrderModel {
+    }
 
     /** 客户订单 客户合并订单*/
     export interface MemberOrderStatusModel extends BaseModel {
@@ -250,25 +254,25 @@ export namespace ModelNameSpace {
     export enum OrderTypeEnum {
         /** 仓库管理-订单入库*/
         OrderIn = 0,
-            /** 我的订单-待打包*/
+        /** 我的订单-待打包*/
         WaitPackage = 1,
-            /** 我的订单-待审核*/
+        /** 我的订单-待审核*/
         WaitApprove = 2,
-            /** 我的订单-待付款*/
+        /** 我的订单-待付款*/
         WaitPay = 3,
-            /** 客服管理-订单确认*/
+        /** 客服管理-订单确认*/
         OrderConfirm = 4,
-            /** 仓库管理-合并打包*/
+        /** 仓库管理-合并打包*/
         OrderMerge = 5,
-            /** 仓库管理-订单出库*/
+        /** 仓库管理-订单出库、我的订单-已发货*/
         OrderOut = 6
     }
 
     /** 自定义模块状态*/
-    export enum OrderStatusEnum{
-        StatusA=0,
-        StatusB=1,
-        StatusC=2
+    export enum OrderStatusEnum {
+        StatusA = 0,
+        StatusB = 1,
+        StatusC = 2
     }
 
     /** 注册类型*/

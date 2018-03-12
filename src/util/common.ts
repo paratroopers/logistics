@@ -15,8 +15,8 @@ export enum SelectType {
     ExpressNo = 5,
     channel = 6,
     Agent = 7,
-    CustomerOrderMerge =8,
-    CustomerOrderMergeWaitForApproveStep =9
+    CustomerOrderMerge = 8,
+    CustomerOrderMergeWaitForApproveStep = 9
 }
 
 export interface Base {
@@ -132,47 +132,35 @@ export class Constants {
     // OrderOut 	6	仓库管理-订单出库	step=4、isAdmin=true	                        0待确认、1已确认
 
     /** 阶段订单Step*/
-    static getOrderStep(typeEnum:ModelNameSpace.OrderTypeEnum){
+    static getOrderStep(typeEnum: ModelNameSpace.OrderTypeEnum = ModelNameSpace.OrderTypeEnum.OrderConfirm, isGetAdmin?: boolean): any {
         const {OrderTypeEnum} = ModelNameSpace;
-        let result = 0;
-        switch (typeEnum) {
-            case OrderTypeEnum.OrderIn:
-                result = 0;
-                break;
-            case OrderTypeEnum.WaitPackage:
-                result = 1;
-                break;
-            case OrderTypeEnum.WaitApprove:
-                result = 12;
-                break;
-            case OrderTypeEnum.OrderConfirm:
-                result = 1;
-                break;
-            case OrderTypeEnum.OrderMerge:
-                result = 2;
-                break;
-            case OrderTypeEnum.WaitPay:
-                result = 3;
-                break;
-            case OrderTypeEnum.OrderOut:
-                result = 4;
-                break;
-        }
-        return result;
+        const EnumStep = {
+            [OrderTypeEnum.OrderIn]: [0, true],
+            [OrderTypeEnum.WaitPackage]: [1, false],
+            [OrderTypeEnum.WaitApprove]: [12, false],
+            [OrderTypeEnum.OrderConfirm]: [1, true],
+            [OrderTypeEnum.OrderMerge]: [2, true],
+            [OrderTypeEnum.WaitPay]: [3, false],
+            [OrderTypeEnum.OrderOut]: [4, true]
+        };
+        return isGetAdmin ? {
+            currentStep: EnumStep[typeEnum][0],
+            isAdmin: EnumStep[typeEnum][1]
+        } : EnumStep[typeEnum][0];
     }
 
     /** 阶段订单状态解析*/
-    static getOrderStatusByEnum(typeEnum:ModelNameSpace.OrderTypeEnum,statusEnum:ModelNameSpace.OrderStatusEnum) {
+    static getOrderStatusByEnum(typeEnum: ModelNameSpace.OrderTypeEnum, statusEnum: ModelNameSpace.OrderStatusEnum) {
         return Global.intl.formatMessage({id: "customer.order.status." + typeEnum.toString() + "." + statusEnum.toString()});
     }
 
     /** 阶段订单状态解析*/
-    static getOrderStatusByString(typeEnum:ModelNameSpace.OrderTypeEnum,statusEnum:string){
+    static getOrderStatusByString(typeEnum: ModelNameSpace.OrderTypeEnum, statusEnum: string) {
         return Global.intl.formatMessage({id: "customer.order.status." + typeEnum.toString() + "." + statusEnum.toString()});
     }
 
     /** 阶段订单状态解析*/
-    static getOrderStatusByNumber(typeEnum:ModelNameSpace.OrderTypeEnum,statusEnum:number){
+    static getOrderStatusByNumber(typeEnum: ModelNameSpace.OrderTypeEnum, statusEnum: number) {
         return Global.intl.formatMessage({id: "customer.order.status." + typeEnum.toString() + "." + statusEnum.toString()});
     }
 }

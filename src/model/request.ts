@@ -1,4 +1,4 @@
- import {ModelNameSpace} from './model';
+import {ModelNameSpace} from './model';
 
 export namespace RequestNameSpace {
 
@@ -8,6 +8,7 @@ export namespace RequestNameSpace {
         pageSize: number;
         isAdmin?: boolean;
     }
+
     //endregion
 
     //region 用户或者会员模块定义区
@@ -108,21 +109,22 @@ export namespace RequestNameSpace {
             height?: string
         };
     }
+
     //endregion
 
     //region 订单和合并订单（仓库入库，待打包，待审核，客服确认，仓库打包，客户付款，仓库打包 所有的接口区域；
 
     /** 获取各阶段订单数量*/
-    export interface GetOrderStatusCountRequest{
-        currentStep:number;
-        isAdmin:boolean;
+    export interface GetOrderStatusCountRequest {
+        currentStep: number;
+        isAdmin: boolean;
     }
 
     /** 获取合并之后的订单列表*/
     export interface GetCustomerOrderMergeRequest extends BaseListRequest {
         country?: string;
         currentStep?: number;
-        currentStatus?:string;
+        currentStatus?: string;
         expressNo?: string;
         customerOrderMergeNo?: string;
         customerChooseChannelID?: number;
@@ -243,20 +245,21 @@ export namespace RequestNameSpace {
     /** 获取客服订单*/
     export interface CustomerOrdersRequest extends BaseListRequest {
         step: number;
-        customerOrderStatus:number;
+        customerOrderStatus: number;
         /** 快递单号*/
         expressNo?: string,
         /** 开始时间*/
         inWarehouseIimeBegin?: Date;
         /** 结束时间*/
         inWarehouseIimeEnd?: Date;
-        isAdmin?:boolean;
+        isAdmin?: boolean;
     }
 
     export interface OrderSearchIndexRequest {
         name: string;
         type: number;
     }
+
     //endregion
 
     //region 客户待打包定义区
@@ -295,10 +298,11 @@ export namespace RequestNameSpace {
     }
 
     /** 查询已合并订单详情*/
-    export interface GetCustomerOrderMergeItemRequest{
-        customerOrderMergeID?:string;
-        isAdmin?:boolean;
+    export interface GetCustomerOrderMergeItemRequest {
+        customerOrderMergeID?: string;
+        isAdmin?: boolean;
     }
+
     //endregion
 
     //region 客服阶段定义区
@@ -316,5 +320,6 @@ export namespace RequestNameSpace {
         customerOrderID: string;
         isAdmin: boolean;
     }
+
     //endregion
 }

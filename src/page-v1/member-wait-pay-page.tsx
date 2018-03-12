@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
-import {FormComponentProps} from "antd/lib/form";
+import {ModelNameSpace} from "../model/model";
 import {PathConfig} from '../config/pathconfig';
-import {FormTablePage, dropDownModel} from '../components-v1/form-table-page';
+import {FormTablePage, DropDownModel} from '../components-v1/form-table-page';
 
 /// 待审核列表
-interface MemberWaitPayPageProps extends FormComponentProps {
+interface MemberWaitPayPageProps {
 
 }
 
@@ -19,7 +19,7 @@ export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, M
     }
 
     getDropDownConfig() {
-        const options: dropDownModel = {
+        const options: DropDownModel = {
             items: [{
                 key: PathConfig.MemberAddressPageView,
                 type: "search",
@@ -37,8 +37,9 @@ export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, M
     }
 
     render() {
-        return <FormTablePage dropDownConfig={this.getDropDownConfig()}
-                              callBackTitle="订单确认"
-                              headerTip={'总计有{name}项待审批'}></FormTablePage>;
+        return <FormTablePage currentStep={ModelNameSpace.OrderTypeEnum.WaitPay}
+                              dropDownConfig={this.getDropDownConfig()}
+                              callBackTitle="代付款"
+                              headerTip={'总计有{name}项待支付订单'}></FormTablePage>;
     }
 }

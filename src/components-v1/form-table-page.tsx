@@ -1,11 +1,12 @@
 import * as React from 'react';
-import {hashHistory} from 'react-router';
-import {Icon, Row} from 'antd';
+import {hashHistory, Link} from 'react-router';
+import {Icon, Row, Tooltip} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {ModelNameSpace} from "../model/model";
+import {PathConfig} from '../config/pathconfig';
 import {RequestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
-import {SelectType, Constants} from "../util/common";
+import {SelectType, Constants, Context} from "../util/common";
 import {FormControl} from "../components-v1/form-control";
 import {APINameSpace} from "../model/api";
 import {ClickParam} from "antd/lib/menu";
@@ -15,8 +16,9 @@ import * as moment from 'moment';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import FormTableHeader from '../components-v1/form-table-header';
+import {FormFileViewer} from "../components-v1/form-file-viewer";
 
-export interface dropDownModel {
+export interface DropDownModel {
     items?: FormTableOperationModel[];
     viewPath?: string;
     editPath?: string;
@@ -25,10 +27,11 @@ export interface dropDownModel {
 
 /// 待审核列表
 interface FormTablePageProps {
-    dropDownConfig?: dropDownModel;
+    dropDownConfig?: DropDownModel;
     searchItems?: FormAdvancedItemModel[];
     callBackTitle?: string;
     headerTip?: string;
+    currentStep?: ModelNameSpace.OrderTypeEnum
 }
 
 interface FormTablePageStates {
@@ -44,6 +47,10 @@ interface FormTablePageStates {
     totalCount: number
     /** 列表是否正在查询*/
     loading?: boolean;
+    /*图片*/
+    imgItems?: ModelNameSpace.Attachment[];
+    /** 图片预览*/
+    visibleFormFileViewer: boolean;
 }
 
 export class FormTablePageTable extends CommonTable<ModelNameSpace.WarehouseListModel> {
@@ -59,7 +66,9 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             pageIndex: 1,
             pageSize: 10,
             totalCount: 0,
-            loading: false
+            loading: false,
+            visibleFormFileViewer: false,
+            imgItems: []
         }
     }
 
@@ -73,10 +82,12 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
 
     /** 获取数据源*/
     public async loadData<T>(values?: T) {
-        const {state: {pageIndex, pageSize}} = this;
-        let request: RequestNameSpace.GetCustomerOrderMergeRequest = {
+        const {state: {pageIndex, pageSize}, props: {currentStep}} = this;
+        let request: RequestNameSpace.CustomerOrdersRequest = {
             pageIndex: pageIndex,
-            pageSize: pageSize
+            pageSize: pageSize,
+            ...Constants.getOrderStep(currentStep, true),
+            currentStatus: '0'
         }
         request = Object.assign(request, values);
         this.setState({loading: true});
@@ -91,6 +102,21 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
         }
     }
 
+    async onClickPicturePreview(item: ModelNameSpace.CustomerOrderModel) {
+        const request: RequestNameSpace.GetAttachmentItemsRequest = {
+            customerOrderID: item.ID,
+            isAdmin: false
+        }
+
+        const resp = await APINameSpace.AttachmentsAPI.GetAttachmentItems(request);
+        if (resp.Status === 0) {
+            //不介意这么做 会渲染两次
+            this.setState({imgItems: resp.Data}, () => {
+                this.setState({visibleFormFileViewer: true});
+            });
+        }
+    }
+
     renderTable() {
         const {state: {listData, selectedRowKeys, pageIndex, pageSize, totalCount, loading}, props: {dropDownConfig}} = this;
         const rowSelection = {
@@ -99,49 +125,44 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             onChange: this.onClickSearch,
         };
         const columns: CommonColumnProps<ModelNameSpace.WarehouseListModel>[] = [{
-            title: "客户订单号",
+            title: "附件",
+            fixed: 'left',
+            layout: ColumnLayout.Img,
+            render: (val, record) => {
+                return <Tooltip title="预览附件"><Icon type="picture" onClick={() => {
+                    this.onClickPicturePreview(record);
+                }} style={{fontSize: 20, color: "#e65922", cursor: "pointer"}}/></Tooltip>
+            }
+        }, {
+            title: "客户合并单号",
             dataIndex: 'MergeOrderNo',
-            layout: ColumnLayout.LeftTop
+            layout: ColumnLayout.LeftTop,
+            render: (txt, record) => {
+                return <Link
+                    to={{pathname: PathConfig.MemberMyOrderApprovalViewPage, query: {ids: record.ID}}}>{txt}</Link>
+            }
         }, {
             title: "渠道",
-            dataIndex: 'expressNo',
-            hidden: Constants.minSM
+            dataIndex: 'CustomerChooseChannelName',
+            layout: ColumnLayout.RightTop
         }, {
             title: "发往国家",
             dataIndex: 'country',
             hidden: Constants.minSM
         }, {
-            title: "入库总体积",
-            dataIndex: 'MemeberCode',
-            hidden: Constants.minSM
-        }, {
-            title: "入库总重量",
-            dataIndex: 'expressTypeName',
-            hidden: Constants.minSM
-        }, {
-            title: "申报总额",
-            dataIndex: 'CustomerServiceName',
-            render: (txt, record) => {
-                return <span>{new String().concat((Constants.minSM ? '申报总额：' : ''), txt)}</span>;
-            },
-            layout: ColumnLayout.RightBottom
-        }, {
-            title: "客服备注",
-            dataIndex: 'WareHouseName'
-        }, {
             title: "状态",
-            dataIndex: 'currentStatus',
-            layout: ColumnLayout.RightTop,
+            layout: ColumnLayout.RightBottom,
+            dataIndex: 'currentStep',
             render: (txt) => {
-                return <span>{Constants.getOrderStatusByString(ModelNameSpace.OrderTypeEnum.WaitPay, txt)}</span>
+                return <span>{Constants.getOrderStatusByString(ModelNameSpace.OrderTypeEnum.WaitApprove, txt)}</span>
             }
         }, {
             title: "创建时间",
-            dataIndex: 'InWareHouseTime',
+            dataIndex: 'Modified',
+            layout: ColumnLayout.LeftBottom,
             render: (txt) => {
-                return moment(txt).format('YYYY-MM-DD HH:mm');
-            },
-            layout: ColumnLayout.LeftBottom
+                return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
+            }
         }, {
             title: '操作',
             layout: ColumnLayout.Option,
@@ -209,6 +230,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
     }
 
     render() {
+        const {state: {visibleFormFileViewer, imgItems}} = this;
         return <Row>
             <ContentHeaderControl title="订单确认"></ContentHeaderControl>
             <FormAdvancedSearch
@@ -217,6 +239,9 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             <FormTableHeader
                 title={this.props.headerTip.replace('{name}', this.state.totalCount.toString())}></FormTableHeader>
             {this.renderTable()}
+            {imgItems.length > 0 ? <FormFileViewer items={imgItems}
+                                                   visible={visibleFormFileViewer}
+                                                   changeVisible={visible => this.setState({visibleFormFileViewer: visible})}/> : null}
         </Row>;
     }
 }
