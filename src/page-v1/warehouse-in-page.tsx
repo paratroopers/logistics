@@ -181,9 +181,13 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
 
         APINameSpace.AttachmentsAPI.GetAttachmentItems(request).then((result: ResponseNameSpace.GetAttachmentItemsResponse) => {
             if (result.Status === 0) {
-                topThis.setState({items: result.Data,}, () => {
-                    topThis.changeFormFileViewerVisible(true);
-                });
+                if (isArray(result.Data) && result.Data.length > 0) {
+                    topThis.setState({items: result.Data,}, () => {
+                        topThis.changeFormFileViewerVisible(true);
+                    });
+                } else {
+                    message.warning("提示：暂无附件");
+                }
             }
         });
     }
@@ -209,9 +213,9 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             fixed: 'left',
             layout: ColumnLayout.Img,
             render: (val, record) => {
-                return <Tooltip title="预览附件"><Icon type="picture" onClick={() => {
+                return <Icon type="picture" onClick={() => {
                     topThis.onClickPicturePreview(record);
-                }} style={{fontSize: 20, color: "#e65922", cursor: "pointer"}}/></Tooltip>
+                }} style={{fontSize: 20, color: "#e65922", cursor: "pointer"}}/>
             }
         }, {
             title: "客户订单号",

@@ -125,7 +125,7 @@ export class Constants {
 
     // OrderIn	    0	仓库管理-订单入库	step=0、isAdmin=true	                        0待确认、1已确认、2仓库退货
     // WaitPackage	1	我的订单-待打包	    step=1、customerOrderStatus=1、isAdmin=false	1待打包
-    // WaitApprove	2	我的订单-待审核	    step=12、isAdmin=false	                        1客户确认、2仓库打包
+    // WaitApprove	2	我的订单-待审核	    step=12、isAdmin=false	                        1客户确认（step:1）、2仓库打包（step:2）
     // OrderConfirm	3	客服管理-订单确认	step=1、isAdmin=true	                        0待确认
     // OrderMerge	4	仓库管理-合并打包	step=2、isAdmin=true	                        0待确认
     // WaitPay	    5	我的订单-待付款	    step=3、isAdmin=false	                        0待确认
