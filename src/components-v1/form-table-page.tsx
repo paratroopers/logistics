@@ -28,7 +28,7 @@ export interface DropDownModel {
 /// 待审核列表
 interface FormTablePageProps {
     dropDownConfig?: DropDownModel;
-    searchItems?: FormAdvancedItemModel[];
+    searchConfig?: FormAdvancedItemModel[];
     callBackTitle?: string;
     headerTip?: string;
     currentStep?: ModelNameSpace.OrderTypeEnum
@@ -76,20 +76,21 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
         this.loadData();
     }
 
-    onClickSearch(values: any) {
+    async onClickSearch(values: any) {
+        console.log(values);
         this.loadData(values);
     }
 
     /** 获取数据源*/
-    public async loadData<T>(values?: T) {
+    async loadData<T>(values?: T) {
         const {state: {pageIndex, pageSize}, props: {currentStep}} = this;
         let request: RequestNameSpace.CustomerOrdersRequest = {
             pageIndex: pageIndex,
             pageSize: pageSize,
-            ...Constants.getOrderStep(currentStep, true),
-            currentStatus: '0'
+            ...Constants.getOrderStep(currentStep, true)
         }
         request = Object.assign(request, values);
+        console.log(request);
         this.setState({loading: true});
         const response = await APINameSpace.MemberAPI.GetCustomerOrdersMerge(request);
         if (response.Status === 0) {
@@ -185,22 +186,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
         const pagination: PaginationProps = {
             current: pageIndex,
             pageSize: pageSize,
-            total: totalCount,//数据总数
-            onChange: (pageindex) => {
-                this.setState({pageIndex: pageindex}, () => {
-                    this.loadData();
-                });
-            },
-            showSizeChanger: true,//是否可以改变 pageSize
-            onShowSizeChange: (a, b) => {
-                this.setState({pageIndex: a, pageSize: b}, () => {
-                    this.loadData();
-                });
-            },
-            showQuickJumper: true,//是否可以快速跳转至某页
-            showTotal: (total, range) => {
-                return `${range[0]}-${range[1]} of ${total} items`;
-            }
+            total: totalCount//数据总数
         };
 
         return <FormTablePageTable columns={columns}
@@ -225,7 +211,8 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
                 mobileShow: true
             }
         ];
-        this.props.searchItems && items.concat(this.props.searchItems);
+        if (this.props.searchConfig)
+            return items.concat(this.props.searchConfig);
         return items;
     }
 
@@ -235,7 +222,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             <ContentHeaderControl title="订单确认"></ContentHeaderControl>
             <FormAdvancedSearch
                 formAdvancedItems={this.renderFormAdvancedItems()}
-                onClickSearch={this.onClickSearch.bind(this)}></FormAdvancedSearch>
+                onClickSearch={v => this.onClickSearch(v)}></FormAdvancedSearch>
             <FormTableHeader
                 title={this.props.headerTip.replace('{name}', this.state.totalCount.toString())}></FormTableHeader>
             {this.renderTable()}
