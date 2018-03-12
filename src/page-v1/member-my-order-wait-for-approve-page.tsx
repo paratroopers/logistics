@@ -182,9 +182,9 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
             fixed: 'left',
             layout: ColumnLayout.Img,
             render: (val, record) => {
-                return <Tooltip title="预览附件"><Icon type="picture" onClick={() => {
+                return <Icon type="picture" onClick={() => {
                     topThis.onClickPicturePreview(record);
-                }} style={{fontSize: 20, color: "#e65922", cursor: "pointer"}}/></Tooltip>
+                }} style={{fontSize: 20, color: "#e65922", cursor: "pointer"}}/>
             }
         }, {
             title: "客户合并单号",
