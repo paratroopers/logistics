@@ -75,7 +75,7 @@ class FormAdvancedSearch extends React.Component<FormAdvancedSearchProps, FormAd
         this.props.form.validateFields((err, values) => {
             if (!err && onClickSearch) {
                 let result = {};
-                Object.keys(values).map(v => values[v] && (result[v] = values[v]));
+                Object.keys(values).forEach(v => values[v] && (result[v] = values[v]));
                 onClickSearch(result);
             }
         });
