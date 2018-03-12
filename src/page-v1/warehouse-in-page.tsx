@@ -181,9 +181,13 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
 
         APINameSpace.AttachmentsAPI.GetAttachmentItems(request).then((result: ResponseNameSpace.GetAttachmentItemsResponse) => {
             if (result.Status === 0) {
-                topThis.setState({items: result.Data,}, () => {
-                    topThis.changeFormFileViewerVisible(true);
-                });
+                if (isArray(result.Data) && result.Data.length > 0) {
+                    topThis.setState({items: result.Data,}, () => {
+                        topThis.changeFormFileViewerVisible(true);
+                    });
+                } else {
+                    message.warning("提示：暂无附件");
+                }
             }
         });
     }
