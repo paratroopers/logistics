@@ -26,8 +26,6 @@ interface MemberMyOrderWaitForApprovePageProps {
 interface MemberMyOrderWaitForApprovePageStates {
     /** 数据源*/
     listData: ModelNameSpace.WarehouseListModel[];
-    /** 选中行*/
-    selectedRowKeys: any[];
     /** 当前页数*/
     pageIndex: number;
     /** 每页条数*/
@@ -55,7 +53,6 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
         super(props, context);
         this.state = {
             listData: [],
-            selectedRowKeys: [],
             pageIndex: 1,
             pageSize: 10,
             OrderConfirmCount: 0,
@@ -72,11 +69,6 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
         this.loadData(1, 10, 0);
         /** 初始化统计数量*/
         this.loadStatus();
-    }
-
-    /** 选中事件*/
-    onSelectChange(selectedRowKeys) {
-        this.setState({selectedRowKeys});
     }
 
     /** 获取状态统计*/
@@ -169,13 +161,7 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
 
     renderTable() {
         const topThis = this;
-        const {state: {listData, selectedRowKeys, pageIndex, pageSize, loading}} = topThis;
-
-        const rowSelection = {
-            fixed: true,
-            selectedRowKeys,
-            onChange: topThis.onSelectChange,
-        };
+        const {state: {listData, pageIndex, pageSize, loading}} = topThis;
 
         const columns: CommonColumnProps<ModelNameSpace.CustomerOrderMergeModel>[] = [{
             title: "附件",
@@ -239,7 +225,6 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
                                                      rowKey={"ID"}
                                                      loading={loading}
                                                      pagination={pagination}
-                                                     rowSelection={rowSelection}
                                                      dataSource={listData}></MemberMyOrderWaitForApprovePageTable>;
     }
 
@@ -264,7 +249,7 @@ export default class MemberMyOrderWaitForApprovePage extends React.Component<Mem
                 fieldName: "expressNo",
                 displayName: "快递单号",
                 mobileShow: true,
-                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} isadmin={false} placeholder="快递单号"/>
+                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} isadmin={false} placeholder="物流单号"/>
             },
             {
                 defaultDisplay: true,

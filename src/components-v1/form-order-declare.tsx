@@ -1,7 +1,8 @@
 import * as React from 'react';
-import {Form, Input, InputNumber, Modal, Icon} from 'antd';
+import {Form, Input, Modal, Icon,message} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {FormSettingGroup} from './form-setting-group';
+import {FormInputNumber} from './form-input-number';
 import {Constants} from '../util/common';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {ModelNameSpace} from '../model/model';
@@ -29,7 +30,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
     constructor(props, context) {
         super(props, context);
         this.state = {
-            data: props.data ? props.data : [],
+            data: props.data ? props.data : [new CustomerOrderMergeProductModel()],
             total: '00.00',
             visible: false
         }
@@ -51,10 +52,12 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
         if ('data' in nextProps && nextProps.data !== this.props.data) {
             let total: number = 0;
             Util.each(nextProps.data, d => {
-                d.declareTotal = (d.declareUnitPrice * d.productCount).toFixed(2);
+                const price = Number.isFinite(d.declareUnitPrice) ? d.declareUnitPrice : 0;
+                const count = Number.isFinite(d.productCount) ? d.productCount : 0;
+                d.declareTotal = (price * count).toFixed(2);
                 total += Number(d.declareTotal);
             });
-            this.setState({total: total.toFixed(2), data: nextProps.data});
+            this.setState({total: total.toFixed(2), data: nextProps.data?nextProps.data:[new CustomerOrderMergeProductModel()]});
         }
     }
 
@@ -79,10 +82,11 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
         const topThis = this;
         const {props: {onChange}} = topThis;
         let data = this.state.data;
+
         Util.remove(data, i => i.ID === record.ID);
         let total: number = 0;
         Util.each(data, d => {
-            total += Number(d.total);
+            total += Number(d.declareTotal);
         });
         this.setState({data: data, total: total.toFixed(2)}, () => {
             if (onChange)
@@ -97,7 +101,9 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
         Util.each(data, d => {
             if (d.ID === record.ID)
                 d[fieldName] = value;
-            d.declareTotal = (d.declareUnitPrice * d.productCount).toFixed(2);
+            const price = Number.isFinite(d.declareUnitPrice) ? d.declareUnitPrice : 0;
+            const count = Number.isFinite(d.productCount) ? d.productCount : 0;
+            d.declareTotal = (price * count).toFixed(2);
             total += Number(d.declareTotal);
         });
         this.setState({total: total.toFixed(2), data: data}, () => {
@@ -147,7 +153,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                     return !this.props.readOnly && !Constants.minSM ?
                         <Form.Item>{getFieldDecorator(`productList[${index}].productName`, {
                             initialValue: txt,
-                            rules: [{required: true, message: '产品名称必须填写'}]
+                            rules: [{required: true, message: '必填'}]
                         })
                         (<Input
                             onChange={e => this.onChange(e.target.value, record, 'productName')}></Input>)}</Form.Item>
@@ -162,7 +168,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                     return !this.props.readOnly && !Constants.minSM ?
                         <Form.Item>{getFieldDecorator(`productList[${index}].productNameEN`, {
                             initialValue: txt,
-                            rules: [{required: true, message: '产品名称必须填写'}]
+                            rules: [{required: true, message: '必填'}]
                         })
                         (<Input
                             onChange={e => this.onChange(e.target.value, record, 'productNameEN')}></Input>)}</Form.Item>
@@ -179,12 +185,12 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                         <Form.Item>
                             {getFieldDecorator(`productList[${index}].productCount`, {
                                 initialValue: txt,
-                                rules: [{required: true, message: '产品数量必须填写'}]
+                                rules: [{required: true, message: '必填'}]
                             })
-                            (< InputNumber step={1}
+                            (< FormInputNumber step={1}
                                            precision={0}
                                            min={0}
-                                           onChange={v => this.onChange(v, record, 'productCount')}></InputNumber>)}
+                                           onChange={v => this.onChange(v, record, 'productCount')}></FormInputNumber>)}
                         </Form.Item> :
                         <span>{new String().concat(Constants.minSM ? "产品数量：" : "", txt)}</span>;
                 },
@@ -220,12 +226,12 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                         <Form.Item>
                             {getFieldDecorator(`productList[${index}].declareUnitPrice`, {
                                 initialValue: txt,
-                                rules: [{required: true, message: '申报单价必须填写'}]
+                                rules: [{required: true, message: '必填'}]
                             })
-                            (<InputNumber step={0.01}
+                            (<FormInputNumber step={0.01}
                                           min={0}
                                           precision={2}
-                                          onChange={v => this.onChange(v, record, 'declareUnitPrice')}></InputNumber>)}
+                                          onChange={v => this.onChange(v, record, 'declareUnitPrice')}></FormInputNumber>)}
                         </Form.Item> :
                         <span>{new String().concat(Constants.minSM ? "申报单价：" : "", txt)}</span>;
                 },
@@ -242,9 +248,9 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
             }, {
                 title: '操作',
                 width: '10%',
-                render: (txt, record) => {
+                render: (txt, record,index) => {
                     return <div>
-                        {!this.props.readOnly ? <a onClick={() => this.onDeleteClick(record)}>删除</a> : null}
+                        {!this.props.readOnly&&index!==0? <a onClick={() => this.onDeleteClick(record)}>删除</a> : null}
                     </div>
                 },
                 layout: ColumnLayout.Option,
@@ -289,7 +295,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                     <Form.Item label="产品名称">
                         {
                             getFieldDecorator('productName',
-                                {rules: [{required: true, message: '请填写产品名称!'}]})
+                                {rules: [{required: true, message: '必填'}]})
                             (<Input/>)
                         }
                     </Form.Item>
@@ -306,8 +312,8 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                     <Form.Item label="数量">
                         {
                             getFieldDecorator('productCount',
-                                {rules: [{required: true, message: '请填写数量!'}]})
-                            (<InputNumber onChange={(val: number) => {
+                                {rules: [{required: true, message: '必填'}]})
+                            (<FormInputNumber onChange={(val: number) => {
                                 const total = val * getFieldValue('declareUnitPrice');
                                 setFieldsValue({total: total.toFixed(2)});
                             }}/>)
@@ -317,7 +323,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                         {
                             getFieldDecorator('declareUnitPrice',
                                 {rules: [{required: true, message: '请填写申报单价!'}]})
-                            (<InputNumber onChange={(val: number) => {
+                            (<FormInputNumber onChange={(val: number) => {
                                 const total = val * getFieldValue('productCount');
                                 setFieldsValue({total: total.toFixed(2)});
                             }}/>)

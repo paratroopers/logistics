@@ -1,20 +1,21 @@
 import * as React from 'react';
-import {Row, Col, Input} from 'antd';
+import {Row, Col, Input, Form} from 'antd';
+import {FormComponentProps} from 'antd/lib/form/Form';
 import {FormSettingGroup} from './form-setting-group';
 
-export interface FormRemarksProps {
+export interface FormRemarksProps extends FormComponentProps {
     readOnly?: boolean;
     value?: string;
-    onChange?: (v: string) => void;
     title?: string;
     minRows?: number;
+    fieldName?: string;
 }
 
 export interface FormRemarksStates {
     value?: string;
 }
 
-export class FormRemarks extends React.Component<FormRemarksProps, FormRemarksStates> {
+class FormRemarks extends React.Component<FormRemarksProps, FormRemarksStates> {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -30,20 +31,22 @@ export class FormRemarks extends React.Component<FormRemarksProps, FormRemarksSt
 
     render() {
         const topThis = this;
-        const {props: {onChange, readOnly, title, minRows}, state: {value}} = topThis;
+        const {props: {form: {getFieldDecorator}, readOnly, title, minRows, fieldName}, state: {value}} = topThis;
         return <FormSettingGroup title={title ? title : "备注"}>
-            <Row className="form-remarks">
-                <Col span={24} style={{marginBottom: 24}}>
-                    {!readOnly ?
-                        <Input.TextArea autosize={{minRows: minRows ? minRows : 6}} value={value} onChange={(e) => {
-                            const v = e.target.value;
-                            topThis.setState({value: v}, () => {
-                                if (onChange)
-                                    onChange(v);
-                            })
-                        }} placeholder={''}></Input.TextArea> :<span>{value}</span>}
-                </Col>
-            </Row>
+            <Form className="form-remarks">
+                <Row >
+                    <Col span={24} style={{marginBottom: 24}}>
+                        {!readOnly ?
+                            <Form.Item>{
+                                getFieldDecorator(fieldName ? fieldName : "Remark",
+                                    {initialValue: value, rules: [{required: true, message: '必填'}]})
+                                (<Input.TextArea autosize={{minRows: minRows ? minRows : 6}}></Input.TextArea>)
+                            }</Form.Item> : <span>{value}</span>}
+                    </Col>
+                </Row>
+            </Form>
         </FormSettingGroup>
     }
 }
+
+export default Form.create<any>()(FormRemarks);

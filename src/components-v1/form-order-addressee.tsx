@@ -94,20 +94,20 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
                 <Form.Item label={label} required={readOnly ? false : !noRequired}>
                     {
                         isTextArea ? getFieldDecorator(fieldName, {
-                                initialValue: defaultValue,
-                                rules: [{
-                                    required: !noRequired,
-                                    message: '请填写' + label
-                                }]
-                            })(<Input.TextArea disabled={this.props.readOnly}
-                                               placeholder={readOnly ? "" : '请输入'}></Input.TextArea>)
+                            initialValue: defaultValue,
+                            rules: [{
+                                required: !noRequired,
+                                message: '必填'
+                            }]
+                        })(<Input.TextArea disabled={this.props.readOnly}
+                                           placeholder={readOnly ? "" : '请输入'}></Input.TextArea>)
                             : getFieldDecorator(fieldName, {
-                                initialValue: defaultValue,
-                                rules: [{
-                                    required: !noRequired,
-                                    message: '请填写' + label
-                                }]
-                            })(<Input disabled={this.props.readOnly} placeholder={readOnly ? "" : '请输入'}></Input>)
+                            initialValue: defaultValue,
+                            rules: [{
+                                required: !noRequired,
+                                message: '必填'
+                            }]
+                        })(<Input disabled={this.props.readOnly} placeholder={readOnly ? "" : '请输入'}></Input>)
                     }
                 </Form.Item>
             </Col>
@@ -115,10 +115,10 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
 
     render() {
         const topThis = this;
-        const {state: {selectContact}} = topThis;
+        const {state: {selectContact}, props: {readOnly}} = topThis;
         const defaultRowSetting: RowProps = {type: "flex", gutter: 16};
         return <FormSettingGroup title={"收件人基本信息"} topBar={this.renderHeader()}>
-            <Form className="form-order-address">
+            <Form className="form-order-address" layout={readOnly ? "inline" : "vertical"}>
                 <Row {...defaultRowSetting}>
                     {this.renderRow('姓名', false, false, 'recipient', selectContact.recipient)}
                     {this.renderRow('电话', false, false, 'Tel', selectContact.Tel)}

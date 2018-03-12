@@ -18,7 +18,7 @@ import {
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {RequestNameSpace} from '../model/request';
 import {Context,Constants} from "../util/common";
-import {isArray, isNullOrUndefined} from "util";
+import {isArray} from "util";
 import {ResponseNameSpace} from '../model/response';
 
 export interface MemberMergePackagePageProps extends RouteComponentProps<any, any>, FormComponentProps {
@@ -33,8 +33,6 @@ export interface MemberMergePackagePageStates {
     orderInfo?: FormOrderInfoModel;
     /** 渠道选择*/
     channelList?: ModelNameSpace.ChannelModal[];
-    /** 客户备注*/
-    CustomerMark?: string;
 }
 
 export interface QueryData {
@@ -46,8 +44,7 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
     constructor(props, context) {
         super(props, context);
         this.state = {
-            selectedKeys: (this.props.location.query as QueryData).ids,
-            CustomerMark: ""
+            selectedKeys: (this.props.location.query as QueryData).ids
         }
     }
 
@@ -80,33 +77,21 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
     /** 表单提交*/
     onSubmit() {
         const topThis = this;
-        const {props: {form}, state: {channelList, data, CustomerMark}} = topThis;
-
-        /** 验证产品信息是否存在*/
-        if (!isArray(form.getFieldValue("productList")) || form.getFieldValue("productList").length === 0) {
-            message.warning("请填写货品申报信息!");
-            return;
-        }
-
-        /** 验证渠道信息是否存在*/
-        if (!isArray(channelList) || channelList.length === 0) {
-            message.warning("请选择渠道!");
-            return;
-        }
-
-        /** 验证渠道信息是否存在*/
-        if (isNullOrUndefined(CustomerMark)||CustomerMark==="") {
-            message.warning("请填写打包要求!");
-            return;
-        }
+        const {props: {form}, state: {channelList, data}} = topThis;
 
         form.validateFieldsAndScroll((errors, values) => {
             if (!errors) {
+                /** 验证渠道信息是否存在*/
+                if (!isArray(channelList) || channelList.length === 0) {
+                    message.warning("请选择渠道!");
+                    return;
+                }
+
                 const request: RequestNameSpace.CustomerOrderMergeAddRequest = {
                     /** 用户ID*/
                     userid: Context.getCurrentUser().userInfo.Userid.toString(),
                     /** 客户备注*/
-                    CustomerMark: CustomerMark,
+                    CustomerMark: values.CustomerMark,
                     /** 选择渠道*/
                     CustomerChooseChannelID: channelList[0].ID,
                     /** 收件人姓名*/
@@ -172,9 +157,7 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
                 <FormOrderChannel onChange={(channelData) => {
                     this.setState({channelList: channelData});
                 }}></FormOrderChannel>
-                <FormRemarks title={"打包要求"} onChange={(mark) => {
-                    this.setState({CustomerMark: mark})
-                }}></FormRemarks>
+                <FormRemarks form={form} title={"打包要求"} fieldName="CustomerMark"></FormRemarks>
             </Layout.Content>
         </Layout>
     }
