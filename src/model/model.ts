@@ -542,6 +542,19 @@ export namespace ModelNameSpace {
         count ?: number;
     }
 
+    /*额外费用*/
+    export class OtherCostModel {
+        constructor(defaultValue: OtherCostModel = undefined) {
+            if (defaultValue) {
+                this.remoteFee = defaultValue.remoteFee;
+                this.magneticinspectionFee = defaultValue.magneticinspectionFee;
+            }
+        }
+
+        remoteFee?: number;
+        magneticinspectionFee?: number;
+    }
+
     /*收货人信息*/
     export class AddressModel {
         constructor(defaultValue = undefined) {
