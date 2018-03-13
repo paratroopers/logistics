@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Icon} from 'antd';
+import {Icon} from 'antd';
 import {Util} from '../util/util';
 import {FormSettingGroup} from './form-setting-group';
 import {ModelNameSpace} from '../model/model';
@@ -7,14 +7,13 @@ import {APINameSpace} from '../model/api';
 import {ResponseNameSpace} from '../model/response';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {FormChannelInfo} from './form-channel-info';
-import {isArray, isNullOrUndefined} from "util";
 
 export interface FormOrderChannelProps {
     readOnly?: boolean;
     data?: ModelNameSpace.ChannelModal[];
-    ids?:string[];
-    onChange?:(data:ModelNameSpace.ChannelModal[])=>void;
-    loading?:boolean;
+    ids?: string[];
+    onChange?: (data: ModelNameSpace.ChannelModal[]) => void;
+    loading?: boolean;
 }
 
 export interface FormOrderChannelStates {
@@ -35,19 +34,27 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
     }
 
     componentDidMount() {
-        const topThis = this;
-        const {props: {ids}} = topThis;
+        const {props: {ids}} = this;
+        if (ids && ids.length > 0)
+            this.getChannels();
+    }
 
-        if(!isNullOrUndefined(ids))
-            APINameSpace.CustomerOrderAPI.GetChannels().then((result: ResponseNameSpace.GetCustomerOrderChannelListResponse) => {
-                if (result.Status === 0) {
-                    this.setState({
-                        data: isArray(result.Data) ? result.Data.filter((item) => {
-                            return ids.indexOf(item.ID)!==-1;
-                        }) : []
-                    });
-                }
+    componentWillReceiveProps(nextProps) {
+        if ('ids' in nextProps && JSON.stringify(nextProps.ids) !== JSON.stringify(this.props.ids)) {
+            this.getChannels(nextProps.ids);
+        }
+    }
+
+    async getChannels(ids?: string[]) {
+        const result = await APINameSpace.CustomerOrderAPI.GetChannels();
+        if (result.Status === 0) {
+            const data = result.Data || [];
+            this.setState({
+                data: data.filter((r) => {
+                    return (ids ? ids : this.props.ids).indexOf(r.ID) !== -1;
+                })
             });
+        }
     }
 
     onAddClick() {
@@ -55,10 +62,10 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
     }
 
     onOk(selected: ModelNameSpace.ChannelModal) {
-        const topThis=this;
-        const {props:{onChange}}=topThis;
-        this.setState({data: [{...selected}]},()=>{
-            if(onChange)
+        const topThis = this;
+        const {props: {onChange}} = topThis;
+        this.setState({data: [{...selected}]}, () => {
+            if (onChange)
                 onChange([{...selected}]);
         });
         this.setState({channelsShow: false});
@@ -68,10 +75,14 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
         this.setState({channelsShow: false});
     }
 
-    onDelete(row?: ModelNameSpace.ChannelModal) {
+    onDelete(row ?: ModelNameSpace.ChannelModal) {
         let data = this.state.data;
         Util.remove(data, d => d.ID === row.ID);
         this.setState({data: data});
+    }
+
+    renderChooseChannel() {
+
     }
 
     renderTable() {
@@ -116,7 +127,7 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
                     return !readOnly ? <a onClick={() => this.onDelete(record)}>删除</a> : null
                 },
                 layout: ColumnLayout.Option,
-                hidden:readOnly
+                hidden: readOnly
             }];
         return <FormOrderChannelTable pagination={false} columns={columns}
                                       dataSource={this.state.data}></FormOrderChannelTable>

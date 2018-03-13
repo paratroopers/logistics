@@ -83,7 +83,6 @@ export class CustomerServiceConfirmApprovePage extends React.Component<CustomerS
             <FormOrderChannel ids={[_mergeOrder['CustomerChooseChannelID']]}></FormOrderChannel>
             <FormOrderOtherCost></FormOrderOtherCost>
             <FormRemarks title="打包规则" fieldName="customerServiceMark"></FormRemarks>
-            <FormRemarks value={_mergeOrder['CustomerMark']} readOnly></FormRemarks>
         </Layout.Content>
     }
 
