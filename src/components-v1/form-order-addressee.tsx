@@ -97,7 +97,7 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
                             initialValue: defaultValue,
                             rules: [{
                                 required: !noRequired,
-                                message: '必填'
+                                message: ' '
                             }]
                         })(<Input.TextArea disabled={this.props.readOnly}
                                            placeholder={readOnly ? "" : '请输入'}></Input.TextArea>)
@@ -105,7 +105,7 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
                             initialValue: defaultValue,
                             rules: [{
                                 required: !noRequired,
-                                message: '必填'
+                                message: ' '
                             }]
                         })(<Input disabled={this.props.readOnly} placeholder={readOnly ? "" : '请输入'}></Input>)
                     }

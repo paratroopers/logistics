@@ -264,10 +264,28 @@
   }
 }
 
-/** 货品申报表单*/
-.declare-table {
-  .ant-form-item {
-    margin-bottom: 0px;
+
+/** 货品申报信息*/
+.form-order-declare{
+  .declare-table {
+    .required-lable:before{
+      display: inline-block;
+      margin-right: 4px;
+      content: "*";
+      font-family: SimSun;
+      line-height: 1;
+      font-size: 14px;
+      color: #f5222d;
+    }
+    .ant-form-item {
+      margin-bottom: 0px;
+    }
+  }
+
+  /** 验证提示文字为空时，控制样式*/
+  .ant-form-item-with-help{
+    margin-bottom: 24px;
+    transition: margin 0.15s steps(1);
   }
 }
 
@@ -378,10 +396,21 @@
       //text-align: right;
       //vertical-align: middle;
     }
+
+    /** 验证提示文字为空时，控制样式*/
+    .ant-form-item-with-help{
+      margin-bottom: 24px;
+      transition: margin 0.15s steps(1);
+    }
   }
   /** 备注*/
   .form-remarks {
     margin: 0px 16px;
+    /** 验证提示文字为空时，控制样式*/
+    .ant-form-item-with-help{
+      margin-bottom: 24px;
+      transition: margin 0.15s steps(1);
+    }
   }
   .form-control-button {
     text-align: center;

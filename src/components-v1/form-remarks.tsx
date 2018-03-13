@@ -39,7 +39,7 @@ class FormRemarks extends React.Component<FormRemarksProps, FormRemarksStates> {
                         {!readOnly ?
                             <Form.Item>{
                                 getFieldDecorator(fieldName ? fieldName : "Remark",
-                                    {initialValue: value, rules: [{required: true, message: '必填'}]})
+                                    {initialValue: value, rules: [{required: true, message: ' '}]})
                                 (<Input.TextArea autosize={{minRows: minRows ? minRows : 6}}></Input.TextArea>)
                             }</Form.Item> : <span>{value}</span>}
                     </Col>
