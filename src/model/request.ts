@@ -264,6 +264,11 @@ export namespace RequestNameSpace {
 
     //region 客户待打包定义区
 
+    export interface GetCustomerOrderItemRequest{
+        customerOrderID?:string;
+        isAdmin?:boolean;
+    }
+
     /** 客户合并订单*/
     export interface CustomerOrderMergeAddRequest {
         /** 用户ID*/
