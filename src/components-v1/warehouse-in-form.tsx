@@ -25,8 +25,8 @@ export interface WarehouseInFormProps extends FormComponentProps {
     Data?: ModelNameSpace.WarehouseListModel;
     /** 类型*/
     type?: 'add' | 'edit' | 'view';
-    /** 是否显示操作按钮*/
-    isHidenBtn?:boolean;
+    /** 是否显示Modal模式*/
+    isModal?: boolean;
     style?: React.CSSProperties;
 }
 
@@ -57,7 +57,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
 
     componentDidMount() {
         const topThis = this;
-        const {props: {Data, type, form: {setFieldsValue}}} = topThis;
+        const {props: {Data, type, isModal, form: {setFieldsValue}}} = topThis;
         switch (type) {
             case"add":
                 break;
@@ -68,8 +68,6 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                     /** 快递方式*/
                     expressType: {key: Data.expressTypeID, label: Data.expressTypeName},
                     expressNo: Data.expressNo,
-                    /** 入库状态*/
-                    inWareHouseStatus: Data.currentStatus,
                     /** 件数*/
                     inPackageCount: Data.InPackageCount,
                     inWeight: Data.InWeight,
@@ -86,6 +84,12 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                     /** 仓库*/
                     wareHouse: {key: Data.WareHouseID, label: Data.WareHouseName}
                 });
+                if (!isModal) {
+                    setFieldsValue({
+                        /** 入库状态*/
+                        inWareHouseStatus: Data.currentStatus
+                    });
+                }
                 break;
         }
     }
@@ -97,13 +101,18 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
 
     render() {
         const topThis = this;
-        const {props: {form: {getFieldDecorator}, type, isHidenBtn,style,Data}} = topThis;
+        const {props: {form: {getFieldDecorator}, type, isModal, style, Data}} = topThis;
 
         /** 控件栅格*/
         const spanLayout: ColProps = {
             xs: 24,
             sm: 12,
             md: 8
+        }
+        const spanViewLayout: ColProps = {
+            xs: 24,
+            sm: 24,
+            md: 16
         }
 
         /** 是否必填*/
@@ -123,6 +132,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                 xs: {span: 17}
             }
         } : null;
+
         return (
             <Form className="warehouse-in-add-form" style={style} layout={type === "view" ? "inline" : "vertical"}
                   onSubmit={topThis.onSubmit.bind(this)}>
@@ -170,7 +180,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>
-                        <FormItem {...formItemLayout} label={"初始重量"}>
+                        <FormItem {...formItemLayout} label={readonly ? "初始重量" : "初始重量(kg)"}>
                             {getFieldDecorator("inWeight", {
                                 rules: [{required: required, message: '请填写重量!'}],
                             })(<FormInputNumber readonly={readonly} step={0.01} style={{width: '100%'}}
@@ -186,7 +196,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                                                 placeholder="件数"/>)}
                         </FormItem>
                     </Col>
-                    <Col {...spanLayout}>
+                    {!isModal ? <Col {...spanLayout}>
                         <FormItem {...formItemLayout} label={"入库状态"}>
                             {getFieldDecorator("inWareHouseStatus", {
                                 rules: [{required: required, message: '请选择状态!'}],
@@ -194,50 +204,73 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                                                  type={ModelNameSpace.OrderTypeEnum.OrderIn}
                                                  placeholder="入库状态"></FormStatusSelect>)}
                         </FormItem>
-                    </Col>
-                    {readonly?<Col {...spanLayout}>
+                    </Col> : null}
+                    {readonly ? <Col {...spanLayout}>
                         <FormItem {...formItemLayout} label={"入库时间"}>
                             <span>{moment(Data.InWareHouseTime).format('YYYY-MM-DD HH:mm')}</span>
                         </FormItem>
-                        </Col>:null}
+                    </Col> : null}
                     <Col {...spanLayout}>
-                        <FormItem {...formItemLayout} label={"初始体积(cm³)"}>
-                            <Row gutter={16} type="flex" justify="center" align="top" style={{minWidth: "200px"}}>
-                                <Col lg={6} sm={12}>
-                                    {Constants.minSM ? <span>体积：</span> : null}
+                        <FormItem {...formItemLayout} label={readonly ? "初始体积" : "初始体积(cm³)"}>
+                            <Row gutter={16} type="flex">
+                                <Col lg={!readonly ? 6 : 24}>
                                     {getFieldDecorator('InVolume', {
                                         rules: [{required: required, message: '请填写体积!'}],
                                     })(<FormInputNumber readonly={readonly} placeholder="体积"
+                                                        suffixText="cm³"
                                                         style={volumeStyle} min={0}/>)}
-                                    {Constants.minSM ? <span>cm³</span> : null}
                                 </Col>
-                                <Col lg={6} sm={12}>
-                                    {Constants.minSM ? <span>长度：</span> : null}
+                                {!readonly ? <Col lg={6}>
                                     {getFieldDecorator('inLength', {
                                         rules: [{required: required, message: '请填写长度!'}],
                                     })(<FormInputNumber readonly={readonly} style={volumeStyle} min={0}
+                                                        suffixText="cm"
                                                         placeholder="长（cm）"/>)}
-                                    {Constants.minSM ? <span>cm</span> : null}
-                                </Col>
-                                <Col lg={6} sm={12}>
-                                    {Constants.minSM ? <span>宽度：</span> : null}
+                                </Col> : null}
+                                {!readonly ? <Col lg={6}>
                                     {getFieldDecorator('inWidth', {
                                         rules: [{required: required, message: '请填写宽度!'}],
                                     })(<FormInputNumber readonly={readonly} style={volumeStyle} min={0}
+                                                        suffixText="cm"
                                                         placeholder="宽（cm）"/>)}
-                                    {Constants.minSM ? <span>cm</span> : null}
-                                </Col>
-                                <Col lg={6} sm={12}>
-                                    {Constants.minSM ? <span>高度：</span> : null}
+                                </Col> : null}
+                                {!readonly ? <Col lg={6}>
                                     {getFieldDecorator('inHeight', {
                                         rules: [{required: required, message: '请填写高度!'}],
                                     })(<FormInputNumber readonly={readonly} style={volumeStyle} min={0}
+                                                        suffixText="cm"
                                                         placeholder="高（cm）"/>)}
-                                    {Constants.minSM ? <span>cm</span> : null}
-                                </Col>
+                                </Col> : null}
                             </Row>
                         </FormItem>
                     </Col>
+                    {readonly ? <Col {...spanLayout}>
+                        <FormItem {...formItemLayout} label={"长宽高"}>
+                            <Row type="flex">
+                                <Col>
+                                    {getFieldDecorator('inLength', {
+                                        rules: [{required: required, message: '请填写长度!'}],
+                                    })(<FormInputNumber readonly={readonly} style={volumeStyle} min={0}
+                                                        suffixText="cm * "
+                                                        placeholder="长（cm）"/>)}
+                                </Col>
+                                <Col>
+                                    {getFieldDecorator('inWidth', {
+                                        rules: [{required: required, message: '请填写宽度!'}],
+                                    })(<FormInputNumber readonly={readonly} style={volumeStyle} min={0}
+                                                        suffixText="cm * "
+                                                        placeholder="宽（cm）"/>)}
+                                </Col>
+                                <Col>
+                                    {getFieldDecorator('inHeight', {
+                                        rules: [{required: required, message: '请填写高度!'}],
+                                    })(<FormInputNumber readonly={readonly} style={volumeStyle} min={0}
+                                                        suffixText="cm"
+                                                        placeholder="高（cm）"/>)}
+                                </Col>
+                            </Row>
+                        </FormItem>
+                    </Col> : null}
                     <Col span={24}>
                         <FormItem {...formItemLayout} label={"备注"}>
                             {getFieldDecorator("warehouseAdminRemark")(<FormInputText readonly={readonly}
@@ -261,7 +294,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                         }}>取消</Button>
                     </Col>
                 </Row> : <Row>
-                    {!isHidenBtn ? <Col span={24}>
+                    {!isModal ? <Col span={24}>
                         <Button type="primary" onClick={() => {
                             /** 返回路由*/
                             hashHistory.goBack();

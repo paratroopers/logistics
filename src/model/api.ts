@@ -235,6 +235,11 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, {request: data});
         }
 
+        static async GetCustomerOrderItem(data: RequestNameSpace.GetCustomerOrderItemRequest) {
+            let url: string = CommonAPI.baseURL + "CustomerOrder/order/item";
+            return new Request<BaseRequest, ResponseNameSpace.GetCustomerOrderItemResponse>().get(url, data);
+        }
+
         /** 获取渠道信息List*/
         static async GetChannels() {
             let url: string = CommonAPI.baseURL + "Channel/Items";

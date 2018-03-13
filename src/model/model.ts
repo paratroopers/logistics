@@ -364,6 +364,23 @@ export namespace ModelNameSpace {
         AttachmentIDList?: string[];
     }
 
+    /** 客户订单详情Model*/
+    export interface CustomerOrderDetailModel extends BaseModel{
+        customerOrder?:CustomerOrderModel;
+        orderStatus?:CustomerOrderStatusModel;
+        attachList?:Attachment[];
+    }
+
+    /** 客户订单状态Model*/
+    export interface CustomerOrderStatusModel extends BaseModel {
+        ID: string,
+        userID:string,
+        OrderID: string,
+        OrderNo: string,
+        currentStep: string,
+        currentStatus: string
+    }
+
     /** 合并订单Model*/
     export interface CustomerOrderMergeModel extends BaseModel {
         currentStatus: string,

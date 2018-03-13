@@ -98,9 +98,6 @@ export class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrder
             {data ? <FormRemarks value={data.mergeOrder.CustomerMark}
                                  title={"打包要求"}
                                  readOnly={true}></FormRemarks> : null}
-            {data ? <FormRemarks value={data.mergeOrder.customerServiceMark}
-                                 title={"客服备注"}
-                                 readOnly={true}></FormRemarks> : null}
         </Row>;
     }
 }

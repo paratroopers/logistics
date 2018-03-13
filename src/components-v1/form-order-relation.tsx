@@ -1,12 +1,15 @@
 import * as React from 'react';
-import {Row,Modal} from "antd";
+import {Row, Modal} from "antd";
 import {Constants} from '../util/common';
 import {ModelNameSpace} from '../model/model';
+import {RequestNameSpace} from '../model/request';
+import {ResponseNameSpace} from '../model/response';
 import {FormSettingGroup} from './form-setting-group';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import WarehouseInForm from "../components-v1/warehouse-in-form";
 import * as moment from 'moment';
 import {isNullOrUndefined} from "util";
+import {APINameSpace} from '../model/api';
 
 export interface FormOrderRelationProps {
     data?: ModelNameSpace.CustomerOrderModel[];
@@ -15,8 +18,8 @@ export interface FormOrderRelationProps {
 
 export interface FormOrderRelationStates {
     data?: ModelNameSpace.CustomerOrderModel[];
-    detailVisible?:boolean;
-    detailData?:ModelNameSpace.CustomerOrderModel;
+    detailVisible?: boolean;
+    detailData?: ModelNameSpace.CustomerOrderModel;
 }
 
 class FormOrderRelationTable extends CommonTable<any> {
@@ -27,7 +30,7 @@ export class FormOrderRelation extends React.Component<FormOrderRelationProps, F
         super(props, context);
         this.state = {
             data: props.data ? props.data : [],
-            detailVisible:false
+            detailVisible: false
         }
     }
 
@@ -37,17 +40,31 @@ export class FormOrderRelation extends React.Component<FormOrderRelationProps, F
         }
     }
 
+    onClickRow(record: ModelNameSpace.CustomerOrderModel) {
+        const topThis = this;
+
+        /** 查询详情信息*/
+        const request: RequestNameSpace.GetCustomerOrderItemRequest = {
+            customerOrderID: record.ID,
+            isAdmin: false
+        }
+
+        APINameSpace.CustomerOrderAPI.GetCustomerOrderItem(request).then((r: ResponseNameSpace.GetCustomerOrderItemResponse) => {
+            if (r.Status === 0 && !isNullOrUndefined(r.Data)) {
+                topThis.setState({detailData: r.Data.customerOrder, detailVisible: true});
+            }
+        });
+    }
+
     renderTable() {
-        const topThis=this;
+        const topThis = this;
         const colums: CommonColumnProps<ModelNameSpace.CustomerOrderModel>[] = [
             {
                 title: '客户订单号',
                 dataIndex: 'CustomerOrderNo',
                 layout: ColumnLayout.LeftTop,
-                render: (txt,record) => {
-                    return <a onClick={()=>{
-                        topThis.setState({detailData:record,detailVisible:true});
-                    }}>{txt}</a>
+                render: (txt, record) => {
+                    return <a onClick={topThis.onClickRow.bind(this, record)}>{txt}</a>
                 }
             },
             {
@@ -88,14 +105,17 @@ export class FormOrderRelation extends React.Component<FormOrderRelationProps, F
     }
 
     render() {
-        const topThis=this;
-        const {state:{detailData,detailVisible}}=topThis;
+        const topThis = this;
+        const {state: {detailData, detailVisible}} = topThis;
 
         return <FormSettingGroup title={"关联订单信息"} loading={this.props.loading}>
             <Row className="form-order-relation">
                 {this.renderTable()}
-                <Modal title="查看订单信息" visible={detailVisible} footer={false} width={800} onCancel={()=>{topThis.setState({detailVisible:false})}}>
-                    {!isNullOrUndefined(detailData) ? <WarehouseInForm type={"view"} Data={detailData} isHidenBtn={true} style={{padding:"0px 8px"}}></WarehouseInForm>:null}
+                <Modal title="查看订单信息" visible={detailVisible} footer={false} width={800} onCancel={() => {
+                    topThis.setState({detailVisible: false})
+                }}>
+                    {!isNullOrUndefined(detailData) ? <WarehouseInForm type={"view"} Data={detailData} isModal={true}
+                                                                       style={{padding: "0px 8px"}}></WarehouseInForm> : null}
                 </Modal>
             </Row>
         </FormSettingGroup>
