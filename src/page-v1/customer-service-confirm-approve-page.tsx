@@ -8,7 +8,8 @@ import {
     FormOrderAddressee,
     FormOrderDeclare,
     FormRemarks,
-    FormOrderChannel
+    FormOrderChannel,
+    FormOrderOtherCost
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {RequestNameSpace} from '../model/request';
@@ -80,6 +81,8 @@ export class CustomerServiceConfirmApprovePage extends React.Component<CustomerS
             <FormOrderAddressee selectContact={new ModelNameSpace.AddressModel(data)} readOnly></FormOrderAddressee>
             <FormOrderDeclare data={mergeDetailList}></FormOrderDeclare>
             <FormOrderChannel ids={[_mergeOrder['CustomerChooseChannelID']]}></FormOrderChannel>
+            <FormOrderOtherCost></FormOrderOtherCost>
+            <FormRemarks title="打包规则" fieldName="customerServiceMark"></FormRemarks>
             <FormRemarks value={_mergeOrder['CustomerMark']} readOnly></FormRemarks>
         </Layout.Content>
     }

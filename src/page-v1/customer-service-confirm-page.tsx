@@ -24,16 +24,16 @@ export class CustomerServiceConfirmPage extends React.Component<CustomerServiceC
     getDropDownConfig() {
         const options: DropDownModel = {
             items: [{
-                key: PathConfig.MemberAddressPageView,
+                key: PathConfig.CustomerServiceConfirmApprovePage,
                 type: "search",
                 label: "审核"
             }, {
-                key: PathConfig.MemberAddressPageEdit,
+                key: PathConfig.CustomerServiceConfirmViewPage,
                 type: "edit",
                 label: "查看"
             }
             ],
-            editPath: PathConfig.MemberWaitPayApprovePage
+            editPath: PathConfig.CustomerServiceConfirmApprovePage
         };
         return options;
     }
