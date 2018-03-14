@@ -131,7 +131,7 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
         content.Declare && !content.Declare.hidden && emls.push(
             <FormOrderDeclare key="Declare"
                               data={mergeDetailList}
-                              readOnly={content.Address.readyOnly}>
+                              readOnly={content.Declare.readyOnly}>
             </FormOrderDeclare>);
 
         content.Channel && !content.Channel.hidden && emls.push(
@@ -160,9 +160,9 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
             </FormRemarks>);
 
         content.WarehousePackage && !content.WarehousePackage.hidden && emls.push(
-            <FormOrderWarehousePackage key="CustomerRemarks"
+            <FormOrderWarehousePackage key="WarehousePackage"
                                        title="仓库打包"
-                                       readOnly={content.CustomerRemarks.readyOnly}>
+                                       readOnly={content.WarehousePackage.readyOnly}>
             </FormOrderWarehousePackage>);
         return emls;
     }

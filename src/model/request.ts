@@ -166,6 +166,101 @@ export namespace RequestNameSpace {
         isAdmin?: boolean;
     }
 
+    /** 客户合并订单*/
+    export interface CustomerOrderMergeAddRequest {
+        /** 用户ID*/
+        userid?: string;
+        /** 客户备注*/
+        CustomerMark?: string;
+        /** 选择渠道*/
+        CustomerChooseChannelID?: string;
+        /** 收件人姓名*/
+        recipient?: string;
+        /** 国家*/
+        country?: string;
+        /** 地址*/
+        address?: string;
+        /** 城市*/
+        city?: string;
+        /** 税号*/
+        code?: string;
+        /** 电话*/
+        tel?: string;
+        /** 公司*/
+        company?: string;
+        /** 邮编*/
+        taxNo?: string;
+        /** 客户关联订单列表*/
+        customerOrderList?: { customerOrderID: string }[];
+        /** 产品申报列表*/
+        productList?: ModelNameSpace.CustomerOrderMergeProductModel[];
+        currentStep?: number,
+        currentStatus?: number,
+        isAdmin?: boolean;
+    }
+
+
+    /*合并订单的更新*/
+    export interface CustomerOrderMergeUpdateRequest {
+        /** Customer order merege ID*/
+        ID?: string;
+        /** 客户备注*/
+        CustomerMark?: string;
+        /** 选择渠道ID*/
+        CustomerChooseChannelID?: string;
+        /*选择渠道 名称*/
+        CustomerChooseChannelName?:string;
+        /** 收件人姓名*/
+        recipient?: string;
+        /** 国家*/
+        country?: string;
+        /** 地址*/
+        address?: string;
+        /** 城市*/
+        city?: string;
+        /** 税号*/
+        HSCode?: string;
+        /** 电话*/
+        tel?: string;
+        /** 公司*/
+        company?: string;
+        /** 邮编*/
+        /** 产品申报列表*/
+        productList?: ModelNameSpace.CustomerOrderMergeProductModel[];
+        /*税号*/
+        taxNo?: string;
+        /*客服备注 打包规则*/
+        customerServiceMark?:string;
+        /*打包重量*/
+        packageWeight?:number;
+        /*打包体积*/
+        packageVolume?:number;
+        /*打包长度*/
+        packageLength?:number;
+        /*打包高度*/
+        packageHeight?:number;
+        /*打包宽度*/
+        packageWidth?:number;
+        /*偏远费*/
+        remoteFee?:number;
+        /*磁检费*/
+        magneticinspectionFee?:number;
+        /*发货时间*/
+        deliverTime?:Date;
+        /*代理ID*/
+        AgentID?:string;
+        /*代理名称*/
+        AgentName?:string;
+        /*渠道单号*/
+        channelNo?:string;
+        /*当前阶段*/
+        currentStep?: number,
+        /*当前状态*/
+        currentStatus?: number,
+
+        isAdmin?: boolean;
+    }
+
     /** 新增入库订单*/
     export interface WarehouseInAddRequest {
         /** 会员ID*/
