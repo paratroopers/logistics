@@ -56,7 +56,7 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
     }
 
     onSaveContact() {
-        this.props.form.validateFields(["countryModel","recipient","City","postalcode","Tel","taxno","companyName","Address"],(err, values) => {
+        this.props.form.validateFields(["countryModel", "recipient", "City", "postalcode", "Tel", "taxno", "companyName", "Address"], (err, values) => {
             if (!err) {
                 let request: RequestNameSpace.InsertRecipientsAddressRequest = {
                     country: values.countryModel.label,
@@ -107,7 +107,7 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
             return <Col {...spanLayout}>
                 <Form.Item label={label}>
                     {
-                        <label>{defaultValue}</label>
+                        <label>{type === "CostCountry" ? defaultValue.lable : defaultValue}</label>
                     }
                 </Form.Item>
             </Col>;

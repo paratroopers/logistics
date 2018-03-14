@@ -120,7 +120,7 @@ class Cost extends React.Component<CostProps, CostStates> {
                     <Form.Item>
                         {getFieldDecorator('country', {
                             rules: [{required: true, message: '请填写收货国家!'}]
-                        })(<CostCountry searchName={getFieldValue('searchName')}
+                        })(<CostCountry size="large" placeholder="收货国家" searchName={getFieldValue('searchName')}
                                         onValueChange={(v, name) => this.onCountryChange(v, name)}></CostCountry>)}
                     </Form.Item>
                     <Form.Item>
