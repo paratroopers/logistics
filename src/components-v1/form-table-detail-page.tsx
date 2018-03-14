@@ -57,9 +57,15 @@ interface FormTableDetailPageStates {
     data?: ModelNameSpace.CustomerOrderMergeDetailModel;
 }
 
+class HeaderGenerator extends React.Component<any, any> {
+    render() {
+        return this.props.children;
+    }
+}
+
 @withRouter
 export class FormTableDetailPage extends React.Component<FormTableDetailPageProps, FormTableDetailPageStates> {
-    static Header?: JSX.Element = null;
+    static Header?: React.ComponentClass<any> = HeaderGenerator;
 
     constructor(props) {
         super(props);
@@ -90,22 +96,25 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
         const _mergeOrder = mergeOrder ? mergeOrder : {};
         const content = new FormTableDetailContentModel(Step);
         let emls: JSX.Element[] = [];
-        content.Info && emls.push(<FormOrderInfo
-            data={new ModelNameSpace.FormOrderInfoModel(data)}></FormOrderInfo>);
-        content.Relation && emls.push(<FormOrderRelation data={customerOrderList}></FormOrderRelation>);
-        content.Address && emls.push(<FormOrderAddressee selectContact={new ModelNameSpace.AddressModel(data)}
+        content.Info && emls.push(<FormOrderInfo key="Info"
+                                                 data={new ModelNameSpace.FormOrderInfoModel(data)}></FormOrderInfo>);
+        content.Relation && emls.push(<FormOrderRelation key="Relation" data={customerOrderList}></FormOrderRelation>);
+        content.Address && emls.push(<FormOrderAddressee key="Address"
+                                                         selectContact={new ModelNameSpace.AddressModel(data)}
                                                          readOnly></FormOrderAddressee>);
-        content.Declare && emls.push(<FormOrderDeclare data={mergeDetailList}></FormOrderDeclare>);
-        content.Channel && emls.push(<FormOrderChannel
-            ids={[_mergeOrder['CustomerChooseChannelID']]}></FormOrderChannel>);
-        content.OtherCost && emls.push(<FormOrderOtherCost></FormOrderOtherCost>);
-        content.PackageRemarks && emls.push(<FormRemarks title="打包规则" fieldName="customerServiceMark"></FormRemarks>);
-        content.CustomerRemarks && emls.push(<FormRemarks title="客户备注" fieldName="customerServiceMark"></FormRemarks>);
+        content.Declare && emls.push(<FormOrderDeclare key="Declare" data={mergeDetailList}></FormOrderDeclare>);
+        content.Channel && emls.push(<FormOrderChannel key="Channel"
+                                                       ids={[_mergeOrder['CustomerChooseChannelID']]}></FormOrderChannel>);
+        content.OtherCost && emls.push(<FormOrderOtherCost key="OtherCost"></FormOrderOtherCost>);
+        content.PackageRemarks && emls.push(<FormRemarks key="PackageRemarks" title="打包规则"
+                                                         fieldName="customerServiceMark"></FormRemarks>);
+        content.CustomerRemarks && emls.push(<FormRemarks key="CustomerRemarks" title="客户备注"
+                                                          fieldName="customerServiceMark"></FormRemarks>);
         return emls;
     }
 
     renderForm() {
-        const {state: {data}} = this;
+        const {state: {data}, props: {children}} = this;
         if (data)
             return <Layout.Content>
                 <Row justify="start" type="flex" style={{margin: '10px 0px 10px 0px'}}>
@@ -115,7 +124,7 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
                             <strong>单号：{data.mergeOrder ? data.mergeOrder.code : ''}</strong>
                         </div>
                         <div className="view-content-page-header-button">
-                            {FormTableDetailPage.Header}
+                            {children ? children.props.children : null}
                         </div>
                     </Col>
                 </Row>
