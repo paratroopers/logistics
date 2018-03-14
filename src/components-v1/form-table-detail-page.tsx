@@ -121,7 +121,7 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
                     <Col span={24}>
                         <div className="view-content-page-header-title">
                             <Icon type="tag" style={{color: '#f2804b', marginRight: '15px'}}/>
-                            <strong>单号：{data.mergeOrder ? data.mergeOrder.code : ''}</strong>
+                            <strong>单号：{data.mergeOrder ? data.mergeOrder.MergeOrderNo : ''}</strong>
                         </div>
                         <div className="view-content-page-header-button">
                             {children ? children.props.children : null}
