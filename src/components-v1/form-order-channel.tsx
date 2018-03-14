@@ -81,10 +81,6 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
         this.setState({data: data});
     }
 
-    renderChooseChannel() {
-
-    }
-
     renderTable() {
         const topThis = this;
         const {props: {readOnly}} = topThis;

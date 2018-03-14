@@ -20,6 +20,7 @@ import {FormOrderChannel} from "./form-order-channel";
 import {FormDeliveredDetail} from "./form-delivered-detail";
 import {FormPayment} from './form-payment';
 import FormOrderOtherCost from './form-order-other-cost';
+import {FormTableDetailPage, FormTableDetailContentModel} from './form-table-detail-page';
 
 
 export {
@@ -45,5 +46,7 @@ export {
     FormOrderChannel,
     FormDeliveredDetail,
     FormPayment,
-    FormOrderOtherCost
+    FormOrderOtherCost,
+    FormTableDetailPage,
+    FormTableDetailContentModel
 }
