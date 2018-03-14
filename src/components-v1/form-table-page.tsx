@@ -84,13 +84,24 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
     /** 获取数据源*/
     async loadData<T>(values?: T) {
         const {state: {pageIndex, pageSize}, props: {currentStep}} = this;
-        let request: RequestNameSpace.CustomerOrdersRequest = {
+        let request: RequestNameSpace.GetCustomerOrderMergeRequest = {
             pageIndex: pageIndex,
             pageSize: pageSize,
             ...Constants.getOrderStep(currentStep, true)
         }
+        for (let key of Object.keys(values)) {
+            /** 处理数据 取Key and Label的key*/
+            if (typeof values[key] === "object" && Array.isArray(values[key]) && values[key].length > 0)
+                switch (key) {
+                    case "customerOrderMergeNo":
+                        values[key] = values[key][0].label;
+                        break;
+                    default:
+                        values[key] = values[key][0].key;
+                        break;
+                }
+        }
         request = Object.assign(request, values);
-        console.log(request);
         this.setState({loading: true});
         const response = await APINameSpace.MemberAPI.GetCustomerOrdersMerge(request);
         if (response.Status === 0) {
@@ -205,10 +216,17 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
         let items: FormAdvancedItemModel[] = [
             {
                 defaultDisplay: true,
-                fieldName: "customerOrderMerge",
+                fieldName: "customerOrderMergeNo",
                 displayName: "客户合并订单号",
-                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrder} placeholder="搜索客户合并订单号"/>,
-                mobileShow: true
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrderMerge} placeholder="搜索客户合并订单号"/>,
+                mobileShow: true,
+                layout: {
+                    xs: 15,
+                    sm: 12,
+                    md: 12,
+                    lg: 6,
+                    xl: 6
+                }
             }
         ];
         if (this.props.searchConfig)

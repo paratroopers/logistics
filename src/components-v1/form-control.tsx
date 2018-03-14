@@ -66,7 +66,6 @@ export namespace FormControl {
         }
 
         fetchData = (value) => {
-            console.log('fetching user', value);
             this.lastFetchId += 1;
             let fetchId = this.lastFetchId;
             this.setState({data: [], fetching: true});
