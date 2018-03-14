@@ -9,21 +9,28 @@ import {
     FormOrderDeclare,
     FormRemarks,
     FormOrderChannel,
-    FormOrderOtherCost
+    FormOrderOtherCost,
+    FormOrderWarehousePackage
 } from "../components-v1/all-components-export";
 import {RequestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 
+interface ControlInterface {
+    hidden?: boolean;
+    readyOnly?: boolean;
+}
+
 export class FormTableDetailContentModel {
-    Info?: boolean = true;
-    Relation?: boolean = true;
-    Address?: boolean = true;
-    Declare?: boolean = true;
-    Channel?: boolean = true;
-    OtherCost?: boolean = true;
-    PackageRemarks?: boolean = true;
-    CustomerRemarks?: boolean = true;
+    Info?: ControlInterface = {};
+    Relation?: ControlInterface = {};
+    Address?: ControlInterface = {};
+    Declare?: ControlInterface = {};
+    Channel?: ControlInterface = {};
+    OtherCost?: ControlInterface = {};
+    PackageRemarks?: ControlInterface = {};
+    CustomerRemarks?: ControlInterface = {};
+    WarehousePackage?: ControlInterface = {};
 
     constructor(step?: ModelNameSpace.OrderTypeEnum) {
         if (step) {
@@ -36,7 +43,19 @@ export class FormTableDetailContentModel {
 
     private getStepDetailControl(step?: ModelNameSpace.OrderTypeEnum) {
         const stepControl = {
-            [ModelNameSpace.OrderTypeEnum.OrderConfirm]: {CustomerRemarks: false}
+            [ModelNameSpace.OrderTypeEnum.OrderConfirm]: {
+                CustomerRemarks: {hidden: true},
+                Address: {readyOnly: true},
+                WarehousePackage: {hidden: true}
+            },
+            [ModelNameSpace.OrderTypeEnum.OrderMerge]: {
+                Address: {readyOnly: true},
+                Declare: {readyOnly: true},
+                Channel: {readyOnly: true},
+                OtherCost: {readyOnly: true},
+                CustomerRemarks: {hidden: true},
+                PackageRemarks: {readyOnly: true}
+            }
         };
         return stepControl[step];
     }
@@ -93,20 +112,58 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
         const _mergeOrder = mergeOrder ? mergeOrder : {};
         const content = new FormTableDetailContentModel(Step);
         let emls: JSX.Element[] = [];
-        content.Info && emls.push(<FormOrderInfo key="Info"
-                                                 data={new ModelNameSpace.FormOrderInfoModel(data)}></FormOrderInfo>);
-        content.Relation && emls.push(<FormOrderRelation key="Relation" data={customerOrderList}></FormOrderRelation>);
-        content.Address && emls.push(<FormOrderAddressee key="Address"
-                                                         selectContact={new ModelNameSpace.AddressModel(data)}
-                                                         readOnly></FormOrderAddressee>);
-        content.Declare && emls.push(<FormOrderDeclare key="Declare" data={mergeDetailList}></FormOrderDeclare>);
-        content.Channel && emls.push(<FormOrderChannel key="Channel"
-                                                       ids={[_mergeOrder['CustomerChooseChannelID']]}></FormOrderChannel>);
-        content.OtherCost && emls.push(<FormOrderOtherCost key="OtherCost"></FormOrderOtherCost>);
-        content.PackageRemarks && emls.push(<FormRemarks key="PackageRemarks" title="打包规则"
-                                                         fieldName="customerServiceMark"></FormRemarks>);
-        content.CustomerRemarks && emls.push(<FormRemarks key="CustomerRemarks" title="客户备注"
-                                                          fieldName="customerServiceMark"></FormRemarks>);
+        content.Info && !content.Info.hidden && emls.push(
+            <FormOrderInfo key="Info"
+                           data={new ModelNameSpace.FormOrderInfoModel(data)}>
+            </FormOrderInfo>);
+
+        content.Relation && !content.Relation.hidden && emls.push(
+            <FormOrderRelation key="Relation"
+                               data={customerOrderList}>
+            </FormOrderRelation>);
+
+        content.Address && !content.Address.hidden && emls.push(
+            <FormOrderAddressee key="Address"
+                                selectContact={new ModelNameSpace.AddressModel(data)}
+                                readOnly={content.Address.readyOnly}>
+            </FormOrderAddressee>);
+
+        content.Declare && !content.Declare.hidden && emls.push(
+            <FormOrderDeclare key="Declare"
+                              data={mergeDetailList}
+                              readOnly={content.Address.readyOnly}>
+            </FormOrderDeclare>);
+
+        content.Channel && !content.Channel.hidden && emls.push(
+            <FormOrderChannel key="Channel"
+                              readOnly={content.Channel.readyOnly}
+                              ids={[_mergeOrder['CustomerChooseChannelID']]}>
+            </FormOrderChannel>);
+
+        content.OtherCost && !content.OtherCost.hidden && emls.push(
+            <FormOrderOtherCost key="OtherCost"
+                                readOnly={content.OtherCost.readyOnly}>
+            </FormOrderOtherCost>);
+
+        content.PackageRemarks && !content.PackageRemarks.hidden && emls.push(
+            <FormRemarks key="PackageRemarks"
+                         title="打包规则"
+                         readOnly={content.PackageRemarks.readyOnly}
+                         fieldName="customerServiceMark">
+            </FormRemarks>);
+
+        content.CustomerRemarks && !content.CustomerRemarks.hidden && emls.push(
+            <FormRemarks key="CustomerRemarks"
+                         title="客户备注"
+                         fieldName="customerServiceMark"
+                         readOnly={content.CustomerRemarks.readyOnly}>
+            </FormRemarks>);
+
+        content.WarehousePackage && !content.WarehousePackage.hidden && emls.push(
+            <FormOrderWarehousePackage key="CustomerRemarks"
+                                       title="仓库打包"
+                                       readOnly={content.CustomerRemarks.readyOnly}>
+            </FormOrderWarehousePackage>);
         return emls;
     }
 

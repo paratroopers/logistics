@@ -365,16 +365,16 @@ export namespace ModelNameSpace {
     }
 
     /** 客户订单详情Model*/
-    export interface CustomerOrderDetailModel extends BaseModel{
-        customerOrder?:CustomerOrderModel;
-        orderStatus?:CustomerOrderStatusModel;
-        attachList?:Attachment[];
+    export interface CustomerOrderDetailModel extends BaseModel {
+        customerOrder?: CustomerOrderModel;
+        orderStatus?: CustomerOrderStatusModel;
+        attachList?: Attachment[];
     }
 
     /** 客户订单状态Model*/
     export interface CustomerOrderStatusModel extends BaseModel {
         ID: string,
-        userID:string,
+        userID: string,
         OrderID: string,
         OrderNo: string,
         currentStep: string,
@@ -553,6 +553,22 @@ export namespace ModelNameSpace {
 
         remoteFee?: number;
         magneticinspectionFee?: number;
+    }
+
+    /*仓库合并打包*/
+    export class WarehousePackageModel {
+        constructor(defaultValue: WarehousePackageModel = undefined) {
+            if (defaultValue) {
+                for (let key of Object.keys(defaultValue)) {
+                    this[key] = defaultValue[key];
+                }
+            }
+        }
+
+        packageWeight?: number;
+        packageLength?: number;
+        packageWidth?: number;
+        packageHeight?: number;
     }
 
     /*收货人信息*/
