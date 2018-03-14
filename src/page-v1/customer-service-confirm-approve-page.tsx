@@ -31,12 +31,8 @@ export class CustomerServiceConfirmApprovePage extends React.Component<CustomerS
     }
 
     render() {
-        return <Layout className="customer-service-confirm-approve-page view-content-page">
-            <Layout.Header className="customer-service-confirm-approve-page-header view-content-page-header">
-                <ContentHeaderControl title="审批"></ContentHeaderControl>
-            </Layout.Header>
-            <FormTableDetailPage ID={this.state.selectedKey}
-                                 Step={ModelNameSpace.OrderTypeEnum.OrderConfirm}></FormTableDetailPage>
-        </Layout>
+        return <FormTableDetailPage ID={this.state.selectedKey}
+                                    Title="审批"
+                                    Step={ModelNameSpace.OrderTypeEnum.OrderConfirm}></FormTableDetailPage>
     }
 }

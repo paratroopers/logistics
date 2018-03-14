@@ -47,6 +47,8 @@ interface FormTableDetailPageProps extends RouteComponentProps<any, any> {
     ID: string;
     /*阶段*/
     Step?: ModelNameSpace.OrderTypeEnum;
+    /*标题*/
+    Title?: string;
 }
 
 interface FormTableDetailPageStates {
@@ -125,7 +127,7 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
         const {state: {data}} = this;
         return <Layout className="customer-service-confirm-approve-page view-content-page">
             <Layout.Header className="customer-service-confirm-approve-page-header view-content-page-header">
-                <ContentHeaderControl title="审批"></ContentHeaderControl>
+                <ContentHeaderControl title={this.props.Title}></ContentHeaderControl>
             </Layout.Header>
             <Spin spinning={!Object.keys(data).length}>
                 {this.renderForm()}
