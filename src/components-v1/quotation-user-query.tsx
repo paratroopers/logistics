@@ -121,7 +121,7 @@ class Cost extends React.Component<CostProps, CostStates> {
                         {getFieldDecorator('country', {
                             rules: [{required: true, message: '请填写收货国家!'}]
                         })(<CostCountry searchName={getFieldValue('searchName')}
-                                        onChange={(v, name) => this.onCountryChange(v, name)}></CostCountry>)}
+                                        onValueChange={(v, name) => this.onCountryChange(v, name)}></CostCountry>)}
                     </Form.Item>
                     <Form.Item>
                         {getFieldDecorator('weight', {
