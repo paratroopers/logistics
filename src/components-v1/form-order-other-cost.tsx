@@ -1,14 +1,9 @@
 import * as React from 'react';
-import {Input, Row, Col, Form, message, Icon} from 'antd';
+import {InputNumber, Row, Col, Form} from 'antd';
 import {FormComponentProps} from 'antd/lib/form';
 import {RowProps} from 'antd/lib/row';
-import {APINameSpace} from '../model/api';
-import {RequestNameSpace} from '../model/request';
-import {ResponseNameSpace} from '../model/response';
 import {FormSettingGroup} from './form-setting-group';
-import {FormContactInfo} from './form-contact-info';
 import {ModelNameSpace} from '../model/model';
-import {Context} from '../util/common';
 
 export interface FormOrderOtherCostProps extends FormComponentProps {
     readOnly?: boolean;
@@ -57,21 +52,14 @@ class FormOrderOtherCost extends React.Component<FormOrderOtherCostProps, FormOr
             return <Col {...spanLayout}>
                 <Form.Item label={label} required={readOnly ? false : !noRequired}>
                     {
-                        isTextArea ? getFieldDecorator(fieldName, {
-                                initialValue: defaultValue,
-                                rules: [{
-                                    required: !noRequired,
-                                    message: ' '
-                                }]
-                            })(<Input.TextArea disabled={this.props.readOnly}
-                                               placeholder={readOnly ? "" : '请输入'}></Input.TextArea>)
-                            : getFieldDecorator(fieldName, {
-                                initialValue: defaultValue,
-                                rules: [{
-                                    required: !noRequired,
-                                    message: ' '
-                                }]
-                            })(<Input disabled={this.props.readOnly} placeholder={readOnly ? "" : '请输入'}></Input>)
+                        getFieldDecorator(fieldName, {
+                            initialValue: defaultValue,
+                            rules: [{
+                                required: !noRequired,
+                                message: ' '
+                            }]
+                        })(<InputNumber disabled={this.props.readOnly} style={{width: '100%'}}
+                                        placeholder={readOnly ? "" : '请输入'}></InputNumber>)
                     }
                 </Form.Item>
             </Col>
