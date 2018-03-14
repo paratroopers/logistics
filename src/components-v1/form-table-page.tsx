@@ -174,7 +174,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
                     }
                     else {
                         hashHistory.push({
-                            pathname: dropDownConfig.editPath,
+                            pathname: (param.key === "view" ? dropDownConfig.viewPath : dropDownConfig.editPath),
                             query: {id: record.ID}
                         });
                     }
