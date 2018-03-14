@@ -21,16 +21,17 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
     getDropDownConfig() {
         const options: DropDownModel = {
             items: [{
-                key: PathConfig.MemberAddressPageView,
+                key: PathConfig.WarehouseOutApprovePage,
                 type: "search",
                 label: "审核"
             }, {
-                key: PathConfig.MemberAddressPageEdit,
+                key: PathConfig.WarehousePackageViewPage,
                 type: "edit",
                 label: "查看"
             }
             ],
-            editPath: PathConfig.MemberWaitPayApprovePage
+            viewPath: PathConfig.WarehousePackageViewPage,
+            editPath: PathConfig.WarehouseOutApprovePage
         };
         return options;
     }

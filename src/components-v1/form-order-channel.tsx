@@ -126,6 +126,7 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
                 hidden: readOnly
             }];
         return <FormOrderChannelTable pagination={false} columns={columns}
+                                      rowKey={"ID"}
                                       dataSource={this.state.data}></FormOrderChannelTable>
     }
 

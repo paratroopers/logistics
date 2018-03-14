@@ -119,7 +119,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
     }
 
     renderTable() {
-        const {state: {listData, selectedRowKeys, pageIndex, pageSize, totalCount, loading}, props: {dropDownConfig}} = this;
+        const {state: {listData, selectedRowKeys, pageIndex, pageSize, totalCount, loading}, props: {dropDownConfig, currentStep}} = this;
         const rowSelection = {
             fixed: true,
             selectedRowKeys,
@@ -154,8 +154,8 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             title: "状态",
             layout: ColumnLayout.RightBottom,
             dataIndex: 'currentStep',
-            render: (txt) => {
-                return <span>{Constants.getOrderStatusByString(ModelNameSpace.OrderTypeEnum.WaitApprove, txt)}</span>
+            render: (txt, record) => {
+                return <span>{Constants.getOrderStatusByString(currentStep, record.currentStatus)}</span>
             }
         }, {
             title: "创建时间",

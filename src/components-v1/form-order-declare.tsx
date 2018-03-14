@@ -261,6 +261,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
             }
         ]
         return <FormOrderDeclareTable columns={colums}
+                                      rowKey={"ID"}
                                       className="declare-table"
                                       pagination={false}
                                       dataSource={this.state.data}></FormOrderDeclareTable>;
