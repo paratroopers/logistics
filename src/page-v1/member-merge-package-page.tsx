@@ -17,8 +17,7 @@ import {
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {RequestNameSpace} from '../model/request';
-import {Context,Constants} from "../util/common";
-import {isArray} from "util";
+import {Context, Constants} from "../util/common";
 import {ResponseNameSpace} from '../model/response';
 
 export interface MemberMergePackagePageProps extends RouteComponentProps<any, any>, FormComponentProps {
@@ -67,7 +66,7 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
     }
 
     getMergeOrderInfo() {
-        const request = util.isArray(this.state.selectedKeys) ? (this.state.selectedKeys as string[]).join(",") : this.state.selectedKeys.toString();
+        const request = Array.isArray(this.state.selectedKeys) ? (this.state.selectedKeys as string[]).join(",") : this.state.selectedKeys.toString();
         APINameSpace.MemberAPI.GetOrderItemsByID(request).then((r: ResponseNameSpace.BaseResponse) => {
             if (r.Status === 0)
                 this.initOrderInfo(r.Data);
@@ -82,9 +81,19 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
         form.validateFieldsAndScroll((errors, values) => {
             if (!errors) {
                 /** 验证渠道信息是否存在*/
-                if (!isArray(channelList) || channelList.length === 0) {
+                if (!Array.isArray(channelList) || channelList.length === 0) {
                     message.warning("请选择渠道!");
                     return;
+                }
+
+                if (Array.isArray(values.productList)) {
+                    const productList = values.productList.filter((product) => {
+                        return ((Number.isFinite(product.declareUnitPrice) && product.declareUnitPrice == 0) || (Number.isFinite(product.productCount) && product.productCount == 0))
+                    });
+                    if (productList.length > 0) {
+                        message.warning("申报总值不能为0");
+                        return;
+                    }
                 }
 
                 const request: RequestNameSpace.CustomerOrderMergeAddRequest = {
@@ -144,7 +153,7 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
                     <Col span={24}>
                         <div className="view-content-page-header-button">
                             <Button type="primary" style={{marginRight: "10px"}} onClick={this.onSubmit.bind(this)}>确认合并打包</Button>
-                            <Button type="primary" onClick={()=>{
+                            <Button type="primary" onClick={() => {
                                 hashHistory.goBack();
                             }}>取消</Button>
                         </div>
