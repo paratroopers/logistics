@@ -10,7 +10,11 @@ import {SelectType, Constants, Context} from "../util/common";
 import {FormControl} from "../components-v1/form-control";
 import {APINameSpace} from "../model/api";
 import {ClickParam} from "antd/lib/menu";
-import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
+import {
+    FormTableOperation,
+    FormTableOperationModel,
+    FormTableOperationEnum
+} from "../components-v1/form-table-operation";
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import * as moment from 'moment';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
@@ -18,16 +22,10 @@ import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import FormTableHeader from '../components-v1/form-table-header';
 import {FormFileViewer} from "../components-v1/form-file-viewer";
 
-export interface DropDownModel {
-    items?: FormTableOperationModel[];
-    viewPath?: string;
-    editPath?: string;
-    delPath?: string;
-}
 
 /// 待审核列表
 interface FormTablePageProps {
-    dropDownConfig?: DropDownModel;
+    dropDownConfig?: FormTableOperationModel[];
     searchConfig?: FormAdvancedItemModel[];
     callBackTitle?: string;
     headerTip?: string;
@@ -179,13 +177,14 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             title: '操作',
             layout: ColumnLayout.Option,
             render: (val, record) => {
-                const menu: FormTableOperationModel[] = dropDownConfig.items;
+                const menu: FormTableOperationModel[] = dropDownConfig;
                 return <FormTableOperation onClick={(param: ClickParam) => {
-                    if (param.key === "delete") {
+                    if (param.key === FormTableOperationEnum.Detele.toString()) {
                     }
                     else {
+                        const thisMenu = dropDownConfig.filter(r => r.key.toString() === param.key)[0];
                         hashHistory.push({
-                            pathname: dropDownConfig.editPath,
+                            pathname: thisMenu.path,
                             query: {id: record.ID}
                         });
                     }

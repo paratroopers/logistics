@@ -71,6 +71,8 @@ interface FormTableDetailPageProps extends RouteComponentProps<any, any> {
     Step?: ModelNameSpace.OrderTypeEnum;
     /*标题*/
     Title?: string;
+    /*是否整个组件只读*/
+    readyOnly?: boolean;
 }
 
 interface FormTableDetailPageStates {
@@ -108,7 +110,7 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
     }
 
     renderContent(): JSX.Element[] {
-        const {state: {data, data: {customerOrderList, mergeDetailList, mergeOrder}}, props: {Step}} = this;
+        const {state: {data, data: {customerOrderList, mergeDetailList, mergeOrder}}, props: {Step, readyOnly}} = this;
         const _mergeOrder = mergeOrder ? mergeOrder : {};
         const content = new FormTableDetailContentModel(Step);
         let emls: JSX.Element[] = [];
@@ -125,30 +127,30 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
         content.Address && !content.Address.hidden && emls.push(
             <FormOrderAddressee key="Address"
                                 selectContact={new ModelNameSpace.AddressModel(data)}
-                                readOnly={content.Address.readyOnly}>
+                                readOnly={content.Address.readyOnly || readyOnly}>
             </FormOrderAddressee>);
 
         content.Declare && !content.Declare.hidden && emls.push(
             <FormOrderDeclare key="Declare"
                               data={mergeDetailList}
-                              readOnly={content.Declare.readyOnly}>
+                              readOnly={content.Declare.readyOnly || readyOnly}>
             </FormOrderDeclare>);
 
         content.Channel && !content.Channel.hidden && emls.push(
             <FormOrderChannel key="Channel"
-                              readOnly={content.Channel.readyOnly}
+                              readOnly={content.Channel.readyOnly || readyOnly}
                               ids={[_mergeOrder['CustomerChooseChannelID']]}>
             </FormOrderChannel>);
 
         content.OtherCost && !content.OtherCost.hidden && emls.push(
             <FormOrderOtherCost key="OtherCost"
-                                readOnly={content.OtherCost.readyOnly}>
+                                readOnly={content.OtherCost.readyOnly || readyOnly}>
             </FormOrderOtherCost>);
 
         content.PackageRemarks && !content.PackageRemarks.hidden && emls.push(
             <FormRemarks key="PackageRemarks"
                          title="打包规则"
-                         readOnly={content.PackageRemarks.readyOnly}
+                         readOnly={content.PackageRemarks.readyOnly || readyOnly}
                          fieldName="customerServiceMark">
             </FormRemarks>);
 
@@ -156,13 +158,13 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
             <FormRemarks key="CustomerRemarks"
                          title="客户备注"
                          fieldName="customerServiceMark"
-                         readOnly={content.CustomerRemarks.readyOnly}>
+                         readOnly={content.CustomerRemarks.readyOnly || readyOnly}>
             </FormRemarks>);
 
         content.WarehousePackage && !content.WarehousePackage.hidden && emls.push(
             <FormOrderWarehousePackage key="WarehousePackage"
                                        title="仓库打包"
-                                       readOnly={content.WarehousePackage.readyOnly}>
+                                       readOnly={content.WarehousePackage.readyOnly || readyOnly}>
             </FormOrderWarehousePackage>);
         return emls;
     }

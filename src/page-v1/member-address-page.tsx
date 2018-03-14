@@ -7,10 +7,14 @@ import {RequestNameSpace} from '../model/request';
 import {ResponseNameSpace} from '../model/response';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import {FormControl} from '../components-v1/form-control';
-import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
 import {PathConfig} from "../config/pathconfig";
 import {ClickParam} from "antd/lib/menu";
 import {ColumnProps, RowSelectionType, TableRowSelection} from "antd/lib/table";
+import {
+    FormTableOperation,
+    FormTableOperationModel,
+    FormTableOperationEnum
+} from "../components-v1/form-table-operation";
 
 
 // import {ContentHeaderControl}from "../../../components/controls/common/content-header-control";
@@ -76,17 +80,17 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
         render: (val, record, index) => {
             const menu: FormTableOperationModel[] = [
                 {
-                    key: PathConfig.MemberAddressPageView,
+                    key: FormTableOperationEnum.View,
                     type: "search",
                     label: "查看"
                 },
                 {
-                    key: PathConfig.MemberAddressPageEdit,
+                    key: FormTableOperationEnum.Edit,
                     type: "edit",
                     label: "编辑"
                 },
                 {
-                    key: "delete",
+                    key: FormTableOperationEnum.Detele,
                     type: "delete",
                     label: "删除"
                 }

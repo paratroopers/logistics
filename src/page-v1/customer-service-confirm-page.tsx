@@ -5,8 +5,11 @@ import {PathConfig} from '../config/pathconfig';
 import {SelectType} from "../util/common";
 import {FormControl} from "../components-v1/form-control";
 import {FormStatusSelect} from "../components-v1/form-status-select";
-import {FormTablePage, DropDownModel} from '../components-v1/form-table-page';
-
+import {FormTablePage} from '../components-v1/form-table-page';
+import {
+    FormTableOperationModel,
+    FormTableOperationEnum
+} from "../components-v1/form-table-operation";
 
 interface CustomerServiceConfirmPageProps {
 }
@@ -22,19 +25,17 @@ export class CustomerServiceConfirmPage extends React.Component<CustomerServiceC
     }
 
     getDropDownConfig() {
-        const options: DropDownModel = {
-            items: [{
-                key: PathConfig.CustomerServiceConfirmApprovePage,
-                type: "edit",
-                label: "审核"
-            }, {
-                key: PathConfig.CustomerServiceConfirmViewPage,
-                type: "search",
-                label: "查看"
-            }
-            ],
-            editPath: PathConfig.CustomerServiceConfirmApprovePage
-        };
+        const options: FormTableOperationModel[] = [{
+            key: FormTableOperationEnum.Edit,
+            type: "edit",
+            label: "审核",
+            path: PathConfig.CustomerServiceConfirmApprovePage
+        }, {
+            key: FormTableOperationEnum.View,
+            type: "search",
+            label: "查看",
+            path: PathConfig.CustomerServiceConfirmViewPage
+        }];
         return options;
     }
 
