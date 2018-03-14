@@ -42,6 +42,12 @@ export class FormTableDetailContentModel {
     }
 }
 
+class HeaderGenerator extends React.Component<any, any> {
+    render() {
+        return this.props.children;
+    }
+}
+
 interface FormTableDetailPageProps extends RouteComponentProps<any, any> {
     /** 原始订单ID*/
     ID: string;
@@ -55,12 +61,6 @@ interface FormTableDetailPageStates {
     viewData?: ModelNameSpace.CustomerOrderModel;
     /** 源数据*/
     data?: ModelNameSpace.CustomerOrderMergeDetailModel;
-}
-
-class HeaderGenerator extends React.Component<any, any> {
-    render() {
-        return this.props.children;
-    }
 }
 
 @withRouter
