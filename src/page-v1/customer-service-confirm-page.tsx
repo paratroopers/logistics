@@ -28,11 +28,13 @@ export class CustomerServiceConfirmPage extends React.Component<CustomerServiceC
         const options: FormTableOperationModel[] = [{
             key: FormTableOperationEnum.Edit,
             type: "edit",
-            label: "审核"
+            label: "审核",
+            path: PathConfig.CustomerServiceConfirmApprovePage
         }, {
             key: FormTableOperationEnum.View,
             type: "search",
-            label: "查看"
+            label: "查看",
+            path: PathConfig.CustomerServiceConfirmViewPage
         }];
         return options;
     }
