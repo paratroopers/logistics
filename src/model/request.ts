@@ -20,6 +20,7 @@ export namespace RequestNameSpace {
 
     export interface InsertRecipientsAddressRequest {
         country: string;
+        countryCode:string;
         recipient: string;
         City: string;
         postalcode: string;
@@ -32,6 +33,7 @@ export namespace RequestNameSpace {
     export interface UpdateRecipientsAddressRequest {
         id: string;
         country: string;
+        countryCode:string;
         recipient: string;
         City: string;
         postalcode: string;

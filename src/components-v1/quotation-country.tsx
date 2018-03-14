@@ -1,14 +1,14 @@
 import * as React from 'react';
 import {Select, Spin} from 'antd';
+import {SelectProps}from "antd/lib/select"
 import {InjectedIntlProps} from "react-intl";
 import {withRouter} from 'react-router';
 import {RequestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 
-export interface CostCountryProps extends ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
-    onChange?: (v, name) => void;
-    value?: any;
+export interface CostCountryProps extends SelectProps, ReactRouter.RouteComponentProps<any, any>, InjectedIntlProps {
+    onValueChange?: (v, name) => void;
     searchName?: string;
 }
 
@@ -61,13 +61,16 @@ export class CostCountry extends React.Component<CostCountryProps, CostCountrySt
     }
 
     onSearch(v?: any) {
-        this.search = v;
+        const topThis = this;
+        topThis.search = v;
         setTimeout(() => {
-            if (this.search === v && v) {
-                this.props.onChange && this.props.onChange([], this.state.searchName ? this.state.searchName : null);
-                this.getCountry(v);
+            const {props: {onValueChange}, state: {searchName}} = topThis;
+            if (topThis.search === v && v) {
+                if (onValueChange)
+                    onValueChange([], searchName ? searchName : null);
+                topThis.getCountry(v);
             }
-        }, this.loadingTime);
+        }, topThis.loadingTime);
     }
 
     onFocus() {
@@ -76,23 +79,31 @@ export class CostCountry extends React.Component<CostCountryProps, CostCountrySt
     }
 
     onCountryChange(value?: any) {
-        this.setState({
+        const topThis = this;
+        const {props: {onValueChange, onChange}} = topThis;
+        topThis.setState({
             fetching: false,
+            value: value
         }, () => {
-            this.props.onChange && this.props.onChange(value, this.state.searchName);
+            const {state: {searchName}} = topThis;
+            if (onValueChange)
+                onValueChange(value, searchName);
+            if (onChange)
+                onChange(value);
         });
     }
 
     render() {
-        const {fetching, data, value} = this.state;
-        return <Select showSearch={true} value={value}
+        const topThis = this;
+        const {state: {fetching, data, value}, props} = topThis;
+        return <Select {...props} showSearch={true} value={value}
                        notFoundContent={fetching ? <Spin size="small"/> : 'No Data'}
                        filterOption={false}
                        onFocus={this.onFocus.bind(this)}
                        onChange={(v) => this.onCountryChange(v)}
                        onSearch={(v) => {
                            this.onSearch(v);
-                       }} placeholder="收货国家" size="large">
+                       }}>
             {data.map(d => <Select.Option
                 key={d.code}>{d.englishName + ' ' + d.chineseName}</Select.Option>)}
         </Select>

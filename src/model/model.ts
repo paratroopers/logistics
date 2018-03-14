@@ -254,17 +254,17 @@ export namespace ModelNameSpace {
     export enum OrderTypeEnum {
         /** 仓库管理-订单入库*/
         OrderIn = 0,
-        /** 我的订单-待打包*/
+            /** 我的订单-待打包*/
         WaitPackage = 1,
-        /** 我的订单-待审核*/
+            /** 我的订单-待审核*/
         WaitApprove = 2,
-        /** 我的订单-待付款*/
+            /** 我的订单-待付款*/
         WaitPay = 3,
-        /** 客服管理-订单确认*/
+            /** 客服管理-订单确认*/
         OrderConfirm = 4,
-        /** 仓库管理-合并打包*/
+            /** 仓库管理-合并打包*/
         OrderMerge = 5,
-        /** 仓库管理-订单出库、我的订单-已发货*/
+            /** 仓库管理-订单出库、我的订单-已发货*/
         OrderOut = 6
     }
 
@@ -365,16 +365,16 @@ export namespace ModelNameSpace {
     }
 
     /** 客户订单详情Model*/
-    export interface CustomerOrderDetailModel extends BaseModel{
-        customerOrder?:CustomerOrderModel;
-        orderStatus?:CustomerOrderStatusModel;
-        attachList?:Attachment[];
+    export interface CustomerOrderDetailModel extends BaseModel {
+        customerOrder?: CustomerOrderModel;
+        orderStatus?: CustomerOrderStatusModel;
+        attachList?: Attachment[];
     }
 
     /** 客户订单状态Model*/
     export interface CustomerOrderStatusModel extends BaseModel {
         ID: string,
-        userID:string,
+        userID: string,
         OrderID: string,
         OrderNo: string,
         currentStep: string,
@@ -405,6 +405,8 @@ export namespace ModelNameSpace {
         InPackageCountTotal: number,
         /** 收件人姓名*/
         recipient: string,
+        /** 国家Code*/
+        countryCode: string,
         /** 国家*/
         country: string,
         /** 地址*/
@@ -568,6 +570,7 @@ export namespace ModelNameSpace {
                 this.recipient = mergeOrder.recipient;
                 this.Address = mergeOrder.address;
                 this.postalcode = mergeOrder.code;
+                this.countryCode = mergeOrder.countryCode || "";
             }
         }
 
@@ -580,6 +583,8 @@ export namespace ModelNameSpace {
         companyName?: string;
         /** 收件人姓名*/
         recipient?: string;
+        /** 国家Code*/
+        countryCode?: string;
         /** 国家*/
         country?: string;
         /** 城市*/
