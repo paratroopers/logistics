@@ -2,7 +2,11 @@ import * as React from 'react';
 import {withRouter} from 'react-router';
 import {ModelNameSpace} from "../model/model";
 import {PathConfig} from '../config/pathconfig';
-import {FormTablePage, DropDownModel} from '../components-v1/form-table-page';
+import {FormTablePage} from '../components-v1/form-table-page';
+import {
+    FormTableOperationModel,
+    FormTableOperationEnum
+} from "../components-v1/form-table-operation";
 
 @withRouter
 export class WarehouseOutPage extends React.Component<any, any> {
@@ -11,19 +15,17 @@ export class WarehouseOutPage extends React.Component<any, any> {
     }
 
     getDropDownConfig() {
-        const options: DropDownModel = {
-            items: [{
-                key: PathConfig.MemberAddressPageView,
-                type: "search",
-                label: "审核"
-            }, {
-                key: PathConfig.MemberAddressPageEdit,
-                type: "edit",
-                label: "查看"
-            }
-            ],
-            editPath: PathConfig.MemberWaitPayApprovePage
-        };
+        const options: FormTableOperationModel[] = [{
+            key: FormTableOperationEnum.Edit,
+            type: "search",
+            label: "审核",
+            path: PathConfig.WarehouseOutApprovePage
+        }, {
+            key: FormTableOperationEnum.View,
+            type: "edit",
+            label: "查看",
+            path: PathConfig.WarehousePackageViewPage
+        }]
         return options;
     }
 

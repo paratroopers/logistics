@@ -2,7 +2,11 @@ import * as React from 'react';
 import {withRouter} from 'react-router';
 import {ModelNameSpace} from "../model/model";
 import {PathConfig} from '../config/pathconfig';
-import {FormTablePage, DropDownModel} from '../components-v1/form-table-page';
+import {FormTablePage} from '../components-v1/form-table-page';
+import {
+    FormTableOperationModel,
+    FormTableOperationEnum
+} from "../components-v1/form-table-operation";
 
 /// 待审核列表
 interface MemberDeliveredPageProps {
@@ -20,19 +24,23 @@ export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProp
     }
 
     getDropDownConfig() {
-        const options: DropDownModel = {
-            items: [{
-                key: PathConfig.MemberAddressPageView,
+        const options: FormTableOperationModel[] = [
+            {
+                key: FormTableOperationEnum.View,
                 type: "search",
-                label: "审核"
-            }, {
-                key: PathConfig.MemberAddressPageEdit,
-                type: "edit",
                 label: "查看"
+            },
+            {
+                key: FormTableOperationEnum.Edit,
+                type: "edit",
+                label: "编辑"
+            },
+            {
+                key: FormTableOperationEnum.Detele,
+                type: "delete",
+                label: "删除"
             }
-            ],
-            editPath: PathConfig.MemberWaitPayApprovePage
-        };
+        ]
         return options;
     }
 

@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {withRouter,hashHistory} from 'react-router';
+import {withRouter, hashHistory} from 'react-router';
 import {Row, Col, Button, Icon, Table, Alert} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
-const { RangePicker } = DatePicker;
+
+const {RangePicker} = DatePicker;
 import {ColumnProps} from 'antd/lib/table';
 import {ModelNameSpace} from "../model/model";
 import {RequestNameSpace} from "../model/request";
@@ -19,7 +20,11 @@ import {FormStatusSelect} from "../components-v1/form-status-select";
 import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import {APINameSpace} from "../model/api";
 import {ClickParam} from "antd/lib/menu";
-import {FormTableOperation,FormTableOperationModel} from "../components-v1/form-table-operation";
+import {
+    FormTableOperation,
+    FormTableOperationModel,
+    FormTableOperationEnum
+} from "../components-v1/form-table-operation";
 
 
 interface MemberWarehouseInQueryPageStates {
@@ -28,11 +33,11 @@ interface MemberWarehouseInQueryPageStates {
     /** 选中行*/
     selectedRowKeys: any[],
     /** 当前页数*/
-    pageIndex:number,
+    pageIndex: number,
     /** 每页条数*/
-    pageSize:number,
+    pageSize: number,
     /** 总数*/
-    totalCount:number
+    totalCount: number
     /** 列表是否正在查询*/
     loading?: boolean;
 }
@@ -74,7 +79,7 @@ export class MemberWarehouseInQueryPage extends React.Component<MemberWarehouseI
     }
 
     /** 获取数据源*/
-    loadData = (index?:number,size?:number) => {
+    loadData = (index?: number, size?: number) => {
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
         const request: RequestNameSpace.GetWarehouseInListRequest = {
@@ -140,25 +145,25 @@ export class MemberWarehouseInQueryPage extends React.Component<MemberWarehouseI
         }, {
             title: "入库时间",
             dataIndex: 'InWareHouseTime'
-        },{
+        }, {
             title: '操作',
             fixed: 'right',
             render: (val, record, index) => {
-                const menu:FormTableOperationModel[]=[
+                const menu: FormTableOperationModel[] = [
                     {
-                        key: PathConfig.WarehouseInViewPage,
+                        key: FormTableOperationEnum.View,
                         type: "search",
                         label: "查看"
                     },
                     {
-                        key: PathConfig.WarehouseInEditPage,
+                        key: FormTableOperationEnum.Edit,
                         type: "edit",
                         label: "编辑"
                     }
                 ]
 
-                return <FormTableOperation onClick={(param:ClickParam)=>{
-                    hashHistory.push({pathname:param.key,state:record});
+                return <FormTableOperation onClick={(param: ClickParam) => {
+                    hashHistory.push({pathname: param.key, state: record});
                 }} value={menu}></FormTableOperation>;
             }
         }];
@@ -203,7 +208,7 @@ export class MemberWarehouseInQueryPage extends React.Component<MemberWarehouseI
         const hasSelected = selectedRowKeys.length > 0;
         return <Row type="flex" justify="end">
             <Col style={{marginRight: 16}}>
-                <Button type="primary" icon="plus" onClick={()=>{
+                <Button type="primary" icon="plus" onClick={() => {
                     hashHistory.push({pathname: PathConfig.WarehouseInAddPage});
                 }}>新增入库</Button>
             </Col>

@@ -8,9 +8,16 @@ import {ClickParam} from "antd/lib/menu";
 import {Context} from '../util/common';
 
 export class FormTableOperationModel {
-    key: string;
+    key: FormTableOperationEnum;
     type?: string;
     label: string;
+    path?: string;
+}
+
+export enum FormTableOperationEnum {
+    Edit = 0,
+    View = 1,
+    Detele = 2
 }
 
 interface FormTableOperationProps {

@@ -114,7 +114,7 @@ export class FormContactInfo extends React.Component<FormContactInfoProps, FormC
             width: '15%',
             render: (val, record, index) => {
                 const menu: FormTableOperationModel[] = [
-                    {
+/*                    {
                         key: PathConfig.MemberAddressPageView,
                         type: "search",
                         label: "查看"
@@ -128,7 +128,7 @@ export class FormContactInfo extends React.Component<FormContactInfoProps, FormC
                         key: "delete",
                         type: "delete",
                         label: "删除"
-                    }
+                    }*/
                 ]
                 return <FormTableOperation onClick={(param: ClickParam) => {
                     if (param.key === "delete") {

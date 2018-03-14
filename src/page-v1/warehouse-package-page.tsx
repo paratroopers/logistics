@@ -2,7 +2,11 @@ import * as React from 'react';
 import {withRouter} from 'react-router';
 import {ModelNameSpace} from "../model/model";
 import {PathConfig} from '../config/pathconfig';
-import {FormTablePage, DropDownModel} from '../components-v1/form-table-page';
+import {FormTablePage} from '../components-v1/form-table-page';
+import {
+    FormTableOperationModel,
+    FormTableOperationEnum
+} from "../components-v1/form-table-operation";
 
 interface WarehousePackgePageProps {
 
@@ -19,20 +23,17 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
     }
 
     getDropDownConfig() {
-        const options: DropDownModel = {
-            items: [{
-                key: 'approve',
-                type: "search",
-                label: "审核"
-            }, {
-                key: 'view',
-                type: "edit",
-                label: "查看"
-            }
-            ],
-            viewPath: PathConfig.WarehousePackageViewPage,
-            editPath: PathConfig.WarehousePackageApprovePage
-        };
+        const options: FormTableOperationModel[] = [{
+            key: FormTableOperationEnum.Edit,
+            type: "search",
+            label: "审核",
+            path: PathConfig.WarehousePackageApprovePage
+        }, {
+            key: FormTableOperationEnum.View,
+            type: "edit",
+            label: "查看",
+            path: PathConfig.WarehousePackageViewPage
+        }]
         return options;
     }
 

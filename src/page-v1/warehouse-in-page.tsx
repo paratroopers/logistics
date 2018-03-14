@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter, hashHistory, Link} from 'react-router';
-import {Row, Col, Button, Icon,Modal, message, Input, Tooltip} from 'antd';
+import {Row, Col, Button, Icon, Modal, message, Input, Tooltip} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {DatePicker} from "antd";
 import {ModelNameSpace} from "../model/model";
@@ -17,12 +17,17 @@ import {FormStatusSelect} from "../components-v1/form-status-select";
 import {FormAdvancedSearch} from "../components-v1/all-components-export";
 import {APINameSpace} from "../model/api";
 import {ClickParam} from "antd/lib/menu";
-import {FormTableOperation, FormTableOperationModel} from "../components-v1/form-table-operation";
+import {
+    FormTableOperation,
+    FormTableOperationModel,
+    FormTableOperationEnum
+} from "../components-v1/form-table-operation";
 import {isArray, isNullOrUndefined} from "util";
 import * as moment from 'moment';
-import {Constants,SelectType} from "../util/common";
+import {Constants, SelectType} from "../util/common";
 import {FormFileViewer} from "../components-v1/form-file-viewer";
 import {FormExport} from '../components-v1/form-export';
+
 const {RangePicker} = DatePicker;
 const confirm = Modal.confirm;
 
@@ -266,17 +271,17 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             render: (val, record) => {
                 const menu: FormTableOperationModel[] = [
                     {
-                        key: PathConfig.WarehouseInViewPage,
+                        key: FormTableOperationEnum.View,
                         type: "search",
                         label: "查看"
                     },
                     {
-                        key: PathConfig.WarehouseInEditPage,
+                        key: FormTableOperationEnum.Edit,
                         type: "edit",
                         label: "编辑"
                     },
                     {
-                        key: "delete",
+                        key: FormTableOperationEnum.Detele,
                         type: "delete",
                         label: "删除"
                     }
@@ -291,9 +296,9 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                             okType: 'danger',
                             cancelText: '取消',
                             onOk() {
-                                if(record.currentStatus!==ModelNameSpace.OrderStatusEnum.StatusB.toString()){
+                                if (record.currentStatus !== ModelNameSpace.OrderStatusEnum.StatusB.toString()) {
                                     topThis.onClickDelete(record.ID);
-                                }else {
+                                } else {
                                     message.warning("Order Is Approved Can Not BeDeleted！");
                                 }
                             },
