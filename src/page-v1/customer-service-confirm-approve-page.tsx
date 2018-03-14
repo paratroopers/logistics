@@ -2,12 +2,10 @@ import * as React from 'react';
 import {withRouter, RouteComponentProps} from 'react-router';
 import {Button} from 'antd';
 import {
-    ContentHeaderControl,
     FormTableDetailPage
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {ModelNameSpace} from '../model/model';
-import {} from '../components-v1/all-components-export';
 
 interface CustomerServiceConfirmApprovePageProps extends RouteComponentProps<any, any>, FormComponentProps {
 }

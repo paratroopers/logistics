@@ -21,6 +21,7 @@ import {FormDeliveredDetail} from "./form-delivered-detail";
 import {FormPayment} from './form-payment';
 import FormOrderOtherCost from './form-order-other-cost';
 import {FormTableDetailPage, FormTableDetailContentModel} from './form-table-detail-page';
+import FormOrderWarehousePackage from './form-order-warehouse-package';
 
 
 export {
@@ -48,5 +49,6 @@ export {
     FormPayment,
     FormOrderOtherCost,
     FormTableDetailPage,
-    FormTableDetailContentModel
+    FormTableDetailContentModel,
+    FormOrderWarehousePackage
 }

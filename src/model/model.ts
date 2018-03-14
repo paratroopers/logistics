@@ -557,6 +557,22 @@ export namespace ModelNameSpace {
         magneticinspectionFee?: number;
     }
 
+    /*仓库合并打包*/
+    export class WarehousePackageModel {
+        constructor(defaultValue: WarehousePackageModel = undefined) {
+            if (defaultValue) {
+                for (let key of Object.keys(defaultValue)) {
+                    this[key] = defaultValue[key];
+                }
+            }
+        }
+
+        packageWeight?: number;
+        packageLength?: number;
+        packageWidth?: number;
+        packageHeight?: number;
+    }
+
     /*收货人信息*/
     export class AddressModel {
         constructor(defaultValue = undefined) {
