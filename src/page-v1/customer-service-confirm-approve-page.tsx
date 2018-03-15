@@ -30,7 +30,8 @@ class CustomerServiceConfirmApprovePage extends React.Component<CustomerServiceC
 
     onSubmit() {
         this.props.form.validateFields((err, values) => {
-            console.log(1);
+            if (err) return;
+
         })
     }
 
