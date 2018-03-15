@@ -273,12 +273,14 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                     {
                         key: FormTableOperationEnum.View,
                         type: "search",
-                        label: "查看"
+                        label: "查看",
+                        path: PathConfig.WarehouseInViewPage
                     },
                     {
                         key: FormTableOperationEnum.Edit,
                         type: "edit",
-                        label: "编辑"
+                        label: "编辑",
+                        path: PathConfig.WarehouseInEditPage
                     },
                     {
                         key: FormTableOperationEnum.Detele,
@@ -288,7 +290,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                 ]
 
                 return <FormTableOperation onClick={(param: ClickParam) => {
-                    if (param.key === "delete") {
+                    if (param.key === FormTableOperationEnum.Detele.toString()) {
                         confirm({
                             title: '你确定要删除此订单?',
                             content: '订单删除后将不可恢复，请注意！',
@@ -307,7 +309,8 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                             }
                         });
                     } else {
-                        hashHistory.push({pathname: param.key, state: record});
+                        const pathModel = menu.filter(r => r.key.toString() === param.key)[0];
+                        hashHistory.push({pathname: pathModel.path, state: record});
                     }
                 }} value={menu}></FormTableOperation>;
             }

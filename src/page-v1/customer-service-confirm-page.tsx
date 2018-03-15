@@ -50,16 +50,9 @@ export class CustomerServiceConfirmPage extends React.Component<CustomerServiceC
             },
             {
                 defaultDisplay: true,
-                fieldName: "channel",
+                fieldName: "customerChooseChannelID",
                 displayName: "渠道",
                 control: <FormControl.FormSelect type={SelectType.channel} placeholder="渠道"/>
-            },
-            {
-                defaultDisplay: true,
-                fieldName: "currentStatus",
-                displayName: "状态",
-                control: <FormStatusSelect type={ModelNameSpace.OrderTypeEnum.WaitApprove}
-                                           placeholder="搜索订单状态"></FormStatusSelect>
             }];
     }
 

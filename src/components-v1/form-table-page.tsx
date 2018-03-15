@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {hashHistory, Link} from 'react-router';
-import {Icon, Row, Tooltip} from 'antd';
+import {Icon, Row, Tooltip, message} from 'antd';
 import {PaginationProps} from 'antd/lib/pagination';
 import {ModelNameSpace} from "../model/model";
 import {PathConfig} from '../config/pathconfig';
 import {RequestNameSpace} from "../model/request";
 import {FormAdvancedItemModel} from "../components-v1/form-advanced-search";
-import {SelectType, Constants, Context} from "../util/common";
+import {SelectType, Constants} from "../util/common";
 import {FormControl} from "../components-v1/form-control";
 import {APINameSpace} from "../model/api";
 import {ClickParam} from "antd/lib/menu";
@@ -87,18 +87,21 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             pageSize: pageSize,
             ...Constants.getOrderStep(currentStep, true)
         }
-        for (let key of Object.keys(values)) {
-            /** 处理数据 取Key and Label的key*/
-            if (typeof values[key] === "object" && Array.isArray(values[key]) && values[key].length > 0)
-                switch (key) {
-                    case "customerOrderMergeNo":
-                        values[key] = values[key][0].label;
-                        break;
-                    default:
-                        values[key] = values[key][0].key;
-                        break;
-                }
-        }
+        if (typeof (values) === "object")
+            for (let key of Object.keys(values)) {
+                /** 处理数据 取Key and Label的key*/
+                if (Array.isArray(values[key]) && values[key].length > 0 && typeof values[key][0] === "object")
+                    switch (key) {
+                        case "customerOrderMergeNo":
+                            values[key] = values[key][0].label;
+                            break;
+                        default:
+                            values[key] = values[key][0].key;
+                            break;
+                    }
+                else if (typeof values[key] === "object" && Object.keys(values[key]).indexOf("key") !== -1)
+                    values[key] = values[key].key;
+            }
         request = Object.assign(request, values);
         this.setState({loading: true});
         const response = await APINameSpace.MemberAPI.GetCustomerOrdersMerge(request);
@@ -120,10 +123,14 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
 
         const resp = await APINameSpace.AttachmentsAPI.GetAttachmentItems(request);
         if (resp.Status === 0) {
-            //不介意这么做 会渲染两次
-            this.setState({imgItems: resp.Data}, () => {
-                this.setState({visibleFormFileViewer: true});
-            });
+            if (Array.isArray(resp.Data) && resp.Data.length > 0) {
+                //不介意这么做 会渲染两次
+                this.setState({imgItems: resp.Data}, () => {
+                    this.setState({visibleFormFileViewer: true});
+                });
+            } else {
+                message.warning("提示：暂无附件");
+            }
         }
     }
 
@@ -162,9 +169,10 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
         }, {
             title: "状态",
             layout: ColumnLayout.RightBottom,
-            dataIndex: 'currentStep',
+            dataIndex: currentStep === ModelNameSpace.OrderTypeEnum.WaitApprove ? 'currentStep' : 'currentStatus',
             render: (txt, record) => {
-                return <span>{Constants.getOrderStatusByString(currentStep, record.currentStatus)}</span>
+                const status = currentStep === ModelNameSpace.OrderTypeEnum.WaitApprove ? record.currentStep : record.currentStatus;
+                return <span>{Constants.getOrderStatusByString(currentStep, status)}</span>
             }
         }, {
             title: "创建时间",
