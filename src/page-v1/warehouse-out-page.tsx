@@ -2,6 +2,8 @@ import * as React from 'react';
 import {withRouter} from 'react-router';
 import {ModelNameSpace} from "../model/model";
 import {PathConfig} from '../config/pathconfig';
+import {SelectType} from "../util/common";
+import {FormControl} from "../components-v1/form-control";
 import {FormTablePage} from '../components-v1/form-table-page';
 import {
     FormTableOperationModel,
@@ -16,21 +18,39 @@ export class WarehouseOutPage extends React.Component<any, any> {
 
     getDropDownConfig() {
         const options: FormTableOperationModel[] = [{
+            key: FormTableOperationEnum.View,
+            type: "edit",
+            label: "查看",
+            path: PathConfig.WarehouseOutViewPage
+        }, {
             key: FormTableOperationEnum.Edit,
             type: "search",
             label: "审核",
             path: PathConfig.WarehouseOutApprovePage
-        }, {
-            key: FormTableOperationEnum.View,
-            type: "edit",
-            label: "查看",
-            path: PathConfig.WarehousePackageViewPage
         }]
         return options;
     }
 
+    getSearchConfig() {
+        return [
+            {
+                defaultDisplay: true,
+                fieldName: "expressNo",
+                displayName: "快递单号",
+                mobileShow: true,
+                control: <FormControl.FormSelectIndex type={SelectType.ExpressNo} isadmin={false} placeholder="快递单号"/>
+            },
+            {
+                defaultDisplay: true,
+                fieldName: "customerChooseChannelID",
+                displayName: "渠道",
+                control: <FormControl.FormSelect type={SelectType.channel} placeholder="渠道"/>
+            }];
+    }
+
     render() {
         return <FormTablePage currentStep={ModelNameSpace.OrderTypeEnum.OrderOut}
+                              searchConfig={this.getSearchConfig()}
                               dropDownConfig={this.getDropDownConfig()}
                               callBackTitle="订单出库"
                               headerTip={'总计有{name}项出库订单'}></FormTablePage>;
