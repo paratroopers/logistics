@@ -4,7 +4,6 @@ import {ModelNameSpace} from "../model/model";
 import {PathConfig} from '../config/pathconfig';
 import {SelectType} from "../util/common";
 import {FormControl} from "../components-v1/form-control";
-import {FormStatusSelect} from "../components-v1/form-status-select";
 import {FormTablePage} from '../components-v1/form-table-page';
 import {
     FormTableOperationModel,

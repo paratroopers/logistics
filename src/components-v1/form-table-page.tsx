@@ -155,8 +155,9 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             dataIndex: 'MergeOrderNo',
             layout: ColumnLayout.LeftTop,
             render: (txt, record) => {
+                const path = dropDownConfig.filter(r => r.key === FormTableOperationEnum.View)[0].path;
                 return <Link
-                    to={{pathname: PathConfig.MemberMyOrderApprovalViewPage, query: {ids: record.ID}}}>{txt}</Link>
+                    to={{pathname: path, query: {id: record.ID}}}>{txt}</Link>
             }
         }, {
             title: "渠道",
