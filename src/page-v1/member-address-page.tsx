@@ -82,12 +82,14 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
                 {
                     key: FormTableOperationEnum.View,
                     type: "search",
-                    label: "查看"
+                    label: "查看",
+                    path: PathConfig.MemberAddressPageView
                 },
                 {
                     key: FormTableOperationEnum.Edit,
                     type: "edit",
-                    label: "编辑"
+                    label: "编辑",
+                    path: PathConfig.MemberAddressPageEdit
                 },
                 {
                     key: FormTableOperationEnum.Detele,
@@ -97,11 +99,12 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
             ]
 
             return <FormTableOperation onClick={(param: ClickParam) => {
-                if (param.key === "delete") {
+                if (param.key === FormTableOperationEnum.Detele.toString()) {
                     this.deleteDataByID(record.ID);
                 }
                 else {
-                    hashHistory.push({pathname: param.key, state: record});
+                    const path = menu.filter(r => r.key.toString() === param.key)[0].path;
+                    hashHistory.push({pathname: path, state: record});
                 }
 
             }} value={menu}></FormTableOperation>;
@@ -135,14 +138,12 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
     render() {
         return (<Row className="member-address-page">
             <ContentHeaderControl title="收件人地址"></ContentHeaderControl>
-            {/*<FormControl.FormButtonControl title="确认" type={ModelNameSpace.ButtonTypeEnum.confirm} handleClick={this.handleClick.bind(this)} loading={this.state.savingLoading}/>*/}
-            {/*<FormControl.FormButtonControl title="新增收件人" type={ModelNameSpace.ButtonTypeEnum.add} url={PathConfig.MemberAddressPageAdd}/>*/}
             {this.props.showOKButton ? <Button type="primary" onClick={this.onOk.bind(this)}>确认</Button> : null}
             <Button type="primary" onClick={this.returnUrl.bind(this)}>
                 新增联系人
             </Button>
             <Table loading={this.state.loading} rowKey={"ID"}
-                   rowSelection={this.props.showOKButton ? this.rowSelection : false}
+                   rowSelection={this.props.showOKButton ? this.rowSelection : null}
                    dataSource={this.state.dataSource} columns={this.columns} pagination={false}/>
         </Row>)
     }
