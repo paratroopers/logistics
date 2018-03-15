@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps} from 'react-router';
-import {Button} from 'antd';
 import {
     FormTableDetailPage
 } from "../components-v1/all-components-export";
@@ -31,7 +30,7 @@ export class WarehouseOutViewPage extends React.Component<WarehouseOutViewPagePr
     render() {
         return <FormTableDetailPage ID={this.state.selectedKey}
                                     Title="查看"
-                                    Step={ModelNameSpace.OrderTypeEnum.OrderMerge}
+                                    Step={ModelNameSpace.OrderTypeEnum.OrderOut}
                                     readyOnly></FormTableDetailPage>
     }
 }
