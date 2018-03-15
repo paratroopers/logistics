@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps, hashHistory} from 'react-router';
-import {Layout, Row, Col, Icon, Spin} from 'antd';
+import {Layout, Row, Col, Icon, Spin, Button} from 'antd';
+import {WrappedFormUtils} from 'antd/lib/form/Form';
 import {
     FormOrderInfo,
     ContentHeaderControl,
@@ -73,6 +74,10 @@ interface FormTableDetailPageProps extends RouteComponentProps<any, any> {
     Title?: string;
     /*是否整个组件只读*/
     readyOnly?: boolean;
+    /*回调事件*/
+    onSubmit?: <T>(values?: T) => void;
+    /*form表单*/
+    form?: WrappedFormUtils;
 }
 
 interface FormTableDetailPageStates {
@@ -109,6 +114,13 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
         response.Status === 0 && this.setState({data: response.Data || {}});
     }
 
+    getFormData() {
+        this.props.form.validateFields((err, values) => {
+            console.log(err);
+            this.props.onSubmit && this.props.onSubmit();
+        })
+    }
+
     renderContent(): JSX.Element[] {
         const {state: {data, data: {customerOrderList, mergeDetailList, mergeOrder}}, props: {Step, readyOnly}} = this;
         const _mergeOrder = mergeOrder ? mergeOrder : {};
@@ -126,6 +138,7 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
 
         content.Address && !content.Address.hidden && emls.push(
             <FormOrderAddressee key="Address"
+                                form={this.props.form}
                                 selectContact={new ModelNameSpace.AddressModel(data)}
                                 readOnly={content.Address.readyOnly || readyOnly}>
             </FormOrderAddressee>);
@@ -133,23 +146,29 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
         content.Declare && !content.Declare.hidden && emls.push(
             <FormOrderDeclare key="Declare"
                               data={mergeDetailList}
+                              form={this.props.form}
                               readOnly={content.Declare.readyOnly || readyOnly}>
             </FormOrderDeclare>);
 
-        content.Channel && !content.Channel.hidden && emls.push(
+        content.Channel && !content.Channel.hidden && this.props.form.getFieldDecorator('Channel') && emls.push(
             <FormOrderChannel key="Channel"
+                              onChange={(select) => {
+                                  this.props.form.setFieldsValue({'Channel': select});
+                              }}
                               readOnly={content.Channel.readyOnly || readyOnly}
                               ids={[_mergeOrder['CustomerChooseChannelID']]}>
             </FormOrderChannel>);
 
         content.OtherCost && !content.OtherCost.hidden && emls.push(
             <FormOrderOtherCost key="OtherCost"
+                                form={this.props.form}
                                 readOnly={content.OtherCost.readyOnly || readyOnly}>
             </FormOrderOtherCost>);
 
         content.PackageRemarks && !content.PackageRemarks.hidden && emls.push(
             <FormRemarks key="PackageRemarks"
                          title="打包规则"
+                         form={this.props.form}
                          readOnly={content.PackageRemarks.readyOnly || readyOnly}
                          fieldName="customerServiceMark">
             </FormRemarks>);
@@ -157,6 +176,7 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
         content.CustomerRemarks && !content.CustomerRemarks.hidden && emls.push(
             <FormRemarks key="CustomerRemarks"
                          title="客户备注"
+                         form={this.props.form}
                          fieldName="customerServiceMark"
                          readOnly={content.CustomerRemarks.readyOnly || readyOnly}>
             </FormRemarks>);
@@ -164,6 +184,7 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
         content.WarehousePackage && !content.WarehousePackage.hidden && emls.push(
             <FormOrderWarehousePackage key="WarehousePackage"
                                        title="仓库打包"
+                                       form={this.props.form}
                                        readOnly={content.WarehousePackage.readyOnly || readyOnly}>
             </FormOrderWarehousePackage>);
         return emls;

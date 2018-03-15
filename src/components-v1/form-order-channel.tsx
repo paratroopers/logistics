@@ -4,11 +4,11 @@ import {Util} from '../util/util';
 import {FormSettingGroup} from './form-setting-group';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
-import {ResponseNameSpace} from '../model/response';
+import {FormComponentProps} from 'antd/lib/form/Form';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {FormChannelInfo} from './form-channel-info';
 
-export interface FormOrderChannelProps {
+export interface FormOrderChannelProps{
     readOnly?: boolean;
     data?: ModelNameSpace.ChannelModal[];
     ids?: string[];

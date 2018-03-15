@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps} from 'react-router';
-import {Button} from 'antd';
+import {Button, Form} from 'antd';
 import {
     FormTableDetailPage
 } from "../components-v1/all-components-export";
@@ -20,7 +20,7 @@ export interface QueryData {
 
 
 @withRouter
-export class CustomerServiceConfirmApprovePage extends React.Component<CustomerServiceConfirmApprovePageProps, CustomerServiceConfirmApprovePageStates> {
+class CustomerServiceConfirmApprovePage extends React.Component<CustomerServiceConfirmApprovePageProps, CustomerServiceConfirmApprovePageStates> {
     constructor(props) {
         super(props);
         this.state = {
@@ -28,15 +28,25 @@ export class CustomerServiceConfirmApprovePage extends React.Component<CustomerS
         }
     }
 
+    onSubmit() {
+        this.props.form.validateFields((err, values) => {
+            console.log(1);
+        })
+    }
+
     render() {
         return <FormTableDetailPage ID={this.state.selectedKey}
+                                    form={this.props.form}
                                     Title="审批"
                                     Step={ModelNameSpace.OrderTypeEnum.OrderConfirm}>
             <FormTableDetailPage.Header>
-                <Button key="1" type="primary" style={{marginRight: "10px"}}>通过</Button>
+                <Button key="1" type="primary" onClick={this.onSubmit.bind(this)}
+                        style={{marginRight: "10px"}}>通过</Button>
                 <Button key="2" type="primary" style={{marginRight: "10px"}}>拒绝</Button>
                 <Button key="3" type="primary">取消</Button>
             </FormTableDetailPage.Header>
         </FormTableDetailPage>
     }
 }
+
+export default Form.create<any>()(CustomerServiceConfirmApprovePage);

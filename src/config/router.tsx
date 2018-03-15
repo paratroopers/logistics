@@ -39,7 +39,7 @@ import {MobileCustomerServicePage} from "../page-v1/mobile-customer-service-page
 
 import {CustomerServiceConfirmPage} from "../page-v1/customer-service-confirm-page";
 import {CustomerServiceConfirmViewPage} from "../page-v1/customer-service-confirm-view-page";
-import {CustomerServiceConfirmApprovePage} from "../page-v1/customer-service-confirm-approve-page";
+import CustomerServiceConfirmApprovePage from "../page-v1/customer-service-confirm-approve-page";
 
 import {WarehouseOutPage} from '../page-v1/warehouse-out-page';
 import {WarehouseOutViewPage} from '../page-v1/warehouse-out-view-page';
