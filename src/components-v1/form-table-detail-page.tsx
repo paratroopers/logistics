@@ -33,16 +33,16 @@ export class FormTableDetailContentModel {
     CustomerRemarks?: ControlInterface = {};
     WarehousePackage?: ControlInterface = {};
 
-    constructor(step?: ModelNameSpace.OrderTypeEnum) {
+    constructor(step?: ModelNameSpace.OrderTypeEnum, readyOnly?: boolean) {
         if (step) {
-            const controls = this.getStepDetailControl(step);
+            const controls = this.getStepDetailControl(step, readyOnly);
             for (let key of Object.keys(controls)) {
                 this[key] = controls[key];
             }
         }
     }
 
-    private getStepDetailControl(step?: ModelNameSpace.OrderTypeEnum) {
+    private getStepDetailControl(step?: ModelNameSpace.OrderTypeEnum, readyOnly?: boolean) {
         const stepApproveControl = {
             [ModelNameSpace.OrderTypeEnum.OrderConfirm]: {
                 CustomerRemarks: {hidden: true},
@@ -78,10 +78,12 @@ export class FormTableDetailContentModel {
             [ModelNameSpace.OrderTypeEnum.OrderConfirm]: {
                 CustomerRemarks: {hidden: true},
                 Address: {readyOnly: true},
-                WarehousePackage: {hidden: true}
+                WarehousePackage: {hidden: true},
+                OtherCost: {hidden: true},
+                PackageRemarks: {hidden: true}
             },
         }
-        return stepApproveControl[step];
+        return readyOnly ? stepViewControl[step] : stepApproveControl[step];
     }
 }
 
@@ -147,7 +149,7 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
     renderContent(): JSX.Element[] {
         const {state: {data, data: {customerOrderList, mergeDetailList, mergeOrder}}, props: {Step, readyOnly}} = this;
         const _mergeOrder = mergeOrder ? mergeOrder : {};
-        const content = new FormTableDetailContentModel(Step);
+        const content = new FormTableDetailContentModel(Step, readyOnly);
         let emls: JSX.Element[] = [];
         content.Info && !content.Info.hidden && emls.push(
             <FormOrderInfo key="Info"

@@ -30,7 +30,7 @@ export class CustomerServiceConfirmViewPage extends React.Component<CustomerServ
     render() {
         return <FormTableDetailPage ID={this.state.selectedKey}
                                     Title="查看"
-                                    Step={ModelNameSpace.OrderTypeEnum.OrderMerge}
+                                    Step={ModelNameSpace.OrderTypeEnum.OrderConfirm}
                                     readyOnly></FormTableDetailPage>
     }
 }
