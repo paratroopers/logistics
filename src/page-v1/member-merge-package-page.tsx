@@ -4,7 +4,6 @@ import {Layout, Row, Col, Button, message, Form} from 'antd';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import * as moment from 'moment';
-import * as util from "util";
 import {
     FormOrderInfo,
     FormOrderInfoModel,
@@ -88,7 +87,7 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
 
                 if (Array.isArray(values.productList)) {
                     const productList = values.productList.filter((product) => {
-                        return ((Number.isFinite(product.declareUnitPrice) && product.declareUnitPrice == 0) || (Number.isFinite(product.productCount) && product.productCount == 0))
+                        return ((Number.isFinite(product.declareUnitPrice) && product.declareUnitPrice === 0) || (Number.isFinite(product.productCount) && product.productCount === 0))
                     });
                     if (productList.length > 0) {
                         message.warning("申报总值不能为0");
@@ -105,8 +104,10 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
                     CustomerChooseChannelID: channelList[0].ID,
                     /** 收件人姓名*/
                     recipient: values.recipient,
+                    /** 国家Code*/
+                    countryCode: values.countryModel.key,
                     /** 国家*/
-                    country: values.country,
+                    country: values.countryModel.label,
                     /** 地址*/
                     address: values.Address,
                     /** 城市*/
