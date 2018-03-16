@@ -31,7 +31,7 @@ class FormOrderOtherCost extends React.Component<FormOrderOtherCostProps, FormOr
     }
 
     renderRow(label?: string, isTextArea?: boolean, noRequired?: boolean, fieldName?: string, defaultValue?: any, layout?: any) {
-        const {form: {getFieldDecorator}, readOnly} = this.props;
+        const {form, readOnly} = this.props;
         const spanLayout = layout ? layout : {
             xs: 24,
             sm: 24,
@@ -52,7 +52,7 @@ class FormOrderOtherCost extends React.Component<FormOrderOtherCostProps, FormOr
             return <Col {...spanLayout}>
                 <Form.Item label={label} required={readOnly ? false : !noRequired}>
                     {
-                        getFieldDecorator(fieldName, {
+                        form.getFieldDecorator(fieldName, {
                             initialValue: defaultValue,
                             rules: [{
                                 required: !noRequired,

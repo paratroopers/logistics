@@ -31,14 +31,14 @@ class FormRemarks extends React.Component<FormRemarksProps, FormRemarksStates> {
 
     render() {
         const topThis = this;
-        const {props: {form: {getFieldDecorator}, readOnly, title, minRows, fieldName}, state: {value}} = topThis;
+        const {props: {form, readOnly, title, minRows, fieldName}, state: {value}} = topThis;
         return <FormSettingGroup title={title ? title : "备注"}>
             <Form className="form-remarks">
-                <Row >
+                <Row>
                     <Col span={24} style={{marginBottom: 24}}>
                         {!readOnly ?
                             <Form.Item>{
-                                getFieldDecorator(fieldName ? fieldName : "Remark",
+                                form.getFieldDecorator(fieldName ? fieldName : "Remark",
                                     {initialValue: value, rules: [{required: true, message: ' '}]})
                                 (<Input.TextArea autosize={{minRows: minRows ? minRows : 6}}></Input.TextArea>)
                             }</Form.Item> : <span>{value}</span>}

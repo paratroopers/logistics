@@ -146,7 +146,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
     }
 
     renderTable() {
-        const {props: {form: {getFieldDecorator}}} = this;
+        const {props: {form}} = this;
         const colums: CommonColumnProps<ModelNameSpace.CustomerOrderMergeProductModel>[] = [
             {
                 title: <span className="required-lable">产品名称(中文)</span>,
@@ -154,7 +154,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                 width: '15%',
                 render: (txt, record, index) => {
                     return !this.props.readOnly && !Constants.minSM ?
-                        <Form.Item>{getFieldDecorator(`productList[${index}].productName`, {
+                        <Form.Item>{form.getFieldDecorator(`productList[${index}].productName`, {
                             initialValue: txt,
                             rules: [{required: true, message: '  '}]
                         })
@@ -169,7 +169,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                 width: '15%',
                 render: (txt, record, index) => {
                     return !this.props.readOnly && !Constants.minSM ?
-                        <Form.Item>{getFieldDecorator(`productList[${index}].productNameEN`, {
+                        <Form.Item>{form.getFieldDecorator(`productList[${index}].productNameEN`, {
                             initialValue: txt,
                             rules: [{required: true, message: '  '}]
                         })
@@ -186,7 +186,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                 render: (txt, record, index) => {
                     return !this.props.readOnly ?
                         <Form.Item>
-                            {getFieldDecorator(`productList[${index}].productCount`, {
+                            {form.getFieldDecorator(`productList[${index}].productCount`, {
                                 initialValue: txt,
                                 rules: [{required: true, message: '  '}]
                             })
@@ -211,7 +211,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                 dataIndex: 'HSCode',
                 render: (txt, record, index) => {
                     return !this.props.readOnly && !Constants.minSM ?
-                        <Form.Item>{getFieldDecorator(`productList[${index}].HSCode`, {
+                        <Form.Item>{form.getFieldDecorator(`productList[${index}].HSCode`, {
                             initialValue: txt
                         })
                         (<Input
@@ -226,7 +226,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                 render: (txt, record, index) => {
                     return !this.props.readOnly ?
                         <Form.Item>
-                            {getFieldDecorator(`productList[${index}].declareUnitPrice`, {
+                            {form.getFieldDecorator(`productList[${index}].declareUnitPrice`, {
                                 initialValue: txt,
                                 rules: [{required: true, message: '  '}]
                             })
@@ -285,14 +285,13 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
         </div>
     }
 
-    render() {
-        const {state: {visible}, props: {loading, form: {getFieldDecorator, getFieldValue, setFieldsValue}}} = this;
-        return <FormSettingGroup title={"货品申报信息"} topBar={this.renderAddButton()} loading={loading}>
-            <Form layout="inline" className="form-order-declare">{this.renderTable()}</Form>
-            {visible ? <Modal title="货品信息"
-                              visible
-                              onOk={this.onModalOk.bind(this)}
-                              onCancel={this.onModalCancel.bind(this)}>
+    renderAddModal() {
+        if (this.state.visible) {
+            const {props: {form: {getFieldDecorator, getFieldValue, setFieldsValue}}} = this;
+            return <Modal title="货品信息"
+                          visible
+                          onOk={this.onModalOk.bind(this)}
+                          onCancel={this.onModalCancel.bind(this)}>
                 <Form>
                     <Form.Item label="产品名称">
                         {
@@ -338,7 +337,16 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                         }
                     </Form.Item>
                 </Form>
-            </Modal> : null}
+            </Modal>
+        } else
+            return null;
+    }
+
+    render() {
+        const {props: {loading}} = this;
+        return <FormSettingGroup title={"货品申报信息"} topBar={this.renderAddButton()} loading={loading}>
+            <Form layout="inline" className="form-order-declare">{this.renderTable()}</Form>
+            {this.renderAddModal()}
         </FormSettingGroup>
     }
 }

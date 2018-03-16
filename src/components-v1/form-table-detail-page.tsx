@@ -43,7 +43,7 @@ export class FormTableDetailContentModel {
     }
 
     private getStepDetailControl(step?: ModelNameSpace.OrderTypeEnum) {
-        const stepControl = {
+        const stepApproveControl = {
             [ModelNameSpace.OrderTypeEnum.OrderConfirm]: {
                 CustomerRemarks: {hidden: true},
                 Address: {readyOnly: true},
@@ -58,7 +58,14 @@ export class FormTableDetailContentModel {
                 PackageRemarks: {readyOnly: true}
             }
         };
-        return stepControl[step];
+        const stepViewControl = {
+            [ModelNameSpace.OrderTypeEnum.OrderConfirm]: {
+                CustomerRemarks: {hidden: true},
+                Address: {readyOnly: true},
+                WarehousePackage: {hidden: true}
+            },
+        }
+        return stepApproveControl[step];
     }
 }
 
@@ -150,14 +157,18 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
                               readOnly={content.Declare.readyOnly || readyOnly}>
             </FormOrderDeclare>);
 
-        content.Channel && !content.Channel.hidden && this.props.form.getFieldDecorator('Channel') && emls.push(
-            <FormOrderChannel key="Channel"
-                              onChange={(select) => {
-                                  this.props.form.setFieldsValue({'Channel': select});
-                              }}
-                              readOnly={content.Channel.readyOnly || readyOnly}
-                              ids={[_mergeOrder['CustomerChooseChannelID']]}>
-            </FormOrderChannel>);
+        if (content.Channel && !content.Channel.hidden) {
+            if (this.props.form)
+                this.props.form.getFieldDecorator('Channel');
+            emls.push(
+                <FormOrderChannel key="Channel"
+                                  onChange={(select) => {
+                                      this.props.form.setFieldsValue({'Channel': select});
+                                  }}
+                                  readOnly={content.Channel.readyOnly || readyOnly}
+                                  ids={[_mergeOrder['CustomerChooseChannelID']]}>
+                </FormOrderChannel>);
+        }
 
         content.OtherCost && !content.OtherCost.hidden && emls.push(
             <FormOrderOtherCost key="OtherCost"

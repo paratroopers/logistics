@@ -92,8 +92,8 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
     }
 
     renderRow(label?: string, type?: "TextArea"
-                  | "CostCountry", noRequired?: boolean, fieldName?: string, defaultValue?: any, layout?: any) {
-        const {form: {getFieldDecorator}, readOnly} = this.props;
+        | "CostCountry", noRequired?: boolean, fieldName?: string, defaultValue?: any, layout?: any) {
+        const {readOnly} = this.props;
 
         const spanLayout = layout ? layout : {
             xs: 24,
@@ -128,14 +128,14 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
 
             return <Col {...spanLayout}>
                 <Form.Item label={label} required={readOnly ? false : !noRequired}>
-                    {getFieldDecorator(fieldName, {
-                        initialValue: defaultValue,
-                        rules: [{
-                            required: !noRequired,
-                            message: ' '
-                        }]
-                    })(FormItem)
-                    }
+                    {this.props.form ? this.props.form.getFieldDecorator(fieldName, {
+                            initialValue: defaultValue,
+                            rules: [{
+                                required: !noRequired,
+                                message: ' '
+                            }]
+                        })(FormItem)
+                        : FormItem}
                 </Form.Item>
             </Col>
         }
