@@ -56,6 +56,22 @@ export class FormTableDetailContentModel {
                 OtherCost: {readyOnly: true},
                 CustomerRemarks: {hidden: true},
                 PackageRemarks: {readyOnly: true}
+            },
+            [ModelNameSpace.OrderTypeEnum.WaitPay]: {
+                Address: {readyOnly: true},
+                Declare: {readyOnly: true},
+                Channel: {readyOnly: true},
+                OtherCost: {readyOnly: true},
+                CustomerRemarks: {readyOnly: true},
+                PackageRemarks: {readyOnly: true}
+            },
+            [ModelNameSpace.OrderTypeEnum.OrderOut]: {
+                Address: {readyOnly: true},
+                Declare: {readyOnly: true},
+                Channel: {readyOnly: true},
+                OtherCost: {readyOnly: true},
+                CustomerRemarks: {readyOnly: true},
+                PackageRemarks: {readyOnly: true}
             }
         };
         const stepViewControl = {

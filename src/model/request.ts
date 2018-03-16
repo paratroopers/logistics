@@ -20,7 +20,7 @@ export namespace RequestNameSpace {
 
     export interface InsertRecipientsAddressRequest {
         country: string;
-        countryCode:string;
+        countryCode: string;
         recipient: string;
         City: string;
         postalcode: string;
@@ -33,7 +33,7 @@ export namespace RequestNameSpace {
     export interface UpdateRecipientsAddressRequest {
         id: string;
         country: string;
-        countryCode:string;
+        countryCode: string;
         recipient: string;
         City: string;
         postalcode: string;
@@ -176,6 +176,8 @@ export namespace RequestNameSpace {
         CustomerChooseChannelID?: string;
         /** 收件人姓名*/
         recipient?: string;
+        /** 国家Code*/
+        countryCode?: string;
         /** 国家*/
         country?: string;
         /** 地址*/
@@ -199,7 +201,6 @@ export namespace RequestNameSpace {
         isAdmin?: boolean;
     }
 
-
     /*合并订单的更新*/
     export interface CustomerOrderMergeUpdateRequest {
         /** Customer order merege ID*/
@@ -209,7 +210,7 @@ export namespace RequestNameSpace {
         /** 选择渠道ID*/
         CustomerChooseChannelID?: string;
         /*选择渠道 名称*/
-        CustomerChooseChannelName?:string;
+        CustomerChooseChannelName?: string;
         /** 收件人姓名*/
         recipient?: string;
         /** 国家*/
@@ -230,29 +231,29 @@ export namespace RequestNameSpace {
         /*税号*/
         taxNo?: string;
         /*客服备注 打包规则*/
-        customerServiceMark?:string;
+        customerServiceMark?: string;
         /*打包重量*/
-        packageWeight?:number;
+        packageWeight?: number;
         /*打包体积*/
-        packageVolume?:number;
+        packageVolume?: number;
         /*打包长度*/
-        packageLength?:number;
+        packageLength?: number;
         /*打包高度*/
-        packageHeight?:number;
+        packageHeight?: number;
         /*打包宽度*/
-        packageWidth?:number;
+        packageWidth?: number;
         /*偏远费*/
-        remoteFee?:number;
+        remoteFee?: number;
         /*磁检费*/
-        magneticinspectionFee?:number;
+        magneticinspectionFee?: number;
         /*发货时间*/
-        deliverTime?:Date;
+        deliverTime?: Date;
         /*代理ID*/
-        AgentID?:string;
+        AgentID?: string;
         /*代理名称*/
-        AgentName?:string;
+        AgentName?: string;
         /*渠道单号*/
-        channelNo?:string;
+        channelNo?: string;
         /*当前阶段*/
         currentStep?: number,
         /*当前状态*/
@@ -361,43 +362,11 @@ export namespace RequestNameSpace {
 
     //region 客户待打包定义区
 
-    export interface GetCustomerOrderItemRequest{
-        customerOrderID?:string;
-        isAdmin?:boolean;
-    }
-
-    /** 客户合并订单*/
-    export interface CustomerOrderMergeAddRequest {
-        /** 用户ID*/
-        userid?: string;
-        /** 客户备注*/
-        CustomerMark?: string;
-        /** 选择渠道*/
-        CustomerChooseChannelID?: string;
-        /** 收件人姓名*/
-        recipient?: string;
-        /** 国家*/
-        country?: string;
-        /** 地址*/
-        address?: string;
-        /** 城市*/
-        city?: string;
-        /** 税号*/
-        code?: string;
-        /** 电话*/
-        tel?: string;
-        /** 公司*/
-        company?: string;
-        /** 邮编*/
-        taxNo?: string;
-        /** 客户关联订单列表*/
-        customerOrderList?: { customerOrderID: string }[];
-        /** 产品申报列表*/
-        productList?: ModelNameSpace.CustomerOrderMergeProductModel[];
-        currentStep?: number,
-        currentStatus?: number,
+    export interface GetCustomerOrderItemRequest {
+        customerOrderID?: string;
         isAdmin?: boolean;
     }
+
 
     /** 查询已合并订单详情*/
     export interface GetCustomerOrderMergeItemRequest {
