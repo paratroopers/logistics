@@ -29,7 +29,7 @@ export class MemberWaitPayViewPage extends React.Component<MemberWaitPayViewPage
     render() {
         return <FormTableDetailPage ID={this.state.selectedKey}
                                     Title="查看"
-                                    Step={ModelNameSpace.OrderTypeEnum.OrderOut}
+                                    Step={ModelNameSpace.OrderTypeEnum.WaitPay}
                                     readyOnly></FormTableDetailPage>
     }
 }

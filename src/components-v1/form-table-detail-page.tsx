@@ -11,7 +11,8 @@ import {
     FormRemarks,
     FormOrderChannel,
     FormOrderOtherCost,
-    FormOrderWarehousePackage
+    FormOrderWarehousePackage,
+    FormPayment
 } from "../components-v1/all-components-export";
 import {RequestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
@@ -32,6 +33,7 @@ export class FormTableDetailContentModel {
     PackageRemarks?: ControlInterface = {};
     CustomerRemarks?: ControlInterface = {};
     WarehousePackage?: ControlInterface = {};
+    Payment?: ControlInterface = {};
 
     constructor(step?: ModelNameSpace.OrderTypeEnum, readyOnly?: boolean) {
         if (step) {
@@ -90,6 +92,15 @@ export class FormTableDetailContentModel {
                 CustomerRemarks: {hidden: true},
                 PackageRemarks: {readyOnly: true},
                 WarehousePackage: {hidden: true}
+            },
+            [ModelNameSpace.OrderTypeEnum.WaitPay]: {
+                Address: {readyOnly: true},
+                Declare: {readyOnly: true},
+                Channel: {readyOnly: true},
+                OtherCost: {readyOnly: true},
+                CustomerRemarks: {readyOnly: true},
+                PackageRemarks: {readyOnly: true},
+                Payment: {hidden: true}
             }
         }
         return readyOnly ? stepViewControl[step] : stepApproveControl[step];
@@ -225,6 +236,8 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
                                        form={this.props.form}
                                        readOnly={content.WarehousePackage.readyOnly || readyOnly}>
             </FormOrderWarehousePackage>);
+
+        content.Payment && !content.Payment.hidden && emls.push(<FormPayment></FormPayment>);
         return emls;
     }
 

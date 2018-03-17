@@ -1,22 +1,11 @@
 import * as React from 'react';
-import {withRouter, RouteComponentProps, hashHistory} from 'react-router';
-import {Layout, Spin} from 'antd';
-import {ModelNameSpace} from '../model/model';
+import {withRouter, RouteComponentProps} from 'react-router';
+import {Button, Form} from 'antd';
 import {
-    FormOrderInfo,
-    ContentHeaderControl,
-    FormOrderRelation,
-    FormOrderAddressee,
-    FormOrderDeclare,
-    FormRemarks,
-    FormPackageDetail,
-    FormOrderChannel,
-    FormDeliveredDetail,
-    FormPayment
+    FormTableDetailPage
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
-import {APINameSpace} from '../model/api';
-import {RequestNameSpace} from '../model/request';
+import {ModelNameSpace} from '../model/model';
 
 interface MemberWaitPayApprovePageProps extends RouteComponentProps<any, any>, FormComponentProps {
 }
@@ -38,54 +27,21 @@ export class MemberWaitPayApprovePage extends React.Component<MemberWaitPayAppro
     constructor(props) {
         super(props);
         this.state = {
-            selectedKey: (this.props.location.query as QueryData).id,
-            data: {}
+            selectedKey: (this.props.location.query as QueryData).id
         }
-    }
-
-    componentDidMount() {
-        const {state: {selectedKey}} = this;
-        /** 未传值则返回*/
-        !selectedKey && hashHistory.goBack();
-        this.getOrderInfo();
-    }
-
-    async getOrderInfo() {
-        /** 通过ID获取表单数据*/
-        const request: RequestNameSpace.GetCustomerOrderMergeItemRequest = {
-            customerOrderMergeID: this.state.selectedKey,
-            isAdmin: false
-        }
-        const response = await APINameSpace.CustomerOrderAPI.GetCustomerOrderMergeItem(request);
-        response.Status === 0 && this.setState({data: response.Data || {}});
-    }
-
-    renderForm() {
-        const {state: {data, data: {customerOrderList, mergeDetailList, mergeOrder}}, props: {form}} = this;
-        const _mergeOrder = mergeOrder ? mergeOrder : {};
-        return <Layout.Content>
-            <FormOrderInfo data={new ModelNameSpace.FormOrderInfoModel(data)}></FormOrderInfo>
-            <FormOrderRelation data={customerOrderList}></FormOrderRelation>
-            <FormOrderAddressee selectContact={new ModelNameSpace.AddressModel(data)} readOnly></FormOrderAddressee>
-            <FormOrderDeclare data={mergeDetailList} readOnly></FormOrderDeclare>
-            <FormOrderChannel ids={[_mergeOrder['CustomerChooseChannelID']]} readOnly></FormOrderChannel>
-            <FormRemarks value={_mergeOrder['CustomerMark']} readOnly></FormRemarks>
-            <FormPackageDetail readOnly></FormPackageDetail>
-            <FormDeliveredDetail form={form} readOnly></FormDeliveredDetail>
-            <FormPayment></FormPayment>
-        </Layout.Content>
     }
 
     render() {
-        const topThis = this;
-        const {state: {data}} = topThis;
-        return <Layout className="member-wait-pay-approve-page view-content-page">
-            <Layout.Header className="member-wait-pay-approve-page-header view-content-page-header">
-                <ContentHeaderControl title="审批"></ContentHeaderControl>
-            </Layout.Header>
-            <Spin spinning={!Object.keys(data).length}>
-                {this.renderForm()}
-            </Spin>
-        </Layout>
+        return <FormTableDetailPage ID={this.state.selectedKey}
+                                    form={this.props.form}
+                                    Title="待付款"
+                                    Step={ModelNameSpace.OrderTypeEnum.WaitPay}>
+            {/*            <FormTableDetailPage.Header>
+                <Button key="1" type="primary" style={{marginRight: "10px"}}>通过</Button>
+                <Button key="2" type="primary">取消</Button>
+            </FormTableDetailPage.Header>*/}
+        </FormTableDetailPage>
     }
 }
+
+export default Form.create<any>()(MemberWaitPayApprovePage);

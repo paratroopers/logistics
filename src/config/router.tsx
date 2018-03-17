@@ -16,7 +16,7 @@ import {MemberMyOrderApprovalViewPage} from "../page-v1/member-my-order-approval
 import {MemberUserInformationPage} from "../page-v1/member-user-information";
 import {MemberWaitPayPage} from "../page-v1/member-wait-pay-page";
 import {MemberWaitPayViewPage} from "../page-v1/member-wait-pay-view-page";
-import {MemberWaitPayApprovePage} from "../page-v1/member-wait-pay-approve-page";
+import MemberWaitPayApprovePage from "../page-v1/member-wait-pay-approve-page";
 import {MemberWarehouseInQueryPage} from "../page-v1/member-warehouse-in-query-page";
 import {WarehouseInPage} from "../page-v1/warehouse-in-page";
 import {WarehouseInAddPage} from "../page-v1/warehouse-in-add-page";
