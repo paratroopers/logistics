@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps} from 'react-router';
-import {Button} from 'antd';
+import {Button, Form} from 'antd';
 import {
     FormTableDetailPage
 } from "../components-v1/all-components-export";
@@ -30,6 +30,7 @@ export class WarehousePackageApprovePage extends React.Component<WarehousePackag
 
     render() {
         return <FormTableDetailPage ID={this.state.selectedKey}
+                                    form={this.props.form}
                                     Title="审核"
                                     Step={ModelNameSpace.OrderTypeEnum.OrderMerge}>
             <FormTableDetailPage.Header>
@@ -39,3 +40,5 @@ export class WarehousePackageApprovePage extends React.Component<WarehousePackag
         </FormTableDetailPage>
     }
 }
+
+export default Form.create<any>()(WarehousePackageApprovePage);

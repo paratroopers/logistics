@@ -82,6 +82,15 @@ export class FormTableDetailContentModel {
                 OtherCost: {hidden: true},
                 PackageRemarks: {hidden: true}
             },
+            [ModelNameSpace.OrderTypeEnum.OrderMerge]: {
+                Address: {readyOnly: true},
+                Declare: {readyOnly: true},
+                Channel: {readyOnly: true},
+                OtherCost: {readyOnly: true},
+                CustomerRemarks: {hidden: true},
+                PackageRemarks: {readyOnly: true},
+                WarehousePackage: {hidden: true}
+            }
         }
         return readyOnly ? stepViewControl[step] : stepApproveControl[step];
     }

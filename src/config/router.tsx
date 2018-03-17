@@ -47,7 +47,7 @@ import {WarehouseOutApprovePage} from '../page-v1/warehouse-out-approve-page';
 
 import WarehousePackgePage from '../page-v1/warehouse-package-page';
 import {WarehousePackageViewPage} from '../page-v1/warehouse-package-view-page';
-import {WarehousePackageApprovePage} from '../page-v1/warehouse-package-approve-page';
+import WarehousePackageApprovePage from '../page-v1/warehouse-package-approve-page';
 
 const routerConfig = (
     <Router history={hashHistory}>
