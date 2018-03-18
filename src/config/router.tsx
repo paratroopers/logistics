@@ -43,7 +43,7 @@ import CustomerServiceConfirmApprovePage from "../page-v1/customer-service-confi
 
 import {WarehouseOutPage} from '../page-v1/warehouse-out-page';
 import {WarehouseOutViewPage} from '../page-v1/warehouse-out-view-page';
-import {WarehouseOutApprovePage} from '../page-v1/warehouse-out-approve-page';
+import WarehouseOutApprovePage from '../page-v1/warehouse-out-approve-page';
 
 import WarehousePackgePage from '../page-v1/warehouse-package-page';
 import {WarehousePackageViewPage} from '../page-v1/warehouse-package-view-page';

@@ -9,6 +9,7 @@ import {ModelNameSpace} from '../model/model';
 interface MemberWaitPayViewPageProps extends RouteComponentProps<any, any>, FormComponentProps {
 
 }
+
 interface MemberWaitPayViewPageStates {
     selectedKey?: string;
 }

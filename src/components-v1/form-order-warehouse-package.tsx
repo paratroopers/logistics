@@ -31,6 +31,10 @@ class FormOrderWarehousePackage extends React.Component<FormOrderWarehousePackag
         }
     }
 
+    getNumberFixed(num: number) {
+        return num ? num.toFixed(2) : '0.00';
+    }
+
     renderRow(label?: string, isTextArea?: boolean, noRequired?: boolean, fieldName?: string, defaultValue?: any, layout?: any) {
         const {form, readOnly} = this.props;
         const spanLayout = layout ? layout : {
@@ -67,15 +71,15 @@ class FormOrderWarehousePackage extends React.Component<FormOrderWarehousePackag
     }
 
     render() {
-        const {state: {data}, props: {readOnly, title}} = this;
+        const {state: {data: {packageLength, packageWidth, packageHeight, packageWeight}}, props: {readOnly, title}} = this;
         const defaultRowSetting: RowProps = {type: "flex", gutter: 16};
         return <FormSettingGroup title={title}>
             <Form className="form-order-address" layout={readOnly ? "inline" : "vertical"}>
                 <Row {...defaultRowSetting}>
-                    {this.renderRow('打包长度(cm)', false, false, 'packageLength', data.packageLength)}
-                    {this.renderRow('打包宽度(cm)', false, false, 'packageWidth', data.packageWidth)}
-                    {this.renderRow('打包高度(cm)', false, false, 'packageHeight', data.packageHeight)}
-                    {this.renderRow('打包总重量(cm³)', false, false, 'packageWeight', data.packageWeight)}
+                    {this.renderRow('打包长度(cm)', false, false, 'packageLength', this.getNumberFixed(packageLength))}
+                    {this.renderRow('打包宽度(cm)', false, false, 'packageWidth', this.getNumberFixed(packageWidth))}
+                    {this.renderRow('打包高度(cm)', false, false, 'packageHeight', this.getNumberFixed(packageHeight))}
+                    {this.renderRow('打包总重量(cm³)', false, false, 'packageWeight', this.getNumberFixed(packageWeight))}
                 </Row>
             </Form>
         </FormSettingGroup>

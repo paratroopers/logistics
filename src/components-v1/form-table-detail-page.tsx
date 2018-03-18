@@ -31,9 +31,9 @@ export class FormTableDetailContentModel {
     Channel?: ControlInterface = {};
     OtherCost?: ControlInterface = {};
     PackageRemarks?: ControlInterface = {};
-    CustomerRemarks?: ControlInterface = {};
     WarehousePackage?: ControlInterface = {};
     Payment?: ControlInterface = {};
+    CustomerMark?: ControlInterface = {};
 
     constructor(step?: ModelNameSpace.OrderTypeEnum, readyOnly?: boolean) {
         if (step) {
@@ -47,60 +47,77 @@ export class FormTableDetailContentModel {
     private getStepDetailControl(step?: ModelNameSpace.OrderTypeEnum, readyOnly?: boolean) {
         const stepApproveControl = {
             [ModelNameSpace.OrderTypeEnum.OrderConfirm]: {
-                CustomerRemarks: {hidden: true},
                 Address: {readyOnly: true},
-                WarehousePackage: {hidden: true}
+                WarehousePackage: {hidden: true},
+                CustomerMark: {readyOnly: true},
+                Payment: {hidden: true}
             },
             [ModelNameSpace.OrderTypeEnum.OrderMerge]: {
                 Address: {readyOnly: true},
                 Declare: {readyOnly: true},
                 Channel: {readyOnly: true},
                 OtherCost: {readyOnly: true},
-                CustomerRemarks: {hidden: true},
-                PackageRemarks: {readyOnly: true}
+                PackageRemarks: {readyOnly: true},
+                Payment: {hidden: true},
+                CustomerMark: {readyOnly: true},
             },
             [ModelNameSpace.OrderTypeEnum.WaitPay]: {
                 Address: {readyOnly: true},
                 Declare: {readyOnly: true},
                 Channel: {readyOnly: true},
-                OtherCost: {readyOnly: true},
-                CustomerRemarks: {readyOnly: true},
-                PackageRemarks: {readyOnly: true}
+                PackageRemarks: {hidden: true},
+                OtherCost: {hidden: true},
+                CustomerMark: {hidden: true},
+                WarehousePackage: {readyOnly: true},
             },
             [ModelNameSpace.OrderTypeEnum.OrderOut]: {
                 Address: {readyOnly: true},
                 Declare: {readyOnly: true},
                 Channel: {readyOnly: true},
-                OtherCost: {readyOnly: true},
-                CustomerRemarks: {readyOnly: true},
-                PackageRemarks: {readyOnly: true}
+                PackageRemarks: {hidden: true},
+                OtherCost: {hidden: true},
+                CustomerMark: {hidden: true},
+                Payment: {hidden: true},
+                WarehousePackage: {readyOnly: true},
             }
         };
         const stepViewControl = {
             [ModelNameSpace.OrderTypeEnum.OrderConfirm]: {
-                CustomerRemarks: {hidden: true},
                 Address: {readyOnly: true},
                 WarehousePackage: {hidden: true},
                 OtherCost: {hidden: true},
-                PackageRemarks: {hidden: true}
+                PackageRemarks: {hidden: true},
+                CustomerMark: {readyOnly: true},
+                Payment: {hidden: true}
             },
             [ModelNameSpace.OrderTypeEnum.OrderMerge]: {
                 Address: {readyOnly: true},
                 Declare: {readyOnly: true},
                 Channel: {readyOnly: true},
                 OtherCost: {readyOnly: true},
-                CustomerRemarks: {hidden: true},
                 PackageRemarks: {readyOnly: true},
-                WarehousePackage: {hidden: true}
+                WarehousePackage: {hidden: true},
+                Payment: {hidden: true}
             },
             [ModelNameSpace.OrderTypeEnum.WaitPay]: {
                 Address: {readyOnly: true},
                 Declare: {readyOnly: true},
                 Channel: {readyOnly: true},
-                OtherCost: {readyOnly: true},
-                CustomerRemarks: {readyOnly: true},
-                PackageRemarks: {readyOnly: true},
-                Payment: {hidden: true}
+                PackageRemarks: {hidden: true},
+                OtherCost: {hidden: true},
+                CustomerMark: {hidden: true},
+                Payment: {hidden: true},
+                WarehousePackage: {readyOnly: true},
+            },
+            [ModelNameSpace.OrderTypeEnum.OrderOut]: {
+                Address: {readyOnly: true},
+                Declare: {readyOnly: true},
+                Channel: {readyOnly: true},
+                PackageRemarks: {hidden: true},
+                OtherCost: {hidden: true},
+                CustomerMark: {hidden: true},
+                Payment: {hidden: true},
+                WarehousePackage: {readyOnly: true},
             }
         }
         return readyOnly ? stepViewControl[step] : stepApproveControl[step];
@@ -208,8 +225,15 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
                 </FormOrderChannel>);
         }
 
+        content.CustomerMark && !content.CustomerMark.hidden && emls.push(
+            <FormRemarks key="CustomerMark"
+                         form={this.props.form} title={"打包要求"}
+                         readOnly={content.CustomerMark.readyOnly || readyOnly}
+                         fieldName="CustomerMark" value={_mergeOrder['CustomerMark']}></FormRemarks>);
+
         content.OtherCost && !content.OtherCost.hidden && emls.push(
             <FormOrderOtherCost key="OtherCost"
+                                data={mergeOrder}
                                 form={this.props.form}
                                 readOnly={content.OtherCost.readyOnly || readyOnly}>
             </FormOrderOtherCost>);
@@ -217,22 +241,16 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
         content.PackageRemarks && !content.PackageRemarks.hidden && emls.push(
             <FormRemarks key="PackageRemarks"
                          title="打包规则"
+                         value={_mergeOrder['customerServiceMark']}
                          form={this.props.form}
                          readOnly={content.PackageRemarks.readyOnly || readyOnly}
                          fieldName="customerServiceMark">
             </FormRemarks>);
 
-        content.CustomerRemarks && !content.CustomerRemarks.hidden && emls.push(
-            <FormRemarks key="CustomerRemarks"
-                         title="客户备注"
-                         form={this.props.form}
-                         fieldName="customerServiceMark"
-                         readOnly={content.CustomerRemarks.readyOnly || readyOnly}>
-            </FormRemarks>);
-
         content.WarehousePackage && !content.WarehousePackage.hidden && emls.push(
             <FormOrderWarehousePackage key="WarehousePackage"
                                        title="仓库打包"
+                                       data={mergeOrder}
                                        form={this.props.form}
                                        readOnly={content.WarehousePackage.readyOnly || readyOnly}>
             </FormOrderWarehousePackage>);

@@ -67,13 +67,13 @@ class FormOrderOtherCost extends React.Component<FormOrderOtherCostProps, FormOr
 
     render() {
         const topThis = this;
-        const {state: {data}, props: {readOnly}} = topThis;
+        const {state: {data: {remoteFee, magneticinspectionFee}}, props: {readOnly}} = topThis;
         const defaultRowSetting: RowProps = {type: "flex", gutter: 16};
         return <FormSettingGroup title={"额外费用"}>
             <Form className="form-order-address" layout={readOnly ? "inline" : "vertical"}>
                 <Row {...defaultRowSetting}>
-                    {this.renderRow('偏远费（RMB)', false, false, 'remoteFee', data.remoteFee)}
-                    {this.renderRow('磁检费（RMB)', false, false, 'magneticinspectionFee', data.magneticinspectionFee)}
+                    {this.renderRow('偏远费（RMB)', false, false, 'remoteFee', remoteFee ? remoteFee.toFixed(2) : '0.00')}
+                    {this.renderRow('磁检费（RMB)', false, false, 'magneticinspectionFee', magneticinspectionFee ? magneticinspectionFee.toFixed(2) : '0.00')}
                 </Row>
             </Form>
         </FormSettingGroup>
