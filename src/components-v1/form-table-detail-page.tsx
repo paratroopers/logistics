@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps, hashHistory} from 'react-router';
-import {Layout, Row, Col, Icon, Spin, Button} from 'antd';
+import {Layout, Row, Col, Icon, Spin} from 'antd';
 import {WrappedFormUtils} from 'antd/lib/form/Form';
 import {
     FormOrderInfo,
@@ -12,100 +12,14 @@ import {
     FormOrderChannel,
     FormOrderOtherCost,
     FormOrderWarehousePackage,
-    FormPayment
+    FormPayment,
+    FormPackageDetail
 } from "../components-v1/all-components-export";
 import {RequestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
+const FormTableDetailContentModel = ModelNameSpace.FormTableDetailContentModel;
 
-interface ControlInterface {
-    hidden?: boolean;
-    readyOnly?: boolean;
-}
-
-export class FormTableDetailContentModel {
-    Info?: ControlInterface = {};
-    Relation?: ControlInterface = {};
-    Address?: ControlInterface = {};
-    Declare?: ControlInterface = {};
-    Channel?: ControlInterface = {};
-    OtherCost?: ControlInterface = {};
-    PackageRemarks?: ControlInterface = {};
-    CustomerRemarks?: ControlInterface = {};
-    WarehousePackage?: ControlInterface = {};
-    Payment?: ControlInterface = {};
-
-    constructor(step?: ModelNameSpace.OrderTypeEnum, readyOnly?: boolean) {
-        if (step) {
-            const controls = this.getStepDetailControl(step, readyOnly);
-            for (let key of Object.keys(controls)) {
-                this[key] = controls[key];
-            }
-        }
-    }
-
-    private getStepDetailControl(step?: ModelNameSpace.OrderTypeEnum, readyOnly?: boolean) {
-        const stepApproveControl = {
-            [ModelNameSpace.OrderTypeEnum.OrderConfirm]: {
-                CustomerRemarks: {hidden: true},
-                Address: {readyOnly: true},
-                WarehousePackage: {hidden: true}
-            },
-            [ModelNameSpace.OrderTypeEnum.OrderMerge]: {
-                Address: {readyOnly: true},
-                Declare: {readyOnly: true},
-                Channel: {readyOnly: true},
-                OtherCost: {readyOnly: true},
-                CustomerRemarks: {hidden: true},
-                PackageRemarks: {readyOnly: true}
-            },
-            [ModelNameSpace.OrderTypeEnum.WaitPay]: {
-                Address: {readyOnly: true},
-                Declare: {readyOnly: true},
-                Channel: {readyOnly: true},
-                OtherCost: {readyOnly: true},
-                CustomerRemarks: {readyOnly: true},
-                PackageRemarks: {readyOnly: true}
-            },
-            [ModelNameSpace.OrderTypeEnum.OrderOut]: {
-                Address: {readyOnly: true},
-                Declare: {readyOnly: true},
-                Channel: {readyOnly: true},
-                OtherCost: {readyOnly: true},
-                CustomerRemarks: {readyOnly: true},
-                PackageRemarks: {readyOnly: true}
-            }
-        };
-        const stepViewControl = {
-            [ModelNameSpace.OrderTypeEnum.OrderConfirm]: {
-                CustomerRemarks: {hidden: true},
-                Address: {readyOnly: true},
-                WarehousePackage: {hidden: true},
-                OtherCost: {hidden: true},
-                PackageRemarks: {hidden: true}
-            },
-            [ModelNameSpace.OrderTypeEnum.OrderMerge]: {
-                Address: {readyOnly: true},
-                Declare: {readyOnly: true},
-                Channel: {readyOnly: true},
-                OtherCost: {readyOnly: true},
-                CustomerRemarks: {hidden: true},
-                PackageRemarks: {readyOnly: true},
-                WarehousePackage: {hidden: true}
-            },
-            [ModelNameSpace.OrderTypeEnum.WaitPay]: {
-                Address: {readyOnly: true},
-                Declare: {readyOnly: true},
-                Channel: {readyOnly: true},
-                OtherCost: {readyOnly: true},
-                CustomerRemarks: {readyOnly: true},
-                PackageRemarks: {readyOnly: true},
-                Payment: {hidden: true}
-            }
-        }
-        return readyOnly ? stepViewControl[step] : stepApproveControl[step];
-    }
-}
 
 class HeaderGenerator extends React.Component<any, any> {
 }
@@ -214,6 +128,14 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
                                 readOnly={content.OtherCost.readyOnly || readyOnly}>
             </FormOrderOtherCost>);
 
+        content.CustomerRemarks && !content.CustomerRemarks.hidden && emls.push(
+            <FormRemarks key="CustomerRemarks"
+                         title="客户备注"
+                         form={this.props.form}
+                         fieldName="customerServiceMark"
+                         readOnly={content.CustomerRemarks.readyOnly || readyOnly}>
+            </FormRemarks>);
+
         content.PackageRemarks && !content.PackageRemarks.hidden && emls.push(
             <FormRemarks key="PackageRemarks"
                          title="打包规则"
@@ -222,13 +144,9 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
                          fieldName="customerServiceMark">
             </FormRemarks>);
 
-        content.CustomerRemarks && !content.CustomerRemarks.hidden && emls.push(
-            <FormRemarks key="CustomerRemarks"
-                         title="客户备注"
-                         form={this.props.form}
-                         fieldName="customerServiceMark"
-                         readOnly={content.CustomerRemarks.readyOnly || readyOnly}>
-            </FormRemarks>);
+        content.WarehousePackage && !content.WarehousePackage.hidden && emls.push(
+            <FormPackageDetail key="PackageDetail" readOnly={content.WarehousePackage.readyOnly || readyOnly}>
+            </FormPackageDetail>);
 
         content.WarehousePackage && !content.WarehousePackage.hidden && emls.push(
             <FormOrderWarehousePackage key="WarehousePackage"

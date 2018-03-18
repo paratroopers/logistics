@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Form, Input, Modal, Icon, message} from 'antd';
+import {Form, Input, Modal, Icon} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {FormSettingGroup} from './form-setting-group';
 import {FormInputNumber} from './form-input-number';

@@ -15,12 +15,12 @@ import {FormOrderInfo, FormOrderInfoModel} from "./form-order-info";
 import {ContentHeaderControl} from "./common-content-header";
 import WarehouseInForm from "../components-v1/warehouse-in-form";
 import FormRemarks from "./form-remarks";
-import {FormPackageDetail} from "./form-package-detail";
+import FormPackageDetail from "./form-package-detail";
 import {FormOrderChannel} from "./form-order-channel";
 import {FormDeliveredDetail} from "./form-delivered-detail";
 import {FormPayment} from './form-payment';
 import FormOrderOtherCost from './form-order-other-cost';
-import {FormTableDetailPage, FormTableDetailContentModel} from './form-table-detail-page';
+import {FormTableDetailPage} from './form-table-detail-page';
 import FormOrderWarehousePackage from './form-order-warehouse-package';
 
 
@@ -49,6 +49,5 @@ export {
     FormPayment,
     FormOrderOtherCost,
     FormTableDetailPage,
-    FormTableDetailContentModel,
     FormOrderWarehousePackage
 }

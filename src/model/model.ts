@@ -522,7 +522,7 @@ export namespace ModelNameSpace {
     //region 财务定义区
     //endregion
 
-    /*订单详情*/
+    /** 订单详情*/
     export class FormOrderInfoModel {
         constructor(defaultValue = undefined) {
             try {
@@ -544,7 +544,7 @@ export namespace ModelNameSpace {
         count ?: number;
     }
 
-    /*额外费用*/
+    /** 额外费用*/
     export class OtherCostModel {
         constructor(defaultValue: OtherCostModel = undefined) {
             if (defaultValue) {
@@ -557,7 +557,7 @@ export namespace ModelNameSpace {
         magneticinspectionFee?: number;
     }
 
-    /*仓库合并打包*/
+    /** 仓库合并打包*/
     export class WarehousePackageModel {
         constructor(defaultValue: WarehousePackageModel = undefined) {
             if (defaultValue) {
@@ -573,7 +573,7 @@ export namespace ModelNameSpace {
         packageHeight?: number;
     }
 
-    /*收货人信息*/
+    /** 收货人信息*/
     export class AddressModel {
         constructor(defaultValue = undefined) {
             if (defaultValue) {
@@ -618,5 +618,98 @@ export namespace ModelNameSpace {
         ModifiedByName?: string;
         Created?: Date;
         Modified?: Date;
+    }
+
+    /** 详情页面*/
+    interface ControlInterface {
+        hidden?: boolean;
+        readyOnly?: boolean;
+    }
+
+    export class FormTableDetailContentModel {
+        Info?: ControlInterface = {};
+        /** 基本信息*/
+        Relation?: ControlInterface = {};
+        /** 关联订单*/
+        Address?: ControlInterface = {};
+        /** 收货地址*/
+        Declare?: ControlInterface = {};
+        /** 货品申报*/
+        Channel?: ControlInterface = {};
+        /** 渠道选择*/
+        OtherCost?: ControlInterface = {};
+        /** 额外费用*/
+        PackageRemarks?: ControlInterface = {};
+        /** 打包要求*/
+        CustomerRemarks?: ControlInterface = {};
+        /** 客户备注*/
+        WarehousePackage?: ControlInterface = {};
+        /** 合并打包*/
+        PackageDetail?: ControlInterface = {};
+        /** 打包明细*/
+        Payment?: ControlInterface = {};
+
+        /** 付款信息*/
+
+        constructor(step?: ModelNameSpace.OrderTypeEnum, readyOnly?: boolean) {
+            if (step) {
+                const controls = this.getStepDetailControl(step, readyOnly);
+                for (let key of Object.keys(controls)) {
+                    this[key] = controls[key];
+                }
+            }
+        }
+
+        private getStepDetailControl(step?: ModelNameSpace.OrderTypeEnum, readyOnly?: boolean) {
+            const stepApproveControl = {
+                [ModelNameSpace.OrderTypeEnum.OrderConfirm]: {
+                    CustomerRemarks: {hidden: true},
+                    Address: {readyOnly: true},
+                    WarehousePackage: {hidden: true}
+                },
+                [ModelNameSpace.OrderTypeEnum.OrderMerge]: {
+                    Address: {readyOnly: true},
+                    Declare: {readyOnly: true},
+                    Channel: {readyOnly: true},
+                    OtherCost: {readyOnly: true},
+                    CustomerRemarks: {hidden: true},
+                    PackageRemarks: {readyOnly: true}
+                },
+                [ModelNameSpace.OrderTypeEnum.WaitPay]: {
+                    Address: {readyOnly: true},
+                    Declare: {readyOnly: true},
+                    Channel: {readyOnly: true},
+                    OtherCost: {readyOnly: true},
+                    CustomerRemarks: {readyOnly: true},
+                    PackageRemarks: {readyOnly: true}
+                },
+                [ModelNameSpace.OrderTypeEnum.OrderOut]: {
+                    Address: {readyOnly: true},
+                    Declare: {readyOnly: true},
+                    Channel: {readyOnly: true},
+                    OtherCost: {readyOnly: true},
+                    CustomerRemarks: {readyOnly: true},
+                    PackageRemarks: {readyOnly: true}
+                }
+            };
+            const stepViewControl = {
+                [ModelNameSpace.OrderTypeEnum.OrderConfirm]: {
+                    WarehousePackage: {hidden: true},
+                    PackageRemarks: {hidden: true},
+                    PackageDetail: {hidden: true},
+                    Payment: {hidden: true}
+                },
+                [ModelNameSpace.OrderTypeEnum.OrderMerge]: {
+                    OtherCost: {hidden: true},
+                    Payment: {hidden: true}
+                },
+                [ModelNameSpace.OrderTypeEnum.WaitPay]: {},
+                [ModelNameSpace.OrderTypeEnum.OrderOut]: {
+                    OtherCost: {hidden: true},
+                    Payment: {hidden: true}
+                }
+            }
+            return readyOnly ? stepViewControl[step] : stepApproveControl[step];
+        }
     }
 }
