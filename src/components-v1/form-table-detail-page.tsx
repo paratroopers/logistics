@@ -12,7 +12,8 @@ import {
     FormOrderChannel,
     FormOrderOtherCost,
     FormOrderWarehousePackage,
-    FormPayment
+    FormPayment,
+    FormOrderReceiptDate
 } from "../components-v1/all-components-export";
 import {RequestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
@@ -34,6 +35,7 @@ export class FormTableDetailContentModel {
     WarehousePackage?: ControlInterface = {};
     Payment?: ControlInterface = {};
     CustomerMark?: ControlInterface = {};
+    ReceiptDate?: ControlInterface = {};
 
     constructor(step?: ModelNameSpace.OrderTypeEnum, readyOnly?: boolean) {
         if (step) {
@@ -50,7 +52,8 @@ export class FormTableDetailContentModel {
                 Address: {readyOnly: true},
                 WarehousePackage: {hidden: true},
                 CustomerMark: {readyOnly: true},
-                Payment: {hidden: true}
+                Payment: {hidden: true},
+                ReceiptDate: {hidden: true}
             },
             [ModelNameSpace.OrderTypeEnum.OrderMerge]: {
                 Address: {readyOnly: true},
@@ -60,6 +63,7 @@ export class FormTableDetailContentModel {
                 PackageRemarks: {readyOnly: true},
                 Payment: {hidden: true},
                 CustomerMark: {readyOnly: true},
+                ReceiptDate: {hidden: true}
             },
             [ModelNameSpace.OrderTypeEnum.WaitPay]: {
                 Address: {readyOnly: true},
@@ -79,6 +83,7 @@ export class FormTableDetailContentModel {
                 CustomerMark: {hidden: true},
                 Payment: {hidden: true},
                 WarehousePackage: {readyOnly: true},
+                ReceiptDate: {readyOnly: true}
             }
         };
         const stepViewControl = {
@@ -88,7 +93,8 @@ export class FormTableDetailContentModel {
                 OtherCost: {hidden: true},
                 PackageRemarks: {hidden: true},
                 CustomerMark: {readyOnly: true},
-                Payment: {hidden: true}
+                Payment: {hidden: true},
+                ReceiptDate: {hidden: true}
             },
             [ModelNameSpace.OrderTypeEnum.OrderMerge]: {
                 Address: {readyOnly: true},
@@ -97,7 +103,8 @@ export class FormTableDetailContentModel {
                 OtherCost: {readyOnly: true},
                 PackageRemarks: {readyOnly: true},
                 WarehousePackage: {hidden: true},
-                Payment: {hidden: true}
+                Payment: {hidden: true},
+                ReceiptDate: {hidden: true}
             },
             [ModelNameSpace.OrderTypeEnum.WaitPay]: {
                 Address: {readyOnly: true},
@@ -118,6 +125,7 @@ export class FormTableDetailContentModel {
                 CustomerMark: {hidden: true},
                 Payment: {hidden: true},
                 WarehousePackage: {readyOnly: true},
+                ReceiptDate: {readyOnly: true}
             }
         }
         return readyOnly ? stepViewControl[step] : stepApproveControl[step];
@@ -254,6 +262,9 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
                                        form={this.props.form}
                                        readOnly={content.WarehousePackage.readyOnly || readyOnly}>
             </FormOrderWarehousePackage>);
+
+        content.ReceiptDate && !content.ReceiptDate.hidden && emls.push(
+            <FormOrderReceiptDate readOnly={content.ReceiptDate.readyOnly || readyOnly}></FormOrderReceiptDate>);
 
         content.Payment && !content.Payment.hidden && emls.push(<FormPayment></FormPayment>);
         return emls;
