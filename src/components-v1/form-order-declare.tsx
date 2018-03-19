@@ -146,10 +146,10 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
     }
 
     renderTable() {
-        const {props: {form}} = this;
+        const {props: {form, readOnly}} = this;
         const colums: CommonColumnProps<ModelNameSpace.CustomerOrderMergeProductModel>[] = [
             {
-                title: <span className="required-lable">产品名称(中文)</span>,
+                title: <span className={!readOnly ? "required-lable" : ""}>产品名称(中文)</span>,
                 dataIndex: 'productName',
                 width: '15%',
                 render: (txt, record, index) => {
@@ -164,7 +164,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                 },
                 layout: ColumnLayout.LeftTop
             }, {
-                title: <span className="required-lable">产品名称(英文)</span>,
+                title: <span className={!readOnly ? "required-lable" : ""}>产品名称(英文)</span>,
                 dataIndex: 'productNameEN',
                 width: '15%',
                 render: (txt, record, index) => {
@@ -180,7 +180,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                 hidden: Constants.minSM
             },
             {
-                title: <span className="required-lable">产品数量</span>,
+                title: <span className={!readOnly ? "required-lable" : ""}>产品数量</span>,
                 width: '10%',
                 dataIndex: 'productCount',
                 render: (txt, record, index) => {
@@ -220,7 +220,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                 },
                 hidden: Constants.minSM
             }, {
-                title: <span className="required-lable">申报单价</span>,
+                title: <span className={!readOnly ? "required-lable" : ""}>申报单价</span>,
                 width: '10%',
                 dataIndex: 'declareUnitPrice',
                 render: (txt, record, index) => {
