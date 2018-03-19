@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps, hashHistory} from 'react-router';
-import {Row} from 'antd';
+import {Row,Form} from 'antd';
+import {FormComponentProps} from 'antd/lib/form/Form';
 import {RequestNameSpace} from '../model/request';
 import {ResponseNameSpace} from '../model/response'
 import {ModelNameSpace} from '../model/model';
@@ -17,7 +18,7 @@ import {
 } from "../components-v1/all-components-export";
 import {isNullOrUndefined} from "util";
 
-interface MemberMyOrderApprovalViewPageProps extends RouteComponentProps<any, any> {
+interface MemberMyOrderApprovalViewPageProps extends RouteComponentProps<any, any>,FormComponentProps{
 
 }
 
@@ -34,7 +35,7 @@ export interface QueryData {
 
 
 @withRouter
-export class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrderApprovalViewPageProps, MemberMyOrderApprovalViewPageStates> {
+class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrderApprovalViewPageProps, MemberMyOrderApprovalViewPageStates> {
     constructor(props) {
         super(props);
         this.state = {
@@ -63,7 +64,7 @@ export class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrder
 
     render() {
         const topThis = this;
-        const {state: {data}} = topThis;
+        const {state: {data},props:{form}} = topThis;
 
         /** 订单基本信息*/
         const orederInfo: FormOrderInfoModel = data ? {
@@ -93,7 +94,7 @@ export class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrder
             <FormOrderAddressee selectContact={address} readOnly={true}></FormOrderAddressee>
             <FormOrderDeclare {...(data ? {data: data.mergeDetailList} : {loading: true})}
                               readOnly={true}></FormOrderDeclare>
-            {data ? <FormOrderChannel ids={[data.mergeOrder.CustomerChooseChannelID]}
+            {data ? <FormOrderChannel form={form} ids={[data.mergeOrder.CustomerChooseChannelID]}
                                       readOnly={true}></FormOrderChannel> : null}
             {data ? <FormRemarks value={data.mergeOrder.CustomerMark}
                                  title={"打包要求"}
@@ -101,3 +102,4 @@ export class MemberMyOrderApprovalViewPage extends React.Component<MemberMyOrder
         </Row>;
     }
 }
+export default Form.create<any>()(MemberMyOrderApprovalViewPage);

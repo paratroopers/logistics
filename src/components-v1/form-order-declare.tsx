@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Form, Input, Modal, Icon} from 'antd';
+import {Form, Input, Modal, Icon,Row,Col} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {FormSettingGroup} from './form-setting-group';
 import {FormInputNumber} from './form-input-number';
@@ -146,7 +146,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
     }
 
     renderTable() {
-        const {props: {form, readOnly}} = this;
+        const {props: {form, readOnly}, state: {total}} = this;
         const colums: CommonColumnProps<ModelNameSpace.CustomerOrderMergeProductModel>[] = [
             {
                 title: <span className={!readOnly ? "required-lable" : ""}>产品名称(中文)</span>,
@@ -264,24 +264,25 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                                       rowKey={"ID"}
                                       className="declare-table"
                                       pagination={false}
+                                      footer={(currentPageData: Object[]) => <Row type="flex" align="middle" justify="end">
+                                          <Col className="team-mao">申报总和</Col>
+                                          <Col>{Number(total).toFixed(2)}</Col>
+                                      </Row>}
                                       dataSource={this.state.data}></FormOrderDeclareTable>;
     }
 
     renderAddButton() {
         return <div>
-            {
-                this.props.readOnly ? null :
                     <span>
                         <Icon type="plus-circle-o"/>
                         <a onClick={this.onAddClick.bind(this)}>
                             <span>添加货品</span>
                         </a>
                     </span>
-            }
-            <div style={{float: 'right'}}>
-                <span style={{paddingRight: '5px'}}>申报总和:</span>
-                <a>{this.state.total}</a>
-            </div>
+            {/*<div style={{float: 'right'}}>*/}
+                {/*<span style={{paddingRight: '5px'}}>申报总和:</span>*/}
+                {/*<a>{this.state.total}</a>*/}
+            {/*</div>*/}
         </div>
     }
 
@@ -344,7 +345,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
 
     render() {
         const {props: {loading}} = this;
-        return <FormSettingGroup title={"货品申报信息"} topBar={this.renderAddButton()} loading={loading}>
+        return <FormSettingGroup telescopic={true} title={"货品申报信息"} topBar={this.props.readOnly ? null :this.renderAddButton()} loading={loading}>
             <Form layout="inline" className="form-order-declare">{this.renderTable()}</Form>
             {this.renderAddModal()}
         </FormSettingGroup>

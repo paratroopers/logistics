@@ -164,7 +164,7 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
                 <FormOrderRelation data={data}></FormOrderRelation>
                 <FormOrderAddressee form={form}></FormOrderAddressee>
                 <FormOrderDeclare form={form}></FormOrderDeclare>
-                <FormOrderChannel onChange={(channelData) => {
+                <FormOrderChannel form={form} onChange={(channelData) => {
                     this.setState({channelList: channelData});
                 }}></FormOrderChannel>
                 <FormRemarks form={form} title={"打包要求"} fieldName="CustomerMark"></FormRemarks>
