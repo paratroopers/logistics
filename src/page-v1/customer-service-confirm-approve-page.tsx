@@ -6,6 +6,8 @@ import {
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {ModelNameSpace} from '../model/model';
+import {APINameSpace} from '../model/api';
+import {RequestNameSpace} from '../model/request';
 
 interface CustomerServiceConfirmApprovePageProps extends RouteComponentProps<any, any>, FormComponentProps {
 }
@@ -31,7 +33,16 @@ class CustomerServiceConfirmApprovePage extends React.Component<CustomerServiceC
     onSubmit() {
         this.props.form.validateFields((err, values) => {
             if (err) return;
-
+            let request: RequestNameSpace.CustomerOrderMergeUpdateRequest = {};
+            for (let key of Object.keys(values)) {
+                request[key] = values[key];
+            }
+            request.ID = this.state.selectedKey;
+            request.currentStep = ModelNameSpace.OrderTypeEnum.OrderConfirm;
+            request.currentStatus = ModelNameSpace.OrderStatusEnum.StatusB;
+            APINameSpace.CustomerOrderAPI.CustomerOrderMergeUpdate(request).then(result => {
+                console.log(result);
+            });
         })
     }
 

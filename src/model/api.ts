@@ -272,7 +272,7 @@ export namespace APINameSpace {
         /*客户合并订单更新接口，适用阶段：客服审批，仓库打包，仓库发货阶段*/
         static CustomerOrderMergeUpdate(data: RequestNameSpace.CustomerOrderMergeUpdateRequest ){
             let url:string = CommonAPI.baseURL + "CustomerOrderMerge/Item/Update";
-            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url,data);
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().put(url,data);
         }
     }
 
