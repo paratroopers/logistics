@@ -233,6 +233,7 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
 
         content.OtherCost && !content.OtherCost.hidden && emls.push(
             <FormOrderOtherCost key="OtherCost"
+                                fieldsName={['remoteFee', 'magneticinspectionFee']}
                                 data={mergeOrder}
                                 form={this.props.form}
                                 readOnly={content.OtherCost.readyOnly || readyOnly}>
