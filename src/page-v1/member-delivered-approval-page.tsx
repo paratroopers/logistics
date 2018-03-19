@@ -81,7 +81,7 @@ export class MemberDeliveredApprovalPage extends React.Component<MemberDelivered
             <FormOrderRelation data={customerOrderList}></FormOrderRelation>
             <FormOrderAddressee selectContact={new ModelNameSpace.AddressModel(data)} readOnly></FormOrderAddressee>
             <FormOrderDeclare data={mergeDetailList} readOnly></FormOrderDeclare>
-            <FormOrderChannel ids={[_mergeOrder['CustomerChooseChannelID']]} readOnly></FormOrderChannel>
+            <FormOrderChannel form={form} ids={[_mergeOrder['CustomerChooseChannelID']]} readOnly></FormOrderChannel>
             <FormRemarks value={_mergeOrder['CustomerMark']} readOnly></FormRemarks>
             <FormPackageDetail readOnly></FormPackageDetail>
             <FormDeliveredDetail form={form} readOnly></FormDeliveredDetail>

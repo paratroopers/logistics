@@ -440,7 +440,9 @@ export namespace ModelNameSpace {
         freightFee: number,
         tax: number,
         serviceFee: number,
+        /** 偏远费*/
         remoteFee: number,
+        /** 磁检费*/
         magneticinspectionFee: number,
         totalFee: number,
         /** 渠道ID*/

@@ -12,7 +12,7 @@ import {MemberDeliveredPage} from "../page-v1/member-delivered-page";
 import {MemberMessageListPage} from "../page-v1/member-message-list-page";
 import {MemberMyOrderPage} from "../page-v1/member-my-order-page";
 import {MemberMyOrderPackageViewPage} from "../page-v1/member-my-order-package-view-page";
-import {MemberMyOrderApprovalViewPage} from "../page-v1/member-my-order-approval-view-page";
+import MemberMyOrderApprovalViewPage from "../page-v1/member-my-order-approval-view-page";
 import {MemberUserInformationPage} from "../page-v1/member-user-information";
 import {MemberWaitPayPage} from "../page-v1/member-wait-pay-page";
 import {MemberWaitPayViewPage} from "../page-v1/member-wait-pay-view-page";
