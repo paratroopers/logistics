@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps} from 'react-router';
-import {Button, Form} from 'antd';
+import {Button, Form,Row,Col} from 'antd';
 import {
     FormTableDetailPage
 } from "../components-v1/all-components-export";
@@ -41,10 +41,17 @@ class CustomerServiceConfirmApprovePage extends React.Component<CustomerServiceC
                                     Title="审批"
                                     Step={ModelNameSpace.OrderTypeEnum.OrderConfirm}>
             <FormTableDetailPage.Header>
-                <Button key="1" type="primary" onClick={this.onSubmit.bind(this)}
-                        style={{marginRight: "10px"}}>通过</Button>
-                <Button key="2" type="primary" style={{marginRight: "10px"}}>拒绝</Button>
-                <Button key="3" type="primary">取消</Button>
+                <Row type="flex" justify="end" gutter={16}>
+                    <Col>
+                        <Button key="1" type="primary" onClick={this.onSubmit.bind(this)} >通过</Button>
+                    </Col>
+                    <Col>
+                        <Button key="2" type="primary" >拒绝</Button>
+                    </Col>
+                    <Col>
+                        <Button key="3" type="primary">取消</Button>
+                    </Col>
+                </Row>
             </FormTableDetailPage.Header>
         </FormTableDetailPage>
     }

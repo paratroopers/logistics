@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps, hashHistory} from 'react-router';
-import {Layout, Row, Col, Icon, Spin, Button} from 'antd';
+import {Layout, Row, Col, Icon, Spin} from 'antd';
 import {WrappedFormUtils} from 'antd/lib/form/Form';
 import {
     FormOrderInfo,
@@ -264,7 +264,7 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
     }
 
     renderForm() {
-        const {state: {data}, props: {children}} = this;
+        const {state: {data}} = this;
         if (data)
             return <Layout.Content>
                 <Row justify="start" type="flex" style={{margin: '10px 0px 10px 0px'}}>
@@ -273,9 +273,6 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
                             <Icon type="tag" style={{color: '#f2804b', marginRight: '15px'}}/>
                             <strong>单号：{data.mergeOrder ? data.mergeOrder.MergeOrderNo : ''}</strong>
                         </div>
-                        <div className="view-content-page-header-button">
-                            {children ? children.props.children : null}
-                        </div>
                     </Col>
                 </Row>
                 {this.renderContent()}
@@ -283,11 +280,9 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
     }
 
     render() {
-        const {state: {data}} = this;
+        const {state: {data},props:{children}} = this;
         return <Layout className="customer-service-confirm-approve-page view-content-page">
-            <Layout.Header className="customer-service-confirm-approve-page-header view-content-page-header">
-                <ContentHeaderControl title={this.props.Title}></ContentHeaderControl>
-            </Layout.Header>
+            <ContentHeaderControl title={this.props.Title} extra={children ? children.props.children : null}></ContentHeaderControl>
             <Spin spinning={!Object.keys(data).length}>
                 {this.renderForm()}
             </Spin>

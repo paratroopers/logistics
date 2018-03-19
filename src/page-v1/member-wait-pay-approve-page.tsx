@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps} from 'react-router';
-import {Button, Form} from 'antd';
+import {Form} from 'antd';
 import {
     FormTableDetailPage
 } from "../components-v1/all-components-export";
@@ -36,10 +36,7 @@ export class MemberWaitPayApprovePage extends React.Component<MemberWaitPayAppro
                                     form={this.props.form}
                                     Title="待付款"
                                     Step={ModelNameSpace.OrderTypeEnum.WaitPay}>
-            {/*            <FormTableDetailPage.Header>
-                <Button key="1" type="primary" style={{marginRight: "10px"}}>通过</Button>
-                <Button key="2" type="primary">取消</Button>
-            </FormTableDetailPage.Header>*/}
+            {/**/}
         </FormTableDetailPage>
     }
 }

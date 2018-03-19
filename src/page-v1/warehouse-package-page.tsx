@@ -27,12 +27,12 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
     getDropDownConfig() {
         const options: FormTableOperationModel[] = [{
             key: FormTableOperationEnum.Edit,
-            type: "search",
+            type: "edit",
             label: "审核",
             path: PathConfig.WarehousePackageApprovePage
         }, {
             key: FormTableOperationEnum.View,
-            type: "edit",
+            type: "search",
             label: "查看",
             path: PathConfig.WarehousePackageViewPage
         }]

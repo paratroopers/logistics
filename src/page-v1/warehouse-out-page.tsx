@@ -19,12 +19,12 @@ export class WarehouseOutPage extends React.Component<any, any> {
     getDropDownConfig() {
         const options: FormTableOperationModel[] = [{
             key: FormTableOperationEnum.View,
-            type: "edit",
+            type: "search",
             label: "查看",
             path: PathConfig.WarehouseOutViewPage
         }, {
             key: FormTableOperationEnum.Edit,
-            type: "search",
+            type: "edit",
             label: "审核",
             path: PathConfig.WarehouseOutApprovePage
         }]

@@ -28,13 +28,13 @@ export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, M
         const options: FormTableOperationModel[] = [
             {
                 key: FormTableOperationEnum.View,
-                type: "search",
+                type: "edit",
                 label: "查看",
                 path: PathConfig.MemberWaitPayViewPage
             },
             {
                 key: FormTableOperationEnum.Edit,
-                type: "edit",
+                type: "search",
                 label: "付款",
                 path: PathConfig.MemberWaitPayApprovePage
             }
