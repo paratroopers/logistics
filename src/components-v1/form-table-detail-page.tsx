@@ -184,13 +184,6 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
         response.Status === 0 && this.setState({data: response.Data || {}});
     }
 
-    getFormData() {
-        this.props.form.validateFields((err, values) => {
-            console.log(err);
-            this.props.onSubmit && this.props.onSubmit();
-        })
-    }
-
     renderContent(): JSX.Element[] {
         const {state: {data, data: {customerOrderList, mergeDetailList, mergeOrder}}, props: {Step, readyOnly}} = this;
         const _mergeOrder = mergeOrder ? mergeOrder : {};
@@ -225,9 +218,8 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
                 this.props.form.getFieldDecorator('Channel');
             emls.push(
                 <FormOrderChannel key="Channel"
-                                  onChange={(select) => {
-                                      this.props.form.setFieldsValue({'Channel': select});
-                                  }}
+                                  form={this.props.form}
+                                  fieldName="CustomerChooseChannelID"
                                   readOnly={content.Channel.readyOnly || readyOnly}
                                   ids={[_mergeOrder['CustomerChooseChannelID']]}>
                 </FormOrderChannel>);

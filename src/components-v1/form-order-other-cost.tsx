@@ -8,6 +8,7 @@ import {ModelNameSpace} from '../model/model';
 export interface FormOrderOtherCostProps extends FormComponentProps {
     readOnly?: boolean;
     data?: ModelNameSpace.OtherCostModel;
+    fieldsName?: string[];
 }
 
 export interface FormOrderOtherCostStates {

@@ -8,8 +8,9 @@ import {FormComponentProps} from 'antd/lib/form/Form';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {FormChannelInfo} from './form-channel-info';
 
-export interface FormOrderChannelProps{
+export interface FormOrderChannelProps extends FormComponentProps {
     readOnly?: boolean;
+    fieldName?: string;
     data?: ModelNameSpace.ChannelModal[];
     ids?: string[];
     onChange?: (data: ModelNameSpace.ChannelModal[]) => void;
@@ -31,6 +32,7 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
             data: props.data ? props.data : [],
             channelsShow: false
         }
+        this.props.form && this.props.form.getFieldDecorator(this.props.fieldName, {initialValue: this.props.ids[0]});
     }
 
     componentDidMount() {
@@ -53,6 +55,10 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
                 data: data.filter((r) => {
                     return (ids ? ids : this.props.ids).indexOf(r.ID) !== -1;
                 })
+            }, () => {
+                if (this.props.form) {
+                    this.props.form.setFieldsValue({[this.props.fieldName]: this.props.ids[0]});
+                }
             });
         }
     }
@@ -67,6 +73,8 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
         this.setState({data: [{...selected}]}, () => {
             if (onChange)
                 onChange([{...selected}]);
+            else if (this.props.form)
+                this.props.form.setFieldsValue({[this.props.fieldName]: selected.ID});
         });
         this.setState({channelsShow: false});
     }
