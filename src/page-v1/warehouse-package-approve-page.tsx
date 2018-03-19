@@ -5,7 +5,10 @@ import {
     FormTableDetailPage
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
+import {Constants} from '../util/common';
 import {ModelNameSpace} from '../model/model';
+import {APINameSpace} from '../model/api';
+import {RequestNameSpace} from '../model/request';
 
 interface WarehousePackageApprovePageProps extends RouteComponentProps<any, any>, FormComponentProps {
 
@@ -28,6 +31,21 @@ export class WarehousePackageApprovePage extends React.Component<WarehousePackag
         }
     }
 
+    onSubmit() {
+        this.props.form.validateFields((err, values) => {
+            if (err) return;
+            let request: RequestNameSpace.CustomerOrderMergeUpdateRequest = {};
+            for (let key of Object.keys(values)) {
+                request[key] = values[key];
+            }
+            request.ID = this.state.selectedKey;
+            request.currentStep = Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderMerge);
+            request.currentStatus = ModelNameSpace.OrderStatusEnum.StatusB;
+            APINameSpace.CustomerOrderAPI.CustomerOrderMergeUpdate(request).then(result => {
+                console.log(result);
+            });
+        })
+    }
 
     render() {
         return <FormTableDetailPage ID={this.state.selectedKey}
@@ -37,7 +55,7 @@ export class WarehousePackageApprovePage extends React.Component<WarehousePackag
             <FormTableDetailPage.Header>
                 <Row type="flex" justify="end" gutter={16}>
                     <Col>
-                        <Button key="1" type="primary">通过</Button>
+                        <Button onClick={this.onSubmit.bind(this)} key="1" type="primary">通过</Button>
                     </Col>
                     <Col>
                         <Button key="2" type="primary">拒绝</Button>

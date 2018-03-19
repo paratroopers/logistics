@@ -5,6 +5,7 @@ import {
     FormTableDetailPage
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
+import {Constants} from '../util/common';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {RequestNameSpace} from '../model/request';
@@ -38,7 +39,7 @@ class CustomerServiceConfirmApprovePage extends React.Component<CustomerServiceC
                 request[key] = values[key];
             }
             request.ID = this.state.selectedKey;
-            request.currentStep = ModelNameSpace.OrderTypeEnum.OrderConfirm;
+            request.currentStep = Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderConfirm);
             request.currentStatus = ModelNameSpace.OrderStatusEnum.StatusB;
             APINameSpace.CustomerOrderAPI.CustomerOrderMergeUpdate(request).then(result => {
                 console.log(result);
