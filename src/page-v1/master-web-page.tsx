@@ -49,7 +49,7 @@ class MasterWebPage extends React.Component<MasterWebPageProps, MasterWebPageSta
                 height: 80,
                 zIndex: 1001,
                 background: "#FFF",
-                borderBottom: "1px solid #c2c2c2",
+                borderBottom: "1px solid #f5f5f5",
                 padding:0
             }}>
                 <div className="content-template" style={{maxWidth: '1500px', margin: '0 auto'}}>

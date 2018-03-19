@@ -268,12 +268,9 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
         if (data)
             return <Layout.Content>
                 <Row justify="start" type="flex" style={{margin: '10px 0px 10px 0px'}}>
-                    <Col span={24}>
-                        <div className="view-content-page-header-title">
-                            <Icon type="tag" style={{color: '#f2804b', marginRight: '15px'}}/>
-                            <strong>单号：{data.mergeOrder ? data.mergeOrder.MergeOrderNo : ''}</strong>
-                        </div>
-                    </Col>
+                        <Icon type="tag" style={{color: '#f2804b', marginRight: '15px',fontSize: 16}}/>
+                        <span className="team-mao form-label">单号</span>
+                        <span className="form-value">{data.mergeOrder ? data.mergeOrder.MergeOrderNo : ''}</span>
                 </Row>
                 {this.renderContent()}
             </Layout.Content>
