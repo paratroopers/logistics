@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps} from 'react-router';
-import {Button, Form,Row,Col} from 'antd';
+import {Button, Form, Row, Col, message} from 'antd';
 import {
     FormTableDetailPage
 } from "../components-v1/all-components-export";
@@ -31,19 +31,18 @@ export class WarehousePackageApprovePage extends React.Component<WarehousePackag
         }
     }
 
-    onSubmit() {
-        this.props.form.validateFields((err, values) => {
+    async onSubmit() {
+        this.props.form.validateFields(async (err, values) => {
             if (err) return;
             let request: RequestNameSpace.CustomerOrderMergeUpdateRequest = {};
-            for (let key of Object.keys(values)) {
-                request[key] = values[key];
+            for (let key of Object.keys(values.needUpdateData)) {
+                request[key] = values[key] ? values[key] : values.needUpdateData[key];
             }
             request.ID = this.state.selectedKey;
             request.currentStep = Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderMerge);
             request.currentStatus = ModelNameSpace.OrderStatusEnum.StatusB;
-            APINameSpace.CustomerOrderAPI.CustomerOrderMergeUpdate(request).then(result => {
-                console.log(result);
-            });
+            const result = await APINameSpace.CustomerOrderAPI.CustomerOrderMergeUpdate(request);
+            result.Status === 0 && message.success('操作成功');
         })
     }
 
