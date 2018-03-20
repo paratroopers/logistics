@@ -181,7 +181,23 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
             isAdmin: false
         }
         const response = await APINameSpace.CustomerOrderAPI.GetCustomerOrderMergeItem(request);
-        response.Status === 0 && this.setState({data: response.Data || {}});
+        if (response.Status === 0) {
+            let updateData: RequestNameSpace.CustomerOrderMergeUpdateRequest;
+            if (response.Data && this.props.form) {
+                const data = response.Data;
+                updateData = {
+                    productList: data.mergeDetailList,
+                    CustomerChooseChannelID: data.mergeOrder['CustomerChooseChannelID'],
+                    CustomerMark: data.mergeOrder['CustomerMark'],
+                    remoteFee: data.mergeOrder['remoteFee'],
+                    magneticinspectionFee: data.mergeOrder['magneticinspectionFee'],
+                    customerServiceMark: data.mergeOrder['customerServiceMark']
+                };
+                this.props.form.getFieldDecorator('needUpdateData', {initialValue: updateData});
+            }
+            this.setState({data: response.Data || {}});
+        }
+
     }
 
     renderContent(): JSX.Element[] {
@@ -268,18 +284,19 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
         if (data)
             return <Layout.Content>
                 <Row justify="start" type="flex" style={{margin: '10px 0px 10px 0px'}}>
-                        <Icon type="tag" style={{color: '#f2804b', marginRight: '15px',fontSize: 16}}/>
-                        <span className="team-mao form-label">单号</span>
-                        <span className="form-value">{data.mergeOrder ? data.mergeOrder.MergeOrderNo : ''}</span>
+                    <Icon type="tag" style={{color: '#f2804b', marginRight: '15px', fontSize: 16}}/>
+                    <span className="team-mao form-label">单号</span>
+                    <span className="form-value">{data.mergeOrder ? data.mergeOrder.MergeOrderNo : ''}</span>
                 </Row>
                 {this.renderContent()}
             </Layout.Content>
     }
 
     render() {
-        const {state: {data},props:{children}} = this;
+        const {state: {data}, props: {children}} = this;
         return <Layout className="customer-service-confirm-approve-page view-content-page">
-            <ContentHeaderControl title={this.props.Title} extra={children ? children.props.children : null}></ContentHeaderControl>
+            <ContentHeaderControl title={this.props.Title}
+                                  extra={children ? children.props.children : null}></ContentHeaderControl>
             <Spin spinning={!Object.keys(data).length}>
                 {this.renderForm()}
             </Spin>
