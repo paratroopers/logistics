@@ -24,9 +24,7 @@ export interface WarehouseInFormProps extends FormComponentProps {
     /** Data*/
     Data?: ModelNameSpace.WarehouseListModel;
     /** 类型*/
-    type?: 'add' | 'edit' | 'view';
-    /** 是否显示Modal模式*/
-    isModal?: boolean;
+    type?: 'add' | 'edit' | 'view' | 'modal'| 'query';
     style?: React.CSSProperties;
 }
 
@@ -57,7 +55,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
 
     componentDidMount() {
         const topThis = this;
-        const {props: {Data, type, isModal, form: {setFieldsValue}}} = topThis;
+        const {props: {Data, type, form: {setFieldsValue}}} = topThis;
         switch (type) {
             case"add":
                 break;
@@ -84,7 +82,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                     /** 仓库*/
                     wareHouse: {key: Data.WareHouseID, label: Data.WareHouseName}
                 });
-                if (!isModal) {
+                if (!(type==="modal")) {
                     setFieldsValue({
                         /** 入库状态*/
                         inWareHouseStatus: Data.currentStatus
@@ -101,7 +99,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
 
     render() {
         const topThis = this;
-        const {props: {form: {getFieldDecorator}, type, isModal, style, Data}} = topThis;
+        const {props: {form: {getFieldDecorator}, type, style, Data}} = topThis;
 
         /** 控件栅格*/
         const spanLayout: ColProps = {
@@ -109,22 +107,18 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
             sm: 12,
             md: 8
         }
-        const spanViewLayout: ColProps = {
-            xs: 24,
-            sm: 24,
-            md: 16
-        }
+
 
         /** 是否必填*/
-        const required = type === "view" ? false : true;
+        const required = (type === "view"||type === "modal"||type==="query") ? false : true;
 
         /** 是否只读*/
-        const readonly = type === "view" ? true : false;
+        const readonly = (type === "view"||type === "modal"||type==="query") ? true : false;
 
         const volumeStyle = Constants.minSM ? {marginBottom: '8px'} : {width: '100%'};
 
         /** vertical布局样式BUG --- 请勿移动控件顺序*/
-        const formItemLayout = type === "view" && Constants.minSM ? {
+        const formItemLayout = (type === "view"||type === "modal"||type==="query") && Constants.minSM ? {
             labelCol: {
                 xs: {span: 7}
             },
@@ -134,7 +128,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
         } : null;
 
         return (
-            <Form className="warehouse-in-add-form" style={style} layout={type === "view" ? "inline" : "vertical"}
+            <Form className="warehouse-in-add-form" style={style} layout={(type === "view"||type === "modal"||type==="query") ? "inline" : "vertical"}
                   onSubmit={topThis.onSubmit.bind(this)}>
                 <Row gutter={16}>
                     <Col {...spanLayout}>
@@ -196,7 +190,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                                                 placeholder="件数"/>)}
                         </FormItem>
                     </Col>
-                    {!isModal ? <Col {...spanLayout}>
+                    {!(type==="modal"||type==="query") ? <Col {...spanLayout}>
                         <FormItem {...formItemLayout} label={"入库状态"}>
                             {getFieldDecorator("inWareHouseStatus", {
                                 rules: [{required: required, message: '请选择状态!'}],
@@ -294,7 +288,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                         }}>取消</Button>
                     </Col>
                 </Row> : <Row>
-                    {!isModal ? <Col span={24}>
+                    {!(type==="modal") ? <Col span={24}>
                         <Button type="primary" onClick={() => {
                             /** 返回路由*/
                             hashHistory.goBack();
