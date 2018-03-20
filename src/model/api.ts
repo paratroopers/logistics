@@ -14,6 +14,7 @@ export namespace APINameSpace {
         static baseFileURL = "http://www.famliytree.cn";
         //static baseFileURL = "http://localhost:8090";
     }
+
     //endregion
 
     //region 系统模块定义区
@@ -35,6 +36,7 @@ export namespace APINameSpace {
 
 
     }
+
     //endregion
 
     //region 报价定义区
@@ -55,6 +57,7 @@ export namespace APINameSpace {
             return new Request<RequestNameSpace.QuotationRequest, ResponseNameSpace.BaseResponse>().get(url, reqeust);
         }
     }
+
     //endregion
 
     //region 用户或者会员模块定义区
@@ -168,6 +171,7 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
     }
+
     //endregion
 
     //region 仓库入库,打包，出库定义区
@@ -207,6 +211,7 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url);
         }
     }
+
     //endregion
 
     /** 订单公共接口*/
@@ -214,7 +219,7 @@ export namespace APINameSpace {
         /** 获取各阶段订单数量*/
         static async GetOrderStatusCount(data: RequestNameSpace.GetOrderStatusCountRequest) {
             let url: string = CommonAPI.baseURL + "CustomerOrderMerge/status/summary";
-            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url,data);
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
     }
 
@@ -258,21 +263,26 @@ export namespace APINameSpace {
         }
 
         /** 客户合并订单新增*/
-        static CustomerOrderMergeAdd(data: RequestNameSpace.CustomerOrderMergeAddRequest){
+        static CustomerOrderMergeAdd(data: RequestNameSpace.CustomerOrderMergeAddRequest) {
             let url: string = CommonAPI.baseURL + "CustomerOrderMerge/Item/Insert";
-            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().post(url,data);
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().post(url, data);
         }
 
         /** 客户合并订单新增*/
-        static GetCustomerOrderMergeItem(data: RequestNameSpace.GetCustomerOrderMergeItemRequest){
+        static GetCustomerOrderMergeItem(data: RequestNameSpace.GetCustomerOrderMergeItemRequest) {
             let url: string = CommonAPI.baseURL + "CustomerOrderMerge/Item";
-            return new Request<BaseRequest, ResponseNameSpace.GetCustomerOrderMergeDetailResponse>().get(url,data);
+            return new Request<BaseRequest, ResponseNameSpace.GetCustomerOrderMergeDetailResponse>().get(url, data);
         }
 
         /*客户合并订单更新接口，适用阶段：客服审批，仓库打包，仓库发货阶段*/
-        static CustomerOrderMergeUpdate(data: RequestNameSpace.CustomerOrderMergeUpdateRequest ){
-            let url:string = CommonAPI.baseURL + "CustomerOrderMerge/Item/Update";
-            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().put(url,data);
+        static CustomerOrderMergeUpdate(data: RequestNameSpace.CustomerOrderMergeUpdateRequest) {
+            let url: string = CommonAPI.baseURL + "CustomerOrderMerge/Item/Update";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().put(url, data);
+        }
+
+        static CustomerOrderItemPay(data: any) {
+            let url: string = CommonAPI.baseURL + "CustomerOrderMerge/Item/pay";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().put(url, data);
         }
     }
 
