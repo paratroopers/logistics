@@ -32,7 +32,7 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
             data: props.data ? props.data : [],
             channelsShow: false
         }
-        this.props.form && !this.props.readOnly && this.props.form.getFieldDecorator(this.props.fieldName, {initialValue: this.props.ids[0]});
+        this.props.form && !this.props.readOnly && this.props.fieldName && this.props.form.getFieldDecorator(this.props.fieldName, {initialValue: this.props.ids[0]});
     }
 
     componentDidMount() {

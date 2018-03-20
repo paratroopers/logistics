@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps} from 'react-router';
-import {Button, Form,Row,Col} from 'antd';
+import {Button, Form, Row, Col} from 'antd';
 import {
     FormTableDetailPage
 } from "../components-v1/all-components-export";
@@ -36,7 +36,8 @@ class CustomerServiceConfirmApprovePage extends React.Component<CustomerServiceC
             if (err) return;
             let request: RequestNameSpace.CustomerOrderMergeUpdateRequest = {};
             for (let key of Object.keys(values)) {
-                request[key] = values[key];
+                if (key !== 'needUpdateData')
+                    request[key] = values[key] ? values[key] : values.needUpdateData[key];
             }
             request.ID = this.state.selectedKey;
             request.currentStep = Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderConfirm);
@@ -55,10 +56,10 @@ class CustomerServiceConfirmApprovePage extends React.Component<CustomerServiceC
             <FormTableDetailPage.Header>
                 <Row type="flex" justify="end" gutter={16}>
                     <Col>
-                        <Button key="1" type="primary" onClick={this.onSubmit.bind(this)} >通过</Button>
+                        <Button key="1" type="primary" onClick={this.onSubmit.bind(this)}>通过</Button>
                     </Col>
                     <Col>
-                        <Button key="2" type="primary" >拒绝</Button>
+                        <Button key="2" type="primary">拒绝</Button>
                     </Col>
                     <Col>
                         <Button key="3" type="primary">取消</Button>
