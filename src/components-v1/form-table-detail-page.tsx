@@ -277,9 +277,11 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
             </FormOrderWarehousePackage>);
 
         content.ReceiptDate && !content.ReceiptDate.hidden && emls.push(
-            <FormOrderReceiptDate readOnly={content.ReceiptDate.readyOnly || readyOnly}></FormOrderReceiptDate>);
+            <FormOrderReceiptDate readOnly={content.ReceiptDate.readyOnly || readyOnly}
+                                  data={mergeOrder}></FormOrderReceiptDate>);
 
-        content.Payment && !content.Payment.hidden && emls.push(<FormPayment></FormPayment>);
+        content.Payment && !content.Payment.hidden && emls.push(<FormPayment key="Payment"
+                                                                             data={mergeOrder}></FormPayment>);
         return emls;
     }
 

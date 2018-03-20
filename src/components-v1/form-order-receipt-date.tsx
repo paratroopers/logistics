@@ -3,13 +3,15 @@ import {Radio, Form, Row, Col, DatePicker} from 'antd';
 import {RowProps} from 'antd/lib/row';
 import {FormSettingGroup} from './form-setting-group';
 import {FormComponentProps} from 'antd/lib/form/Form';
+import * as moment from 'moment';
 
 interface FormOrderReceiptDateProps extends FormComponentProps {
     readOnly?: boolean;
-    data?: any;
+    data: any;
 }
-interface FormOrderReceiptDateStates {
 
+interface FormOrderReceiptDateStates {
+    data?: any;
 }
 
 export enum ReceiptEnum {
@@ -20,11 +22,20 @@ export enum ReceiptEnum {
 class FormOrderReceiptDate extends React.Component<FormOrderReceiptDateProps, FormOrderReceiptDateStates> {
     constructor(props, context) {
         super(props, context);
+        this.state = {
+            data: {}
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if ('data' in nextProps && nextProps.data !== this.props.data) {
+            this.setState({data: Object.assign(nextProps.data, {deliverTime: moment().format('YYYY-MM-DD HH:mm:ss')})})
+        }
     }
 
     renderRadio() {
-        const {props: {form, readOnly, data}} = this;
-        return readOnly ? <span>{data}</span> : <Form.Item>
+        const {props: {form, readOnly}, state: {data}} = this;
+        return readOnly ? <span>{data['deliverTime']}</span> : <Form.Item>
             {
                 form.getFieldDecorator('receiptType', {
                     initialValue: ReceiptEnum.Now
@@ -58,7 +69,8 @@ class FormOrderReceiptDate extends React.Component<FormOrderReceiptDateProps, Fo
                                             }
                                         ]
                                     })(<DatePicker
-                                        disabled={form.getFieldValue('receiptType') === ReceiptEnum.Now }></DatePicker>)
+                                        onChange={v => this.state.data.deliverTime = moment(v.toString()).format('YYYY-MM-DD HH:mm:ss')}
+                                        disabled={form.getFieldValue('receiptType') === ReceiptEnum.Now}></DatePicker>)
                             }
                         </Form.Item>
                     </Col>
@@ -67,4 +79,5 @@ class FormOrderReceiptDate extends React.Component<FormOrderReceiptDateProps, Fo
         </FormSettingGroup>
     }
 }
+
 export default Form.create<any>()(FormOrderReceiptDate);

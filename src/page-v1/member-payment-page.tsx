@@ -2,14 +2,14 @@ import * as React from 'react';
 import {withRouter, RouteComponentProps} from 'react-router';
 import {Row, Col, Card, Button, Radio} from "antd";
 import {FormSettingGroup} from '../components-v1/form-setting-group';
-
+import {APINameSpace} from '../model/api';
 
 export interface MemberPaymentPageProps extends RouteComponentProps<any, any> {
 
 }
 
 export interface MemberPaymentPageStates {
-    money?: number;
+    data?: any;
 }
 
 @withRouter
@@ -17,14 +17,26 @@ export class MemberPaymentPage extends React.Component<MemberPaymentPageProps, M
 
     constructor(props, context) {
         super(props, context);
-        const query = props.location.query;
+        const query: any = props.location.query;
         this.state = {
-            money: Number(query.money)
+            data: {
+                amount: Number(query.money),
+                payMethod: 0,
+                CustomerOrderMergeID: query.CustomerOrderMergeID,
+                deliverTime: query.deliverTime,
+                isAdmin: true
+            }
         }
     }
 
     renderPayImage() {
 
+    }
+
+    onClick() {
+        APINameSpace.CustomerOrderAPI.CustomerOrderItemPay(this.state.data).then(result => {
+            console.log(result);
+        });
     }
 
     render() {
@@ -35,7 +47,7 @@ export class MemberPaymentPage extends React.Component<MemberPaymentPageProps, M
                 </Col>
                 <Col span={14} className="payment-paypage-money">
                     <span>实付：</span>
-                    <span className="money">{this.state.money.toFixed(2)}</span>
+                    <span className="money">{this.state.data.amount.toFixed(2)}</span>
                 </Col>
                 <Col span={24} className="payment-paypage-mode">
                     <Card style={{marginTop: 16}}
@@ -52,7 +64,7 @@ export class MemberPaymentPage extends React.Component<MemberPaymentPageProps, M
                     </Card>
                 </Col>
                 <Col offset={20} span={4} className="payment-go">
-                    <Button type="primary">立即付款</Button>
+                    <Button type="primary" onClick={this.onClick.bind(this)}>立即付款</Button>
                     <div className="time">
                         <span>剩余付款时间:</span>
                         <span className="count-down">45分12秒</span>
