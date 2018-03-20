@@ -114,7 +114,7 @@ export class FormOrderRelation extends React.Component<FormOrderRelationProps, F
                 <Modal title="查看订单信息" visible={detailVisible} footer={false} width={800} onCancel={() => {
                     topThis.setState({detailVisible: false})
                 }}>
-                    {!isNullOrUndefined(detailData) ? <WarehouseInForm type={"view"} Data={detailData} isModal={true}
+                    {!isNullOrUndefined(detailData) ? <WarehouseInForm type={"modal"} Data={detailData}
                                                                        style={{padding: "0px 8px"}}></WarehouseInForm> : null}
                 </Modal>
             </Row>

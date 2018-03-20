@@ -17,7 +17,8 @@ import {MemberUserInformationPage} from "../page-v1/member-user-information";
 import {MemberWaitPayPage} from "../page-v1/member-wait-pay-page";
 import {MemberWaitPayViewPage} from "../page-v1/member-wait-pay-view-page";
 import MemberWaitPayApprovePage from "../page-v1/member-wait-pay-approve-page";
-import {MemberWarehouseInQueryPage} from "../page-v1/member-warehouse-in-query-page";
+import {WarehouseInQueryPage} from "../page-v1/warehouse-in-query-page";
+import {WarehouseInQueryViewPage} from "../page-v1/warehouse-in-query-view-page";
 import {WarehouseInPage} from "../page-v1/warehouse-in-page";
 import {WarehouseInAddPage} from "../page-v1/warehouse-in-add-page";
 import {WarehouseInViewPage} from "../page-v1/warehouse-in-view-page";
@@ -79,7 +80,8 @@ const routerConfig = (
                 <Route path={PathConfig.MemberWaitPayPage} component={MemberWaitPayPage}/>
                 <Route path={PathConfig.MemberWaitPayViewPage} component={MemberWaitPayViewPage}/>
                 <Route path={PathConfig.MemberWaitPayApprovePage} component={MemberWaitPayApprovePage}/>
-                <Route path={PathConfig.MemberWarehouseInQueryPage} component={MemberWarehouseInQueryPage}/>
+                <Route path={PathConfig.WarehouseInQueryPage} component={WarehouseInQueryPage}/>
+                <Route path={PathConfig.WarehouseInQueryViewPage} component={WarehouseInQueryViewPage}/>
                 <Route path={PathConfig.WarehouseInPage} component={WarehouseInPage}/>
                 <Route path={PathConfig.WarehouseOutPage} component={WarehouseOutPage}/>
                 <Route path={PathConfig.WarehouseOutViewPage} component={WarehouseOutViewPage}/>

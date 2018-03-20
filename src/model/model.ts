@@ -265,7 +265,9 @@ export namespace ModelNameSpace {
             /** 仓库管理-合并打包*/
         OrderMerge = 5,
             /** 仓库管理-订单出库、我的订单-已发货*/
-        OrderOut = 6
+        OrderOut = 6,
+        /** 我的订单-入库查询*/
+        OrderInQuery=7
     }
 
     /** 自定义模块状态*/

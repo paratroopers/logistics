@@ -130,6 +130,7 @@ export class Constants {
     // OrderMerge	4	仓库管理-合并打包	step=2、isAdmin=true	                        0待确认
     // WaitPay	    5	我的订单-待付款	    step=3、isAdmin=false	                        0待确认
     // OrderOut 	6	仓库管理-订单出库	step=4、isAdmin=true	                        0待确认、1已确认
+    // OrderInQuery 7	我的订单-入库查询	step=2、isAdmin=false	                        无状态
 
     /** 阶段订单Step*/
     static getOrderStep(typeEnum: ModelNameSpace.OrderTypeEnum = ModelNameSpace.OrderTypeEnum.OrderConfirm, isGetAdmin?: boolean): any {
@@ -141,7 +142,8 @@ export class Constants {
             [OrderTypeEnum.OrderConfirm]: [1, true],
             [OrderTypeEnum.OrderMerge]: [2, true],
             [OrderTypeEnum.WaitPay]: [3, false],
-            [OrderTypeEnum.OrderOut]: [4, true]
+            [OrderTypeEnum.OrderOut]: [4, true],
+            [OrderTypeEnum.OrderInQuery]:[2,true]
         };
         return isGetAdmin ? {
             currentStep: EnumStep[typeEnum][0],
