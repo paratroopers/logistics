@@ -191,7 +191,11 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
                     CustomerMark: data.mergeOrder['CustomerMark'],
                     remoteFee: data.mergeOrder['remoteFee'],
                     magneticinspectionFee: data.mergeOrder['magneticinspectionFee'],
-                    customerServiceMark: data.mergeOrder['customerServiceMark']
+                    customerServiceMark: data.mergeOrder['customerServiceMark'],
+                    packageLength: data.mergeOrder['packageLength'],
+                    packageWidth: data.mergeOrder['packageWidth'],
+                    packageHeight: data.mergeOrder['packageHeight'],
+                    packageWeight: data.mergeOrder['packageWeight']
                 };
                 this.props.form.getFieldDecorator('needUpdateData', {initialValue: updateData});
             }
