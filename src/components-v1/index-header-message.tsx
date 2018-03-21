@@ -28,7 +28,7 @@ export class HeaderMessage extends React.Component<HeaderMessageProps, HeaderMes
                     <FormMessageList layoutText={true} tagStatus={true}></FormMessageList>
                 </TabPane>
                 <TabPane tab="消息通知" key="1">
-                    <FormMessageList layoutText={true} tagStatus={true}></FormMessageList>
+                    <FormMessageList layoutText={true} tagStatus={true} isSystem={true}></FormMessageList>
                 </TabPane>
             </Tabs>
         </Card>

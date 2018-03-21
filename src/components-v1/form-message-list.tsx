@@ -10,12 +10,14 @@ import * as  moment from 'moment';
 moment.locale('zh-cn');
 
 interface FormMessageListProps {
-    /*自动出现省略号*/
+    /** 自动出现省略号*/
     layoutText?: boolean;
-    /* 状态是否显示为tag模式*/
+    /** 状态是否显示为tag模式*/
     tagStatus?: boolean;
-    /* 是否全屏展示*/
+    /** 是否全屏展示*/
     fullScreen?: boolean;
+    /** 是否显示为系统消息*/
+    isSystem?: boolean;
 }
 
 interface FormMessageListStates {
@@ -54,9 +56,12 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
     }
 
     getMessageData() {
+        const topThis = this;
+        const {props: {isSystem}} = topThis;
         this.setState({loading: true});
         APINameSpace.MemberAPI.GetMesaageLatest().then(result => {
             if (result.Status === 0) {
+                if (isSystem) result.Data = [{message: "程序员反感（讨厌、不喜欢）什么？别人我不知道。我最反感！！！下班了，明明没啥事。都不走！都不走！都不走！然后，我忍不住了。一打卡！！不到10分钟。全跑完了！全跑完了！全跑完了！"}, {message: "程序员反感（讨厌、不喜欢）什么？别人我不知道。我最反感！！！下班了，明明没啥事。都不走！都不走！都不走！然后，我忍不住了。一打卡！！不到10分钟。全跑完了！全跑完了！全跑完了！"}, {message: "程序员反感（讨厌、不喜欢）什么？别人我不知道。我最反感！！！下班了，明明没啥事。都不走！都不走！都不走！然后，我忍不住了。一打卡！！不到10分钟。全跑完了！全跑完了！全跑完了！"}];
                 this.setState({messageItems: result.Data, loading: false});
             }
         });
@@ -123,11 +128,27 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         </List.Item>;
     }
 
+    renderSystemItem(item: ModelNameSpace.MessageLaterModel) {
+        const title = <Row type="flex" align="middle" justify="space-between">
+            <Col>系统通知</Col>
+            <Col>{moment(item.Created).fromNow()}</Col>
+        </Row>
+
+        return <List.Item className="message-list-item">
+            <List.Item.Meta
+                className="message-list-item-meta"
+                title={title}
+                description={item.message}/>
+        </List.Item>;
+    }
+
     render() {
+        const topThis = this;
+        const {props: {isSystem}} = topThis;
         return <Spin spinning={this.state.loading}>
             <div className="message-list">
                 <List dataSource={this.state.messageItems}
-                      renderItem={item => this.renderItem(item)}>
+                      renderItem={item => !isSystem ? topThis.renderItem(item) : topThis.renderSystemItem(item)}>
                 </List>
             </div>
         </Spin>;
