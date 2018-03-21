@@ -13,7 +13,8 @@ import {
     FormOrderOtherCost,
     FormOrderWarehousePackage,
     FormPayment,
-    FormOrderReceiptDate
+    FormOrderReceiptDate,
+    FormOrderAgent
 } from "../components-v1/all-components-export";
 import {RequestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
@@ -36,6 +37,7 @@ export class FormTableDetailContentModel {
     Payment?: ControlInterface = {};
     CustomerMark?: ControlInterface = {};
     ReceiptDate?: ControlInterface = {};
+    Agent?: ControlInterface = {};
 
     constructor(step?: ModelNameSpace.OrderTypeEnum, readyOnly?: boolean) {
         if (step) {
@@ -53,7 +55,8 @@ export class FormTableDetailContentModel {
                 WarehousePackage: {hidden: true},
                 CustomerMark: {readyOnly: true},
                 Payment: {hidden: true},
-                ReceiptDate: {hidden: true}
+                ReceiptDate: {hidden: true},
+                Agent: {hidden: true}
             },
             [ModelNameSpace.OrderTypeEnum.OrderMerge]: {
                 Address: {readyOnly: true},
@@ -63,7 +66,8 @@ export class FormTableDetailContentModel {
                 PackageRemarks: {readyOnly: true},
                 Payment: {hidden: true},
                 CustomerMark: {readyOnly: true},
-                ReceiptDate: {hidden: true}
+                ReceiptDate: {hidden: true},
+                Agent: {hidden: true}
             },
             [ModelNameSpace.OrderTypeEnum.WaitPay]: {
                 Address: {readyOnly: true},
@@ -73,6 +77,7 @@ export class FormTableDetailContentModel {
                 OtherCost: {hidden: true},
                 CustomerMark: {hidden: true},
                 WarehousePackage: {readyOnly: true},
+                Agent: {hidden: true}
             },
             [ModelNameSpace.OrderTypeEnum.OrderOut]: {
                 Address: {readyOnly: true},
@@ -94,7 +99,8 @@ export class FormTableDetailContentModel {
                 PackageRemarks: {hidden: true},
                 CustomerMark: {readyOnly: true},
                 Payment: {hidden: true},
-                ReceiptDate: {hidden: true}
+                ReceiptDate: {hidden: true},
+                Agent: {hidden: true}
             },
             [ModelNameSpace.OrderTypeEnum.OrderMerge]: {
                 Address: {readyOnly: true},
@@ -104,7 +110,8 @@ export class FormTableDetailContentModel {
                 PackageRemarks: {readyOnly: true},
                 WarehousePackage: {hidden: true},
                 Payment: {hidden: true},
-                ReceiptDate: {hidden: true}
+                ReceiptDate: {hidden: true},
+                Agent: {hidden: true}
             },
             [ModelNameSpace.OrderTypeEnum.WaitPay]: {
                 Address: {readyOnly: true},
@@ -115,6 +122,7 @@ export class FormTableDetailContentModel {
                 CustomerMark: {hidden: true},
                 Payment: {hidden: true},
                 WarehousePackage: {readyOnly: true},
+                Agent: {hidden: true}
             },
             [ModelNameSpace.OrderTypeEnum.OrderOut]: {
                 Address: {readyOnly: true},
@@ -195,7 +203,9 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
                     packageLength: data.mergeOrder['packageLength'],
                     packageWidth: data.mergeOrder['packageWidth'],
                     packageHeight: data.mergeOrder['packageHeight'],
-                    packageWeight: data.mergeOrder['packageWeight']
+                    packageWeight: data.mergeOrder['packageWeight'],
+                    deliverTime: data.mergeOrder['deliverTime']
+                /*    ,agent: data.mergeOrder['agent']*/
                 };
                 this.props.form.getFieldDecorator('needUpdateData', {initialValue: updateData});
             }
@@ -282,6 +292,10 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
 
         content.Payment && !content.Payment.hidden && emls.push(<FormPayment key="Payment"
                                                                              data={mergeOrder}></FormPayment>);
+
+        content.Agent && !content.Agent.hidden && emls.push(<FormOrderAgent key="Agent"
+                                                                            form={this.props.form}></FormOrderAgent>);
+
         return emls;
     }
 

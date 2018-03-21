@@ -1,7 +1,8 @@
 import * as React from "react";
 import {Component} from "react";
-import {Form, Row, Col,Input} from 'antd';
-const FormItem=Form.Item;
+import {Form, Row, Col, Input} from 'antd';
+
+const FormItem = Form.Item;
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {FormControl} from '../components-v1/form-control';
 import {SelectType} from "../util/common";
@@ -54,7 +55,8 @@ class DeliveredDetailForm extends Component<DeliveredDetailFormProps, DeliveredD
                         <FormItem {...formItemLayout} label={"代理商"}>
                             {getFieldDecorator("agent", {
                                 rules: [{required: required, message: '请选择代理商!'}],
-                            })(<FormControl.FormSelectIndex disabled={disabled} type={SelectType.Agent} placeholder="代理商"/>)}
+                            })(<FormControl.FormSelectIndex disabled={disabled} type={SelectType.Agent}
+                                                            placeholder="代理商"/>)}
                         </FormItem>
                     </Col>
                     <Col {...spanLayout}>

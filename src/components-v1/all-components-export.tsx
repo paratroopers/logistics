@@ -23,6 +23,7 @@ import FormOrderOtherCost from './form-order-other-cost';
 import {FormTableDetailPage, FormTableDetailContentModel} from './form-table-detail-page';
 import FormOrderWarehousePackage from './form-order-warehouse-package';
 import FormOrderReceiptDate from './form-order-receipt-date';
+import FormOrderAgent from './form-order-agent';
 
 
 export {
@@ -52,5 +53,6 @@ export {
     FormTableDetailPage,
     FormTableDetailContentModel,
     FormOrderWarehousePackage,
-    FormOrderReceiptDate
+    FormOrderReceiptDate,
+    FormOrderAgent
 }

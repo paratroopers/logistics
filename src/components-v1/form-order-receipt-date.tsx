@@ -57,23 +57,25 @@ class FormOrderReceiptDate extends React.Component<FormOrderReceiptDateProps, Fo
                     <Col lg={6}>
                         {this.renderRadio()}
                     </Col>
-                    <Col lg={6}>
-                        <Form.Item>
-                            {
-                                readOnly ? <span>{data}</span> :
-                                    form.getFieldDecorator('receiptDate', {
-                                        rules: [
-                                            {
-                                                required: form.getFieldValue('receiptType') === ReceiptEnum.Selected ? true : false,
-                                                message: '必须填写发货日期'
-                                            }
-                                        ]
-                                    })(<DatePicker
-                                        onChange={v => this.state.data.deliverTime = moment(v.toString()).format('YYYY-MM-DD HH:mm:ss')}
-                                        disabled={form.getFieldValue('receiptType') === ReceiptEnum.Now}></DatePicker>)
-                            }
-                        </Form.Item>
-                    </Col>
+                    {
+                        readOnly ? null :
+                            <Col lg={6}>
+                                <Form.Item>
+                                    {
+                                        form.getFieldDecorator('deliverTime', {
+                                            rules: [
+                                                {
+                                                    required: form.getFieldValue('receiptType') === ReceiptEnum.Selected ? true : false,
+                                                    message: '必须填写发货日期'
+                                                }
+                                            ]
+                                        })(<DatePicker
+                                            onChange={v => this.state.data.deliverTime = moment(v.toString()).format('YYYY-MM-DD HH:mm:ss')}
+                                            disabled={form.getFieldValue('receiptType') === ReceiptEnum.Now}></DatePicker>)
+                                    }
+                                </Form.Item>
+                            </Col>
+                    }
                 </Row>
             </Form>
         </FormSettingGroup>

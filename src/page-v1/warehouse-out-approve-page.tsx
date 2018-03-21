@@ -1,11 +1,14 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps} from 'react-router';
-import {Button, Form,Row,Col} from 'antd';
+import {Button, Form, Row, Col, message} from 'antd';
 import {
     FormTableDetailPage
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
+import {Constants} from '../util/common';
 import {ModelNameSpace} from '../model/model';
+import {APINameSpace} from '../model/api';
+import {RequestNameSpace} from '../model/request';
 
 interface WarehouseOutApprovePageProps extends RouteComponentProps<any, any>, FormComponentProps {
 
@@ -28,6 +31,21 @@ class WarehouseOutApprovePage extends React.Component<WarehouseOutApprovePagePro
         }
     }
 
+    async onSubmit() {
+        this.props.form.validateFields(async (err, values) => {
+            if (err) return;
+            let request: RequestNameSpace.CustomerOrderMergeUpdateRequest = {};
+            for (let key of Object.keys(values.needUpdateData)) {
+                request[key] = values[key] ? values[key] : values.needUpdateData[key];
+            }
+            request.ID = this.state.selectedKey;
+            request.currentStep = Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderOut);
+            request.currentStatus = ModelNameSpace.OrderStatusEnum.StatusB;
+            const result = await APINameSpace.CustomerOrderAPI.CustomerOrderMergeUpdate(request);
+            result.Status === 0 && message.success('操作成功');
+        })
+    }
+
     render() {
         return <FormTableDetailPage ID={this.state.selectedKey}
                                     Title="审批"
@@ -36,7 +54,7 @@ class WarehouseOutApprovePage extends React.Component<WarehouseOutApprovePagePro
             <FormTableDetailPage.Header>
                 <Row type="flex" justify="end" gutter={16}>
                     <Col>
-                        <Button key="1" type="primary">通过</Button>
+                        <Button key="1" type="primary" onClick={this.onSubmit.bind(this)}>通过</Button>
                     </Col>
                     <Col>
                         <Button key="2" type="primary">拒绝</Button>
