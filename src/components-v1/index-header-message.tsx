@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Row, Col, Popover, Icon, Badge, Card, Tabs} from 'antd';
+import {Popover, Icon, Badge, Card, Tabs} from 'antd';
 import {FormMessageList} from './form-message-list';
 const TabPane = Tabs.TabPane;
 
