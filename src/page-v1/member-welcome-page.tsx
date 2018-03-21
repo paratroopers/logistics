@@ -63,8 +63,12 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
     }
 
     renderHeader() {
-        var MemberCode="";
-        try {MemberCode=Context.getCurrentUser().userInfo.MemeberCode;}catch (ex) {MemberCode = "";}
+        var MemberCode = "";
+        try {
+            MemberCode = Context.getCurrentUser().userInfo.MemeberCode;
+        } catch (ex) {
+            MemberCode = "";
+        }
         return <Row type="flex" justify="space-between" align="middle" className="welcome-header-content">
             <Col>
                 <Row type="flex" justify="start" align="middle">
@@ -110,7 +114,7 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
                     </Card.Grid>
                 </Card>
                 <Card className="content-card" title="大陆动态" extra={<a href="#">更多</a>}>
-                    <Card.Grid className="content-card-grid">
+                    <Card.Grid className="content-card-grid" style={{padding: 0}}>
                         <FormMessageList layoutText={true}></FormMessageList>
                     </Card.Grid>
                 </Card>

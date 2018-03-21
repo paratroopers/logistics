@@ -1,12 +1,10 @@
 import * as React from 'react';
-import {List, Spin, Tag} from 'antd';
+import {List, Spin, Tag, Row, Col} from 'antd';
 import {Global} from '../util/common';
 import {MessageLocale} from '../locales/localeid';
 import {FormStepIcon, FormStepEnum} from './form-step-icon';
-import {RequestNameSpace} from '../model/request';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
-
 import * as  moment from 'moment';
 
 moment.locale('zh-cn');
@@ -24,7 +22,6 @@ interface FormMessageListStates {
     loading: boolean,
     messageItems?: ModelNameSpace.MessageLaterModel[];
     textStyle?: any;
-
 }
 
 export class FormMessageList extends React.Component<FormMessageListProps, FormMessageListStates> {
@@ -33,6 +30,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap'
     }
+
 
     static defaultColor = {
         WarehouseIn: 'warehouse-in',
@@ -64,55 +62,64 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         });
     }
 
-    renderMessageStatus(item): { message: string, textClass: string } {
+    renderMessageStatus(type: FormStepEnum): { message: string, textClass: string, tagColor: string } {
         const {WarehouseIn, CustomerServiceConfirm, WarehousePackge, WaitForPay, Delivered} = MessageLocale;
         let formatMessage: string;
         let textColor: string;
-        switch (item.type) {
+        let tagColor: string;
+        switch (type) {
             case FormStepEnum.WarehouseIn:
                 formatMessage = WarehouseIn;
                 textColor = FormMessageList.defaultColor.WarehouseIn;
+                tagColor = "blue";
                 break;
             case FormStepEnum.CustomerServiceConfirm:
                 formatMessage = CustomerServiceConfirm;
                 textColor = FormMessageList.defaultColor.CustomerServiceConfirm;
+                tagColor = "gold";
                 break;
             case FormStepEnum.WarehousePackge:
                 formatMessage = WarehousePackge;
                 textColor = FormMessageList.defaultColor.WarehousePackge;
+                tagColor = "green";
                 break;
             case FormStepEnum.WaitForPay:
                 formatMessage = WaitForPay;
                 textColor = FormMessageList.defaultColor.WaitForPay;
+                tagColor = "red";
                 break;
             case FormStepEnum.Delivered:
                 formatMessage = Delivered;
                 textColor = FormMessageList.defaultColor.Delivered;
+                tagColor = "purple";
                 break;
         }
-        return {message: Global.intl.formatMessage({id: formatMessage}), textClass: textColor};
-    }
-
-    renderMessage(item) {
-        const message = this.renderMessageStatus(item)
-        return <div style={this.state.textStyle}>
-            {Global.intl.formatMessage({id: MessageLocale.YourOrder})}
-            <a style={{margin: '0 5px'}}>{item.message}</a>
-            {
-                this.props.tagStatus ?
-                    <Tag className={"status-tag " + message.textClass}>{message.message}</Tag>
-                    : message.message
-            }
-        </div>;
+        return {message: Global.intl.formatMessage({id: formatMessage}), textClass: textColor, tagColor: tagColor};
     }
 
     renderItem(item: ModelNameSpace.MessageLaterModel) {
-        return <List.Item>
+        const topThis = this;
+        const {props: {tagStatus}, state: {textStyle}} = topThis;
+
+        const message = this.renderMessageStatus(item.type);
+
+        const title = <Row style={textStyle} type="flex" align="middle" justify="space-between">
+            {Global.intl.formatMessage({id: MessageLocale.YourOrder})}
+            <a style={{margin: '0 5px'}}>{item.message}</a>
+        </Row>
+
+        const des = <Row type="flex" align="middle" justify="space-between">
+            <Col>{moment(item.Created).fromNow()}</Col>
+            <Col>{tagStatus ?
+                <Tag color={message.tagColor}>{message.message}</Tag> : message.message}</Col>
+        </Row>
+
+        return <List.Item className="message-list-item">
             <List.Item.Meta
-                avatar={<FormStepIcon size={40}
-                                      type={item.type as FormStepEnum}></FormStepIcon>}
-                title={this.renderMessage(item)}
-                description={moment(item.Created).fromNow()}/>
+                className="message-list-item-meta"
+                avatar={<FormStepIcon size={40} type={item.type as FormStepEnum}></FormStepIcon>}
+                title={title}
+                description={des}/>
         </List.Item>;
     }
 

@@ -186,38 +186,6 @@
   }
 }
 
-
-/** 消息列表*/
-.message-list {
-  .status-tag {
-    float: right;
-    margin-left: 10px;
-  }
-  .message-step-icon {
-    .ant-list-item-meta {
-
-    }
-    .iconfont {
-      margin-right: 0px !important;
-    }
-    .warehouse-in {
-      color: rgb(51, 145, 229) !important;
-    }
-    .wait-for-pay {
-      color: rgb(254, 93, 88) !important;
-    }
-    .warehouse-packge {
-      color: rgb(47, 194, 91) !important;
-    }
-    .customer-service-confirm {
-      color: rgb(255, 206, 61) !important;
-    }
-    .delivered {
-      color: rgb(124, 81, 184) !important;
-    }
-  }
-}
-
 @media screen and (max-width: 767px) {
   /* 注册*/
   .na-page-register {
@@ -251,7 +219,11 @@
 
 /** Demo*/
 .demo-page {
-  //max-width: 900px;
+  max-width: 900px;
+  margin: 0 auto;
+  .header-message-badge{
+    float: right;
+  }
 }
 
 .form-control-title {

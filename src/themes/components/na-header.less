@@ -55,7 +55,7 @@
       color: @primary-color;
     }
     &-user {
-      &-message{
+      &-message {
         height: 80px;
         line-height: 80px;
         padding: 0px 16px;
@@ -132,25 +132,82 @@
   .ant-popover-inner-content {
     padding: 0px !important;
     width: 120px;
-    .ant-menu-item{
+    .ant-menu-item {
       margin: 0px;
     }
   }
 }
 
-.tool-message-popover {
-  width: 350px;
-  .ant-popover-inner-content {
-    padding: 0px !important;
-  }
-  .header-message-card{
-    .ant-card-body{
-      padding: 0px;
+/** 消息通知铃铛组件*/
+.header-message {
+  &-popover {
+    width: 350px;
+    .ant-popover-inner-content {
+      padding: 0px !important;
     }
+    .message-card {
+      &-tabs {
+        .ant-tabs-bar {
+          margin-bottom: 4px;
+        }
+        .ant-tabs-nav-scroll {
+          text-align: center;
+          .ant-tabs-tab {
+            margin: 0 32px 0 0;
+            &:last-child {
+              margin-right: 0px;
+            }
+          }
+        }
+
+      }
+      .ant-card-body {
+        padding: 0px;
+      }
+    }
+  }
+  &-badge {
+
   }
 }
 
+/** 消息列表组件*/
+.message-list {
+  .warehouse-in {
+    color: #3391E5 !important;
+  }
+  .wait-for-pay {
+    color: #FE5D58 !important;
+  }
+  .warehouse-packge {
+    color: #2FC25B !important;
+  }
+  .customer-service-confirm {
+    color: #FFCE3D !important;
+  }
+  .delivered {
+    color: #7C51B8 !important;
+  }
 
+  &-item{
+    &:hover{
+      background-color: #e6f7ff;
+      cursor: pointer;
+    }
+    &-meta{
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  }
+  .message-step-icon {
+    .ant-list-item-meta {
+
+    }
+    .iconfont {
+      margin-right: 0px !important;
+    }
+  }
+}
 
 .page-title-cost-image, .page-title-company-image {
   background-size: 100%;
