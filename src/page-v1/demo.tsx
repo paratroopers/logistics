@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
-import {Row, Col,Form} from 'antd';
-import {FormRichEdit}from "../components-v1/form-richedit";
-const FormItem=Form.Item;
+import {Row,Form, Input, Button, message} from 'antd';
+import {FormComponentProps, WrappedFormUtils} from 'antd/lib/form/Form';
+import FormMessageManager from "../components-v1/form-message-manager";
 
-interface DemoStates {
+interface DemoStates extends FormComponentProps {
 
 }
 
@@ -20,20 +20,7 @@ export class DemoPage extends React.Component<DemoProps, DemoStates> {
 
     render() {
         return <Row className="demo-page">
-            <FormRichEdit></FormRichEdit>
+            <FormMessageManager></FormMessageManager>
         </Row>
     }
 }
-
-class FormMessageManager extends React.Component<DemoProps, DemoStates> {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return <Form>
-
-        </Form>
-    }
-}
-export default Form.create<any>()(FormMessageManager);
