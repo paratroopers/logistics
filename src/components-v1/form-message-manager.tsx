@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {withRouter} from 'react-router';
-import {Row,Form, Input, Button, message} from 'antd';
-import {FormComponentProps, WrappedFormUtils} from 'antd/lib/form/Form';
-import {FormRichEdit}from "../components-v1/form-richedit";
+import {Form, Input, Button, message} from 'antd';
+import {WrappedFormUtils} from 'antd/lib/form/Form';
+import {FormLzEdit}from "../components-v1/form-lz-edit";
 const FormItem = Form.Item;
 
 
@@ -37,7 +36,7 @@ class FormMessageManager extends React.Component<FormMessageManagerProps, any> {
             <FormItem label={"内容"}>
                 {getFieldDecorator("content", {
                     rules: [{required: true, message: '请填写内容'}],
-                })(<FormRichEdit />)}
+                })(<FormLzEdit />)}
             </FormItem>
             <FormItem>
                 <Button type="primary" onClick={topThis.onSubmit.bind(this)}>发布</Button>
