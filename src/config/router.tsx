@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Router, Route, hashHistory, IndexRoute} from 'react-router';
 import {PathConfig, MobilePathConfig} from './pathconfig';
-import DemoPage from "../page-v1/demo";
+import {DemoPage} from "../page-v1/demo";
 import {NaMasterMainPage} from "../page-v1/master-main-page";
 import {MemberWelcomePage} from "../page-v1/member-welcome-page";
 import {MemberAddressPage} from "../page-v1/member-address-page";

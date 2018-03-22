@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
 import {Row, Col,Form} from 'antd';
-import {extendConfigurationFile} from "tslint/lib/configuration";
+import {FormRichEdit}from "../components-v1/form-richedit";
 const FormItem=Form.Item;
 
 interface DemoStates {
@@ -20,7 +20,7 @@ export class DemoPage extends React.Component<DemoProps, DemoStates> {
 
     render() {
         return <Row className="demo-page">
-            <FormMessageManager></FormMessageManager>
+            <FormRichEdit></FormRichEdit>
         </Row>
     }
 }
