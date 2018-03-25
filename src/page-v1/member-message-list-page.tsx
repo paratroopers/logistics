@@ -22,7 +22,7 @@ export class MemberMessageListPage extends React.Component<MemberMessageListPage
 
     render() {
         return <Row className="member-message-list-page">
-            <ContentHeaderControl title=""></ContentHeaderControl>
+            <ContentHeaderControl title="消息动态"></ContentHeaderControl>
             <Tabs tabBarStyle={{marginBottom:4}} size="large" tabPosition="left">
                 <TabPane tab="物流消息" key="0">
                     <FormMessageList layoutText={true} tagStatus={true} isPagination={true}></FormMessageList>
