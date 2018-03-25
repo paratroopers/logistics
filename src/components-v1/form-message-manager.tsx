@@ -8,7 +8,7 @@ const FormItem = Form.Item;
 
 interface FormMessageManagerProps extends FormComponentProps {
     /** 点击提交*/
-    onSubmit?: (values: any, status?: number) => void;
+    onSubmit?: (values: any, status: number) => void;
     /** 数据*/
     item?: ModelNameSpace.MessageModel;
 }
@@ -29,13 +29,13 @@ class FormMessageManager extends React.Component<FormMessageManagerProps, FormMe
     }
 
     /** 点击确认*/
-    onSubmit = (status:number) => {
+    onSubmit = (status: number) => {
         const topThis = this;
         const {props: {onSubmit, form}} = topThis;
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 if (onSubmit)
-                    onSubmit(values,status);
+                    onSubmit(values, status);
             }
         });
     }
@@ -55,8 +55,8 @@ class FormMessageManager extends React.Component<FormMessageManagerProps, FormMe
                 })(<FormLzEdit />)}
             </FormItem>
             <FormItem>
-                <Button type="primary" onClick={topThis.onSubmit.bind(0, this)}>保存</Button>
-                <Button type="primary" onClick={topThis.onSubmit.bind(1, this)}>发布</Button>
+                <Button type="primary" onClick={topThis.onSubmit.bind(this, 0)}>保存</Button>
+                <Button type="primary" onClick={topThis.onSubmit.bind(this, 1)}>发布</Button>
             </FormItem>
         </Form>
     }

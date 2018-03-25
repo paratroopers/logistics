@@ -134,8 +134,8 @@ export namespace APINameSpace {
 
         /** 新增系统信息*/
         static async AddMessageManagerItem(data:RequestNameSpace.AddMessageManagerItemRequest) {
-            let url: string = CommonAPI.baseURL + "Message/Item/update";
-            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().put(url,data);
+            let url: string = CommonAPI.baseURL + "Message/item";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().post(url,data);
         }
 
         /** 更新系统信息*/

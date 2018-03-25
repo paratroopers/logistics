@@ -23,7 +23,7 @@ export class MessageManagerAddPage extends React.Component<MessageManagerAddPage
 
     onSubmit = (values,status) => {
         const request: RequestNameSpace.AddMessageManagerItemRequest = {
-            status:status,
+            status: status,
             type: ModelNameSpace.MessageType.System,
             title: values.title,
             message: values.message,
@@ -32,9 +32,10 @@ export class MessageManagerAddPage extends React.Component<MessageManagerAddPage
         APINameSpace.MemberAPI.AddMessageManagerItem(request).then((result: ResponseNameSpace.BaseResponse) => {
             if (result.Status === 0) {
                 message.success("新增成功!");
-                hashHistory.push(PathConfig.WarehouseInPage);
+                hashHistory.push(PathConfig.MessageManagerPage);
             }
         })
+
     }
 
     render() {
