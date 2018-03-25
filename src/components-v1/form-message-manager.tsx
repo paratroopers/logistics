@@ -1,27 +1,43 @@
 import * as React from 'react';
-import {Form, Input, Button, message} from 'antd';
-import {WrappedFormUtils} from 'antd/lib/form/Form';
+import {Form, Input, Button} from 'antd';
+import {FormComponentProps} from 'antd/lib/form/Form';
 import {FormLzEdit}from "../components-v1/form-lz-edit";
+import {ModelNameSpace} from "../model/model";
 const FormItem = Form.Item;
 
 
-interface FormMessageManagerProps {
-    form?: WrappedFormUtils;
+interface FormMessageManagerProps extends FormComponentProps {
+    /** 点击提交*/
+    onSubmit?: (values: any, status?: number) => void;
+    /** 数据*/
+    item?: ModelNameSpace.MessageModel;
 }
 
-class FormMessageManager extends React.Component<FormMessageManagerProps, any> {
+export interface FormMessageManagerStates {
+
+}
+
+class FormMessageManager extends React.Component<FormMessageManagerProps, FormMessageManagerStates> {
     constructor(props) {
         super(props);
     }
 
-    onSubmit() {
+    componentDidMount() {
         const topThis = this;
-        const {props: {form}} = topThis;
+        const {props: {item, form}} = topThis;
+        form.setFieldsValue({"title": item.title, "message": item.message});
+    }
+
+    /** 点击确认*/
+    onSubmit = (status:number) => {
+        const topThis = this;
+        const {props: {onSubmit, form}} = topThis;
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                message.success("发布成功");
+                if (onSubmit)
+                    onSubmit(values,status);
             }
-        })
+        });
     }
 
     render() {
@@ -34,12 +50,13 @@ class FormMessageManager extends React.Component<FormMessageManagerProps, any> {
                 })(<Input placeholder=""/>)}
             </FormItem>
             <FormItem label={"内容"}>
-                {getFieldDecorator("content", {
+                {getFieldDecorator("message", {
                     rules: [{required: true, message: '请填写内容'}],
                 })(<FormLzEdit />)}
             </FormItem>
             <FormItem>
-                <Button type="primary" onClick={topThis.onSubmit.bind(this)}>发布</Button>
+                <Button type="primary" onClick={topThis.onSubmit.bind(0, this)}>保存</Button>
+                <Button type="primary" onClick={topThis.onSubmit.bind(1, this)}>发布</Button>
             </FormItem>
         </Form>
     }

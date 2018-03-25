@@ -5,6 +5,8 @@ import {MessageLocale} from '../locales/localeid';
 import {FormStepIcon, FormStepEnum} from './form-step-icon';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
+import {RequestNameSpace} from '../model/request';
+import {ResponseNameSpace} from '../model/response';
 import * as  moment from 'moment';
 
 moment.locale('zh-cn');
@@ -16,14 +18,22 @@ interface FormMessageListProps {
     tagStatus?: boolean;
     /** 是否全屏展示*/
     fullScreen?: boolean;
-    /** 是否显示为系统消息*/
-    isSystem?: boolean;
+    /** 消息类型*/
+    messageType?: ModelNameSpace.MessageType;
+    /** 是否为分页*/
+    isPagination?:boolean;
 }
 
 interface FormMessageListStates {
     loading: boolean,
-    messageItems?: ModelNameSpace.MessageLaterModel[];
+    messageItems: ModelNameSpace.MessageModel[];
     textStyle?: any;
+    /** 当前页数*/
+    pageIndex: number;
+    /** 每页条数*/
+    pageSize: number;
+    /** 总数*/
+    totalCount: number;
 }
 
 export class FormMessageList extends React.Component<FormMessageListProps, FormMessageListStates> {
@@ -32,7 +42,6 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap'
     }
-
 
     static defaultColor = {
         WarehouseIn: 'warehouse-in',
@@ -47,24 +56,50 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         super(props, content);
         this.state = {
             loading: false,
-            textStyle: props.layoutText ? this.defaultStyle : {}
+            messageItems: [],
+            textStyle: props.layoutText ? this.defaultStyle : {},
+            pageIndex: 1,
+            pageSize: 10,
+            totalCount: 0,
         }
     }
 
     componentDidMount() {
-        this.getMessageData();
+        this.getMessageData(1, 5);
     }
 
-    getMessageData() {
+    getMessageData(index?: number, size?: number) {
         const topThis = this;
-        const {props: {isSystem}} = topThis;
+        const {props: {messageType, isPagination}} = topThis;
         this.setState({loading: true});
-        APINameSpace.MemberAPI.GetMesaageLatest().then(result => {
-            if (result.Status === 0) {
-                if (isSystem) result.Data = [{message: "程序员反感（讨厌、不喜欢）什么？别人我不知道。我最反感！！！下班了，明明没啥事。都不走！都不走！都不走！然后，我忍不住了。一打卡！！不到10分钟。全跑完了！全跑完了！全跑完了！"}, {message: "程序员反感（讨厌、不喜欢）什么？别人我不知道。我最反感！！！下班了，明明没啥事。都不走！都不走！都不走！然后，我忍不住了。一打卡！！不到10分钟。全跑完了！全跑完了！全跑完了！"}, {message: "程序员反感（讨厌、不喜欢）什么？别人我不知道。我最反感！！！下班了，明明没啥事。都不走！都不走！都不走！然后，我忍不住了。一打卡！！不到10分钟。全跑完了！全跑完了！全跑完了！"}];
-                this.setState({messageItems: result.Data, loading: false});
-            }
-        });
+        const request: RequestNameSpace.GetMessageLatestListRequest = {
+            messageType: messageType ? messageType : ModelNameSpace.MessageType.Member,
+            pageIndex: index,
+            pageSize: size,
+            isAdmin: false
+        }
+
+        if (isPagination === true) {
+            APINameSpace.MemberAPI.GetMessageList(request).then((result:ResponseNameSpace.GetMessageListResponse) => {
+                if (result.Status === 0) {
+                    this.setState({
+                        messageItems: result.Data,
+                        loading: false,
+                        pageIndex: index,
+                        totalCount: result.TotalCount
+                    });
+                }
+            });
+        } else {
+            APINameSpace.MemberAPI.GetMessageLatestList(request).then((result:ResponseNameSpace.GetMessageLatestListResponse) => {
+                if (result.Status === 0) {
+                    this.setState({
+                        messageItems: result.Data,
+                        loading: false
+                    });
+                }
+            });
+        }
     }
 
     renderMessageStatus(type: FormStepEnum): { message: string, textClass: string, tagColor: string } {
@@ -102,7 +137,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         return {message: Global.intl.formatMessage({id: formatMessage}), textClass: textColor, tagColor: tagColor};
     }
 
-    renderItem(item: ModelNameSpace.MessageLaterModel) {
+    renderItem(item: ModelNameSpace.MessageModel) {
         const topThis = this;
         const {props: {tagStatus}, state: {textStyle}} = topThis;
 
@@ -128,7 +163,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         </List.Item>;
     }
 
-    renderSystemItem(item: ModelNameSpace.MessageLaterModel) {
+    renderSystemItem(item: ModelNameSpace.MessageModel) {
         const title = <Row type="flex" align="middle" justify="space-between">
             <Col>系统通知</Col>
             <Col>{moment(item.Created).fromNow()}</Col>
@@ -144,11 +179,23 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
 
     render() {
         const topThis = this;
-        const {props: {isSystem}} = topThis;
-        return <Spin spinning={this.state.loading}>
+        const {props: {messageType, isPagination}, state: {loading, messageItems, pageIndex, pageSize}} = topThis;
+
+        /** 分页*/
+        const pagination = {
+            pageSize: pageSize,
+            current: pageIndex,
+            total: messageItems.length,
+            onChange: ((index) => {
+                topThis.getMessageData(index, pageSize);
+            }),
+        };
+
+        return <Spin spinning={loading}>
             <div className="message-list">
-                <List dataSource={this.state.messageItems}
-                      renderItem={item => !isSystem ? topThis.renderItem(item) : topThis.renderSystemItem(item)}>
+                <List dataSource={messageItems}
+                      pagination={isPagination ? pagination : false}
+                      renderItem={item => !(messageType === ModelNameSpace.MessageType.System) ? topThis.renderItem(item) : topThis.renderSystemItem(item)}>
                 </List>
             </div>
         </Spin>;

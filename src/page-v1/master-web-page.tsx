@@ -47,7 +47,7 @@ class MasterWebPage extends React.Component<MasterWebPageProps, MasterWebPageSta
                 position: 'fixed',
                 width: '100%',
                 height: 80,
-                zIndex: 1001,
+                zIndex: 998,
                 background: "#FFF",
                 borderBottom: "1px solid #f5f5f5",
                 padding:0

@@ -10,6 +10,11 @@ import {MemberAddressPageEdit} from "../page-v1/member-address-page-edit";
 import {MemberAddressPageView} from "../page-v1/member-address-page-view";
 import {MemberDeliveredPage} from "../page-v1/member-delivered-page";
 import {MemberMessageListPage} from "../page-v1/member-message-list-page";
+import {MessageManagerPage} from "../page-v1/message-manager-page";
+import {MessageManagerAddPage} from "../page-v1/message-manager-add-page";
+import {MessageManagerEditPage} from "../page-v1/message-manager-edit-page";
+import {MessageManagerViewPage} from "../page-v1/message-manager-view-page";
+
 import {MemberMyOrderPage} from "../page-v1/member-my-order-page";
 import {MemberMyOrderPackageViewPage} from "../page-v1/member-my-order-package-view-page";
 import MemberMyOrderApprovalViewPage from "../page-v1/member-my-order-approval-view-page";
@@ -73,6 +78,10 @@ const routerConfig = (
                 <Route path={PathConfig.MemberAddressPageView} component={MemberAddressPageView}/>
                 <Route path={PathConfig.MemberDeliveredPage} component={MemberDeliveredPage}/>
                 <Route path={PathConfig.MemberMessageListPage} component={MemberMessageListPage}/>
+                <Route path={PathConfig.MessageManagerPage} component={MessageManagerPage}/>
+                <Route path={PathConfig.MessageManagerAddPage} component={MessageManagerAddPage}/>
+                <Route path={PathConfig.MessageManagerEditPage} component={MessageManagerEditPage}/>
+                <Route path={PathConfig.MessageManagerViewPage} component={MessageManagerViewPage}/>
                 <Route path={PathConfig.MemberMyOrderPage} component={MemberMyOrderPage}/>
                 <Route path={PathConfig.MemberMyOrderPackageViewPage} component={MemberMyOrderPackageViewPage}/>
                 <Route path={PathConfig.MemberMyOrderApprovalViewPage} component={MemberMyOrderApprovalViewPage}/>

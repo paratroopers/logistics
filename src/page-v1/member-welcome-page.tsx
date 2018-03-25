@@ -11,7 +11,9 @@ import {FormSteps} from '../components-v1/form-steps';
 import {CustomerserviceDropdown} from '../components-v1/customer-service-dropdown';
 import {MemberBaseInformation} from '../components-v1/member-base-information';
 import {ContentHeaderControl}from "../components-v1/common-content-header";
+import {ModelNameSpace} from "../model/model";
 const TabPane=Tabs.TabPane;
+
 interface MemberWelcomePageProps {
 }
 
@@ -120,7 +122,7 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
                                 <FormMessageList layoutText={true} tagStatus={true}></FormMessageList>
                             </TabPane>
                             <TabPane tab="消息通知" key="1">
-                                <FormMessageList layoutText={true} tagStatus={true} isSystem={true}></FormMessageList>
+                                <FormMessageList layoutText={true} tagStatus={true} messageType={ModelNameSpace.MessageType.System}></FormMessageList>
                             </TabPane>
                         </Tabs>
                     </Card.Grid>
