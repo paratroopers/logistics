@@ -213,7 +213,7 @@ export class WarehouseInQueryPage extends React.Component<WarehouseInQueryPagePr
 
     renderHeader() {
         const {state: {totalCount}} = this;
-        const message = <span>已入库: <span style={{fontWeight: "bold"}}>{totalCount}项 </span></span>;
+        const message = <span>总计: <span style={{fontWeight: "bold"}}>{totalCount}项已入库 </span></span>;
         return <FormTableHeader title={message}></FormTableHeader>;
     }
 
@@ -233,7 +233,7 @@ export class WarehouseInQueryPage extends React.Component<WarehouseInQueryPagePr
     render() {
         const {state: {visibleFormFileViewer, items}} = this;
         return <Row className="warehouse-in-page mainland-content-page">
-            <ContentHeaderControl title="入库操作"></ContentHeaderControl>
+            <ContentHeaderControl title="入库查询"></ContentHeaderControl>
             <FormAdvancedSearch
                 easyMode={true}
                 formAdvancedItems={this.renderFormAdvancedItems()}

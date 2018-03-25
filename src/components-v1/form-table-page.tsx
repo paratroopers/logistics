@@ -29,7 +29,8 @@ interface FormTablePageProps {
     searchConfig?: FormAdvancedItemModel[];
     callBackTitle?: string;
     headerTip?: string;
-    currentStep?: ModelNameSpace.OrderTypeEnum
+    currentStep?: ModelNameSpace.OrderTypeEnum;
+    title?:string;
 }
 
 interface FormTablePageStates {
@@ -245,7 +246,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
     render() {
         const {state: {visibleFormFileViewer, imgItems}} = this;
         return <Row>
-            <ContentHeaderControl title="订单确认"></ContentHeaderControl>
+            <ContentHeaderControl title={this.props.title}></ContentHeaderControl>
             <FormAdvancedSearch
                 formAdvancedItems={this.renderFormAdvancedItems()}
                 onClickSearch={v => this.onClickSearch(v)}></FormAdvancedSearch>

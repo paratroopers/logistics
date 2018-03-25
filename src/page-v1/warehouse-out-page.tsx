@@ -51,8 +51,9 @@ export class WarehouseOutPage extends React.Component<any, any> {
     render() {
         return <FormTablePage currentStep={ModelNameSpace.OrderTypeEnum.OrderOut}
                               searchConfig={this.getSearchConfig()}
+                              title = "订单出库"
                               dropDownConfig={this.getDropDownConfig()}
                               callBackTitle="订单出库"
-                              headerTip={'总计有{name}项出库订单'}></FormTablePage>;
+                              headerTip={'总计有{name}项订单待出库'}></FormTablePage>;
     }
 }
