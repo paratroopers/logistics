@@ -150,29 +150,18 @@ export class WarehouseInQueryPage extends React.Component<WarehouseInQueryPagePr
             render: (txt, record) => {
                 return <Link to={{pathname: PathConfig.WarehouseInQueryViewPage, state: record}}>{txt}</Link>
             }
-        }, {
-            title: "会员编号",
-            layout: ColumnLayout.LeftBottom,
-            dataIndex: 'MemeberCode',
-            render: (txt) => {
-                return Constants.minSM ? <span>会员编号:{txt}</span> : <span>{txt}</span>
-            }
-        }, {
+        },  {
+            title: '物流方式',
+            hidden: Constants.minSM,
+            dataIndex: 'expressTypeName'
+        },{
             title: "物流单号",
             dataIndex: 'expressNo',
             layout: ColumnLayout.OptionRow,
             render: (txt) => {
                 return Constants.minSM ? <span>快递单号:{txt}</span> : <span>{txt}</span>
             },
-        }, {
-            title: "交接单",
-            dataIndex: 'TransferNo',
-            hidden: Constants.minSM
-        }, {
-            title: "创建人",
-            dataIndex: 'CreatedByName',
-            hidden: Constants.minSM
-        }, {
+        },   {
             title: "入库时间",
             dataIndex: 'InWareHouseTime',
             render: (txt) => {
