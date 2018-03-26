@@ -73,7 +73,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         const {props: {messageType, isPagination}} = topThis;
         this.setState({loading: true});
         const request: RequestNameSpace.GetMessageLatestListRequest = {
-            messageType: messageType ? messageType : ModelNameSpace.MessageType.Member,
+            messageType: messageType ? messageType : ModelNameSpace.MessageType.All,
             pageIndex: index,
             pageSize: size,
             isAdmin: false
@@ -103,7 +103,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
     }
 
     renderMessageStatus(type: FormStepEnum): { message: string, textClass: string, tagColor: string } {
-        const {WarehouseIn, CustomerServiceConfirm, WarehousePackge, WaitForPay, Delivered} = MessageLocale;
+        const {WarehouseIn, CustomerServiceConfirm, WarehousePackge, WaitForPay, Delivered,Manager} = MessageLocale;
         let formatMessage: string;
         let textColor: string;
         let tagColor: string;
@@ -133,7 +133,13 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
                 textColor = FormMessageList.defaultColor.Delivered;
                 tagColor = "purple";
                 break;
+            default:
+                formatMessage = Manager;
+                textColor = "";
+                tagColor = "";
+                break;
         }
+
         return {message: Global.intl.formatMessage({id: formatMessage}), textClass: textColor, tagColor: tagColor};
     }
 

@@ -42,6 +42,7 @@
   "message.status.warehouse.packge": "WarehousePackge",
   "message.status.wait.for.pay": "WaitForPay",
   "message.status.delivered": "Delivered",
+  "message.status.manager": "Message",
   "common.nav.my.warehouse": "My Warehouse",
   "common.nav.order": "Order",
   "common.nav.orders.already.issued": "Orders Already Issued",
