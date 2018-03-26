@@ -99,6 +99,6 @@
   "customer.order.status.3.0":"待确认",
   "customer.order.status.4.0":"待确认",
   "customer.order.status.5.0":"待确认",
-  "customer.order.status.6.0":"待确认",
-  "customer.order.status.6.1":"已确认"
+  "customer.order.status.6.0":"待发货",
+  "customer.order.status.6.1":"已发货"
 }
