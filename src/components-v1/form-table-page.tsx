@@ -83,11 +83,24 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
     /** 获取数据源*/
     async loadData<T>(values?: T) {
         const {state: {pageIndex, pageSize}, props: {currentStep}} = this;
-        let request: RequestNameSpace.GetCustomerOrderMergeRequest = {
-            pageIndex: pageIndex,
-            pageSize: pageSize,
-            ...Constants.getOrderStep(currentStep, true)
+        let request:RequestNameSpace.GetCustomerOrderMergeRequest;
+
+        if (this.props.currentStep === ModelNameSpace.OrderTypeEnum.OrderOut){
+            request={
+                pageIndex: pageIndex,
+                pageSize: pageSize,
+                ...Constants.getOrderStep(currentStep, true),
+                currentStatus: 1
+            }
         }
+        else {
+            request={
+                pageIndex: pageIndex,
+                pageSize: pageSize,
+                ...Constants.getOrderStep(currentStep, true)
+            }
+        }
+
         if (typeof (values) === "object")
             for (let key of Object.keys(values)) {
                 /** 处理数据 取Key and Label的key*/
