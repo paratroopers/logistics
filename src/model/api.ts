@@ -127,6 +127,7 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.GetMessageListResponse>().get(url,data);
         }
 
+        /** 获取消息列表*/
         static async GetMessageList(data:RequestNameSpace.GetMessageListRequest) {
             let url: string = CommonAPI.baseURL + "Message/items/page";
             return new Request<BaseRequest, ResponseNameSpace.GetMessageLatestListResponse>().get(url,data);
@@ -148,6 +149,18 @@ export namespace APINameSpace {
         static async DeleteMessageManagerItem(data:RequestNameSpace.DeleteMessageManagerItemRequest) {
             let url: string = CommonAPI.baseURL + "Message/delete";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().del(url,data);
+        }
+
+        /** 获取未读数量*/
+        static async GetMessageUnreadCount() {
+            let url: string = CommonAPI.baseURL + "Message/unread";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url);
+        }
+
+        /** 更新未读数量*/
+        static async UpdateMessageUnreadCount() {
+            let url: string = CommonAPI.baseURL + "Message/unreadupdate";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().put(url);
         }
 
         static async LoginOut() {

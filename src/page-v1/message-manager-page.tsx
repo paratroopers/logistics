@@ -186,7 +186,7 @@ export class MessageManagerPage extends React.Component<MessageManagerPageProps,
 
     render() {
         return <Row className="message-manager-page mainland-content-page">
-            <ContentHeaderControl title="系统消息" extra={this.renderButton()}></ContentHeaderControl>
+            <ContentHeaderControl title="系统通知管理" extra={this.renderButton()}></ContentHeaderControl>
             {this.renderTable()}
         </Row>;
     }

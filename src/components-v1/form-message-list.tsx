@@ -65,7 +65,9 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
     }
 
     componentDidMount() {
-        this.getMessageData(1, 5);
+        const topThis = this;
+        const {state: {pageIndex, pageSize}} = topThis;
+        this.getMessageData(pageIndex, pageSize);
     }
 
     getMessageData(index?: number, size?: number) {
@@ -82,7 +84,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         if (isPagination === true) {
             APINameSpace.MemberAPI.GetMessageList(request).then((result:ResponseNameSpace.GetMessageListResponse) => {
                 if (result.Status === 0) {
-                    this.setState({
+                    topThis.setState({
                         messageItems: result.Data,
                         loading: false,
                         pageIndex: index,
@@ -93,7 +95,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         } else {
             APINameSpace.MemberAPI.GetMessageLatestList(request).then((result:ResponseNameSpace.GetMessageLatestListResponse) => {
                 if (result.Status === 0) {
-                    this.setState({
+                    topThis.setState({
                         messageItems: result.Data,
                         loading: false
                     });
@@ -170,8 +172,10 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
     }
 
     renderSystemItem(item: ModelNameSpace.MessageModel) {
+
+
         const title = <Row type="flex" align="middle" justify="space-between">
-            <Col>系统通知</Col>
+            <Col>{item.title}</Col>
             <Col>{moment(item.Created).fromNow()}</Col>
         </Row>
 
@@ -179,19 +183,19 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
             <List.Item.Meta
                 className="message-list-item-meta"
                 title={title}
-                description={item.message}/>
+                description={item.message.replace(/<(?:.|\s)*?>/g,"").replace(/<\/?.+?>/g,"").replace(/ /g,"")}/>
         </List.Item>;
     }
 
     render() {
         const topThis = this;
-        const {props: {messageType, isPagination}, state: {loading, messageItems, pageIndex, pageSize}} = topThis;
+        const {props: {messageType, isPagination}, state: {loading, messageItems, pageIndex, pageSize,totalCount}} = topThis;
 
         /** 分页*/
         const pagination = {
             pageSize: pageSize,
             current: pageIndex,
-            total: messageItems.length,
+            total: totalCount,
             onChange: ((index) => {
                 topThis.getMessageData(index, pageSize);
             }),

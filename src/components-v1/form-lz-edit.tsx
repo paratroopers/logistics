@@ -9,6 +9,7 @@ import * as LzEditor from 'react-lz-editor';
 interface FormLzEditProps {
     value?: string,
     onChange?: (value) => void
+    readonly?: boolean;
 }
 
 interface FormLzEditStates {
@@ -39,7 +40,9 @@ export class FormLzEdit extends React.Component<FormLzEditProps, FormLzEditState
 
     render() {
         const topThis = this;
-        const {state: {htmlContent}} = topThis;
-        return <LzEditor active={true} importContent={htmlContent} cbReceiver={this.receiveHtml.bind(this)}/>;
+        const {props: {readonly}, state: {htmlContent}} = topThis;
+        return !readonly ?
+            <LzEditor active={true} importContent={htmlContent} cbReceiver={this.receiveHtml.bind(this)}/> :
+            <div dangerouslySetInnerHTML={{__html: htmlContent}} ref="lzEditor"></div>;
     }
 }
