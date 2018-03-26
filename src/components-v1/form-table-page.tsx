@@ -201,19 +201,28 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             layout: ColumnLayout.Option,
             render: (val, record) => {
                 const menu: FormTableOperationModel[] = dropDownConfig;
-                return this.props.title === "已发货" ? <Link to={{pathname: PathConfig.WarehouseInQueryViewPage, state: record}}>查看</Link> : <FormTableOperation onClick={(param: ClickParam) => {
-                    if (param.key === FormTableOperationEnum.Detele.toString()) {
-                    }
-                    else {
-                        const thisMenu = dropDownConfig.filter(r => r.key.toString() === param.key)[0];
-                        hashHistory.push({
-                            pathname: thisMenu.path,
-                            query: {id: record.ID}
-                        });
-                    }
+                if(this.props.title ==="已发货")
+                {
+                    return <Link to={{pathname: PathConfig.WarehouseInQueryViewPage, state: record}}>查看</Link>;
+                }
+                if (this.props.title ==="待付款")
+                {
+                    return <Link to={{pathname:PathConfig.MemberWaitPayApprovePage,query: {id:record.ID}}}>付款</Link>;
+                }
+                else {
+                   return <FormTableOperation onClick={(param: ClickParam) => {
+                        if (param.key === FormTableOperationEnum.Detele.toString()) {
+                        }
+                        else {
+                            const thisMenu = dropDownConfig.filter(r => r.key.toString() === param.key)[0];
+                            hashHistory.push({
+                                pathname: thisMenu.path,
+                                query: {id: record.ID}
+                            });
+                        }
 
-                }} value={menu}></FormTableOperation>;
-
+                    }} value={menu}></FormTableOperation>;
+                }
             }
         }];
 
