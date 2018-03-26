@@ -190,7 +190,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
                 return <span>{Constants.getOrderStatusByString(currentStep, status)}</span>
             }
         }, {
-            title: "创建时间",
+            title:  currentStep === ModelNameSpace.OrderTypeEnum.OrderOut ? "发货时间":"创建时间",
             dataIndex: 'Modified',
             layout: ColumnLayout.LeftBottom,
             render: (txt) => {
