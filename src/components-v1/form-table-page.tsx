@@ -191,7 +191,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             }
         }, {
             title:  currentStep === ModelNameSpace.OrderTypeEnum.OrderOut ? "发货时间":"创建时间",
-            dataIndex: 'Modified',
+            dataIndex: currentStep === ModelNameSpace.OrderTypeEnum.OrderOut?'deliverTime':'Modified',
             layout: ColumnLayout.LeftBottom,
             render: (txt) => {
                 return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
