@@ -205,7 +205,7 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
                     packageHeight: data.mergeOrder['packageHeight'],
                     packageWeight: data.mergeOrder['packageWeight'],
                     deliverTime: data.mergeOrder['deliverTime']
-                /*    ,agent: data.mergeOrder['agent']*/
+                    /*    ,agent: data.mergeOrder['agent']*/
                 };
                 this.props.form.getFieldDecorator('needUpdateData', {initialValue: updateData});
             }
@@ -246,8 +246,7 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
         if (content.Channel && !content.Channel.hidden) {
             if (this.props.form)
                 this.props.form.getFieldDecorator('Channel');
-            emls.push(
-                <FormOrderChannel key="Channel"
+            emls.push(<FormOrderChannel key="Channel"
                                   form={this.props.form}
                                   fieldName="CustomerChooseChannelID"
                                   readOnly={content.Channel.readyOnly || readyOnly}
@@ -286,9 +285,9 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
                                        readOnly={content.WarehousePackage.readyOnly || readyOnly}>
             </FormOrderWarehousePackage>);
 
-        content.ReceiptDate && !content.ReceiptDate.hidden && emls.push(
-            <FormOrderReceiptDate readOnly={content.ReceiptDate.readyOnly || readyOnly}
-                                  data={mergeOrder}></FormOrderReceiptDate>);
+        content.ReceiptDate && !content.ReceiptDate.hidden && emls.push(<FormOrderReceiptDate
+            readOnly={content.ReceiptDate.readyOnly || readyOnly}
+            data={mergeOrder}></FormOrderReceiptDate>);
 
         content.Payment && !content.Payment.hidden && emls.push(<FormPayment key="Payment"
                                                                              data={mergeOrder}></FormPayment>);

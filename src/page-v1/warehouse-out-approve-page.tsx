@@ -35,9 +35,11 @@ class WarehouseOutApprovePage extends React.Component<WarehouseOutApprovePagePro
         this.props.form.validateFields(async (err, values) => {
             if (err) return;
             let request: RequestNameSpace.CustomerOrderMergeUpdateRequest = {};
-            for (let key of Object.keys(values.needUpdateData)) {
-                request[key] = values[key] ? values[key] : values.needUpdateData[key];
-            }
+            let sets = new Set(Object.keys(values.needUpdateData).concat(Object.keys(values)));
+            const keys = Array.from(sets as any);
+            keys.forEach((item: string) => {
+                request[item] = values[item] ? values[item] : values.needUpdateData[item];
+            });
             request.ID = this.state.selectedKey;
             request.currentStep = Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderOut);
             request.currentStatus = ModelNameSpace.OrderStatusEnum.StatusB;

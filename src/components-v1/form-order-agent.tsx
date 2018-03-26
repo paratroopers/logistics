@@ -20,9 +20,6 @@ export default class FormOrderAgent extends React.Component<FormOrderAgentProps,
     }
 
     render() {
-        {/*      <FormControl.FormSelectIndex type={SelectType.Agent}
-                                     placeholder="代理商"/>*/
-        }
         const {props: {form, readyOnly, AgentName}} = this;
         return <FormSettingGroup title={"代理商选择"}>
             <Form>
@@ -31,7 +28,10 @@ export default class FormOrderAgent extends React.Component<FormOrderAgentProps,
                         <Form.Item required={!readyOnly}>
                             {form.getFieldDecorator("agent", {
                                 rules: [{required: true, message: '请选择代理商!'}],
-                            })(<Input></Input>)}
+                            })(<FormControl.FormSelectIndex type={SelectType.Agent}
+                                                            mode="default"
+                                                            noLabelInValue={true}
+                                                            placeholder="代理商"/>)}
                         </Form.Item>
                     </Col>
                 </Row>
