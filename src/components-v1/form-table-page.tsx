@@ -85,7 +85,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
         const {state: {pageIndex, pageSize}, props: {currentStep}} = this;
         let request:RequestNameSpace.GetCustomerOrderMergeRequest;
 
-        if (this.props.currentStep === ModelNameSpace.OrderTypeEnum.OrderOut){
+        if (this.props.title === "已发货"){
             request={
                 pageIndex: pageIndex,
                 pageSize: pageSize,
@@ -201,7 +201,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             layout: ColumnLayout.Option,
             render: (val, record) => {
                 const menu: FormTableOperationModel[] = dropDownConfig;
-                return <FormTableOperation onClick={(param: ClickParam) => {
+                return this.props.title === "已发货" ? <Link to={{pathname: PathConfig.WarehouseInQueryViewPage, state: record}}>查看</Link> : <FormTableOperation onClick={(param: ClickParam) => {
                     if (param.key === FormTableOperationEnum.Detele.toString()) {
                     }
                     else {
@@ -213,6 +213,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
                     }
 
                 }} value={menu}></FormTableOperation>;
+
             }
         }];
 
