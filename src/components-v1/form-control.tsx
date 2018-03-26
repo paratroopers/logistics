@@ -23,11 +23,12 @@ export namespace FormControl {
     //region    属性  状态定义区
 
     export interface FormSelectIndexProps extends SelectProps {
-        readonly?:boolean;
+        readonly?: boolean;
         placeholder: string;
         type: SelectType;
         value?: LabeledValue;
         isadmin?: boolean;
+        noLabelInValue?: boolean;
     }
 
     export interface FormSelectIndexStates {
@@ -149,14 +150,14 @@ export namespace FormControl {
                     }
                 });
             } else if (type === SelectType.Agent) {
-                APINameSpace.CustomerOrderAPI.OrderSearchIndex(request).then(result => {
+                APINameSpace.SystemAPI.GetAgentList({name: value}).then(result => {
                     if (fetchId !== this.lastFetchId) { // for fetch callback order
                         return;
                     }
                     if (result.Status === 0 && result.Data !== null) {
                         const data = result.Data.map(o => ({
-                            text: `${o.expressNo}`,
-                            value: o.expressNo
+                            text: `${o.Name}`,
+                            value: o.ID
                         }));
                         this.setState({
                             data: data, fetching: false
@@ -181,7 +182,7 @@ export namespace FormControl {
             return !readonly ? <Select
                 disabled={disabled}
                 mode="multiple"
-                labelInValue
+                labelInValue={!this.props.noLabelInValue}
                 value={value}
                 placeholder={this.props.placeholder}
                 notFoundContent={fetching ? <Spin size="small"/> : null}

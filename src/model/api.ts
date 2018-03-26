@@ -34,7 +34,10 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url);
         }
 
-
+        static GetAgentList(data) {
+            let url: string = CommonAPI.baseURL + "Agent/index";
+            return new Request<RequestNameSpace.BaseListRequest, ResponseNameSpace.BaseResponse>().get(url,data);
+        }
     }
 
     //endregion
@@ -56,6 +59,7 @@ export namespace APINameSpace {
             let url: string = CommonAPI.baseURL + "Quotation/Country/Items";
             return new Request<RequestNameSpace.QuotationRequest, ResponseNameSpace.BaseResponse>().get(url, reqeust);
         }
+
     }
 
     //endregion
