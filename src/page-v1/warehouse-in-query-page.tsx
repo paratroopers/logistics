@@ -82,7 +82,8 @@ export class WarehouseInQueryPage extends React.Component<WarehouseInQueryPagePr
         let request: RequestNameSpace.GetWarehouseInListRequest = {
                 pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize,
-            ...Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderInQuery, true)
+            ...Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderInQuery, true),
+            step:2
         }
         if (typeof (formAdvancedData) === "object") {
             for (let key of Object.keys(formAdvancedData)) {
@@ -183,11 +184,11 @@ export class WarehouseInQueryPage extends React.Component<WarehouseInQueryPagePr
             onChange: (a) => {
                 topThis.loadData(a, pageSize);
             },
-            showSizeChanger: true,//是否可以改变 pageSize
-            onShowSizeChange: (a, b) => {
-                topThis.setState({pageIndex: a, pageSize: b});
-                topThis.loadData(a, b);
-            }
+            // showSizeChanger: true,//是否可以改变 pageSize
+            // onShowSizeChange: (a, b) => {
+            //     topThis.setState({pageIndex: a, pageSize: b});
+            //     topThis.loadData(a, b);
+            // }
         };
 
         return <WarehouseInQueryPageTable columns={columns}

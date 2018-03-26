@@ -59,9 +59,6 @@ class WarehouseOutApprovePage extends React.Component<WarehouseOutApprovePagePro
                         <Button key="1" type="primary" onClick={this.onSubmit.bind(this)}>通过</Button>
                     </Col>
                     <Col>
-                        <Button key="2" type="primary">拒绝</Button>
-                    </Col>
-                    <Col>
                         <Button key="3" type="primary">取消</Button>
                     </Col>
                 </Row>
