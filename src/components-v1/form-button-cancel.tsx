@@ -14,7 +14,7 @@ interface FormButtonCancelProps {
 interface FormButtonCancelPropsStates {
 }
 
-export class FormButtonCancel extends React.Component<FormButtonCancelProps, FormButtonCancelPropsStates> {
+export default class FormButtonCancel extends React.Component<FormButtonCancelProps, FormButtonCancelPropsStates> {
     constructor(props, content) {
         super(props, content);
     }

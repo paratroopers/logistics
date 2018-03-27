@@ -24,9 +24,11 @@ import {FormTableDetailPage, FormTableDetailContentModel} from './form-table-det
 import FormOrderWarehousePackage from './form-order-warehouse-package';
 import FormOrderReceiptDate from './form-order-receipt-date';
 import FormOrderAgent from './form-order-agent';
+import FormButtonCancel from './form-button-cancel';
 
 
 export {
+    FormButtonCancel,
     FormAdvancedSearch,
     FormMessageList,
     FormStatusSelect,
