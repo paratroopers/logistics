@@ -126,9 +126,45 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
 
-        static async GetMesaageLatest() {
+        static async GetMessageLatestList(data:RequestNameSpace.GetMessageLatestListRequest) {
             let url: string = CommonAPI.baseURL + "Message/latest";
+            return new Request<BaseRequest, ResponseNameSpace.GetMessageListResponse>().get(url,data);
+        }
+
+        /** 获取消息列表*/
+        static async GetMessageList(data:RequestNameSpace.GetMessageListRequest) {
+            let url: string = CommonAPI.baseURL + "Message/items/page";
+            return new Request<BaseRequest, ResponseNameSpace.GetMessageLatestListResponse>().get(url,data);
+        }
+
+        /** 新增系统信息*/
+        static async AddMessageManagerItem(data:RequestNameSpace.AddMessageManagerItemRequest) {
+            let url: string = CommonAPI.baseURL + "Message/item";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().post(url,data);
+        }
+
+        /** 更新系统信息*/
+        static async UpdateMessageManagerItem(data:RequestNameSpace.UpdateMessageManagerItemRequest) {
+            let url: string = CommonAPI.baseURL + "Message/Item/update";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().put(url,data);
+        }
+
+        /** 删除系统消息*/
+        static async DeleteMessageManagerItem(data:RequestNameSpace.DeleteMessageManagerItemRequest) {
+            let url: string = CommonAPI.baseURL + "Message/delete";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().del(url,data);
+        }
+
+        /** 获取未读数量*/
+        static async GetMessageUnreadCount() {
+            let url: string = CommonAPI.baseURL + "Message/unread";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url);
+        }
+
+        /** 更新未读数量*/
+        static async UpdateMessageUnreadCount() {
+            let url: string = CommonAPI.baseURL + "Message/unreadupdate";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().put(url);
         }
 
         static async LoginOut() {

@@ -83,13 +83,11 @@ export namespace ModelNameSpace {
 
     //region 系统模块定义区
 
-    export interface MessageLaterModel {
-        Created?: string;
-        CreatedBy?: string;
+    export interface MessageModel extends BaseModel {
         ID?: string;
-        Modified?: string;
-        ModifiedBy?: string;
-        TenantID?: string;
+        status: number;
+        title: string;
+        IsRead: boolean;
         message?: string;
         type?: number;
         userid?: string;
@@ -314,6 +312,12 @@ export namespace ModelNameSpace {
 
     }
 
+    /** 消息类型*/
+    export enum MessageType{
+        Member = 0,
+        System = 100,
+        All = -1
+    }
     //endregion
 
     //region 客户定义区

@@ -52,6 +52,8 @@ export class MessageLocale {
     static WaitForPay = "message.status.wait.for.pay";
     /*交付*/
     static Delivered = "message.status.delivered";
+    /*系统消息*/
+    static Manager = "message.status.manager";
 }
 
 export class NavLocale {
