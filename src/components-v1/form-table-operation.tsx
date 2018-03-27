@@ -8,12 +8,14 @@ import {Dropdown, Menu, Icon} from 'antd';
 import {ClickParam} from "antd/lib/menu";
 import {Context} from '../util/common';
 import {PathConfig} from '../config/pathconfig';
+import {ModelNameSpace} from "../model/model";
 
 export class FormTableOperationModel {
     key: FormTableOperationEnum;
     type?: string;
     label: string;
     path?: string;
+    step?: ModelNameSpace.OrderTypeEnum;
 }
 
 export enum FormTableOperationEnum {
@@ -49,14 +51,8 @@ export class FormTableOperation extends React.Component<FormTableOperationProps,
             </Menu.Item>)}
         </Menu>;
 
-        return <div>
-            {
-                value.length === 1 ? <a onClick={x => onClick({key: value[0].key.toString()})}>{value[0].label}</a> :
-                    <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
-                        <i className={Context.getIconClassName("icon-ellipsisv")}/>
-                    </Dropdown>
-            }
-        </div>;
-
+        return <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
+            <i className={Context.getIconClassName("icon-ellipsisv")}/>
+        </Dropdown>;
     }
 }

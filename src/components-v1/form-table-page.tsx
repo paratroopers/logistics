@@ -206,6 +206,10 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
                     return <Link to={{pathname: PathConfig.MemberWaitPayApprovePage, query: {id: record.ID}}}>付款</Link>;
                 }
                 else {
+                    let _step: ModelNameSpace.OrderTypeEnum;
+                    if (record.currentStep === '待付款') {
+                        _step = record.currentStatus === '1' ? ModelNameSpace.OrderTypeEnum.OrderOutDeliver : ModelNameSpace.OrderTypeEnum.OrderOut;
+                    }
                     return <FormTableOperation
                         onClick={(param: any) => {
                             if (param.key === FormTableOperationEnum.Detele.toString()) {
@@ -214,7 +218,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
                                 const thisMenu = dropDownConfig.filter(r => r.key.toString() === param.key)[0];
                                 hashHistory.push({
                                     pathname: thisMenu.path,
-                                    query: {id: record.ID}
+                                    query: {id: record.ID, step:_step},
                                 });
                             }
 
@@ -247,7 +251,8 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
                 defaultDisplay: true,
                 fieldName: "customerOrderMergeNo",
                 displayName: "客户合并订单号",
-                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrderMerge} placeholder="搜索客户合并订单号"/>,
+                control: <FormControl.FormSelectIndex type={SelectType.CustomerOrderMerge}
+                                                      placeholder="搜索客户合并订单号"/>,
                 mobileShow: true,
                 layout: {
                     xs: 15,

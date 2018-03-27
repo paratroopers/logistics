@@ -89,6 +89,17 @@ export class FormTableDetailContentModel {
                 Payment: {hidden: true},
                 WarehousePackage: {readyOnly: true},
                 ReceiptDate: {readyOnly: true}
+            },
+            [ModelNameSpace.OrderTypeEnum.OrderOutDeliver]: {
+                Address: {readyOnly: true},
+                Declare: {readyOnly: true},
+                Channel: {readyOnly: true},
+                PackageRemarks: {hidden: true},
+                OtherCost: {hidden: true},
+                CustomerMark: {hidden: true},
+                Payment: {hidden: true},
+                WarehousePackage: {readyOnly: true},
+                ReceiptDate: {readyOnly: true}
             }
         };
         const stepViewControl = {
@@ -135,6 +146,17 @@ export class FormTableDetailContentModel {
                 WarehousePackage: {readyOnly: true},
                 ReceiptDate: {readyOnly: true},
                 Agent: {hidden: true}
+            },
+            [ModelNameSpace.OrderTypeEnum.OrderOutDeliver]: {
+                Address: {readyOnly: true},
+                Declare: {readyOnly: true},
+                Channel: {readyOnly: true},
+                PackageRemarks: {hidden: true},
+                OtherCost: {hidden: true},
+                CustomerMark: {hidden: true},
+                Payment: {hidden: true},
+                WarehousePackage: {readyOnly: true},
+                ReceiptDate: {readyOnly: true}
             }
         }
         return readyOnly ? stepViewControl[step] : stepApproveControl[step];
@@ -248,11 +270,11 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
             if (this.props.form)
                 this.props.form.getFieldDecorator('Channel');
             emls.push(<FormOrderChannel key="Channel"
-                                  form={this.props.form}
-                                  fieldName="CustomerChooseChannelID"
-                                  readOnly={content.Channel.readyOnly || readyOnly}
-                                  ids={[_mergeOrder['CustomerChooseChannelID']]}>
-                </FormOrderChannel>);
+                                        form={this.props.form}
+                                        fieldName="CustomerChooseChannelID"
+                                        readOnly={content.Channel.readyOnly || readyOnly}
+                                        ids={[_mergeOrder['CustomerChooseChannelID']]}>
+            </FormOrderChannel>);
         }
 
         content.CustomerMark && !content.CustomerMark.hidden && emls.push(
@@ -294,6 +316,8 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
                                                                              data={mergeOrder}></FormPayment>);
 
         content.Agent && !content.Agent.hidden && emls.push(<FormOrderAgent key="Agent"
+                                                                            readyOnly={readyOnly}
+                                                                            data={mergeOrder}
                                                                             form={this.props.form}></FormOrderAgent>);
 
         return emls;
