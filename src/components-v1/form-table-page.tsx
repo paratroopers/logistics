@@ -30,7 +30,7 @@ interface FormTablePageProps {
     callBackTitle?: string;
     headerTip?: string;
     currentStep?: ModelNameSpace.OrderTypeEnum;
-    title?:string;
+    title?: string;
 }
 
 interface FormTablePageStates {
@@ -83,10 +83,10 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
     /** 获取数据源*/
     async loadData<T>(values?: T) {
         const {state: {pageIndex, pageSize}, props: {currentStep}} = this;
-        let request:RequestNameSpace.GetCustomerOrderMergeRequest;
+        let request: RequestNameSpace.GetCustomerOrderMergeRequest;
 
-        if (this.props.title === "已发货"){
-            request={
+        if (this.props.title === "已发货") {
+            request = {
                 pageIndex: pageIndex,
                 pageSize: pageSize,
                 ...Constants.getOrderStep(currentStep, true),
@@ -94,7 +94,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             }
         }
         else {
-            request={
+            request = {
                 pageIndex: pageIndex,
                 pageSize: pageSize,
                 ...Constants.getOrderStep(currentStep, true)
@@ -186,8 +186,8 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
                 return <span>{Constants.getOrderStatusByString(currentStep, status)}</span>
             }
         }, {
-            title:  currentStep === ModelNameSpace.OrderTypeEnum.OrderOut ? "发货时间":"创建时间",
-            dataIndex: currentStep === ModelNameSpace.OrderTypeEnum.OrderOut?'deliverTime':'Modified',
+            title: currentStep === ModelNameSpace.OrderTypeEnum.OrderOut ? "发货时间" : "创建时间",
+            dataIndex: currentStep === ModelNameSpace.OrderTypeEnum.OrderOut ? 'deliverTime' : 'Modified',
             layout: ColumnLayout.LeftBottom,
             render: (txt) => {
                 if (txt === "0001-01-01T00:00:00")
@@ -199,27 +199,26 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             layout: ColumnLayout.Option,
             render: (val, record) => {
                 const menu: FormTableOperationModel[] = dropDownConfig;
-                if(this.props.title ==="已发货")
-                {
+                if (this.props.title === "已发货") {
                     return <Link to={{pathname: PathConfig.WarehouseInQueryViewPage, state: record}}>查看</Link>;
                 }
-                if (this.props.title ==="待付款")
-                {
-                    return <Link to={{pathname:PathConfig.MemberWaitPayApprovePage,query: {id:record.ID}}}>付款</Link>;
+                if (this.props.title === "待付款") {
+                    return <Link to={{pathname: PathConfig.MemberWaitPayApprovePage, query: {id: record.ID}}}>付款</Link>;
                 }
                 else {
-                   return <FormTableOperation onClick={(param: ClickParam) => {
-                        if (param.key === FormTableOperationEnum.Detele.toString()) {
-                        }
-                        else {
-                            const thisMenu = dropDownConfig.filter(r => r.key.toString() === param.key)[0];
-                            hashHistory.push({
-                                pathname: thisMenu.path,
-                                query: {id: record.ID}
-                            });
-                        }
+                    return <FormTableOperation
+                        onClick={(param: any) => {
+                            if (param.key === FormTableOperationEnum.Detele.toString()) {
+                            }
+                            else {
+                                const thisMenu = dropDownConfig.filter(r => r.key.toString() === param.key)[0];
+                                hashHistory.push({
+                                    pathname: thisMenu.path,
+                                    query: {id: record.ID}
+                                });
+                            }
 
-                    }} value={menu}></FormTableOperation>;
+                        }} value={menu}></FormTableOperation>;
                 }
             }
         }];

@@ -3,6 +3,7 @@
  * Created by Handy
  * */
 import * as React from 'react';
+import {hashHistory} from 'react-router';
 import {Dropdown, Menu, Icon} from 'antd';
 import {ClickParam} from "antd/lib/menu";
 import {Context} from '../util/common';
@@ -22,8 +23,8 @@ export enum FormTableOperationEnum {
 }
 
 interface FormTableOperationProps {
-    onClick?: (a: ClickParam) => void;
-    value: FormTableOperationModel[]
+    onClick?: (a: any) => void;
+    value: FormTableOperationModel[];
 }
 
 interface FormTableOperationStates {
@@ -41,17 +42,21 @@ export class FormTableOperation extends React.Component<FormTableOperationProps,
 
 
         const menu = <Menu onClick={onClick}>
-            {value.length === 1 ? <a onClick={() => {
-                value[0].path
-            }}>{value[0].label}</a> : value.map(item => <Menu.Item key={item.key}>
+            {value.map(item => <Menu.Item key={item.key}>
                 <span>{item.type ?
                     <Icon style={{fontSize: 14, margin: "4px 8px 4px 0px"}}
                           type={item.type}></Icon> : null}{item.label}</span>
             </Menu.Item>)}
         </Menu>;
 
-        return <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
-            <i className={Context.getIconClassName("icon-ellipsisv")}/>
-        </Dropdown>;
+        return <div>
+            {
+                value.length === 1 ? <a onClick={x => onClick({key: value[0].key.toString()})}>{value[0].label}</a> :
+                    <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
+                        <i className={Context.getIconClassName("icon-ellipsisv")}/>
+                    </Dropdown>
+            }
+        </div>;
+
     }
 }
