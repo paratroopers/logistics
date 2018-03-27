@@ -9,6 +9,9 @@ import {Constants} from '../util/common';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {RequestNameSpace} from '../model/request';
+import FormButtonCancel from "../components-v1/form-button-cancel";
+import {PathConfig} from "../config/pathconfig";
+import {PathConfig} from "../config/pathconfig";
 
 interface WarehousePackageApprovePageProps extends RouteComponentProps<any, any>, FormComponentProps {
 
@@ -57,10 +60,7 @@ export class WarehousePackageApprovePage extends React.Component<WarehousePackag
                         <Button onClick={this.onSubmit.bind(this)} key="1" type="primary">通过</Button>
                     </Col>
                     <Col>
-                        <Button key="2" type="primary">拒绝</Button>
-                    </Col>
-                    <Col>
-                        <Button key="3" type="primary">取消</Button>
+                        <FormButtonCancel url={PathConfig.WarehousePackagePage}></FormButtonCancel>
                     </Col>
                 </Row>
             </FormTableDetailPage.Header>
