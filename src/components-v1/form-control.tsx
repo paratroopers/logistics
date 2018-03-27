@@ -29,6 +29,7 @@ export namespace FormControl {
         value?: LabeledValue;
         isadmin?: boolean;
         noLabelInValue?: boolean;
+        mode?: 'default' | 'multiple' | 'tags' | 'combobox';
     }
 
     export interface FormSelectIndexStates {
@@ -56,6 +57,8 @@ export namespace FormControl {
     //region select索引控件, Button控件 Select 控件
     export class FormSelectIndex extends React.Component<FormSelectIndexProps, FormSelectIndexStates> {
         lastFetchId: number;
+        loadingTime?: number;
+        search?: string;
 
         constructor(props, context) {
             super(props, context);
@@ -64,125 +67,131 @@ export namespace FormControl {
                 data: [],
                 fetching: false,
             }
+            this.loadingTime = 500;
+            this.search = "";
         }
 
         fetchData = (value) => {
             this.lastFetchId += 1;
-            let fetchId = this.lastFetchId;
-            this.setState({data: [], fetching: true});
-            const type = this.props.type;
-            var request: RequestNameSpace.UserSearchIndexRequest = {
-                name: value,
-                type: type
-            };
-            if (type === SelectType.Member || type === SelectType.CustomerService || type === SelectType.WarehouseAdmin) {
-                APINameSpace.MemberAPI.UserSearchIndex(request).then(result => {
-                    if (fetchId !== this.lastFetchId) { // for fetch callback order
-                        return;
-                    }
-                    if (result.Status === 0 && result.Data !== null) {
-                        const data = result.Data.map(o => ({
-                            text: `${o.MemeberCode}`,
-                            value: o.Userid
-                        }));
-                        this.setState({
-                            data: data, fetching: false
+            this.search = value;
+            setTimeout(() => {
+                if (this.search === value && value) {
+                    let fetchId = this.lastFetchId;
+                    this.setState({data: [], fetching: true});
+                    const type = this.props.type;
+                    var request: RequestNameSpace.UserSearchIndexRequest = {
+                        name: value,
+                        type: type
+                    };
+                    if (type === SelectType.Member || type === SelectType.CustomerService || type === SelectType.WarehouseAdmin) {
+                        APINameSpace.MemberAPI.UserSearchIndex(request).then(result => {
+                            if (fetchId !== this.lastFetchId) { // for fetch callback order
+                                return;
+                            }
+                            if (result.Status === 0 && result.Data !== null) {
+                                const data = result.Data.map(o => ({
+                                    text: `${o.MemeberCode}`,
+                                    value: o.Userid
+                                }));
+                                this.setState({
+                                    data: data, fetching: false
+                                });
+                            }
                         });
-
                     }
-                });
-            }
-            else if (type === SelectType.CustomerOrder) {
-                APINameSpace.CustomerOrderAPI.OrderSearchIndex(request).then(result => {
-                    if (fetchId !== this.lastFetchId) { // for fetch callback order
-                        return;
-                    }
-                    if (result.Status === 0 && result.Data !== null) {
-                        const data = result.Data.map(o => ({
-                            text: `${o.CustomerOrderNo}`,
-                            value: o.CustomerOrderNo
-                        }));
-                        this.setState({
-                            data: data, fetching: false
+                    else if (type === SelectType.CustomerOrder) {
+                        APINameSpace.CustomerOrderAPI.OrderSearchIndex(request).then(result => {
+                            if (fetchId !== this.lastFetchId) { // for fetch callback order
+                                return;
+                            }
+                            if (result.Status === 0 && result.Data !== null) {
+                                const data = result.Data.map(o => ({
+                                    text: `${o.CustomerOrderNo}`,
+                                    value: o.CustomerOrderNo
+                                }));
+                                this.setState({
+                                    data: data, fetching: false
+                                });
+                            }
                         });
-
                     }
-                });
-            }
-            else if (type === SelectType.CustomerOrderMerge) {
+                    else if (type === SelectType.CustomerOrderMerge) {
 
-                let req: RequestNameSpace.GetCustomerOrderMergeRequest = {
-                    pageIndex: 1,
-                    pageSize: 1000,
-                    isAdmin: this.props.isadmin
-                };
+                        let req: RequestNameSpace.GetCustomerOrderMergeRequest = {
+                            pageIndex: 1,
+                            pageSize: 1000,
+                            isAdmin: this.props.isadmin
+                        };
 
-                APINameSpace.MemberAPI.GetCustomerOrdersMerge(req).then((result: ResponseNameSpace.GetCustomerOrderMergeListResponse) => {
-                    if (fetchId !== this.lastFetchId) { // for fetch callback order
-                        return;
-                    }
-                    if (result.Status === 0 && result.Data !== null) {
-                        const data = result.Data.map(o => ({
-                            text: `${o.MergeOrderNo}`,
-                            value: o.ID
-                        }));
-                        this.setState({
-                            data: data, fetching: false
+                        APINameSpace.MemberAPI.GetCustomerOrdersMerge(req).then((result: ResponseNameSpace.GetCustomerOrderMergeListResponse) => {
+                            if (fetchId !== this.lastFetchId) { // for fetch callback order
+                                return;
+                            }
+                            if (result.Status === 0 && result.Data !== null) {
+                                const data = result.Data.map(o => ({
+                                    text: `${o.MergeOrderNo}`,
+                                    value: o.ID
+                                }));
+                                this.setState({
+                                    data: data, fetching: false
+                                });
+
+                            }
                         });
+                    }
+                    else if (type === SelectType.ExpressNo) {
+                        APINameSpace.CustomerOrderAPI.OrderSearchIndex(request).then(result => {
+                            if (fetchId !== this.lastFetchId) { // for fetch callback order
+                                return;
+                            }
+                            if (result.Status === 0 && result.Data !== null) {
+                                const data = result.Data.map(o => ({
+                                    text: `${o.expressNo}`,
+                                    value: o.expressNo
+                                }));
+                                this.setState({
+                                    data: data, fetching: false
+                                });
 
-                    }
-                });
-            }
-            else if (type === SelectType.ExpressNo) {
-                APINameSpace.CustomerOrderAPI.OrderSearchIndex(request).then(result => {
-                    if (fetchId !== this.lastFetchId) { // for fetch callback order
-                        return;
-                    }
-                    if (result.Status === 0 && result.Data !== null) {
-                        const data = result.Data.map(o => ({
-                            text: `${o.expressNo}`,
-                            value: o.expressNo
-                        }));
-                        this.setState({
-                            data: data, fetching: false
+                            }
                         });
-
-                    }
-                });
-            } else if (type === SelectType.Agent) {
-                APINameSpace.SystemAPI.GetAgentList({name: value}).then(result => {
-                    if (fetchId !== this.lastFetchId) { // for fetch callback order
-                        return;
-                    }
-                    if (result.Status === 0 && result.Data !== null) {
-                        const data = result.Data.map(o => ({
-                            text: `${o.Name}`,
-                            value: o.ID
-                        }));
-                        this.setState({
-                            data: data, fetching: false
+                    } else if (type === SelectType.Agent) {
+                        APINameSpace.SystemAPI.GetAgentList({name: value}).then(result => {
+                            if (fetchId !== this.lastFetchId) { // for fetch callback order
+                                return;
+                            }
+                            if (result.Status === 0 && result.Data !== null) {
+                                const data = result.Data.map(o => ({
+                                    text: `${o.Name}`,
+                                    value: o.ID
+                                }));
+                                this.setState({
+                                    data: data,
+                                    fetching: false
+                                });
+                            }
                         });
-
                     }
-                });
-            }
+                }
+            }, this.loadingTime);
         }
 
         handleChange = (value) => {
-            this.setState({
-                data: [],
-                fetching: false,
-            });
+            /*            this.setState({
+                            data: [],
+                            fetching: false,
+                        });*/
             this.props.onChange(value);
         }
 
         render() {
             const topThis = this;
-            const {props: {value, disabled, readonly, style}, state: {fetching, data}} = topThis;
+            const {props: {value, disabled, readonly, style, noLabelInValue, mode}, state: {fetching, data}} = topThis;
             return !readonly ? <Select
                 disabled={disabled}
-                mode="multiple"
-                labelInValue={!this.props.noLabelInValue}
+                mode={mode ? mode : "multiple"}
+                showSearch={true}
+                labelInValue={!noLabelInValue}
                 value={value}
                 placeholder={this.props.placeholder}
                 notFoundContent={fetching ? <Spin size="small"/> : null}
@@ -195,7 +204,6 @@ export namespace FormControl {
                 return item.label;
             }) : ""}</label>;
         }
-
     }
 
     export class FormButtonControl extends React.Component<FormButtonControlProps, FormButtonControlState> {

@@ -444,7 +444,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
     render() {
         const {state: {visibleFormFileViewer, items}} = this;
         return <Row className="warehouse-in-page mainland-content-page">
-            <ContentHeaderControl title="入库操作" extra={this.renderButton()}></ContentHeaderControl>
+            <ContentHeaderControl title="订单入库" extra={this.renderButton()}></ContentHeaderControl>
             <FormAdvancedSearch
                 easyMode={true}
                 formAdvancedItems={this.renderFormAdvancedItems()}

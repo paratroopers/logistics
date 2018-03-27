@@ -34,10 +34,11 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url);
         }
 
-        static GetAgentList(data) {
+        static async GetAgentList(data) {
             let url: string = CommonAPI.baseURL + "Agent/index";
-            return new Request<RequestNameSpace.BaseListRequest, ResponseNameSpace.BaseResponse>().get(url,data);
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
+
     }
 
     //endregion
@@ -59,7 +60,6 @@ export namespace APINameSpace {
             let url: string = CommonAPI.baseURL + "Quotation/Country/Items";
             return new Request<RequestNameSpace.QuotationRequest, ResponseNameSpace.BaseResponse>().get(url, reqeust);
         }
-
     }
 
     //endregion
@@ -234,6 +234,7 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
         }
 
+
         static async GetCustomerOrders(data: RequestNameSpace.CustomerOrdersRequest) {
             let url: string = CommonAPI.baseURL + "CustomerOrder/items/page";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url, data);
@@ -296,7 +297,6 @@ export namespace APINameSpace {
             let url: string = CommonAPI.baseURL + "CustomerOrderStatus/items";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url);
         }
-
     }
 
     export class CustomerOrderMergeStatusAPI {

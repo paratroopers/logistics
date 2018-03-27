@@ -29,7 +29,8 @@ interface FormTablePageProps {
     searchConfig?: FormAdvancedItemModel[];
     callBackTitle?: string;
     headerTip?: string;
-    currentStep?: ModelNameSpace.OrderTypeEnum
+    currentStep?: ModelNameSpace.OrderTypeEnum;
+    title?:string;
 }
 
 interface FormTablePageStates {
@@ -82,11 +83,24 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
     /** 获取数据源*/
     async loadData<T>(values?: T) {
         const {state: {pageIndex, pageSize}, props: {currentStep}} = this;
-        let request: RequestNameSpace.GetCustomerOrderMergeRequest = {
-            pageIndex: pageIndex,
-            pageSize: pageSize,
-            ...Constants.getOrderStep(currentStep, true)
+        let request:RequestNameSpace.GetCustomerOrderMergeRequest;
+
+        if (this.props.title === "已发货"){
+            request={
+                pageIndex: pageIndex,
+                pageSize: pageSize,
+                ...Constants.getOrderStep(currentStep, true),
+                currentStatus: 1
+            }
         }
+        else {
+            request={
+                pageIndex: pageIndex,
+                pageSize: pageSize,
+                ...Constants.getOrderStep(currentStep, true)
+            }
+        }
+
         if (typeof (values) === "object")
             for (let key of Object.keys(values)) {
                 /** 处理数据 取Key and Label的key*/
@@ -176,8 +190,8 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
                 return <span>{Constants.getOrderStatusByString(currentStep, status)}</span>
             }
         }, {
-            title: "创建时间",
-            dataIndex: 'Modified',
+            title:  currentStep === ModelNameSpace.OrderTypeEnum.OrderOut ? "发货时间":"创建时间",
+            dataIndex: currentStep === ModelNameSpace.OrderTypeEnum.OrderOut?'deliverTime':'Modified',
             layout: ColumnLayout.LeftBottom,
             render: (txt) => {
                 return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
@@ -187,18 +201,28 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             layout: ColumnLayout.Option,
             render: (val, record) => {
                 const menu: FormTableOperationModel[] = dropDownConfig;
-                return <FormTableOperation onClick={(param: ClickParam) => {
-                    if (param.key === FormTableOperationEnum.Detele.toString()) {
-                    }
-                    else {
-                        const thisMenu = dropDownConfig.filter(r => r.key.toString() === param.key)[0];
-                        hashHistory.push({
-                            pathname: thisMenu.path,
-                            query: {id: record.ID}
-                        });
-                    }
+                if(this.props.title ==="已发货")
+                {
+                    return <Link to={{pathname: PathConfig.WarehouseInQueryViewPage, state: record}}>查看</Link>;
+                }
+                if (this.props.title ==="待付款")
+                {
+                    return <Link to={{pathname:PathConfig.MemberWaitPayApprovePage,query: {id:record.ID}}}>付款</Link>;
+                }
+                else {
+                   return <FormTableOperation onClick={(param: ClickParam) => {
+                        if (param.key === FormTableOperationEnum.Detele.toString()) {
+                        }
+                        else {
+                            const thisMenu = dropDownConfig.filter(r => r.key.toString() === param.key)[0];
+                            hashHistory.push({
+                                pathname: thisMenu.path,
+                                query: {id: record.ID}
+                            });
+                        }
 
-                }} value={menu}></FormTableOperation>;
+                    }} value={menu}></FormTableOperation>;
+                }
             }
         }];
 
@@ -245,7 +269,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
     render() {
         const {state: {visibleFormFileViewer, imgItems}} = this;
         return <Row>
-            <ContentHeaderControl title="订单确认"></ContentHeaderControl>
+            <ContentHeaderControl title={this.props.title}></ContentHeaderControl>
             <FormAdvancedSearch
                 formAdvancedItems={this.renderFormAdvancedItems()}
                 onClickSearch={v => this.onClickSearch(v)}></FormAdvancedSearch>

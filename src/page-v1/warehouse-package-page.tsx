@@ -61,6 +61,7 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
                               searchConfig={this.getSearchConfig()}
                               dropDownConfig={this.getDropDownConfig()}
                               callBackTitle="合并打包"
-                              headerTip={'总计有{name}项合并订单'}></FormTablePage>;
+                              title="合并打包"
+                              headerTip={'总计有{name}项待合并打包订单'}></FormTablePage>;
     }
 }
