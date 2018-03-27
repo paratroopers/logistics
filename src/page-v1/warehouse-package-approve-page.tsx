@@ -11,7 +11,6 @@ import {APINameSpace} from '../model/api';
 import {RequestNameSpace} from '../model/request';
 import FormButtonCancel from "../components-v1/form-button-cancel";
 import {PathConfig} from "../config/pathconfig";
-import {PathConfig} from "../config/pathconfig";
 
 interface WarehousePackageApprovePageProps extends RouteComponentProps<any, any>, FormComponentProps {
 
