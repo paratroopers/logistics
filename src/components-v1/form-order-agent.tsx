@@ -24,7 +24,7 @@ export default class FormOrderAgent extends React.Component<FormOrderAgentProps,
         return <FormSettingGroup title={"代理商选择"}>
             <Form>
                 <Row gutter={16}>
-                    <Col xs={24} sm={12} md={8} style={{paddingLeft: '8px'}}>
+                    <Col  xs={24} sm={12} md={8} style={{paddingLeft: '8px'}}>
                         <Form.Item required={!readyOnly}>
                             {form.getFieldDecorator("agent", {
                                 rules: [{required: true, message: '请选择代理商!'}],
@@ -34,6 +34,14 @@ export default class FormOrderAgent extends React.Component<FormOrderAgentProps,
                                                             placeholder="代理商"/>)}
                         </Form.Item>
                     </Col>
+                    <Col  xs={24} sm={12} md={8} style={{paddingLeft: '8px'}}>
+                        <Form.Item required={!readyOnly}>
+                            {form.getFieldDecorator("channelNo", {
+                                rules: [{required: true, message: '请输入渠道单号!'}],
+                            })(<Input  placeholder="请输入渠道单号"/>)}
+                        </Form.Item>
+                    </Col>
+
                 </Row>
             </Form>
         </FormSettingGroup>
