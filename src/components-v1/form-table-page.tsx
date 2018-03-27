@@ -194,6 +194,8 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             dataIndex: currentStep === ModelNameSpace.OrderTypeEnum.OrderOut?'deliverTime':'Modified',
             layout: ColumnLayout.LeftBottom,
             render: (txt) => {
+                if (txt === "0001-01-01T00:00:00")
+                    return <span></span>;
                 return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
             }
         }, {
