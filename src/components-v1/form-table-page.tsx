@@ -150,11 +150,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
 
     renderTable() {
         const {state: {listData, selectedRowKeys, pageIndex, pageSize, totalCount, loading}, props: {dropDownConfig, currentStep}} = this;
-        const rowSelection = {
-            fixed: true,
-            selectedRowKeys,
-            onChange: this.onClickSearch,
-        };
+
         const columns: CommonColumnProps<ModelNameSpace.WarehouseListModel>[] = [{
             title: "附件",
             fixed: 'left',
@@ -239,7 +235,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
                                    loading={loading}
                                    style={{padding: '12px'}}
                                    pagination={pagination}
-                                   rowSelection={rowSelection}
+
                                    dataSource={listData}
                                    locale={{
                                        emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>
