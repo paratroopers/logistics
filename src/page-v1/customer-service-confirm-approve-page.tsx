@@ -2,13 +2,14 @@ import * as React from 'react';
 import {withRouter, RouteComponentProps} from 'react-router';
 import {Button, Form, Row, Col, message} from 'antd';
 import {
-    FormTableDetailPage
+    FormTableDetailPage,FormButtonCancel
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {Constants} from '../util/common';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {RequestNameSpace} from '../model/request';
+import {PathConfig} from "../config/pathconfig";
 
 interface CustomerServiceConfirmApprovePageProps extends RouteComponentProps<any, any>, FormComponentProps {
 }
@@ -60,7 +61,7 @@ class CustomerServiceConfirmApprovePage extends React.Component<CustomerServiceC
                         <Button key="2" type="primary">拒绝</Button>
                     </Col>
                     <Col>
-                        <Button key="3" type="primary">取消</Button>
+                        <FormButtonCancel url={PathConfig.CustomerServiceConfirmPage}></FormButtonCancel>
                     </Col>
                 </Row>
             </FormTableDetailPage.Header>
