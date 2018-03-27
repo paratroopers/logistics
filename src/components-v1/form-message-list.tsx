@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Link}from "react-router";
 import {List, Spin, Tag, Row, Col} from 'antd';
 import {Global} from '../util/common';
 import {MessageLocale} from '../locales/localeid';
@@ -8,6 +9,7 @@ import {APINameSpace} from '../model/api';
 import {RequestNameSpace} from '../model/request';
 import {ResponseNameSpace} from '../model/response';
 import * as  moment from 'moment';
+import {PathConfig} from "../config/pathconfig";
 
 moment.locale('zh-cn');
 
@@ -172,19 +174,20 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
     }
 
     renderSystemItem(item: ModelNameSpace.MessageModel) {
+        const title =
+            <Row type="flex" align="middle" justify="space-between">
+                <Col>{item.title}</Col>
+                <Col>{moment(item.Created).fromNow()}</Col>
+            </Row>
 
-
-        const title = <Row type="flex" align="middle" justify="space-between">
-            <Col>{item.title}</Col>
-            <Col>{moment(item.Created).fromNow()}</Col>
-        </Row>
-
-        return <List.Item className="message-list-item">
+        return <Link to={{pathname: PathConfig.MessageManagerViewPage, state: item}}><List.Item
+            className="message-list-item">
             <List.Item.Meta
                 className="message-list-item-meta"
                 title={title}
-                description={item.message.replace(/<(?:.|\s)*?>/g,"").replace(/<\/?.+?>/g,"").replace(/ /g,"")}/>
-        </List.Item>;
+                description={item.message.replace(/<(?:.|\s)*?>/g, "").replace(/<\/?.+?>/g, "").replace(/ /g, "")}/>
+        </List.Item>
+        </Link>;
     }
 
     render() {
