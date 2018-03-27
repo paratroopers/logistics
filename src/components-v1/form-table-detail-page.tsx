@@ -133,7 +133,8 @@ export class FormTableDetailContentModel {
                 CustomerMark: {hidden: true},
                 Payment: {hidden: true},
                 WarehousePackage: {readyOnly: true},
-                ReceiptDate: {readyOnly: true}
+                ReceiptDate: {readyOnly: true},
+                Agent: {hidden: true}
             }
         }
         return readyOnly ? stepViewControl[step] : stepApproveControl[step];

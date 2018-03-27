@@ -22,11 +22,6 @@ export class WarehouseOutPage extends React.Component<any, any> {
             type: "search",
             label: "查看",
             path: PathConfig.WarehouseOutViewPage
-        }, {
-            key: FormTableOperationEnum.Edit,
-            type: "edit",
-            label: "审核",
-            path: PathConfig.WarehouseOutApprovePage
         }]
         return options;
     }

@@ -178,9 +178,9 @@ export namespace FormControl {
 
         handleChange = (value) => {
             /*            this.setState({
-                            data: [],
-                            fetching: false,
-                        });*/
+             data: [],
+             fetching: false,
+             });*/
             this.props.onChange(value);
         }
 
@@ -352,15 +352,12 @@ export namespace FormControl {
         }
 
         render() {
-            const topThis = this;
-            const {props: {value, ...otherProps}} = topThis;
+            const {props: {value, ...otherProps}} = this;
             return <Select allowClear={true} labelInValue value={value} {...otherProps} showSearch
                            optionFilterProp="children"
                            filterOption={(input, option) => option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0}>
-                {topThis.renderOption()}
+                {this.renderOption()}
             </Select>;
         }
     }
-
-    //endregion
 }
