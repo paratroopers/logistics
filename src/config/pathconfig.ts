@@ -22,6 +22,12 @@ export class PathConfig {
     static MemberIndexPage = "/member/index";
     /** 消息动态*/
     static MemberMessageListPage = "/member/message/list";
+    /** 系统消息管理*/
+    static MessageManagerPage = "/message/manager";
+    static MessageManagerAddPage = "/message/manager/add";
+    static MessageManagerEditPage = "/message/manager/edit";
+    static MessageManagerViewPage = "/message/manager/view";
+
 
     static MemberAddressCombinationPage = "/member/address/combination";
 

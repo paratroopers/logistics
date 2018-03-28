@@ -19,7 +19,7 @@ export class MemberUserInformationPage extends React.Component<MemberUserInforma
 
     render() {
         return <Row className="member-user-information-page">
-            <ContentHeaderControl title="个人消息"></ContentHeaderControl>
+            <ContentHeaderControl title="个人信息"></ContentHeaderControl>
             <Row>MemberUserInformationPage</Row>
         </Row>
     }

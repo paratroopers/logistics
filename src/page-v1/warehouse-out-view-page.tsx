@@ -12,25 +12,29 @@ interface WarehouseOutViewPageProps extends RouteComponentProps<any, any>, FormC
 
 interface WarehouseOutViewPageStates {
     selectedKey?: string;
+    step?: ModelNameSpace.OrderTypeEnum;
 }
 
 export interface QueryData {
     id?: string;
+    step?: string;
 }
 
 @withRouter
 export class WarehouseOutViewPage extends React.Component<WarehouseOutViewPageProps, WarehouseOutViewPageStates> {
     constructor(props) {
         super(props);
+        const data = this.props.location.query as QueryData;
         this.state = {
-            selectedKey: (this.props.location.query as QueryData).id
+            selectedKey: data.id,
+            step: parseInt(data.step) as ModelNameSpace.OrderTypeEnum,
         }
     }
 
     render() {
         return <FormTableDetailPage ID={this.state.selectedKey}
                                     Title="查看"
-                                    Step={ModelNameSpace.OrderTypeEnum.OrderOut}
+                                    Step={this.state.step}
                                     readyOnly></FormTableDetailPage>
     }
 }

@@ -21,11 +21,11 @@ export class WarehouseOutPage extends React.Component<any, any> {
             key: FormTableOperationEnum.View,
             type: "search",
             label: "查看",
-            path: PathConfig.WarehouseOutViewPage
+            path: PathConfig.WarehouseOutViewPage,
         }, {
             key: FormTableOperationEnum.Edit,
             type: "edit",
-            label: "审核",
+            label: "审批",
             path: PathConfig.WarehouseOutApprovePage
         }]
         return options;
@@ -51,8 +51,9 @@ export class WarehouseOutPage extends React.Component<any, any> {
     render() {
         return <FormTablePage currentStep={ModelNameSpace.OrderTypeEnum.OrderOut}
                               searchConfig={this.getSearchConfig()}
+                              title="订单出库"
                               dropDownConfig={this.getDropDownConfig()}
                               callBackTitle="订单出库"
-                              headerTip={'总计有{name}项出库订单'}></FormTablePage>;
+                              headerTip={'总计有{name}项订单待出库'}></FormTablePage>;
     }
 }

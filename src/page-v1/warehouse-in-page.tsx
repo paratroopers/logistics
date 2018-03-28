@@ -323,12 +323,6 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             onChange: (a) => {
                 topThis.loadData(a, pageSize);
             },
-            showSizeChanger: true,//是否可以改变 pageSize
-            onShowSizeChange: (a, b) => {
-                topThis.setState({pageIndex: a, pageSize: b});
-                topThis.loadData(a, b);
-            },
-            showQuickJumper: false//是否可以快速跳转至某页
         };
 
         return <WarehouseInPageTable columns={columns}
@@ -336,7 +330,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                                      loading={loading}
                                      style={{padding: '12px'}}
                                      pagination={pagination}
-                                     rowSelection={rowSelection}
+
                                      bordered={false}
                                      dataSource={listData}
                                      locale={{emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>}}/>;
@@ -444,7 +438,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
     render() {
         const {state: {visibleFormFileViewer, items}} = this;
         return <Row className="warehouse-in-page mainland-content-page">
-            <ContentHeaderControl title="入库操作" extra={this.renderButton()}></ContentHeaderControl>
+            <ContentHeaderControl title="订单入库" extra={this.renderButton()}></ContentHeaderControl>
             <FormAdvancedSearch
                 easyMode={true}
                 formAdvancedItems={this.renderFormAdvancedItems()}

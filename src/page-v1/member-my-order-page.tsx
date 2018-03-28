@@ -171,6 +171,11 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                 }
             },
             {
+                title: '物流方式',
+                hidden: Constants.minSM,
+                dataIndex: 'expressTypeName'
+            },
+            {
                 title: '物流单号',
                 dataIndex: 'expressNo',
                 hidden: Constants.minSM,
@@ -183,11 +188,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                     </span>
                 }
             },
-            {
-                title: '物流方式',
-                hidden: Constants.minSM,
-                dataIndex: 'expressTypeName'
-            },
+
             {
                 title: '状态',
                 dataIndex: 'currentStatus',

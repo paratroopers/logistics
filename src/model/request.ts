@@ -69,6 +69,41 @@ export namespace RequestNameSpace {
         type: number;
     }
 
+    export interface GetMessageLatestListRequest{
+        messageType:number;
+        pageIndex?:number;
+        pageSize?:number;
+        isAdmin?:boolean;
+    }
+
+    export interface GetMessageListRequest{
+        messageType:number;
+        pageIndex?:number;
+        pageSize?:number;
+        isAdmin?:boolean;
+    }
+
+    export interface AddMessageManagerItemRequest {
+        type: ModelNameSpace.MessageType;
+        title: string;
+        message: string;
+        status?: number;
+        userid?: number;
+        isAdmin?: boolean;
+    }
+
+    export interface UpdateMessageManagerItemRequest {
+        ID: string;
+        status: number;
+        title: string;
+        message: string;
+        isAdmin?: boolean;
+    }
+
+    export interface DeleteMessageManagerItemRequest {
+        id: string;
+        isAdmin?: boolean;
+    }
     //endregion
 
     //region 系统模块定义区

@@ -83,13 +83,11 @@ export namespace ModelNameSpace {
 
     //region 系统模块定义区
 
-    export interface MessageLaterModel {
-        Created?: string;
-        CreatedBy?: string;
+    export interface MessageModel extends BaseModel {
         ID?: string;
-        Modified?: string;
-        ModifiedBy?: string;
-        TenantID?: string;
+        status: number;
+        title: string;
+        IsRead: boolean;
         message?: string;
         type?: number;
         userid?: string;
@@ -254,20 +252,22 @@ export namespace ModelNameSpace {
     export enum OrderTypeEnum {
         /** 仓库管理-订单入库*/
         OrderIn = 0,
-            /** 我的订单-待打包*/
+        /** 我的订单-待打包*/
         WaitPackage = 1,
-            /** 我的订单-待审核*/
+        /** 我的订单-待审核*/
         WaitApprove = 2,
-            /** 我的订单-待付款*/
+        /** 我的订单-待付款*/
         WaitPay = 3,
-            /** 客服管理-订单确认*/
+        /** 客服管理-订单确认*/
         OrderConfirm = 4,
-            /** 仓库管理-合并打包*/
+        /** 仓库管理-合并打包*/
         OrderMerge = 5,
-            /** 仓库管理-订单出库、我的订单-已发货*/
+        /** 仓库管理-订单出库、我的订单-已发货*/
         OrderOut = 6,
         /** 我的订单-入库查询*/
-        OrderInQuery=7
+        OrderInQuery = 7,
+        /** 仓库管理-发货（专门为列表点击详情页提供，请不要随意使用）*/
+        OrderOutDeliver = 8
     }
 
     /** 自定义模块状态*/
@@ -312,6 +312,12 @@ export namespace ModelNameSpace {
 
     }
 
+    /** 消息类型*/
+    export enum MessageType{
+        Member = 0,
+        System = 100,
+        All = -1
+    }
     //endregion
 
     //region 客户定义区
@@ -453,6 +459,7 @@ export namespace ModelNameSpace {
         channelNo: string,
         deliverTime: Date,
         AgentID: string,
+        AgentName: string,
     }
 
     /** 合并订单状态Model*/

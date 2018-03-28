@@ -29,6 +29,10 @@ export class MemberPaymentPage extends React.Component<MemberPaymentPageProps, M
         }
     }
 
+    componentDidMount() {
+        window.scrollTo(0, 0);
+    }
+
     renderPayImage() {
 
     }

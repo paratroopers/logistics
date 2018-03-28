@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {withRouter, RouteComponentProps} from 'react-router';
+import {withRouter, RouteComponentProps, hashHistory} from 'react-router';
 import {Button, Form, Row, Col, message} from 'antd';
 import {
     FormTableDetailPage
@@ -9,6 +9,8 @@ import {Constants} from '../util/common';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {RequestNameSpace} from '../model/request';
+import FormButtonCancel from "../components-v1/form-button-cancel";
+import {PathConfig} from "../config/pathconfig";
 
 interface WarehousePackageApprovePageProps extends RouteComponentProps<any, any>, FormComponentProps {
 
@@ -42,7 +44,16 @@ export class WarehousePackageApprovePage extends React.Component<WarehousePackag
             request.currentStep = Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderMerge);
             request.currentStatus = ModelNameSpace.OrderStatusEnum.StatusB;
             const result = await APINameSpace.CustomerOrderAPI.CustomerOrderMergeUpdate(request);
-            result.Status === 0 && message.success('操作成功');
+            if (result.Status === 0) {
+                message.success('操作成功');
+                this.onCancel();
+            }
+        })
+    }
+
+    onCancel() {
+        hashHistory.push({
+            pathname: PathConfig.WarehousePackagePage
         })
     }
 
@@ -57,10 +68,7 @@ export class WarehousePackageApprovePage extends React.Component<WarehousePackag
                         <Button onClick={this.onSubmit.bind(this)} key="1" type="primary">通过</Button>
                     </Col>
                     <Col>
-                        <Button key="2" type="primary">拒绝</Button>
-                    </Col>
-                    <Col>
-                        <Button key="3" type="primary">取消</Button>
+                        <FormButtonCancel url={PathConfig.WarehousePackagePage}></FormButtonCancel>
                     </Col>
                 </Row>
             </FormTableDetailPage.Header>

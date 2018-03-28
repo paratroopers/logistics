@@ -1,11 +1,15 @@
 import * as React from 'react';
+import {Link}from "react-router";
 import {List, Spin, Tag, Row, Col} from 'antd';
 import {Global} from '../util/common';
 import {MessageLocale} from '../locales/localeid';
 import {FormStepIcon, FormStepEnum} from './form-step-icon';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
+import {RequestNameSpace} from '../model/request';
+import {ResponseNameSpace} from '../model/response';
 import * as  moment from 'moment';
+import {PathConfig} from "../config/pathconfig";
 
 moment.locale('zh-cn');
 
@@ -16,14 +20,22 @@ interface FormMessageListProps {
     tagStatus?: boolean;
     /** 是否全屏展示*/
     fullScreen?: boolean;
-    /** 是否显示为系统消息*/
-    isSystem?: boolean;
+    /** 消息类型*/
+    messageType?: ModelNameSpace.MessageType;
+    /** 是否为分页*/
+    isPagination?:boolean;
 }
 
 interface FormMessageListStates {
     loading: boolean,
-    messageItems?: ModelNameSpace.MessageLaterModel[];
+    messageItems: ModelNameSpace.MessageModel[];
     textStyle?: any;
+    /** 当前页数*/
+    pageIndex: number;
+    /** 每页条数*/
+    pageSize: number;
+    /** 总数*/
+    totalCount: number;
 }
 
 export class FormMessageList extends React.Component<FormMessageListProps, FormMessageListStates> {
@@ -32,7 +44,6 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap'
     }
-
 
     static defaultColor = {
         WarehouseIn: 'warehouse-in',
@@ -47,28 +58,56 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         super(props, content);
         this.state = {
             loading: false,
-            textStyle: props.layoutText ? this.defaultStyle : {}
+            messageItems: [],
+            textStyle: props.layoutText ? this.defaultStyle : {},
+            pageIndex: 1,
+            pageSize: 10,
+            totalCount: 0,
         }
     }
 
     componentDidMount() {
-        this.getMessageData();
+        const topThis = this;
+        const {state: {pageIndex, pageSize}} = topThis;
+        this.getMessageData(pageIndex, pageSize);
     }
 
-    getMessageData() {
+    getMessageData(index?: number, size?: number) {
         const topThis = this;
-        const {props: {isSystem}} = topThis;
+        const {props: {messageType, isPagination}} = topThis;
         this.setState({loading: true});
-        APINameSpace.MemberAPI.GetMesaageLatest().then(result => {
-            if (result.Status === 0) {
-                if (isSystem) result.Data = [{message: "程序员反感（讨厌、不喜欢）什么？别人我不知道。我最反感！！！下班了，明明没啥事。都不走！都不走！都不走！然后，我忍不住了。一打卡！！不到10分钟。全跑完了！全跑完了！全跑完了！"}, {message: "程序员反感（讨厌、不喜欢）什么？别人我不知道。我最反感！！！下班了，明明没啥事。都不走！都不走！都不走！然后，我忍不住了。一打卡！！不到10分钟。全跑完了！全跑完了！全跑完了！"}, {message: "程序员反感（讨厌、不喜欢）什么？别人我不知道。我最反感！！！下班了，明明没啥事。都不走！都不走！都不走！然后，我忍不住了。一打卡！！不到10分钟。全跑完了！全跑完了！全跑完了！"}];
-                this.setState({messageItems: result.Data, loading: false});
-            }
-        });
+        const request: RequestNameSpace.GetMessageLatestListRequest = {
+            messageType: messageType ? messageType : ModelNameSpace.MessageType.All,
+            pageIndex: index,
+            pageSize: size,
+            isAdmin: false
+        }
+
+        if (isPagination === true) {
+            APINameSpace.MemberAPI.GetMessageList(request).then((result:ResponseNameSpace.GetMessageListResponse) => {
+                if (result.Status === 0) {
+                    topThis.setState({
+                        messageItems: result.Data,
+                        loading: false,
+                        pageIndex: index,
+                        totalCount: result.TotalCount
+                    });
+                }
+            });
+        } else {
+            APINameSpace.MemberAPI.GetMessageLatestList(request).then((result:ResponseNameSpace.GetMessageLatestListResponse) => {
+                if (result.Status === 0) {
+                    topThis.setState({
+                        messageItems: result.Data,
+                        loading: false
+                    });
+                }
+            });
+        }
     }
 
     renderMessageStatus(type: FormStepEnum): { message: string, textClass: string, tagColor: string } {
-        const {WarehouseIn, CustomerServiceConfirm, WarehousePackge, WaitForPay, Delivered} = MessageLocale;
+        const {WarehouseIn, CustomerServiceConfirm, WarehousePackge, WaitForPay, Delivered,Manager} = MessageLocale;
         let formatMessage: string;
         let textColor: string;
         let tagColor: string;
@@ -98,11 +137,17 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
                 textColor = FormMessageList.defaultColor.Delivered;
                 tagColor = "purple";
                 break;
+            default:
+                formatMessage = Manager;
+                textColor = "";
+                tagColor = "";
+                break;
         }
+
         return {message: Global.intl.formatMessage({id: formatMessage}), textClass: textColor, tagColor: tagColor};
     }
 
-    renderItem(item: ModelNameSpace.MessageLaterModel) {
+    renderItem(item: ModelNameSpace.MessageModel) {
         const topThis = this;
         const {props: {tagStatus}, state: {textStyle}} = topThis;
 
@@ -128,27 +173,42 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         </List.Item>;
     }
 
-    renderSystemItem(item: ModelNameSpace.MessageLaterModel) {
-        const title = <Row type="flex" align="middle" justify="space-between">
-            <Col>系统通知</Col>
-            <Col>{moment(item.Created).fromNow()}</Col>
-        </Row>
+    renderSystemItem(item: ModelNameSpace.MessageModel) {
+        const title =
+            <Row type="flex" align="middle" justify="space-between">
+                <Col>{item.title}</Col>
+                <Col>{moment(item.Created).fromNow()}</Col>
+            </Row>
 
-        return <List.Item className="message-list-item">
+        return <Link to={{pathname: PathConfig.MessageManagerViewPage, state: item}}><List.Item
+            className="message-list-item">
             <List.Item.Meta
                 className="message-list-item-meta"
                 title={title}
-                description={item.message}/>
-        </List.Item>;
+                description={item.message.replace(/<(?:.|\s)*?>/g, "").replace(/<\/?.+?>/g, "").replace(/ /g, "")}/>
+        </List.Item>
+        </Link>;
     }
 
     render() {
         const topThis = this;
-        const {props: {isSystem}} = topThis;
-        return <Spin spinning={this.state.loading}>
+        const {props: {messageType, isPagination}, state: {loading, messageItems, pageIndex, pageSize,totalCount}} = topThis;
+
+        /** 分页*/
+        const pagination = {
+            pageSize: pageSize,
+            current: pageIndex,
+            total: totalCount,
+            onChange: ((index) => {
+                topThis.getMessageData(index, pageSize);
+            }),
+        };
+
+        return <Spin spinning={loading}>
             <div className="message-list">
-                <List dataSource={this.state.messageItems}
-                      renderItem={item => !isSystem ? topThis.renderItem(item) : topThis.renderSystemItem(item)}>
+                <List dataSource={messageItems}
+                      pagination={isPagination ? pagination : false}
+                      renderItem={item => !(messageType === ModelNameSpace.MessageType.System) ? topThis.renderItem(item) : topThis.renderSystemItem(item)}>
                 </List>
             </div>
         </Spin>;

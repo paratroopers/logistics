@@ -89,6 +89,17 @@ export class FormTableDetailContentModel {
                 Payment: {hidden: true},
                 WarehousePackage: {readyOnly: true},
                 ReceiptDate: {readyOnly: true}
+            },
+            [ModelNameSpace.OrderTypeEnum.OrderOutDeliver]: {
+                Address: {readyOnly: true},
+                Declare: {readyOnly: true},
+                Channel: {readyOnly: true},
+                PackageRemarks: {hidden: true},
+                OtherCost: {hidden: true},
+                CustomerMark: {hidden: true},
+                Payment: {hidden: true},
+                WarehousePackage: {readyOnly: true},
+                ReceiptDate: {readyOnly: true}
             }
         };
         const stepViewControl = {
@@ -122,9 +133,22 @@ export class FormTableDetailContentModel {
                 CustomerMark: {hidden: true},
                 Payment: {hidden: true},
                 WarehousePackage: {readyOnly: true},
+                ReceiptDate: {hidden: true},
                 Agent: {hidden: true}
             },
             [ModelNameSpace.OrderTypeEnum.OrderOut]: {
+                Address: {readyOnly: true},
+                Declare: {readyOnly: true},
+                Channel: {readyOnly: true},
+                PackageRemarks: {hidden: true},
+                OtherCost: {hidden: true},
+                CustomerMark: {hidden: true},
+                Payment: {hidden: true},
+                WarehousePackage: {readyOnly: true},
+                ReceiptDate: {readyOnly: true},
+                Agent: {hidden: true}
+            },
+            [ModelNameSpace.OrderTypeEnum.OrderOutDeliver]: {
                 Address: {readyOnly: true},
                 Declare: {readyOnly: true},
                 Channel: {readyOnly: true},
@@ -193,20 +217,28 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
             let updateData: RequestNameSpace.CustomerOrderMergeUpdateRequest;
             if (response.Data && this.props.form) {
                 const data = response.Data;
+                const content = new FormTableDetailContentModel(this.props.Step, this.props.readyOnly)
                 updateData = {
-                    productList: data.mergeDetailList,
-                    CustomerChooseChannelID: data.mergeOrder['CustomerChooseChannelID'],
-                    CustomerMark: data.mergeOrder['CustomerMark'],
-                    remoteFee: data.mergeOrder['remoteFee'],
-                    magneticinspectionFee: data.mergeOrder['magneticinspectionFee'],
-                    customerServiceMark: data.mergeOrder['customerServiceMark'],
-                    packageLength: data.mergeOrder['packageLength'],
-                    packageWidth: data.mergeOrder['packageWidth'],
-                    packageHeight: data.mergeOrder['packageHeight'],
-                    packageWeight: data.mergeOrder['packageWeight'],
-                    deliverTime: data.mergeOrder['deliverTime']
-                /*    ,agent: data.mergeOrder['agent']*/
+                    productList: data.mergeDetailList
                 };
+                if (!content.Channel.hidden)
+                    updateData.CustomerChooseChannelID = data.mergeOrder['CustomerChooseChannelID'];
+                if (!content.CustomerMark.hidden)
+                    updateData.CustomerMark = data.mergeOrder['CustomerMark'];
+                if (!content.OtherCost.hidden) {
+                    updateData.remoteFee = data.mergeOrder['remoteFee'];
+                    updateData.magneticinspectionFee = data.mergeOrder['magneticinspectionFee'];
+                }
+                if (!content.WarehousePackage.hidden) {
+                    updateData.packageLength = data.mergeOrder['packageLength'];
+                    updateData.packageWidth = data.mergeOrder['packageWidth'];
+                    updateData.packageHeight = data.mergeOrder['packageHeight'];
+                    updateData.packageWeight = data.mergeOrder['packageWeight'];
+                }
+                if (!content.PackageRemarks.hidden)
+                    updateData.customerServiceMark = data.mergeOrder['customerServiceMark'];
+                if (!content.ReceiptDate.hidden)
+                    updateData.deliverTime = data.mergeOrder['deliverTime'];
                 this.props.form.getFieldDecorator('needUpdateData', {initialValue: updateData});
             }
             this.setState({data: response.Data || {}});
@@ -246,13 +278,12 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
         if (content.Channel && !content.Channel.hidden) {
             if (this.props.form)
                 this.props.form.getFieldDecorator('Channel');
-            emls.push(
-                <FormOrderChannel key="Channel"
-                                  form={this.props.form}
-                                  fieldName="CustomerChooseChannelID"
-                                  readOnly={content.Channel.readyOnly || readyOnly}
-                                  ids={[_mergeOrder['CustomerChooseChannelID']]}>
-                </FormOrderChannel>);
+            emls.push(<FormOrderChannel key="Channel"
+                                        form={this.props.form}
+                                        fieldName="CustomerChooseChannelID"
+                                        readOnly={content.Channel.readyOnly || readyOnly}
+                                        ids={[_mergeOrder['CustomerChooseChannelID']]}>
+            </FormOrderChannel>);
         }
 
         content.CustomerMark && !content.CustomerMark.hidden && emls.push(
@@ -286,14 +317,16 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
                                        readOnly={content.WarehousePackage.readyOnly || readyOnly}>
             </FormOrderWarehousePackage>);
 
-        content.ReceiptDate && !content.ReceiptDate.hidden && emls.push(
-            <FormOrderReceiptDate readOnly={content.ReceiptDate.readyOnly || readyOnly}
-                                  data={mergeOrder}></FormOrderReceiptDate>);
+        content.ReceiptDate && !content.ReceiptDate.hidden && emls.push(<FormOrderReceiptDate
+            readOnly={content.ReceiptDate.readyOnly || readyOnly}
+            data={mergeOrder}></FormOrderReceiptDate>);
 
         content.Payment && !content.Payment.hidden && emls.push(<FormPayment key="Payment"
                                                                              data={mergeOrder}></FormPayment>);
 
         content.Agent && !content.Agent.hidden && emls.push(<FormOrderAgent key="Agent"
+                                                                            readyOnly={readyOnly}
+                                                                            data={mergeOrder}
                                                                             form={this.props.form}></FormOrderAgent>);
 
         return emls;

@@ -151,7 +151,7 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
             <ContentHeaderControl title="待打包"></ContentHeaderControl>
             <Layout.Content>
                 <Row justify="start" type="flex" style={{margin: '10px 0px 10px 0px'}}>
-                    <Col span={24}>
+                    <Col span={8} offset={18}>
                         <div className="view-content-page-header-button">
                             <Button type="primary" style={{marginRight: "10px"}} onClick={this.onSubmit.bind(this)}>确认合并打包</Button>
                             <Button type="primary" onClick={() => {

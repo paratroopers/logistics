@@ -15,9 +15,7 @@ import {
 } from "lodash";
 import * as scrollIntoView from "dom-scroll-into-view";
 import {Constants}from "./common";
-// import {ScreenModeEnum}from "../api/model/common";
 import {ModelNameSpace} from '../model/model';
-import {isNullOrUndefined} from "util";
 
 
 export class Util {

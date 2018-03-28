@@ -1,14 +1,15 @@
 import * as React from 'react';
-import {withRouter, RouteComponentProps} from 'react-router';
+import {withRouter, RouteComponentProps,hashHistory} from 'react-router';
 import {Button, Form, Row, Col, message} from 'antd';
 import {
-    FormTableDetailPage
+    FormTableDetailPage,FormButtonCancel
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {Constants} from '../util/common';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {RequestNameSpace} from '../model/request';
+import {PathConfig} from "../config/pathconfig";
 
 interface WarehouseOutApprovePageProps extends RouteComponentProps<any, any>, FormComponentProps {
 
@@ -35,14 +36,16 @@ class WarehouseOutApprovePage extends React.Component<WarehouseOutApprovePagePro
         this.props.form.validateFields(async (err, values) => {
             if (err) return;
             let request: RequestNameSpace.CustomerOrderMergeUpdateRequest = {};
-            for (let key of Object.keys(values.needUpdateData)) {
-                request[key] = values[key] ? values[key] : values.needUpdateData[key];
-            }
+            let sets = new Set(Object.keys(values.needUpdateData).concat(Object.keys(values)));
+            const keys = Array.from(sets as any);
+            keys.forEach((item: string) => {
+                request[item] = values[item] ? values[item] : values.needUpdateData[item];
+            });
             request.ID = this.state.selectedKey;
             request.currentStep = Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderOut);
             request.currentStatus = ModelNameSpace.OrderStatusEnum.StatusB;
             const result = await APINameSpace.CustomerOrderAPI.CustomerOrderMergeUpdate(request);
-            result.Status === 0 && message.success('操作成功');
+            result.Status === 0 && message.success('操作成功')&&hashHistory.push(PathConfig.WarehouseOutPage);
         })
     }
 
@@ -57,10 +60,7 @@ class WarehouseOutApprovePage extends React.Component<WarehouseOutApprovePagePro
                         <Button key="1" type="primary" onClick={this.onSubmit.bind(this)}>通过</Button>
                     </Col>
                     <Col>
-                        <Button key="2" type="primary">拒绝</Button>
-                    </Col>
-                    <Col>
-                        <Button key="3" type="primary">取消</Button>
+                        <FormButtonCancel url={PathConfig.WarehouseOutPage}></FormButtonCancel>
                     </Col>
                 </Row>
             </FormTableDetailPage.Header>

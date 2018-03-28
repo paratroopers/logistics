@@ -42,6 +42,7 @@
   "message.status.warehouse.packge": "仓库打包中",
   "message.status.wait.for.pay": "等待付款中",
   "message.status.delivered": "已入库",
+  "message.status.manager": "系统消息",
   "common.nav.my.warehouse": "我的仓库",
   "common.nav.order": "订单",
   "common.nav.orders.already.issued": "已发订单",
@@ -96,9 +97,9 @@
   "customer.order.status.1.1":"待打包",
   "customer.order.status.2.1":"客服确认",
   "customer.order.status.2.2":"仓库打包",
-  "customer.order.status.3.0":"待确认",
+  "customer.order.status.3.0":"待付款",
   "customer.order.status.4.0":"待确认",
   "customer.order.status.5.0":"待确认",
-  "customer.order.status.6.0":"待确认",
-  "customer.order.status.6.1":"已确认"
+  "customer.order.status.6.0":"待发货",
+  "customer.order.status.6.1":"已发货"
 }

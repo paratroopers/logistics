@@ -32,6 +32,8 @@ export namespace ResponseNameSpace {
 
     //region 用户或者会员模块定义区
     export interface GetUserContextResponse extends  BaseModelResponse<ModelNameSpace.UserModel>{}
+    export interface GetMessageListResponse extends  BaseModelListResonse<ModelNameSpace.MessageModel>{}
+    export interface GetMessageLatestListResponse extends  BaseModelListResonse<ModelNameSpace.MessageModel>{}
     //endregion
 
     //region 报价定义区

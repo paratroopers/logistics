@@ -60,6 +60,7 @@ export class CustomerServiceConfirmPage extends React.Component<CustomerServiceC
                               searchConfig={this.getSearchConfig()}
                               dropDownConfig={this.getDropDownConfig()}
                               callBackTitle="订单确认"
+                              title="订单确认"
                               headerTip={'总计有{name}项待审批'}></FormTablePage>;
     }
 }

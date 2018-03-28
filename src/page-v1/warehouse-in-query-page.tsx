@@ -82,7 +82,8 @@ export class WarehouseInQueryPage extends React.Component<WarehouseInQueryPagePr
         let request: RequestNameSpace.GetWarehouseInListRequest = {
                 pageIndex: index ? index : pageIndex,
             pageSize: size ? size : pageSize,
-            ...Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderInQuery, true)
+            ...Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderInQuery, true),
+            step:2
         }
         if (typeof (formAdvancedData) === "object") {
             for (let key of Object.keys(formAdvancedData)) {
@@ -150,29 +151,18 @@ export class WarehouseInQueryPage extends React.Component<WarehouseInQueryPagePr
             render: (txt, record) => {
                 return <Link to={{pathname: PathConfig.WarehouseInQueryViewPage, state: record}}>{txt}</Link>
             }
-        }, {
-            title: "会员编号",
-            layout: ColumnLayout.LeftBottom,
-            dataIndex: 'MemeberCode',
-            render: (txt) => {
-                return Constants.minSM ? <span>会员编号:{txt}</span> : <span>{txt}</span>
-            }
-        }, {
+        },  {
+            title: '物流方式',
+            hidden: Constants.minSM,
+            dataIndex: 'expressTypeName'
+        },{
             title: "物流单号",
             dataIndex: 'expressNo',
             layout: ColumnLayout.OptionRow,
             render: (txt) => {
                 return Constants.minSM ? <span>快递单号:{txt}</span> : <span>{txt}</span>
             },
-        }, {
-            title: "交接单",
-            dataIndex: 'TransferNo',
-            hidden: Constants.minSM
-        }, {
-            title: "创建人",
-            dataIndex: 'CreatedByName',
-            hidden: Constants.minSM
-        }, {
+        },   {
             title: "入库时间",
             dataIndex: 'InWareHouseTime',
             render: (txt) => {
@@ -194,11 +184,11 @@ export class WarehouseInQueryPage extends React.Component<WarehouseInQueryPagePr
             onChange: (a) => {
                 topThis.loadData(a, pageSize);
             },
-            showSizeChanger: true,//是否可以改变 pageSize
-            onShowSizeChange: (a, b) => {
-                topThis.setState({pageIndex: a, pageSize: b});
-                topThis.loadData(a, b);
-            }
+            // showSizeChanger: true,//是否可以改变 pageSize
+            // onShowSizeChange: (a, b) => {
+            //     topThis.setState({pageIndex: a, pageSize: b});
+            //     topThis.loadData(a, b);
+            // }
         };
 
         return <WarehouseInQueryPageTable columns={columns}
@@ -213,7 +203,7 @@ export class WarehouseInQueryPage extends React.Component<WarehouseInQueryPagePr
 
     renderHeader() {
         const {state: {totalCount}} = this;
-        const message = <span>已入库: <span style={{fontWeight: "bold"}}>{totalCount}项 </span></span>;
+        const message = <span>总计: <span style={{fontWeight: "bold"}}>{totalCount}项已入库 </span></span>;
         return <FormTableHeader title={message}></FormTableHeader>;
     }
 
@@ -233,7 +223,7 @@ export class WarehouseInQueryPage extends React.Component<WarehouseInQueryPagePr
     render() {
         const {state: {visibleFormFileViewer, items}} = this;
         return <Row className="warehouse-in-page mainland-content-page">
-            <ContentHeaderControl title="入库操作"></ContentHeaderControl>
+            <ContentHeaderControl title="入库查询"></ContentHeaderControl>
             <FormAdvancedSearch
                 easyMode={true}
                 formAdvancedItems={this.renderFormAdvancedItems()}
