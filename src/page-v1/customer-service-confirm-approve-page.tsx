@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {withRouter, RouteComponentProps} from 'react-router';
+import {withRouter, RouteComponentProps, hashHistory} from 'react-router';
 import {Button, Form, Row, Col, message} from 'antd';
 import {
-    FormTableDetailPage,FormButtonCancel
+    FormTableDetailPage, FormButtonCancel
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {Constants} from '../util/common';
@@ -35,6 +35,10 @@ class CustomerServiceConfirmApprovePage extends React.Component<CustomerServiceC
     async onSubmit() {
         this.props.form.validateFields(async (err, values) => {
             if (err) return;
+            if (!values.CustomerChooseChannelID) {
+                message.warning('请至少选择一条渠道');
+                return;
+            }
             let request: RequestNameSpace.CustomerOrderMergeUpdateRequest = {};
             for (let key of Object.keys(values.needUpdateData)) {
                 request[key] = values[key] ? values[key] : values.needUpdateData[key];
@@ -43,7 +47,12 @@ class CustomerServiceConfirmApprovePage extends React.Component<CustomerServiceC
             request.currentStep = Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderConfirm);
             request.currentStatus = ModelNameSpace.OrderStatusEnum.StatusB;
             const result = await APINameSpace.CustomerOrderAPI.CustomerOrderMergeUpdate(request);
-            result.Status === 0 && message.success('操作成功');
+            if (result.Status === 0) {
+                hashHistory.push({
+                    pathname: PathConfig.CustomerServiceConfirmPage
+                })
+                message.success('操作成功');
+            }
         })
     }
 

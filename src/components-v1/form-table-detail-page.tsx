@@ -217,20 +217,28 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
             let updateData: RequestNameSpace.CustomerOrderMergeUpdateRequest;
             if (response.Data && this.props.form) {
                 const data = response.Data;
+                const content = new FormTableDetailContentModel(this.props.Step, this.props.readyOnly)
                 updateData = {
-                    productList: data.mergeDetailList,
-                    CustomerChooseChannelID: data.mergeOrder['CustomerChooseChannelID'],
-                    CustomerMark: data.mergeOrder['CustomerMark'],
-                    remoteFee: data.mergeOrder['remoteFee'],
-                    magneticinspectionFee: data.mergeOrder['magneticinspectionFee'],
-                    customerServiceMark: data.mergeOrder['customerServiceMark'],
-                    packageLength: data.mergeOrder['packageLength'],
-                    packageWidth: data.mergeOrder['packageWidth'],
-                    packageHeight: data.mergeOrder['packageHeight'],
-                    packageWeight: data.mergeOrder['packageWeight'],
-                    deliverTime: data.mergeOrder['deliverTime']
-                    /*    ,agent: data.mergeOrder['agent']*/
+                    productList: data.mergeDetailList
                 };
+                if (!content.Channel.hidden)
+                    updateData.CustomerChooseChannelID = data.mergeOrder['CustomerChooseChannelID'];
+                if (!content.CustomerMark.hidden)
+                    updateData.CustomerMark = data.mergeOrder['CustomerMark'];
+                if (!content.OtherCost.hidden) {
+                    updateData.remoteFee = data.mergeOrder['remoteFee'];
+                    updateData.magneticinspectionFee = data.mergeOrder['magneticinspectionFee'];
+                }
+                if (!content.WarehousePackage.hidden) {
+                    updateData.packageLength = data.mergeOrder['packageLength'];
+                    updateData.packageWidth = data.mergeOrder['packageWidth'];
+                    updateData.packageHeight = data.mergeOrder['packageHeight'];
+                    updateData.packageWeight = data.mergeOrder['packageWeight'];
+                }
+                if (!content.PackageRemarks.hidden)
+                    updateData.customerServiceMark = data.mergeOrder['customerServiceMark'];
+                if (!content.ReceiptDate.hidden)
+                    updateData.deliverTime = data.mergeOrder['deliverTime'];
                 this.props.form.getFieldDecorator('needUpdateData', {initialValue: updateData});
             }
             this.setState({data: response.Data || {}});

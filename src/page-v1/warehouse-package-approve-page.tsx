@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {withRouter, RouteComponentProps} from 'react-router';
+import {withRouter, RouteComponentProps, hashHistory} from 'react-router';
 import {Button, Form, Row, Col, message} from 'antd';
 import {
     FormTableDetailPage
@@ -44,7 +44,16 @@ export class WarehousePackageApprovePage extends React.Component<WarehousePackag
             request.currentStep = Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.OrderMerge);
             request.currentStatus = ModelNameSpace.OrderStatusEnum.StatusB;
             const result = await APINameSpace.CustomerOrderAPI.CustomerOrderMergeUpdate(request);
-            result.Status === 0 && message.success('操作成功');
+            if (result.Status === 0) {
+                message.success('操作成功');
+                this.onCancel();
+            }
+        })
+    }
+
+    onCancel() {
+        hashHistory.push({
+            pathname: PathConfig.WarehousePackagePage
         })
     }
 

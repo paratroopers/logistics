@@ -86,6 +86,7 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
     onDelete(row ?: ModelNameSpace.ChannelModal) {
         let data = this.state.data;
         Util.remove(data, d => d.ID === row.ID);
+        this.props.form && !this.props.readOnly && this.props.fieldName && this.props.form.setFieldsValue({[this.props.fieldName]: null});
         this.setState({data: data});
     }
 
@@ -148,7 +149,7 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
     }
 
     render() {
-        return <FormSettingGroup title={"渠道选择"} topBar={this.renderHeader()} loading={this.props.loading}>
+        return <FormSettingGroup title={"选择渠道"} topBar={this.renderHeader()} loading={this.props.loading}>
             {this.renderTable()}
             {<FormChannelInfo visible={this.state.channelsShow} onOk={this.onOk.bind(this)}
                               onChanel={this.onChanel.bind(this)}></FormChannelInfo>}
