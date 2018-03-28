@@ -133,6 +133,7 @@ export class FormTableDetailContentModel {
                 CustomerMark: {hidden: true},
                 Payment: {hidden: true},
                 WarehousePackage: {readyOnly: true},
+                ReceiptDate: {hidden: true},
                 Agent: {hidden: true}
             },
             [ModelNameSpace.OrderTypeEnum.OrderOut]: {
