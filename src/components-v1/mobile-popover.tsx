@@ -30,7 +30,7 @@ export class MobilePopover extends React.Component<MobilePopoverProps, MobilePop
 
     onSelect(node, index) {
         if (index === 0) {
-            Modal.alert('退出', '确定退出?', [
+            Modal.alert("退出", '确定退出?', [
                 {
                     text: '取消', onPress: () => {
                 }, style: 'default'
