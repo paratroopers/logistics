@@ -78,69 +78,38 @@ export class FormContactInfo extends React.Component<FormContactInfoProps, FormC
     }
 
     onOk() {
-        this.props.onOk && this.props.onOk(this.state.selectRow);
+        const topThis = this
+        const {props: {onOk},state:{selectRow}} = topThis;
+        if (onOk)
+            onOk(selectRow);
     }
 
     onCancel() {
-        this.props.onCancel && this.props.onCancel();
+        const topThis = this
+        const {props: {onCancel}} = topThis;
+        if (onCancel)
+            onCancel();
     }
-
 
     renderTable() {
         let columns: ColumnProps<ModelNameSpace.AddressModel>[] = [{
             title: '收件人',
             dataIndex: 'recipient',
             key: 'recipient',
-            width: '15%'
         }, {
             title: '国家',
             dataIndex: 'country',
             key: 'country',
-            width: '10%'
-        }, {
-            title: '地址',
-            dataIndex: 'Address',
-            key: 'Address',
-            width: '55%'
         }, {
             title: '电话',
             dataIndex: 'Tel',
             key: 'Tel',
-            width: '20%'
         }];
-
-        (!this.props.readOnly) && columns.push({
-            title: '操作',
-            width: '15%',
-            render: (val, record, index) => {
-                const menu: FormTableOperationModel[] = [
-/*                    {
-                        key: PathConfig.MemberAddressPageView,
-                        type: "search",
-                        label: "查看"
-                    },
-                    {
-                        key: PathConfig.MemberAddressPageEdit,
-                        type: "edit",
-                        label: "编辑"
-                    },
-                    {
-                        key: "delete",
-                        type: "delete",
-                        label: "删除"
-                    }*/
-                ]
-                return <FormTableOperation onClick={(param: ClickParam) => {
-                    if (param.key === "delete") {
-                        this.onDeleteByID(record.ID);
-                    }
-                }} value={menu}></FormTableOperation>;
-            }
-        })
-
 
         return <Table loading={this.state.loading}
                       rowKey={"ID"}
+                      defaultExpandAllRows={true}
+                      expandedRowRender={record => <p style={{ margin: 0 }}>{`收货地址：${record.Address}`}</p>}
                       rowSelection={this.onRowSelection()}
                       dataSource={this.state.dataSource}
                       bordered={false}
@@ -149,7 +118,7 @@ export class FormContactInfo extends React.Component<FormContactInfoProps, FormC
     }
 
     render() {
-        return <Modal visible={this.state.visible} onOk={this.onOk.bind(this)} onCancel={this.onCancel.bind(this)}
+        return <Modal className="form-contact-info" visible={this.state.visible} onOk={this.onOk.bind(this)} onCancel={this.onCancel.bind(this)}
                       title="选择联系人"
                       width={this.props.width}>
             {this.renderTable()}

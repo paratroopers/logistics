@@ -82,13 +82,6 @@ export class FormOrderRelation extends React.Component<FormOrderRelationProps, F
                     return <span>{Constants.minSM ? new String().concat("物流方式：", txt) : txt}</span>;
                 }
             }, {
-                title: '入库时间',
-                dataIndex: 'InWareHouseTime',
-                layout: ColumnLayout.LeftBottom,
-                render: (txt) => {
-                    return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
-                }
-            }, {
                 title: '初始重量(kg)',
                 dataIndex: 'InWeight',
                 hidden: Constants.minSM
@@ -96,6 +89,13 @@ export class FormOrderRelation extends React.Component<FormOrderRelationProps, F
                 title: '初始体积(cm³)',
                 dataIndex: 'InVolume',
                 hidden: Constants.minSM
+            }, {
+                title: '入库时间',
+                dataIndex: 'InWareHouseTime',
+                layout: ColumnLayout.LeftBottom,
+                render: (txt) => {
+                    return <span>{moment(txt).format('YYYY-MM-DD HH:mm')}</span>
+                }
             }
         ]
         return <FormOrderRelationTable columns={colums}
