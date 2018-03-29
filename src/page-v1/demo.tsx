@@ -3,8 +3,9 @@ import {withRouter} from 'react-router';
 import {Row,Form, Input, Button, message} from 'antd';
 import {FormComponentProps, WrappedFormUtils} from 'antd/lib/form/Form';
 import FormMessageManager from "../components-v1/form-message-manager";
+import {ContactCustomerService} from "../components-v1/customer-service-dropdown";
 
-interface DemoStates extends FormComponentProps {
+interface DemoStates {
 
 }
 
@@ -20,7 +21,7 @@ export class DemoPage extends React.Component<DemoProps, DemoStates> {
 
     render() {
         return <Row className="demo-page">
-            <FormMessageManager></FormMessageManager>
+            <ContactCustomerService></ContactCustomerService>
         </Row>
     }
 }

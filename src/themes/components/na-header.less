@@ -233,58 +233,60 @@
 .tool-doubt {
   @img-width: 80px;
   @font-color: #373d41;
-  @qq-color: @app-theme-color;
-  @wx-color: @app-theme-color;
-  @email-color: @app-theme-color;
-  &-content {
-    width: 200px;
-    padding: 5px 0 5px 0;
-    border-bottom: 1px solid #eaeaea;;
-    &-num-title, &-eml-title, &-wx-title {
-      color: @font-color;
-      margin: 0;
-      textAlign: center;
+  &-item {
+    border-bottom: 1px solid #eaeaea;
+    padding: 5px;
+    &-left{
+      width: 30px;
+      margin-right: 8px;
+      .icon-dianhua-yuankuang, .icon-youxiang, .icon-qq, .icon-weixin {
+        color: @app-theme-color;
+      }
+      .icon-dianhua-yuankuang, .icon-youxiang{
+        font-size: 28px;
+      }
+      .icon-qq{
+        font-size: 26px;
+      }
+      .icon-weixin {
+        font-size: 30px;
+      }
     }
-    &-num, &-eml, &-code {
-      margin: 0;
-    }
-    &-code {
-      width: @img-width;
-      height: 80px;
-    }
-    &-wx-title {
-      width: @img-width;
-      font-size: 12px;
-      text-align: center;
-      color: #FF8A00;
-    }
-    .icon-qq, .icon-youxiang, .icon-weixin {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    .icon-dianhua-yuankuang, .icon-qq {
-      font-size: 25px;
-    }
-    .icon-youxiang, .icon-weixin {
-      font-size: 27px;
-    }
-    .title {
-      cursor: pointer;
-    }
-    .icon-dianhua-yuankuang, .icon-qq, .icon-youxiang, .icon-weixin {
-      color: @app-theme-color;
+    &-right{
+      &-h{
+        display: block;
+      }
+      &-p{
+        color: rgba(0,0,0,.85);
+        line-height: 20px;
+        font-size: 20px;
+      }
+      &-img{
+        display: block;
+        width: 130px;
+        height: 130px;
+        img{
+          width: 100%;
+        }
+      }
     }
   }
-  &-content:hover {
+  &-item:hover {
+    cursor: pointer;
+    .icon-dianhua-yuankuang{
+      color: #ff0000;
+    }
     .icon-qq {
-      color: @qq-color;
+      color: #4cbbe6;
     }
     .icon-youxiang {
-      color: @email-color;
+      color: #ff0000;
     }
     .icon-weixin {
-      color: @wx-color;
+      color: #17e63c;
     }
+  }
+  &-item:last-child{
+    border-bottom: none;
   }
 }

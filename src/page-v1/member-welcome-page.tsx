@@ -8,7 +8,7 @@ import * as moment from 'moment';
 import {MemberWelcomeTab} from "../components-v1/member-welcome-tab";
 import {FormMessageList} from '../components-v1/form-message-list';
 import {FormSteps} from '../components-v1/form-steps';
-import {CustomerserviceDropdown} from '../components-v1/customer-service-dropdown';
+import {ContactCustomerService} from '../components-v1/customer-service-dropdown';
 import {MemberBaseInformation} from '../components-v1/member-base-information';
 import {ContentHeaderControl}from "../components-v1/common-content-header";
 import {ModelNameSpace} from "../model/model";
@@ -137,7 +137,7 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
                 </Card>
                 <Card className="content-card" title="联系客服">
                     <Card.Grid className="content-card-grid">
-                        <CustomerserviceDropdown size={25} style={{marginBottom: '3px'}}></CustomerserviceDropdown>
+                        <ContactCustomerService></ContactCustomerService>
                     </Card.Grid>
                 </Card>
             </Col>

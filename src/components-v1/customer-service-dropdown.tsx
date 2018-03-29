@@ -2,55 +2,51 @@ import * as React from 'react';
 import {Context} from "../util/common";
 import {Row, Col} from 'antd';
 
-interface CustomerserviceDropdownProps {
-    size?: number;
-    style?: any;
-}
+interface ContactCustomerServiceProps {}
 
-interface CustomerserviceDropdownStates {
-}
+interface ContactCustomerServiceStates {}
 
-export class CustomerserviceDropdown extends React.Component<CustomerserviceDropdownProps, CustomerserviceDropdownStates> {
+export class ContactCustomerService extends React.Component<ContactCustomerServiceProps, ContactCustomerServiceStates> {
 
     render() {
-        const style = this.props.size ? {fontSize: this.props.size} : {};
-        return <div style={this.props.style}>
-            <Row key="0" type="flex" className="tool-doubt-content">
-                <Col span={6}>
-                    <i className={Context.getIconClassName('icon-dianhua-yuankuang')} style={style}></i>
+        return <Row className="tool-doubt">
+            <Row type="flex" justify="start" align="middle" className="tool-doubt-item">
+                <Col className="tool-doubt-item-left">
+                    <i className={Context.getIconClassName('icon-dianhua-yuankuang')}></i>
                 </Col>
-                <Col span={18} className="title">
-                    <p className="tool-doubt-content-num-title">客服电话</p>
-                    <p className="tool-doubt-content-num">400-820-8820</p>
-                </Col>
-            </Row>
-            <Row key="1" type="flex" className="tool-doubt-content qq">
-                <Col span={6}>
-                    <i className={Context.getIconClassName('icon-qq')} style={style}></i>
-                </Col>
-                <Col span={18} className="title">
-                    <p className="tool-doubt-content-num-title">客服QQ</p>
-                    <p className="tool-doubt-content-num">738114990</p>
+                <Col className="tool-doubt-item-right">
+                    <span className="tool-doubt-item-right-h team-mao">客服电话</span>
+                    <span className="tool-doubt-item-right-p">400-820-8820</span>
                 </Col>
             </Row>
-            <Row key="2" type="flex" className="tool-doubt-content">
-                <Col span={6}>
-                    <i className={Context.getIconClassName('icon-youxiang')} style={style}></i>
+            <Row type="flex" justify="start" align="middle" className="tool-doubt-item">
+                <Col className="tool-doubt-item-left">
+                    <i className={Context.getIconClassName('icon-qq')}></i>
                 </Col>
-                <Col span={18} className="title">
-                    <p className="tool-doubt-content-eml-title">客服邮箱</p>
-                    <p className="tool-doubt-content-eml">xuke_break@163.com</p>
-                </Col>
-            </Row>
-            <Row key="3" type="flex" className="tool-doubt-content">
-                <Col span={6}>
-                    <i className={Context.getIconClassName('icon-weixin')} style={style}></i>
-                </Col>
-                <Col span={18} className="title">
-                    <p className="tool-doubt-content-wx-title">关注我</p>
-                    <img className="code" src="http://www.famliytree.cn/icon/wx_ewm.jpg"/>
+                <Col className="tool-doubt-item-right">
+                    <span className="tool-doubt-item-right-h team-mao">客服QQ</span>
+                    <span className="tool-doubt-item-right-p">738114990</span>
                 </Col>
             </Row>
-        </div>
+            <Row type="flex" justify="start" align="middle" className="tool-doubt-item">
+                <Col className="tool-doubt-item-left">
+                    <i className={Context.getIconClassName('icon-youxiang')}></i>
+                </Col>
+                <Col className="tool-doubt-item-right">
+                    <span className="tool-doubt-item-right-h team-mao">客服邮箱</span>
+                    <span className="tool-doubt-item-right-p">xuke_break@163.com</span>
+                </Col>
+            </Row>
+            <Row type="flex" justify="start" align="middle" className="tool-doubt-item">
+                <Col className="tool-doubt-item-left">
+                    <i className={Context.getIconClassName('icon-weixin')}></i>
+                </Col>
+                <Col className="tool-doubt-item-right">
+                    <span className="tool-doubt-item-right-img">
+                        <img className="code" src="http://www.famliytree.cn/icon/wx_ewm.jpg"/>
+                    </span>
+                </Col>
+            </Row>
+        </Row>
     }
 }

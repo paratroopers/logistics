@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import {isBoolean, isNullOrUndefined} from "util";
 import {HeaderLogo} from './index-header-logo';
 import {HeaderSetting} from './index-header-settings';
-import {CustomerserviceDropdown} from './customer-service-dropdown';
+import {ContactCustomerService} from './customer-service-dropdown';
 import {HeaderNavigation, NavigationType} from './index-header-navigation';
 
 interface HeaderProps {
@@ -75,7 +75,7 @@ class Header extends Component<HeaderProps, HeaderStates> {
             {/*<Col >{topThis.renderLanguageSelect()}</Col>*/}
             {/*<Col lg={0} xl={0}>{topThis.renderButtonNavigation()}</Col>*/}
             <Col className="tool-doubt">
-                <Popover placement="bottom" content={<CustomerserviceDropdown></CustomerserviceDropdown>}>
+                <Popover placement="bottom" content={<ContactCustomerService></ContactCustomerService>}>
                     <i className={Context.getIconClassName('icon-zixun')}></i>
                     <span>咨询客服</span>
                 </Popover>
