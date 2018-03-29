@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Form, Input, Modal, Icon, Row, Col} from 'antd';
+import {Form, Input, Modal, Icon, Row, Col,Tooltip} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {FormSettingGroup} from './form-setting-group';
 import {FormInputNumber} from './form-input-number';
@@ -212,7 +212,14 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                 },
                 hidden: Constants.minSM
             }, {
-                title: "HSCode",
+                title: <div>
+                    <span>{"您的专属仓库"}</span>
+                    <Tooltip
+                        title={<span
+                            style={{whiteSpace: 'pre-line'}}>{"如不清楚HScode，请联系客服"}</span>}>
+                        <Icon type="question-circle" style={{cursor: "pointer"}}></Icon>
+                    </Tooltip>
+                </div>,
                 width: '15%',
                 dataIndex: 'HSCode',
                 render: (txt, record, index) => {
