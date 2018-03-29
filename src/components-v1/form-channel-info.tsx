@@ -117,7 +117,7 @@ export class FormChannelInfo extends React.Component<FormChannelInfoProps, FormC
         const {props: {visible, onChanel, width}} = this;
         return <Modal visible={visible}
                       width={width ? width : 800}
-                      title="渠道选择"
+                      title="选择渠道"
                       onOk={this.onOk.bind(this)}
                       onCancel={() => onChanel && onChanel()}>
             {this.renderTable()}

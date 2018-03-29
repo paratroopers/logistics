@@ -143,13 +143,13 @@ export class FormOrderChannel extends React.Component<FormOrderChannelProps, For
         return this.props.readOnly ? null : <div>
             <Icon type="plus-circle-o"/>
             <a onClick={this.onAddClick.bind(this)}>
-                <span>添加渠道</span>
+                <span>选择渠道</span>
             </a>
         </div>
     }
 
     render() {
-        return <FormSettingGroup title={"选择渠道"} topBar={this.renderHeader()} loading={this.props.loading}>
+        return <FormSettingGroup title={"渠道选择"} topBar={this.renderHeader()} loading={this.props.loading}>
             {this.renderTable()}
             {<FormChannelInfo visible={this.state.channelsShow} onOk={this.onOk.bind(this)}
                               onChanel={this.onChanel.bind(this)}></FormChannelInfo>}
