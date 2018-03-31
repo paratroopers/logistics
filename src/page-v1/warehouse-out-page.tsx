@@ -3,6 +3,7 @@ import {withRouter} from 'react-router';
 import {ModelNameSpace} from "../model/model";
 import {PathConfig} from '../config/pathconfig';
 import {SelectType} from "../util/common";
+import {FormStatusSelect} from "../components-v1/all-components-export";
 import {FormControl} from "../components-v1/form-control";
 import {FormTablePage} from '../components-v1/form-table-page';
 import {
@@ -45,6 +46,13 @@ export class WarehouseOutPage extends React.Component<any, any> {
                 fieldName: "customerChooseChannelID",
                 displayName: "渠道",
                 control: <FormControl.FormSelect type={SelectType.channel} placeholder="渠道"/>
+            },
+            {
+                defaultDisplay: true,
+                fieldName: "currentStatus",
+                displayName: "状态",
+                control: <FormStatusSelect type={ModelNameSpace.OrderTypeEnum.OrderOut}
+                                           placeholder="搜索订单状态"></FormStatusSelect>
             }];
     }
 

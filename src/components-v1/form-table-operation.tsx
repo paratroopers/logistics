@@ -21,7 +21,8 @@ export class FormTableOperationModel {
 export enum FormTableOperationEnum {
     Edit = 0,
     View = 1,
-    Detele = 2
+    Detele = 2,
+    Print=3
 }
 
 interface FormTableOperationProps {
