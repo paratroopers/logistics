@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter, RouteComponentProps, hashHistory} from 'react-router';
-import {Layout, Row, Col, Button, message, Form} from 'antd';
+import {Layout, Row, Col, Button, message, Form,Spin} from 'antd';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import * as moment from 'moment';
@@ -31,6 +31,7 @@ export interface MemberMergePackagePageStates {
     orderInfo?: FormOrderInfoModel;
     /** 渠道选择*/
     channelList?: ModelNameSpace.ChannelModal[];
+    loading:boolean;
 }
 
 export interface QueryData {
@@ -42,7 +43,8 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
     constructor(props, context) {
         super(props, context);
         this.state = {
-            selectedKeys: (this.props.location.query as QueryData).ids
+            selectedKeys: (this.props.location.query as QueryData).ids,
+            loading: false
         }
     }
 
@@ -130,16 +132,19 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
                     currentStatus: ModelNameSpace.OrderStatusEnum.StatusA,
                     isAdmin: false
                 }
+                topThis.setState({loading:true});
                 APINameSpace.CustomerOrderAPI.CustomerOrderMergeAdd(request).then((result: ResponseNameSpace.BaseResponse) => {
-                    if (result.Status === 0) {
-                        message.success("合并成功!");
-                        setTimeout(() => {
-                            hashHistory.goBack();
-                        }, 1000);
-                    }
-                    else {
-                        message.warning("合并失败!");
-                    }
+                    topThis.setState({loading:false},()=>{
+                        if (result.Status === 0) {
+                            message.success("合并成功!");
+                            setTimeout(() => {
+                                hashHistory.goBack();
+                            }, 1000);
+                        }
+                        else {
+                            message.warning("合并失败!");
+                        }
+                    })
                 });
             }
         });
@@ -159,21 +164,23 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
     }
 
     renderContent() {
-        const {state: {orderInfo, data}, props: {form}} = this;
-        return <Layout className="merge-package-page view-content-page">
-            <ContentHeaderControl title="待打包" extra={this.renderButton()}></ContentHeaderControl>
-            <Layout.Content>
-                <FormOrderInfo data={orderInfo}></FormOrderInfo>
-                <FormOrderRelation data={data}></FormOrderRelation>
-                <FormOrderAddressee form={form}></FormOrderAddressee>
-                <FormOrderDeclare form={form}></FormOrderDeclare>
-                <FormOrderChannel form={form} onChange={(channelData) => {
-                    this.setState({channelList: channelData});
-                }}></FormOrderChannel>
-                <FormRemarks form={form} title={"打包要求"} fieldName="CustomerMark"></FormRemarks>
-                {this.renderButton()}
-            </Layout.Content>
-        </Layout>
+        const {state: {orderInfo, data, loading}, props: {form}} = this;
+        return <Spin size="large" spinning={loading}>
+            <Layout className="merge-package-page view-content-page">
+                <ContentHeaderControl title="待打包" extra={this.renderButton()}></ContentHeaderControl>
+                <Layout.Content>
+                    <FormOrderInfo data={orderInfo}></FormOrderInfo>
+                    <FormOrderRelation data={data}></FormOrderRelation>
+                    <FormOrderAddressee form={form}></FormOrderAddressee>
+                    <FormOrderDeclare form={form}></FormOrderDeclare>
+                    <FormOrderChannel form={form} onChange={(channelData) => {
+                        this.setState({channelList: channelData});
+                    }}></FormOrderChannel>
+                    <FormRemarks form={form} title={"打包要求"} fieldName="CustomerMark"></FormRemarks>
+                    {this.renderButton()}
+                </Layout.Content>
+            </Layout>
+        </Spin>
     }
 
     render() {

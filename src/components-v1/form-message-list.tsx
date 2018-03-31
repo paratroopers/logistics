@@ -82,11 +82,11 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
     getPath(item: ModelNameSpace.MessageModel) {
         switch (item.type) {
             case  FormStepEnum.Delivered:
-                return {pathname:PathConfig.WarehouseOutViewPage,query: {id: item.ID}};
+                return {pathname: PathConfig.WarehouseOutViewPage, query: {id: item.ID}};
             case  FormStepEnum.WaitForPay:
-                return {pathname:PathConfig.MemberWaitPayViewPage,query: {id: item.ID}};
+                return {pathname: PathConfig.MemberWaitPayViewPage, query: {id: item.ID}};
             case  FormStepEnum.WarehouseIn:
-                return {pathname:PathConfig.WarehouseInViewPage,state: {ID: item.ID}};
+                return {pathname: PathConfig.WarehouseInViewPage, state: {ID: item.ID}};
         }
         return {pathname: ""};
     }
@@ -103,7 +103,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         }
 
         if (isPagination === true) {
-            APINameSpace.MemberAPI.GetMessageList(request).then((result:ResponseNameSpace.GetMessageListResponse) => {
+            APINameSpace.MemberAPI.GetMessageList(request).then((result: ResponseNameSpace.GetMessageListResponse) => {
                 if (result.Status === 0) {
                     topThis.setState({
                         messageItems: result.Data,
@@ -114,7 +114,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
                 }
             });
         } else {
-            APINameSpace.MemberAPI.GetMessageLatestList(request).then((result:ResponseNameSpace.GetMessageLatestListResponse) => {
+            APINameSpace.MemberAPI.GetMessageLatestList(request).then((result: ResponseNameSpace.GetMessageLatestListResponse) => {
                 if (result.Status === 0) {
                     topThis.setState({
                         messageItems: result.Data,
@@ -126,7 +126,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
     }
 
     renderMessageStatus(type: FormStepEnum): { message: string, textClass: string, tagColor: string } {
-        const {WarehouseIn, WaitForPay, Delivered,Manager} = MessageLocale;
+        const {WarehouseIn, WaitForPay, Delivered, Manager} = MessageLocale;
         let formatMessage: string;
         let textColor: string;
         let tagColor: string;
@@ -185,7 +185,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
     }
 
     renderSystemItem(item: ModelNameSpace.MessageModel) {
-        const topThis=this;
+        const topThis = this;
 
         const title =
             <Row type="flex" align="middle" justify="space-between">
@@ -193,7 +193,8 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
                 <Col>{moment(item.Created).fromNow()}</Col>
             </Row>
 
-        return <Link onClick={topThis.onClick.bind(this)} to={{pathname: PathConfig.MessageManagerViewPage, state: item}}><List.Item
+        return <Link onClick={topThis.onClick.bind(this)}
+                     to={{pathname: PathConfig.MessageManagerViewPage, state: item}}><List.Item
             className="message-list-item">
             <List.Item.Meta
                 className="message-list-item-meta"
@@ -205,7 +206,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
 
     render() {
         const topThis = this;
-        const {props: {messageType, isPagination}, state: {loading, messageItems, pageIndex, pageSize,totalCount}} = topThis;
+        const {props: {messageType, isPagination}, state: {loading, messageItems, pageIndex, pageSize, totalCount}} = topThis;
 
         /** 分页*/
         const pagination = {
@@ -220,7 +221,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         return <Spin spinning={loading}>
             <div className="message-list">
                 <List dataSource={messageItems}
-                      pagination={isPagination ? pagination : false}
+                      pagination={isPagination && messageItems && messageItems.length > 0 ? pagination : false}
                       renderItem={item => messageType !== ModelNameSpace.MessageType.System ? topThis.renderItem(item) : topThis.renderSystemItem(item)}>
                 </List>
             </div>
