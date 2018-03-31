@@ -212,7 +212,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
                         if (param.key === FormTableOperationEnum.Detele.toString()) {
                         }
                         else {
-                            const thisMenu = dropDownConfig.filter(r => r.key.toString() === param.key)[0];
+                            const thisMenu = dropDownConfig.filter(r => r.key.toString() === param.key.toString())[0];
                             hashHistory.push({
                                 pathname: thisMenu.path,
                                 query: {id: record.ID, step: _step},

@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Row, Col, Form, Input} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {FormSettingGroup} from './form-setting-group'
-import {FormControl} from '../components-v1/form-control';
+import {FormAgentDropDown} from '../components-v1/all-components-export';
 import {SelectType} from "../util/common";
 import {ModelNameSpace} from '../model/model';
 
@@ -35,12 +35,10 @@ export default class FormOrderAgent extends React.Component<FormOrderAgentProps,
     }
 
     renderFormIndexControl(isDis?: boolean, val?: any) {
-        return <FormControl.FormSelectIndex type={SelectType.Agent}
-                                            mode="default"
-                                            defaultValue={val}
-                                            disabled={isDis}
-                                            noLabelInValue={true}
-                                            placeholder="代理商"/>;
+        return <FormAgentDropDown mode="default"
+                                  defaultValue={val}
+                                  disabled={isDis}
+                                  placeholder="代理商"></FormAgentDropDown>;
     }
 
     render() {
@@ -55,10 +53,8 @@ export default class FormOrderAgent extends React.Component<FormOrderAgentProps,
                                 form.getFieldDecorator("AgentID", {
                                     initialValue: 'AgentID',
                                     rules: [{required: true, message: '请选择代理商!'}],
-                                })(<FormControl.FormSelectIndex type={SelectType.Agent}
-                                                                mode="default"
-                                                                noLabelInValue={true}
-                                                                placeholder="代理商"/>)}
+                                })(<FormAgentDropDown mode="default"
+                                                      placeholder="代理商"></FormAgentDropDown>)}
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} style={{paddingLeft: '8px'}}>
