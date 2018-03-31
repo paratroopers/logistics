@@ -71,11 +71,15 @@ export namespace FormControl {
             this.search = "";
         }
 
+        componentDidMount() {
+            this.fetchData("");
+        }
+
         fetchData = (value) => {
             this.lastFetchId += 1;
             this.search = value;
             setTimeout(() => {
-                if (this.search === value && value) {
+                if (this.search === value && (value || value === "")) {
                     let fetchId = this.lastFetchId;
                     this.setState({data: [], fetching: true});
                     const type = this.props.type;

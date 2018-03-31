@@ -9,6 +9,7 @@ import {MemberAddressPageAdd} from "../page-v1/member-address-page-add";
 import {MemberAddressPageEdit} from "../page-v1/member-address-page-edit";
 import {MemberAddressPageView} from "../page-v1/member-address-page-view";
 import {MemberDeliveredPage} from "../page-v1/member-delivered-page";
+import {MemberDeliveredViewPage} from '../page-v1/member-delivered-view-page';
 import {MemberMessageListPage} from "../page-v1/member-message-list-page";
 import {MessageManagerPage} from "../page-v1/message-manager-page";
 import {MessageManagerAddPage} from "../page-v1/message-manager-add-page";
@@ -56,7 +57,7 @@ import {WarehousePackageViewPage} from '../page-v1/warehouse-package-view-page';
 import WarehousePackageApprovePage from '../page-v1/warehouse-package-approve-page';
 
 const routerConfig = (
-    <Router history={hashHistory} onUpdate={()=>{
+    <Router history={hashHistory} onUpdate={() => {
         /** 路由改变，切换页面时返回页面顶部*/
         window.scrollTo(0, 0);
     }}>
@@ -80,6 +81,7 @@ const routerConfig = (
                 <Route path={PathConfig.MemberAddressPageEdit} component={MemberAddressPageEdit}/>
                 <Route path={PathConfig.MemberAddressPageView} component={MemberAddressPageView}/>
                 <Route path={PathConfig.MemberDeliveredPage} component={MemberDeliveredPage}/>
+                <Route path={PathConfig.MemberDeliveredViewPage} component={MemberDeliveredViewPage}/>
                 <Route path={PathConfig.MemberMessageListPage} component={MemberMessageListPage}/>
                 <Route path={PathConfig.MessageManagerPage} component={MessageManagerPage}/>
                 <Route path={PathConfig.MessageManagerAddPage} component={MessageManagerAddPage}/>

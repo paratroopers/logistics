@@ -199,31 +199,26 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             layout: ColumnLayout.Option,
             render: (val, record) => {
                 const menu: FormTableOperationModel[] = dropDownConfig;
-                if (this.props.title === "已发货") {
-                    return <Link to={{pathname: PathConfig.WarehouseOutViewPage, query: {id: record.ID}}}>查看</Link>;
+                let _step: ModelNameSpace.OrderTypeEnum;
+                if (menu.length === 1) {
+                    return <Link to={{pathname: menu[0].path, query: {id: record.ID}}}>{menu[0].label}</Link>;
                 }
-                if (this.props.title === "待付款") {
-                    return <Link to={{pathname: PathConfig.MemberWaitPayApprovePage, query: {id: record.ID}}}>付款</Link>;
+                if (record.currentStep === '待付款') {
+                    _step = record.currentStatus === '1' ? ModelNameSpace.OrderTypeEnum.OrderOutDeliver : ModelNameSpace.OrderTypeEnum.OrderOut;
                 }
-                else {
-                    let _step: ModelNameSpace.OrderTypeEnum;
-                    if (record.currentStep === '待付款') {
-                        _step = record.currentStatus === '1' ? ModelNameSpace.OrderTypeEnum.OrderOutDeliver : ModelNameSpace.OrderTypeEnum.OrderOut;
-                    }
-                    return <FormTableOperation
-                        onClick={(param: any) => {
-                            if (param.key === FormTableOperationEnum.Detele.toString()) {
-                            }
-                            else {
-                                const thisMenu = dropDownConfig.filter(r => r.key.toString() === param.key)[0];
-                                hashHistory.push({
-                                    pathname: thisMenu.path,
-                                    query: {id: record.ID, step:_step},
-                                });
-                            }
+                return <FormTableOperation
+                    onClick={(param: any) => {
+                        if (param.key === FormTableOperationEnum.Detele.toString()) {
+                        }
+                        else {
+                            const thisMenu = dropDownConfig.filter(r => r.key.toString() === param.key)[0];
+                            hashHistory.push({
+                                pathname: thisMenu.path,
+                                query: {id: record.ID, step: _step},
+                            });
+                        }
 
-                        }} value={menu}></FormTableOperation>;
-                }
+                    }} value={menu}></FormTableOperation>;
             }
         }];
 

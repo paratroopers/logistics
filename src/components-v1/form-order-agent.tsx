@@ -9,6 +9,7 @@ import {ModelNameSpace} from '../model/model';
 export interface FormOrderAgentProps extends FormComponentProps {
     readyOnly?: boolean;
     data?: ModelNameSpace.CustomerOrderMergeModel;
+    defaultAgent?: string;
 }
 
 export interface FormOrderAgentStates {
@@ -16,13 +17,20 @@ export interface FormOrderAgentStates {
 
 
 export default class FormOrderAgent extends React.Component<FormOrderAgentProps, FormOrderAgentStates> {
+    static defaultProps = {
+        defaultAgent: "0"
+    }
+
     constructor(props, context) {
         super(props, context);
     }
 
     componentWillReceiveProps(nextProps) {
         if ('data' in nextProps && nextProps.data !== this.props.data && this.props.form) {
-            this.props.form.setFieldsValue({agent: nextProps.data.AgentID, channelNo: nextProps.data.channelNo});
+            this.props.form.setFieldsValue({
+                AgentID: nextProps.data.AgentID !== this.props.defaultAgent ? nextProps.data.AgentID : undefined,
+                channelNo: nextProps.data.channelNo
+            });
         }
     }
 
@@ -44,7 +52,7 @@ export default class FormOrderAgent extends React.Component<FormOrderAgentProps,
                     <Col xs={24} sm={12} md={8} style={{paddingLeft: '8px'}}>
                         <Form.Item required={!readyOnly}>
                             {readyOnly ? this.renderFormIndexControl(true, data.AgentID) :
-                                form.getFieldDecorator("agent", {
+                                form.getFieldDecorator("AgentID", {
                                     initialValue: 'AgentID',
                                     rules: [{required: true, message: '请选择代理商!'}],
                                 })(<FormControl.FormSelectIndex type={SelectType.Agent}
