@@ -22,7 +22,7 @@ export class FormAgentDropDown extends React.Component<FormAgentDropDownProps, F
     }
 
     async getData(value?: string) {
-        const response = await APINameSpace.SystemAPI.GetAgentList({name:value });
+        const response = await APINameSpace.SystemAPI.GetAgentList({name: value});
         response.Status === 0 && this.setState({data: response.Data});
     }
 
@@ -34,9 +34,15 @@ export class FormAgentDropDown extends React.Component<FormAgentDropDownProps, F
         });
     }
 
+    renderReadyOnlySelected() {
+        return this.state.data.filter(item => item.ID === this.props.value)[0].Name;
+    }
+
     render() {
-        return <Select {...this.props}>
-            {this.renderOptions()}
-        </Select>;
+        return <div>{
+            this.props.disabled ? <span>{this.renderReadyOnlySelected()}</span> : <Select {...this.props}>
+                {this.renderOptions()}
+            </Select>
+        }</div>;
     }
 }

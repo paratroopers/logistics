@@ -30,7 +30,8 @@ export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, M
                 key: FormTableOperationEnum.View,
                 type: "edit",
                 label: "查看",
-                path: PathConfig.MemberWaitPayViewPage
+                path: PathConfig.MemberWaitPayViewPage,
+                viewOnly: true
             },
             {
                 key: FormTableOperationEnum.Edit,
@@ -61,10 +62,10 @@ export class MemberWaitPayPage extends React.Component<MemberWaitPayPageProps, M
 
     render() {
         return <FormTablePage currentStep={ModelNameSpace.OrderTypeEnum.WaitPay}
-                              title = "待付款"
+                              title="待付款"
                               searchConfig={this.getSearchConfig()}
                               dropDownConfig={this.getDropDownConfig()}
-                              callBackTitle="代付款"
+                              callBackTitle="待付款"
                               headerTip={'总计有{name}项待支付订单'}></FormTablePage>;
     }
 }
