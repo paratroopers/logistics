@@ -145,10 +145,23 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
         });
     }
 
+    renderButton(){
+        return <Row justify="end" type="flex" style={{margin: '10px 0px 10px 0px'}}>
+            <Col>
+                <div className="view-content-page-header-button">
+                    <Button type="primary" style={{marginRight: "10px"}} onClick={this.onSubmit.bind(this)}>确认合并打包</Button>
+                    <Button type="primary" onClick={() => {
+                        hashHistory.goBack();
+                    }}>取消</Button>
+                </div>
+            </Col>
+        </Row>
+    }
+
     renderContent() {
         const {state: {orderInfo, data}, props: {form}} = this;
         return <Layout className="merge-package-page view-content-page">
-            <ContentHeaderControl title="待打包"></ContentHeaderControl>
+            <ContentHeaderControl title="待打包" extra={this.renderButton()}></ContentHeaderControl>
             <Layout.Content>
                 <FormOrderInfo data={orderInfo}></FormOrderInfo>
                 <FormOrderRelation data={data}></FormOrderRelation>
@@ -158,16 +171,7 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
                     this.setState({channelList: channelData});
                 }}></FormOrderChannel>
                 <FormRemarks form={form} title={"打包要求"} fieldName="CustomerMark"></FormRemarks>
-                <Row justify="start" type="flex" style={{margin: '10px 0px 10px 0px'}}>
-                    <Col>
-                        <div className="view-content-page-header-button">
-                            <Button type="primary" style={{marginRight: "10px"}} onClick={this.onSubmit.bind(this)}>确认合并打包</Button>
-                            <Button type="primary" onClick={() => {
-                                hashHistory.goBack();
-                            }}>取消</Button>
-                        </div>
-                    </Col>
-                </Row>
+                {this.renderButton()}
             </Layout.Content>
         </Layout>
     }
