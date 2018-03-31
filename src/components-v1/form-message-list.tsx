@@ -80,7 +80,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
     }
 
     getPath(item: ModelNameSpace.MessageModel) {
-        switch (item.type) {
+    switch (item.type) {
             case  FormStepEnum.Delivered:
                 return {pathname: PathConfig.WarehouseOutViewPage, query: {id: item.ID}};
             case  FormStepEnum.WaitForPay:
