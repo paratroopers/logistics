@@ -56,7 +56,10 @@ import {WarehousePackageViewPage} from '../page-v1/warehouse-package-view-page';
 import WarehousePackageApprovePage from '../page-v1/warehouse-package-approve-page';
 
 const routerConfig = (
-    <Router history={hashHistory}>
+    <Router history={hashHistory} onUpdate={()=>{
+        /** 路由改变，切换页面时返回页面顶部*/
+        window.scrollTo(0, 0);
+    }}>
         {/*<Route path={PathConfig.EnzoDemoPage} component={FormControl.EnzoDemoPage}/>*/}
         <Route path={PathConfig.DemoPage} component={DemoPage}/>
         <Route path={PathConfig.MasterPage} component={NaMasterMainPage}>
