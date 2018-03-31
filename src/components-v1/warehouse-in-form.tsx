@@ -272,7 +272,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                         </FormItem>
                     </Col>
                     {readonly ? <Col {...spanLayout}>
-                        <FormItem {...formItemLayout} label={"长宽高"}>
+                        <FormItem {...formItemLayout} label={"长*宽*高"}>
                             <Row type="flex">
                                 <Col>
                                     {getFieldDecorator('inLength', {

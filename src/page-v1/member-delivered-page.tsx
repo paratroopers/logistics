@@ -8,7 +8,6 @@ import {
     FormTableOperationEnum
 } from "../components-v1/form-table-operation";
 
-/// 待审核列表
 interface MemberDeliveredPageProps {
 
 }
@@ -29,7 +28,7 @@ export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProp
                 key: FormTableOperationEnum.View,
                 type: "search",
                 label: "查看",
-                path: PathConfig.MemberDeliveredViewPage
+                path:PathConfig.WarehouseOutViewPage
             }
         ]
         return options;
