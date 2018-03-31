@@ -22,6 +22,7 @@ export interface QueryData {
 
 @withRouter
 export class WarehouseOutViewPage extends React.Component<WarehouseOutViewPageProps, WarehouseOutViewPageStates> {
+
     constructor(props) {
         super(props);
         const data = this.props.location.query as QueryData;

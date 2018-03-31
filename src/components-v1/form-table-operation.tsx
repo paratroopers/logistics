@@ -3,7 +3,7 @@
  * Created by Handy
  * */
 import * as React from 'react';
-import {hashHistory} from 'react-router';
+import {hashHistory, Link} from 'react-router';
 import {Dropdown, Menu, Icon} from 'antd';
 import {ClickParam} from "antd/lib/menu";
 import {Context} from '../util/common';
@@ -51,8 +51,9 @@ export class FormTableOperation extends React.Component<FormTableOperationProps,
             </Menu.Item>)}
         </Menu>;
 
-        return <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
-            <i className={Context.getIconClassName("icon-ellipsisv")}/>
-        </Dropdown>;
+        return value.length === 1 ? <a onClick={onClick}>{menu[0].label}</a> :
+            <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
+                <i className={Context.getIconClassName("icon-ellipsisv")}/>
+            </Dropdown>;
     }
 }

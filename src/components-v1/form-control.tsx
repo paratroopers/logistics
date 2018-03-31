@@ -71,10 +71,6 @@ export namespace FormControl {
             this.search = "";
         }
 
-        componentDidMount() {
-            this.fetchData("");
-        }
-
         fetchData = (value) => {
             this.lastFetchId += 1;
             this.search = value;

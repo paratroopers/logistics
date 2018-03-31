@@ -200,9 +200,10 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             render: (val, record) => {
                 const menu: FormTableOperationModel[] = dropDownConfig;
                 let _step: ModelNameSpace.OrderTypeEnum;
-                if (menu.length === 1) {
-                    return <Link to={{pathname: menu[0].path, query: {id: record.ID}}}>{menu[0].label}</Link>;
-                }
+/*                if (menu.length === 1) {
+                    return <Link
+                        to={{pathname: menu[0].path, query: {id: record.ID}, state: record}}>{menu[0].label}</Link>;
+                }*/
                 if (record.currentStep === '待付款') {
                     _step = record.currentStatus === '1' ? ModelNameSpace.OrderTypeEnum.OrderOutDeliver : ModelNameSpace.OrderTypeEnum.OrderOut;
                 }
@@ -217,7 +218,6 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
                                 query: {id: record.ID, step: _step},
                             });
                         }
-
                     }} value={menu}></FormTableOperation>;
             }
         }];
