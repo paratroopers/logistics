@@ -227,7 +227,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
             dataIndex: 'CustomerOrderNo',
             layout: ColumnLayout.LeftTop,
             render: (txt, record) => {
-                return <Link to={{pathname: PathConfig.WarehouseInViewPage, state: record}}>{txt}</Link>
+                return <Link to={{pathname: PathConfig.WarehouseInViewPage, state: {ID: record.ID}}}>{txt}</Link>
             }
         }, {
             title: "会员编号",
@@ -310,7 +310,7 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                         });
                     } else {
                         const pathModel = menu.filter(r => r.key.toString() === param.key)[0];
-                        hashHistory.push({pathname: pathModel.path, state: record});
+                        hashHistory.push({pathname: pathModel.path, state: {ID: record.ID}});
                     }
                 }} value={menu}></FormTableOperation>;
             }
@@ -330,7 +330,6 @@ export class WarehouseInPage extends React.Component<WarehouseInPageProps, Wareh
                                      loading={loading}
                                      style={{padding: '12px'}}
                                      pagination={pagination}
-
                                      bordered={false}
                                      dataSource={listData}
                                      locale={{emptyText: <div><Icon type="frown-o"></Icon><span>暂无数据</span></div>}}/>;

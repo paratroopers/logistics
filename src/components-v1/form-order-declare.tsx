@@ -213,7 +213,7 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                 hidden: Constants.minSM
             }, {
                 title: <div>
-                    <span>{"您的专属仓库"}</span>
+                    <span>{"HScode"}</span>
                     <Tooltip
                         title={<span
                             style={{whiteSpace: 'pre-line'}}>{"如不清楚HScode，请联系客服"}</span>}>

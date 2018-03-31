@@ -47,23 +47,34 @@ export class HeaderMessage extends React.Component<HeaderMessageProps, HeaderMes
     }
 
     setUnReadCount() {
+        const topThis=this;
         APINameSpace.MemberAPI.UpdateMessageUnreadCount().then((result: ResponseNameSpace.BaseResponse) => {
-            if (result.Status !== 0) {
+            if (result.Status === 0) {
+                topThis.setState({
+                    unreadCount: 0
+                });
+            }else {
                 console.log("Don't Update Message Unread Count!")
             }
         });
     }
 
+    onClickMessageItem() {
+        const topThis = this;
+        topThis.setState({visible: false});
+    }
+
     renderContent() {
+        const topThis=this;
         const maxWidth = window.innerWidth;
         return <Card style={{width: this.props.fullScreen ? maxWidth : 'auto'}} className="message-card"
-                     actions={[<Link to={PathConfig.MemberMessageListPage}>查看更多</Link>]}>
+                     actions={[<Link onClick={topThis.onClickMessageItem.bind(this)} to={PathConfig.MemberMessageListPage}>查看更多</Link>]}>
             <Tabs className="message-card-tabs">
                 <TabPane tab="物流消息" key="0">
-                    <FormMessageList isPagination={false} layoutText={true} tagStatus={true}></FormMessageList>
+                    <FormMessageList onClick={topThis.onClickMessageItem.bind(this)} isPagination={false} layoutText={true} tagStatus={true}></FormMessageList>
                 </TabPane>
                 <TabPane tab="系统通知" key="1">
-                    <FormMessageList isPagination={false} layoutText={true} tagStatus={true}
+                    <FormMessageList onClick={topThis.onClickMessageItem.bind(this)} isPagination={false} layoutText={true} tagStatus={true}
                                      messageType={ModelNameSpace.MessageType.System}></FormMessageList>
                 </TabPane>
             </Tabs>

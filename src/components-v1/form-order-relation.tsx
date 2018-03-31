@@ -3,13 +3,13 @@ import {Row, Modal} from "antd";
 import {Constants} from '../util/common';
 import {ModelNameSpace} from '../model/model';
 import {RequestNameSpace} from '../model/request';
+import {APINameSpace} from '../model/api';
 import {ResponseNameSpace} from '../model/response';
 import {FormSettingGroup} from './form-setting-group';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import WarehouseInForm from "../components-v1/warehouse-in-form";
 import * as moment from 'moment';
 import {isNullOrUndefined} from "util";
-import {APINameSpace} from '../model/api';
 
 export interface FormOrderRelationProps {
     data?: ModelNameSpace.CustomerOrderModel[];

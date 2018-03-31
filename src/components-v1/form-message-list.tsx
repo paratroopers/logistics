@@ -23,7 +23,9 @@ interface FormMessageListProps {
     /** 消息类型*/
     messageType?: ModelNameSpace.MessageType;
     /** 是否为分页*/
-    isPagination?:boolean;
+    isPagination?: boolean;
+    /** 点击回调*/
+    onClick?: () => void;
 }
 
 interface FormMessageListStates {
@@ -70,6 +72,13 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         const topThis = this;
         const {state: {pageIndex, pageSize}} = topThis;
         this.getMessageData(pageIndex, pageSize);
+    }
+
+    onClick() {
+        const topThis = this;
+        const {props: {onClick}} = topThis;
+        if (onClick)
+            onClick();
     }
 
     getMessageData(index?: number, size?: number) {
@@ -174,13 +183,14 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
     }
 
     renderSystemItem(item: ModelNameSpace.MessageModel) {
+        const topThis=this;
         const title =
             <Row type="flex" align="middle" justify="space-between">
                 <Col>{item.title}</Col>
                 <Col>{moment(item.Created).fromNow()}</Col>
             </Row>
 
-        return <Link to={{pathname: PathConfig.MessageManagerViewPage, state: item}}><List.Item
+        return <Link onClick={topThis.onClick.bind(this)} to={{pathname: PathConfig.MessageManagerViewPage, state: item}}><List.Item
             className="message-list-item">
             <List.Item.Meta
                 className="message-list-item-meta"

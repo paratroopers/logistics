@@ -8,6 +8,9 @@ import {FormControl} from '../components-v1/form-control';
 import {FormUpload} from '../components-v1/form-upload';
 import {SelectType} from "../util/common";
 import {ModelNameSpace} from '../model/model';
+import {RequestNameSpace} from '../model/request';
+import {APINameSpace} from '../model/api';
+import {ResponseNameSpace} from '../model/response';
 import {FormExpressSelect} from "./form-express-select";
 import {FormWarehouseSelect} from "./form-warehouse-select";
 import {FormStatusSelect} from "./form-status-select";
@@ -16,20 +19,22 @@ import {FormInputNumber} from "./form-input-number";
 import {FormInputText} from "./form-input-text";
 import {Constants} from '../util/common';
 import * as moment from 'moment';
+import {isNullOrUndefined} from "util";
 const FormItem = Form.Item;
 
 export interface WarehouseInFormProps extends FormComponentProps {
     /** 点击提交*/
     onSubmit?: (values: any) => void;
-    /** Data*/
-    Data?: ModelNameSpace.WarehouseListModel;
+    /** 数据源主键*/
+    ID?: string;
     /** 类型*/
-    type?: 'add' | 'edit' | 'view' | 'modal'| 'query';
+    type?: 'add' | 'edit' | 'view' | 'modal' | 'query';
     style?: React.CSSProperties;
 }
 
 export interface WarehouseInFormStates {
     files?: string[];
+    dataSource?: ModelNameSpace.WarehouseListModel;
 }
 
 class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormStates> {
@@ -38,6 +43,28 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
         this.state = {
             files: []
         }
+    }
+
+    initData() {
+        const topThis = this;
+        const {props: {ID}} = topThis;
+
+        if (isNullOrUndefined(ID))
+            return;
+
+        /** 查询详情信息*/
+        const request: RequestNameSpace.GetCustomerOrderItemRequest = {
+            customerOrderID: ID,
+            isAdmin: false
+        }
+
+        APINameSpace.CustomerOrderAPI.GetCustomerOrderItem(request).then((r: ResponseNameSpace.GetCustomerOrderItemResponse) => {
+            if (r.Status === 0) {
+                topThis.setState({dataSource: {...r.Data.customerOrder}}, () => {
+                    topThis.initDataFormat();
+                });
+            }
+        });
     }
 
     /** 点击确认*/
@@ -53,43 +80,48 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
         });
     }
 
-    componentDidMount() {
+    initDataFormat() {
         const topThis = this;
-        const {props: {Data, type, form: {setFieldsValue}}} = topThis;
+        const {props: {type, form: {setFieldsValue}}, state: {dataSource}} = topThis;
         switch (type) {
             case"add":
                 break;
             default:
                 setFieldsValue({
                     /** 会员*/
-                    user: [{key: Data.userid, label: Data.MemeberCode}],
+                    user: [{key: dataSource.userid, label: dataSource.MemeberCode}],
                     /** 快递方式*/
-                    expressType: {key: Data.expressTypeID, label: Data.expressTypeName},
-                    expressNo: Data.expressNo,
+                    expressType: {key: dataSource.expressTypeID, label: dataSource.expressTypeName},
+                    expressNo: dataSource.expressNo,
                     /** 件数*/
-                    inPackageCount: Data.InPackageCount,
-                    inWeight: Data.InWeight,
-                    inLength: Data.InLength,
-                    InVolume: Data.InVolume,
-                    inWidth: Data.InWidth,
-                    inHeight: Data.InHeight,
+                    inPackageCount: dataSource.InPackageCount,
+                    inWeight: dataSource.InWeight,
+                    inLength: dataSource.InLength,
+                    InVolume: dataSource.InVolume,
+                    inWidth: dataSource.InWidth,
+                    inHeight: dataSource.InHeight,
                     /** 交接单*/
-                    transferNo: Data.TransferNo,
+                    transferNo: dataSource.TransferNo,
                     /** 备注*/
-                    warehouseAdminRemark: Data.WarehouseAdminRemark,
+                    warehouseAdminRemark: dataSource.WarehouseAdminRemark,
                     /** 客服*/
-                    customerService: [{key: Data.CustomerServiceID, label: Data.CustomerServiceName}],
+                    customerService: [{key: dataSource.CustomerServiceID, label: dataSource.CustomerServiceName}],
                     /** 仓库*/
-                    wareHouse: {key: Data.WareHouseID, label: Data.WareHouseName}
+                    wareHouse: {key: dataSource.WareHouseID, label: dataSource.WareHouseName}
                 });
-                if (!(type==="modal")) {
+                if (!(type === "modal")) {
                     setFieldsValue({
                         /** 入库状态*/
-                        inWareHouseStatus: Data.currentStatus
+                        inWareHouseStatus: dataSource.currentStatus
                     });
                 }
                 break;
         }
+    }
+
+    componentDidMount() {
+        const topThis = this;
+        topThis.initData();
     }
 
     onFileUpload(files: any[]) {
@@ -99,7 +131,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
 
     render() {
         const topThis = this;
-        const {props: {form: {getFieldDecorator}, type, style, Data}} = topThis;
+        const {props: {ID, form: {getFieldDecorator}, type, style},state:{dataSource}} = topThis;
 
         /** 控件栅格*/
         const spanLayout: ColProps = {
@@ -110,15 +142,15 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
 
 
         /** 是否必填*/
-        const required = (type === "view"||type === "modal"||type==="query") ? false : true;
+        const required = (type === "view" || type === "modal" || type === "query") ? false : true;
 
         /** 是否只读*/
-        const readonly = (type === "view"||type === "modal"||type==="query") ? true : false;
+        const readonly = (type === "view" || type === "modal" || type === "query") ? true : false;
 
         const volumeStyle = Constants.minSM ? {marginBottom: '8px'} : {width: '100%'};
 
         /** vertical布局样式BUG --- 请勿移动控件顺序*/
-        const formItemLayout = (type === "view"||type === "modal"||type==="query") && Constants.minSM ? {
+        const formItemLayout = (type === "view" || type === "modal" || type === "query") && Constants.minSM ? {
             labelCol: {
                 xs: {span: 7}
             },
@@ -128,7 +160,8 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
         } : null;
 
         return (
-            <Form className="warehouse-in-add-form" style={style} layout={(type === "view"||type === "modal"||type==="query") ? "inline" : "vertical"}
+            <Form className="warehouse-in-add-form" style={style}
+                  layout={(type === "view" || type === "modal" || type === "query") ? "inline" : "vertical"}
                   onSubmit={topThis.onSubmit.bind(this)}>
                 <Row gutter={16}>
                     <Col {...spanLayout}>
@@ -190,7 +223,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                                                 placeholder="件数"/>)}
                         </FormItem>
                     </Col>
-                    {!(type==="modal"||type==="query") ? <Col {...spanLayout}>
+                    {!(type === "modal" || type === "query") ? <Col {...spanLayout}>
                         <FormItem {...formItemLayout} label={"入库状态"}>
                             {getFieldDecorator("inWareHouseStatus", {
                                 rules: [{required: required, message: '请选择状态!'}],
@@ -199,9 +232,9 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                                                  placeholder="入库状态"></FormStatusSelect>)}
                         </FormItem>
                     </Col> : null}
-                    {readonly ? <Col {...spanLayout}>
+                    {readonly&&dataSource ? <Col {...spanLayout}>
                         <FormItem {...formItemLayout} label={"入库时间"}>
-                            <span>{moment(Data.InWareHouseTime).format('YYYY-MM-DD HH:mm')}</span>
+                            <span>{moment(dataSource.InWareHouseTime).format('YYYY-MM-DD HH:mm')}</span>
                         </FormItem>
                     </Col> : null}
                     <Col {...spanLayout}>
@@ -274,7 +307,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                     <Col span={24}>
                         <FormItem {...formItemLayout} label={"附件"}>
                             <FormUpload disabled={readonly} imgCount={9}
-                                        customerOrderID={this.props.Data ? this.props.Data.ID : null}
+                                        customerOrderID={ID ? ID : null}
                                         onChange={files => this.onFileUpload(files)}></FormUpload>
                         </FormItem>
                     </Col>
@@ -288,7 +321,7 @@ class WarehouseInForm extends Component<WarehouseInFormProps, WarehouseInFormSta
                         }}>取消</Button>
                     </Col>
                 </Row> : <Row>
-                    {!(type==="modal") ? <Col span={24}>
+                    {!(type === "modal") ? <Col span={24}>
                         <Button type="primary" onClick={() => {
                             /** 返回路由*/
                             hashHistory.goBack();
