@@ -25,6 +25,7 @@ import FormOrderWarehousePackage from './form-order-warehouse-package';
 import FormOrderReceiptDate from './form-order-receipt-date';
 import FormOrderAgent from './form-order-agent';
 import FormButtonCancel from './form-button-cancel';
+import {FormAgentDropDown} from './form-agent-dropdown';
 
 
 export {
@@ -56,5 +57,6 @@ export {
     FormTableDetailContentModel,
     FormOrderWarehousePackage,
     FormOrderReceiptDate,
-    FormOrderAgent
+    FormOrderAgent,
+    FormAgentDropDown
 }

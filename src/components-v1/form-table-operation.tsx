@@ -51,7 +51,7 @@ export class FormTableOperation extends React.Component<FormTableOperationProps,
             </Menu.Item>)}
         </Menu>;
 
-        return value.length === 1 ? <a onClick={onClick}>{menu[0].label}</a> :
+        return value.length === 1 ? <a onClick={() => onClick(value[0])}>{value[0].label}</a> :
             <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
                 <i className={Context.getIconClassName("icon-ellipsisv")}/>
             </Dropdown>;
