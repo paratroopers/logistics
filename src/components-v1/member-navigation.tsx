@@ -56,7 +56,7 @@ export class MemberNavigation extends React.Component<MemberNavigationProps, Mem
         return <Menu
             className="member-navigation-control"
             style={style}
-            defaultOpenKeys={['890331594632818690','892231594632818690']}
+            defaultOpenKeys={['890331594632818690','892231594632818690','892231594632998690','892231594632678690','892231594632678450',]}
             mode={"inline"}
             onClick={(obj: { item, key, keyPath }) => {
                 hashHistory.push({pathname: obj.key});
