@@ -1,10 +1,7 @@
 import * as React from 'react';
 import {Row, Col, Card} from 'antd';
-import {hashHistory, Link} from 'react-router';
+import {Link} from 'react-router';
 import {FormStepIcon, FormStepEnum} from './form-step-icon';
-// import {MemberAPI} from "../../../api/member";
-// import {GetMemberOrderStatusResponse} from '../../../api/model/response/member';
-// import {MemberOrderStatusModel}from '../../../api/model/member';
 import {ResponseNameSpace} from '../model/response';
 import {ModelNameSpace} from '../model/model';
 import {PathConfig}from "../config/pathconfig";

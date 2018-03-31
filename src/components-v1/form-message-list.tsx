@@ -49,8 +49,6 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
 
     static defaultColor = {
         WarehouseIn: 'warehouse-in',
-        CustomerServiceConfirm: 'customer-service-confirm',
-        WarehousePackge: 'warehouse-packge',
         WaitForPay: 'wait-for-pay',
         Delivered: 'delivered',
         WaitForPack: 'wait-for-pack'
@@ -116,7 +114,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
     }
 
     renderMessageStatus(type: FormStepEnum): { message: string, textClass: string, tagColor: string } {
-        const {WarehouseIn, CustomerServiceConfirm, WarehousePackge, WaitForPay, Delivered,Manager} = MessageLocale;
+        const {WarehouseIn, WaitForPay, Delivered,Manager} = MessageLocale;
         let formatMessage: string;
         let textColor: string;
         let tagColor: string;
@@ -125,16 +123,6 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
                 formatMessage = WarehouseIn;
                 textColor = FormMessageList.defaultColor.WarehouseIn;
                 tagColor = "blue";
-                break;
-            case FormStepEnum.CustomerServiceConfirm:
-                formatMessage = CustomerServiceConfirm;
-                textColor = FormMessageList.defaultColor.CustomerServiceConfirm;
-                tagColor = "gold";
-                break;
-            case FormStepEnum.WarehousePackge:
-                formatMessage = WarehousePackge;
-                textColor = FormMessageList.defaultColor.WarehousePackge;
-                tagColor = "green";
                 break;
             case FormStepEnum.WaitForPay:
                 formatMessage = WaitForPay;
@@ -218,7 +206,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
             <div className="message-list">
                 <List dataSource={messageItems}
                       pagination={isPagination ? pagination : false}
-                      renderItem={item => !(messageType === ModelNameSpace.MessageType.System) ? topThis.renderItem(item) : topThis.renderSystemItem(item)}>
+                      renderItem={item => messageType !== ModelNameSpace.MessageType.System ? topThis.renderItem(item) : topThis.renderSystemItem(item)}>
                 </List>
             </div>
         </Spin>;
