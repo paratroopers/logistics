@@ -33,7 +33,7 @@ class FormMessageManager extends React.Component<FormMessageManagerProps, FormMe
     componentDidMount() {
         const topThis = this;
         const {props: {item, form}} = topThis;
-        form.setFieldsValue({"title": item.title, "message": item.message});
+        item && form.setFieldsValue({"title": item.title, "message": item.message});
     }
 
     /** 点击确认*/

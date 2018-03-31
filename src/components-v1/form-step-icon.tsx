@@ -25,13 +25,13 @@ export class FormStepIcon extends React.Component<FormStepIconProps, FormStepIco
         const color = FormMessageList.defaultColor;
         switch (this.props.type) {
             case  FormStepEnum.Delivered:
-                return <i style={style} className={"iconfont icon-rukuguanli " + color.Delivered}></i>;
+                return <i style={style} className={"iconfont icon-daifahuosel " + color.Delivered}></i>;
             case  FormStepEnum.WaitForPay:
                 return <i style={style} className={"iconfont icon-fukuansel " + color.WaitForPay}></i>;
             case  FormStepEnum.WarehouseIn:
-                return <i style={style} className={"iconfont icon-yuanxingxuanzhong-fill " + color.WarehouseIn}></i>;
+                return <i style={style} className={"iconfont icon-rukuguanli " + color.WarehouseIn}></i>;
             case  FormStepEnum.WaitForPack:
-                return <i style={style} className={"iconfont icon-yuanxingxuanzhong-fill " + color.WaitForPack}></i>;
+                return <i style={style} className={"iconfont icon-jianyanceshizhenglidabao " + color.WaitForPack}></i>;
         }
         return " iconfont " + icon;
     }
