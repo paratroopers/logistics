@@ -60,7 +60,7 @@ export default class FormOrderAgent extends React.Component<FormOrderAgentProps,
                     <Col xs={24} sm={12} md={8} style={{paddingLeft: '8px'}}>
                         <Form.Item required={!readyOnly}>
                             {readyOnly ?
-                                <Input disabled value={data.channelNo}></Input> : form.getFieldDecorator("channelNo", {
+                                <span>渠道单号:{data.channelNo}</span> : form.getFieldDecorator("channelNo", {
                                     initialValue: 'channelNo',
                                     rules: [{required: true, message: '请输入渠道单号!'}],
                                 })(<Input placeholder="请输入渠道单号"/>)}

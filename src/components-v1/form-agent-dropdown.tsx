@@ -35,12 +35,12 @@ export class FormAgentDropDown extends React.Component<FormAgentDropDownProps, F
     }
 
     renderReadyOnlySelected() {
-        return this.state.data.filter(item => item.ID === this.props.value)[0].Name;
+        return this.state.data.length > 0 ? this.state.data.filter(item => item.ID === this.props.value)[0].Name : '';
     }
 
     render() {
         return <div>{
-            this.props.disabled ? <span>{this.renderReadyOnlySelected()}</span> : <Select {...this.props}>
+            this.props.disabled ? <span>代理商:{this.renderReadyOnlySelected()}</span> : <Select {...this.props}>
                 {this.renderOptions()}
             </Select>
         }</div>;
