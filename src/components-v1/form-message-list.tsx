@@ -79,6 +79,18 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
             onClick();
     }
 
+    getPath(item: ModelNameSpace.MessageModel) {
+        switch (item.type) {
+            case  FormStepEnum.Delivered:
+                return {pathname:PathConfig.WarehouseOutViewPage,query: {id: item.ID}};
+            case  FormStepEnum.WaitForPay:
+                return {pathname:PathConfig.MemberWaitPayViewPage,query: {id: item.ID}};
+            case  FormStepEnum.WarehouseIn:
+                return {pathname:PathConfig.WarehouseInViewPage,state: {ID: item.ID}};
+        }
+        return {pathname: ""};
+    }
+
     getMessageData(index?: number, size?: number) {
         const topThis = this;
         const {props: {messageType, isPagination}} = topThis;
@@ -161,17 +173,20 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
                 <Tag color={message.tagColor}>{message.message}</Tag> : message.message}</Col>
         </Row>
 
-        return <List.Item className="message-list-item">
-            <List.Item.Meta
-                className="message-list-item-meta"
-                avatar={<FormStepIcon size={40} type={item.type as FormStepEnum}></FormStepIcon>}
-                title={title}
-                description={des}/>
-        </List.Item>;
+        return <Link onClick={topThis.onClick.bind(this)} to={topThis.getPath(item)}>
+            <List.Item className="message-list-item">
+                <List.Item.Meta
+                    className="message-list-item-meta"
+                    avatar={<FormStepIcon size={40} type={item.type as FormStepEnum}></FormStepIcon>}
+                    title={title}
+                    description={des}/>
+            </List.Item>
+        </Link>;
     }
 
     renderSystemItem(item: ModelNameSpace.MessageModel) {
         const topThis=this;
+
         const title =
             <Row type="flex" align="middle" justify="space-between">
                 <Col>{item.title}</Col>

@@ -12,7 +12,7 @@ interface FormStepIconStates {
 
 export enum FormStepEnum {
     WarehouseIn = 0,
-    WaitForPay = 2,
+    WaitForPay = 3,
     Delivered = 4,
     WaitForPack = 5
 }

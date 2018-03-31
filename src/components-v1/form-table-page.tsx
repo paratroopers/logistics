@@ -200,7 +200,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             render: (val, record) => {
                 const menu: FormTableOperationModel[] = dropDownConfig;
                 if (this.props.title === "已发货") {
-                    return <Link to={{pathname: PathConfig.WarehouseInQueryViewPage, state: record}}>查看</Link>;
+                    return <Link to={{pathname: PathConfig.WarehouseOutViewPage, query: {id: record.ID}}}>查看</Link>;
                 }
                 if (this.props.title === "待付款") {
                     return <Link to={{pathname: PathConfig.MemberWaitPayApprovePage, query: {id: record.ID}}}>付款</Link>;
