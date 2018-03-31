@@ -22,7 +22,7 @@ export class FormAgentDropDown extends React.Component<FormAgentDropDownProps, F
     }
 
     async getData(value?: string) {
-        const response = await APINameSpace.SystemAPI.GetAgentList({name: value});
+        const response = await APINameSpace.SystemAPI.GetAgentList({name:value });
         response.Status === 0 && this.setState({data: response.Data});
     }
 

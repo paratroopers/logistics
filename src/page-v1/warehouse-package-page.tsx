@@ -35,6 +35,10 @@ export default class WarehousePackgePage extends React.Component<WarehousePackge
             type: "search",
             label: "查看",
             path: PathConfig.WarehousePackageViewPage
+        }, {
+            key: FormTableOperationEnum.Print,
+            type: "copy",
+            label: "打印"
         }]
         return options;
     }

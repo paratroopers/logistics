@@ -36,7 +36,7 @@ export default class FormOrderAgent extends React.Component<FormOrderAgentProps,
 
     renderFormIndexControl(isDis?: boolean, val?: any) {
         return <FormAgentDropDown mode="default"
-                                  defaultValue={val}
+                                  value={val}
                                   disabled={isDis}
                                   placeholder="代理商"></FormAgentDropDown>;
     }
