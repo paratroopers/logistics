@@ -91,6 +91,7 @@ export namespace ModelNameSpace {
         message?: string;
         type?: number;
         userid?: string;
+        orderID?:string;
     }
 
     /** 国际化*/

@@ -82,11 +82,11 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
     getPath(item: ModelNameSpace.MessageModel) {
     switch (item.type) {
             case  FormStepEnum.Delivered:
-                return {pathname: PathConfig.WarehouseOutViewPage, query: {id: item.ID}};
+                return {pathname: PathConfig.WarehouseOutViewPage, query: {id: item.orderID}};
             case  FormStepEnum.WaitForPay:
-                return {pathname: PathConfig.MemberWaitPayViewPage, query: {id: item.ID}};
+                return {pathname: PathConfig.MemberWaitPayViewPage, query: {id: item.orderID}};
             case  FormStepEnum.WarehouseIn:
-                return {pathname: PathConfig.WarehouseInViewPage, state: {ID: item.ID}};
+                return {pathname: PathConfig.WarehouseInViewPage, state: {ID: item.orderID}};
         }
         return {pathname: ""};
     }
@@ -106,7 +106,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
             APINameSpace.MemberAPI.GetMessageList(request).then((result: ResponseNameSpace.GetMessageListResponse) => {
                 if (result.Status === 0) {
                     topThis.setState({
-                        messageItems: result.Data,
+                        messageItems: result.Data === null ? [] : result.Data,
                         loading: false,
                         pageIndex: index,
                         totalCount: result.TotalCount
@@ -117,7 +117,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
             APINameSpace.MemberAPI.GetMessageLatestList(request).then((result: ResponseNameSpace.GetMessageLatestListResponse) => {
                 if (result.Status === 0) {
                     topThis.setState({
-                        messageItems: result.Data,
+                        messageItems: result.Data === null ? [] : result.Data,
                         loading: false
                     });
                 }
