@@ -18,6 +18,7 @@ import {FormComponentProps} from 'antd/lib/form/Form';
 import {RequestNameSpace} from '../model/request';
 import {Context, Constants} from "../util/common";
 import {ResponseNameSpace} from '../model/response';
+import {PathConfig}from "../config/pathconfig";
 
 export interface MemberMergePackagePageProps extends RouteComponentProps<any, any>, FormComponentProps {
 }
@@ -134,17 +135,14 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
                 }
                 topThis.setState({loading:true});
                 APINameSpace.CustomerOrderAPI.CustomerOrderMergeAdd(request).then((result: ResponseNameSpace.BaseResponse) => {
-                    topThis.setState({loading:false},()=>{
-                        if (result.Status === 0) {
-                            message.success("合并成功!");
-                            setTimeout(() => {
-                                hashHistory.goBack();
-                            }, 1000);
-                        }
-                        else {
-                            message.warning("合并失败!");
-                        }
-                    })
+                    if (result.Status === 0) {
+                        message.success("合并成功!");
+                        hashHistory.push({pathname:PathConfig.MemberMyOrderPage,state:ModelNameSpace.OrderTypeEnum.WaitApprove.toString()});
+                    }
+                    else {
+                        topThis.setState({loading:false});
+                        message.warning("合并失败!");
+                    }
                 });
             }
         });

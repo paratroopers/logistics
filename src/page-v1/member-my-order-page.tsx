@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {withRouter, hashHistory, Link} from 'react-router';
-import {Row, Tabs, message,Tooltip,Icon} from "antd";
+import {withRouter, hashHistory, Link, RouteComponentProps} from 'react-router';
+import {Row, Tabs, message, Icon} from "antd";
 import {PathConfig} from '../config/pathconfig';
 import {CommonTable, CommonColumnProps, ColumnLayout} from '../components-v1/common-table';
 import {RequestNameSpace} from '../model/request';
@@ -15,7 +15,7 @@ import MemberMyOrderWaitForApprovePage from './member-my-order-wait-for-approve-
 import * as moment from 'moment';
 import {FormControl} from "../components-v1/form-control";
 import {SelectType, Constants} from "../util/common";
-import {isArray, isNullOrUndefined} from "util";
+import {isNullOrUndefined} from "util";
 import {FormFileViewer} from "../components-v1/form-file-viewer";
 
 interface MemberMyOrderPageStates {
@@ -33,8 +33,7 @@ interface MemberMyOrderPageStates {
     items: ModelNameSpace.Attachment[];
 }
 
-interface MemberMyOrderPageProps {
-
+interface MemberMyOrderPageProps extends RouteComponentProps<any, any> {
 }
 
 class MemberMyOrderPageTable extends CommonTable<any> {
@@ -67,16 +66,16 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
         const {state: {formAdvancedData}} = topThis;
 
         let request: RequestNameSpace.CustomerOrdersRequest = {
-            step:Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.WaitPackage),
-            customerOrderStatus:ModelNameSpace.OrderStatusEnum.StatusB,
+            step: Constants.getOrderStep(ModelNameSpace.OrderTypeEnum.WaitPackage),
+            customerOrderStatus: ModelNameSpace.OrderStatusEnum.StatusB,
             pageSize: this.state.pageSize,
             pageIndex: pageIndex ? pageIndex : this.state.pageIndex,
-            isAdmin:false
+            isAdmin: false
         };
 
         if (!isNullOrUndefined(formAdvancedData)) {
             request = {
-                expressNo: isArray(formAdvancedData.expressNo) && !isNullOrUndefined(formAdvancedData.expressNo[0]) ? formAdvancedData.expressNo[0].key : "",
+                expressNo: Array.isArray(formAdvancedData.expressNo) && !isNullOrUndefined(formAdvancedData.expressNo[0]) ? formAdvancedData.expressNo[0].key : "",
                 ...request
             }
         }
@@ -124,7 +123,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
 
         APINameSpace.AttachmentsAPI.GetAttachmentItems(request).then((result: ResponseNameSpace.GetAttachmentItemsResponse) => {
             if (result.Status === 0) {
-                if (isArray(result.Data) && result.Data.length > 0) {
+                if (Array.isArray(result.Data) && result.Data.length > 0) {
                     topThis.setState({items: result.Data,}, () => {
                         topThis.changeFormFileViewerVisible(true);
                     });
@@ -142,18 +141,19 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
     }
 
     renderTable() {
-        const topThis=this;
+        const topThis = this;
         const {state: {pageSize, pageIndex, totalCount, data, loading, selected}} = topThis;
-        const columns: CommonColumnProps<ModelNameSpace.CustomerOrderModel>[] = [{
-            title: "附件",
-            fixed: 'left',
-            layout: ColumnLayout.Img,
-            render: (val, record) => {
-                return <Icon type="picture" onClick={() => {
-                    topThis.onClickPicturePreview(record);
-                }} style={{fontSize: 20, color: "#e65922", cursor: "pointer"}}/>
-            }
-        },
+        const columns: CommonColumnProps<ModelNameSpace.CustomerOrderModel>[] = [
+            {
+                title: "附件",
+                fixed: 'left',
+                layout: ColumnLayout.Img,
+                render: (val, record) => {
+                    return <Icon type="picture" onClick={() => {
+                        topThis.onClickPicturePreview(record);
+                    }} style={{fontSize: 20, color: "#e65922", cursor: "pointer"}}/>
+                }
+            },
             {
                 title: '客户订单',
                 dataIndex: 'CustomerOrderNo',
@@ -162,9 +162,12 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                     return <span>
                         {
                             Constants.minSM ? <div>
-                                    <div><Link to={{pathname: PathConfig.MemberMyOrderPackageViewPage, state: record}}>{`客户订单号:${txt}`}</Link></div>
-                                    <div>物流单号:{record.expressNo}</div>
-                                </div>
+                                <div><Link to={{
+                                    pathname: PathConfig.MemberMyOrderPackageViewPage,
+                                    state: record
+                                }}>{`客户订单号:${txt}`}</Link></div>
+                                <div>物流单号:{record.expressNo}</div>
+                            </div>
                                 : <Link to={{pathname: PathConfig.WarehouseInViewPage, state: record}}>{txt}</Link>
                         }
                     </span>
@@ -188,7 +191,6 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                     </span>
                 }
             },
-
             {
                 title: '状态',
                 dataIndex: 'currentStatus',
@@ -266,11 +268,14 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
 
     render() {
         const topThis = this;
-        const {state: {visibleFormFileViewer, items}} = topThis;
+        const {state: {visibleFormFileViewer, items}, props: {location: {state}}} = topThis;
+
+        const defaultKey = state ? state : ModelNameSpace.OrderTypeEnum.WaitPackage.toString();
+
         return <Row className="mainland-content-page">
             <ContentHeaderControl title="我的订单"></ContentHeaderControl>
-            <Tabs defaultActiveKey="1">
-                <Tabs.TabPane tab="待打包" key="1">
+            <Tabs defaultActiveKey={defaultKey}>
+                <Tabs.TabPane tab="待打包" key={ModelNameSpace.OrderTypeEnum.WaitPackage.toString()}>
                     <FormAdvancedSearch
                         easyMode={true}
                         formAdvancedItems={this.renderFormAdvancedItems()}
@@ -280,7 +285,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
                         {this.renderTable()}
                     </Row>
                 </Tabs.TabPane>
-                <Tabs.TabPane tab="待审核" key="2">
+                <Tabs.TabPane tab="待审核" key={ModelNameSpace.OrderTypeEnum.WaitApprove.toString()}>
                     <MemberMyOrderWaitForApprovePage></MemberMyOrderWaitForApprovePage>
                 </Tabs.TabPane>
             </Tabs>
