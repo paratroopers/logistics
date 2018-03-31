@@ -1,9 +1,7 @@
 import * as React from 'react';
-import {withRouter,RouteComponentProps,hashHistory} from 'react-router';
+import {withRouter,RouteComponentProps} from 'react-router';
 import {Row} from 'antd';
 import WarehouseInForm from "../components-v1/warehouse-in-form";
-import {ModelNameSpace} from '../model/model';
-import {isNullOrUndefined} from "util";
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 
 interface WarehouseInViewPageProps extends RouteComponentProps<any, any>{}

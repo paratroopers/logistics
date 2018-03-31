@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter, hashHistory} from 'react-router';
-import {Row, message, Form,Spin} from 'antd';
+import {Row, message, Form, Spin} from 'antd';
 import {ContentHeaderControl} from "../components-v1/common-content-header";
 import WarehouseInForm from "../components-v1/warehouse-in-form";
 import {RequestNameSpace} from '../model/request';
@@ -12,20 +12,20 @@ interface WarehouseInAddPageProps {
 }
 
 interface WarehouseInAddPageStates {
-    loading:boolean
+    loading: boolean
 }
 
 @withRouter
 export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps, WarehouseInAddPageStates> {
     constructor(props) {
         super(props);
-        this.state={
-            loading:false
+        this.state = {
+            loading: false
         }
     }
 
     onSubmit = (values) => {
-        const topThis=this;
+        const topThis = this;
         const request: RequestNameSpace.WarehouseInAddRequest = {
             /** 会员ID*/
             userid: values.user[0].key,
@@ -61,18 +61,19 @@ export class WarehouseInAddPage extends React.Component<WarehouseInAddPageProps,
         }
         topThis.setState({loading: true});
         APINameSpace.WarehouseAPI.WarehouseInAdd(request).then((result: ResponseNameSpace.BaseResponse) => {
-            topThis.setState({loading:false},()=>{
-                if (result.Status === 0) {
-                    message.success("新增成功!");
-                    hashHistory.push(PathConfig.WarehouseInPage);
-                }
-            })
+            if (result.Status === 0) {
+                message.success("新增成功!");
+                hashHistory.push(PathConfig.WarehouseInPage);
+            } else {
+                message.success("新增失败!")
+                topThis.setState({loading: false})
+            }
         })
     }
 
     render() {
         const topThis = this;
-        const {state:{loading}}=topThis;
+        const {state: {loading}} = topThis;
         return <Spin size="large" spinning={loading}><Row className="warehouse-in-page">
             <ContentHeaderControl title="新增入库"></ContentHeaderControl>
             <WarehouseInForm onSubmit={topThis.onSubmit.bind(this)} type="add"></WarehouseInForm>
