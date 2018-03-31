@@ -28,7 +28,8 @@ export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProp
             {
                 key: FormTableOperationEnum.View,
                 type: "search",
-                label: "查看"
+                label: "查看",
+                path: PathConfig.MemberDeliveredViewPage
             }
         ]
         return options;
@@ -38,7 +39,7 @@ export class MemberDeliveredPage extends React.Component<MemberDeliveredPageProp
         return <FormTablePage currentStep={ModelNameSpace.OrderTypeEnum.OrderOut}
                               dropDownConfig={this.getDropDownConfig()}
                               callBackTitle="已发货"
-                              title = "已发货"
+                              title="已发货"
                               headerTip={'总计有{name}项已发货订单'}></FormTablePage>;
     }
 }

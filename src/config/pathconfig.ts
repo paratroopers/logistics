@@ -46,6 +46,7 @@ export class PathConfig {
     /** 我的仓库-已发货*/
     static MemberDeliveredPage = "/member/delivered";
     static MemberDeliveredApprovalPage = "member/delivered/approve";
+    static MemberDeliveredViewPage = "member/delivered/view";
     /** 我的仓库-入库查询*/
     static WarehouseInQueryPage = "/member/warehouse/in/query";
     static WarehouseInQueryViewPage = "/member/warehouse/in/query/view";
