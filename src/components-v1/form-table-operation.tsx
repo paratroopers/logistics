@@ -16,13 +16,14 @@ export class FormTableOperationModel {
     label: string;
     path?: string;
     step?: ModelNameSpace.OrderTypeEnum;
+    viewOnly?: boolean;
 }
 
 export enum FormTableOperationEnum {
     Edit = 0,
     View = 1,
     Detele = 2,
-    Print=3
+    Print = 3
 }
 
 interface FormTableOperationProps {
