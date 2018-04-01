@@ -98,6 +98,7 @@ export class FormLzEdit extends React.Component<FormLzEditProps, FormLzEditState
         let Signature = Base64.encode(h);
         return Signature;
     }
+
     getPolicy(fileName) {
         let now = new Date();
         let afterHour = new Date(now.getTime() + 1 * 60 * 60 * 1000); //过期时间1小时后
@@ -137,7 +138,11 @@ export class FormLzEdit extends React.Component<FormLzEditProps, FormLzEditState
         }
 
         return !readonly ?
-            <LzEditor uploadProps={uploadProps} active={true} importContent={htmlContent} cbReceiver={topThis.receiveHtml.bind(this)}/> :
-            <div dangerouslySetInnerHTML={{__html: htmlContent}} ref="lzEditor"></div>;
+            <LzEditor uploadProps={uploadProps}
+                      disabled={readonly}
+                      active={true}
+                      importContent={htmlContent}
+                      cbReceiver={topThis.receiveHtml.bind(this)}/> :
+            <div dangerouslySetInnerHTML={{__html: htmlContent}}></div>;
     }
 }

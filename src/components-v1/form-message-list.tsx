@@ -80,7 +80,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
     }
 
     getPath(item: ModelNameSpace.MessageModel) {
-    switch (item.type) {
+        switch (item.type) {
             case  FormStepEnum.Delivered:
                 return {pathname: PathConfig.WarehouseOutViewPage, query: {id: item.orderID}};
             case  FormStepEnum.WaitForPay:
@@ -174,9 +174,9 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         </Row>
 
         return <Link onClick={topThis.onClick.bind(this)} to={topThis.getPath(item)}>
-            <List.Item className="message-list-item">
+            <List.Item className="form-message-list-item">
                 <List.Item.Meta
-                    className="message-list-item-meta"
+                    className="form-message-list-item-meta"
                     avatar={<FormStepIcon size={40} type={item.type as FormStepEnum}></FormStepIcon>}
                     title={title}
                     description={des}/>
@@ -187,20 +187,24 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
     renderSystemItem(item: ModelNameSpace.MessageModel) {
         const topThis = this;
 
-        const title =
-            <Row type="flex" align="middle" justify="space-between">
-                <Col>{item.title}</Col>
+        const description = <Row className="desc-content">
+            <Col
+                className="desc-desc">{item.message.replace(/<(?:.|\s)*?>/g, "").replace(/<\/?.+?>/g, "").replace(/ /g, "")}</Col>
+            <Row type="flex" justify="space-between" align="middle">
                 <Col>{moment(item.Created).fromNow()}</Col>
+                <Col><Tag color="orange">系统消息</Tag></Col>
             </Row>
+        </Row>
 
         return <Link onClick={topThis.onClick.bind(this)}
-                     to={{pathname: PathConfig.MessageManagerViewPage, state: item}}><List.Item
-            className="message-list-item">
-            <List.Item.Meta
-                className="message-list-item-meta"
-                title={title}
-                description={item.message.replace(/<(?:.|\s)*?>/g, "").replace(/<\/?.+?>/g, "").replace(/ /g, "")}/>
-        </List.Item>
+                     to={{pathname: PathConfig.MessageManagerViewPage, state: item}}>
+            <List.Item
+                className="form-message-list-item">
+                <List.Item.Meta
+                    className="form-message-list-item-meta"
+                    title={item.title}
+                    description={description}/>
+            </List.Item>
         </Link>;
     }
 
@@ -219,7 +223,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         };
 
         return <Spin spinning={loading}>
-            <div className="message-list">
+            <div className="form-message-list">
                 <List dataSource={messageItems}
                       pagination={isPagination && messageItems && messageItems.length > 0 ? pagination : false}
                       renderItem={item => messageType !== ModelNameSpace.MessageType.System ? topThis.renderItem(item) : topThis.renderSystemItem(item)}>
