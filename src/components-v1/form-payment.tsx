@@ -8,6 +8,7 @@ import {PathConfig} from '../config/pathconfig';
 
 export interface FormPaymentProps {
     data: ModelNameSpace.CustomerOrderMergeModel;
+    readyOnly?: boolean;
 }
 
 export interface FormPaymentStates {
@@ -35,7 +36,7 @@ export class FormPayment extends React.Component<FormPaymentProps, FormPaymentSt
     }
 
     render() {
-        const {props: {data}} = this;
+        const {props: {data, readyOnly}} = this;
         const payInfo: any = data ? data : {};
         return <FormSettingGroup title={"支付信息"}>
             <Row type="flex" justify="start" className="payment">
@@ -62,9 +63,11 @@ export class FormPayment extends React.Component<FormPaymentProps, FormPaymentSt
                     <span className="consignee">收货人：{payInfo['recipient']}</span>
                     <span className="tel">{payInfo['tel']}</span>
                 </Col>
-                <Col offset={19} span={5} className="payment-go">
-                    <Button type="primary" onClick={this.onPayClick.bind(this)}>去支付</Button>
-                </Col>
+                {readyOnly ? null :
+                    <Col offset={19} span={5} className="payment-go">
+                        <Button type="primary" onClick={this.onPayClick.bind(this)}>去支付</Button>
+                    </Col>
+                }
             </Row>
         </FormSettingGroup>
     }
