@@ -20,7 +20,7 @@ export class FormPayment extends React.Component<FormPaymentProps, FormPaymentSt
     constructor(props, context) {
         super(props, context);
         this.state = {
-            money: 407
+            money: 0
         }
     }
 
@@ -63,10 +63,11 @@ export class FormPayment extends React.Component<FormPaymentProps, FormPaymentSt
                     <span className="consignee">收货人：{payInfo['recipient']}</span>
                     <span className="tel">{payInfo['tel']}</span>
                 </Col>
-                {readyOnly ? null :
-                    <Col offset={19} span={5} className="payment-go">
-                        <Button type="primary" onClick={this.onPayClick.bind(this)}>去支付</Button>
-                    </Col>
+                {
+                    readyOnly ? null :
+                        <Col offset={19} span={5} className="payment-go">
+                            <Button type="primary" onClick={this.onPayClick.bind(this)}>去支付</Button>
+                        </Col>
                 }
             </Row>
         </FormSettingGroup>
