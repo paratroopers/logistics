@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Layout} from "antd";
+import {Layout,BackTop} from "antd";
 import {Global} from '../util/common';
 import {WebAction} from "../actions/index";
 import {connect} from "react-redux";
@@ -50,7 +50,7 @@ class MasterWebPage extends React.Component<MasterWebPageProps, MasterWebPageSta
                 zIndex: 998,
                 background: "#FFF",
                 borderBottom: "1px solid #f5f5f5",
-                padding:0
+                padding: 0
             }}>
                 <div className="content-template" style={{maxWidth: '1500px', margin: '0 auto'}}>
                     <Header
@@ -64,6 +64,7 @@ class MasterWebPage extends React.Component<MasterWebPageProps, MasterWebPageSta
                 {children}
             </Content>
             <Footer style={{padding: 0}}>
+                <BackTop style={{right: 50}}></BackTop>
                 <div className="templates-wrapper">
                     <MotionFooterControl></MotionFooterControl>
                 </div>
