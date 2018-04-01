@@ -58,7 +58,6 @@
       &-message {
         height: 80px;
         line-height: 80px;
-        padding: 0px 16px;
         cursor: pointer;
         &:hover {
           background-color: #e6f7ff;
@@ -168,11 +167,15 @@
   }
   &-badge {
     cursor: pointer;
+    padding: 0px 16px;
+    display: flex;
+    height: 100%;
+    align-items: center;
   }
 }
 
 /** 消息列表组件*/
-.message-list {
+.form-message-list {
   .warehouse-in {
     color: #3391E5 !important;
   }
@@ -186,16 +189,25 @@
     color: #7C51B8 !important;
   }
 
-  &-item{
-    &:hover{
+  &-item {
+    /** - - - - - - -*/
+    border-bottom: 1px solid #e8e8e8 !important;
+    &:hover {
       background-color: #e6f7ff;
       cursor: pointer;
     }
-    &-meta{
-      .ant-list-item-meta-description{
+    &-meta {
+      .desc-content .desc-desc{
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
+        overflow: hidden;
+        margin-bottom: 4px;
+      }
+      .ant-list-item-meta-title{
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
         overflow: hidden;
       }
       padding-left: 24px;
@@ -233,36 +245,36 @@
   &-item {
     border-bottom: 1px solid #eaeaea;
     padding: 5px;
-    &-left{
+    &-left {
       width: 30px;
       margin-right: 8px;
       .icon-dianhua-yuankuang, .icon-youxiang, .icon-qq, .icon-weixin {
         color: @app-theme-color;
       }
-      .icon-dianhua-yuankuang, .icon-youxiang{
+      .icon-dianhua-yuankuang, .icon-youxiang {
         font-size: 28px;
       }
-      .icon-qq{
+      .icon-qq {
         font-size: 26px;
       }
       .icon-weixin {
         font-size: 30px;
       }
     }
-    &-right{
-      &-h{
+    &-right {
+      &-h {
         display: block;
       }
-      &-p{
-        color: rgba(0,0,0,.85);
+      &-p {
+        color: rgba(0, 0, 0, .85);
         line-height: 20px;
         font-size: 20px;
       }
-      &-img{
+      &-img {
         display: block;
         width: 130px;
         height: 130px;
-        img{
+        img {
           width: 100%;
         }
       }
@@ -270,7 +282,7 @@
   }
   &-item:hover {
     cursor: pointer;
-    .icon-dianhua-yuankuang{
+    .icon-dianhua-yuankuang {
       color: #ff0000;
     }
     .icon-qq {
@@ -283,7 +295,7 @@
       color: #17e63c;
     }
   }
-  &-item:last-child{
+  &-item:last-child {
     border-bottom: none;
   }
 }
