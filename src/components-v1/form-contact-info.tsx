@@ -79,7 +79,7 @@ export class FormContactInfo extends React.Component<FormContactInfoProps, FormC
 
     onOk() {
         const topThis = this
-        const {props: {onOk},state:{selectRow}} = topThis;
+        const {props: {onOk}, state: {selectRow}} = topThis;
         if (onOk)
             onOk(selectRow);
     }
@@ -96,20 +96,25 @@ export class FormContactInfo extends React.Component<FormContactInfoProps, FormC
             title: '收件人',
             dataIndex: 'recipient',
             key: 'recipient',
+            width: '20%'
         }, {
             title: '国家',
             dataIndex: 'country',
             key: 'country',
+            render(txt){
+                return <span title={txt}>{txt.lenght > 10 ? txt.sub(0, 10) + '...' : txt}</span>
+            },
+            width: '60%'
         }, {
             title: '电话',
             dataIndex: 'Tel',
             key: 'Tel',
+            width: '20%'
         }];
 
         return <Table loading={this.state.loading}
                       rowKey={"ID"}
                       defaultExpandAllRows={true}
-                      expandedRowRender={record => <p style={{ margin: 0 }}>{`收货地址：${record.Address}`}</p>}
                       rowSelection={this.onRowSelection()}
                       dataSource={this.state.dataSource}
                       bordered={false}
@@ -118,7 +123,8 @@ export class FormContactInfo extends React.Component<FormContactInfoProps, FormC
     }
 
     render() {
-        return <Modal className="form-contact-info" visible={this.state.visible} onOk={this.onOk.bind(this)} onCancel={this.onCancel.bind(this)}
+        return <Modal className="form-contact-info" visible={this.state.visible} onOk={this.onOk.bind(this)}
+                      onCancel={this.onCancel.bind(this)}
                       title="选择联系人"
                       width={this.props.width}>
             {this.renderTable()}
