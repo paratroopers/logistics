@@ -4,6 +4,7 @@ import {
     FormTableDetailPage
 } from "../components-v1/all-components-export";
 import {FormComponentProps} from 'antd/lib/form/Form';
+import {Context} from '../util/common';
 import {ModelNameSpace} from '../model/model';
 
 interface WarehouseOutViewPageProps extends RouteComponentProps<any, any>, FormComponentProps {
@@ -36,6 +37,13 @@ export class WarehouseOutViewPage extends React.Component<WarehouseOutViewPagePr
         return <FormTableDetailPage ID={this.state.selectedKey}
                                     Title="查看"
                                     Step={this.state.step}
-                                    readyOnly></FormTableDetailPage>
+                                    readyOnly>
+            <FormTableDetailPage.Header>
+                <div className="complete-group">
+                    <i className={Context.getIconClassName('icon-wancheng')}></i>
+                    <div className="title">已完成</div>
+                </div>
+            </FormTableDetailPage.Header>
+        </FormTableDetailPage>
     }
 }

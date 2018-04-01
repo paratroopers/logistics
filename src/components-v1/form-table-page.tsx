@@ -148,6 +148,14 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
         }
     }
 
+    getStep(record) {
+        let _step: any;
+        if (record.currentStep === '待付款') {
+            _step = record.currentStatus === '1' ? ModelNameSpace.OrderTypeEnum.OrderOutDeliver : ModelNameSpace.OrderTypeEnum.OrderOut;
+        }
+        return _step;
+    }
+
     renderTable() {
         const {state: {listData, selectedRowKeys, pageIndex, pageSize, totalCount, loading}, props: {dropDownConfig, currentStep}} = this;
 
@@ -167,7 +175,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             render: (txt, record) => {
                 const path = dropDownConfig.filter(r => r.key === FormTableOperationEnum.View)[0].path;
                 return <Link
-                    to={{pathname: path, query: {id: record.ID}}}>{txt}</Link>
+                    to={{pathname: path, query: {id: record.ID, step: this.getStep(record)}}}>{txt}</Link>
             }
         }, {
             title: "渠道",
@@ -199,14 +207,6 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
             layout: ColumnLayout.Option,
             render: (val, record) => {
                 const menu: FormTableOperationModel[] = dropDownConfig.filter(r => !r.viewOnly);
-                let _step: ModelNameSpace.OrderTypeEnum;
-                /*                if (menu.length === 1) {
-                 return <Link
-                 to={{pathname: menu[0].path, query: {id: record.ID}, state: record}}>{menu[0].label}</Link>;
-                 }*/
-                if (record.currentStep === '待付款') {
-                    _step = record.currentStatus === '1' ? ModelNameSpace.OrderTypeEnum.OrderOutDeliver : ModelNameSpace.OrderTypeEnum.OrderOut;
-                }
                 return <FormTableOperation
                     onClick={(param: any) => {
                         if (param.key === FormTableOperationEnum.Detele.toString()) {
@@ -215,7 +215,7 @@ export class FormTablePage extends React.Component<FormTablePageProps, FormTable
                             const thisMenu = menu.filter(r => r.key.toString() === param.key.toString())[0];
                             hashHistory.push({
                                 pathname: thisMenu.path,
-                                query: {id: record.ID, step: _step},
+                                query: {id: record.ID, step: this.getStep(record)},
                             });
                         }
                     }} value={menu}></FormTableOperation>;

@@ -86,7 +86,7 @@ export class FormTableDetailContentModel {
                 PackageRemarks: {hidden: true},
                 OtherCost: {hidden: true},
                 CustomerMark: {hidden: true},
-                Payment: {hidden: true},
+                Payment: {readyOnly: true},
                 WarehousePackage: {readyOnly: true},
                 ReceiptDate: {readyOnly: true}
             },
@@ -97,7 +97,7 @@ export class FormTableDetailContentModel {
                 PackageRemarks: {hidden: true},
                 OtherCost: {hidden: true},
                 CustomerMark: {hidden: true},
-                Payment: {hidden: true},
+                Payment: {readyOnly: true},
                 WarehousePackage: {readyOnly: true},
                 ReceiptDate: {readyOnly: true}
             }
@@ -143,7 +143,7 @@ export class FormTableDetailContentModel {
                 PackageRemarks: {hidden: true},
                 OtherCost: {hidden: true},
                 CustomerMark: {hidden: true},
-                Payment: {hidden: true},
+                Payment: {readyOnly: true},
                 WarehousePackage: {readyOnly: true},
                 ReceiptDate: {readyOnly: true},
                 Agent: {hidden: true}
@@ -155,7 +155,7 @@ export class FormTableDetailContentModel {
                 PackageRemarks: {hidden: true},
                 OtherCost: {hidden: true},
                 CustomerMark: {hidden: true},
-                Payment: {hidden: true},
+                Payment: {readyOnly: true},
                 WarehousePackage: {readyOnly: true},
                 ReceiptDate: {readyOnly: true}
             }
@@ -321,14 +321,14 @@ export class FormTableDetailPage extends React.Component<FormTableDetailPageProp
             readOnly={content.ReceiptDate.readyOnly || readyOnly}
             data={mergeOrder}></FormOrderReceiptDate>);
 
-        content.Payment && !content.Payment.hidden && emls.push(<FormPayment key="Payment"
-                                                                             data={mergeOrder}></FormPayment>);
-
         content.Agent && !content.Agent.hidden && emls.push(<FormOrderAgent key="Agent"
                                                                             readyOnly={readyOnly}
                                                                             data={mergeOrder}
                                                                             form={this.props.form}></FormOrderAgent>);
 
+        content.Payment && !content.Payment.hidden && emls.push(<FormPayment key="Payment"
+                                                                             readyOnly={readyOnly}
+                                                                             data={mergeOrder}></FormPayment>);
         return emls;
     }
 

@@ -51,7 +51,6 @@ export default class FormOrderAgent extends React.Component<FormOrderAgentProps,
                         <Form.Item required={!readyOnly}>
                             {readyOnly ? this.renderFormIndexControl(true, data.AgentID) :
                                 form.getFieldDecorator("AgentID", {
-                                    initialValue: 'AgentID',
                                     rules: [{required: true, message: '请选择代理商!'}],
                                 })(<FormAgentDropDown mode="default"
                                                       placeholder="代理商"></FormAgentDropDown>)}
@@ -61,7 +60,6 @@ export default class FormOrderAgent extends React.Component<FormOrderAgentProps,
                         <Form.Item required={!readyOnly}>
                             {readyOnly ?
                                 <span>渠道单号:{data.channelNo}</span> : form.getFieldDecorator("channelNo", {
-                                    initialValue: 'channelNo',
                                     rules: [{required: true, message: '请输入渠道单号!'}],
                                 })(<Input placeholder="请输入渠道单号"/>)}
                         </Form.Item>
