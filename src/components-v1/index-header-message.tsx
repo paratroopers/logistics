@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Link} from "react-router";
+import {Link,RouteComponentProps,withRouter} from "react-router";
 import {Popover, Icon, Badge, Card, Tabs} from 'antd';
 import {FormMessageList} from './form-message-list';
 import {ModelNameSpace} from "../model/model";
@@ -8,7 +8,7 @@ import {ResponseNameSpace} from '../model/response';
 import {APINameSpace} from '../model/api';
 const TabPane = Tabs.TabPane;
 
-interface HeaderMessageProps {
+interface HeaderMessageProps extends RouteComponentProps<any,any>{
     fullScreen?: boolean;
     classNameBadge?: string;
     classNamePopover?: string;
@@ -21,6 +21,7 @@ interface HeaderMessageStates {
     unreadCount: number;
 }
 
+@withRouter
 export class HeaderMessage extends React.Component<HeaderMessageProps, HeaderMessageStates> {
     constructor(props, context) {
         super(props, context);
@@ -28,6 +29,12 @@ export class HeaderMessage extends React.Component<HeaderMessageProps, HeaderMes
             visible: false,
             unreadCount: 0
         }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        /** 路由如果切换则进行数据刷新*/
+        if (this.props.location.pathname !== nextProps.location.pathname)
+            this.getUnReadCount();
     }
 
     componentDidMount() {
