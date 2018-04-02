@@ -42,8 +42,10 @@ export class CommonLocale {
 export class MessageLocale {
     /* 您的订单*/
     static YourOrder = "message.status.your.order";
-    /* 入库*/
+    /* 已入库-待打包*/
     static WarehouseIn = "message.status.warehouse.in";
+    /** 待打包*/
+    static WaitForPack = "message.status.warehouse.wait.pack";
     /* 客户确认*/
     static CustomerServiceConfirm = "message.status.customer.service.confirm";
     /* 仓库打包*/

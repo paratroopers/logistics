@@ -48,7 +48,6 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
     }
 
     static defaultColor = {
-        WarehouseIn: 'warehouse-in',
         WaitForPay: 'wait-for-pay',
         Delivered: 'delivered',
         WaitForPack: 'wait-for-pack'
@@ -85,7 +84,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
                 return {pathname: PathConfig.WarehouseOutViewPage, query: {id: item.orderID}};
             case  FormStepEnum.WaitForPay:
                 return {pathname: PathConfig.MemberWaitPayViewPage, query: {id: item.orderID}};
-            case  FormStepEnum.WarehouseIn:
+            case  FormStepEnum.WaitForPack:
                 return {pathname: PathConfig.WarehouseInViewPage, state: {ID: item.orderID}};
         }
         return {pathname: ""};
@@ -126,15 +125,15 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
     }
 
     renderMessageStatus(type: FormStepEnum): { message: string, textClass: string, tagColor: string } {
-        const {WarehouseIn, WaitForPay, Delivered, Manager} = MessageLocale;
+        const {WaitForPack, WaitForPay, Delivered, Manager} = MessageLocale;
         let formatMessage: string;
         let textColor: string;
         let tagColor: string;
         switch (type) {
-            case FormStepEnum.WarehouseIn:
-                formatMessage = WarehouseIn;
-                textColor = FormMessageList.defaultColor.WarehouseIn;
-                tagColor = "blue";
+            case FormStepEnum.WaitForPack:
+                formatMessage = WaitForPack;
+                textColor = FormMessageList.defaultColor.WaitForPack;
+                tagColor = "green";
                 break;
             case FormStepEnum.WaitForPay:
                 formatMessage = WaitForPay;

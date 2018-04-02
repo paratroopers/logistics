@@ -38,6 +38,7 @@
   "common.header.good.evening": "Good evening",
   "message.status.your.order": "Your order ",
   "message.status.warehouse.in": "WarehouseIn",
+  "message.status.warehouse.wait.pack": "WaitForPack",
   "message.status.customer.service.confirm": "CustomerServiceConfirm",
   "message.status.warehouse.packge": "WarehousePackge",
   "message.status.wait.for.pay": "WaitForPay",
