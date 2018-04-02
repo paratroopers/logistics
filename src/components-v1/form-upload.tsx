@@ -64,13 +64,13 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
         });
     }
 
-    onCancel(bool:boolean) {
+    onCancel(bool: boolean) {
         this.setState({previewVisible: bool})
     }
 
     onChange(fileList) {
         let fileIds: string[] = [];
-        Util.each(fileList.fileList , (item: any) => {
+        Util.each(fileList.fileList, (item: any) => {
             if (item.response)
                 fileIds.push(item.response.Data);
             else
@@ -82,7 +82,7 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
 
     render() {
         const {state: {previewVisible, previewImage, fileList}, props: {disabled, imgCount}} = this;
-        const items: ModelNameSpace.Attachment[]=[{path:previewImage}];
+        const items: ModelNameSpace.Attachment[] = [{path: previewImage}];
 
         const uploadButton = (
             <div>
@@ -92,6 +92,13 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
         );
         return <div className="clearfix">
             <Upload action={APINameSpace.CommonAPI.baseUploadURL}
+                    data={(file: UploadFile) => {
+                        return {
+                            type: 1,
+                            TenantID: "890501594632818690",
+                            isAdmin: false
+                        }
+                    }}
                     listType="picture-card"
                     multiple={false}
                     fileList={fileList}
@@ -100,9 +107,6 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
                     onChange={this.onChange.bind(this)}>
                 {fileList.length >= imgCount || disabled ? null : uploadButton}
             </Upload>
-            {/*<Modal visible={previewVisible} footer={null} onCancel={this.onCancel.bind(this)}>*/}
-                {/*<img alt="example" style={{width: '100%'}} src={previewImage}/>*/}
-            {/*</Modal>*/}
             <FormFileViewer items={items} visible={previewVisible}
                             changeVisible={this.onCancel.bind(this)}/>
         </div>;
