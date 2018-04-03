@@ -15,7 +15,7 @@ interface FormLzEditProps {
     value?: string,
     onChange?: (value) => void
     readonly?: boolean;
-    isMultiple?:boolean;
+    isMultiple?: boolean;
 }
 
 interface FormLzEditStates {
@@ -40,7 +40,7 @@ export class FormLzEdit extends React.Component<FormLzEditProps, FormLzEditState
     receiveHtml(content) {
         const topThis = this;
         const {props: {onChange}} = topThis;
-        this.setState({htmlContent: content});
+        this.setState({htmlContent: content,responseList:[]});
         if (onChange)
             onChange(content);
     }
@@ -75,7 +75,7 @@ export class FormLzEdit extends React.Component<FormLzEditProps, FormLzEditState
                 } else {
                     responseList = [file];
                 }
-                topThis.setState({responseList:responseList});
+                topThis.setState({responseList: responseList});
                 topThis.forceUpdate();
             }
             return !!file.response || (!!file.url && file.status === "done") || file.status === "uploading";
@@ -115,6 +115,18 @@ export class FormLzEdit extends React.Component<FormLzEditProps, FormLzEditState
         const topThis = this;
         const {props: {readonly}, state: {htmlContent}} = topThis;
 
+        var watermarkImage = [{
+            type: "white_small",
+            tip: "white small",
+            value: "http://www.famliytree.cn/icon/h.png",
+            valuebase64: "aHR0cDovLzd4amwxai5jb20xLnowLmdsYi5jbG91ZGRuLmNvbS93aGl0ZV9zbWFsbC5wbmc="
+        }, {
+            type: "white_big",
+            tip: "white big",
+            value: "http://www.famliytree.cn/icon/h.png",
+            valuebase64: "aHR0cDovLzd4amwxai5jb20xLnowLmdsYi5jbG91ZGRuLmNvbS93aGl0ZV9iaWcucG5n"
+        }];
+
         let policy = "";
 
         const uploadProps = {
@@ -142,6 +154,7 @@ export class FormLzEdit extends React.Component<FormLzEditProps, FormLzEditState
                       disabled={readonly}
                       active={true}
                       importContent={htmlContent}
+                      watermarkImage={watermarkImage}
                       cbReceiver={topThis.receiveHtml.bind(this)}/> :
             <div dangerouslySetInnerHTML={{__html: htmlContent}}></div>;
     }
