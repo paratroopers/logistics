@@ -12,7 +12,8 @@ import {
     props_warehouse_in_model,
     update_user_avatar,
     REQUEST_WAITPAYCOUNT,
-    WAITPAYCOUNT_LOADED
+    WAITPAYCOUNT_LOADED,
+    onRunSagaDemo
 } from "./ActionTypes";
 import {ModelNameSpace} from '../model/model';
 
@@ -69,4 +70,7 @@ export class WebAction {
     static waitPayCountLoaded = createAction(WAITPAYCOUNT_LOADED, (data: any) => {
         return {unWaitPayCount: data}
     });
+
+    /** SagaDemo*/
+    static onRunSagaDemo = createAction(onRunSagaDemo);
 }

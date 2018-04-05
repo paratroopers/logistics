@@ -1,6 +1,6 @@
 import {take, put, call, fork} from "redux-saga/effects";
 import {WebAction} from '../actions/index';
-import {REQUEST_WAITPAYCOUNT} from '../actions/ActionTypes';
+import {REQUEST_WAITPAYCOUNT, onRunSagaDemo} from '../actions/ActionTypes';
 import {APINameSpace} from '../model/api';
 import {delay} from 'redux-saga';
 
@@ -13,9 +13,17 @@ export function* fetchUnPayData() {
     }
 }
 
+export function* fetchOnRunSagaDemo() {
+    while (true) {
+        const demo = yield take(onRunSagaDemo);
+        console.log(demo);
+    }
+}
+
 export default function* rootSaga(): any {
     yield [
-        fork(fetchUnPayData)
+        fork(fetchUnPayData),
+        fork(fetchOnRunSagaDemo)
     ]
 }
 

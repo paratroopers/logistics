@@ -13,7 +13,7 @@ interface MemberWelcomeTabProps {
 }
 
 interface MemberWelcomeTabStates {
-    statusData?:ModelNameSpace.MemberOrderStatusModel;
+    statusData?: ModelNameSpace.MemberOrderStatusModel;
 }
 
 export class MemberWelcomeTab extends React.Component<MemberWelcomeTabProps, MemberWelcomeTabStates> {
@@ -57,7 +57,7 @@ export class MemberWelcomeTab extends React.Component<MemberWelcomeTabProps, Mem
         }];
 
         return data.map(item => {
-            return <Col span={8}>
+            return <Col span={8} key={item.key}>
                 <Link to={item.key}>
                     <Card bordered={false} className={item.isDivision ? "member-welcome-tab-division" : ""}>
                         <Row type="flex" justify="start">
