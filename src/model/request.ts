@@ -125,6 +125,14 @@ export namespace RequestNameSpace {
         tenantID?: string;
     }
 
+    export interface UpdatePwdRequest{
+        srcPwd?:string;
+        newPwd?:string;
+        newPwdAgain?:string;
+        TenantID?:string;
+        isAdmin?:string;
+    }
+
 
     //endregion
 

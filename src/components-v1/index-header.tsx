@@ -5,7 +5,7 @@ import {Context} from "../util/common";
 import {connect} from "react-redux";
 import {isBoolean, isNullOrUndefined} from "util";
 import {HeaderLogo} from './index-header-logo';
-import {HeaderSetting} from './index-header-settings';
+import HeaderSetting from './index-header-settings';
 import {ContactCustomerService} from './customer-service-dropdown';
 import {HeaderNavigation, NavigationType} from './index-header-navigation';
 
