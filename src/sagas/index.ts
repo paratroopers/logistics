@@ -4,11 +4,11 @@ import {REQUEST_WAITPAYCOUNT} from '../actions/ActionTypes';
 import {APINameSpace} from '../model/api';
 import {delay} from 'redux-saga';
 
-export function* fetchUnPayData() {
+function* fetchUnPayData() {
     while (true) {
         yield take(REQUEST_WAITPAYCOUNT);
         const data = yield call(APINameSpace.CustomerOrderAPI.CustomerOrderUnPayCount);
-        if (data.Status === 0) yield put(WebAction.waitPayCountLoaded(data));
+        if (data.Status === 0) yield put(WebAction.waitPayCountLoaded(data.Data));
         call(delay, 20000);
     }
 }
