@@ -1,11 +1,11 @@
 import * as React from "react";
-import {hashHistory} from 'react-router';
+import { hashHistory, RouteComponentProps, withRouter } from 'react-router';
 import {Row, Menu, Dropdown, Icon} from 'antd';
 import {Global} from "../util/common";
 import {CommonLocale} from "../locales/localeid";
 import {PathConfig} from "../config/pathconfig";
 
-interface HeaderNavigationProps {
+interface HeaderNavigationProps extends RouteComponentProps<any,any> {
     theme?: "light" | "dark" | undefined;
     member?: boolean;
     onClick?: (key: string) => void;
@@ -13,15 +13,27 @@ interface HeaderNavigationProps {
 }
 
 interface HeaderNavigationStates {
-
+   selectedKeys:string[];
 }
 
 export enum NavigationType {
     Button = 0,
     Default = 1
 }
-
+@withRouter
 export class HeaderNavigation extends React.Component<HeaderNavigationProps, HeaderNavigationStates> {
+  constructor(props,context){
+      super(props,context);
+      this.state={
+          selectedKeys:[this.props.location.pathname]
+      }
+  }
+
+    componentWillReceiveProps(nextProps){
+        if("router" in nextProps && nextProps.router){
+           this.setState({selectedKeys:[nextProps.router.location.pathname]})
+        }
+    }
 
     onClickNavigation({item, key, keyPath}) {
         switch (key) {
@@ -37,6 +49,7 @@ export class HeaderNavigation extends React.Component<HeaderNavigationProps, Hea
                 break;
         }
         this.props.onClick && this.props.onClick(key);
+        this.setState({selectedKeys:[key]});
     }
 
     renderButtonNavigation(): JSX.Element {
@@ -63,8 +76,8 @@ export class HeaderNavigation extends React.Component<HeaderNavigationProps, Hea
         return <Row type="flex" justify="end">
             <Menu theme={theme ? theme : "dark"}
                   mode="horizontal"
-                  defaultSelectedKeys={['1']}
                   className="na-header-navigation"
+                  selectedKeys={this.state.selectedKeys}
                   onClick={this.onClickNavigation.bind(this)}>
                 <Menu.Item
                     key={PathConfig.HomePage}>{Global.intl.formatMessage({id: CommonLocale.HeaderMenuHome})}</Menu.Item>
