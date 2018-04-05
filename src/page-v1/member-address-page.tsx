@@ -63,6 +63,9 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
         title: '收件人',
         dataIndex: 'recipient',
         key: 'recipient',
+        render:(txt,recode)=>{
+            return <span className="address-th" title={txt}>{txt}</span>
+        }
     }, {
         title: '国家',
         dataIndex: 'country',
@@ -71,6 +74,9 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
         title: '地址',
         dataIndex: 'Address',
         key: 'Address',
+        render:(txt,recode)=>{
+            return <span className="address-th" title={txt}>{txt}</span>
+        }
     }, {
         title: '电话',
         dataIndex: 'Tel',

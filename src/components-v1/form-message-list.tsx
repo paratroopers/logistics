@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Link}from "react-router";
+import {Link, hashHistory}from "react-router";
 import {List, Spin, Tag, Row, Col} from 'antd';
 import {Global} from '../util/common';
 import {MessageLocale} from '../locales/localeid';
@@ -71,9 +71,17 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
         this.getMessageData(pageIndex, pageSize);
     }
 
-    onClick() {
+    onClick(type, item) {
         const topThis = this;
         const {props: {onClick}} = topThis;
+        switch (type) {
+            case "item":
+                hashHistory.push(topThis.getPath(item));
+                break;
+            case "system":
+                hashHistory.push({pathname: PathConfig.MessageManagerViewPage, state: item});
+                break;
+        }
         if (onClick)
             onClick();
     }
@@ -172,7 +180,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
                 <Tag color={message.tagColor}>{message.message}</Tag> : message.message}</Col>
         </Row>
 
-        return <Link onClick={topThis.onClick.bind(this)} to={topThis.getPath(item)}>
+        return <div onClick={topThis.onClick.bind(this, "item", item)}>
             <List.Item className="form-message-list-item">
                 <List.Item.Meta
                     className="form-message-list-item-meta"
@@ -180,7 +188,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
                     title={title}
                     description={des}/>
             </List.Item>
-        </Link>;
+        </div>;
     }
 
     renderSystemItem(item: ModelNameSpace.MessageModel) {
@@ -195,8 +203,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
             </Row>
         </Row>
 
-        return <Link onClick={topThis.onClick.bind(this)}
-                     to={{pathname: PathConfig.MessageManagerViewPage, state: item}}>
+        return <div onClick={topThis.onClick.bind(this, "system", item)}>
             <List.Item
                 className="form-message-list-item">
                 <List.Item.Meta
@@ -204,7 +211,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
                     title={item.title}
                     description={description}/>
             </List.Item>
-        </Link>;
+        </div>;
     }
 
     render() {
