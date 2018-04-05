@@ -11,6 +11,7 @@ import {APINameSpace} from "../model/api";
 import {ModelNameSpace} from "../model/model";
 import {RequestNameSpace} from "../model/request";
 import {isNullOrUndefined} from "util";
+import HeaderUpdatePwd from "./header-update-password";
 
 interface HeaderSettingProps extends FormComponentProps {
     isLogin?: boolean;
@@ -81,111 +82,6 @@ class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSettingSta
         }
     }
 
-    //密码校验 
-    onHandleComfirmPassword = (rule, value, callback) => {
-        const {getFieldValue} = this.props.form;
-        if (value && value.length > 20 || value.length < 6) {
-            callback("字符长度在6-20之间");
-        }
-        if (value && this.props.form.isFieldTouched('newPwdAgain')) {
-            this.props.form.validateFields(["newPwdAgain"], {force: true}, callback());
-        }
-
-        callback();
-    }
-
-    onHandleComfirmPasswordAgain = (rule, value, callback) => {
-        const {getFieldValue} = this.props.form;
-
-        if (value && value.length > 20 || value.length < 6) {
-            callback("字符长度在6-20之间");
-        }
-        if (value && value !== getFieldValue('newPwd')) {
-            callback("两次密码不一致");
-        }
-
-        callback();
-
-    }
-
-    onSubmit() {
-        this.props.form.validateFieldsAndScroll((err, values) => {
-            if (!err) {
-                const request: RequestNameSpace.UpdatePwdRequest = {
-                    isAdmin: true,
-                    ...values
-                }
-                APINameSpace.MemberAPI.updatePwd(request).then(data => {
-                    if (data.Status === 0) {
-                        this.setState({isShowModal: false});
-                    }
-                })
-            }
-        })
-    }
-
-    onrenderPasswordModal() {
-        const {isShowModal, confirmLoading} = this.state;
-        const {getFieldDecorator} = this.props.form;
-
-        const modalprops = {
-            title: "修改密码",
-            visible: isShowModal,
-            confirmLoading: confirmLoading,
-            onOk: () => {
-                this.onSubmit()
-            },
-            onCancel: () => {
-                this.setState({isShowModal: false});
-            }
-        }
-        return <Modal {...modalprops}>
-            <Form>
-                <Form.Item
-                    label="旧密码"
-                    labelCol={{span: 8}}
-                    wrapperCol={{span: 16}}>
-                    {
-                        getFieldDecorator('srcPwd', {
-                            rules: [{required: true, message: "请填写密码"}]
-                        })(
-                            <Input type="password" placeholder="输入当前密码"/>
-                        )
-                    }
-                </Form.Item>
-                <Form.Item
-                    label="新密码"
-                    labelCol={{span: 8}}
-                    wrapperCol={{span: 16}}>
-                    {
-                        getFieldDecorator('newPwd', {
-                            rules: [{required: true, message: "请填写密码"}, {
-                                validator: this.onHandleComfirmPassword
-                            }]
-                        })(
-                            <Input type="password" placeholder="请输入6-20个字符"/>
-                        )
-                    }
-                </Form.Item>
-                <Form.Item
-                    label="确认密码"
-                    labelCol={{span: 8}}
-                    wrapperCol={{span: 16}}>
-                    {
-                        getFieldDecorator('newPwdAgain', {
-                            rules: [{required: true, message: "请填写密码"}, {
-                                validator: this.onHandleComfirmPasswordAgain,
-                            }]
-                        })(
-                            <Input type="password" placeholder="请输入6-20个字符"/>
-                        )
-                    }
-                </Form.Item>
-            </Form>
-        </Modal>
-
-    }
-
     renderUserNameContent() {
         return <Menu onClick={this.onClickUserMenu.bind(this)}>
             <Menu.Item key="0">
@@ -223,7 +119,7 @@ class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSettingSta
                         </a>
                     </Popover>
                 </Col>
-                {this.onrenderPasswordModal()}
+               <HeaderUpdatePwd visible={this.state.isShowModal} onCancel={()=>this.setState({isShowModal:false})}></HeaderUpdatePwd>
             </Row>
         } catch (ex) {
             return null;

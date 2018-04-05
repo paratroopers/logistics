@@ -5,6 +5,7 @@ import {Context} from '../util/common';
 import {Cookies} from '../util/cookie';
 import {PathConfig} from '../config/pathconfig';
 import {MobileNavTreeAction} from '../actions/index';
+import HeaderUpdatePwd from "./header-update-password";
 
 interface MobilePopoverProps {
     visible?: boolean;
@@ -14,13 +15,15 @@ interface MobilePopoverProps {
 interface MobilePopoverStates {
     visible?: boolean;
     selected?: string;
+    isShowModal:boolean
 }
 
 export class MobilePopover extends React.Component<MobilePopoverProps, MobilePopoverStates> {
     constructor(props, context) {
         super(props, context)
         this.state = {
-            visible: false
+            visible: false,
+            isShowModal:false
         }
     }
 
@@ -43,6 +46,9 @@ export class MobilePopover extends React.Component<MobilePopoverProps, MobilePop
                 },
             ])
         }
+        if(index===1){
+            this.setState({isShowModal:true});
+        }
     }
 
     renderOverlay() {
@@ -63,7 +69,8 @@ export class MobilePopover extends React.Component<MobilePopoverProps, MobilePop
     }
 
     render() {
-        return <Popover mask
+        return <div>
+            <Popover mask
                         overlayStyle={{color: 'currentColor'}}
                         visible={this.state.visible}
                         overlay={this.renderOverlay()}
@@ -79,5 +86,7 @@ export class MobilePopover extends React.Component<MobilePopoverProps, MobilePop
                 <Icon type="ellipsis"/>
             </div>
         </Popover>
+         <HeaderUpdatePwd visible={this.state.isShowModal} onCancel={()=>this.setState({isShowModal:false})}></HeaderUpdatePwd>
+        </div>
     }
 }

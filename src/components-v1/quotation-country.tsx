@@ -62,14 +62,12 @@ export class CostCountry extends React.Component<CostCountryProps, CostCountrySt
 
     onSearch(v?: any) {
         const topThis = this;
-        topThis.search = v;
+        topThis.search = v ? v :"";
         setTimeout(() => {
             const {props: {onValueChange}, state: {searchName}} = topThis;
-            if (topThis.search === v && v) {
                 if (onValueChange)
                     onValueChange([], searchName ? searchName : null);
                 topThis.getCountry(v);
-            }
         }, topThis.loadingTime);
     }
 
