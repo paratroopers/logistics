@@ -6,7 +6,8 @@ export const ESELECTTAB_COUNTLOADED = "ESELECTTAB_COUNTLOADED";
 
 export const REQUEST_MOBILENAVTREE = "REQUEST_MOBILENAVTREE";
 export const NAVTREE_COUNTLOADED = "ESELECTTAB_COUNTLOADED";
-
+/** SagaDemo*/
+export const onRunSagaDemo = "onRunSagaDemo";
 /** 多语言状态*/
 export const onChangeLanguage = "onChangeLanguage";
 /** 获取登录状态*/

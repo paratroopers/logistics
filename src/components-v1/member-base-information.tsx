@@ -1,8 +1,6 @@
 import * as React from 'react';
-import {Row, Col, Tooltip, Button, message} from 'antd';
+import {Row, Col, Tooltip, message} from 'antd';
 import {Context} from '../util/common';
-import {APINameSpace} from '../model/api';
-import {ResponseNameSpace} from '../model/response';
 
 import * as copy from 'copy-to-clipboard';
 
@@ -42,24 +40,24 @@ export class MemberBaseInformation extends React.Component<MemberBaseInformation
         const {state: {MemeberCode}, props: {size}} = topThis;
         const style = size ? {fontSize: size + 'px', lineHeight: size + 'px'} : {};
         return <Row className="member-information">
-            <p style={{cursor: "pointer"}}>
+            <Col style={{cursor: "pointer", padding: "8px 0px"}}>
                 <i style={style} className="iconfont icon-shoujianchenggong" title="收件人"></i>
-                <div className="self-warehouse">大陆仓库</div>
-            </p>
-            <p style={{cursor: "pointer"}}>
+                <span className="self-warehouse">大陆仓库</span>
+            </Col>
+            <Col style={{cursor: "pointer", padding: "8px 0px"}}>
                 <i style={style} className="iconfont icon-dizhi2" title="地址"></i>
                 <Tooltip title={topThis.renderCopy()} trigger="hover" placement="topRight">
-                    <div className="self-warehouse">上海市黄浦区河南南路和蓬莱路交叉口24号楼402房间{`( ${MemeberCode})`}</div>
+                    <span className="self-warehouse">上海市黄浦区河南南路和蓬莱路交叉口24号楼402房间{`( ${MemeberCode})`}</span>
                 </Tooltip>
-            </p>
-            <p style={{cursor: "pointer"}}>
+            </Col>
+            <Col style={{cursor: "pointer", padding: "8px 0px"}}>
                 <i style={style} className="iconfont icon-youxiang2" title="邮编"></i>
-                <div className="self-warehouse">4761111</div>
-            </p>
-            <p style={{cursor: "pointer"}}>
+                <span className="self-warehouse">4761111</span>
+            </Col>
+            <Col style={{cursor: "pointer", padding: "8px 0px"}}>
                 <i style={style} className="iconfont icon-dianhua1" title="电话"></i>
-                <div className="self-warehouse">0376-588 7777 777</div>
-            </p>
+                <span className="self-warehouse">0376-588 7777 777</span>
+            </Col>
         </Row>;
     }
 }

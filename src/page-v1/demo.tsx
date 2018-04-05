@@ -1,9 +1,8 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
-import {Row,Form, Input, Button, message} from 'antd';
-import {FormComponentProps, WrappedFormUtils} from 'antd/lib/form/Form';
-import FormMessageManager from "../components-v1/form-message-manager";
-import {ContactCustomerService} from "../components-v1/customer-service-dropdown";
+import {WebAction} from "../actions/index";
+import {Row} from 'antd';
+import {Global} from "../util/common";
 
 interface DemoStates {
 
@@ -19,9 +18,14 @@ export class DemoPage extends React.Component<DemoProps, DemoStates> {
         super(props);
     }
 
+
+
     render() {
         return <Row className="demo-page">
-            <ContactCustomerService></ContactCustomerService>
+            <a onClick={()=>{
+                Global.store.dispatch(WebAction.onRunSagaDemo());
+            }}>测试Saga</a>
         </Row>
     }
 }
+
