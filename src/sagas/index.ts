@@ -1,16 +1,19 @@
-// import {take, put, call, fork, cancel} from "redux-saga/effects";
-// import {update_user_avatar} from "../actions/ActionTypes";
-// import {delay} from "redux-saga";
-//
-// function* syncUpdateUserAvatar() {
-//     while (true) {
-//         let obj = yield take(update_user_avatar);
-//         yield call(delay, 1000);
-//     }
-//
-// }
-// export default function* rootSaga(): any {
-//     yield [
-//         fork(syncUpdateUserAvatar),
-//     ]
-// }
+import {take, put, call, fork, cancel} from "redux-saga/effects";
+import {REQUEST_WAITPAYCOUNT} from '../actions/ActionTypes';
+import {APINameSpace} from '../model/api';
+
+export function* fetchUnPayData(action) {
+    try {
+        const data = yield call(APINameSpace.CustomerOrderAPI.CustomerOrderUnPayCount, action.payload.url);
+        yield put({type: REQUEST_WAITPAYCOUNT, data});
+    } catch (error) {
+        yield put({type: REQUEST_WAITPAYCOUNT, error});
+    }
+}
+
+export default function* rootSaga(): any {
+    yield [
+        fork(fetchUnPayData),
+    ]
+}
+

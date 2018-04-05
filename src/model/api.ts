@@ -337,6 +337,11 @@ export namespace APINameSpace {
             let url: string = CommonAPI.baseURL + "CustomerOrderMerge/Item/Refuse";
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().put(url, data);
         }
+
+        static CustomerOrderUnPayCount() {
+            let url: string = CommonAPI.baseURL + "CustomerOrderMerge/unplay/count";
+            return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().get(url);
+        }
     }
 
     export class CustomerOrderStatusAPI {

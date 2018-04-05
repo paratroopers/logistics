@@ -10,7 +10,8 @@ import {
     onChangeLanguage,
     GetLoginState,
     props_warehouse_in_model,
-    update_user_avatar
+    update_user_avatar,
+    REQUEST_WAITPAYCOUNT
 } from "./ActionTypes";
 import {ModelNameSpace} from '../model/model';
 
@@ -61,4 +62,7 @@ export class WebAction {
     static update_user_avatar = createAction(update_user_avatar, (url: string) => {
         return {avatarUrl: url}
     });
+
+    /** 待付款界面数字提醒*/
+    static requestWaitPayCount = createAction(REQUEST_WAITPAYCOUNT);
 }

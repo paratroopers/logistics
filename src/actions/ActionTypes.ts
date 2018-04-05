@@ -17,3 +17,5 @@ export const QOUNTRY_COUNTLOADED = "QOUNTRY_COUNTLOADED";
 export const props_warehouse_in_model = "PROPS_WAREHOUSE_IN_MODEL";
 /** 更新用户信息-头像*/
 export const update_user_avatar = "UPDATE_USER_AVATAR";
+/** 待付款消息数字提醒*/
+export const REQUEST_WAITPAYCOUNT = "REQUEST_WAITPAYCOUNT";

@@ -1,4 +1,4 @@
-import {onChangeLanguage, GetLoginState, props_warehouse_in_model, update_user_avatar} from "../actions/ActionTypes";
+import {onChangeLanguage, GetLoginState, props_warehouse_in_model, update_user_avatar,REQUEST_WAITPAYCOUNT} from "../actions/ActionTypes";
 import {ModelNameSpace} from '../model/model';
 
 /** 初始化默认值*/
@@ -28,6 +28,8 @@ export const web = (state = initialState, action) => {
             userModel.userInfo.HeaderURL = action.payload.avatarUrl;
             window.localStorage.setItem('UserInfo', JSON.stringify(userModel));
             return {...state, avatarUrl: action.payload.avatarUrl};
+        case REQUEST_WAITPAYCOUNT:
+            return {...state};
         default:
             return state;
     }

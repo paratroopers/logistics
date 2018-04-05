@@ -1,14 +1,16 @@
 import * as React from "react";
 import {Component} from "react";
-import {ReducersMapObject, createStore, combineReducers} from "redux";
+import {ReducersMapObject, createStore, combineReducers, applyMiddleware} from "redux";
 import {Provider} from "react-redux";
 import {getLocale} from "../locales";
 import {ModelNameSpace} from '../model/model';
+import rootSaga from '../sagas/index';
 // import LocalProvider from '../components/controls/common/localprovider';
 import LocalProvider from '../components-v1/common-localprovider';
 import {Global} from "../util/common";
 import {Util} from "../util/util";
 import {message} from 'antd';
+import createSagaMiddleware from 'redux-saga';
 
 interface MasterPageProps extends ReactRouter.RouteComponentProps<any, any> {
     onLoaded?: (appLocale?: ModelNameSpace.AppLocaleStatic, theme?: string) => Promise<any>;
@@ -31,7 +33,9 @@ class MasterPage extends Component<MasterPageProps, MasterPageStates> {
     }
 
     initRedux() {
-        Global.store = createStore(combineReducers(this.props.reducers)); //创建store
+        const sagaMiddleware = createSagaMiddleware();
+        Global.store = createStore(combineReducers(this.props.reducers), applyMiddleware(sagaMiddleware)); //创建store
+        sagaMiddleware.run(rootSaga);
         //Window.prototype.naDispatch = (action) => Global.store.dispatch(action); //给window对象增加dispatch action方法
     }
 
