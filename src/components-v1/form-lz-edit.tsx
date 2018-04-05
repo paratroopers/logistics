@@ -5,9 +5,6 @@
  * */
 import * as React from 'react';
 import * as LzEditor from 'react-lz-editor';
-import * as hmacsha1 from "hmacsha1";
-import {Base64} from "js-base64";
-import * as md5 from "md5";
 import * as lodash  from "lodash";
 import {APINameSpace}from "../model/api";
 
@@ -40,24 +37,20 @@ export class FormLzEdit extends React.Component<FormLzEditProps, FormLzEditState
     receiveHtml(content) {
         const topThis = this;
         const {props: {onChange}} = topThis;
-        this.setState({htmlContent: content,responseList:[]});
+        this.setState({htmlContent: content, responseList: []});
         if (onChange)
             onChange(content);
     }
 
     onChange(info) {
-        // console.log("onChange:", info);
-        // console.log("upload onChange this.state.files",this.state.files,info)
         let currFileList = info.fileList;
 
         currFileList = currFileList.filter((f) => (!f.length));
-        let url = "http://www.famliytree.cn/upload/";
         //读取远程路径并显示链接
         currFileList = currFileList.map((file) => {
-            if (file.response) {
+            if (file.response && file.response.Status === 0) {
                 // 组件会将 file.url 作为链接进行展示  自定义上传接口没有返回response
-                // file.url = url + file.response.url;
-                file.url = url + file.name;
+                file.url = "http://www.famliytree.cn" + file.response.Data.fileURL;
             }
             if (!file.length) {
                 return file;
@@ -92,25 +85,6 @@ export class FormLzEdit extends React.Component<FormLzEditProps, FormLzEditState
         console.log("beforeUpload like", file);
     }
 
-    getSignature(fileName) {
-        let now = new Date();
-        let h = hmacsha1('19931944122b23f77681b6ab765648f8', 'POST&/upyun-temp/' + fileName + '&' + now);
-        let Signature = Base64.encode(h);
-        return Signature;
-    }
-
-    getPolicy(fileName) {
-        let now = new Date();
-        let afterHour = new Date(now.getTime() + 1 * 60 * 60 * 1000); //过期时间1小时后
-        let policy = Base64.encode(JSON.stringify({
-            "bucket": "devopee",
-            "save-key": "/" + fileName,
-            "expiration": Math.round(afterHour.getTime() / 1000),
-            "date": now
-        }));
-        return policy;
-    }
-
     render() {
         const topThis = this;
         const {props: {readonly}, state: {htmlContent}} = topThis;
@@ -127,23 +101,11 @@ export class FormLzEdit extends React.Component<FormLzEditProps, FormLzEditState
             valuebase64: "aHR0cDovLzd4amwxai5jb20xLnowLmdsYi5jbG91ZGRuLmNvbS93aGl0ZV9iaWcucG5n"
         }];
 
-        let policy = "";
-
         const uploadProps = {
             action: APINameSpace.CommonAPI.baseUploadURL,
             onChange: topThis.onChange.bind(this),
             listType: 'picture',
-            fileList: this.state.responseList,
-            data: (file) => { //自定义上传参数，这里使用UPYUN
-                return {
-                    Authorization: "UPYUN reactlzeditor:" + topThis.getSignature(file.name),
-                    policy: (() => {
-                        policy = this.getPolicy(file.name);
-                        return policy;
-                    })(),
-                    signature: md5(policy + '&pLv/J4I6vfpeznxtwU+g/dsUcEY=')
-                }
-            },
+            fileList: topThis.state.responseList,
             multiple: true,
             beforeUpload: topThis.beforeUpload.bind(this),
             showUploadList: true

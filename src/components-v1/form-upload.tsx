@@ -72,7 +72,7 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
         let fileIds: string[] = [];
         Util.each(fileList.fileList, (item: any) => {
             if (item.response)
-                fileIds.push(item.response.Data);
+                fileIds.push(item.response.Data.fileID);
             else
                 fileIds.push(item.uid);
         });

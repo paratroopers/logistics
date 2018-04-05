@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Link,RouteComponentProps,withRouter} from "react-router";
+import {Link, RouteComponentProps, withRouter} from "react-router";
 import {Popover, Icon, Badge, Card, Tabs} from 'antd';
 import {FormMessageList} from './form-message-list';
 import {ModelNameSpace} from "../model/model";
@@ -8,7 +8,7 @@ import {ResponseNameSpace} from '../model/response';
 import {APINameSpace} from '../model/api';
 const TabPane = Tabs.TabPane;
 
-interface HeaderMessageProps extends RouteComponentProps<any,any>{
+interface HeaderMessageProps extends RouteComponentProps<any, any> {
     fullScreen?: boolean;
     classNameBadge?: string;
     classNamePopover?: string;
@@ -54,13 +54,13 @@ export class HeaderMessage extends React.Component<HeaderMessageProps, HeaderMes
     }
 
     setUnReadCount() {
-        const topThis=this;
+        const topThis = this;
         APINameSpace.MemberAPI.UpdateMessageUnreadCount().then((result: ResponseNameSpace.BaseResponse) => {
             if (result.Status === 0) {
                 topThis.setState({
                     unreadCount: 0
                 });
-            }else {
+            } else {
                 console.log("Don't Update Message Unread Count!")
             }
         });
@@ -72,16 +72,19 @@ export class HeaderMessage extends React.Component<HeaderMessageProps, HeaderMes
     }
 
     renderContent() {
-        const topThis=this;
+        const topThis = this;
         const maxWidth = window.innerWidth;
         return <Card style={{width: this.props.fullScreen ? maxWidth : 'auto'}} className="message-card"
-                     actions={[<Link onClick={topThis.onClickMessageItem.bind(this)} to={PathConfig.MemberMessageListPage}>查看更多</Link>]}>
+                     actions={[<Link onClick={topThis.onClickMessageItem.bind(this)}
+                                     to={PathConfig.MemberMessageListPage}>查看更多</Link>]}>
             <Tabs className="message-card-tabs">
                 <TabPane tab="物流消息" key="0">
-                    <FormMessageList onClick={topThis.onClickMessageItem.bind(this)} isPagination={false} layoutText={true} tagStatus={true}></FormMessageList>
+                    <FormMessageList onClick={topThis.onClickMessageItem.bind(this)} isPagination={false}
+                                     layoutText={true} tagStatus={true}></FormMessageList>
                 </TabPane>
                 <TabPane tab="系统通知" key="1">
-                    <FormMessageList onClick={topThis.onClickMessageItem.bind(this)} isPagination={false} layoutText={true} tagStatus={true}
+                    <FormMessageList onClick={topThis.onClickMessageItem.bind(this)} isPagination={false}
+                                     layoutText={true} tagStatus={true}
                                      messageType={ModelNameSpace.MessageType.System}></FormMessageList>
                 </TabPane>
             </Tabs>
@@ -104,7 +107,8 @@ export class HeaderMessage extends React.Component<HeaderMessageProps, HeaderMes
                         }}
                         content={visible ? topThis.renderContent() : null}
                         trigger="click">
-            <Badge count={unreadCount} className={`${classNameBadge ? classNameBadge : ""} header-message-badge`}>
+            <Badge offset={[20, 25]} count={unreadCount}
+                   className={`${classNameBadge ? classNameBadge : ""} header-message-badge`}>
                 <Icon type="bell" style={{fontSize: 16, padding: 4}}/>
             </Badge>
         </Popover>;
