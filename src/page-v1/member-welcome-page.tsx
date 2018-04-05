@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Component} from "react";
-import {withRouter,Link} from "react-router";
-import {Row, Col, Avatar, Card, Icon, Tooltip,Tabs} from "antd";
+import {withRouter, Link} from "react-router";
+import {Row, Col, Card, Icon, Tooltip, Tabs} from "antd";
 import {Global, Context} from '../util/common';
 import {CommonLocale} from '../locales/localeid';
 import * as moment from 'moment';
@@ -11,9 +11,10 @@ import {FormSteps} from '../components-v1/form-steps';
 import {ContactCustomerService} from '../components-v1/customer-service-dropdown';
 import {MemberBaseInformation} from '../components-v1/member-base-information';
 import {ContentHeaderControl}from "../components-v1/common-content-header";
+import {UserAvatar} from "../components-v1/user-avatar";
 import {ModelNameSpace} from "../model/model";
 import {PathConfig} from "../config/pathconfig";
-const TabPane=Tabs.TabPane;
+const TabPane = Tabs.TabPane;
 
 interface MemberWelcomePageProps {
 }
@@ -76,9 +77,8 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
             <Col>
                 <Row type="flex" justify="start" align="middle">
                     <Col>
-                        <Avatar className="header-avatar"
-                                size="large" icon="user"
-                                src="http://www.famliytree.cn/icon/timor.png"/>
+                        <UserAvatar className="header-avatar" size={72}
+                                    src="http://www.famliytree.cn/icon/timor.png"></UserAvatar>
                     </Col>
                     <Col className="header-content">
                         <h2>{this.timeInterval()}，{MemberCode}</h2>
@@ -116,14 +116,20 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
                         <MemberBaseInformation size={25}></MemberBaseInformation>
                     </Card.Grid>
                 </Card>
-                    <Card className="content-card" style={{maxWidth: 900}} bodyStyle={{padding:0}}>
-                        <Card.Grid className="content-card-grid" style={{padding: 0}}>
-                        <Tabs tabBarExtraContent={<Link to={{pathname: PathConfig.MemberMessageListPage}} style={{margin:"0 32px",height:55,display:"flex",alignItems:"center"}}>查看更多</Link>} tabBarStyle={{marginBottom:4}} size="large">
+                <Card className="content-card" style={{maxWidth: 900}} bodyStyle={{padding: 0}}>
+                    <Card.Grid className="content-card-grid" style={{padding: 0}}>
+                        <Tabs tabBarExtraContent={<Link to={{pathname: PathConfig.MemberMessageListPage}} style={{
+                            margin: "0 32px",
+                            height: 55,
+                            display: "flex",
+                            alignItems: "center"
+                        }}>查看更多</Link>} tabBarStyle={{marginBottom: 4}} size="large">
                             <TabPane tab="物流信息" key="0">
                                 <FormMessageList layoutText={true} tagStatus={true}></FormMessageList>
                             </TabPane>
                             <TabPane tab="消息通知" key="1">
-                                <FormMessageList layoutText={true} tagStatus={true} messageType={ModelNameSpace.MessageType.System}></FormMessageList>
+                                <FormMessageList layoutText={true} tagStatus={true}
+                                                 messageType={ModelNameSpace.MessageType.System}></FormMessageList>
                             </TabPane>
                         </Tabs>
                     </Card.Grid>

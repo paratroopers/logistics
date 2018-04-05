@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Upload, Icon, Modal} from 'antd';
+import {Upload, Icon} from 'antd';
 import {UploadFile} from 'antd/lib/upload/interface';
 import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
@@ -69,6 +69,8 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
     }
 
     onChange(fileList) {
+        const topThis = this;
+        const {props: {onChange}} = topThis;
         let fileIds: string[] = [];
         Util.each(fileList.fileList, (item: any) => {
             if (item.response)
@@ -76,7 +78,8 @@ export class FormUpload extends React.Component<FormUploadProps, FormUploadState
             else
                 fileIds.push(item.uid);
         });
-        this.props.onChange && this.props.onChange(fileIds);
+        if (onChange)
+            onChange(fileIds);
         this.setState({fileList: fileList.fileList});
     }
 

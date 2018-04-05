@@ -50,7 +50,7 @@ export class FormLzEdit extends React.Component<FormLzEditProps, FormLzEditState
         currFileList = currFileList.map((file) => {
             if (file.response && file.response.Status === 0) {
                 // 组件会将 file.url 作为链接进行展示  自定义上传接口没有返回response
-                file.url = "http://www.famliytree.cn" + file.response.Data.fileURL;
+                file.url = APINameSpace.CommonAPI.baseFileURL + file.response.Data.fileURL;
             }
             if (!file.length) {
                 return file;

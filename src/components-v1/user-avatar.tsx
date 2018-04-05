@@ -1,29 +1,124 @@
 import * as React from 'react';
-import {Avatar} from 'antd';
+import {Avatar, Modal, Upload, Icon, message} from 'antd';
+import {APINameSpace} from '../model/api';
 
 interface UserAvatarProps {
-    value?: string;
-    attr?: 'Photo' | 'Name';
     size?: number;
+    src?: string;
+    attr?: 'Photo' | 'Name';
     className?: string;
 }
 
 interface UserAvatarStates {
+    src?: string;
     size?: string;
+    modalVisible?: boolean;
+    loading?: boolean;
+    imageBase64?: string;
+    url?: string;
+}
+
+function getBase64(img, callback) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(img);
+}
+
+function beforeUpload(file) {
+    const isJPG = file.type === 'image/jpeg';
+    if (!isJPG) {
+        message.error('You can only upload JPG file!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+        message.error('Image must smaller than 2MB!');
+    }
+    return isJPG && isLt2M;
 }
 
 export class UserAvatar extends React.Component<UserAvatarProps, UserAvatarStates> {
+    constructor(props, context) {
+        super(props, context)
+        this.state = {
+            src: props.src ? props.src : "http://www.famliytree.cn/icon/timor.png",
+            modalVisible: false,
+            loading: false,
+            imageBase64: ""
+        }
+    }
 
-    renderText() {
+    componentWillReceiveProps(nextProps) {
+        const topThis = this;
+        const {props: {src}} = topThis;
+        if (nextProps.src !== src) {
+            topThis.setState({src: nextProps});
+        }
+    }
 
+    handleChange = (info) => {
+        if (info.file.status === 'uploading') {
+            this.setState({loading: true});
+            return;
+        }
+        if (info.file.status === 'done' && info.file.response.Data.fileURL) {
+            // Get this url from response in real world.
+            getBase64(info.file.originFileObj, (imageBase64) => {
+                this.setState({
+                    imageBase64,
+                    url: APINameSpace.CommonAPI.baseFileURL + info.file.response.Data.fileURL,
+                    loading: false,
+                })
+            });
+        }
+    }
+
+    onOk() {
+        const topThis = this;
+        const {state: {url}} = topThis;
+        topThis.setState({
+            modalVisible: false,
+            src: url
+        });
+    }
+
+    renderModal() {
+        const topThis = this;
+        const {state: {modalVisible}} = topThis;
+        const uploadButton = (
+            <div>
+                <Icon type={this.state.loading ? 'loading' : 'plus'}/>
+                <div className="ant-upload-text">Upload</div>
+            </div>
+        );
+        const imageBase64 = this.state.imageBase64;
+        return <Modal maskClosable={true} destroyOnClose={true} title="更换头像" visible={modalVisible}
+                      bodyStyle={{display: "flex", alignItems: "center", justifyContent: "center"}}
+                      onOk={topThis.onOk.bind(this)} onCancel={() => {
+            topThis.setState({modalVisible: false, imageBase64: ""})
+        }}>
+            <Upload
+                action={APINameSpace.CommonAPI.baseUploadUserURL}
+                name="avatar"
+                listType="picture-card"
+                showUploadList={false}
+                beforeUpload={beforeUpload}
+                onChange={this.handleChange}
+            >
+                {imageBase64 ? <img style={{width: 120, height: 120}} src={imageBase64} alt=""/> : uploadButton}
+            </Upload>
+        </Modal>
     }
 
     render() {
-        var size = this.props.size;
-        var src = "http://www.famliytree.cn/icon/timor.png";
+        const topThis = this;
+        const {props: {size, className}, state: {src, modalVisible}} = topThis;
 
         const style = size ? {width: size, height: size, borderRadius: size} : {};
-        return <Avatar className={this.props.className} style={style}
-                       src={src}/>;
+        return <a className="user-avatar" onClick={() => {
+            topThis.setState({modalVisible: true});
+        }}>
+            <Avatar className={className} style={style} src={src}></Avatar>
+            {modalVisible && topThis.renderModal()}
+        </a>;
     }
 }

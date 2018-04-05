@@ -1,9 +1,7 @@
 import * as React from 'react';
 import {Row, Col, Tooltip, Button, message} from 'antd';
 import {Context} from '../util/common';
-// import {MemberAPI} from "../../../api/member";
 import {APINameSpace} from '../model/api';
-// import {GetUserContextResponse} from '../../../api/model/response/member';
 import {ResponseNameSpace} from '../model/response';
 
 import * as copy from 'copy-to-clipboard';
