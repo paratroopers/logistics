@@ -344,10 +344,10 @@ class MemberAddressEidtView extends React.Component<MemberAddressEditViewProps, 
 
                 <FormItem wrapperCol={{span: 12, offset: 5}}>
 
-                    {Read === true ? <Button type="primary" onClick={this.returnUrl.bind(this)}>确认</Button>
-                        : <Button type="primary" htmlType="submit">保存</Button>}
-                    <Button type="primary" onClick={this.returnUrl.bind(this)}>取消</Button>
-
+                    {Read === true ? null : <div>
+                              <Button type="primary" htmlType="submit">保存</Button>
+                              <Button type="primary" onClick={this.returnUrl.bind(this)}>取消</Button>
+                            </div>}
                 </FormItem>
 
             </Form>

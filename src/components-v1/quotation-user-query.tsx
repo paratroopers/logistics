@@ -60,13 +60,18 @@ class Cost extends React.Component<CostProps, CostStates> {
 
     onVolumeChange(l?: any, w?: any, h?: any) {
         const {getFieldValue, setFieldsValue} = this.props.form;
-        const height = h ? h : getFieldValue('height');
-        const width = w ? w : getFieldValue('width');
-        const length = l ? l : getFieldValue('length');
-        if (height && length && width && typeof height === 'number' && typeof length === 'number' && typeof width === 'number') {
+        if(l===0||w===0||h===0){
+          setFieldsValue({volume: 0});
+        }else{
+           const height = h ? h : getFieldValue('height');
+           const width = w ? w : getFieldValue('width');
+           const length = l ? l : getFieldValue('length');
+           if (Number(height) && Number(length) && Number(width)) {
             const volume = height * width * length
             setFieldsValue({volume: volume.toFixed(2)});
         }
+        }
+   
     }
 
     onOk() {

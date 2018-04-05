@@ -142,7 +142,7 @@ export class MemberAddressPage extends React.Component<MemberAddressPageProps, M
             <Button type="primary" onClick={this.returnUrl.bind(this)}>
                 新增联系人
             </Button>
-            <Table loading={this.state.loading} rowKey={"ID"}
+            <Table className="member-address-table" loading={this.state.loading} rowKey={"ID"}
                    rowSelection={this.props.showOKButton ? this.rowSelection : null}
                    dataSource={this.state.dataSource} columns={this.columns} pagination={false}/>
         </Row>)
