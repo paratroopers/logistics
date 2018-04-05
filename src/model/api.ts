@@ -172,6 +172,11 @@ export namespace APINameSpace {
             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().post(url);
         }
 
+        static async updatePwd(data:RequestNameSpace.UpdatePwdRequest){
+            let url:string=CommonAPI.baseURL+"Memeber/pwd/update";
+             return new Request<BaseRequest, ResponseNameSpace.BaseResponse>().put(url,data);
+        }
+
         /** 获取当前登录人的Token*/
         static async GetToken() {
             let url: string = CommonAPI.baseURL + "Token/Item";
