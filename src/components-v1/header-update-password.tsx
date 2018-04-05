@@ -3,6 +3,10 @@ import * as React from "React";
 import { Form, Modal, Input } from "antd";
 import { RequestNameSpace } from "../model/request";
 import { APINameSpace } from "../model/api";
+import { hashHistory } from "react-router";
+import { Cookies } from "../util/cookie";
+import { Context } from "../util/common";
+import { PathConfig } from "../config/pathconfig";
 
 interface HeaderUpdatePwdProps extends FormComponentProps {
     visible?:boolean;
@@ -60,7 +64,11 @@ class HeaderUpdatePwd extends React.Component<HeaderUpdatePwdProps,HeaderUpdateP
                 APINameSpace.MemberAPI.updatePwd(request).then(data=>{
                    if(data.Status===0){
                       this.setState({confirmLoading:false});
+                      Context.setMerchantData({isLogin: false});
+                      hashHistory.push({pathname: PathConfig.LoginPage});
+                      Cookies.remove("Authorization");
                       this.props.onCancel();
+
                    }
                 });
             }
