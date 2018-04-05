@@ -1,19 +1,21 @@
-import {take, put, call, fork, cancel} from "redux-saga/effects";
+import {take, put, call, fork} from "redux-saga/effects";
+import {WebAction} from '../actions/index';
 import {REQUEST_WAITPAYCOUNT} from '../actions/ActionTypes';
 import {APINameSpace} from '../model/api';
+import {delay} from 'redux-saga';
 
-export function* fetchUnPayData(action) {
-    try {
-        const data = yield call(APINameSpace.CustomerOrderAPI.CustomerOrderUnPayCount, action.payload.url);
-        yield put({type: REQUEST_WAITPAYCOUNT, data});
-    } catch (error) {
-        yield put({type: REQUEST_WAITPAYCOUNT, error});
+export function* fetchUnPayData() {
+    while (true) {
+        yield take(REQUEST_WAITPAYCOUNT);
+        const data = yield call(APINameSpace.CustomerOrderAPI.CustomerOrderUnPayCount);
+        if (data.Status === 0) yield put(WebAction.waitPayCountLoaded(data));
+        call(delay, 20000);
     }
 }
 
 export default function* rootSaga(): any {
     yield [
-        fork(fetchUnPayData),
+        fork(fetchUnPayData)
     ]
 }
 

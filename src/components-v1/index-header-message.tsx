@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {Link, RouteComponentProps, withRouter} from "react-router";
 import {Popover, Icon, Badge, Card, Tabs} from 'antd';
+import {Global} from '../util/common';
+import {WebAction} from '../actions/index';
 import {FormMessageList} from './form-message-list';
 import {ModelNameSpace} from "../model/model";
 import {PathConfig}from "../config/pathconfig";
@@ -33,8 +35,10 @@ export class HeaderMessage extends React.Component<HeaderMessageProps, HeaderMes
 
     componentWillReceiveProps(nextProps) {
         /** 路由如果切换则进行数据刷新*/
-        if (this.props.location.pathname !== nextProps.location.pathname)
+        if (this.props.location.pathname !== nextProps.location.pathname) {
             this.getUnReadCount();
+            this.getWaitPayCount();
+        }
     }
 
     componentDidMount() {
@@ -64,6 +68,10 @@ export class HeaderMessage extends React.Component<HeaderMessageProps, HeaderMes
                 console.log("Don't Update Message Unread Count!")
             }
         });
+    }
+
+    getWaitPayCount() {
+        Global.store.dispatch(WebAction.requestWaitPayCount());
     }
 
     onClickMessageItem() {

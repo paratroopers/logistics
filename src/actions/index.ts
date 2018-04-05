@@ -11,7 +11,8 @@ import {
     GetLoginState,
     props_warehouse_in_model,
     update_user_avatar,
-    REQUEST_WAITPAYCOUNT
+    REQUEST_WAITPAYCOUNT,
+    WAITPAYCOUNT_LOADED
 } from "./ActionTypes";
 import {ModelNameSpace} from '../model/model';
 
@@ -65,4 +66,7 @@ export class WebAction {
 
     /** 待付款界面数字提醒*/
     static requestWaitPayCount = createAction(REQUEST_WAITPAYCOUNT);
+    static waitPayCountLoaded = createAction(WAITPAYCOUNT_LOADED, (data: any) => {
+        return {unWaitPayCount: data}
+    });
 }

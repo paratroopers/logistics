@@ -19,3 +19,4 @@ export const props_warehouse_in_model = "PROPS_WAREHOUSE_IN_MODEL";
 export const update_user_avatar = "UPDATE_USER_AVATAR";
 /** 待付款消息数字提醒*/
 export const REQUEST_WAITPAYCOUNT = "REQUEST_WAITPAYCOUNT";
+export const WAITPAYCOUNT_LOADED = "WAITPAYCOUNT_LOADED";
