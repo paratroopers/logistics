@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {withRouter} from 'react-router';
 import {List} from 'antd-mobile';
-import {UserAvatar} from '../components-v1/user-avatar';
+import UserAvatar from '../components-v1/user-avatar';
 import {hashHistory} from 'react-router';
 import {Global, Context} from '../util/common';
 import {CommonLocale} from '../locales/localeid';

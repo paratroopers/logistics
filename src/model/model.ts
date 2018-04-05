@@ -61,6 +61,7 @@ export namespace ModelNameSpace {
         MemeberCode?: string;
         LastLoginTime?: string
         Ticket?: string;
+        HeaderURL?: string;
     }
 
     export interface UserModel {
@@ -91,7 +92,7 @@ export namespace ModelNameSpace {
         message?: string;
         type?: number;
         userid?: string;
-        orderID?:string;
+        orderID?: string;
     }
 
     /** 国际化*/
@@ -253,21 +254,21 @@ export namespace ModelNameSpace {
     export enum OrderTypeEnum {
         /** 仓库管理-订单入库*/
         OrderIn = 0,
-        /** 我的订单-待打包*/
+            /** 我的订单-待打包*/
         WaitPackage = 1,
-        /** 我的订单-待审核*/
+            /** 我的订单-待审核*/
         WaitApprove = 2,
-        /** 我的订单-待付款*/
+            /** 我的订单-待付款*/
         WaitPay = 3,
-        /** 客服管理-订单确认*/
+            /** 客服管理-订单确认*/
         OrderConfirm = 4,
-        /** 仓库管理-合并打包*/
+            /** 仓库管理-合并打包*/
         OrderMerge = 5,
-        /** 仓库管理-订单出库、我的订单-已发货*/
+            /** 仓库管理-订单出库、我的订单-已发货*/
         OrderOut = 6,
-        /** 我的订单-入库查询*/
+            /** 我的订单-入库查询*/
         OrderInQuery = 7,
-        /** 仓库管理-发货（专门为列表点击详情页提供，请不要随意使用）*/
+            /** 仓库管理-发货（专门为列表点击详情页提供，请不要随意使用）*/
         OrderOutDeliver = 8
     }
 

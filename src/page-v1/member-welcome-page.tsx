@@ -11,7 +11,7 @@ import {FormSteps} from '../components-v1/form-steps';
 import {ContactCustomerService} from '../components-v1/customer-service-dropdown';
 import {MemberBaseInformation} from '../components-v1/member-base-information';
 import {ContentHeaderControl}from "../components-v1/common-content-header";
-import {UserAvatar} from "../components-v1/user-avatar";
+import UserAvatar from "../components-v1/user-avatar";
 import {ModelNameSpace} from "../model/model";
 import {PathConfig} from "../config/pathconfig";
 const TabPane = Tabs.TabPane;
@@ -20,7 +20,6 @@ interface MemberWelcomePageProps {
 }
 
 interface MemberWelcomePageStates {
-
 }
 
 @withRouter

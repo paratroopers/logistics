@@ -1,6 +1,11 @@
 import * as React from 'react';
+import {connect} from "react-redux";
+import {Global} from '../util/common';
+import {WebAction} from "../actions/index";
 import {Avatar, Modal, Upload, Icon, message} from 'antd';
 import {APINameSpace} from '../model/api';
+import {ModelNameSpace} from '../model/model';
+import {isNullOrUndefined} from "util";
 
 interface UserAvatarProps {
     size?: number;
@@ -25,7 +30,7 @@ function getBase64(img, callback) {
 }
 
 function beforeUpload(file) {
-    const isJPG = file.type === 'image/jpeg';
+    const isJPG = ["image/jpg", "image/jpeg", "image/png"].indexOf(file.type) !== -1;
     if (!isJPG) {
         message.error('You can only upload JPG file!');
     }
@@ -36,7 +41,7 @@ function beforeUpload(file) {
     return isJPG && isLt2M;
 }
 
-export class UserAvatar extends React.Component<UserAvatarProps, UserAvatarStates> {
+class UserAvatar extends React.Component<UserAvatarProps, UserAvatarStates> {
     constructor(props, context) {
         super(props, context)
         this.state = {
@@ -47,11 +52,20 @@ export class UserAvatar extends React.Component<UserAvatarProps, UserAvatarState
         }
     }
 
+    componentDidMount() {
+        const topThis = this;
+        /** 更新用户信息*/
+        let userModel: ModelNameSpace.UserModel = JSON.parse(window.localStorage.getItem('UserInfo'));
+        if (!isNullOrUndefined(userModel) && userModel.userInfo.HeaderURL !== "" && userModel.userInfo.HeaderURL !== null) {
+            topThis.setState({src: userModel.userInfo.HeaderURL});
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
         const topThis = this;
         const {props: {src}} = topThis;
-        if (nextProps.src !== src) {
-            topThis.setState({src: nextProps});
+        if ('src' in nextProps && nextProps.src !== src) {
+            topThis.setState({src: nextProps.src !== "" && nextProps.src !== null ? nextProps.src : "http://www.famliytree.cn/icon/timor.png"});
         }
     }
 
@@ -78,19 +92,20 @@ export class UserAvatar extends React.Component<UserAvatarProps, UserAvatarState
         topThis.setState({
             modalVisible: false,
             src: url
+        }, () => {
+            Global.store.dispatch(WebAction.update_user_avatar(url));
         });
     }
 
     renderModal() {
         const topThis = this;
-        const {state: {modalVisible}} = topThis;
+        const {state: {modalVisible, imageBase64}} = topThis;
         const uploadButton = (
             <div>
                 <Icon type={this.state.loading ? 'loading' : 'plus'}/>
                 <div className="ant-upload-text">Upload</div>
             </div>
         );
-        const imageBase64 = this.state.imageBase64;
         return <Modal maskClosable={true} destroyOnClose={true} title="更换头像" visible={modalVisible}
                       bodyStyle={{display: "flex", alignItems: "center", justifyContent: "center"}}
                       onOk={topThis.onOk.bind(this)} onCancel={() => {
@@ -115,10 +130,17 @@ export class UserAvatar extends React.Component<UserAvatarProps, UserAvatarState
 
         const style = size ? {width: size, height: size, borderRadius: size} : {};
         return <a className="user-avatar" onClick={() => {
-            topThis.setState({modalVisible: true});
+            topThis.setState({modalVisible: true, imageBase64: ""});
         }}>
             <Avatar className={className} style={style} src={src}></Avatar>
             {modalVisible && topThis.renderModal()}
         </a>;
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        src: state.web.avatarUrl
+    }
+}
+export default connect(mapStateToProps)(UserAvatar);

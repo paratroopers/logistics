@@ -14,4 +14,6 @@ export const GetLoginState = "GetLoginState";
 /** 国家下拉内容*/
 export const QOUNTRY_COUNTLOADED = "QOUNTRY_COUNTLOADED";
 /** 传递入库订单详情*/
-export const props_warehouse_in_model="PROPS_WAREHOUSE_IN_MODEL";
+export const props_warehouse_in_model = "PROPS_WAREHOUSE_IN_MODEL";
+/** 更新用户信息-头像*/
+export const update_user_avatar = "UPDATE_USER_AVATAR";

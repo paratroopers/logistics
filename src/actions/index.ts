@@ -9,7 +9,8 @@ import {
     QOUNTRY_COUNTLOADED,
     onChangeLanguage,
     GetLoginState,
-    props_warehouse_in_model
+    props_warehouse_in_model,
+    update_user_avatar
 } from "./ActionTypes";
 import {ModelNameSpace} from '../model/model';
 
@@ -54,5 +55,10 @@ export class WebAction {
     /** 传递入库订单详情*/
     static props_warehouse_in_model = createAction(props_warehouse_in_model, (model: ModelNameSpace.WarehouseListModel) => {
         return {props_warehouse_in_model: model};
+    });
+
+    /** 更新用户信息-头像*/
+    static update_user_avatar = createAction(update_user_avatar, (url: string) => {
+        return {avatarUrl: url}
     });
 }

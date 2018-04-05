@@ -75,6 +75,8 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
                         APINameSpace.MemberAPI.GetUserContextInfo().then((r: ResponseNameSpace.GetUserContextResponse) => {
                             if (r.Status === 0) {
                                 window.localStorage.setItem('UserInfo', JSON.stringify(r.Data));
+                                /** 头像信息更新*/
+                                Global.store.dispatch(WebAction.update_user_avatar(APINameSpace.CommonAPI.baseFileURL + r.Data.userInfo.HeaderURL));
                             }
                             if (window.innerWidth <= Constants.xs)
                                 hashHistory.push(MobilePathConfig.UserCenter);
@@ -84,9 +86,9 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
 
                         // setInterval(() => this.getToken(), 1000 * 60 * 30);
                         /*                        if (window.innerWidth <= Constants.xs)
-                                                    hashHistory.push(MobilePathConfig.UserCenter);
-                                                else
-                                                    hashHistory.push(PathConfig.MemberIndexPage);*/
+                         hashHistory.push(MobilePathConfig.UserCenter);
+                         else
+                         hashHistory.push(PathConfig.MemberIndexPage);*/
                     } else {
                         message.error(result.Message);
                         /* NaNotification.error({
