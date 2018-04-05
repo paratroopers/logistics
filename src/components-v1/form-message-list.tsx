@@ -180,7 +180,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
                 <Tag color={message.tagColor}>{message.message}</Tag> : message.message}</Col>
         </Row>
 
-        return <Link onClick={topThis.onClick.bind(this, "item", item)} to={topThis.getPath(item)}>
+        return <div onClick={topThis.onClick.bind(this, "item", item)}>
             <List.Item className="form-message-list-item">
                 <List.Item.Meta
                     className="form-message-list-item-meta"
@@ -188,7 +188,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
                     title={title}
                     description={des}/>
             </List.Item>
-        </Link>;
+        </div>;
     }
 
     renderSystemItem(item: ModelNameSpace.MessageModel) {
@@ -203,8 +203,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
             </Row>
         </Row>
 
-        return <Link onClick={topThis.onClick.bind(this, "system", item)}
-                     to={{pathname: PathConfig.MessageManagerViewPage, state: item}}>
+        return <div onClick={topThis.onClick.bind(this, "system", item)}>
             <List.Item
                 className="form-message-list-item">
                 <List.Item.Meta
@@ -212,7 +211,7 @@ export class FormMessageList extends React.Component<FormMessageListProps, FormM
                     title={item.title}
                     description={description}/>
             </List.Item>
-        </Link>;
+        </div>;
     }
 
     render() {
