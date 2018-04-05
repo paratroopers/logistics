@@ -1,5 +1,5 @@
 import { FormComponentProps } from "antd/lib/form";
-import * as React from "React";
+import * as React from "react";
 import { Form, Modal, Input } from "antd";
 import { RequestNameSpace } from "../model/request";
 import { APINameSpace } from "../model/api";

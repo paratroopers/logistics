@@ -7,9 +7,7 @@ import {Cookies} from '../util/cookie';
 import {Row, Col, Popover, Avatar, Menu, Icon, Modal, Form, Input} from 'antd';
 import {HeaderMessage} from './index-header-message';
 import {FormComponentProps} from "antd/lib/form";
-import {APINameSpace} from "../model/api";
 import {ModelNameSpace} from "../model/model";
-import {RequestNameSpace} from "../model/request";
 import {isNullOrUndefined} from "util";
 import HeaderUpdatePwd from "./header-update-password";
 
