@@ -30,7 +30,7 @@ export class MobileMemberPage extends React.Component<MemberPageProps, MemberPag
     }
 
     componentDidMount() {
-        this.setState({treeData: Context.getCurrentUser().navigations});
+        this.setState({treeData: Context.getMerchantData().navigations});
     }
 
     renderIcon(icon: string, colorCode: string) {
@@ -86,7 +86,7 @@ export class MobileMemberPage extends React.Component<MemberPageProps, MemberPag
                     <UserAvatar className="user-img" size={46} attr="Photo"></UserAvatar>
                     <div className="some-information">
                         <div
-                            className="some-information-conetnt">{this.timeInterval()}，{Context.getCurrentUser().userInfo.MemeberCode}</div>
+                            className="some-information-conetnt">{this.timeInterval()}，{Context.getMerchantData().userInfo.MemeberCode}</div>
                         <span className="some-information-welcome">欢迎你来到大陆网，体验更便捷的服务</span>
                     </div>
                 </List.Item>

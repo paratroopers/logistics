@@ -5,7 +5,7 @@ import {CommonLocale} from "../locales/localeid";
 import {ModelNameSpace} from '../model/model';
 
 import {Notification} from "../components-v1/notification";
-
+import {isNullOrUndefined} from "util";
 
 export enum SelectType {
     CustomerOrder = 1,
@@ -143,7 +143,7 @@ export class Constants {
             [OrderTypeEnum.OrderMerge]: [2, true],
             [OrderTypeEnum.WaitPay]: [3, false],
             [OrderTypeEnum.OrderOut]: [4, true],
-            [OrderTypeEnum.OrderInQuery]:[2,true]
+            [OrderTypeEnum.OrderInQuery]: [2, true]
         };
         return isGetAdmin ? {
             currentStep: EnumStep[typeEnum][0],
@@ -172,13 +172,17 @@ export class Context {
      * 登录后的用户信息
      */
     static MerchantData: any;
+    /**
+     * 登录后的Token信息
+     */
+    static TokenData: any;
 
     /** 默认Key键值*/
     static Keys = {
         /**
          * LocalStorage的存储key
          */
-        TokenDataKey: "NaTokenData",
+        MerchantData: "UserInfo",
         /**
          * Cookie的存储key
          */
@@ -189,47 +193,79 @@ export class Context {
         LanguageKey: "na-language"
     };
 
+    /** 判断当前用户是否已经登录*/
+    static getLoginStatus() {
+        const token = this.getToken();
+        const merchant = this.getMerchantData();
+        if (isNullOrUndefined(token) || isNullOrUndefined(merchant) || token === "" || merchant === "")
+            return false;
+        if (isNullOrUndefined(merchant.userInfo) || isNullOrUndefined(merchant.navigations))
+            return false;
+        return true;
+    }
+
     /**
      * 设置登录信息
+     * @param data  用户登录信息
      */
     static setMerchantData(data) {
         try {
-            window.localStorage.setItem(Context.Keys.TokenDataKey, JSON.stringify(data));
+            window.localStorage.setItem(Context.Keys.MerchantData, JSON.stringify(data));
         } catch (e) {
             Context.MerchantData = data;
         }
     }
 
     /** 获取登录信息 */
-    static getMerchantData() {
+    static getMerchantData(): ModelNameSpace.UserModel {
         if (Context.MerchantData) {
             return Context.MerchantData;
         }
         var data = null;
         try {
-            data = JSON.parse(window.localStorage.getItem(Context.Keys.TokenDataKey));
+            data = JSON.parse(window.localStorage.getItem(Context.Keys.MerchantData));
         } catch (e) {
             data = null;
         }
         return data;
     }
 
-    /** 获取用户信息*/
-    static getCurrentUser(): ModelNameSpace.UserModel {
-        return JSON.parse(window.localStorage.getItem('UserInfo'));
+    /**
+     * 设置当前Token
+     */
+    static setToken(data) {
+        try {
+            Cookies.set(Context.Keys.LoginSecretKey, data, 1);
+        } catch (e) {
+            Context.TokenData = data;
+        }
     }
 
     /**
-     * 获取当前语言,如果用户没有选择，默认走公司语言,兼容两个版版本
+     * 获取当前Token
      */
+    static getToken() {
+        if (Context.TokenData) {
+            return Context.TokenData;
+        }
+        var data = null;
+        try {
+            data = Cookies.get(Context.Keys.LoginSecretKey);
+        } catch (e) {
+            data = null;
+        }
+        return data;
+    }
+
+    /** 获取当前语言,如果用户没有选择，默认走公司语言,兼容两个版版本*/
     static getLanguage(): string {
         let language = Cookies.get(Context.Keys.LanguageKey) === "undefined" ? undefined : Cookies.get(Context.Keys.LanguageKey);
-        if (!language) {
-            let data = Context.getMerchantData();
-            if (data) {
-                language = data.CompanyInfo.LanguageCode;
-            }
-        }
+        // if (!language) {
+        //     let data = Context.getMerchantData();
+        //     if (data) {
+        //         language = data.CompanyInfo.LanguageCode;
+        //     }
+        // }
         return language;
     }
 
@@ -244,13 +280,6 @@ export class Context {
             path: '/',
             expires: secretExpiresDate
         });
-    }
-
-    /**
-     * 获取当前Token
-     */
-    static getToken() {
-        return Cookies.get("Authorization");
     }
 
     /**

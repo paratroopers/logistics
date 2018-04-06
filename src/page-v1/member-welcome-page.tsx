@@ -68,7 +68,7 @@ export class MemberWelcomePage extends Component<MemberWelcomePageProps, MemberW
     renderHeader() {
         var MemberCode = "";
         try {
-            MemberCode = Context.getCurrentUser().userInfo.MemeberCode;
+            MemberCode = Context.getMerchantData().userInfo.MemeberCode;
         } catch (ex) {
             MemberCode = "";
         }

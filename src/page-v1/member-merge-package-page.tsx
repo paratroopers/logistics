@@ -100,7 +100,7 @@ class MemberMergePackagePage extends React.Component<MemberMergePackagePageProps
 
                 const request: RequestNameSpace.CustomerOrderMergeAddRequest = {
                     /** 用户ID*/
-                    userid: Context.getCurrentUser().userInfo.Userid.toString(),
+                    userid: Context.getMerchantData().userInfo.Userid.toString(),
                     /** 客户备注*/
                     CustomerMark: values.CustomerMark,
                     /** 选择渠道*/

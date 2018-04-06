@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {connect} from "react-redux";
-import {Global} from '../util/common';
+import {connect, hashHistory} from "react-redux";
+import {Global, Context} from '../util/common';
 import {WebAction} from "../actions/index";
 import {Avatar, Modal, Upload, Icon, message} from 'antd';
 import {APINameSpace} from '../model/api';
 import {ModelNameSpace} from '../model/model';
-import {isNullOrUndefined} from "util";
+import {PathConfig} from "../config/pathconfig";
 
 interface UserAvatarProps {
     size?: number;
@@ -55,9 +55,12 @@ class UserAvatar extends React.Component<UserAvatarProps, UserAvatarStates> {
     componentDidMount() {
         const topThis = this;
         /** 更新用户信息*/
-        let userModel: ModelNameSpace.UserModel = JSON.parse(window.localStorage.getItem('UserInfo'));
-        if (!isNullOrUndefined(userModel) && userModel.userInfo.HeaderURL !== "" && userModel.userInfo.HeaderURL !== null) {
+        let userModel: ModelNameSpace.UserModel = Context.getMerchantData();
+        try {
             topThis.setState({src: userModel.userInfo.HeaderURL});
+        } catch (e) {
+            message.warning("登录信息失效，请重新登录");
+            hashHistory.push(PathConfig.LoginPage);
         }
     }
 
