@@ -41,7 +41,7 @@ export class HeaderNavigation extends React.Component<HeaderNavigationProps, Hea
         const {props: {onClick}} = topThis;
         switch (key) {
             case PathConfig.MemberIndexPage:
-                if (!Context.getLoginStatus()){
+                if (Context.getLoginStatus()){
                     hashHistory.push({pathname: PathConfig.MemberIndexPage});
                 } else {
                     hashHistory.push({pathname: PathConfig.LoginPage});
