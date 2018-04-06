@@ -35,8 +35,16 @@ export class MemberNavigation extends React.Component<MemberNavigationProps, Mem
 
     renderChildMenu(treeData: ModelNameSpace.UserNavigationsChildrenModel[]) {
         return treeData.map((item) => {
-            return <Menu.Item key={item.Url}>{<span><Icon
-                type={item.Image}/><span>{item.Name_CN}</span></span>}</Menu.Item>
+            return <Menu.Item key={item.Url}>{
+                <div>
+                    <Icon type={item.Image}/>
+                    <span>{item.Name_CN}</span>
+                    {typeof(this.props.unWaitPayCount) === 'number' && this.props.unWaitPayCount !== 0
+                    && item.Name_CN === MemberNavigation.defaultWaitPayName ?
+                        <div style={{float: 'right'}}><Badge count={this.props.unWaitPayCount}>
+                        </Badge></div> : null}
+                </div>
+            }</Menu.Item>
         });
     }
 
@@ -49,16 +57,7 @@ export class MemberNavigation extends React.Component<MemberNavigationProps, Mem
                     {topThis.renderChildMenu(item.childItems)}
                 </SubMenu>;
             else {
-                return <Menu.Item key={item.parentItem.Url}>
-                    {
-                        this.props.unWaitPayCount !== 0
-                        && item.parentItem.Name_CN === MemberNavigation.defaultWaitPayName ?
-                            <Badge count={this.props.unWaitPayCount}>
-                                <span>{item.parentItem.Name_CN}</span>
-                            </Badge>
-                            : ''
-                    }
-                </Menu.Item>
+                return <Menu.Item key={item.parentItem.Url}>{item.parentItem.Name_CN}</Menu.Item>
             }
         });
     }
