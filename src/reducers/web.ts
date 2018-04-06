@@ -1,13 +1,10 @@
-import {onChangeLanguage, props_warehouse_in_model, update_user_avatar,REQUEST_WAITPAYCOUNT} from "../actions/ActionTypes";
 import {
     onChangeLanguage,
     WAITPAYCOUNT_LOADED,
     props_warehouse_in_model,
     update_user_avatar,
     REQUEST_WAITPAYCOUNT
-}
-    from
-        "../actions/ActionTypes";
+} from "../actions/ActionTypes";
 import {ModelNameSpace} from '../model/model';
 
 /** 初始化默认值*/
