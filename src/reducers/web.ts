@@ -1,4 +1,13 @@
 import {onChangeLanguage, props_warehouse_in_model, update_user_avatar,REQUEST_WAITPAYCOUNT} from "../actions/ActionTypes";
+import {
+    onChangeLanguage,
+    WAITPAYCOUNT_LOADED,
+    props_warehouse_in_model,
+    update_user_avatar,
+    REQUEST_WAITPAYCOUNT
+}
+    from
+        "../actions/ActionTypes";
 import {ModelNameSpace} from '../model/model';
 
 /** 初始化默认值*/
@@ -6,7 +15,8 @@ const initialState = {
     data: [],
     routerAddress: '',
     props_warehouse_in_model: null,
-    avatarUrl: ''
+    avatarUrl: '',
+    unWaitPayCount: {}
 }
 
 export const web = (state = initialState, action) => {
@@ -26,6 +36,8 @@ export const web = (state = initialState, action) => {
             return {...state, avatarUrl: action.payload.avatarUrl};
         case REQUEST_WAITPAYCOUNT:
             return {...state};
+        case WAITPAYCOUNT_LOADED:
+            return {...state, unWaitPayCount: action.payload.unWaitPayCount};
         default:
             return state;
     }

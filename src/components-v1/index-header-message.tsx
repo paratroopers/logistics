@@ -44,6 +44,7 @@ export class HeaderMessage extends React.Component<HeaderMessageProps, HeaderMes
     componentDidMount() {
         /** 首次加载获取数量*/
         this.getUnReadCount();
+        this.getWaitPayCount();
     }
 
     getUnReadCount() {
