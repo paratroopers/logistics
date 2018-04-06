@@ -22,7 +22,7 @@ export class MemberBaseInformation extends React.Component<MemberBaseInformation
     }
 
     componentDidMount() {
-        this.setState({MemeberCode: Context.getCurrentUser().userInfo.MemeberCode});
+        this.setState({MemeberCode: Context.getMerchantData().userInfo.MemeberCode});
     }
 
     renderCopy() {

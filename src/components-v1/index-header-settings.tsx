@@ -3,8 +3,7 @@ import {hashHistory} from 'react-router';
 import {connect} from "react-redux";
 import {PathConfig} from "../config/pathconfig";
 import {Context} from "../util/common";
-import {Cookies} from '../util/cookie';
-import {Row, Col, Popover, Avatar, Menu, Icon, Modal, Form, Input} from 'antd';
+import {Row, Col, Popover, Avatar, Menu, Icon, Form} from 'antd';
 import {HeaderMessage} from './index-header-message';
 import {FormComponentProps} from "antd/lib/form";
 import {ModelNameSpace} from "../model/model";
@@ -12,12 +11,10 @@ import {isNullOrUndefined} from "util";
 import HeaderUpdatePwd from "./header-update-password";
 
 interface HeaderSettingProps extends FormComponentProps {
-    isLogin?: boolean;
     src?: string;
 }
 
 interface HeaderSettingStates {
-    isLogin?: boolean;
     isShowModal?: boolean;
     confirmLoading?: boolean;
     src?: string;
@@ -27,7 +24,6 @@ class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSettingSta
     constructor(props, context) {
         super(props, context);
         this.state = {
-            isLogin: props.isLogin ? props.isLogin : false,
             isShowModal: false,
             confirmLoading: false,
             src: props.src ? props.src : "http://www.famliytree.cn/icon/timor.png",
@@ -36,8 +32,8 @@ class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSettingSta
 
     componentDidMount() {
         const topThis = this;
-        /** 更新用户信息*/
-        let userModel: ModelNameSpace.UserModel = JSON.parse(window.localStorage.getItem('UserInfo'));
+        /** 初始化用不信息设置头像*/
+        let userModel: ModelNameSpace.UserModel = Context.getMerchantData();
         if (!isNullOrUndefined(userModel) && userModel.userInfo.HeaderURL !== "" && userModel.userInfo.HeaderURL !== null) {
             topThis.setState({src: userModel.userInfo.HeaderURL});
         }
@@ -45,10 +41,7 @@ class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSettingSta
 
     componentWillReceiveProps(nextProps) {
         const topThis = this;
-        const {props: {isLogin, src}} = topThis;
-        if ('isLogin' in nextProps && nextProps.isLogin !== isLogin) {
-            topThis.setState({isLogin: nextProps.isLogin});
-        }
+        const {props: {src}} = topThis;
         if ('src' in nextProps && nextProps.src !== src) {
             topThis.setState({src: nextProps.src !== "" && nextProps.src !== null ? nextProps.src : "http://www.famliytree.cn/icon/timor.png"});
         }
@@ -57,23 +50,13 @@ class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSettingSta
     onClickUserMenu({item, key, keyPath}) {
         const topThis = this;
         switch (key) {
-            case "0":
-                hashHistory.push({pathname: PathConfig.MemberIndexPage});
+            case "changePassword":
                 topThis.setState({isShowModal: true});
                 break;
-            case "2":
-                Context.setMerchantData({isLogin: false});
+            case "logOut":
+                Context.setMerchantData(null);
+                Context.setToken(null);
                 hashHistory.push({pathname: PathConfig.LoginPage});
-                topThis.setState({isLogin: false});
-                Cookies.remove("Authorization");
-
-                // MememberAPI.LoginOut().then(result =>{
-                //     if (result.Data == "True")
-                //     {
-                //
-                //     }
-                // });
-
                 break;
             default:
                 break;
@@ -81,14 +64,14 @@ class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSettingSta
     }
 
     renderUserNameContent() {
-        return <Menu onClick={this.onClickUserMenu.bind(this)}>
-            <Menu.Item key="0">
+        const topThis = this;
+        return <Menu onClick={topThis.onClickUserMenu.bind(this)}>
+            <Menu.Item key="changePassword">
                 <Icon type="unlock"/>
                 <span>修改密码</span>
             </Menu.Item>
-
             <Menu.Divider></Menu.Divider>
-            <Menu.Item key="2">
+            <Menu.Item key="logOut">
                 <Icon type="poweroff"/>
                 <span>退出</span>
             </Menu.Item>
@@ -97,10 +80,9 @@ class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSettingSta
 
     render() {
         const topThis = this;
-        const {state: {src, isLogin}} = topThis;
-        if (!isLogin) return <div></div>;
+        const {state: {src}} = topThis;
         try {
-            const userName = Context.getCurrentUser().userInfo.MemeberCode;
+            const userName = Context.getMerchantData().userInfo.MemeberCode;
             return <Row className="tool-user" type="flex" align="middle" justify="start">
                 <Col className="tool-user-message">
                     <HeaderMessage></HeaderMessage>
@@ -109,7 +91,7 @@ class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSettingSta
                     <Popover placement="bottomRight"
                              overlayClassName="tool-user-popover"
                              autoAdjustOverflow={true}
-                             content={this.renderUserNameContent()}
+                             content={topThis.renderUserNameContent()}
                              trigger="click">
                         <a className="tool-user-right-name">
                             <Avatar style={{marginRight: 5}} src={src}/>
@@ -117,7 +99,8 @@ class HeaderSetting extends React.Component<HeaderSettingProps, HeaderSettingSta
                         </a>
                     </Popover>
                 </Col>
-               <HeaderUpdatePwd visible={this.state.isShowModal} onCancel={()=>this.setState({isShowModal:false})}></HeaderUpdatePwd>
+                <HeaderUpdatePwd visible={topThis.state.isShowModal}
+                                 onCancel={() => topThis.setState({isShowModal: false})}></HeaderUpdatePwd>
             </Row>
         } catch (ex) {
             return null;

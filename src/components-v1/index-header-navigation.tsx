@@ -1,19 +1,20 @@
 import * as React from "react";
-import { hashHistory, RouteComponentProps, withRouter } from 'react-router';
+import {hashHistory, RouteComponentProps, withRouter} from 'react-router';
 import {Row, Menu, Dropdown, Icon} from 'antd';
 import {Global} from "../util/common";
 import {CommonLocale} from "../locales/localeid";
 import {PathConfig} from "../config/pathconfig";
+import {isNullOrUndefined} from "util";
+import {Context} from "../util/common";
 
-interface HeaderNavigationProps extends RouteComponentProps<any,any> {
+interface HeaderNavigationProps extends RouteComponentProps<any, any> {
     theme?: "light" | "dark" | undefined;
-    member?: boolean;
     onClick?: (key: string) => void;
     type: NavigationType;
 }
 
 interface HeaderNavigationStates {
-   selectedKeys:string[];
+    selectedKeys: string[];
 }
 
 export enum NavigationType {
@@ -22,23 +23,25 @@ export enum NavigationType {
 }
 @withRouter
 export class HeaderNavigation extends React.Component<HeaderNavigationProps, HeaderNavigationStates> {
-  constructor(props,context){
-      super(props,context);
-      this.state={
-          selectedKeys:[this.props.location.pathname]
-      }
-  }
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            selectedKeys: [this.props.location.pathname]
+        }
+    }
 
-    componentWillReceiveProps(nextProps){
-        if("router" in nextProps && nextProps.router){
-           this.setState({selectedKeys:[nextProps.router.location.pathname]})
+    componentWillReceiveProps(nextProps) {
+        if ("router" in nextProps && nextProps.router) {
+            this.setState({selectedKeys: [nextProps.router.location.pathname]})
         }
     }
 
     onClickNavigation({item, key, keyPath}) {
+        const topThis = this;
+        const {props: {onClick}} = topThis;
         switch (key) {
             case PathConfig.MemberIndexPage:
-                if (this.props.member) {
+                if (!Context.getLoginStatus()){
                     hashHistory.push({pathname: PathConfig.MemberIndexPage});
                 } else {
                     hashHistory.push({pathname: PathConfig.LoginPage});
@@ -48,8 +51,8 @@ export class HeaderNavigation extends React.Component<HeaderNavigationProps, Hea
                 hashHistory.push({pathname: key});
                 break;
         }
-        this.props.onClick && this.props.onClick(key);
-        this.setState({selectedKeys:[key]});
+        if (onClick) onClick(key);
+        topThis.setState({selectedKeys: [key]});
     }
 
     renderButtonNavigation(): JSX.Element {

@@ -50,11 +50,6 @@ export class WebAction {
         return {languageKey: languageKey};
     });
 
-    /** 获取登录状态*/
-    static GetLoginState = createAction(GetLoginState, (isLogin: boolean) => {
-        return {isLogin: isLogin};
-    });
-
     /** 传递入库订单详情*/
     static props_warehouse_in_model = createAction(props_warehouse_in_model, (model: ModelNameSpace.WarehouseListModel) => {
         return {props_warehouse_in_model: model};

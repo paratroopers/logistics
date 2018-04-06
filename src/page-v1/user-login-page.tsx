@@ -1,15 +1,13 @@
 import * as React from 'react';
 import {hashHistory, Link} from 'react-router';
-import {Form, Icon, Input, Button, Checkbox, Row, Col, Layout, message} from 'antd';
+import {Form, Icon, Input, Button, Row, Col, Layout, message} from 'antd';
 import {FormComponentProps} from 'antd/lib/form/Form';
 import {PathConfig, MobilePathConfig} from '../config/pathconfig';
 import UserLoginForgetPage from './user-login-forget-page';
 import {Global} from '../util/common';
 import {WebAction} from "../actions/index";
-import {Cookies} from '../util/cookie';
 import {Constants, Context} from '../util/common';
 import {RequestNameSpace} from '../model/request';
-import {ModelNameSpace} from '../model/model';
 import {APINameSpace} from '../model/api';
 import {ResponseNameSpace} from '../model/response';
 
@@ -40,61 +38,47 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
         this.setState({loading: false});
     }
 
-
     onRegister() {
         hashHistory.push(PathConfig.RegisterPage);
     }
 
-    getToken() {
-        APINameSpace.MemberAPI.GetToken().then(result => {
-            if (result.Data !== "") {
-                Cookies.set("Authorization", result.Data);
+    /** 载入用户信息*/
+    initUserInfo() {
+        APINameSpace.MemberAPI.GetUserContextInfo().then((r: ResponseNameSpace.GetUserContextResponse) => {
+            if (r.Status === 0) {
+                Context.setMerchantData(r.Data);
+                /** 头像信息更新*/
+                Global.store.dispatch(WebAction.update_user_avatar(APINameSpace.CommonAPI.baseFileURL + r.Data.userInfo.HeaderURL));
+                /** 跳转用户中心*/
+                if (window.innerWidth <= Constants.xs)
+                    hashHistory.push(MobilePathConfig.UserCenter);
+                else
+                    hashHistory.push(PathConfig.MemberIndexPage);
+            } else {
+                message.warning("登录失败，请重新登录");
             }
-        })
-
+        });
     }
 
     onLogin() {
-        this.props.form.validateFields((err, vas) => {
-            if (err) {
-                return;
-            } else {
+        const topThis = this;
+        const {props: {form}} = topThis;
+        form.validateFields((err, vas) => {
+            if (!err) {
                 const data: RequestNameSpace.LoginRequest = {
                     pwd: vas['pwd'],
                     user: vas['user']
                 };
-                this.setState({loading: true});
+                topThis.setState({loading: true});
                 APINameSpace.LoginApi.Login(data).then(result => {
-                    this.setState({loading: false});
+                    topThis.setState({loading: false});
                     if (result.Status === 0) {
-                        Cookies.set("Authorization", result.Data);
-                        /** 设置登录信息*/
-                        Context.setMerchantData({isLogin: true});
-                        /** 更改登录的状态*/
-                        Global.store.dispatch(WebAction.GetLoginState(true));
-                        APINameSpace.MemberAPI.GetUserContextInfo().then((r: ResponseNameSpace.GetUserContextResponse) => {
-                            if (r.Status === 0) {
-                                window.localStorage.setItem('UserInfo', JSON.stringify(r.Data));
-                                /** 头像信息更新*/
-                                Global.store.dispatch(WebAction.update_user_avatar(APINameSpace.CommonAPI.baseFileURL + r.Data.userInfo.HeaderURL));
-                            }
-                            if (window.innerWidth <= Constants.xs)
-                                hashHistory.push(MobilePathConfig.UserCenter);
-                            else
-                                hashHistory.push(PathConfig.MemberIndexPage);
-                        });
-
-                        // setInterval(() => this.getToken(), 1000 * 60 * 30);
-                        /*                        if (window.innerWidth <= Constants.xs)
-                         hashHistory.push(MobilePathConfig.UserCenter);
-                         else
-                         hashHistory.push(PathConfig.MemberIndexPage);*/
+                        /** 初始化Token信息*/
+                        Context.setToken(result.Data);
+                        /** 初始化用户信息*/
+                        topThis.initUserInfo();
                     } else {
                         message.error(result.Message);
-                        /* NaNotification.error({
-                         message: 'Tip',
-                         description: result.Message
-                         });*/
                     }
                 });
             }
@@ -104,7 +88,6 @@ class UserLoginPage extends React.Component<UserLoginPageProps, UserLoginPageSta
     changeType() {
         this.setState({type: 'password'});
     }
-
 
     render() {
         const inputSize = 'large';

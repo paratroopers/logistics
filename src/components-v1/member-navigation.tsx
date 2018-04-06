@@ -2,10 +2,8 @@ import * as React from 'react';
 import {Menu, Icon} from 'antd';
 import {hashHistory} from 'react-router';
 import {Context} from '../util/common';
-// import {UserNavigationsModel, UserNavigationsChildrenModel} from '../../../api/model/base';
 import {ModelNameSpace} from '../model/model';
 import {isNullOrUndefined} from "util";
-
 const {SubMenu} = Menu;
 
 interface MemberNavigationProps {
@@ -25,7 +23,7 @@ export class MemberNavigation extends React.Component<MemberNavigationProps, Mem
     }
 
     componentDidMount() {
-        this.setState({treeData: Context.getCurrentUser().navigations});
+        this.setState({treeData: Context.getMerchantData().navigations});
     }
 
     renderChildMenu(treeData: ModelNameSpace.UserNavigationsChildrenModel[]) {
