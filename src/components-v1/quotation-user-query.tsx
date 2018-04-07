@@ -39,7 +39,12 @@ class Cost extends React.Component<CostProps, CostStates> {
     componentDidMount() {
         const query = this.props.location.query;
         const {setFieldsValue} = this.props.form;
-        setFieldsValue({...query});
+        if (query.length > -1 || query.width > -1 || query.height > -1) {
+            this.setState({ isAdvanced: true });
+        }
+        setTimeout(()=>{
+          setFieldsValue({...query});
+        })
         if (this.initHomeToThisPage())
             this.onOk();
     }

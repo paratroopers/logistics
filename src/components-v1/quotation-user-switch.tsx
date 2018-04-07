@@ -22,7 +22,7 @@ export class QuotationUserSwitch extends React.Component<QuotationUserSwitchProp
     }
 
     componentWillReceiveProps(nextProps) {
-        if ('checked' in nextProps && nextProps.isisAccurate !== this.props.checked) {
+        if ('checked' in nextProps && nextProps.checked !== this.props.checked) {
             this.setState({checked: nextProps.checked});
         }
     }
@@ -36,7 +36,7 @@ export class QuotationUserSwitch extends React.Component<QuotationUserSwitchProp
                             onChange={checked => {
                                 onChange && onChange(checked);
                             }}></Switch> :
-                    <Checkbox onChange={e => {
+                    <Checkbox checked={this.state.checked} onChange={e => {
                         onChange && onChange(e.target.checked);
                     }}>{placeholder}</Checkbox>
                 }
