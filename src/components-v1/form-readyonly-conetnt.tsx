@@ -10,7 +10,7 @@ export interface ReadyOnlyContentItemModel {
 export function FormReadyOnlyContent(data: ReadyOnlyContentItemModel): any {
     const {lableCol, lable, conetntCol, conetent} = data;
     return [
-        <Col span={lableCol - 2}>
+        <Col span={lableCol - 2} style={{textAlign: 'left'}}>
             {lable}:
         </Col>,
         <Col span={conetntCol}>

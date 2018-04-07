@@ -10,6 +10,7 @@ import {FormContactInfo} from './form-contact-info';
 import {ModelNameSpace} from '../model/model';
 import {Context} from '../util/common';
 import {CostCountry} from './quotation-country';
+import {FormReadyOnlyContent, ReadyOnlyContentItemModel} from './form-readyonly-conetnt';
 
 export interface FormOrderAddresseeProps extends FormComponentProps {
     readOnly?: boolean;
@@ -104,13 +105,13 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
         }
 
         if (readOnly) {
-            return <Col {...spanLayout}>
-                <Form.Item label={label}>
-                    {
-                        <label>{type === "CostCountry" ? defaultValue.lable : defaultValue}</label>
-                    }
-                </Form.Item>
-            </Col>;
+            const readyOnlyData: ReadyOnlyContentItemModel = {
+                conetent: type === "CostCountry" ? defaultValue.lable : defaultValue,
+                lable: label,
+                lableCol: 6,
+                conetntCol: label === '国家' ? 18 : 6,
+            };
+            return FormReadyOnlyContent(readyOnlyData);
         }
         else {
             let FormItem;
@@ -129,12 +130,12 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
             return <Col {...spanLayout}>
                 <Form.Item label={label} required={readOnly ? false : !noRequired}>
                     {this.props.form ? this.props.form.getFieldDecorator(fieldName, {
-                            initialValue: defaultValue,
-                            rules: [{
-                                required: !noRequired,
-                                message: ' '
-                            }]
-                        })(FormItem)
+                        initialValue: defaultValue,
+                        rules: [{
+                            required: !noRequired,
+                            message: ' '
+                        }]
+                    })(FormItem)
                         : FormItem}
                 </Form.Item>
             </Col>

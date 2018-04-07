@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Row, Col} from 'antd';
-import {FormSettingGroup} from './form-setting-group'
+import {FormSettingGroup} from './form-setting-group';
+import {FormReadyOnlyContent, ReadyOnlyContentItemModel} from './form-readyonly-conetnt';
 import * as moment from 'moment';
 
 export interface FormOrderInfoProps {
@@ -35,28 +36,24 @@ export class FormOrderInfo extends React.Component<FormOrderInfoProps, FormOrder
         }
     }
 
+    renderContent(label?: string, content?: any, lableCol?: number, contentCol?: number) {
+        const readyOnlyData: ReadyOnlyContentItemModel = {
+            conetent: content,
+            lable: label,
+            lableCol: lableCol,
+            conetntCol: contentCol,
+        };
+        return FormReadyOnlyContent(readyOnlyData);
+    }
+
     render() {
         const {state: {data}, props: {loading}} = this;
         return <FormSettingGroup title={"订单基本信息"} loading={loading}>
             <Row className="form-order-info">
-                <Row>
-                    <Col xl={6} md={24}>
-                        <span className="order-content-key">创建时间</span>
-                        <span className="order-content-value">{moment(data.created).format('YYYY-MM-DD HH:mm')}</span>
-                    </Col>
-                    <Col xl={6} md={24}>
-                        <span className="order-content-key">净重量</span>
-                        <span className="order-content-value">{data.weight}kg</span>
-                    </Col>
-                    <Col xl={6} md={24}>
-                        <span className="order-content-key">净重体积</span>
-                        <span className="order-content-value">{data.volume}cm³</span>
-                    </Col>
-                    <Col xl={6} md={24}>
-                        <span className="order-content-key">总件数</span>
-                        <span className="order-content-value">{data.count}</span>
-                    </Col>
-                </Row>
+                {this.renderContent('净重量', data.weight, 6, 6)}
+                {this.renderContent('净重体积', data.volume, 8, 4)}
+                {this.renderContent('总件数', data.count, 6, 6)}
+                <Col span={24}>{this.renderContent('创建时间', moment(data.created).format('YYYY-MM-DD HH:mm'), 8, 16)}</Col>
             </Row>
         </FormSettingGroup>
     }
