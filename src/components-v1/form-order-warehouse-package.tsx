@@ -4,6 +4,7 @@ import {FormComponentProps} from 'antd/lib/form';
 import {RowProps} from 'antd/lib/row';
 import {FormSettingGroup} from './form-setting-group';
 import {ModelNameSpace} from '../model/model';
+import {FormReadyOnlyContent, ReadyOnlyContentItemModel} from './form-readyonly-conetnt';
 
 export interface FormOrderWarehousePackageProps extends FormComponentProps {
     readOnly?: boolean;
@@ -45,14 +46,15 @@ class FormOrderWarehousePackage extends React.Component<FormOrderWarehousePackag
             xl: 6
         }
 
-        if (readOnly)
-            return <Col {...spanLayout}>
-                <Form.Item label={label}>
-                    {
-                        <label>{defaultValue}</label>
-                    }
-                </Form.Item>
-            </Col>;
+        if (readOnly) {
+            const readyOnlyData: ReadyOnlyContentItemModel = {
+                conetent: defaultValue,
+                lable: label,
+                lableCol: 10,
+                conetntCol: 2,
+            };
+            return FormReadyOnlyContent(readyOnlyData);
+        }
         else
             return <Col {...spanLayout}>
                 <Form.Item label={label} required={readOnly ? false : !noRequired}>
@@ -79,7 +81,7 @@ class FormOrderWarehousePackage extends React.Component<FormOrderWarehousePackag
                     {this.renderRow('打包长度(cm)', false, false, 'packageLength', this.getNumberFixed(packageLength))}
                     {this.renderRow('打包宽度(cm)', false, false, 'packageWidth', this.getNumberFixed(packageWidth))}
                     {this.renderRow('打包高度(cm)', false, false, 'packageHeight', this.getNumberFixed(packageHeight))}
-                    {this.renderRow('打包总重量(cm³)', false, false, 'packageWeight', this.getNumberFixed(packageWeight))}
+                    {this.renderRow('打包重量(cm³)', false, false, 'packageWeight', this.getNumberFixed(packageWeight))}
                 </Row>
             </Form>
         </FormSettingGroup>
