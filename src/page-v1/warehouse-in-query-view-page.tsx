@@ -25,7 +25,7 @@ export class WarehouseInQueryViewPage extends React.Component<WarehouseInQueryVi
         if (isNullOrUndefined(viewData)) hashHistory.goBack();
         return <Row className="warehouse-in-query-view-page view-page-form">
             <ContentHeaderControl title="查看"></ContentHeaderControl>
-            {!isNullOrUndefined(viewData) ? <WarehouseInForm type={"query"} Data={viewData} ></WarehouseInForm> :
+            {!isNullOrUndefined(viewData) ? <WarehouseInForm type={"query"} ID={viewData.ID} Data={viewData} ></WarehouseInForm> :
                 <div>暂无数据</div>}
         </Row>;
     }
