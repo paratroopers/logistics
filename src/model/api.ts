@@ -7,11 +7,11 @@ export namespace APINameSpace {
     //region 基类定义区
     export class CommonAPI {
         // static  uatURL = "http://localhost:8090/_api/ver(1.0)/";
-        static baseURL = "http://www.famliytree.cn/_api/ver(1.0)/";
+        static baseURL = "http://www.famliytree.cn:8080/dev/_api/ver(1.0)/";
         //static  baseURL = "http://localhost:8090/_api/ver(1.0)/";
-        static baseUploadURL = "http://www.famliytree.cn/_api/ver(1.0)/File/upload";
+        static baseUploadURL = "http://famliytree.cn:8080/dev/_api/ver(1.0)/File/upload";
         // static baseUploadURL = "http://localhost:8090/_api/ver(1.0)/File/upload";
-        static baseUploadUserURL = "http://www.famliytree.cn/_api/ver(1.0)/File/upload/user";
+        static baseUploadUserURL = "http://www.famliytree.cn:8080/dev/_api/ver(1.0)/File/upload/user";
         // static baseUploadUserURL = "http://localhost:8090/_api/ver(1.0)/File/upload/user";
         static baseFileURL = "http://www.famliytree.cn";
         //static baseFileURL = "http://localhost:8090";
