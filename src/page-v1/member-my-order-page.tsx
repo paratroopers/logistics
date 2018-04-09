@@ -210,7 +210,7 @@ export class MemberMyOrderPage extends React.Component<MemberMyOrderPageProps, M
             {
                 title: '操作',
                 layout: ColumnLayout.Option,
-                render: (val, record, index) => {
+                render: (val, record, index) => {             
                     return <Link to={{pathname: PathConfig.MemberMyOrderPackageViewPage, state: record}}>查看</Link>;
                 }
             }

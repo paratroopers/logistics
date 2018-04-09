@@ -24,7 +24,7 @@ export class MemberMyOrderPackageViewPage extends React.Component<MemberMyOrderP
         if (isNullOrUndefined(viewData)) hashHistory.goBack();
         return <Row className="member-my-order-approval-view-page view-content-page">
             <ContentHeaderControl title="查看"></ContentHeaderControl>
-            {!isNullOrUndefined(viewData) ? <WarehouseInForm type={"view"} Data={viewData}></WarehouseInForm> :
+            {!isNullOrUndefined(viewData) ? <WarehouseInForm ID={viewData.ID} type={"view"} Data={viewData}></WarehouseInForm> :
                 <div>暂无数据</div>}
         </Row>;
     }
