@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Link, RouteComponentProps, withRouter} from "react-router";
-import {Popover, Icon, Badge, Card, Tabs} from 'antd';
-import {Global} from '../util/common';
+import {Popover, Icon, Badge, Card, Tabs, Modal} from 'antd';
+import {Global, Constants} from '../util/common';
 import {WebAction} from '../actions/index';
 import {FormMessageList} from './form-message-list';
 import {ModelNameSpace} from "../model/model";
@@ -106,7 +106,7 @@ export class HeaderMessage extends React.Component<HeaderMessageProps, HeaderMes
         return <Popover placement="bottomRight"
                         overlayClassName={`${classNamePopover ? classNamePopover : ""} header-message-popover`}
                         autoAdjustOverflow={true}
-                        visible={visible}
+                        visible={!Constants.minSM && visible}
                         onVisibleChange={(v) => {
                             topThis.setState({visible: v});
                             if (unreadCount > 0 && v) {
@@ -120,6 +120,17 @@ export class HeaderMessage extends React.Component<HeaderMessageProps, HeaderMes
                    className={`${classNameBadge ? classNameBadge : ""} header-message-badge`}>
                 <Icon type="bell" style={{fontSize: 16, padding: 4}}/>
             </Badge>
+            <Modal wrapClassName="header-message-modal"
+                   maskClosable={true}
+                   mask={true}
+                   footer={null}
+                   visible={Constants.minSM && visible}
+                   onCancel={() => {
+                       topThis.setState({visible: false});
+                   }}
+            >
+                {visible ? topThis.renderContent() : null}
+            </Modal>
         </Popover>;
     }
 }

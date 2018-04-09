@@ -177,6 +177,52 @@
   }
 }
 
+.header-message-modal {
+  text-align: center;
+  //white-space: nowrap;
+  &:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    width: 0;
+  }
+  .ant-modal {
+    display: inline-block;
+    vertical-align: middle;
+    top: 0;
+    text-align: left;
+    margin: 0px;
+    padding: 0px;
+    .ant-modal-close-x {
+      width: 45px;
+      height: 45px;
+      line-height: 45px;
+    }
+    .ant-modal-body {
+      padding: 0px;
+    }
+  }
+  .message-card {
+    width: auto;
+    .ant-card-body {
+      padding: 0px;
+    }
+    .ant-tabs-bar {
+      margin-bottom: 4px;
+    }
+    .ant-tabs-nav-scroll {
+      text-align: center;
+      .ant-tabs-tab {
+        margin: 0 32px 0 0;
+        &:last-child {
+          margin-right: 0px;
+        }
+      }
+    }
+  }
+}
+
 /** 消息列表组件*/
 .form-message-list {
   .warehouse-in {
