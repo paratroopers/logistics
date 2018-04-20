@@ -126,7 +126,6 @@ class FormOrderAddressee extends React.Component<FormOrderAddresseeProps, FormOr
                     FormItem = <Input placeholder={readOnly ? "" : '请输入'}></Input>;
                     break;
             }
-
             return <Col {...spanLayout}>
                 <Form.Item label={label} required={readOnly ? false : !noRequired}>
                     {this.props.form ? this.props.form.getFieldDecorator(fieldName, {

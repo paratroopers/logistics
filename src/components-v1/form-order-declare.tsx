@@ -325,7 +325,6 @@ class FormOrderDeclare extends React.Component<FormOrderDeclareProps, FormOrderD
                         <span>美元</span>
                     </Form.Item>
                     <Form.Item label="HSCode">
-
                         {
                             getFieldDecorator('HSCode', {})
                             (<Input/>)
